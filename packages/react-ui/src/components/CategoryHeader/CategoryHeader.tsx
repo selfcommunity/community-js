@@ -163,7 +163,6 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
             category={scCategory}
             onFollow={handleFollow}
             {...CategoryFollowButtonProps}
-            disabled={isPaymentsEnabled && scCategory.paywalls.length > 0 && !scCategory.followed}
           />
         </Box>
       </Box>

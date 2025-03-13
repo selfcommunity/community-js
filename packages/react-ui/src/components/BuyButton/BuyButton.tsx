@@ -1,5 +1,5 @@
 import {LoadingButton} from '@mui/lab';
-import {Icon, SwipeableDrawer, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Icon, SwipeableDrawer, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {SCContextType, SCThemeType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
@@ -117,7 +117,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
     name: PREFIX
   });
 
-  const {className, contentId, contentType, content, onPurchase, ...rest} = props;
+  const {className, contentId, contentType, content, disabled, onPurchase, ...rest} = props;
 
   // STATE
   const [open, setOpen] = useState<boolean>(false);
@@ -242,17 +242,19 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
 
   return (
     <>
-      <RequestRoot
-        className={classNames(classes.requestRoot, className)}
-        variant="contained"
-        color={purchased ? 'inherit' : 'secondary'}
-        size="small"
-        startIcon={<Icon>card_giftcard</Icon>}
-        loading={scUserContext.user === undefined || purchased === null}
-        onClick={handleOpen}
-        {...rest}>
-        {btnLabel}
-      </RequestRoot>
+      <Tooltip title={disabled == true ? '' : <FormattedMessage id="ui.buyButton.disabled" defaultMessage="ui.buyButton.disabled" />}>
+        <RequestRoot
+          className={classNames(classes.requestRoot, className)}
+          variant="contained"
+          color={purchased ? 'inherit' : 'secondary'}
+          size="small"
+          startIcon={<Icon>card_giftcard</Icon>}
+          loading={scUserContext.user === undefined || purchased === null}
+          onClick={handleOpen}
+          {...rest}>
+          {btnLabel}
+        </RequestRoot>
+      </Tooltip>
       {open && (
         <>
           {isMobile ? (

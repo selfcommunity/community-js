@@ -220,7 +220,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
 
   if (!scCategory) {
     return <CategoryFeedSkeleton />;
-  } else if (scCategory && !scCategory.followed && isPaymentsEnabled) {
+  } else if (scCategory && isPaymentsEnabled && !scCategory.followed && scCategory.paywalls?.length > 0) {
     return <HiddenPurchasableContent />;
   }
 

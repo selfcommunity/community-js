@@ -1302,6 +1302,7 @@
   "ui.buyButton.buyCourse": "Acquista il corso",
   "ui.buyButton.purchased": "Acquistato",
   "ui.buyButton.subscribed": "Iscritto",
+  "ui.buyButton.disabled": "Al momento non è possbile acquistare questo contenuto. Potrai farlo successivamente.",
   "ui.paymentProductsDialog.title": "Scegli tra i seguenti prezzi",
   "ui.paymentProductsDialog.title.purchased": "Il tuo acquisto",
   "ui.paymentProduct.action.buy": "Acquista",

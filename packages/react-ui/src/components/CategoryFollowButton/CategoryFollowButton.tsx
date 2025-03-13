@@ -98,7 +98,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     name: PREFIX
   });
 
-  const {className, categoryId, category, onFollow, disableBuyContentIfPaidContent, ...rest} = props;
+  const {className, categoryId, category, onFollow, disableBuyContentIfPaidContent, disabled, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -127,6 +127,16 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
   });
   const [followed, setFollowed] = useState<boolean>(null);
+
+  /**
+   * Check the button if is disabled
+   * Disable action follow/unfollow only if payments feature is active
+   * and the category is a paid content and the category isn't paid
+   */
+  const isActionFollowDisabled = useMemo(
+    () => disabled || (scCategory && scUserContext.user && isPaymentsEnabled && scCategory.paywalls?.length > 0 && !scCategory.payment_order),
+    [disabled, scCategory, scUserContext.user, isPaymentsEnabled]
+  );
 
   useEffect(() => {
     /**
@@ -161,6 +171,9 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     return null;
   }
 
+  /**
+   * if the category is a paid content and it isn't followed show the Buy button
+   */
   if (scCategory && scUserContext.user && isPaymentsEnabled && scCategory.paywalls?.length > 0 && !followed) {
     return <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} disabled={disableBuyContentIfPaidContent} />;
   }
@@ -172,6 +185,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
       onClick={handleFollowAction}
       loading={scUserContext.user ? followed === null || scCategoriesManager.isLoading(scCategory) : null}
       className={classNames(classes.root, className)}
+      disabled={isActionFollowDisabled}
       {...rest}>
       {followed && scUserContext.user ? (
         <FormattedMessage defaultMessage="ui.categoryFollowButton.unfollow" id="ui.categoryFollowButton.unfollow" />
