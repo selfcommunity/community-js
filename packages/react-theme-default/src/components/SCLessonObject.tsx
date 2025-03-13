@@ -10,10 +10,12 @@ const Component = {
         padding: `${theme.spacing(2)} !important`,
         '& .SCLessonObject-text': {
           '& > div:first-of-type': {
-            height: '240px',
             img: {
-              height: '240px',
-              objectFit: 'cover'
+              display: 'block',
+              margin: '0 auto',
+              width: 'auto !important',
+              maxWidth: '100% !important',
+              position: 'relative !important'
             },
             padding: '0 !important'
           },
