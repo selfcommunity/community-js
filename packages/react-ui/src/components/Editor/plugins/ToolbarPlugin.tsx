@@ -183,6 +183,7 @@ export interface ToolbarPluginProps {
   uploadImage: boolean;
   uploadFile?: boolean;
   MediaPluginProps?: MediaPluginProps;
+  customLink?: React.ReactNode;
 }
 
 export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element {
@@ -191,7 +192,7 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const {uploadImage = false, uploadFile = false, MediaPluginProps = {}} = props;
+  const {uploadImage = false, uploadFile = false, MediaPluginProps = {}, customLink = null} = props;
 
   // STATE
   const [editor] = useLexicalComposerContext();
@@ -393,11 +394,13 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
       </IconButton>
       {uploadImage && <ImagePlugin />}
       {uploadFile && <MediaPlugin {...MediaPluginProps} />}
-      <IconButton disabled={!isEditable} onClick={insertLink}>
-        <Tooltip title={<FormattedMessage id="ui.editor.toolbarPlugin.link" defaultMessage="ui.editor.toolbarPlugin.link" />}>
-          <Icon>format_link</Icon>
-        </Tooltip>
-      </IconButton>
+      {customLink ?? (
+        <IconButton disabled={!isEditable} onClick={insertLink}>
+          <Tooltip title={<FormattedMessage id="ui.editor.toolbarPlugin.link" defaultMessage="ui.editor.toolbarPlugin.link" />}>
+            <Icon>format_link</Icon>
+          </Tooltip>
+        </IconButton>
+      )}
       <EmojiPlugin />
     </Root>
   );

@@ -168,6 +168,12 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
     commentsEndRef.current?.scrollIntoView({block: 'end', behavior: 'instant'});
   };
 
+  useEffect(() => {
+    if (commentsObject.comments.length > 0) {
+      scrollToBottom();
+    }
+  }, [commentsObject.comments]);
+
   /**
    * Perform save/update comment
    */
@@ -203,7 +209,6 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
           handleCommentsUpdate(data);
           setReplyKey(comment.id);
           setIsCommenting(false);
-          scrollToBottom();
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);

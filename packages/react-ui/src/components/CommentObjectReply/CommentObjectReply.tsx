@@ -11,12 +11,14 @@ import BaseItem from '../../shared/BaseItem';
 import UserAvatar from '../../shared/UserAvatar';
 import {useThemeProps} from '@mui/system';
 import {SCMediaType} from '@selfcommunity/types';
+import PreviewComponent from '../../shared/Media/File/PreviewComponent';
 
 const PREFIX = 'SCCommentObjectReply';
 
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
+  media: `${PREFIX}-media`,
   hasValue: `${PREFIX}-has-value`,
   avatar: `${PREFIX}-avatar`,
   actions: `${PREFIX}-actions`,
@@ -161,7 +163,8 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
 
   // RETRIEVE OBJECTS
   const [html, setHtml] = useState(text);
-  const [media, setMedia] = useState(medias);
+  const [media, setMedia] = useState(medias ?? []);
+  const [uploadingMedia, setUploadingMedia] = useState(false);
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
@@ -215,8 +218,12 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
     setHtml(value);
   };
 
-  const handleChangeMedia = (medias: SCMediaType[]): void => {
-    setMedia(medias);
+  const handleChangeMedia = (value: SCMediaType): void => {
+    setMedia((prev) => [...prev, value]);
+  };
+
+  const handleChangeMedias = (value: SCMediaType[] | null): void => {
+    setMedia([...value]);
   };
 
   /**
@@ -248,22 +255,23 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
       }
       secondary={
         <Widget className={classNames(classes.comment, {[classes.hasValue]: !isEditorEmpty})} {...WidgetProps}>
+          {media && media.length > 0 && <PreviewComponent value={media} onChange={handleChangeMedias} className={classes.media} />}
           <Editor
             ref={editor}
             onChange={handleChangeText}
-            onMediaChange={handleChangeMedia}
             defaultValue={html}
             editable={editable}
             uploadImage
             action={
               replyIcon &&
               onReply && (
-                <IconButton onClick={handleReply} className={classes.iconReply}>
+                <IconButton onClick={handleReply} className={classes.iconReply} disabled={uploadingMedia}>
                   <Icon>send</Icon>
                 </IconButton>
               )
             }
             {...EditorProps}
+            MediaPluginProps={{isUploading: setUploadingMedia, onMediaAdd: handleChangeMedia}}
           />
           {!isEditorEmpty && (
             <Stack direction="row" spacing={2} className={classes.actions}>
