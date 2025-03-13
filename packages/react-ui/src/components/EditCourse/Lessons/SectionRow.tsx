@@ -33,7 +33,7 @@ interface SectionRowProps {
   provider: DraggableProvided;
   section: SCCourseSectionType;
   isNewRow: boolean;
-  handleManageSection: (section: SCCourseSectionType, type: ActionLessonType) => void;
+  handleManageSection: (section: SCCourseSectionType, type: ActionLessonType, newRow?: boolean) => void;
 }
 
 function SectionRow(props: SectionRowProps) {
@@ -120,7 +120,7 @@ function SectionRow(props: SectionRowProps) {
       .then(() => {
         const tempSection: SCCourseSectionType = {
           ...section,
-          num_lessons: section.lessons.length
+          num_lessons: section.lessons?.length || 0
         };
 
         handleManageSection(tempSection, ActionLessonType.DELETE);
@@ -144,7 +144,7 @@ function SectionRow(props: SectionRowProps) {
   }, [course, section, handleManageSection]);
 
   const handleManageLesson = useCallback(
-    (lesson: SCCourseLessonType, type: ActionLessonType) => {
+    (lesson: SCCourseLessonType, type: ActionLessonType, newRow?: boolean) => {
       switch (type) {
         case ActionLessonType.ADD: {
           const tempSection: SCCourseSectionType = {
@@ -179,7 +179,7 @@ function SectionRow(props: SectionRowProps) {
             lessons: section.lessons.filter((prevLesson) => prevLesson.id !== lesson.id)
           };
 
-          handleManageSection(tempSection, ActionLessonType.DELETE_UPDATE);
+          handleManageSection(tempSection, ActionLessonType.DELETE_UPDATE, newRow);
         }
       }
     },

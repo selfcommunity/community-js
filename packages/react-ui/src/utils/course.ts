@@ -26,7 +26,7 @@ export const getDripDelayAndUnit = (value: number) => {
   return {delay: value, _unit: unitType.DAYS};
 };
 
-export function getCurrentSectionAndLessonIndex(course: SCCourseType, sectionId: number, lessonId: number) {
+export function getCurrentSectionAndLessonIndex(course: SCCourseType, sectionId: string | number, lessonId: string | number) {
   const currentSectionIndex = course.sections.findIndex((section) => section.id === sectionId);
   if (currentSectionIndex === -1) {
     return {currentSectionIndex: null, currentLessonIndex: null};

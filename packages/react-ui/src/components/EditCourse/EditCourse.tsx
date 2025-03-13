@@ -46,15 +46,15 @@ const TAB_DATA = [
   }
 ];
 
-function getPanelData(course: SCCourseType | null, setSCCourse: (course: SCCourseType) => void) {
+function getPanelData(course: SCCourseType | null, setCourse: (course: SCCourseType) => void) {
   return [
     {
       value: SCCourseEditTabType.LESSONS,
-      children: <Lessons course={course} setSCCourse={setSCCourse} />
+      children: <Lessons course={course} setCourse={setCourse} />
     },
     {
       value: SCCourseEditTabType.CUSTOMIZE,
-      children: <Customize course={course} setSCCourse={setSCCourse} />
+      children: <Customize course={course} setCourse={setCourse} />
     },
     {
       value: SCCourseEditTabType.USERS,
@@ -66,7 +66,7 @@ function getPanelData(course: SCCourseType | null, setSCCourse: (course: SCCours
     },
     {
       value: SCCourseEditTabType.OPTIONS,
-      children: <Options course={course} setSCCourse={setSCCourse} />
+      children: <Options course={course} setCourse={setCourse} />
     }
   ];
 }

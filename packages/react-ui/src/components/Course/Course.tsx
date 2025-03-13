@@ -13,7 +13,7 @@ import {PREFIX} from './constants';
 import CourseSkeleton, {CourseSkeletonProps} from './Skeleton';
 import BaseItem from '../../shared/BaseItem';
 import {isCourseCompleted, isCourseNew} from '../../utils/course';
-import CourseJoinButton from '../CourseJoinButton';
+import UserAvatar from '../../shared/UserAvatar';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -162,7 +162,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
   } = props;
 
   // STATE
-  const {scCourse, setSCCourse} = useSCFetchCourse({id: courseId, course});
+  const {scCourse} = useSCFetchCourse({id: courseId, course});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -170,14 +170,6 @@ export default function Course(inProps: CourseProps): JSX.Element {
     () => scCourse && (scCourse.join_status === SCCourseJoinStatusType.CREATOR || scCourse.join_status === SCCourseJoinStatusType.MANAGER),
     [scCourse]
   );
-
-  //HANDLERS
-  /**
-   * Handles callback join course
-   */
-  const handleJoinCourse = (course, status) => {
-    setSCCourse({...course, join_status: status});
-  };
 
   /**
    * Renders course object
@@ -252,12 +244,23 @@ export default function Course(inProps: CourseProps): JSX.Element {
               className={classes.chip}
             />
           )}
-          <Avatar alt={scCourse.name} src={scCourse.created_by.avatar} className={classes.previewAvatar} />
+          <Link
+            {...(!scCourse.created_by.deleted && {
+              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
+            })}>
+            <UserAvatar hide={!scCourse.created_by.community_badge} smaller={true}>
+              <Avatar alt={scCourse.name} src={scCourse.created_by.avatar} className={classes.previewAvatar} />
+            </UserAvatar>
+          </Link>
         </Box>
         <CardContent className={classes.previewContent}>
-          <Typography variant="body2" className={classes.previewCreator}>
-            {scCourse.created_by.username}
-          </Typography>
+          <Link
+            className={classes.previewCreator}
+            {...(!scCourse.created_by.deleted && {
+              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
+            })}>
+            <Typography variant="body2">{scCourse.created_by.username}</Typography>
+          </Link>
           <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)} className={classes.previewNameWrapper}>
             <Typography variant="h6" className={classes.previewName}>
               {scCourse.name}
@@ -280,13 +283,9 @@ export default function Course(inProps: CourseProps): JSX.Element {
         </CardContent>
         {actions ?? (
           <CardActions className={classes.previewActions}>
-            {!scCourse.join_status ? (
-              <CourseJoinButton course={scCourse} onJoin={handleJoinCourse} />
-            ) : (
-              <Button variant="outlined" size="small" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
-                <FormattedMessage defaultMessage="ui.course.see.preview" id="ui.course.see.preview" />
-              </Button>
-            )}
+            <Button variant="outlined" size="small" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
+              <FormattedMessage defaultMessage="ui.course.see.preview" id="ui.course.see.preview" />
+            </Button>
           </CardActions>
         )}
       </PreviewRoot>
@@ -317,10 +316,18 @@ export default function Course(inProps: CourseProps): JSX.Element {
           </Box>
         }
         primary={
-          <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)} className={classes.snippetPrimary}>
-            <Typography component="span">{scCourse.created_by.username}</Typography>
-            <Typography variant="body1">{scCourse.name}</Typography>
-          </Link>
+          <>
+            <Link
+              {...(!scCourse.created_by.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
+              })}
+              className={classes.snippetPrimary}>
+              <Typography component="span">{scCourse.created_by.username}</Typography>
+            </Link>
+            <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)} className={classes.snippetPrimary}>
+              <Typography variant="body1">{scCourse.name}</Typography>
+            </Link>
+          </>
         }
         secondary={
           <Typography component="p" variant="body2" className={classes.snippetSecondary}>

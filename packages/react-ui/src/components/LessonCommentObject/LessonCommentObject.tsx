@@ -31,6 +31,7 @@ import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
 import {PREFIX} from './constants';
 import LessonCommentActionsMenu from '../../shared/LessonCommentActionsMenu';
+import LessonFilePreview from '../../shared/LessonFilePreview';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -39,6 +40,7 @@ const classes = {
   content: `${PREFIX}-content`,
   author: `${PREFIX}-author`,
   textContent: `${PREFIX}-text-content`,
+  mediaContent: `${PREFIX}-media-content`,
   commentActionsMenu: `${PREFIX}-comment-actions-menu`
 };
 
@@ -142,6 +144,7 @@ export interface LessonCommentObjectProps {
  |author|.SCCommentObject-author|Styles applied to the author section.|
  |content|.SCCommentObject-content|Styles applied to content section.|
  |textContent|.SCCommentObject-text-content|Styles applied to text content section.|
+ |mediaContent|.SCCommentObject-media-content|Styles applied to media content section.|
  |commentActionsMenu|.SCCommentObject-comment-actions-menu|Styles applied to comment action menu element.|
  
 
@@ -252,7 +255,8 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
           const newObj = Object.assign({}, obj, {
             text: data.text,
             html: data.html,
-            created_at: data.created_at
+            created_at: data.created_at,
+            medias: medias
           });
           updateObject(newObj);
           setEditComment(null);
@@ -326,6 +330,13 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
                       <DateTimeAgo date={comment.created_at} showStartIcon={false} />
                     </>
                     <Typography className={classes.textContent} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />
+                    {obj.medias && obj.medias.length > 0 && (
+                      <>
+                        {obj.medias.map((media: any) => {
+                          return <LessonFilePreview key={media.id} className={classes.mediaContent} media={media} />;
+                        })}
+                      </>
+                    )}
                   </CardContent>
                   {scUserContext.user && (
                     <Box className={classes.commentActionsMenu}>

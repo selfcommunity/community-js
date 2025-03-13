@@ -35,12 +35,12 @@ const OPTIONS = {
 
 interface OptionsProps {
   course: SCCourseType;
-  setSCCourse: (course: SCCourseType) => void;
+  setCourse: (course: SCCourseType) => void;
 }
 
 function Options(props: OptionsProps) {
   // PROPS
-  const {course, setSCCourse} = props;
+  const {course, setCourse} = props;
 
   // STATES
   const [tempOptions, setTempOptions] = useState<OptionsData | null>(null);
@@ -94,7 +94,7 @@ function Options(props: OptionsProps) {
 
     CourseService.patchCourse(course.id, {id: course.id, ...tempOptions})
       .then((data) => {
-        setSCCourse(data);
+        setCourse(data);
         setTempOptions(null);
         setCanSave(false);
         setLoading(false);
