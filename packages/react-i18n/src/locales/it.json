@@ -306,6 +306,7 @@
   "ui.course.dashboard.teacher.info.students": "Studenti",
   "ui.course.dashboard.teacher.tab.comments": "Commenti",
   "ui.course.dashboard.teacher.tab.comments.btn.label": "Vedi altri",
+  "ui.course.dashboard.teacher.tab.comments.empty": "Al momento non ci sono commenti",
   "ui.course.dashboard.teacher.tab.comments.lessons.btn.label": "Altri commenti",
   "ui.course.dashboard.teacher.tab.comments.number": "{commentsNumber, plural, =0 {# Commenti} one {# Commento} other {# Commenti}}",
   "ui.course.dashboard.teacher.tab.students": "Studenti",

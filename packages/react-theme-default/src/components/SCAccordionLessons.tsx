@@ -4,6 +4,10 @@ const Component = {
       border: `1px solid ${theme.palette.grey['300']}`,
       borderRadius: '5px',
 
+      '& .SCAccordionLessons-empty': {
+        padding: theme.spacing('19px', 3)
+      },
+
       '& .SCAccordionLessons-accordion': {
         '& .SCAccordionLessons-summary': {
           flexDirection: 'row-reverse',
