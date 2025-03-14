@@ -15,7 +15,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof PaymentProducts> = {
 	args: {
-			id: 1,
+			contentId: 1,
 			contentType: SCContentType.EVENT
 	},
 	render: template

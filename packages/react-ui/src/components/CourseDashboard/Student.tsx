@@ -195,7 +195,7 @@ function Student(inProps: StudentCourseDashboardProps) {
           />
         )}
 
-        {isPaymentsEnabled && scCourse.paywalls.length > 0 && <BuyButton contentType={SCContentType.COURSE} content={scCourse} />}
+        {isPaymentsEnabled && scCourse.paywalls?.length > 0 && <BuyButton contentType={SCContentType.COURSE} content={scCourse} />}
 
         {((scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
           (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse?.join_status === SCCourseJoinStatusType.JOINED)) ||

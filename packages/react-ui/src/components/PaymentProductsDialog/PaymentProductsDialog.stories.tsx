@@ -15,8 +15,8 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof PaymentProductsDialog> = {
 	args: {
-		PaymentProductPricesComponentProps: {
-			id: 1,
+		PaymentProductsComponentProps: {
+			contentId: 1,
 			contentType: SCContentType.EVENT
 		}
 	},

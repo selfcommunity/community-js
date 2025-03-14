@@ -163,7 +163,7 @@ export default function Checkout(inProps: CheckoutProps) {
           );
           break;
         case SCContentType.GROUP:
-          _c = <Group courseId={contentId} actions={<></>} hideEventParticipants hideEventPlanner variant="outlined" className={classes.object} />;
+          _c = <Group groupId={contentId} variant="outlined" hideActions hideEventParticipants hideEventPlanner className={classes.object} />;
           break;
       }
     }

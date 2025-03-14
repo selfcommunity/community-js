@@ -78,7 +78,7 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     } else if (content && contentType) {
-      setProducts(content.paywalls);
+      setProducts(content.paywalls || []);
       setLoading(false);
     }
   }, [prefetchedProducts.length]);
