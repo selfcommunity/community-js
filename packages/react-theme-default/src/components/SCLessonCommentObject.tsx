@@ -64,6 +64,9 @@ const Component = {
           '& img': {
             maxWidth: '100%'
           }
+        },
+        '& .SCLessonCommentObject-media-content': {
+          marginBottom: theme.spacing(1)
         }
       },
       '& .SCLessonCommentObject-avatar': {

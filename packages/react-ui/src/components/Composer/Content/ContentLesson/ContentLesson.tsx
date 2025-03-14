@@ -1,19 +1,22 @@
-import React, {useCallback} from 'react';
-import {Box, BoxProps, Typography} from '@mui/material';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Box, BoxProps, Icon, IconButton, InputAdornment, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import Editor, {EditorProps} from '../../../Editor';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../../constants';
-import {MediaPluginProps} from '../../../Editor/plugins';
 import {SCMediaType} from '@selfcommunity/types';
+import {File, Link} from '../../../../shared/Media';
+import {SCMediaObjectType} from '../../../../types';
+import UrlTextField from '../../../../shared/Media/Link/UrlTextField';
 
 const classes = {
   root: `${PREFIX}-content-lesson-root`,
   generalError: `${PREFIX}-general-error`,
   title: `${PREFIX}-content-lesson-title`,
   medias: `${PREFIX}-content-lesson-medias`,
-  editor: `${PREFIX}-content-lesson-editor`
+  editor: `${PREFIX}-content-lesson-editor`,
+  link: `${PREFIX}-content-lesson-link`
 };
 
 const Root = styled(Box, {
@@ -62,8 +65,13 @@ export default (props: ContentLessonProps): JSX.Element => {
   // PROPS
   const {className = null, value, error = {}, disabled = false, onChange, onMediaChange, EditorProps = {}} = props;
   const {error: generalError = null} = {...error};
+  const mediaObjectTypes = [File, Link];
+  const [medias, setMedias] = useState<SCMediaType[]>(value?.medias || []);
+  const [openLink, setOpenLink] = useState<boolean>();
+  const linkInputRef = useRef<HTMLInputElement>(null);
 
   // HANDLERS
+
   const handleChangeHtml = useCallback(
     (html: string) => {
       onChange(html);
@@ -71,12 +79,31 @@ export default (props: ContentLessonProps): JSX.Element => {
     [value]
   );
 
-  const handleChangeMedia = useCallback((medias: SCMediaType[]) => {
-    onMediaChange(medias);
+  const handleChangeMedias = useCallback((value: SCMediaType[] | null) => {
+    setMedias([...value]);
+    onMediaChange([...value]);
   }, []);
 
-  // RENDER
+  const handleChangeMedia = (value: SCMediaType): void => {
+    setMedias((prev) => [...prev, value]);
+    onMediaChange([...medias, value]);
+  };
 
+  const handleLinkAdd = useCallback(
+    (media: SCMediaType) => {
+      setMedias([...medias, media]);
+      setOpenLink(false);
+    },
+    [medias]
+  );
+
+  useEffect(() => {
+    if (openLink && linkInputRef.current) {
+      linkInputRef.current.scrollIntoView({behavior: 'smooth'});
+    }
+  }, [openLink]);
+
+  // RENDER
   return (
     <Root className={classNames(classes.root, className)}>
       {generalError && (
@@ -91,7 +118,43 @@ export default (props: ContentLessonProps): JSX.Element => {
         onChange={handleChangeHtml}
         onMediaChange={handleChangeMedia}
         defaultValue={value.html}
+        ToolBarProps={{
+          customLink: <Link.triggerButton key={Link.name} color="default" onClick={() => setOpenLink(true)} />,
+          uploadImage: false,
+          uploadFile: true
+        }}
       />
+      {openLink && (
+        <UrlTextField
+          inputRef={linkInputRef}
+          className={classes.link}
+          id="page"
+          name="page"
+          label={<FormattedMessage id="ui.composer.media.link.add.label" defaultMessage="ui.composer.media.link.add.label" />}
+          fullWidth
+          variant="outlined"
+          placeholder="https://"
+          onSuccess={handleLinkAdd}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setOpenLink(false)}>
+                  <Icon>close</Icon>
+                </IconButton>
+              </InputAdornment>
+            )
+          }}
+        />
+      )}
+      {medias && medias.length > 0 && (
+        <Box className={classes.medias}>
+          {mediaObjectTypes.map((mediaObjectType: SCMediaObjectType) => {
+            if (mediaObjectType.previewComponent) {
+              return <mediaObjectType.previewComponent key={mediaObjectType.name} value={medias} onChange={handleChangeMedias} />;
+            }
+          })}
+        </Box>
+      )}
     </Root>
   );
 };

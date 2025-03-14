@@ -38,6 +38,7 @@ import SCCategory from './components/SCCategory';
 import SCCategoryAutocomplete from './components/SCCategoryAutocomplete';
 import SCCategoryFeedTemplate from './components/SCCategoryFeedTemplate';
 import SCCategoryFollowersButton from './components/SCCategoryFollowersButton';
+import SCCategoryFollowButton from './components/SCCategoryFollowButton';
 import SCCategoryHeader from './components/SCCategoryHeader';
 import SCCategoryTemplate from './components/SCCategoryTemplate';
 import SCCategoryTrendingFeedWidget from './components/SCCategoryTrendingFeedWidget';
@@ -126,6 +127,7 @@ import SCLessonCommentObject from './components/SCLessonCommentObject';
 import SCLessonCommentObjects from './components/SCLessonCommentObjects';
 import SCCourseCompletedDialog from './components/SCCourseCompletedDialog';
 import SCLessonEditForm from './components/SCLessonEditForm';
+import SCLessonFilePreview from './components/SCLessonFilePreview';
 import SCLessonTemplate from './components/SCLessonTemplate';
 import SCLessonObject from './components/SCLessonObject';
 import SCLessonReleaseMenu from './components/SCLessonReleaseMenu';
@@ -205,6 +207,7 @@ import SCPaymentProduct from './components/SCPaymentProduct';
 import SCPaymentProductPrice from './components/SCPaymentProductPrice';
 import SCCheckout from './components/SCCheckout';
 import SCCheckoutReturnDialog from './components/SCCheckoutReturnDialog';
+import SCHiddenPurchasableContent from './components/SCHiddenPurchasableContent';
 
 /**
  * Style fragments - Imports - End
@@ -323,6 +326,7 @@ const theme = {
     SCCategoryAutocomplete,
     SCCategoryFeedTemplate,
     SCCategoryFollowersButton,
+		SCCategoryFollowButton,
     SCCategoryHeader,
     SCCategoryTemplate,
     SCCategoryTrendingFeedWidget,
@@ -393,6 +397,7 @@ const theme = {
     SCLessonCommentObjects,
     SCCourseCompletedDialog,
     SCLessonEditForm,
+    SCLessonFilePreview,
     SCLessonTemplate,
     SCLessonObject,
     SCLessonReleaseMenu,
@@ -490,7 +495,8 @@ const theme = {
     SCPaymentProduct,
     SCPaymentProductPrice,
     SCCheckout,
-    SCCheckoutReturnDialog
+    SCCheckoutReturnDialog,
+		SCHiddenPurchasableContent
   },
   selfcommunity: {
     user: {

@@ -1602,11 +1602,15 @@ const Endpoints: {[key: string]: EndpointType} = {
    * Payments/Paywalls
    */
   GetContentProducts: {
-    url: urlReplacer('/api/v2/payments/products/'),
+    url: urlReplacer('/api/v2/payments/payment_product/'),
+    method: 'GET'
+  },
+  GetProduct: {
+    url: urlReplacer('/api/v2/payments/payment_product/$(id)/'),
     method: 'GET'
   },
   GetProductPrices: {
-    url: urlReplacer('/api/v2/payments/product/$(id)/prices/'),
+    url: urlReplacer('/api/v2/payments/payment_product/$(id)/'),
     method: 'GET'
   },
   GetCheckoutSession: {
@@ -1624,6 +1628,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   GetPaymentOrders: {
     url: urlReplacer('/api/v2/payments/order/'),
     method: 'GET'
+  },
+  CreateCustomerPortalSession: {
+    url: urlReplacer('/api/v2/payments/customer_portal_session/'),
+    method: 'POST'
   }
 };
 

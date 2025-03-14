@@ -95,7 +95,7 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
         <>
           {products.map((p, i) => (
             <PaymentProduct
-              product={p}
+              paymentProduct={p}
               key={i}
               contentType={contentType}
               {...(content ? {content} : {contentId})}

@@ -101,7 +101,7 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
             </Typography>
           )}
           <>
-            {paymentOrder && (
+            {!isMobile && paymentOrder && paymentOrder.payment_price.id === price.id && (
               <Typography component="p" variant="body2" className={classNames(classes.secondary, classes.purchasedAt)}>
                 <FormattedMessage
                   defaultMessage="ui.paymentProduct.action.purchasedAt"

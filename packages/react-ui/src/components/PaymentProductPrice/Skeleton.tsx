@@ -44,7 +44,7 @@ const Root = styled(BaseItem, {
 export default function PaymentProductPriceSkeleton(props): JSX.Element {
   // HOOKS
   const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <Root
@@ -58,14 +58,14 @@ export default function PaymentProductPriceSkeleton(props): JSX.Element {
           className={classes.image}
         />
       }
-      primary={<Skeleton animation="wave" height={10} width={isMobile ? 70 : 120} className={classes.primary} />}
-      secondary={<Skeleton animation="wave" height={10} width={isMobile ? 40 : 70} className={classes.secondary} />}
+      primary={<Skeleton animation="wave" height={10} width={isMobile ? 70 : 85} className={classes.primary} />}
+      secondary={<Skeleton animation="wave" height={10} width={isMobile ? 40 : 55} className={classes.secondary} />}
       actions={
         props.actions !== undefined ? (
           props.actions
         ) : (
           <Button size="small" variant="outlined" disabled className={classes.button}>
-            <Skeleton animation="wave" height={10} width={isMobile ? 35 : 50} className={classes.action} />
+            <Skeleton animation="wave" height={10} width={isMobile ? 30 : 40} className={classes.action} />
           </Button>
         )
       }

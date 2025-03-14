@@ -11,11 +11,20 @@ import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
 import {RichTextPlugin} from './plugins/LexicalRichTextPlugin';
 import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
 import {HorizontalRulePlugin} from '@lexical/react/LexicalHorizontalRulePlugin';
-import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MediaPlugin, MentionsPlugin, OnChangePlugin} from './plugins';
+import {
+  AutoLinkPlugin,
+  DefaultHtmlValuePlugin,
+  EmojiPlugin,
+  ImagePlugin,
+  MediaPlugin,
+  MediaPluginProps,
+  MentionsPlugin,
+  OnChangePlugin
+} from './plugins';
 import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
 import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
 import {EditorThemeClasses, LexicalEditor} from 'lexical';
-import ToolbarPlugin from './plugins/ToolbarPlugin';
+import ToolbarPlugin, {ToolbarPluginProps} from './plugins/ToolbarPlugin';
 import {ListPlugin} from '@lexical/react/LexicalListPlugin';
 import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
 import OnBlurPlugin from './plugins/OnBlurPlugin';
@@ -75,8 +84,7 @@ const editorTheme: EditorThemeClasses = {
     superscript: `${PREFIX}-textSuperscript`,
     underline: `${PREFIX}-textUnderline`,
     underlineStrikethrough: `${PREFIX}-textUnderlineStrikethrough`
-  },
-  document: `${PREFIX}-document`
+  }
 };
 
 export interface EditorProps {
@@ -131,7 +139,19 @@ export interface EditorProps {
    * Handler for change media in the editor
    * @default null
    * */
-  onMediaChange?: (medias: SCMediaType[]) => void;
+  onMediaChange?: (media: SCMediaType) => void;
+
+  /**
+   * Props to spread to ToolBar.
+   * @default {}
+   */
+  ToolBarProps?: ToolbarPluginProps;
+
+  /**
+   * Props to spread to MediaPlugin.
+   * @default {}
+   */
+  MediaPluginProps?: MediaPluginProps;
 
   /**
    * Handler for blur event of the editor
@@ -205,6 +225,8 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     onFocus = null,
     onBlur = null,
     action = null,
+    ToolBarProps = {},
+    MediaPluginProps = {},
     placeholder = <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
   } = props;
   const apiRef = useRef<ApiRef>();
@@ -271,14 +293,14 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
       <LexicalComposer initialConfig={initialConfig}>
         {toolbar ? (
           <>
-            <ToolbarPlugin uploadImage={uploadImage} uploadFile={uploadFile} MediaPluginProps={{onMediaAdd: handleMediaChange}} />
+            <ToolbarPlugin uploadImage={uploadImage} uploadFile={uploadFile} MediaPluginProps={{onMediaAdd: handleMediaChange}} {...ToolBarProps} />
             <ListPlugin />
             <HorizontalRulePlugin />
           </>
         ) : (
           <Stack className={classes.actions} direction="row">
             {uploadImage && <ImagePlugin />}
-            {uploadFile && <MediaPlugin onMediaAdd={handleMediaChange} />}
+            {uploadFile && <MediaPlugin {...MediaPluginProps} />}
             <EmojiPlugin />
             {action && action}
           </Stack>

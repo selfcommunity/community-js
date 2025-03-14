@@ -1,5 +1,5 @@
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCCourseLessonType, SCCourseType} from '@selfcommunity/types';
+import {SCCourseLessonType} from '@selfcommunity/types';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {useEffect, useMemo, useState} from 'react';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
@@ -65,26 +65,26 @@ export default function useSCFetchLesson({
           return Promise.resolve(res.data);
         });
     },
-    []
+    [courseId, sectionId, id]
   );
 
   /**
    * If id attempt to get the lesson by id
    */
   useEffect(() => {
-    if (id !== null && id !== undefined && courseId !== null && courseId !== undefined && sectionId) {
-      fetchLesson(id)
+    if (__lessonId && courseId && sectionId) {
+      fetchLesson(__lessonId)
         .then((e: SCCourseLessonType) => {
           setSCLesson(e);
         })
         .catch((err) => {
           LRUCache.delete(__lessonCacheKey);
-          setError(`Lesson with id ${id} not found`);
-          Logger.error(SCOPE_SC_CORE, `Lesson with id ${id} not found`);
+          setError(`Lesson with id ${__lessonId} not found`);
+          Logger.error(SCOPE_SC_CORE, `Lesson with id ${__lessonId} not found`);
           Logger.error(SCOPE_SC_CORE, err.message);
         });
     }
-  }, [id, courseId, authUserId, sectionId]);
+  }, [__lessonId, courseId, sectionId]);
 
   useDeepCompareEffectNoCheck(() => {
     if (lesson) {

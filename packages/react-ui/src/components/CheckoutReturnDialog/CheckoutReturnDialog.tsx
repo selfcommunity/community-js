@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Box, Button, CircularProgress, Dialog, DialogContent, DialogProps, DialogTitle, Slide, Stack, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
@@ -47,6 +47,7 @@ export interface CheckoutReturnDialogProps extends DialogProps {
   className?: string;
   checkoutSessionId: string;
   disableInitialTransition?: boolean;
+  onHandleViewContentPurchased?: (redirectUrl: string) => void;
 }
 
 export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps) {
@@ -55,7 +56,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     props: inProps,
     name: PREFIX
   });
-  const {className, checkoutSessionId, disableInitialTransition = false, ...rest} = props;
+  const {className, checkoutSessionId, disableInitialTransition = false, onHandleViewContentPurchased, ...rest} = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [contentType, setContentType] = useState<SCContentType | null>(null);
   const [contentId, setContentId] = useState<number | null>(null);
@@ -67,6 +68,34 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  /**
+   * Handle view new object purchased
+   */
+  const handleViewPurchasedObject = useCallback(() => {
+    let _redirectUrl: string;
+    switch (contentType) {
+      case SCContentType.GROUP:
+        _redirectUrl = scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, content);
+        break;
+      case SCContentType.EVENT:
+        _redirectUrl = scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, content);
+        break;
+      case SCContentType.CATEGORY:
+        _redirectUrl = scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, content);
+        break;
+      case SCContentType.COURSE:
+        _redirectUrl = scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, content);
+        break;
+      default:
+        break;
+    }
+    if (onHandleViewContentPurchased) {
+      onHandleViewContentPurchased(_redirectUrl);
+    } else if (_redirectUrl) {
+      window.location.href = _redirectUrl;
+    }
+  }, [scRoutingContext, onHandleViewContentPurchased, content, contentType]);
 
   useEffect(() => {
     PaymentApiClient.getCheckoutSession({session_id: checkoutSessionId})
@@ -105,12 +134,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
               className={classes.object}
             />
           </Box>
-          <Button
-            size="medium"
-            variant={'contained'}
-            to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, content)}
-            component={Link}
-            className={classes.btn}>
+          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.event.button" defaultMessage="ui.checkoutReturnDialog.event.button" />
           </Button>
         </>
@@ -121,12 +145,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
           <Box className={classes.contentObject}>
             <Category category={content as SCCategoryType} actions={<></>} variant="outlined" className={classes.object} />
           </Box>
-          <Button
-            size="medium"
-            variant={'contained'}
-            to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, content)}
-            component={Link}
-            className={classes.btn}>
+          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />
           </Button>
         </>
@@ -145,12 +164,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
               className={classes.object}
             />
           </Box>
-          <Button
-            size="medium"
-            variant={'contained'}
-            to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, content)}
-            component={Link}
-            className={classes.btn}>
+          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.course.button" defaultMessage="ui.checkoutReturnDialog.course.button" />
           </Button>
         </>
@@ -168,12 +182,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
               className={classes.object}
             />
           </Box>
-          <Button
-            size="medium"
-            variant={'contained'}
-            to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, content)}
-            component={Link}
-            className={classes.btn}>
+          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />
           </Button>
         </>

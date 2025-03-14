@@ -55,7 +55,6 @@ const Component = {
         }
       },
       '& .SCCourses-no-results': {
-        marginTop: theme.spacing(5),
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

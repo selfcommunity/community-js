@@ -95,22 +95,15 @@ export default function CourseSkeleton(inProps: CourseSkeletonProps): JSX.Elemen
       <SkeletonPreviewRoot className={classes.skeletonPreviewRoot}>
         <Box position="relative">
           <Skeleton variant="rectangular" animation={skeletonsAnimation} width="100%" height="110px" />
-          <Skeleton
-            className={classes.skeletonPreviewAvatar}
-            variant="rounded"
-            animation={skeletonsAnimation}
-            width="24px"
-            height="24px"
-            sx={{marginBottom: 1}}
-          />
+          <Skeleton className={classes.skeletonPreviewAvatar} variant="rounded" animation={skeletonsAnimation} />
         </Box>
         <CardContent className={classes.skeletonPreviewContent}>
-          <Skeleton animation={skeletonsAnimation} width="40%" height={14} variant="rectangular" />
-          <Skeleton animation={skeletonsAnimation} width="30%" height={14} sx={{marginTop: 1}} variant="rectangular" />
-          <Skeleton animation={skeletonsAnimation} width="60%" height={14} sx={{marginTop: 1}} variant="rectangular" />
+          <Skeleton animation={skeletonsAnimation} width="20%" height={14} sx={{marginTop: 1}} variant="rectangular" />
+          <Skeleton animation={skeletonsAnimation} width="40%" height={14} sx={{marginTop: 1.5}} variant="rectangular" />
+          <Skeleton animation={skeletonsAnimation} width="60%" height={14} sx={{marginTop: 4.5}} variant="rectangular" />
         </CardContent>
         <CardActions className={classes.skeletonPreviewActions}>
-          {actions !== undefined ? actions : <Skeleton variant="rounded" width={'100%'} height={24} />}
+          {actions !== undefined ? actions : <Skeleton variant="rounded" width={100} height={30} />}
         </CardActions>
       </SkeletonPreviewRoot>
     );

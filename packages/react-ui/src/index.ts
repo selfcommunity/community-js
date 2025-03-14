@@ -236,6 +236,7 @@ import UrlTextField from './shared/UrlTextField';
 import UserAvatar, {UserAvatarProps} from './shared/UserAvatar';
 import UserDeletedSnackBar, {UserDeletedSnackBarProps} from './shared/UserDeletedSnackBar';
 import UsernameTextField from './shared/UsernameTextField';
+import HiddenPurchasableContent from './shared/HiddenPurchasableContent';
 import {
   PlatformWidgetActionType,
   SCBroadcastMessageTemplateType,
@@ -811,5 +812,6 @@ export {
   Checkout,
   CheckoutProps,
   CheckoutReturnDialog,
-  CheckoutReturnDialogProps
+  CheckoutReturnDialogProps,
+	HiddenPurchasableContent,
 };

@@ -24,12 +24,8 @@ const Component = {
       },
       '& .SCPaymentProductPrice-root': {
         marginBottom: theme.spacing(),
-        width: '95%',
-        borderRadius: '3px',
-        [theme.breakpoints.down('md')]: {
-          width: '88%',
-          borderRadius: '3px'
-        }
+        width: 'auto',
+        borderRadius: '3px'
       }
     }),
     skeletonRoot: ({theme}) => ({
@@ -43,10 +39,7 @@ const Component = {
       },
       '& .SCPaymentProductPrice-skeleton-root': {
         marginBottom: theme.spacing(),
-        width: '95%',
-        [theme.breakpoints.down('md')]: {
-          width: '88%'
-        }
+        width: 'auto'
       }
     })
   }

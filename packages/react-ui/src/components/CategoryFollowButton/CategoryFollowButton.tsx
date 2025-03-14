@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {
@@ -7,15 +7,16 @@ import {
   SCUserContextType,
   useSCContext,
   useSCFetchCategory,
+  useSCPaymentsEnabled,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCCategoryType} from '@selfcommunity/types';
+import {SCCategoryAutoFollowType, SCCategoryType, SCContentType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {SCCategoryAutoFollowType} from '@selfcommunity/types';
+import BuyButton from '../BuyButton';
 
 const PREFIX = 'SCCategoryFollowButton';
 
@@ -55,6 +56,12 @@ export interface CategoryFollowButtonProps {
   onFollow?: (category: SCCategoryType, followed: boolean) => any;
 
   /**
+   * Disable action if feature payments is enabled and the content is paid item
+   */
+
+  disableBuyContentIfPaidContent?: boolean;
+
+  /**
    * Others properties
    */
   [p: string]: any;
@@ -89,7 +96,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     name: PREFIX
   });
 
-  const {className, categoryId, category, onFollow, ...rest} = props;
+  const {className, categoryId, category, onFollow, disableBuyContentIfPaidContent, disabled, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -99,12 +106,25 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
-  const {scCategory, setSCCategory} = useSCFetchCategory({
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
+  const {scCategory} = useSCFetchCategory({
     id: categoryId,
     category,
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
   });
   const [followed, setFollowed] = useState<boolean>(null);
+
+  /**
+   * Check the button if is disabled
+   * Disable action follow/unfollow only if payments feature is active
+   * and the category is a paid content and the category isn't paid
+   */
+  const isActionFollowDisabled = useMemo(
+    () => disabled || (scCategory && scUserContext.user && isPaymentsEnabled && scCategory.paywalls?.length > 0 && !scCategory.payment_order),
+    [disabled, scCategory, scUserContext.user, isPaymentsEnabled]
+  );
 
   useEffect(() => {
     /**
@@ -139,6 +159,13 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     return null;
   }
 
+  /**
+   * if the category is a paid content and it isn't followed show the Buy button
+   */
+  if (scCategory && scUserContext.user && isPaymentsEnabled && scCategory.paywalls?.length > 0 && !followed) {
+    return <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} disabled={disableBuyContentIfPaidContent} />;
+  }
+
   return (
     <FollowButton
       size="small"
@@ -146,6 +173,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
       onClick={handleFollowAction}
       loading={scUserContext.user ? followed === null || scCategoriesManager.isLoading(scCategory) : null}
       className={classNames(classes.root, className)}
+      disabled={isActionFollowDisabled}
       {...rest}>
       {followed && scUserContext.user ? (
         <FormattedMessage defaultMessage="ui.categoryFollowButton.unfollow" id="ui.categoryFollowButton.unfollow" />

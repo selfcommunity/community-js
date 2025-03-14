@@ -40,7 +40,14 @@ const Root = styled(Box, {
 })(({theme}) => ({
   [`& .${classes.content}`]: {
     position: 'relative',
-    padding: '30px 10px'
+    padding: '30px 10px',
+    '& table': {
+      '& tr': {
+        '& th': {
+          zIndex: 1
+        }
+      }
+    }
   },
   [`& .${classes.headline}`]: {
     margin: '40px 0',

@@ -173,6 +173,8 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+	// PAYMENTS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   // REFS
@@ -336,7 +338,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
             <GroupInviteButton group={scGroup} groupId={scGroup.id} />
             {isMobile && <GroupActionsMenu group={scGroup} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} {...GroupActionsProps} />}
           </Box>
-        ) : isPaymentsEnabled ? (
+        ) : isPaymentsEnabled && scGroup.paywalls.length > 0 && scGroup.subscription_status !== SCGroupSubscriptionStatusType.REQUESTED ? (
           <BuyButton contentType={SCContentType.GROUP} content={scGroup} />
         ) : (
           <GroupSubscribeButton group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />

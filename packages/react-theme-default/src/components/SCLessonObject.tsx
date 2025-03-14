@@ -3,19 +3,22 @@ const Component = {
     root: ({theme}: any) => ({
       display: 'flex',
       flexDirection: 'column',
-      padding: theme.spacing(1),
+      [theme.breakpoints.up('sm')]: {
+        padding: theme.spacing(1)
+      },
       '& .SCLessonObject-content': {
         padding: `${theme.spacing(2)} !important`,
         '& .SCLessonObject-text': {
           '& > div:first-of-type': {
-            height: '240px',
             img: {
-              height: '240px',
-              objectFit: 'cover'
+              display: 'block',
+              margin: '0 auto',
+              width: 'auto !important',
+              maxWidth: '100% !important',
+              position: 'relative !important'
             },
             padding: '0 !important'
           },
-          // '& .SCEditor-paragraph': {}
           '& > div:has(> a)': {
             borderRadius: '5px',
             padding: theme.spacing(1),
@@ -24,6 +27,21 @@ const Component = {
           '& > div:has(> a) > a:first-of-type': {
             textDecoration: 'none',
             color: 'inherit'
+          }
+        },
+        '& .SCLessonObject-medias-section': {
+          display: 'flex',
+          '& .SCLessonFilePreview-root': {
+            marginBottom: theme.spacing(1)
+          },
+          '& .SCMediaLink-display-root': {
+            marginBottom: theme.spacing(1),
+
+            '& > div > div': {
+              [theme.breakpoints.down('md')]: {
+                height: '240px !important'
+              }
+            }
           }
         }
       },

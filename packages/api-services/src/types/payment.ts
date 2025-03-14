@@ -32,6 +32,10 @@ export interface CheckoutCreateSessionParams {
    * Price id
    */
   payment_price_id: number;
+  /**
+   *	Return url
+   */
+  return_url?: string;
 }
 
 export interface CheckoutSessionParams {
@@ -39,4 +43,11 @@ export interface CheckoutSessionParams {
    *	Session Id
    */
   session_id: string;
+}
+
+export interface CustomerPortalCreateSessionParams {
+  /**
+   *	Return url
+   */
+  return_url?: string;
 }

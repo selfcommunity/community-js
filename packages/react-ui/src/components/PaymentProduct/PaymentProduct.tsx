@@ -1,14 +1,24 @@
-import React, {useMemo} from 'react';
-import {AccordionDetails, AccordionSummary, Typography} from '@mui/material';
+import React, {useEffect, useMemo} from 'react';
+import {AccordionDetails, AccordionProps, AccordionSummary, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
-import {SCPaymentProduct, SCContentType, SCPurchasableContent, SCPaymentOrder, SCPaymentPrice} from '@selfcommunity/types';
+import {useSCFetchEvent, useSCFetchPaymentProduct, useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import {
+  SCPaymentProduct,
+  SCContentType,
+  SCPurchasableContent,
+  SCPaymentOrder,
+  SCPaymentPrice,
+  SCPaymentProductTemplateType
+} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import PaymentProductSkeleton from './Skeleton';
 import Accordion from '@mui/material/Accordion';
 import PaymentProductPrice from '../PaymentProductPrice';
+import {ButtonProps} from '@mui/material/Button/Button';
+import {Logger} from '@selfcommunity/utils/src/utils/logger';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -19,15 +29,17 @@ const Root = styled(Accordion, {
   name: PREFIX
 })(({theme}) => ({}));
 
-export interface PaymentProductProps {
+export interface PaymentProductProps extends Pick<AccordionProps, Exclude<keyof AccordionProps, 'children' | 'expanded'>> {
   className?: string;
-  id?: number | string;
-  product?: SCPaymentProduct;
+  paymentProductId?: number;
+  paymentProduct?: SCPaymentProduct;
   contentType?: SCContentType;
   contentId?: number | string;
   content?: SCPurchasableContent;
   paymentOrder?: SCPaymentOrder;
   onUpdatePaymentOrder?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
+  template?: SCPaymentProductTemplateType;
+  expanded?: boolean;
 }
 
 export default function PaymentProduct(inProps: PaymentProductProps) {
@@ -36,18 +48,32 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, id, product, contentType, contentId, content, paymentOrder, onUpdatePaymentOrder, ...rest} = props;
+  const {
+    className,
+    paymentProductId,
+    paymentProduct,
+    contentType,
+    contentId,
+    content,
+    paymentOrder,
+    onUpdatePaymentOrder,
+    template = SCPaymentProductTemplateType.DETAIL,
+    expanded,
+    ...rest
+  } = props;
 
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
+  const {scPaymentProduct} = useSCFetchPaymentProduct({id: paymentProductId, paymentProduct});
 
   // CONST
   const productPaymentPriceIds = useMemo(() => {
-    if (product) {
-      return product.payment_prices.map((p) => p.id);
+    if (scPaymentProduct) {
+      return scPaymentProduct.payment_prices.map((p) => p.id);
     }
     return [];
-  }, [product]);
+  }, [scPaymentProduct]);
+
   const isProductExpanded = useMemo(
     () => !paymentOrder || (paymentOrder && paymentOrder.payment_price && productPaymentPriceIds.indexOf(paymentOrder.payment_price.id) > -1),
     [paymentOrder, productPaymentPriceIds]
@@ -57,7 +83,7 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
     return null;
   }
 
-  if (!product) {
+  if (!scPaymentProduct) {
     return <PaymentProductSkeleton />;
   }
 
@@ -67,23 +93,24 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
       defaultExpanded={isProductExpanded && productPaymentPriceIds.length > 0}
       square
       className={classNames(classes.root, className)}
+      {...(expanded && {expanded})}
       {...rest}>
       <AccordionSummary aria-controls="panel1-content" id="panel1-header">
         <Typography variant="h5" component="div">
-          <b>{product.name}</b>
+          <b>{scPaymentProduct.name}</b>
         </Typography>
-        {product.description && (
+        {scPaymentProduct.description && (
           <Typography variant="body1" component="div">
-            {product.description}
+            {scPaymentProduct.description}
           </Typography>
         )}
       </AccordionSummary>
       <AccordionDetails>
-        {product.payment_prices.map((price, index) => (
+        {scPaymentProduct.payment_prices.map((price, index) => (
           <PaymentProductPrice
             price={price}
             key={index}
-            contentType={contentType}
+            {...(contentType && {contentType})}
             {...(content ? {content} : {contentId})}
             {...(paymentOrder && {paymentOrder, onHandleActionBuy: onUpdatePaymentOrder})}
           />

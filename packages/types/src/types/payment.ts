@@ -41,6 +41,10 @@ export interface SCPaymentProduct {
   payment_prices: SCPaymentPrice[];
 }
 
+export enum SCPaymentProductTemplateType {
+  DETAIL = 'detail'
+}
+
 export interface SCPaymentPrice {
   /**
    * Id product
@@ -97,7 +101,8 @@ export enum SCContentType {
   EVENT = 'event',
   COURSE = 'course',
   CATEGORY = 'category',
-  GROUP = 'group'
+  GROUP = 'group',
+  COMMUNITY = 'community'
 }
 
 export interface SCPurchasableContent {
@@ -150,4 +155,8 @@ export interface SCPaymentOrder {
    * Price
    */
   payment_price?: SCPaymentPrice;
+}
+
+export interface SCPaymentsCustomerPortalSession {
+  url: string;
 }

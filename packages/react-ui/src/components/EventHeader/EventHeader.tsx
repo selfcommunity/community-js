@@ -7,10 +7,11 @@ import {
   SCThemeType,
   SCUserContextType,
   useSCFetchEvent,
+  useSCPaymentsEnabled,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCContentType, SCEventLocationType, SCEventPrivacyType, SCEventType, SCFeatureName} from '@selfcommunity/types';
+import {SCContentType, SCEventLocationType, SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -130,7 +131,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   const {id = null, className = null, event, eventId = null, EventSubscribeButtonProps = {}, EventActionsProps = {}, ...rest} = props;
 
   // PREFERENCES
-  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -151,15 +152,8 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
 
   const isEventFinished = useMemo(() => checkEventFinished(scEvent), [scEvent]);
 
-  const isPaymentsEnabled = useMemo(
-    () =>
-      preferences &&
-      features &&
-      features.includes(SCFeatureName.PAYMENTS) &&
-      SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED in preferences &&
-      preferences[SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED].value,
-    [preferences]
-  );
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   /**
    * Handles callback subscribe/unsubscribe event
@@ -312,7 +306,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                 </Box>
               ) : (
                 <>
-                  {isPaymentsEnabled ? (
+                  {isPaymentsEnabled && scEvent.paywalls.length > 0 && scEvent.subscription_status !== SCEventSubscriptionStatusType.REQUESTED ? (
                     <BuyButton contentType={SCContentType.EVENT} content={scEvent} />
                   ) : (
                     <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />

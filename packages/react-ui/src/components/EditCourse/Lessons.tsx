@@ -51,12 +51,12 @@ const headerCells = [
 
 interface LessonsProps {
   course: SCCourseType;
-  setSCCourse: (course: SCCourseType) => void;
+  setCourse: (course: SCCourseType) => void;
 }
 
 function Lessons(props: LessonsProps) {
   // PROPS
-  const {course, setSCCourse} = props;
+  const {course, setCourse} = props;
 
   // STATES
   const [sections, setSections] = useState<SCCourseSectionType[]>([]);
@@ -103,7 +103,7 @@ function Lessons(props: LessonsProps) {
       };
 
       CourseService.patchCourse(course.id, data)
-        .then(() => setSCCourse({...course, sections: tempSections}))
+        .then(() => setCourse({...course, sections: tempSections}))
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
 
@@ -121,17 +121,17 @@ function Lessons(props: LessonsProps) {
   }, [setSections]);
 
   const handleManageSection = useCallback(
-    (section: SCCourseSectionType, type: ActionLessonType) => {
+    (section: SCCourseSectionType, type: ActionLessonType, newRow = false) => {
       switch (type) {
         case ActionLessonType.ADD:
-          setSCCourse({
+          setCourse({
             ...course,
             num_sections: course.num_sections + 1,
             sections: [...course.sections, section]
           });
           break;
         case ActionLessonType.RENAME:
-          setSCCourse({
+          setCourse({
             ...course,
             sections: course.sections.map((prevSection: SCCourseSectionType) => {
               if (prevSection.id === section.id) {
@@ -145,16 +145,24 @@ function Lessons(props: LessonsProps) {
             })
           });
           break;
-        case ActionLessonType.DELETE:
-          setSCCourse({
-            ...course,
-            num_sections: course.num_sections - 1,
-            num_lessons: course.num_lessons - section.num_lessons,
-            sections: course.sections.filter((prevSection: SCCourseSectionType) => prevSection.id !== section.id)
-          });
+        case ActionLessonType.DELETE: {
+          if (newRow) {
+            setCourse({
+              ...course,
+              sections: course.sections.filter((prevSection: SCCourseSectionType) => prevSection.id !== section.id)
+            });
+          } else {
+            setCourse({
+              ...course,
+              num_sections: course.num_sections - 1,
+              num_lessons: course.num_lessons - section.num_lessons,
+              sections: course.sections.filter((prevSection: SCCourseSectionType) => prevSection.id !== section.id)
+            });
+          }
           break;
+        }
         case ActionLessonType.UPDATE:
-          setSCCourse({
+          setCourse({
             ...course,
             sections: course.sections.map((prevSection: SCCourseSectionType) => {
               if (prevSection.id === section.id) {
@@ -169,29 +177,42 @@ function Lessons(props: LessonsProps) {
           });
           break;
         case type.endsWith(ActionLessonType.UPDATE) && type: {
-          let numLessons = course.num_lessons;
+          if (newRow) {
+            setCourse({
+              ...course,
+              sections: course.sections.map((prevSection: SCCourseSectionType) => {
+                if (prevSection.id === section.id) {
+                  return section;
+                }
 
-          if (type === ActionLessonType.ADD_UPDATE) {
-            numLessons = course.num_lessons + 1;
-          } else if (type === ActionLessonType.DELETE_UPDATE) {
-            numLessons = course.num_lessons - 1;
+                return prevSection;
+              })
+            });
+          } else {
+            let numLessons: number | undefined = course.num_lessons;
+
+            if (type === ActionLessonType.ADD_UPDATE) {
+              numLessons = course.num_lessons + 1;
+            } else if (type === ActionLessonType.DELETE_UPDATE) {
+              numLessons = course.num_lessons - 1;
+            }
+
+            setCourse({
+              ...course,
+              num_lessons: numLessons,
+              sections: course.sections.map((prevSection: SCCourseSectionType) => {
+                if (prevSection.id === section.id) {
+                  return section;
+                }
+
+                return prevSection;
+              })
+            });
           }
-
-          setSCCourse({
-            ...course,
-            num_lessons: numLessons,
-            sections: course.sections.map((prevSection: SCCourseSectionType) => {
-              if (prevSection.id === section.id) {
-                return section;
-              }
-
-              return prevSection;
-            })
-          });
         }
       }
     },
-    [course, setSections]
+    [course]
   );
 
   return (

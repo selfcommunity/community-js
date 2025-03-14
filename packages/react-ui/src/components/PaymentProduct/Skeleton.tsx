@@ -1,12 +1,13 @@
 import React from 'react';
 import {styled} from '@mui/material/styles';
 import Skeleton from '@mui/material/Skeleton';
-import {Accordion, AccordionDetails, AccordionSummary, useMediaQuery, useTheme} from '@mui/material';
+import {Accordion, AccordionDetails, AccordionProps, AccordionSummary, useMediaQuery, useTheme} from '@mui/material';
 import BaseItem from '../../shared/BaseItem';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import classNames from 'classnames';
 import PaymentProductPriceSkeleton from '../PaymentProductPrice/Skeleton';
+import {useThemeProps} from '@mui/system';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
@@ -21,6 +22,11 @@ const Root = styled(Accordion, {
   name: PREFIX,
   slot: 'SkeletonRoot'
 })(() => ({}));
+
+export interface PaymentProductSkeletonProps extends Pick<AccordionProps, Exclude<keyof AccordionProps, 'children' | 'expanded'>> {
+  className?: string;
+  expanded?: boolean;
+}
 
 /**
  * > API documentation for the Community-JS PaymentProductSkeleton component. Learn about the available props and the CSS API.
@@ -42,13 +48,20 @@ const Root = styled(Accordion, {
  |root|.SCPaymentProductSkeleton-skeleton-root|Styles applied to the root element.|
  *
  */
-export default function PaymentProductSkeleton(props): JSX.Element {
+export default function PaymentProductSkeleton(inProps: PaymentProductSkeletonProps): JSX.Element {
+  // PROPS
+  const props: PaymentProductSkeletonProps = useThemeProps({
+    props: inProps,
+    name: `${PREFIX}Skeleton`
+  });
+  const {className, expanded, ...rest} = props;
+
   // HOOKS
   const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Root defaultExpanded square className={classNames(classes.root)}>
+    <Root defaultExpanded square className={classNames(classes.root)} {...(expanded && {expanded})} {...rest}>
       <AccordionSummary aria-controls="panel1-content" id="panel1-header">
         <BaseItem
           elevation={0}
