@@ -869,7 +869,7 @@
   "ui.userConnectionsWidget.modal.title": "Connesioni",
   "ui.userConnectionsWidget.noMoreResults": "Nessun altro risultato",
   "ui.userConnectionsWidget.subtitle.noResults": "Nessun risultato",
-  "ui.userConnectionsWidget.title": "{total, plural, =0 {# connessioni} one {# connessione} other {# connesssioni}}",
+  "ui.userConnectionsWidget.title": "{total, plural, =0 {# connessioni} one {# connessione} other {# connessioni}}",
   "ui.userCounters.categories": "{count, plural, =0 {<b>#</b> Categorie seguite} one {<b>#</b> Categoria seguita} other {<b>#</b> Categorie seguite}}",
   "ui.userCounters.connections": "{count, plural, =0 {<b>#</b> Connessioni} one {<b>#</b> Connessione} other {<b>#</b> Connessioni}}",
   "ui.userCounters.followers": "{count, plural, =0 {<b>#</b> Followers} one {<b>#</b> Follower} other {<b>#</b> Followers}}",
