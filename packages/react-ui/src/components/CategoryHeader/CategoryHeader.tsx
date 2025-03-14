@@ -147,7 +147,7 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
           <CategoryFollowersButton category={scCategory} categoryId={scCategory?.id} {...CategoryFollowersButtonProps} />
         </Box>
         <Box className={classes.action}>
-          {isPaymentsEnabled && scCategory.paywalls.length > 0 && scCategory.payment_order && (
+          {isPaymentsEnabled && scCategory.paywalls?.length > 0 && scCategory.payment_order && (
             <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} />
           )}
           <CategoryFollowButton category={scCategory} onFollow={handleFollow} {...CategoryFollowButtonProps} />

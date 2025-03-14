@@ -44,6 +44,7 @@ const Component = {
       },
       ['& .SCCheckout-object']: {
         marginTop: theme.spacing(2),
+        width: 'auto',
         [theme.breakpoints.up('sm')]: {
           minWidth: 395
         }

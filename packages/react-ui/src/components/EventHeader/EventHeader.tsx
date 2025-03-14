@@ -306,7 +306,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                 </Box>
               ) : (
                 <>
-                  {isPaymentsEnabled && scEvent.paywalls.length > 0 && scEvent.subscription_status !== SCEventSubscriptionStatusType.REQUESTED ? (
+                  {isPaymentsEnabled && scEvent.paywalls?.length > 0 && scEvent.subscription_status !== SCEventSubscriptionStatusType.REQUESTED ? (
                     <BuyButton contentType={SCContentType.EVENT} content={scEvent} />
                   ) : (
                     <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />

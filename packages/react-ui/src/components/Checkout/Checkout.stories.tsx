@@ -22,4 +22,22 @@ export const Base: StoryObj<typeof Checkout> = {
 	render: template
 };
 
+export const Group: StoryObj<typeof Checkout> = {
+	args: {
+		contentId: 4,
+		contentType: SCContentType.GROUP,
+		priceId: 4
+	},
+	render: template
+};
+
+export const Category: StoryObj<typeof Checkout> = {
+	args: {
+		contentId: 1,
+		contentType: SCContentType.CATEGORY,
+		priceId: 3
+	},
+	render: template
+};
+
 

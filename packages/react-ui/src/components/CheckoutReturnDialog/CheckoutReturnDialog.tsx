@@ -175,10 +175,10 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
           <Box className={classes.contentObject}>
             <Group
               group={content as SCGroupType}
-              actions={<></>}
+              hideActions
+							variant="outlined"
               hideEventParticipants
               hideEventPlanner
-              variant="outlined"
               className={classes.object}
             />
           </Box>

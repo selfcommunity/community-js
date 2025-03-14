@@ -338,7 +338,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
             <GroupInviteButton group={scGroup} groupId={scGroup.id} />
             {isMobile && <GroupActionsMenu group={scGroup} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} {...GroupActionsProps} />}
           </Box>
-        ) : isPaymentsEnabled && scGroup.paywalls.length > 0 && scGroup.subscription_status !== SCGroupSubscriptionStatusType.REQUESTED ? (
+        ) : isPaymentsEnabled && scGroup.paywalls?.length > 0 && scGroup.subscription_status !== SCGroupSubscriptionStatusType.REQUESTED ? (
           <BuyButton contentType={SCContentType.GROUP} content={scGroup} />
         ) : (
           <GroupSubscribeButton group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />
