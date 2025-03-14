@@ -259,7 +259,8 @@ function Student(inProps: StudentCourseDashboardProps) {
         (scCourse.join_status === SCCourseJoinStatusType.CREATOR ||
           scCourse.join_status === SCCourseJoinStatusType.MANAGER ||
           scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
-        scCourse.privacy === SCCoursePrivacyType.OPEN) && (
+        scCourse.privacy === SCCoursePrivacyType.OPEN ||
+        scCourse.privacy === SCCoursePrivacyType.DRAFT) && (
         <Fragment>
           <Typography variant="h6" className={classes.margin}>
             <FormattedMessage id="ui.course.dashboard.student.description" defaultMessage="ui.course.dashboard.student.description" />

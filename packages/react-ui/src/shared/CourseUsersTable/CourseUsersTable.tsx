@@ -176,7 +176,6 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           </TableHead>
 
           <TableBody>
-            {users.length === 0 && <RowSkeleton animation={false} editMode={mode !== 'dashboard'} />}
             {users.length > 0 &&
               users.map((user, i) => (
                 <TableRow key={i}>
