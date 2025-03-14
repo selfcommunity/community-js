@@ -1,18 +1,14 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
-import {useIntl} from 'react-intl';
+import {Box, CircularProgress} from '@mui/material';
 import {Logger} from '@selfcommunity/utils';
-import {SCUserType} from '@selfcommunity/types';
-import {SCPreferences, SCPreferencesContextType, useSCFetchUser, useSCPreferences} from '@selfcommunity/react-core';
-import {DEFAULT_FIELDS} from '../../constants/UserProfile';
-import UserInfoSkeleton from './Skeleton';
+import {SCPaymentsCustomerPortalSession} from '@selfcommunity/types';
+import {SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {SCUserProfileFields} from '../../types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import Tags, {TagsComponentType} from '../../shared/Tags';
 import {PREFIX} from './constants';
+import {PaymentApiClient} from '@selfcommunity/api-services';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -32,16 +28,10 @@ export interface UserPaymentMethodsProps {
   className?: string;
 
   /**
-   * Id of user object
-   * @default null
+   * Handle customer portal callback
+   * @param url
    */
-  userId?: number;
-
-  /**
-   * User Object
-   * @default null
-   */
-  user?: SCUserType;
+  onHandleCustomerPortal?: (url) => void;
 
   /**
    * Any other properties
@@ -68,7 +58,6 @@ export interface UserPaymentMethodsProps {
  |Rule Name|Global class|Description|
  |---|---|---|
  |root|.SCUserPaymentMethods-root|Styles applied to the root element.|
- |field|.SCUserPaymentMethods-field|Styles applied to the field element.|
 
  * @param inProps
  */
@@ -78,66 +67,73 @@ export default function UserPaymentMethods(inProps: UserPaymentMethodsProps): JS
     props: inProps,
     name: PREFIX
   });
-  const {className = null, userId = null, user = null, fields = [...DEFAULT_FIELDS], ...rest} = props;
+  const {className = null, onHandleCustomerPortal, ...rest} = props;
 
   // STATE
-  const {scUser} = useSCFetchUser({id: userId, user});
+  const [initialized, setInitialized] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  // INTL
-  const intl = useIntl();
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
 
-  // PREFERENCES
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
-  const metadataDefinitions = useMemo(() => {
-    if (scPreferences.preferences && SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS in scPreferences.preferences) {
-      try {
-        return JSON.parse(scPreferences.preferences[SCPreferences.CONFIGURATIONS_USER_METADATA_DEFINITIONS].value);
-      } catch (e) {
-        Logger.error(SCOPE_SC_UI, 'Error on parse user metadata.');
-        return {};
+  // HOOKS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
+  /**
+   * Handle view new object purchased
+   */
+  const handleCustomerPortal = useCallback(
+    (redirectUrl: string) => {
+      if (onHandleCustomerPortal) {
+        onHandleCustomerPortal(redirectUrl);
+      } else if (redirectUrl) {
+        window.location.href = redirectUrl;
       }
+    },
+    [onHandleCustomerPortal]
+  );
+
+  /**
+   * Initialize component
+   * Fetch data only if the component is not initialized, and it is not loading data
+   */
+  const _initComponent = useMemo(
+    () => (): void => {
+      if (!initialized && !isLoading) {
+        setInitialized(true);
+        setIsLoading(true);
+        PaymentApiClient.getPaymentsCustomerPortal({})
+          .then((portalSession: SCPaymentsCustomerPortalSession) => {
+            if (portalSession.url) {
+              handleCustomerPortal(portalSession.url);
+            }
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+          });
+      }
+    },
+    [isLoading, initialized]
+  );
+
+  // EFFECTS
+  useEffect(() => {
+    let _t;
+    if (scUserContext.user && !initialized) {
+      _t = setTimeout(_initComponent);
+      return (): void => {
+        _t && clearTimeout(_t);
+      };
     }
+  }, [scUserContext.user, initialized]);
+
+  if (!isPaymentsEnabled) {
     return null;
-  }, [scPreferences.preferences]);
-
-  // FIELDS
-  const _fields: string[] = [...fields, ...Object.keys(metadataDefinitions)];
-
-  // RENDER
-  const renderField = (user, field) => {
-    switch (field) {
-      case SCUserProfileFields.DATE_JOINED:
-      case SCUserProfileFields.DATE_OF_BIRTH:
-        return `${intl.formatDate(user[field], {year: 'numeric', month: 'numeric', day: 'numeric'})}`;
-      case SCUserProfileFields.TAGS:
-        return (
-          <Tags
-            tags={user.tags.filter((t) => t.visible)}
-            type={TagsComponentType.LIST}
-            direction={'row'}
-            TagChipProps={{clickable: false, disposable: false}}
-          />
-        );
-      case SCUserProfileFields.WEBSITE:
-        return (
-          <a href={user[field]} target={'_blank'}>
-            {user[field]}
-          </a>
-        );
-      default:
-        return user[field];
-    }
-  };
-
-  if (!scUser || !metadataDefinitions) {
-    return <UserInfoSkeleton />;
   }
 
-  if (_fields.length === 0) {
-    return null;
-  }
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
+      {(!scUserContext.user || isLoading) && <CircularProgress />}
     </Root>
   );
 }

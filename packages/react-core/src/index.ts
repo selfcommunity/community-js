@@ -108,6 +108,7 @@ import useSCFetchCourse from './hooks/useSCFetchCourse';
 import useSCFetchCourses from './hooks/useSCFetchCourses';
 import useSCFetchLesson from './hooks/useSCFetchLesson';
 import useSCPaymentsEnabled from './hooks/useSCPaymentsEnabled';
+import useSCFetchPaymentProduct from './hooks/useSCFetchPaymentProduct';
 
 /**
  * Routing component
@@ -240,5 +241,6 @@ export {
   useSCFetchCourse,
   useSCFetchCourses,
   useSCFetchLesson,
-	useSCPaymentsEnabled,
+  useSCPaymentsEnabled,
+  useSCFetchPaymentProduct,
 };

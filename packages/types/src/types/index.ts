@@ -168,7 +168,8 @@ import {
   type SCCheckoutSessionDetail,
   type SCCheckoutSessionComplete,
   type SCPaymentOrder,
-  type SCPaymentsCustomerPortalSession
+  type SCPaymentsCustomerPortalSession,
+	SCPaymentProductTemplateType
 } from './payment';
 
 /**
@@ -365,5 +366,6 @@ export {
   type SCCheckoutSessionDetail,
   type SCCheckoutSessionComplete,
   type SCPaymentOrder,
-  type SCPaymentsCustomerPortalSession
+  type SCPaymentsCustomerPortalSession,
+	SCPaymentProductTemplateType
 };

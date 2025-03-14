@@ -195,7 +195,8 @@ import {
   SCCommunityEnvironment,
   SCPaymentPriceCurrencyType,
   SCContentType,
-  SCCheckoutSessionStatus
+  SCCheckoutSessionStatus,
+  SCPaymentProductTemplateType
 } from './types';
 
 /**
@@ -253,7 +254,8 @@ export {
   SCCommunityEnvironment,
   SCPaymentPriceCurrencyType,
   SCContentType,
-  SCCheckoutSessionStatus
+  SCCheckoutSessionStatus,
+  SCPaymentProductTemplateType
 };
 export {
   type SCBannerType,

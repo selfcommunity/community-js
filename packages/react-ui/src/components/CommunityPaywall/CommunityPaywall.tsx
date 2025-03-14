@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Box} from '@mui/material';
+import Grid from '@mui/material/Unstable_Grid2';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {Endpoints, PaymentApiClient} from '@selfcommunity/api-services';
-import {SCPaymentProduct, SCContentType, SCPurchasableContent, SCPaymentOrder, SCPaymentPrice} from '@selfcommunity/types';
+import {SCContentType, SCPaymentOrder, SCPaymentPrice, SCPaymentProduct} from '@selfcommunity/types';
 import {useIsComponentMountedRef, useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
-import PaymentProductsSkeleton from './Skeleton';
+import CommunityPaywallSkeleton from './Skeleton';
 import PaymentProduct from '../PaymentProduct';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -17,29 +17,25 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(Box, {
+const Root = styled(Grid, {
   slot: 'Root',
   name: PREFIX
 })(({theme}) => ({}));
 
-export interface PaymentProductsProps {
+export interface CommunityPaywallProps {
   className?: string;
-  id?: number | string;
-  contentType?: SCContentType;
-  contentId?: number | string;
-  content?: SCPurchasableContent;
   prefetchedProducts?: SCPaymentProduct[];
   paymentOrder?: SCPaymentOrder;
   onUpdatePaymentOrder?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
 }
 
-export default function PaymentProducts(inProps: PaymentProductsProps) {
+export default function CommunityPaywall(inProps: CommunityPaywallProps) {
   // PROPS
-  const props: PaymentProductsProps = useThemeProps({
+  const props: CommunityPaywallProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {className, id, contentId, contentType, content, prefetchedProducts = [], paymentOrder, onUpdatePaymentOrder, ...rest} = props;
+  const {className, prefetchedProducts = [], paymentOrder, onUpdatePaymentOrder, ...rest} = props;
 
   // STATE
   const [products, setProducts] = useState<SCPaymentProduct[]>([]);
@@ -53,7 +49,7 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
    * Fetches products list
    */
   const fetchProducts = async (next: string = Endpoints.GetContentProducts.url({})): Promise<SCPaymentProduct[]> => {
-    const data = await PaymentApiClient.getPaymentProducts(id !== undefined ? {id} : {content_id: contentId, content_type: contentType}, {
+    const data = await PaymentApiClient.getPaymentProducts({content_id: 1, content_type: SCContentType.COMMUNITY}, {
       url: next
     } as AxiosRequestConfig);
     return data.next ? data.results.concat(await fetchProducts(data.next)) : data.results;
@@ -66,7 +62,7 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
     if (prefetchedProducts.length) {
       setProducts(prefetchedProducts);
       setLoading(false);
-    } else if (id !== undefined || (contentId !== undefined && contentType)) {
+    } else {
       fetchProducts()
         .then((data) => {
           if (isMountedRef.current) {
@@ -77,9 +73,6 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
         });
-    } else if (content && contentType) {
-      setProducts(content.paywalls);
-      setLoading(false);
     }
   }, [prefetchedProducts.length]);
 
@@ -87,23 +80,23 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
     return null;
   }
 
+  if (loading) {
+    return <CommunityPaywallSkeleton />;
+  }
+
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
-      {loading ? (
-        <PaymentProductsSkeleton />
-      ) : (
-        <>
-          {products.map((p, i) => (
-            <PaymentProduct
-              paymentProduct={p}
-              key={i}
-              contentType={contentType}
-              {...(content ? {content} : {contentId})}
-              {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
-            />
-          ))}
-        </>
-      )}
+    <Root className={classNames(classes.root, className)} container spacing={4} {...rest}>
+      {products.map((p, i) => (
+        <Grid xs={4} key={i}>
+          <PaymentProduct
+            expanded
+            paymentProduct={p}
+            contentType={SCContentType.COMMUNITY}
+            contentId={p.id}
+            {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
+          />
+        </Grid>
+      ))}
     </Root>
   );
 }

@@ -23,6 +23,13 @@ export interface PaymentApiClientInterface {
   getPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>>;
 
   /**
+   * Get product
+   * @param id
+   * @param config
+   */
+  getPaymentProduct(id: number | string, config?: AxiosRequestConfig): Promise<SCPaymentProduct>;
+
+  /**
    * Get prices related to a product
    * @param id
    * @param params
@@ -52,14 +59,14 @@ export interface PaymentApiClientInterface {
   checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<SCCheckoutSessionComplete>;
 
   /**
-   * This endpoint retrive order history of authenticated user
+   * This endpoint retrieve order history of authenticated user
    * @param params
    * @param config
    */
   getPaymentsOrder(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>>;
 
   /**
-   * This endpoint retrive customer portal
+   * This endpoint retrieve customer portal
    * @param data
    * @param config
    */
@@ -81,6 +88,15 @@ export class PaymentApiClient {
   static getPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetContentProducts.url({})}?${p.toString()}`, method: Endpoints.GetContentProducts.method});
+  }
+
+  /**
+   * This endpoint retrieves a specific payment product.
+   * @param id
+   * @param config
+   */
+  static getPaymentProduct(id: number | string, config?: AxiosRequestConfig): Promise<SCPaymentProduct> {
+    return apiRequest({...config, url: Endpoints.GetProduct.url({id}), method: Endpoints.GetProduct.method});
   }
 
   /**
@@ -186,6 +202,9 @@ export class PaymentApiClient {
 export default class PaymentService {
   static async getPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
     return PaymentApiClient.getPaymentProducts(params, config);
+  }
+  static async getPaymentProduct(id: number | string, config?: AxiosRequestConfig): Promise<SCPaymentProduct> {
+    return PaymentApiClient.getPaymentProduct(id, config);
   }
   static async getPaymentProductPrices(
     id: number | string,

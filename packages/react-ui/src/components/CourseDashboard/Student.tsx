@@ -1,9 +1,10 @@
-import {Fragment, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {Fragment, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {PREFIX} from './constants';
-import {Avatar, Box, Divider, LinearProgress, Stack, styled, Typography, useThemeProps} from '@mui/material';
+import {Avatar, Box, Divider, LinearProgress, Skeleton, Stack, styled, Typography, useThemeProps} from '@mui/material';
 import classNames from 'classnames';
 import HeaderCourseDashboard from './Header';
 import {
+  SCContentType,
   SCCourseJoinStatusType,
   SCCourseLessonCompletionStatusType,
   SCCoursePrivacyType,
@@ -13,7 +14,7 @@ import {
 import {FormattedMessage, useIntl} from 'react-intl';
 import ActionButton from './Student/ActionButton';
 import {CLAPPING} from '../../assets/courses/clapping';
-import {SCRoutes, SCRoutingContextType, useSCFetchCourse, useSCRouting, Link} from '@selfcommunity/react-core';
+import {SCRoutes, SCRoutingContextType, useSCFetchCourse, useSCRouting, Link, useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import AccordionLessons from '../../shared/AccordionLessons';
 import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -21,6 +22,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import StudentSkeleton from './Student/Skeleton';
 import UserAvatar from '../../shared/UserAvatar';
+import BuyButton from '../BuyButton';
 
 const messages = {
   dashboard: 'ui.course.dashboard.student.button.dashboard',
@@ -129,6 +131,9 @@ function Student(inProps: StudentCourseDashboardProps) {
   const intl = useIntl();
   const {enqueueSnackbar} = useSnackbar();
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
   // EFFETCS
   useEffect(() => {
     if (scCourse) {
@@ -176,7 +181,7 @@ function Student(inProps: StudentCourseDashboardProps) {
   // MEMOS
   const actionButton = useMemo(() => {
     if (!scCourse) {
-      return <></>;
+      return <Skeleton animation="wave" variant="rectangular" width="130px" height="20px" />;
     }
 
     return (
@@ -189,9 +194,16 @@ function Student(inProps: StudentCourseDashboardProps) {
             variant="outlined"
           />
         )}
+
+        {isPaymentsEnabled && scCourse.paywalls.length > 0 && <BuyButton contentType={SCContentType.COURSE} content={scCourse} />}
+
         {((scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
           (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse?.join_status === SCCourseJoinStatusType.JOINED)) ||
-          (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) && (
+          (scCourse.privacy === SCCoursePrivacyType.OPEN &&
+            scCourse.join_status !== SCCourseJoinStatusType.CREATOR &&
+            (!isPaymentsEnabled ||
+              !scCourse.paywalls?.length ||
+              (isPaymentsEnabled && scCourse.paywalls?.length > 0 && scCourse.payment_order)))) && (
           <ActionButton
             labelId={
               scCourse.user_completion_rate === 0 ? messages.start : scCourse.user_completion_rate === 100 ? messages.review : messages.continue
@@ -202,6 +214,7 @@ function Student(inProps: StudentCourseDashboardProps) {
             variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
           />
         )}
+
         {scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
           (scCourse.join_status === null || scCourse.join_status === SCCourseJoinStatusType.REQUESTED) && (
             <ActionButton
@@ -306,7 +319,6 @@ function Student(inProps: StudentCourseDashboardProps) {
               <Typography variant="h3">
                 <FormattedMessage id="ui.course.dashboard.student.completed" defaultMessage="ui.course.dashboard.student.completed" />
               </Typography>
-
               <img
                 src={CLAPPING}
                 alt={intl.formatMessage({id: 'ui.course.dashboard.student.completed', defaultMessage: 'ui.course.dashboard.student.completed'})}

@@ -47,7 +47,7 @@ export interface CheckoutReturnDialogProps extends DialogProps {
   className?: string;
   checkoutSessionId: string;
   disableInitialTransition?: boolean;
-  onHandleViewContentPurchased?: () => void;
+  onHandleViewContentPurchased?: (redirectUrl: string) => void;
 }
 
 export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps) {
@@ -73,25 +73,27 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
    * Handle view new object purchased
    */
   const handleViewPurchasedObject = useCallback(() => {
+    let _redirectUrl: string;
+    switch (contentType) {
+      case SCContentType.GROUP:
+        _redirectUrl = scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, content);
+        break;
+      case SCContentType.EVENT:
+        _redirectUrl = scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, content);
+        break;
+      case SCContentType.CATEGORY:
+        _redirectUrl = scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, content);
+        break;
+      case SCContentType.COURSE:
+        _redirectUrl = scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, content);
+        break;
+      default:
+        break;
+    }
     if (onHandleViewContentPurchased) {
-      onHandleViewContentPurchased();
-    } else {
-      switch (contentType) {
-        case SCContentType.GROUP:
-          window.location.href = scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, content);
-          break;
-        case SCContentType.EVENT:
-          window.location.href = scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, content);
-          break;
-        case SCContentType.CATEGORY:
-          window.location.href = scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, content);
-          break;
-        case SCContentType.COURSE:
-          window.location.href = scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, content);
-          break;
-        default:
-          break;
-      }
+      onHandleViewContentPurchased(_redirectUrl);
+    } else if (_redirectUrl) {
+      window.location.href = _redirectUrl;
     }
   }, [scRoutingContext, onHandleViewContentPurchased, content, contentType]);
 

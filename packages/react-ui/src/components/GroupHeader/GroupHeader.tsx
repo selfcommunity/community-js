@@ -173,6 +173,8 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+	// PAYMENTS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   // REFS

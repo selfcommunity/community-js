@@ -4,15 +4,13 @@ import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
   SCFollowedCategoriesManagerType,
-  SCPreferences,
-  SCPreferencesContextType,
   SCUserContextType,
   useSCContext,
   useSCFetchCategory,
-  useSCPreferences,
+  useSCPaymentsEnabled,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCCategoryAutoFollowType, SCCategoryType, SCContentType, SCFeatureName} from '@selfcommunity/types';
+import {SCCategoryAutoFollowType, SCCategoryType, SCContentType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
@@ -105,21 +103,11 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
   const scUserContext: SCUserContextType = useSCUser();
   const scCategoriesManager: SCFollowedCategoriesManagerType = scUserContext.managers.categories;
 
-  // PREFERENCES
-  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
-
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
 
-  const isPaymentsEnabled = useMemo(
-    () =>
-      preferences &&
-      features &&
-      features.includes(SCFeatureName.PAYMENTS) &&
-      SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED in preferences &&
-      preferences[SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED].value,
-    [preferences]
-  );
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   const {scCategory} = useSCFetchCategory({
     id: categoryId,

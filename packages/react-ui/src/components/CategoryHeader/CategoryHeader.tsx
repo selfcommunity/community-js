@@ -3,8 +3,8 @@ import {styled} from '@mui/material/styles';
 import {Box, Paper, Typography} from '@mui/material';
 import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
 import {FormattedMessage} from 'react-intl';
-import {SCPreferences, SCPreferencesContextType, useSCFetchCategory, useSCPreferences} from '@selfcommunity/react-core';
-import {SCCategoryType, SCContentType, SCEventSubscriptionStatusType, SCFeatureName} from '@selfcommunity/types';
+import {useSCFetchCategory, useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import {SCCategoryType, SCContentType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import CategoryFollowersButton, {CategoryFollowersButtonProps} from '../CategoryFollowersButton';
@@ -100,22 +100,11 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
   });
   const {className, categoryId, category, CategoryFollowButtonProps = {}, CategoryFollowersButtonProps = {}, ...rest} = props;
 
-  // PREFERENCES
-  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
-
   // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
 
-  const isPaymentsEnabled = useMemo(
-    () =>
-      preferences &&
-      features &&
-      features.includes(SCFeatureName.PAYMENTS) &&
-      SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED in preferences &&
-      preferences[SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED].value,
-    [preferences]
-  );
-
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
   /**
    * Handles callback follow/unfollow category
    */
@@ -158,12 +147,10 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
           <CategoryFollowersButton category={scCategory} categoryId={scCategory?.id} {...CategoryFollowersButtonProps} />
         </Box>
         <Box className={classes.action}>
-          {isPaymentsEnabled && scCategory.paywalls.length > 0 && <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} />}
-          <CategoryFollowButton
-            category={scCategory}
-            onFollow={handleFollow}
-            {...CategoryFollowButtonProps}
-          />
+          {isPaymentsEnabled && scCategory.paywalls.length > 0 && scCategory.payment_order && (
+            <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} />
+          )}
+          <CategoryFollowButton category={scCategory} onFollow={handleFollow} {...CategoryFollowButtonProps} />
         </Box>
       </Box>
     </Root>

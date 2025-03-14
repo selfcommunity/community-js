@@ -21,7 +21,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof UserPaymentMethods> = {
   args: {
-    userId: 167,
-  },
+		onHandleCustomerPortal: (url) => console.log(url),
+	},
   render: template
 };
