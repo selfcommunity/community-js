@@ -146,6 +146,11 @@ export enum SCCheckoutSessionStatus {
   OPEN = 'open'
 }
 
+export enum SCCheckoutSessionUIMode {
+  HOSTED = 'hosted',
+  EMBEDDED = 'embedded'
+}
+
 export interface SCPaymentOrder {
   /**
    * Order id
@@ -159,4 +164,10 @@ export interface SCPaymentOrder {
 
 export interface SCPaymentsCustomerPortalSession {
   url: string;
+}
+
+export interface SCCommunityPaymentProducts {
+  id?: number;
+  payment_order?: SCPaymentOrder;
+  paywalls?: SCPaymentProduct[];
 }

@@ -212,6 +212,7 @@ import PaymentProduct, {PaymentProductProps} from './components/PaymentProduct';
 import PaymentDetailDialog, {PaymentDetailDialogProps} from './components/PaymentDetailDialog';
 import PaymentOrders, {PaymentOrdersProps} from './components/PaymentOrders';
 import PaymentProductPrice, {PaymentProductPriceProps} from './components/PaymentProductPrice';
+import UserPaymentMethods, {UserPaymentMethodsProps, UserPaymentMethodsSkeleton} from './components/UserPaymentMethods';
 import Checkout, {CheckoutProps} from './components/Checkout';
 import CheckoutReturnDialog, {CheckoutReturnDialogProps} from './components/CheckoutReturnDialog';
 import BaseDialog, {BaseDialogProps} from './shared/BaseDialog';
@@ -768,6 +769,9 @@ export {
   UserLiveStreamWidget,
   UserLiveStreamWidgetProps,
   UserLiveStreamWidgetSkeleton,
+  UserPaymentMethods,
+  UserPaymentMethodsProps,
+  UserPaymentMethodsSkeleton,
   useStickyBox,
   UseStickyBoxProps,
   LiveStream,
@@ -813,5 +817,5 @@ export {
   CheckoutProps,
   CheckoutReturnDialog,
   CheckoutReturnDialogProps,
-	HiddenPurchasableContent,
+  HiddenPurchasableContent
 };

@@ -3,15 +3,14 @@ import Grid from '@mui/material/Unstable_Grid2';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Endpoints, PaymentApiClient} from '@selfcommunity/api-services';
-import {SCContentType, SCPaymentOrder, SCPaymentPrice, SCPaymentProduct} from '@selfcommunity/types';
+import {PaymentApiClient} from '@selfcommunity/api-services';
+import {SCCommunityPaymentProducts, SCContentType, SCPaymentOrder, SCPaymentPrice, SCPaymentProduct} from '@selfcommunity/types';
 import {useIsComponentMountedRef, useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import CommunityPaywallSkeleton from './Skeleton';
 import PaymentProduct from '../PaymentProduct';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosRequestConfig} from 'axios';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -35,10 +34,11 @@ export default function CommunityPaywall(inProps: CommunityPaywallProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, prefetchedProducts = [], paymentOrder, onUpdatePaymentOrder, ...rest} = props;
+  const {className, prefetchedProducts = [], paymentOrder = null, onUpdatePaymentOrder, ...rest} = props;
 
   // STATE
   const [products, setProducts] = useState<SCPaymentProduct[]>([]);
+  const [payment, setPayment] = useState<SCPaymentOrder | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   // HOOKS
@@ -46,27 +46,19 @@ export default function CommunityPaywall(inProps: CommunityPaywallProps) {
   const isMountedRef = useIsComponentMountedRef();
 
   /**
-   * Fetches products list
-   */
-  const fetchProducts = async (next: string = Endpoints.GetContentProducts.url({})): Promise<SCPaymentProduct[]> => {
-    const data = await PaymentApiClient.getPaymentProducts({content_id: 1, content_type: SCContentType.COMMUNITY}, {
-      url: next
-    } as AxiosRequestConfig);
-    return data.next ? data.results.concat(await fetchProducts(data.next)) : data.results;
-  };
-
-  /**
-   * On mount, fetches products/prices list
+   * On mount, fetches community products
    */
   useEffect(() => {
     if (prefetchedProducts.length) {
       setProducts(prefetchedProducts);
+      setPayment(paymentOrder);
       setLoading(false);
     } else {
-      fetchProducts()
-        .then((data) => {
+      PaymentApiClient.getCommunityPaymentProducts()
+        .then((data: SCCommunityPaymentProducts) => {
           if (isMountedRef.current) {
-            setProducts(data);
+            setProducts(data.paywalls);
+            setPayment(data.payment_order);
             setLoading(false);
           }
         })
