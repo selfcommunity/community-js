@@ -1,5 +1,5 @@
 import {BaseGetParams} from './baseParams';
-import {SCContentType} from '@selfcommunity/types';
+import {SCCheckoutSessionUIMode, SCContentType} from '@selfcommunity/types';
 
 /**
  * PaymentParams interface.
@@ -36,6 +36,14 @@ export interface CheckoutCreateSessionParams {
    *	Return url
    */
   return_url?: string;
+  /**
+   *	Success url
+   */
+  success_url?: string;
+  /**
+   *	Session UI mode
+   */
+  ui_mode?: SCCheckoutSessionUIMode;
 }
 
 export interface CheckoutSessionParams {

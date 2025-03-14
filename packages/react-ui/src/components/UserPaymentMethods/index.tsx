@@ -1,4 +1,4 @@
 import UserPaymentMethods, {UserPaymentMethodsProps} from './UserPaymentMethods';
-import UserInfoSkeleton from './Skeleton';
+import UserPaymentMethodsSkeleton from './Skeleton';
 export default UserPaymentMethods;
-export {UserPaymentMethodsProps, UserInfoSkeleton};
+export {UserPaymentMethodsProps, UserPaymentMethodsSkeleton};

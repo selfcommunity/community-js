@@ -1613,6 +1613,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/payments/payment_product/$(id)/'),
     method: 'GET'
   },
+	GetCommunityProduct: {
+		url: urlReplacer('/api/v2/payments/payment_product/community/'),
+		method: 'GET'
+	},
   GetCheckoutSession: {
     url: urlReplacer('/api/v2/payments/checkout_session/'),
     method: 'GET'

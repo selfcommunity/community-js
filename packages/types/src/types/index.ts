@@ -169,7 +169,9 @@ import {
   type SCCheckoutSessionComplete,
   type SCPaymentOrder,
   type SCPaymentsCustomerPortalSession,
-	SCPaymentProductTemplateType
+  SCPaymentProductTemplateType,
+  SCCheckoutSessionUIMode,
+  type SCCommunityPaymentProducts
 } from './payment';
 
 /**
@@ -367,5 +369,7 @@ export {
   type SCCheckoutSessionComplete,
   type SCPaymentOrder,
   type SCPaymentsCustomerPortalSession,
-	SCPaymentProductTemplateType
+  SCPaymentProductTemplateType,
+  SCCheckoutSessionUIMode,
+  type SCCommunityPaymentProducts
 };

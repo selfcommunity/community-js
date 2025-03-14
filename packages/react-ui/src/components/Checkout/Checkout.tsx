@@ -8,7 +8,7 @@ import {loadStripe, Stripe} from '@stripe/stripe-js';
 import {PaymentApiClient} from '@selfcommunity/api-services';
 import CheckoutSkeleton from './Skeleton';
 import {PREFIX} from './constants';
-import {SCContentType, SCPurchasableContent} from '@selfcommunity/types';
+import {SCCheckoutSessionUIMode, SCContentType, SCPurchasableContent} from '@selfcommunity/types';
 import {FormattedMessage, IntlShape, useIntl} from 'react-intl';
 import {getDefaultLocale} from '../../utils/payment';
 import {useSCUser} from '@selfcommunity/react-core';
@@ -19,6 +19,7 @@ import Group from '../Group';
 import {SCEventTemplateType} from '../../types/event';
 import {SCCourseTemplateType} from '../../types/course';
 import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import * as stripeJs from '@stripe/stripe-js';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -41,6 +42,11 @@ export interface CheckoutProps {
   contentId?: number;
   content?: SCPurchasableContent;
   priceId?: number;
+  returnUrl?: string;
+  successUrl?: string;
+  uiMode?: SCCheckoutSessionUIMode;
+  onComplete?: () => void;
+  onShippingDetailsChange?: (event: stripeJs.StripeEmbeddedCheckoutShippingDetailsChangeEvent) => Promise<stripeJs.ResultAction>;
 }
 
 export default function Checkout(inProps: CheckoutProps) {
@@ -49,7 +55,7 @@ export default function Checkout(inProps: CheckoutProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, contentType, contentId, content, priceId, ...rest} = props;
+  const {className, contentType, contentId, content, priceId, returnUrl, successUrl, uiMode, onComplete, onShippingDetailsChange, ...rest} = props;
 
   const [loading, setLoading] = useState<boolean>(false);
   const [initialized, setInitialized] = useState<boolean>(false);
@@ -73,16 +79,17 @@ export default function Checkout(inProps: CheckoutProps) {
   const fetchClientSecret = useCallback(() => {
     // Create a Checkout Session
     if (!loading) {
-      console.log('fetching client secret...');
       setInitialized(true);
       setLoading(true);
       PaymentApiClient.checkoutCreateSession({
         content_type: contentType,
         content_id: content ? content.id : contentId,
-        payment_price_id: priceId
+        payment_price_id: priceId,
+        ...(returnUrl && {return_url: returnUrl}),
+        ...(successUrl && {success_url: successUrl}),
+        ...(uiMode && {ui_mode: uiMode})
       })
         .then((r) => {
-          console.log(r);
           setClientSecret(r.client_secret);
           setLoading(false);
         })
@@ -102,6 +109,16 @@ export default function Checkout(inProps: CheckoutProps) {
       };
     }
   }, [scUserContext.user, clientSecret, stripePromise, contentType, contentId, content, priceId, loading, initialized]);
+
+  // Payment provider options
+  const providerOptions = useMemo(
+    () => ({
+      clientSecret,
+      ...(onComplete && {onComplete}),
+      ...(onShippingDetailsChange && {onShippingDetailsChange})
+    }),
+    [clientSecret, onComplete, onShippingDetailsChange]
+  );
 
   if (!isPaymentsEnabled) {
     return null;
@@ -133,7 +150,7 @@ export default function Checkout(inProps: CheckoutProps) {
           _c = <Category categoryId={contentId} actions={<></>} variant="outlined" className={classes.object} />;
           break;
         case SCContentType.COURSE:
-          return (
+          _c = (
             <Course
               courseId={contentId}
               template={SCCourseTemplateType.PREVIEW}
@@ -171,7 +188,7 @@ export default function Checkout(inProps: CheckoutProps) {
         </Box>
       )}
       <Box id="checkout" className={classes.checkout}>
-        <EmbeddedCheckoutProvider stripe={stripePromise} options={{clientSecret}}>
+        <EmbeddedCheckoutProvider stripe={stripePromise} options={providerOptions}>
           <EmbeddedCheckout />
         </EmbeddedCheckoutProvider>
       </Box>
