@@ -28,7 +28,7 @@ function ChangeUserStatus(props: ChangeUserStatusProps) {
 
   // EFFECTS
   useEffect(() => {
-    setValue(`ui.editCourse.tab.users.table.select.${user.join_status}`);
+    setValue(`ui.editCourse.tab.users.table.select.${user.join_status || 'joined'}`);
   }, [user, setValue]);
 
   // HANDLERS

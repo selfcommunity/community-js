@@ -88,15 +88,21 @@ function Users(props: UsersProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [state.isLoadingNext, state.initialized, course, dispatch]);
+  }, [state.isLoadingNext, state.initialized, course, dispatch, endpointQueryParams]);
+
+  // HANDLERS
+  const handleAddUser = useCallback(
+    (_msg: string, user: SCUserType) => {
+      dispatch({type: actionWidgetTypes.LOAD_PREVIOUS_SUCCESS, payload: {count: state.count + 1, results: [user], initialized: true}});
+    },
+    [state.count, dispatch]
+  );
 
   // EFFECTS
   useEffect(() => {
     let _t: NodeJS.Timeout;
-
     if (scUserContext.user) {
       _t = setTimeout(_init);
-
       return () => {
         clearTimeout(_t);
       };
@@ -109,15 +115,7 @@ function Users(props: UsersProps) {
     return () => {
       updatedUsers.current && PubSub.unsubscribe(updatedUsers.current);
     };
-  }, []);
-
-  // HANDLERS
-  const handleAddUser = useCallback(
-    (user: SCUserType) => {
-      dispatch({type: actionWidgetTypes.LOAD_PREVIOUS_SUCCESS, payload: {count: state.count + 1, results: [user], initialized: true}});
-    },
-    [dispatch]
-  );
+  }, [handleAddUser]);
 
   const handleConfirm = useCallback(
     (newUsers: SCUserType[]) => {
@@ -127,7 +125,10 @@ function Users(props: UsersProps) {
 
       CourseService.changeCourseUserRole(course.id, data)
         .then(() => {
-          dispatch({type: actionWidgetTypes.RESET});
+          dispatch({
+            type: actionWidgetTypes.LOAD_PREVIOUS_SUCCESS,
+            payload: {count: state.count + newUsers.length, results: newUsers, initialized: true}
+          });
         })
         .catch((error) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
