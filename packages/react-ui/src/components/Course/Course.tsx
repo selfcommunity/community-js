@@ -11,9 +11,9 @@ import CourseParticipantsButton, {CourseParticipantsButtonProps} from '../Course
 import Widget, {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
 import CourseSkeleton, {CourseSkeletonProps} from './Skeleton';
-import BaseItem from '../../shared/BaseItem';
 import {isCourseCompleted, isCourseNew} from '../../utils/course';
 import UserAvatar from '../../shared/UserAvatar';
+import BaseItemButton from '../../shared/BaseItemButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -33,11 +33,9 @@ const classes = {
   previewProgress: `${PREFIX}-preview-progress`,
   previewProgressBar: `${PREFIX}-preview-progress-bar`,
   snippetRoot: `${PREFIX}-snippet-root`,
-  snippetActions: `${PREFIX}-snippet-actions`,
   snippetAvatar: `${PREFIX}-snippet-avatar`,
-  snippetImage: `${PREFIX}-snippet-image`,
-  snippetPrimary: `${PREFIX}-snippet-primary`,
-  snippetSecondary: `${PREFIX}-snippet-secondary`
+  snippetAvatarUserProfile: `${PREFIX}-snippet-avatar-user-profile-view`,
+  snippetImage: `${PREFIX}-snippet-image`
 };
 
 const Root = styled(Widget, {
@@ -52,7 +50,7 @@ const PreviewRoot = styled(Box, {
   overridesResolver: (_props, styles) => styles.previewRoot
 })(() => ({}));
 
-const SnippetRoot = styled(BaseItem, {
+const SnippetRoot = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'SnippetRoot',
   overridesResolver: (_props, styles) => styles.snippetRoot
@@ -74,6 +72,10 @@ export interface CourseProps extends WidgetProps {
    * @default 'preview'
    */
   template?: SCCourseTemplateType;
+  /**
+   * It shows a different snippet type
+   */
+  userProfileSnippet?: boolean;
   /**
    * Actions
    * @default null
@@ -134,12 +136,9 @@ export interface CourseProps extends WidgetProps {
  |previewProgress|.SCCourses-preview-progress|Styles applied to indicate the progress section in the preview template.|
  |previewProgressBar|.SCCourses-preview-progress-bar|Styles applied to the progress bar in the preview template.|
  |snippetRoot|.SCCourses-snippet-root|Styles applied to the root element in the snippet template.|
- |snippetActions|.SCCourses-snippet-actions|Styles applied to the actions section in the snippet template.|
  |snippetAvatar|.SCCourses-snippet-avatar|Styles applied to the avatar element in the snippet template.|
  |snippetImage|.SCCourses-snippet-image|Styles applied to the image element in the snippet template.|
- |snippetPrimary|.SCCourses-snippet-primary|Styles applied to the primary section in the snippet template.|
- |snippetSecondary|.SCCourses-snippet-secondary|Styles applied to the secondary section in the snippet template.|
-
+ 
  *
  * @param inProps
  */
@@ -158,6 +157,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
     actions,
     CourseParticipantsButtonComponentProps = {},
     CourseSkeletonComponentProps = {},
+    userProfileSnippet,
     ...rest
   } = props;
 
@@ -245,21 +245,21 @@ export default function Course(inProps: CourseProps): JSX.Element {
             />
           )}
           <Link
-            {...(!scCourse.created_by.deleted && {
+            {...(!scCourse.created_by?.deleted && {
               to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
             })}>
-            <UserAvatar hide={!scCourse.created_by.community_badge} smaller={true}>
-              <Avatar alt={scCourse.name} src={scCourse.created_by.avatar} className={classes.previewAvatar} />
+            <UserAvatar hide={!scCourse.created_by?.community_badge} smaller={true}>
+              <Avatar alt={scCourse.name} src={scCourse.created_by?.avatar} className={classes.previewAvatar} />
             </UserAvatar>
           </Link>
         </Box>
         <CardContent className={classes.previewContent}>
           <Link
             className={classes.previewCreator}
-            {...(!scCourse.created_by.deleted && {
+            {...(!scCourse.created_by?.deleted && {
               to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
             })}>
-            <Typography variant="body2">{scCourse.created_by.username}</Typography>
+            <Typography variant="body2">{scCourse.created_by?.username}</Typography>
           </Link>
           <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)} className={classes.previewNameWrapper}>
             <Typography variant="h6" className={classes.previewName}>
@@ -284,7 +284,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
         {actions ?? (
           <CardActions className={classes.previewActions}>
             <Button variant="outlined" size="small" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
-              <FormattedMessage defaultMessage="ui.course.see.preview" id="ui.course.see.preview" />
+              <FormattedMessage defaultMessage="ui.course.see" id="ui.course.see" />
             </Button>
           </CardActions>
         )}
@@ -297,8 +297,13 @@ export default function Course(inProps: CourseProps): JSX.Element {
         className={classes.snippetRoot}
         image={
           <Box className={classes.snippetImage}>
-            <Avatar variant="square" alt={scCourse.name} src={scCourse.image_medium} className={classes.snippetAvatar} />
-            {(isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse)) && (
+            <Avatar
+              variant="square"
+              alt={scCourse.name}
+              src={scCourse.image_medium}
+              className={userProfileSnippet ? classes.snippetAvatarUserProfile : classes.snippetAvatar}
+            />
+            {!userProfileSnippet && (isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse)) && (
               <Chip
                 size="small"
                 component="div"
@@ -317,35 +322,48 @@ export default function Course(inProps: CourseProps): JSX.Element {
         }
         primary={
           <>
-            <Link
-              {...(!scCourse.created_by.deleted && {
-                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
-              })}
-              className={classes.snippetPrimary}>
-              <Typography component="span">{scCourse.created_by.username}</Typography>
-            </Link>
-            <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)} className={classes.snippetPrimary}>
+            {!userProfileSnippet && (
+              <Link
+                {...(!scCourse.created_by?.deleted && {
+                  to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
+                })}>
+                <Typography component="span">{scCourse.created_by?.username}</Typography>
+              </Link>
+            )}
+            <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
               <Typography variant="body1">{scCourse.name}</Typography>
             </Link>
           </>
         }
         secondary={
-          <Typography component="p" variant="body2" className={classes.snippetSecondary}>
-            <FormattedMessage
-              id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
-              defaultMessage={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
-            />
-            -
-            <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
-          </Typography>
+          <>
+            {userProfileSnippet ? (
+              <>
+                {!scCourse.hide_member_count && (
+                  <FormattedMessage
+                    id="ui.course.userProfileSnippet.students"
+                    defaultMessage="ui.course.userProfileSnippet.students"
+                    values={{students: scCourse.member_count}}
+                  />
+                )}
+              </>
+            ) : (
+              <>
+                <FormattedMessage
+                  id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
+                  defaultMessage={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
+                />
+                -
+                <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
+              </>
+            )}
+          </>
         }
         actions={
           actions ?? (
-            <Box className={classes.snippetActions}>
-              <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
-                <FormattedMessage defaultMessage="ui.course.see" id="ui.course.see" />
-              </Button>
-            </Box>
+            <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
+              <FormattedMessage defaultMessage="ui.course.see" id="ui.course.see" />
+            </Button>
           )
         }
       />
