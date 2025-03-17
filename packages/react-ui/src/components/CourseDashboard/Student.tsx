@@ -22,13 +22,20 @@ import {useSnackbar} from 'notistack';
 import StudentSkeleton from './Student/Skeleton';
 import UserAvatar from '../../shared/UserAvatar';
 
-const messages = {
+const BUTTON_MESSAGES = {
   dashboard: 'ui.course.dashboard.student.button.dashboard',
   request: 'ui.course.dashboard.student.button.request',
+  signUp: 'ui.course.dashboard.student.button.signUp',
   review: 'ui.course.dashboard.student.button.review',
   cancel: 'ui.course.dashboard.student.button.cancel',
   start: 'ui.course.dashboard.student.button.start',
   continue: 'ui.course.dashboard.student.button.continue'
+};
+
+const SNACKBAR_MESSAGES = {
+  cancel: 'ui.course.dashboard.student.snackbar.success.cancel',
+  enroll: 'ui.course.dashboard.student.snackbar.success.enroll',
+  request: 'ui.course.dashboard.student.snackbar.success.request'
 };
 
 const classes = {
@@ -125,7 +132,7 @@ function Student(inProps: StudentCourseDashboardProps) {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HOOKS
-  const {scCourse} = useSCFetchCourse({id: courseId, course});
+  const {scCourse, setSCCourse} = useSCFetchCourse({id: courseId, course});
   const intl = useIntl();
   const {enqueueSnackbar} = useSnackbar();
 
@@ -141,27 +148,39 @@ function Student(inProps: StudentCourseDashboardProps) {
     setLoadingRequest(true);
 
     let request: Promise<any>;
+    let updatedCourse: SCCourseType;
     if (sentRequest) {
       request = CourseService.leaveOrRemoveCourseRequest(scCourse.id);
+      updatedCourse = {
+        ...scCourse,
+        join_status: null
+      };
     } else {
       request = CourseService.joinOrAcceptInviteToCourse(scCourse.id);
+      updatedCourse = {
+        ...scCourse,
+        join_status: scCourse.privacy === SCCoursePrivacyType.PRIVATE ? SCCourseJoinStatusType.REQUESTED : SCCourseJoinStatusType.JOINED
+      };
     }
 
     request
       .then(() => {
+        setSCCourse(updatedCourse);
+        setSentRequest((prev) => !prev);
+        setLoadingRequest(false);
+
         enqueueSnackbar(
           <FormattedMessage
-            id={`ui.course.dashboard.student.snackbar.success.${sentRequest ? 'cancel' : 'request'}`}
-            defaultMessage={`ui.course.dashboard.student.snackbar.success.${sentRequest ? 'cancel' : 'request'}`}
+            id={sentRequest ? SNACKBAR_MESSAGES.request : scCourse.join_status === null ? SNACKBAR_MESSAGES.enroll : SNACKBAR_MESSAGES.cancel}
+            defaultMessage={
+              sentRequest ? SNACKBAR_MESSAGES.request : scCourse.join_status === null ? SNACKBAR_MESSAGES.enroll : SNACKBAR_MESSAGES.cancel
+            }
           />,
           {
             variant: 'success',
             autoHideDuration: 3000
           }
         );
-
-        setSentRequest((prev) => !prev);
-        setLoadingRequest(false);
       })
       .catch((error) => {
         enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
@@ -183,29 +202,37 @@ function Student(inProps: StudentCourseDashboardProps) {
       <Stack className={classes.actionsWrapper}>
         {(scCourse.join_status === SCCourseJoinStatusType.CREATOR || scCourse.join_status === SCCourseJoinStatusType.MANAGER) && (
           <ActionButton
-            labelId={messages.dashboard}
+            labelId={BUTTON_MESSAGES.dashboard}
             to={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)}
             color="inherit"
             variant="outlined"
           />
         )}
         {((scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
-          (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse?.join_status === SCCourseJoinStatusType.JOINED)) ||
+          (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
           (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) && (
           <ActionButton
             labelId={
-              scCourse.user_completion_rate === 0 ? messages.start : scCourse.user_completion_rate === 100 ? messages.review : messages.continue
+              scCourse.join_status === null
+                ? BUTTON_MESSAGES.signUp
+                : scCourse.user_completion_rate === 0
+                ? BUTTON_MESSAGES.start
+                : scCourse.user_completion_rate === 100
+                ? BUTTON_MESSAGES.review
+                : BUTTON_MESSAGES.continue
             }
-            to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse))}
-            disabled={getIsNextLessonLocked(scCourse)}
+            to={scCourse.join_status !== null ? scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse)) : undefined}
+            disabled={scCourse.join_status !== null ? getIsNextLessonLocked(scCourse) : undefined}
             color={scCourse.user_completion_rate === 100 ? 'inherit' : undefined}
             variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
+            loading={scCourse.join_status === null ? loadingRequest : undefined}
+            onClick={scCourse.join_status === null ? handleRequest : undefined}
           />
         )}
         {scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
           (scCourse.join_status === null || scCourse.join_status === SCCourseJoinStatusType.REQUESTED) && (
             <ActionButton
-              labelId={sentRequest ? messages.cancel : messages.request}
+              labelId={sentRequest ? BUTTON_MESSAGES.cancel : BUTTON_MESSAGES.request}
               color="inherit"
               variant="outlined"
               loading={loadingRequest}
