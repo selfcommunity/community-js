@@ -2,7 +2,7 @@ import {DraggableProvided} from '@hello-pangea/dnd';
 import {Icon, MenuItem, Stack, TableCell, TableRow, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {PREFIX} from '../constants';
-import {memo, useCallback, useState} from 'react';
+import {Fragment, memo, useCallback, useState} from 'react';
 import MenuRow from '../MenuRow';
 import {FormattedMessage} from 'react-intl';
 import FieldName from './FieldName';
@@ -15,6 +15,7 @@ import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {ActionLessonType} from '../types';
 import {useDisabled} from '../hooks';
+import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 
 const classes = {
   cellWidth: `${PREFIX}-cell-width`,
@@ -55,6 +56,7 @@ function LessonRow(props: LessonRowProps) {
 
   // STATES
   const [editMode, setEditMode] = useState(false);
+  const [open, setOpen] = useState(false);
 
   // CONTEXTS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -64,7 +66,7 @@ function LessonRow(props: LessonRowProps) {
   const {enqueueSnackbar} = useSnackbar();
 
   // HANDLERS
-  const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true)), [setEditMode]);
+  const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true), 100), [setEditMode]);
   const handleDisableEditMode = useCallback(() => setEditMode(false), [setEditMode]);
 
   const handleDeleteLesson = useCallback(() => {
@@ -90,60 +92,68 @@ function LessonRow(props: LessonRowProps) {
       });
   }, [course, section, lesson, handleManageLesson]);
 
-  return (
-    <TableRow {...provider.draggableProps} ref={provider.innerRef}>
-      <TableCell width="4%" />
-      <TableCell component="th" scope="row" {...provider.dragHandleProps} className={classNames(classes.cellWidth, classes.cellPadding)}>
-        <Stack className={classes.tableBodyIconWrapper}>
-          <Icon color="disabled">drag</Icon>
-        </Stack>
-      </TableCell>
-      <TableCell>
-        <FieldName
-          endpoint={{
-            url: () =>
-              isNewRow
-                ? Endpoints.CreateCourseLesson.url({id: course.id, section_id: section.id})
-                : Endpoints.PatchCourseLesson.url({id: course.id, section_id: section.id, lesson_id: lesson.id}),
-            method: isNewRow ? Endpoints.CreateCourseLesson.method : Endpoints.PatchCourseLesson.method
-          }}
-          row={lesson}
-          isNewRow={isNewRow}
-          handleManageRow={handleManageLesson}
-          editMode={editMode}
-          handleDisableEditMode={handleDisableEditMode}
-        />
-      </TableCell>
-      <TableCell />
-      <TableCell className={classes.cellAlignRight}>
-        <Stack className={classes.actionsWrapper}>
-          <ChangeLessonStatus course={course} section={section} lesson={lesson} disabled={isDisabled} />
+  const handleOpenDialog = useCallback(() => {
+    setOpen((prev) => !prev);
+  }, [setOpen]);
 
-          <MenuRow disabled={isDisabled}>
-            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
-              <Typography variant="body1">
-                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.edit" defaultMessage="ui.editCourse.tab.lessons.table.menu.edit" />
-              </Typography>
-            </MenuItem>
-            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
-              <Typography variant="body1">
-                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.view" defaultMessage="ui.editCourse.tab.lessons.table.menu.view" />
-              </Typography>
-            </MenuItem>
-            <MenuItem onClick={handleAbleEditMode}>
-              <Typography variant="body1">
-                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
-              </Typography>
-            </MenuItem>
-            <MenuItem onClick={handleDeleteLesson}>
-              <Typography variant="body1">
-                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
-              </Typography>
-            </MenuItem>
-          </MenuRow>
-        </Stack>
-      </TableCell>
-    </TableRow>
+  return (
+    <Fragment>
+      <TableRow {...provider.draggableProps} ref={provider.innerRef}>
+        <TableCell width="4%" />
+        <TableCell component="th" scope="row" {...provider.dragHandleProps} className={classNames(classes.cellWidth, classes.cellPadding)}>
+          <Stack className={classes.tableBodyIconWrapper}>
+            <Icon color="disabled">drag</Icon>
+          </Stack>
+        </TableCell>
+        <TableCell>
+          <FieldName
+            endpoint={{
+              url: () =>
+                isNewRow
+                  ? Endpoints.CreateCourseLesson.url({id: course.id, section_id: section.id})
+                  : Endpoints.PatchCourseLesson.url({id: course.id, section_id: section.id, lesson_id: lesson.id}),
+              method: isNewRow ? Endpoints.CreateCourseLesson.method : Endpoints.PatchCourseLesson.method
+            }}
+            row={lesson}
+            isNewRow={isNewRow}
+            handleManageRow={handleManageLesson}
+            editMode={editMode}
+            handleDisableEditMode={handleDisableEditMode}
+          />
+        </TableCell>
+        <TableCell />
+        <TableCell className={classes.cellAlignRight}>
+          <Stack className={classes.actionsWrapper}>
+            <ChangeLessonStatus course={course} section={section} lesson={lesson} disabled={isDisabled} />
+
+            <MenuRow disabled={isDisabled}>
+              <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
+                <Typography variant="body1">
+                  <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.edit" defaultMessage="ui.editCourse.tab.lessons.table.menu.edit" />
+                </Typography>
+              </MenuItem>
+              <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
+                <Typography variant="body1">
+                  <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.view" defaultMessage="ui.editCourse.tab.lessons.table.menu.view" />
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleAbleEditMode}>
+                <Typography variant="body1">
+                  <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
+                </Typography>
+              </MenuItem>
+              <MenuItem onClick={handleOpenDialog}>
+                <Typography variant="body1">
+                  <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
+                </Typography>
+              </MenuItem>
+            </MenuRow>
+          </Stack>
+        </TableCell>
+      </TableRow>
+
+      {open && <ConfirmDialog open onClose={handleOpenDialog} onConfirm={handleDeleteLesson} />}
+    </Fragment>
   );
 }
 
