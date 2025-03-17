@@ -293,10 +293,9 @@ function SectionRow(props: SectionRowProps) {
               </Table>
             </DragDropContext>
           </Collapse>
+          {open && <ConfirmDialog open onClose={handleOpenDialog} onConfirm={handleDeleteSection} />}
         </TableCell>
       </TableRow>
-
-      {open && <ConfirmDialog open onClose={handleOpenDialog} onConfirm={handleDeleteSection} />}
     </Fragment>
   );
 }
