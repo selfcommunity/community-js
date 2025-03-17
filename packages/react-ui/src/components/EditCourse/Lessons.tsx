@@ -90,7 +90,7 @@ function Lessons(props: LessonsProps) {
   // HANDLERS
   const handleDragEnd = useCallback(
     (e: DropResult<string>) => {
-      if (!e.destination) {
+      if (!e.destination || e.destination.index === e.source.index) {
         return;
       }
 
@@ -103,7 +103,17 @@ function Lessons(props: LessonsProps) {
       };
 
       CourseService.patchCourse(course.id, data)
-        .then(() => setCourse({...course, sections: tempSections}))
+        .then(() => {
+          setCourse({...course, sections: tempSections});
+
+          enqueueSnackbar(
+            <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.save" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.save" />,
+            {
+              variant: 'success',
+              autoHideDuration: 3000
+            }
+          );
+        })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
 
