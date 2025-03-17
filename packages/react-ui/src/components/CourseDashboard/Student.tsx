@@ -208,7 +208,7 @@ function Student(inProps: StudentCourseDashboardProps) {
             variant="outlined"
           />
         )}
-        {((scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
+        {(((scCourse.privacy === SCCoursePrivacyType.PRIVATE || scCourse.privacy === SCCoursePrivacyType.SECRET) &&
           (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
           (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) && (
           <ActionButton
@@ -282,7 +282,7 @@ function Student(inProps: StudentCourseDashboardProps) {
 
       <Divider />
 
-      {((scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
+      {(((scCourse.privacy === SCCoursePrivacyType.PRIVATE || scCourse.privacy === SCCoursePrivacyType.SECRET) &&
         (scCourse.join_status === SCCourseJoinStatusType.CREATOR ||
           scCourse.join_status === SCCourseJoinStatusType.MANAGER ||
           scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
@@ -299,7 +299,7 @@ function Student(inProps: StudentCourseDashboardProps) {
         </Fragment>
       )}
 
-      {((scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
+      {(((scCourse.privacy === SCCoursePrivacyType.PRIVATE || scCourse.privacy === SCCoursePrivacyType.SECRET) &&
         (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
         (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) && (
         <Fragment>
