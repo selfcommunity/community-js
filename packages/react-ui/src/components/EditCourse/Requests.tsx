@@ -80,7 +80,18 @@ function Requests(props: RequestsProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [state.isLoadingNext, state.initialized, course, dispatch]);
+  }, [state.isLoadingNext, state.initialized, course, dispatch, endpointQueryParams]);
+
+  // HANDLERS
+  const handleRemoveUser = useCallback(
+    (_msg: string, user: SCUserType) => {
+      dispatch({
+        type: actionWidgetTypes.SET_RESULTS,
+        payload: {count: state.results.length - 1, results: state.results.filter((result: SCUserType) => result.id !== user.id)}
+      });
+    },
+    [state.count, state.results, dispatch]
+  );
 
   // EFFECTS
   useEffect(() => {
@@ -101,18 +112,7 @@ function Requests(props: RequestsProps) {
     return () => {
       updatedUsers.current && PubSub.unsubscribe(updatedUsers.current);
     };
-  }, []);
-
-  // HANDLERS
-  const handleRemoveUser = useCallback(
-    (user: SCUserType) => {
-      dispatch({
-        type: actionWidgetTypes.SET_RESULTS,
-        payload: {count: state.count - 1, results: state.results.filter((result: SCUserType) => result.id !== user.id)}
-      });
-    },
-    [dispatch]
-  );
+  }, [handleRemoveUser]);
 
   return (
     <Box>

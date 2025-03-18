@@ -277,7 +277,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       {/*      <Icon>explore</Icon>*/}
       {/*    </IconButton>*/}
       {/*  )}*/}
-      {coursesEnabled && scUserContext.user && (
+      {coursesEnabled && (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY]) && (
         <IconButton
           className={classNames(classes.courses, {
             [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {}))
@@ -288,7 +288,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           <Icon>courses</Icon>
         </IconButton>
       )}
-      {groupsEnabled && scUserContext.user && (
+      {groupsEnabled && (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY]) && (
         <IconButton
           className={classNames(classes.groups, {
             [classes.active]:

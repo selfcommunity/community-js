@@ -153,6 +153,7 @@ import UserConnectionsRequestsWidget, {
 } from './components/UserConnectionsRequestsWidget';
 import UserConnectionsWidget, {UserConnectionsWidgetProps, UserConnectionsWidgetSkeleton} from './components/UserConnectionsWidget';
 import UserCounters, {UserCountersProps} from './components/UserCounters';
+import UserCreatedCoursesWidget, {UserCreatedCoursesWidgetProps, UserCreatedCoursesWidgetSkeleton} from './components/UserCreatedCoursesWidget';
 import UserFollowedCategoriesWidget, {
   UserFollowedCategoriesWidgetProps,
   UserFollowedCategoriesWidgetSkeleton
@@ -725,6 +726,9 @@ export {
   UserConnectionsWidgetSkeleton,
   UserCounters,
   UserCountersProps,
+  UserCreatedCoursesWidget,
+  UserCreatedCoursesWidgetProps,
+  UserCreatedCoursesWidgetSkeleton,
   UserDeletedSnackBar,
   UserDeletedSnackBarProps,
   UserFollowedCategoriesWidget,

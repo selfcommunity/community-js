@@ -15,6 +15,7 @@ import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {ActionLessonType} from '../types';
 import {useDisabled} from '../hooks';
+import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 
 const classes = {
   cellWidth: `${PREFIX}-cell-width`,
@@ -55,6 +56,7 @@ function LessonRow(props: LessonRowProps) {
 
   // STATES
   const [editMode, setEditMode] = useState(false);
+  const [open, setOpen] = useState(false);
 
   // CONTEXTS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -64,7 +66,7 @@ function LessonRow(props: LessonRowProps) {
   const {enqueueSnackbar} = useSnackbar();
 
   // HANDLERS
-  const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true)), [setEditMode]);
+  const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true), 100), [setEditMode]);
   const handleDisableEditMode = useCallback(() => setEditMode(false), [setEditMode]);
 
   const handleDeleteLesson = useCallback(() => {
@@ -89,6 +91,10 @@ function LessonRow(props: LessonRowProps) {
         });
       });
   }, [course, section, lesson, handleManageLesson]);
+
+  const handleOpenDialog = useCallback(() => {
+    setOpen((prev) => !prev);
+  }, [setOpen]);
 
   return (
     <TableRow {...provider.draggableProps} ref={provider.innerRef}>
@@ -135,13 +141,14 @@ function LessonRow(props: LessonRowProps) {
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
               </Typography>
             </MenuItem>
-            <MenuItem onClick={handleDeleteLesson}>
+            <MenuItem onClick={handleOpenDialog}>
               <Typography variant="body1">
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
               </Typography>
             </MenuItem>
           </MenuRow>
         </Stack>
+        {open && <ConfirmDialog open onClose={handleOpenDialog} onConfirm={handleDeleteLesson} />}
       </TableCell>
     </TableRow>
   );

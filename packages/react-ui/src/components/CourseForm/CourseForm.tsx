@@ -250,7 +250,6 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         description: field.description,
         type: field.type,
         categories: field.categories,
-        ...(field.imageOriginalFile && {image_original: field.imageOriginalFile}),
         ...(field.privacy && {privacy: field.privacy})
       };
       courseService = CourseService.updateCourse(course.id, data, {
@@ -353,7 +352,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                 </Typography>
               )}
               <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-                <UploadCourseCover isCreationMode={true} onChange={handleChangeCover} />
+                <UploadCourseCover courseId={course?.id ?? null} isCreationMode={!course} onChange={handleChangeCover} />
               </Paper>
               <TextField
                 required
