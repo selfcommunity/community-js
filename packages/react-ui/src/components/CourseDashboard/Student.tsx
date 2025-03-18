@@ -216,27 +216,26 @@ function Student(inProps: StudentCourseDashboardProps) {
 
         {(((scCourse.privacy === SCCoursePrivacyType.PRIVATE || scCourse.privacy === SCCoursePrivacyType.SECRET) &&
           (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
-          (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) && (!isPaymentsEnabled ||
-              !scCourse.paywalls?.length ||
-              (isPaymentsEnabled && scCourse.paywalls?.length > 0 && scCourse.payment_order)))) && (
-          <ActionButton
-            labelId={
-              scCourse.join_status === null
-                ? BUTTON_MESSAGES.signUp
-                : scCourse.user_completion_rate === 0
-                ? BUTTON_MESSAGES.start
-                : scCourse.user_completion_rate === 100
-                ? BUTTON_MESSAGES.review
-                : BUTTON_MESSAGES.continue
-            }
-            to={scCourse.join_status !== null ? scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse)) : undefined}
-            disabled={scCourse.join_status !== null ? getIsNextLessonLocked(scCourse) : undefined}
-            color={scCourse.user_completion_rate === 100 ? 'inherit' : undefined}
-            variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
-            loading={scCourse.join_status === null ? loadingRequest : undefined}
-            onClick={scCourse.join_status === null ? handleRequest : undefined}
-          />
-        )}
+          (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) &&
+          (!isPaymentsEnabled || !scCourse.paywalls?.length || (isPaymentsEnabled && scCourse.paywalls?.length > 0 && scCourse.payment_order)) && (
+            <ActionButton
+              labelId={
+                scCourse.join_status === null
+                  ? BUTTON_MESSAGES.signUp
+                  : scCourse.user_completion_rate === 0
+                  ? BUTTON_MESSAGES.start
+                  : scCourse.user_completion_rate === 100
+                  ? BUTTON_MESSAGES.review
+                  : BUTTON_MESSAGES.continue
+              }
+              to={scCourse.join_status !== null ? scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse)) : undefined}
+              disabled={scCourse.join_status !== null ? getIsNextLessonLocked(scCourse) : undefined}
+              color={scCourse.user_completion_rate === 100 ? 'inherit' : undefined}
+              variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
+              loading={scCourse.join_status === null ? loadingRequest : undefined}
+              onClick={scCourse.join_status === null ? handleRequest : undefined}
+            />
+          )}
 
         {scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
           (scCourse.join_status === null || scCourse.join_status === SCCourseJoinStatusType.REQUESTED) && (
