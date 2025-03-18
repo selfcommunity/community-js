@@ -2,9 +2,11 @@ import {Chip, Typography} from '@mui/material';
 import {useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
+import classNames from 'classnames';
 
 const classes = {
-  status: `${PREFIX}-status`
+  status: `${PREFIX}-status`,
+  contrastBgColor: `${PREFIX}-contrast-bg-color`
 };
 
 interface StatusProps {
@@ -38,7 +40,7 @@ export default function Status(props: StatusProps) {
           )}
         </Typography>
       }
-      className={classes.status}
+      className={classNames(classes.status, classes.contrastBgColor)}
     />
   );
 }

@@ -54,7 +54,9 @@ const classes = {
   selected: `${PREFIX}-selected`,
   stepOne: `${PREFIX}-step-one`,
   stepTwo: `${PREFIX}-step-two`,
-  title: `${PREFIX}-title`
+  title: `${PREFIX}-title`,
+  contrastColor: `${PREFIX}-contrast-color`,
+  contrastBgColor: `${PREFIX}-contrast-bg-color`
 };
 
 const Root = styled(Box, {
@@ -347,7 +349,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
           {_step === SCCourseFormStepType.CUSTOMIZATION && (
             <FormGroup className={classes.form}>
               {course && (
-                <Typography variant="h5">
+                <Typography variant="h5" className={classes.contrastColor}>
                   <FormattedMessage id="ui.courseForm.edit.title.general" defaultMessage="ui.courseForm.edit.title.general" />
                 </Typography>
               )}
@@ -356,7 +358,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
               </Paper>
               <TextField
                 required
-                className={classes.name}
+                className={classNames(classes.name, classes.contrastBgColor)}
                 placeholder={`${intl.formatMessage(messages.name)}`}
                 margin="normal"
                 value={field.name}
@@ -376,7 +378,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
               />
               <TextField
                 multiline
-                className={classes.description}
+                className={classNames(classes.description, classes.contrastBgColor)}
                 placeholder={`${intl.formatMessage(messages.description)}`}
                 margin="normal"
                 value={field.description}
@@ -401,11 +403,18 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                 TextFieldProps={{label: intl.formatMessage(Object.keys(field.categories).length ? messages.category : messages.categoryEmpty)}}
                 multiple={true}
                 onChange={handleOnChangeCategory}
+                className={classes.contrastBgColor}
               />
-              {course && <CourseEdit course={course} onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))} />}
+              {course && (
+                <CourseEdit
+                  course={course}
+                  onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))}
+                  className={classes.contrastBgColor}
+                />
+              )}
             </FormGroup>
           )}
-          <Box className={classes.actions}>
+          <Box className={classNames(classes.actions, classes.contrastBgColor)}>
             <LoadingButton
               size="small"
               loading={field.isSubmitting}

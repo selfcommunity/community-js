@@ -23,6 +23,7 @@ import {AxiosResponse} from 'axios';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
+import classNames from 'classnames';
 
 const PREFIX = 'SCAddUsersButton';
 
@@ -102,6 +103,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
     endpoint = Endpoints.GetCourseSuggestedUsers,
     endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET, search: ''},
     onConfirm,
+    className,
     ...rest
   } = props;
 
@@ -224,7 +226,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
 
   return (
     <Fragment>
-      <Root onClick={handleToggleDialogOpen} variant={variant} color={color} size={size} className={classes.root} {...rest}>
+      <Root onClick={handleToggleDialogOpen} variant={variant} color={color} size={size} className={classNames(classes.root, className)} {...rest}>
         <FormattedMessage id={label} defaultMessage={label} />
       </Root>
 

@@ -33,13 +33,16 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import ChangeUserStatus from './ChangeUsersStatus';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import RequestButton from './RequestButton';
+import classNames from 'classnames';
 
 const classes = {
+  root: `${PREFIX}-root`,
   search: `${PREFIX}-search`,
   avatarWrapper: `${PREFIX}-avatar-wrapper`,
   progressWrapper: `${PREFIX}-progress-wrapper`,
   progress: `${PREFIX}-progress`,
-  loadingButton: `${PREFIX}-loading-button`
+  loadingButton: `${PREFIX}-loading-button`,
+  contrastBgColor: `${PREFIX}-contrast-bg-color`
 };
 
 const Root = styled(Box, {
@@ -135,7 +138,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
   }
 
   return (
-    <Root>
+    <Root className={classNames(classes.root, classes.contrastBgColor)}>
       <TextField
         placeholder={intl.formatMessage({
           id: 'ui.courseUsersTable.searchBar.placeholder',

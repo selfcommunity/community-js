@@ -11,6 +11,7 @@ import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../.
 import {Link, SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import {CourseService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
+import classNames from 'classnames';
 
 const classes = {
   container: `${PREFIX}-comments-container`,
@@ -20,7 +21,9 @@ const classes = {
   avatar: `${PREFIX}-avatar`,
   userInfo: `${PREFIX}-user-info`,
   circle: `${PREFIX}-circle`,
-  button: `${PREFIX}-button`
+  button: `${PREFIX}-button`,
+  contrastColor: `${PREFIX}-contrast-color`,
+  contrastBgColor: `${PREFIX}-contrast-bg-color`
 };
 
 interface CommentsProps {
@@ -156,7 +159,7 @@ function Comments(props: CommentsProps) {
     });
 
     return Array.from(map.entries()).map(([name, comments]) => (
-      <Box key={name} className={classes.outerWrapper}>
+      <Box key={name} className={classNames(classes.outerWrapper, classes.contrastBgColor)}>
         <Typography variant="h5">{name}</Typography>
         <Divider />
         <Stack className={classes.innerWrapper}>
@@ -205,7 +208,7 @@ function Comments(props: CommentsProps) {
     <Box className={classes.container}>
       {state.count > 0 ? (
         <Fragment>
-          <Typography variant="body1">
+          <Typography variant="body1" className={classes.contrastColor}>
             <FormattedMessage
               id="ui.course.dashboard.teacher.tab.comments.number"
               defaultMessage="ui.course.dashboard.teacher.tab.comments.number"
@@ -217,7 +220,14 @@ function Comments(props: CommentsProps) {
 
           {isLoadingComments && <CommentSkeleton id={1} />}
 
-          <LoadingButton size="small" variant="outlined" color="inherit" loading={isLoadingComments} disabled={!state.next} onClick={handleNext}>
+          <LoadingButton
+            size="small"
+            variant="outlined"
+            color="inherit"
+            loading={isLoadingComments}
+            disabled={!state.next}
+            onClick={handleNext}
+            className={classes.contrastBgColor}>
             <Typography variant="body2">
               <FormattedMessage
                 id="ui.course.dashboard.teacher.tab.comments.btn.label"
@@ -227,7 +237,7 @@ function Comments(props: CommentsProps) {
           </LoadingButton>
         </Fragment>
       ) : (
-        <Typography variant="body2">
+        <Typography variant="body2" className={classes.contrastColor}>
           <FormattedMessage id="ui.course.dashboard.teacher.tab.comments.empty" defaultMessage="ui.course.dashboard.teacher.tab.comments.empty" />
         </Typography>
       )}

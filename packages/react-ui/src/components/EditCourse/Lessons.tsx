@@ -14,6 +14,7 @@ import AddButton from './Lessons/AddButton';
 import SectionRow from './Lessons/SectionRow';
 import {ActionLessonType} from './types';
 import {useDisabled} from './hooks';
+import classNames from 'classnames';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
@@ -31,7 +32,9 @@ const classes = {
   cellAlignRight: `${PREFIX}-cell-align-right`,
   cellAlignCenter: `${PREFIX}-cell-align-center`,
   lessonEmptyStatus: `${PREFIX}-lesson-empty-status`,
-  emptyStatusButton: `${PREFIX}-empty-status-button`
+  emptyStatusButton: `${PREFIX}-empty-status-button`,
+  contrastColor: `${PREFIX}-contrast-color`,
+  contrastBgColor: `${PREFIX}-contrast-bg-color`
 };
 
 const headerCells = [
@@ -227,15 +230,15 @@ function Lessons(props: LessonsProps) {
 
   return (
     <Box>
-      <Typography className={classes.lessonTitle} variant="h4">
+      <Typography className={classNames(classes.lessonTitle, classes.contrastColor)} variant="h4">
         <FormattedMessage id="ui.editCourse.tab.lessons" defaultMessage="ui.editCourse.tab.lessons" />
       </Typography>
 
       <Stack className={classes.lessonInfoWrapper}>
         <Stack className={classes.lessonInfo}>
-          <Icon>courses</Icon>
+          <Icon className={classes.contrastColor}>courses</Icon>
 
-          <Typography variant="body2">
+          <Typography variant="body2" className={classes.contrastColor}>
             <FormattedMessage
               id="ui.course.type"
               defaultMessage="ui.course.type"
@@ -266,13 +269,13 @@ function Lessons(props: LessonsProps) {
               variant="outlined"
             />
           }
-          className={classes.lessonEmptyStatus}
+          className={classNames(classes.lessonEmptyStatus, classes.contrastBgColor)}
         />
       )}
 
       {sections.length > 0 && (
         <Fragment>
-          <Stack className={classes.lessonsSectionsWrapper}>
+          <Stack className={classNames(classes.lessonsSectionsWrapper, classes.contrastBgColor)}>
             <Stack className={classes.lessonsSections}>
               <Typography variant="h5">
                 <FormattedMessage
@@ -307,7 +310,7 @@ function Lessons(props: LessonsProps) {
           </Stack>
 
           <DragDropContext onDragEnd={handleDragEnd}>
-            <TableContainer className={classes.tableContainer}>
+            <TableContainer className={classNames(classes.tableContainer, classes.contrastBgColor)}>
               <Table className={classes.table}>
                 <TableHead className={classes.tableHeader}>
                   <TableRow>

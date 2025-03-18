@@ -11,11 +11,13 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import {LoadingButton} from '@mui/lab';
 import {SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
+import classNames from 'classnames';
 
 const classes = {
   optionsWrapper: `${PREFIX}-options-wrapper`,
   optionsDivider: `${PREFIX}-options-divider`,
-  optionsButtonWrapper: `${PREFIX}-options-button-wrapper`
+  optionsButtonWrapper: `${PREFIX}-options-button-wrapper`,
+  contrastBgColor: `${PREFIX}-contrast-bg-color`
 };
 
 const OPTIONS = {
@@ -116,7 +118,7 @@ function Options(props: OptionsProps) {
 
   return (
     <Fragment>
-      <Stack className={classes.optionsWrapper}>
+      <Stack className={classNames(classes.optionsWrapper, classes.contrastBgColor)}>
         {Object.entries(OPTIONS).map(([key, value], i) => (
           <SwitchForm
             key={i}
@@ -129,9 +131,9 @@ function Options(props: OptionsProps) {
         ))}
       </Stack>
 
-      <Divider className={classes.optionsDivider} />
+      <Divider className={classNames(classes.optionsDivider, classes.contrastBgColor)} />
 
-      <Stack className={classes.optionsButtonWrapper}>
+      <Stack className={classNames(classes.optionsButtonWrapper, classes.contrastBgColor)}>
         <LoadingButton size="small" variant="contained" disabled={!canSave} onClick={handleSubmit} loading={loading}>
           <Typography variant="body1">
             <FormattedMessage id="ui.editCourse.tab.options.button.save" defaultMessage="ui.editCourse.tab.options.button.save" />
