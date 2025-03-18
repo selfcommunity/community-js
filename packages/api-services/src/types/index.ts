@@ -45,6 +45,13 @@ import {
   CourseUsersParams,
   CourseDashboardUsersParams
 } from './course';
+import {
+  PaymentContentStatusParams,
+	PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams
+} from './payment';
 
 export {
   AccountCreateParams,
@@ -121,5 +128,10 @@ export {
   CourseLessonCommentsParams,
   CourseUserRoleParams,
   CourseUsersParams,
-  CourseDashboardUsersParams
+  CourseDashboardUsersParams,
+  PaymentContentStatusParams,
+	PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams
 };

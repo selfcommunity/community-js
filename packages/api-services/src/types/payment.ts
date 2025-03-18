@@ -4,7 +4,7 @@ import {SCCheckoutSessionUIMode, SCContentType} from '@selfcommunity/types';
 /**
  * PaymentParams interface.
  */
-export interface ContentProductsParams extends BaseGetParams {
+export interface PaymentProductsParams extends BaseGetParams {
   /**
    * Content id
    */
@@ -58,4 +58,18 @@ export interface CustomerPortalCreateSessionParams {
    *	Return url
    */
   return_url?: string;
+}
+
+/**
+ * PaymentContentStatusParams interface.
+ */
+export interface PaymentContentStatusParams extends BaseGetParams {
+  /**
+   * Content id
+   */
+  content_id?: number | string;
+  /**
+   * Content type
+   */
+  content_type?: SCContentType;
 }

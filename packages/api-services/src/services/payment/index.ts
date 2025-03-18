@@ -1,9 +1,9 @@
 import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
-import {BaseGetParams, SCPaginatedResponse} from '../../types';
+import {BaseGetParams, PaymentContentStatusParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
-import {CheckoutCreateSessionParams, CheckoutSessionParams, ContentProductsParams, CustomerPortalCreateSessionParams} from '../../types/payment';
+import {CheckoutCreateSessionParams, CheckoutSessionParams, PaymentProductsParams, CustomerPortalCreateSessionParams} from '../../types/payment';
 import {
   SCCheckoutSession,
   SCPaymentOrder,
@@ -12,16 +12,30 @@ import {
   SCPaymentProduct,
   SCPaymentPrice,
   SCPaymentsCustomerPortalSession,
-  SCCommunityPaymentProducts
+  SCPurchasableContent
 } from '@selfcommunity/types';
 
 export interface PaymentApiClientInterface {
   /**
-   * Get paywall products related to an object of type <content_type> and id <content_id>
+   * Get payment products related to an object (aka paywalls) of type <content_type> and id <content_id> and the current payment_order
    * @param params
    * @param config
    */
-  getPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>>;
+  getPaymentContentStatus(params?: PaymentContentStatusParams, config?: AxiosRequestConfig): Promise<SCPurchasableContent>;
+
+  /**
+   * Get payment products related to an object (aka paywalls) of type <content_type> and id <content_id>
+   * @param params
+   * @param config
+   */
+  getPaywalls(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>>;
+
+  /**
+   * Get payment products
+   * @param params
+   * @param config
+   */
+  getPaymentProducts(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>>;
 
   /**
    * Get product
@@ -37,13 +51,6 @@ export interface PaymentApiClientInterface {
    * @param config
    */
   getPaymentProductPrices(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentPrice>>;
-
-  /**
-   * Get paywall for the community
-   * @param params
-   * @param config
-   */
-  getCommunityPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCCommunityPaymentProducts>;
 
   /**
    * Create session checkout with price_id for an object of type <content_type> and id <content_id>
@@ -89,13 +96,37 @@ export interface PaymentApiClientInterface {
  */
 export class PaymentApiClient {
   /**
+   * This endpoint retrieves all the products related to an object of type <content_type> and id <content_id> and the current payment_order
+   * @param params
+   * @param config
+   */
+  static getPaymentContentStatus(params?: PaymentContentStatusParams, config?: AxiosRequestConfig): Promise<SCPurchasableContent> {
+    const p = urlParams(params);
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.GetPaymentContentStatus.url({})}?${p.toString()}`,
+      method: Endpoints.GetPaymentContentStatus.method
+    });
+  }
+
+  /**
    * This endpoint retrieves all the products related to an object of type <content_type> and id <content_id>
    * @param params
    * @param config
    */
-  static getPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
+  static getPaywalls(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
     const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.GetContentProducts.url({})}?${p.toString()}`, method: Endpoints.GetContentProducts.method});
+    return apiRequest({...config, url: `${Endpoints.GetPaywalls.url({})}?${p.toString()}`, method: Endpoints.GetPaywalls.method});
+  }
+
+  /**
+   * This endpoint retrieves all the payment products
+   * @param params
+   * @param config
+   */
+  static getPaymentProducts(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.GetPaymentProducts.url({})}?${p.toString()}`, method: Endpoints.GetPaymentProducts.method});
   }
 
   /**
@@ -104,7 +135,7 @@ export class PaymentApiClient {
    * @param config
    */
   static getPaymentProduct(id: number | string, config?: AxiosRequestConfig): Promise<SCPaymentProduct> {
-    return apiRequest({...config, url: Endpoints.GetProduct.url({id}), method: Endpoints.GetProduct.method});
+    return apiRequest({...config, url: Endpoints.GetPaymentProduct.url({id}), method: Endpoints.GetPaymentProduct.method});
   }
 
   /**
@@ -119,17 +150,11 @@ export class PaymentApiClient {
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCPaymentPrice>> {
     const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.GetProductPrices.url({id})}?${p.toString()}`, method: Endpoints.GetProductPrices.method});
-  }
-
-  /**
-   * This endpoint retrieves all the products related the Community product
-   * @param params
-   * @param config
-   */
-  static getCommunityPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCCommunityPaymentProducts> {
-    const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.GetCommunityProduct.url({})}?${p.toString()}`, method: Endpoints.GetCommunityProduct.method});
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.GetPaymentProductPrices.url({id})}?${p.toString()}`,
+      method: Endpoints.GetPaymentProductPrices.method
+    });
   }
 
   /**
@@ -218,7 +243,13 @@ export class PaymentApiClient {
  :::
  */
 export default class PaymentService {
-  static async getPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
+  static async getPaymentContentStatus(params?: PaymentContentStatusParams, config?: AxiosRequestConfig): Promise<SCPurchasableContent> {
+    return PaymentApiClient.getPaymentContentStatus(params, config);
+  }
+  static async getPaywalls(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
+    return PaymentApiClient.getPaywalls(params, config);
+  }
+  static async getPaymentProducts(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
     return PaymentApiClient.getPaymentProducts(params, config);
   }
   static async getPaymentProduct(id: number | string, config?: AxiosRequestConfig): Promise<SCPaymentProduct> {
@@ -226,14 +257,12 @@ export default class PaymentService {
   }
   static async getPaymentProductPrices(
     id: number | string,
-    params?: ContentProductsParams,
+    params?: PaymentProductsParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCPaymentPrice>> {
     return PaymentApiClient.getPaymentProductPrices(id, params, config);
   }
-  static async getCommunityPaymentProducts(params?: ContentProductsParams, config?: AxiosRequestConfig): Promise<SCCommunityPaymentProducts> {
-    return PaymentApiClient.getCommunityPaymentProducts(params, config);
-  }
+
   static async checkoutCreateSession(data: CheckoutCreateSessionParams | FormData, config?: AxiosRequestConfig): Promise<SCCheckoutSession> {
     return PaymentApiClient.checkoutCreateSession(data, config);
   }

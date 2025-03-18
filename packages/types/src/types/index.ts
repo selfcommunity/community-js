@@ -170,9 +170,9 @@ import {
   type SCPaymentOrder,
   type SCPaymentsCustomerPortalSession,
   SCPaymentProductTemplateType,
-  SCCheckoutSessionUIMode,
-  type SCCommunityPaymentProducts
+  SCCheckoutSessionUIMode
 } from './payment';
+import {type SCCommunity} from './community';
 
 /**
  * Exports all types
@@ -371,5 +371,5 @@ export {
   type SCPaymentsCustomerPortalSession,
   SCPaymentProductTemplateType,
   SCCheckoutSessionUIMode,
-  type SCCommunityPaymentProducts
+  type SCCommunity
 };

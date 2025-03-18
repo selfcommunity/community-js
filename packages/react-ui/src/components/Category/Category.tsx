@@ -3,6 +3,7 @@ import {styled} from '@mui/material/styles';
 import {Avatar, Tooltip, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
 import {SCCategoryAutoFollowType, SCCategoryType} from '@selfcommunity/types';
+import {CacheStrategies} from '@selfcommunity/utils';
 import CategorySkeleton from './Skeleton';
 import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
 import {defineMessages, useIntl} from 'react-intl';
@@ -67,6 +68,10 @@ export interface CategoryProps extends WidgetProps {
    */
   showTooltip?: boolean;
   /**
+   * Override default cache strategy on fetch element
+   */
+  cacheStrategy?: CacheStrategies;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -118,6 +123,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     showFollowers = true,
     showTooltip = false,
     ButtonBaseProps = null,
+    cacheStrategy,
     ...rest
   } = props;
 
@@ -125,7 +131,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
-  const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
+  const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category, ...(cacheStrategy && {cacheStrategy})});
 
   // MEMO
   const _ButtonBaseProps = useMemo(

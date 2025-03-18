@@ -5,12 +5,12 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import PaymentProducts from '../PaymentProducts';
-import {PaymentProductsProps} from '../PaymentProducts';
 import {FormattedMessage} from 'react-intl';
 import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import {PaywallsProps} from '../Paywalls/Paywalls';
+import Paywalls from '../Paywalls';
 
-const PREFIX = 'SCPaymentProductsDialog';
+const PREFIX = 'SCPaywallsDialog';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -31,17 +31,17 @@ const NoTransition = React.forwardRef(function NoTransition(props: {children: Re
 
 export interface PaymentProductDialogProps extends BaseDialogProps {
   className?: string;
-  PaymentProductsComponentProps: PaymentProductsProps;
+  PaywallsComponentProps: PaywallsProps;
   disableInitialTransition?: boolean;
 }
 
-export default function PaymentProductsDialog(inProps: PaymentProductDialogProps) {
+export default function PaywallsDialog(inProps: PaymentProductDialogProps) {
   // PROPS
   const props: PaymentProductDialogProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {className, PaymentProductsComponentProps, disableInitialTransition = false, ...rest} = props;
+  const {className, PaywallsComponentProps, disableInitialTransition = false, ...rest} = props;
 
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
@@ -55,10 +55,11 @@ export default function PaymentProductsDialog(inProps: PaymentProductDialogProps
       maxWidth={'sm'}
       fullWidth
       title={
-        PaymentProductsComponentProps && PaymentProductsComponentProps.paymentOrder ? (
-          <FormattedMessage id="ui.paymentProductsDialog.title.purchased" defaultMessage="ui.paymentProductsDialog.title.purchased" />
+        (PaywallsComponentProps && PaywallsComponentProps.prefetchedPaymentContentStatus.payment_order) ||
+        (PaywallsComponentProps.content && PaywallsComponentProps.content.payment_order) ? (
+          <FormattedMessage id="ui.paywallsDialog.title.purchased" defaultMessage="ui.paywallsDialog.title.purchased" />
         ) : (
-          <FormattedMessage id="ui.paymentProductsDialog.title" defaultMessage="ui.paymentProductsDialog.title" />
+          <FormattedMessage id="ui.paywallsDialog.title" defaultMessage="ui.paywallsDialog.title" />
         )
       }
       scroll={'paper'}
@@ -67,7 +68,7 @@ export default function PaymentProductsDialog(inProps: PaymentProductDialogProps
       className={classNames(classes.root, className)}
       TransitionComponent={Transition}
       {...rest}>
-      <PaymentProducts {...PaymentProductsComponentProps} />
+      <Paywalls {...PaywallsComponentProps} />
     </Root>
   );
 }

@@ -2,6 +2,7 @@ import React, {useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Button, ButtonBaseProps, Icon, Stack, useMediaQuery, useTheme} from '@mui/material';
 import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
+import {CacheStrategies} from '@selfcommunity/utils/src/utils/cache';
 import {
   Link,
   SCRoutes,
@@ -80,6 +81,10 @@ export interface GroupProps extends WidgetProps {
    */
   buttonProps?: ButtonBaseProps;
   /**
+   * Override default cache strategy on fetch element
+   */
+  cacheStrategy?: CacheStrategies;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -130,11 +135,12 @@ export default function Group(inProps: GroupProps): JSX.Element {
     hideActions = false,
     actionRedirect = false,
     groupSubscribeButtonProps = {},
+    cacheStrategy,
     ...rest
   } = props;
 
   // STATE
-  const {scGroup} = useSCFetchGroup({id: groupId, group});
+  const {scGroup} = useSCFetchGroup({id: groupId, group, ...(cacheStrategy && {cacheStrategy})});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();

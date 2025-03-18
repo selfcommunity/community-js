@@ -33,9 +33,18 @@ export const Group: StoryObj<typeof Checkout> = {
 
 export const Category: StoryObj<typeof Checkout> = {
 	args: {
-		contentId: 1,
+		contentId: 2,
 		contentType: SCContentType.CATEGORY,
-		priceId: 3
+		priceId: 5
+	},
+	render: template
+};
+
+export const Community: StoryObj<typeof Checkout> = {
+	args: {
+		contentId: 1,
+		contentType: SCContentType.COMMUNITY,
+		priceId: 1
 	},
 	render: template
 };

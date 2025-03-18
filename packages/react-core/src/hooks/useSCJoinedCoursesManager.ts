@@ -119,8 +119,8 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
         // Only if user is authenticated
         http
           .request({
-            url: Endpoints.GetJoinedCourses.url(),
-            method: Endpoints.GetJoinedCourses.method,
+            url: Endpoints.GetUserJoinedCourses.url({id: user.id}),
+            method: Endpoints.GetUserJoinedCourses.method,
           })
           .then((res: HttpResponse<any>) => {
             if (res.status >= 300) {

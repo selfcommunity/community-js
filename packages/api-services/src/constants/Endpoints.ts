@@ -1599,24 +1599,43 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   /**
+   * Community
+   */
+  GetCommunities: {
+    url: urlReplacer('/api/v2/community/'),
+    method: 'GET'
+  },
+  GetCommunity: {
+    url: urlReplacer('/api/v2/community/$(id)/'),
+    method: 'GET'
+  },
+  /**
    * Payments/Paywalls
    */
-  GetContentProducts: {
+  GetPaymentContentStatus: {
+    url: urlReplacer('/api/v2/payments/content_status/'),
+    method: 'GET'
+  },
+  GetPaywalls: {
+    url: urlReplacer('/api/v2/payments/paywall/'),
+    method: 'GET'
+  },
+  GetPaywall: {
+    url: urlReplacer('/api/v2/payments/paywall/$(id)/'),
+    method: 'GET'
+  },
+  GetPaymentProducts: {
     url: urlReplacer('/api/v2/payments/payment_product/'),
     method: 'GET'
   },
-  GetProduct: {
+  GetPaymentProduct: {
     url: urlReplacer('/api/v2/payments/payment_product/$(id)/'),
     method: 'GET'
   },
-  GetProductPrices: {
+  GetPaymentProductPrices: {
     url: urlReplacer('/api/v2/payments/payment_product/$(id)/'),
     method: 'GET'
   },
-	GetCommunityProduct: {
-		url: urlReplacer('/api/v2/payments/payment_product/community/'),
-		method: 'GET'
-	},
   GetCheckoutSession: {
     url: urlReplacer('/api/v2/payments/checkout_session/'),
     method: 'GET'

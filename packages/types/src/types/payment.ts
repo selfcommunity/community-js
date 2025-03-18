@@ -82,9 +82,14 @@ export interface SCPaymentPrice {
   recurring_interval?: string;
 
   /**
-   * Payment product associated
+   * Payment product id associated
    */
   payment_product_id?: number;
+
+  /**
+   * Payment product associated
+   */
+  payment_product?: SCPaymentProduct;
 }
 
 /**
@@ -164,10 +169,4 @@ export interface SCPaymentOrder {
 
 export interface SCPaymentsCustomerPortalSession {
   url: string;
-}
-
-export interface SCCommunityPaymentProducts {
-  id?: number;
-  payment_order?: SCPaymentOrder;
-  paywalls?: SCPaymentProduct[];
 }

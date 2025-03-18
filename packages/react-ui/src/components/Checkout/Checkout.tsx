@@ -4,6 +4,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {EmbeddedCheckout, EmbeddedCheckoutProvider} from '@stripe/react-stripe-js';
+import * as stripeJs from '@stripe/stripe-js';
 import {loadStripe, Stripe} from '@stripe/stripe-js';
 import {PaymentApiClient} from '@selfcommunity/api-services';
 import CheckoutSkeleton from './Skeleton';
@@ -11,15 +12,13 @@ import {PREFIX} from './constants';
 import {SCCheckoutSessionUIMode, SCContentType, SCPurchasableContent} from '@selfcommunity/types';
 import {FormattedMessage, IntlShape, useIntl} from 'react-intl';
 import {getDefaultLocale} from '../../utils/payment';
-import {useSCUser} from '@selfcommunity/react-core';
+import {useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
 import Event from '../Event';
 import Category from '../Category';
 import Course from '../Course';
 import Group from '../Group';
 import {SCEventTemplateType} from '../../types/event';
 import {SCCourseTemplateType} from '../../types/course';
-import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
-import * as stripeJs from '@stripe/stripe-js';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -172,7 +171,7 @@ export default function Checkout(inProps: CheckoutProps) {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {isContentObject && (
+      {isContentObject && contentType !== SCContentType.COMMUNITY && (
         <Box className={classes.content}>
           <Box className={classes.contentObject}>{renderContentObject()}</Box>
           <Box className={classes.contentDesc}>

@@ -20,10 +20,11 @@ import {
 import classNames from 'classnames';
 import React, {MouseEvent, ReactNode, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import PaymentProductsDialog from '../PaymentProductsDialog';
+import PaywallsDialog from '../PaywallsDialog';
 import PaymentProducts from '../PaymentProducts';
 import {CategoryApiClient, GroupApiClient, EventApiClient, CourseApiClient} from '@selfcommunity/api-services';
 import {capitalize} from '@selfcommunity/utils';
+import Paywalls from '../Paywalls';
 
 const PREFIX = 'SCBuyButton';
 
@@ -130,6 +131,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
 
   // CONST
   const [purchased, setPurchased] = useState<boolean | null>(null);
+  const [products, setProducts] = useState<SCPaymentProduct[] | []>([]);
   const [paymentOrder, setPaymentOrder] = useState<SCPaymentOrder | null>(null);
   const [btnLabel, setBtnLabel] = useState<ReactNode>(
     <FormattedMessage defaultMessage={`ui.buyButton.buy${contentType}`} id={`ui.buyButton.buy${capitalize(contentType)}`} />
@@ -176,6 +178,9 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
             if (data.subscription_status === SCEventSubscriptionStatusType.GOING) {
               setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.purchased" id="ui.buyButton.purchased" />);
             }
+            if (data.paywalls) {
+              setProducts(data.paywalls);
+            }
             if (data.payment_order) {
               setPaymentOrder(data.payment_order);
             }
@@ -188,6 +193,9 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
         CategoryApiClient.getSpecificCategory(contentId ? contentId : (content as SCCategoryType).id).then((data) => {
           if (data.followed) {
             setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.subscribed" id="ui.buyButton.subscribed" />);
+          }
+          if (data.paywalls) {
+            setProducts(data.paywalls);
           }
           if (data.payment_order) {
             setPaymentOrder(data.payment_order);
@@ -202,6 +210,9 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
             if (data.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED) {
               setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.subscribed" id="ui.buyButton.subscribed" />);
             }
+            if (data.paywalls) {
+              setProducts(data.paywalls);
+            }
             if (data.payment_order) {
               setPaymentOrder(data.payment_order);
             }
@@ -215,6 +226,9 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
           if (scUserContext.user && data?.managed_by?.id !== scUserContext.user.id) {
             if (data.subscription_status === SCCourseJoinStatusType.JOINED) {
               setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.subscribed" id="ui.buyButton.subscribed" />);
+            }
+            if (data.paywalls) {
+              setProducts(data.paywalls);
             }
             if (data.payment_order) {
               setPaymentOrder(data.payment_order);
@@ -242,7 +256,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
 
   return (
     <>
-      <Tooltip title={disabled == true ? '' : <FormattedMessage id="ui.buyButton.disabled" defaultMessage="ui.buyButton.disabled" />}>
+      <Tooltip title={disabled == true ? <FormattedMessage id="ui.buyButton.disabled" defaultMessage="ui.buyButton.disabled" /> : ''}>
         <RequestRoot
           className={classNames(classes.requestRoot, className)}
           variant="contained"
@@ -270,28 +284,36 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
                 <Typography variant="h5" component="div" marginBottom={2}>
                   <b>
                     {paymentOrder ? (
-                      <FormattedMessage id="ui.paymentProductsDialog.title.purchased" defaultMessage="ui.paymentProductsDialog.title.purchased" />
+                      <FormattedMessage id="ui.paywallssDialog.title.purchased" defaultMessage="ui.paymentProductsDialog.title.purchased" />
                     ) : (
-                      <FormattedMessage id="ui.paymentProductsDialog.title" defaultMessage="ui.paymentProductsDialog.title" />
+                      <FormattedMessage id="ui.paywallssDialog.title" defaultMessage="ui.paymentProductsDialog.title" />
                     )}
                   </b>
                 </Typography>
-                <PaymentProducts
+                <Paywalls
                   contentType={contentType}
                   {...(content ? {content} : {contentId})}
-                  {...(paymentOrder && {paymentOrder: paymentOrder, onUpdatePaymentOrder: handleUpdatePaymentOrder})}
+                  prefetchedPaymentContentStatus={{
+                    paywalls: products,
+                    payment_order: paymentOrder
+                  }}
+                  onUpdatePaymentOrder={handleUpdatePaymentOrder}
                 />
               </>
             </SwipeableDrawerRoot>
           ) : (
             <>
-              <PaymentProductsDialog
+              <PaywallsDialog
                 open
                 onClose={handleClose}
-                PaymentProductsComponentProps={{
+                PaywallsComponentProps={{
                   contentType,
                   ...(content ? {content} : {contentId}),
-                  ...(paymentOrder && {paymentOrder: paymentOrder, onUpdatePaymentOrder: handleUpdatePaymentOrder})
+                  prefetchedPaymentContentStatus: {
+                    paywalls: products,
+                    payment_order: paymentOrder
+                  },
+                  onUpdatePaymentOrder: handleUpdatePaymentOrder
                 }}
               />
             </>
