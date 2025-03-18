@@ -1,14 +1,19 @@
 const Component = {
   styleOverrides: {
-    root: ({theme}: any) => ({}),
+    root: () => ({
+      width: '100%'
+    }),
     snippetRoot: ({theme}: any) => ({
-      overflow: 'visible',
-      boxSizing: 'border-box',
-      paddingLeft: `${theme.spacing()} !important`,
-      paddingRight: `${theme.spacing()} !important`,
-      '& .SCBaseItem-image': {
-        '& .MuiAvatar-root': {
+      '& .SCBaseItemButton-image': {
+        '& .SCCourse-snippet-avatar': {
           width: 100,
+          height: 60,
+          '& img': {
+            borderRadius: '5px'
+          }
+        },
+        '& .SCCourse-snippet-avatar-user-profile-view': {
+          width: 60,
           height: 60,
           '& img': {
             borderRadius: '5px'
@@ -32,19 +37,24 @@ const Component = {
           }
         }
       },
-      '& .SCBaseItem-text': {
+      '& .SCBaseItemButton-text': {
         fontSize: theme.typography.fontSize,
-        '& .SCCourse-snippet-primary': {
+        textAlign: 'start',
+        '& .SCBaseItemButton-primary > a': {
           color: theme.palette.text.primary,
           textDecoration: 'none',
           '&:hover': {
             textDecoration: 'none'
           },
           '& p': {
-            fontWeight: theme.typography.fontWeightBold
+            fontWeight: theme.typography.fontWeightBold,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: 'block'
           }
         },
-        '& .SCCourse-snippet-secondary': {
+        '& .SSCBaseItemButton-secondary > a': {
           color: theme.palette.text.secondary
         }
       },
@@ -85,7 +95,7 @@ const Component = {
         },
         '& .SCCourse-preview-avatar': {
           position: 'absolute',
-          bottom: theme.spacing(-2),
+          bottom: theme.spacing(-1),
           left: theme.spacing(1.5),
           width: theme.selfcommunity.user.avatar.sizeMedium,
           height: theme.selfcommunity.user.avatar.sizeMedium,
@@ -97,7 +107,7 @@ const Component = {
         }
       },
       '& .SCCourse-preview-content': {
-        padding: theme.spacing(1.5, 2, 2, 2),
+        padding: theme.spacing(1, 2, 2, 2),
         '& .SCCourse-preview-creator': {
           textDecoration: 'none',
           color: 'inherit',
@@ -211,6 +221,7 @@ const Component = {
       }
     }),
     skeletonRoot: ({theme}: any) => ({
+      width: '100%',
       '& .SCCourse-skeleton-preview-root': {
         height: '100%',
         [theme.breakpoints.up('sm')]: {
@@ -235,10 +246,6 @@ const Component = {
         }
       },
       '& .SCCourse-skeleton-snippet-root': {
-        overflow: 'visible',
-        boxSizing: 'border-box',
-        paddingLeft: `${theme.spacing()} !important`,
-        paddingRight: `${theme.spacing()} !important`,
         '& .SCCourse-skeleton-snippet-image': {
           position: 'relative',
           '& .MuiSkeleton-root': {
@@ -251,9 +258,6 @@ const Component = {
             left: '50%',
             transform: 'translate(-50%, -50%)'
           }
-        },
-        '& .SCBaseItem-actions': {
-          maxWidth: 'none !important'
         }
       }
     })

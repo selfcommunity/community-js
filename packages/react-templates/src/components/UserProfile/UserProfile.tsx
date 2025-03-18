@@ -13,6 +13,7 @@ import {
   UserConnectionsRequestsWidget,
   UserConnectionsWidget,
   UserCounters,
+  UserCreatedCoursesWidget,
   UserFollowedCategoriesWidget,
   UserFollowedUsersWidget,
   UserFollowersWidget,
@@ -184,6 +185,13 @@ const WIDGETS_FOLLOWERS = [
     componentProps: {},
     column: 'right',
     position: 4
+  },
+  {
+    type: 'widget',
+    component: UserCreatedCoursesWidget,
+    componentProps: {},
+    column: 'right',
+    position: 5
   }
 ];
 

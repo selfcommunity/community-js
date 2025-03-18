@@ -89,7 +89,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
   // EFFECTS
   useEffect(() => {
     setUsers(state.results);
-  }, [state.results]);
+  }, [state.results, setUsers]);
 
   // HANDLERS
   const handleChange = useCallback(
@@ -176,7 +176,6 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           </TableHead>
 
           <TableBody>
-            {users.length === 0 && <RowSkeleton animation={false} editMode={mode !== 'dashboard'} />}
             {users.length > 0 &&
               users.map((user, i) => (
                 <TableRow key={i}>
@@ -210,11 +209,13 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                     </TableCell>
                   )}
                   <TableCell>
-                    <Typography variant="body2">{new Date(mode === 'requests' ? user.date_joined : user.joined_at).toLocaleDateString()}</Typography>
+                    <Typography variant="body2">
+                      {new Date(mode === 'requests' ? user.date_joined : user.joined_at || new Date()).toLocaleDateString()}
+                    </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">
-                      {new Date(mode === 'requests' ? user.date_joined : user.last_active_at).toLocaleDateString()}
+                      {new Date(mode === 'requests' ? user.date_joined : user.last_active_at || new Date()).toLocaleDateString()}
                     </Typography>
                   </TableCell>
                   {mode === 'dashboard' && (

@@ -138,7 +138,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
             />
           </ListItemButton>
         </ListItem>
-        {coursesEnabled && scUserContext.user && (
+        {coursesEnabled && (scUserContext.user || contentAvailable) && (
           <ListItem disablePadding>
             <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}>
               <ListItemIcon>
@@ -155,7 +155,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
             </ListItemButton>
           </ListItem>
         )}
-        {groupsEnabled && scUserContext.user && (
+        {groupsEnabled && (scUserContext.user || contentAvailable) && (
           <ListItem disablePadding>
             <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}>
               <ListItemIcon>

@@ -39,13 +39,13 @@ export interface CourseSectionParams {
  */
 export interface CourseUserParams extends BaseGetParams {
   /**
-   * Filter results by subscription_status
-   */
-  join_status?: SCCourseJoinStatusType;
-  /**
    * Return only courses created by this user id
    */
   created_by?: number;
+  /**
+   *  Filter by join_status; default: ["manager", "joined"]
+   */
+  statuses?: SCCourseJoinStatusType[] | SCCourseJoinStatusType;
 }
 
 /**
@@ -119,7 +119,7 @@ export interface CourseUsersParams extends BaseGetParams {
    * Filter by join_status; default: ["manager", "joined"].
    * Only creator, manager and joined are valid status for this route
    */
-  statuses?: SCCourseJoinStatusType[];
+  statuses?: SCCourseJoinStatusType[] | SCCourseJoinStatusType;
 }
 
 /**

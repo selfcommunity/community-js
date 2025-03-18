@@ -85,7 +85,7 @@ export default function UploadCourseCover(inProps: UploadCourseCoverProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {courseId, onChange, className = false, isCreationMode = false, ...rest} = props;
+  const {courseId = null, onChange, className = false, isCreationMode = false, ...rest} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -105,41 +105,43 @@ export default function UploadCourseCover(inProps: UploadCourseCoverProps): JSX.
 
   /**
    * Handles file upload
-   * @param course
+   * @param event
    */
-  const handleUpload = (course) => {
-    fileInput = course.target.files[0];
-    if (fileInput) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const img = new Image();
-        img.onload = () => {
-          isCreationMode ? onChange && onChange(fileInput) : handleSave();
-        };
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        img.src = e.target.result;
+  const handleUpload = (event) => {
+    const selectedFile = event.target.files[0];
+    if (!selectedFile) return;
+    fileInput = selectedFile;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        if (isCreationMode) {
+          onChange(fileInput);
+        } else {
+          onChange(fileInput);
+          handleSave();
+        }
       };
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
-      reader.readAsDataURL(fileInput);
-    }
+      img.src = e.target.result as string;
+    };
+    reader.readAsDataURL(selectedFile);
   };
 
   /**
    * Handles cover saving after upload action
    */
   function handleSave() {
+    if (!fileInput) {
+      return;
+    }
     setLoading(true);
     const formData = new FormData();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     formData.append('image_original', fileInput);
     CourseService.changeCourseCover(courseId, formData, {headers: {'Content-Type': 'multipart/form-data'}})
-      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-      // @ts-ignore
       .then((data: SCCourseType) => {
-        onChange && onChange(data.image_medium);
+        // onChange && onChange(data.image_medium);
         setLoading(false);
       })
       .catch((error) => {

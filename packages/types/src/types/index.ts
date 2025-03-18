@@ -172,7 +172,7 @@ import {
   SCPaymentProductTemplateType,
   SCCheckoutSessionUIMode
 } from './payment';
-import {type SCCommunity} from './community';
+import {type SCCommunityType} from './community';
 
 /**
  * Exports all types
@@ -371,5 +371,5 @@ export {
   type SCPaymentsCustomerPortalSession,
   SCPaymentProductTemplateType,
   SCCheckoutSessionUIMode,
-  type SCCommunity
+  type SCCommunityType
 };

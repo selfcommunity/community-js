@@ -25,7 +25,7 @@ export interface CourseApiClientInterface {
   getJoinedCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
 
   // Courses subscribed by the user identified with :id in the path params (for the rest it is the same as getUserCourses)
-  getUserJoinedCourses(id: number | string, params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
+  getUserJoinedCourses(id: number | string, params?: CourseUsersParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
 
   // Courses search
   searchCourses(params?: CourseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
@@ -206,10 +206,15 @@ export class CourseApiClient {
   /**
    * This endpoint retrieves a specific course.
    * @param id
+   * @param params
    * @param config
    */
-  static getUserJoinedCourses(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
-    return apiRequest({...config, url: Endpoints.GetUserJoinedCourses.url({id}), method: Endpoints.GetUserJoinedCourses.method});
+  static getUserJoinedCourses(
+    id: number | string,
+    params?: CourseUsersParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCCourseType>> {
+    return apiRequest({...config, params, url: Endpoints.GetUserJoinedCourses.url({id}), method: Endpoints.GetUserJoinedCourses.method});
   }
   /**
    * This endpoint performs events search
@@ -816,8 +821,12 @@ export default class CourseService {
   static async getJoinedCourses(params?: CourseUserParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
     return CourseApiClient.getJoinedCourses(params, config);
   }
-  static async getUserJoinedCourses(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
-    return CourseApiClient.getUserJoinedCourses(id, config);
+  static async getUserJoinedCourses(
+    id: number | string,
+    params?: CourseUsersParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCCourseType>> {
+    return CourseApiClient.getUserJoinedCourses(id, params, config);
   }
   static async searchCourses(params?: CourseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
     return CourseApiClient.searchCourses(params, config);

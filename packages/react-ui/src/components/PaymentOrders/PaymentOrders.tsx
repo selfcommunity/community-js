@@ -12,7 +12,7 @@ import {
   TableRow,
   Typography,
   Stack,
-  CircularProgress
+  CircularProgress,
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -24,6 +24,13 @@ import classNames from 'classnames';
 import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {getConvertedAmount} from '../../utils/payment';
 import Event from '../Event';
+import {SCCategoryType, SCCommunityType, SCContentType, SCCourseType, SCEventType, SCGroupType, SCPaymentOrder} from '@selfcommunity/types';
+import {CacheStrategies} from '@selfcommunity/utils';
+import {SCCourseTemplateType, SCEventTemplateType} from '@selfcommunity/react-ui';
+import Category from '../Category';
+import Course from '../Course';
+import Group from '../Group';
+import PaymentProduct from '../PaymentProduct';
 
 const PREFIX = 'SCPaymentOrders';
 
@@ -107,6 +114,52 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
       await loadItems();
     }
   }, [orders, isLoadingPage, isLoading, hasMore, next]);
+
+  const renderContent = (order: SCPaymentOrder) => {
+    const contentType: SCContentType = order.content_type;
+    const content: SCEventType | SCCategoryType | SCCourseType | SCGroupType | SCCommunityType = order[order.content_type];
+    if (contentType === SCContentType.EVENT) {
+      return (
+        <Event
+          event={content as SCEventType}
+          cacheStrategy={CacheStrategies.NETWORK_ONLY}
+          template={SCEventTemplateType.SNIPPET}
+          actions={<></>}
+          variant="outlined"
+        />
+      );
+    } else if (contentType === SCContentType.CATEGORY) {
+      return <Category category={content as SCCategoryType} cacheStrategy={CacheStrategies.NETWORK_ONLY} actions={<></>} variant="outlined" />;
+    } else if (contentType === SCContentType.COURSE) {
+      return (
+        <Course
+          course={content as SCCourseType}
+          cacheStrategy={CacheStrategies.NETWORK_ONLY}
+          template={SCCourseTemplateType.SNIPPET}
+          actions={<></>}
+          hideEventParticipants
+          hideEventPlanner
+          variant="outlined"
+        />
+      );
+    } else if (contentType === SCContentType.GROUP) {
+      return (
+        <Group
+          group={content as SCGroupType}
+          cacheStrategy={CacheStrategies.NETWORK_ONLY}
+          hideActions
+          variant="outlined"
+          hideEventParticipants
+          hideEventPlanner
+        />
+      );
+    } else if (contentType === SCContentType.COMMUNITY) {
+      if (order?.payment_price?.payment_product) {
+        return <PaymentProduct hidePaymentProductPrices paymentProduct={order.payment_price.payment_product} />;
+      }
+      return null;
+    }
+  };
 
   /**
    * Load more orders
@@ -203,9 +256,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                       <b>{order.id}</b>
                     </TableCell>
                     <TableCell scope="row">{order.content_type}</TableCell>
-                    <TableCell scope="row">
-                      <Event event={order[order.content_type]} actions={<></>} />
-                    </TableCell>
+                    <TableCell scope="row">{renderContent(order)}</TableCell>
                     <TableCell scope="row">{getConvertedAmount(order.payment_price)}</TableCell>
                     <TableCell scope="row">
                       {order.created_at &&

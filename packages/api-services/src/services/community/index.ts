@@ -3,7 +3,7 @@ import Endpoints from '../../constants/Endpoints';
 import {BaseGetParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
-import {SCCommunity} from '@selfcommunity/types';
+import {SCCommunityType} from '@selfcommunity/types';
 
 export interface CommunityApiClientInterface {
   /**
@@ -11,14 +11,14 @@ export interface CommunityApiClientInterface {
    * @param params
    * @param config
    */
-  getCommunities(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCommunity>>;
+  getCommunities(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCommunityType>>;
 
   /**
    * Get Community
    * @param id
    * @param config
    */
-  getCommunity(id: number | string, config?: AxiosRequestConfig): Promise<SCCommunity>;
+  getCommunity(id: number | string, config?: AxiosRequestConfig): Promise<SCCommunityType>;
 }
 
 /**
@@ -30,7 +30,7 @@ export class CommunityApiClient {
    * @param params
    * @param config
    */
-  static getCommunities(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCommunity>> {
+  static getCommunities(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCommunityType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetCommunities.url({})}?${p.toString()}`, method: Endpoints.GetCommunities.method});
   }
@@ -40,7 +40,7 @@ export class CommunityApiClient {
    * @param id
    * @param config
    */
-  static getCommunity(id: number | string, config?: AxiosRequestConfig): Promise<SCCommunity> {
+  static getCommunity(id: number | string, config?: AxiosRequestConfig): Promise<SCCommunityType> {
     return apiRequest({...config, url: Endpoints.GetCommunity.url({id}), method: Endpoints.GetCommunity.method});
   }
 }
@@ -73,10 +73,10 @@ export class CommunityApiClient {
  :::
  */
 export default class CommunityService {
-  static async getCommunities(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCommunity>> {
+  static async getCommunities(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCommunityType>> {
     return CommunityApiClient.getCommunities(params, config);
   }
-  static async getPaymentProduct(id: number | string, config?: AxiosRequestConfig): Promise<SCCommunity> {
+  static async getPaymentProduct(id: number | string, config?: AxiosRequestConfig): Promise<SCCommunityType> {
     return CommunityApiClient.getCommunity(id, config);
   }
 }

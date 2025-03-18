@@ -1,6 +1,6 @@
 import {SCPurchasableContent} from './payment';
 
-export interface SCCommunity extends SCPurchasableContent {
+export interface SCCommunityType extends SCPurchasableContent {
   /**
    * Id community
    */

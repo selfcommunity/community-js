@@ -3,6 +3,7 @@ import {SCEventType} from './event';
 import {SCCourseType} from './course';
 import {SCGroupType} from './group';
 import {SCCategoryType} from './category';
+import {SCCommunityType} from './community';
 
 export interface SCPaymentProduct {
   /**
@@ -165,6 +166,30 @@ export interface SCPaymentOrder {
    * Price
    */
   payment_price?: SCPaymentPrice;
+  /**
+   * Content type
+   */
+  content_type: SCContentType;
+  /**
+   * Content event
+   */
+  event?: SCEventType;
+  /**
+   * Content course
+   */
+  course?: SCCourseType;
+  /**
+   * Content group
+   */
+  group?: SCGroupType;
+  /**
+   * Content category
+   */
+  category?: SCCategoryType;
+  /**
+   * Content community
+   */
+  community?: SCCommunityType;
 }
 
 export interface SCPaymentsCustomerPortalSession {

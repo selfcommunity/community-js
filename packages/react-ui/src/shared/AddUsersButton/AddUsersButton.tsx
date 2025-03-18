@@ -170,7 +170,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
   const handleConfirm = useCallback(() => {
     onConfirm?.(invited);
     setInvited([]);
-  }, [invited]);
+  }, [invited, onConfirm]);
 
   // HANDLERS AUTOCOMPLETE
   const handleInputChange = useCallback(

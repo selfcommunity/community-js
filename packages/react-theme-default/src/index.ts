@@ -187,6 +187,7 @@ import SCUserConnectionsRequestsSentWidget from './components/SCUserConnectionsR
 import SCUserConnectionsRequestsWidget from './components/SCUserConnectionsRequestsWidget';
 import SCUserConnectionsWidget from './components/SCUserConnectionsWidget';
 import SCUserCounters from './components/SCUserCounters';
+import SCUserCreatedCoursesWidget from './components/SCUserCreatedCoursesWidget';
 import SCUserFeedTemplate from './components/SCUserFeedTemplate';
 import SCUserFollowedUsersWidget from './components/SCUserFollowedUsersWidget';
 import SCUserFollowersWidget from './components/SCUserFollowersWidget';
@@ -444,6 +445,7 @@ const theme = {
     SCUserConnectionsRequestsWidget,
     SCUserConnectionsWidget,
     SCUserCounters,
+    SCUserCreatedCoursesWidget,
     SCUserFeedTemplate,
     SCUserFollowedUsersWidget,
     SCUserFollowersWidget,

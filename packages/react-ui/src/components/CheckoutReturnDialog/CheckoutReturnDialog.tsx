@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
 import {Box, Button, CircularProgress, Dialog, DialogContent, DialogProps, DialogTitle, Slide, Stack, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
@@ -7,7 +7,18 @@ import {TransitionProps} from '@mui/material/transitions';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {SCCategoryType, SCCheckoutSessionStatus, SCContentType, SCCourseType, SCEventType, SCGroupType, SCPaymentProduct} from '@selfcommunity/types';
 import {CLAPPING} from '../../assets/courses/clapping';
-import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCPaymentsEnabled, useSCRouting, useSCUser} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContext,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  useSCPaymentsEnabled,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import Event from '../Event';
 import {SCEventTemplateType} from '../../types/event';
 import {SCCourseTemplateType} from '../../types/course';
@@ -48,6 +59,7 @@ export interface CheckoutReturnDialogProps extends DialogProps {
   checkoutSessionId: string;
   disableInitialTransition?: boolean;
   onHandleViewContentPurchased?: (redirectUrl: string) => void;
+  returnUrl?: string;
 }
 
 export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps) {
@@ -56,7 +68,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     props: inProps,
     name: PREFIX
   });
-  const {className, checkoutSessionId, disableInitialTransition = false, onHandleViewContentPurchased, ...rest} = props;
+  const {className, checkoutSessionId, disableInitialTransition = false, onHandleViewContentPurchased, returnUrl, ...rest} = props;
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
@@ -72,6 +84,11 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const appUrl = useMemo(
+    () => scPreferencesContext.preferences && scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_APP_URL].value,
+    [scPreferencesContext.preferences]
+  );
 
   /**
    * Handle view new object purchased
@@ -91,13 +108,16 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
       case SCContentType.COURSE:
         _redirectUrl = scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, content);
         break;
+      case SCContentType.COMMUNITY:
+        _redirectUrl = appUrl;
+        break;
       default:
         break;
     }
     if (onHandleViewContentPurchased) {
-      onHandleViewContentPurchased(_redirectUrl);
+      onHandleViewContentPurchased(returnUrl ? returnUrl : _redirectUrl);
     } else if (_redirectUrl) {
-      window.location.href = _redirectUrl;
+      window.location.href = returnUrl ? returnUrl : _redirectUrl;
     }
   }, [scRoutingContext, onHandleViewContentPurchased, content, contentType]);
 

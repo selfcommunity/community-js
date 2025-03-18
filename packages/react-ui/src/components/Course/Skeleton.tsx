@@ -4,10 +4,11 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import React from 'react';
-import BaseItem from '../../shared/BaseItem';
 import {SCCourseTemplateType} from '../../types/course';
 import Widget, {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
+import BaseItemButton from '../../shared/BaseItemButton';
+import {CourseProps} from './Course';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
@@ -30,7 +31,7 @@ const SkeletonPreviewRoot = styled(Box, {
   slot: 'SkeletonPreviewRoot'
 })(() => ({}));
 
-const SkeletonSnippetRoot = styled(BaseItem, {
+const SkeletonSnippetRoot = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'SkeletonSnippetRoot'
 })(() => ({}));
@@ -54,6 +55,10 @@ export interface CourseSkeletonProps extends WidgetProps {
    * Prop to pass an action to be rendered next to the skeleton
    */
   actions?: React.ReactNode;
+  /**
+   * CourseProps
+   */
+  CourseProps?: CourseProps;
 }
 
 /**
@@ -84,7 +89,7 @@ export default function CourseSkeleton(inProps: CourseSkeletonProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {className, template, skeletonsAnimation = 'wave', actions, ...rest} = props;
+  const {className, template, skeletonsAnimation = 'wave', actions, CourseProps, ...rest} = props;
 
   /**
    * Renders course object
@@ -116,15 +121,26 @@ export default function CourseSkeleton(inProps: CourseSkeletonProps): JSX.Elemen
         className={classes.skeletonSnippetRoot}
         image={
           <Box className={classes.skeletonSnippetImage}>
-            <Skeleton animation={skeletonsAnimation} variant="rectangular" width={100} height={60} /> <Icon fontSize="large">courses</Icon>
+            <Skeleton animation={skeletonsAnimation} variant="rectangular" width={CourseProps?.userProfileSnippet ? 60 : 100} height={60} />
+            <Icon fontSize="large">courses</Icon>
           </Box>
         }
-        primary={<Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="40%" style={{marginBottom: 12}} />}
+        primary={
+          CourseProps?.userProfileSnippet ? (
+            <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width={120} style={{marginBottom: 10}} />
+          ) : (
+            <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width={40} style={{marginBottom: 12}} />
+          )
+        }
         secondary={
-          <>
-            <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="60%" style={{marginBottom: 10, marginRight: 5}} />
-            <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width="35%" />
-          </>
+          CourseProps?.userProfileSnippet ? (
+            <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width={60} />
+          ) : (
+            <>
+              <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width={120} style={{marginBottom: 10}} />
+              <Skeleton animation={skeletonsAnimation} variant="rectangular" height={10} width={60} />
+            </>
+          )
         }
         actions={
           <>
@@ -132,7 +148,7 @@ export default function CourseSkeleton(inProps: CourseSkeletonProps): JSX.Elemen
               actions
             ) : (
               <Button size="small" variant="outlined" disabled>
-                <Skeleton animation={skeletonsAnimation} height={10} width={30} style={{marginTop: 5, marginBottom: 5}} />
+                <Skeleton animation={skeletonsAnimation} height={15} width={60} />
               </Button>
             )}
           </>

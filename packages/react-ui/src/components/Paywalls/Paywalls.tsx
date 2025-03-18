@@ -49,18 +49,16 @@ export default function Paywalls(inProps: PaywallsProps) {
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
   const isMountedRef = useIsComponentMountedRef();
 
-  // Check if the payment price is in the current list
-  const isPaymentProductPriceIncluded = useMemo(() => {
+  // Check if the payment price of the purchase is in the current list
+  const isPricePurchasedIncluded = useMemo(() => {
     let _included = false;
-    if (!products.length) {
+    if (!products.length || !paymentOrder) {
       return true;
     }
     products.map((p) => {
       if (p.payment_prices) {
         const _ids = p.payment_prices.map((price) => price.id);
-        console.log(_ids);
         if (_ids.indexOf(paymentOrder.payment_price.id) > -1) {
-          console.log('found payment order', paymentOrder.payment_price.id, _ids);
           _included = _included || true;
         }
       }
@@ -112,7 +110,7 @@ export default function Paywalls(inProps: PaywallsProps) {
             paymentOrder={paymentOrder}
             {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
           />
-          {paymentOrder && !isPaymentProductPriceIncluded && (
+          {paymentOrder && !isPricePurchasedIncluded && (
             <Alert severity="error" className={classes.error}>
               <FormattedMessage id="ui.paywalls.priceNotIncluded" defaultMessage="ui.paywalls.priceNotIncluded" />
             </Alert>

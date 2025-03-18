@@ -16,6 +16,7 @@ import {SCCourseLessonType, SCCourseLessonTypologyType, SCCourseSectionType, SCC
 import {CourseService, Endpoints} from '@selfcommunity/api-services';
 import {ActionLessonType} from '../types';
 import {useDisabled} from '../hooks';
+import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 
 const classes = {
   tableBodyIconWrapper: `${PREFIX}-table-body-icon-wrapper`,
@@ -41,7 +42,8 @@ function SectionRow(props: SectionRowProps) {
   const {course, provider, section, isNewRow, handleManageSection} = props;
 
   // STATES
-  const [open, setOpen] = useState(true);
+  const [expand, setExpand] = useState(true);
+  const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [lessons, setLessons] = useState<SCCourseLessonType[]>([]);
 
@@ -73,11 +75,11 @@ function SectionRow(props: SectionRowProps) {
   }, []);
 
   // HANDLERS
-  const handleExpandAccordion = useCallback(() => setOpen((prev) => !prev), [setOpen]);
+  const handleExpandAccordion = useCallback(() => setExpand((prev) => !prev), [setExpand]);
 
   const handleDragEnd = useCallback(
     (e: DropResult<string>) => {
-      if (!e.destination) {
+      if (!e.destination || e.destination.index === e.source.index) {
         return;
       }
 
@@ -95,7 +97,17 @@ function SectionRow(props: SectionRowProps) {
       };
 
       CourseService.patchCourseSection(course.id, section.id, data)
-        .then(() => handleManageSection(tempSection, ActionLessonType.UPDATE))
+        .then(() => {
+          handleManageSection(tempSection, ActionLessonType.UPDATE);
+
+          enqueueSnackbar(
+            <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.save" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.save" />,
+            {
+              variant: 'success',
+              autoHideDuration: 3000
+            }
+          );
+        })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
 
@@ -186,13 +198,17 @@ function SectionRow(props: SectionRowProps) {
     [section, handleManageSection]
   );
 
+  const handleOpenDialog = useCallback(() => {
+    setOpen((prev) => !prev);
+  }, [setOpen]);
+
   return (
     <Fragment>
       <TableRow {...provider.draggableProps} ref={provider.innerRef} className={classes.tableBodyAccordion}>
         <TableCell component="th" scope="row" {...provider.dragHandleProps} className={classNames(classes.cellWidth, classes.cellPadding)}>
           <Stack className={classes.tableBodyIconWrapper}>
             <IconButton aria-label="expand row" size="small" onClick={handleExpandAccordion}>
-              {open ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
+              {expand ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
             </IconButton>
 
             <Icon color="disabled">drag</Icon>
@@ -237,7 +253,7 @@ function SectionRow(props: SectionRowProps) {
                   <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
                 </Typography>
               </MenuItem>
-              <MenuItem onClick={handleDeleteSection}>
+              <MenuItem onClick={handleOpenDialog}>
                 <Typography variant="body1">
                   <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
                 </Typography>
@@ -249,7 +265,7 @@ function SectionRow(props: SectionRowProps) {
 
       <TableRow>
         <TableCell className={classes.tableBodyCollapseWrapper} colSpan={4}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={expand} timeout="auto" unmountOnExit>
             <DragDropContext onDragEnd={handleDragEnd}>
               <Table>
                 <Droppable droppableId="droppable-2">
@@ -277,6 +293,7 @@ function SectionRow(props: SectionRowProps) {
               </Table>
             </DragDropContext>
           </Collapse>
+          {open && <ConfirmDialog open onClose={handleOpenDialog} onConfirm={handleDeleteSection} />}
         </TableCell>
       </TableRow>
     </Fragment>

@@ -34,14 +34,14 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
 
   // STATES
   const [loading, setLoading] = useState(false);
-  const [name, setName] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(row.name);
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
 
   // DEBOUNCE
-  const debounceSetData = debounce((name: string) => {
-    setName(name);
+  const debounceSetData = debounce((newName: string) => {
+    setName(newName);
   }, 300);
 
   // HANDLERS
