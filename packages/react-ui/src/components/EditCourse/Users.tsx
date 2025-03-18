@@ -17,7 +17,9 @@ import PubSub from 'pubsub-js';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
-  usersStatusWrapper: `${PREFIX}-users-status-wrapper`
+  usersStatusWrapper: `${PREFIX}-users-status-wrapper`,
+  contrastColor: `${PREFIX}-contrast-color`,
+  contrastBgColor: `${PREFIX}-contrast-bg-color`
 };
 
 const headerCells = [
@@ -145,7 +147,7 @@ function Users(props: UsersProps) {
 
   return (
     <Box>
-      <Typography variant="h6">
+      <Typography variant="h6" className={classes.contrastColor}>
         <FormattedMessage
           id="ui.editCourse.tab.users.title"
           defaultMessage="ui.editCourse.tab.users.title"
@@ -164,6 +166,7 @@ function Users(props: UsersProps) {
           }}
           onConfirm={handleConfirm}
           isUpdating={state.isLoadingPrevious}
+          className={classes.contrastBgColor}
         />
       </Stack>
 

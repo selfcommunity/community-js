@@ -5,13 +5,15 @@ import {PREFIX} from './constants';
 import {memo, useMemo} from 'react';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCCourseEditTabType} from '../../types';
+import classNames from 'classnames';
 
 const classes = {
   header: `${PREFIX}-header`,
   img: `${PREFIX}-header-img`,
   outerWrapper: `${PREFIX}-header-outer-wrapper`,
   innerWrapper: `${PREFIX}-header-inner-wrapper`,
-  iconWrapper: `${PREFIX}-header-icon-wrapper`
+  iconWrapper: `${PREFIX}-header-icon-wrapper`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 type DataUrlEditDashboard = {
@@ -66,12 +68,14 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
     <Box className={classes.header}>
       <img src={course.image_bigger} alt={course.image_bigger} className={classes.img} />
 
-      <Typography variant="h3">{course.name}</Typography>
+      <Typography variant="h3" className={classes.contrastColor}>
+        {course.name}
+      </Typography>
 
       <Stack className={classes.outerWrapper}>
         <Stack className={classes.innerWrapper}>
           {iconData.map((data, i) => (
-            <Stack key={i} className={classes.iconWrapper}>
+            <Stack key={i} className={classNames(classes.iconWrapper, classes.contrastColor)}>
               <Icon fontSize="small">{data.icon}</Icon>
 
               <Typography variant="body2">

@@ -20,7 +20,8 @@ const classes = {
   header: `${PREFIX}-header`,
   tabList: `${PREFIX}-tab-list`,
   tab: `${PREFIX}-tab`,
-  tabPanel: `${PREFIX}-tab-panel`
+  tabPanel: `${PREFIX}-tab-panel`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const TAB_DATA = [
@@ -128,9 +129,11 @@ export default function EditCourse(inProps: EditCourseProps) {
     <Root className={classNames(classes.root, className)} {...rest}>
       <Stack className={classes.header}>
         <IconButton href={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)} size="small">
-          <Icon>arrow_back</Icon>
+          <Icon className={classes.contrastColor}>arrow_back</Icon>
         </IconButton>
-        <Typography variant="h5">{scCourse.name}</Typography>
+        <Typography variant="h5" className={classes.contrastColor}>
+          {scCourse.name}
+        </Typography>
       </Stack>
 
       <TabContext value={tabValue}>
@@ -151,7 +154,7 @@ export default function EditCourse(inProps: EditCourseProps) {
                 </Typography>
               }
               value={data.value}
-              className={classes.tab}
+              className={classNames(classes.tab, classes.contrastColor)}
             />
           ))}
         </TabList>

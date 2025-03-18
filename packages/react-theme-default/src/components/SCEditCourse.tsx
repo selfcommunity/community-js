@@ -1,8 +1,18 @@
+import {getContrastRatio} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
       [theme.breakpoints.down('sm')]: {
         marginBottom: '56px'
+      },
+
+      '& .SCEditCourse-contrast-color': {
+        color: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
+      },
+
+      '& .SCEditCourse-contrast-bg-color': {
+        backgroundColor: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
       },
 
       '& .SCEditCourse-header': {

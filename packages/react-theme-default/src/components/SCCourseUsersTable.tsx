@@ -1,6 +1,12 @@
+import {getContrastRatio} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
+      '&.SCCourseUsersTable-contrast-bg-color': {
+        backgroundColor: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
+      },
+
       '& .SCCourseUsersTable-search': {
         '& > .MuiInputBase-root': {
           borderBottomLeftRadius: 'unset',
