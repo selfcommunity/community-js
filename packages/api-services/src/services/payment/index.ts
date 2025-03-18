@@ -1,9 +1,16 @@
 import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
-import {BaseGetParams, PaymentContentStatusParams, SCPaginatedResponse} from '../../types';
+import {BaseGetParams, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
-import {CheckoutCreateSessionParams, CheckoutSessionParams, PaymentProductsParams, CustomerPortalCreateSessionParams} from '../../types/payment';
+import {
+  CheckoutCreateSessionParams,
+  CheckoutSessionParams,
+  PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  PaymentContentStatusParams,
+  PaymentOrderParams
+} from '../../types/payment';
 import {
   SCCheckoutSession,
   SCPaymentOrder,
@@ -78,7 +85,7 @@ export interface PaymentApiClientInterface {
    * @param params
    * @param config
    */
-  getPaymentsOrder(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>>;
+  getPaymentsOrder(params?: PaymentOrderParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>>;
 
   /**
    * This endpoint retrieve customer portal
@@ -190,8 +197,9 @@ export class PaymentApiClient {
    * @param params
    * @param config
    */
-  static getPaymentsOrder(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
-    return apiRequest({...config, url: Endpoints.GetPaymentOrders.url({}), method: Endpoints.GetPaymentOrders.method});
+  static getPaymentsOrder(params?: PaymentOrderParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.GetPaymentOrders.url({})}?${p.toString()}`, method: Endpoints.GetPaymentOrders.method});
   }
 
   /**
@@ -272,7 +280,7 @@ export default class PaymentService {
   static async checkoutCompleteSession(data: CheckoutSessionParams | FormData, config?: AxiosRequestConfig): Promise<SCCheckoutSessionComplete> {
     return PaymentApiClient.checkoutCompleteSession(data, config);
   }
-  static getPaymentsOrder(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
+  static getPaymentsOrder(params?: PaymentOrderParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
     return PaymentApiClient.getPaymentsOrder(params, config);
   }
   static getPaymentsCustomerPortal(

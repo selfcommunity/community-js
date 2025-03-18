@@ -12,7 +12,7 @@ import {
   TableRow,
   Typography,
   Stack,
-  CircularProgress,
+  CircularProgress
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -97,7 +97,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
   const loadMore = useCallback(async () => {
     const loadItems = async () => {
       try {
-        const res = await PaymentService.getPaymentsOrder({offset: orders.length});
+        const res = await PaymentService.getPaymentsOrder({offset: orders.length, order_by: '-created_at'});
         if (res) {
           setHasMore(res.next !== null);
           setNext(res.next);

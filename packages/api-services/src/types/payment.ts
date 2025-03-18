@@ -1,4 +1,4 @@
-import {BaseGetParams} from './baseParams';
+import {BaseGetParams, BaseSearchParams} from './baseParams';
 import {SCCheckoutSessionUIMode, SCContentType} from '@selfcommunity/types';
 
 /**
@@ -72,4 +72,14 @@ export interface PaymentContentStatusParams extends BaseGetParams {
    * Content type
    */
   content_type?: SCContentType;
+}
+
+/**
+ * PaymentOrderParams interface.
+ */
+export interface PaymentOrderParams extends BaseSearchParams {
+  /**
+   * Ordering
+   */
+  order_by?: string;
 }

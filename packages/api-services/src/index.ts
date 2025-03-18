@@ -137,7 +137,8 @@ import {
   PaymentProductsParams,
   CustomerPortalCreateSessionParams,
   CheckoutSessionParams,
-  CheckoutCreateSessionParams
+  CheckoutCreateSessionParams,
+  PaymentOrderParams
 } from './types';
 
 /**
@@ -343,5 +344,6 @@ export {
   PaymentProductsParams,
   CustomerPortalCreateSessionParams,
   CheckoutSessionParams,
-  CheckoutCreateSessionParams
+  CheckoutCreateSessionParams,
+  PaymentOrderParams
 };
