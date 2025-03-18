@@ -49,7 +49,6 @@ export default function UserCreatedCoursesWidgetSkeleton(props): JSX.Element {
           ))}
         </List>
       </CardContent>
-      );
     </Root>
   );
 }
