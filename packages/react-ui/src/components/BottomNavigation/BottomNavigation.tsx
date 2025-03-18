@@ -154,7 +154,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 disableRipple
               />
             ) : null,
-            coursesEnabled && scUserContext.user ? (
+            coursesEnabled && (scUserContext.user || contentAvailable) ? (
               <BottomNavigationAction
                 key="courses"
                 className={classes.action}
@@ -185,7 +185,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 disableRipple
               />
             ) : null,
-            eventsEnabled ? (
+            eventsEnabled && (scUserContext.user || contentAvailable) ? (
               <BottomNavigationAction
                 key="events"
                 className={classes.action}
