@@ -1,5 +1,3 @@
-import theme from '@selfcommunity/react-theme-default';
-
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
