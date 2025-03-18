@@ -4,7 +4,6 @@ import {Avatar, Box, Divider, LinearProgress, Skeleton, Stack, styled, Typograph
 import classNames from 'classnames';
 import HeaderCourseDashboard from './Header';
 import {
-  SCContentType,
   SCCourseJoinStatusType,
   SCCourseLessonCompletionStatusType,
   SCCoursePrivacyType,
@@ -22,7 +21,6 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import StudentSkeleton from './Student/Skeleton';
 import UserAvatar from '../../shared/UserAvatar';
-import BuyButton from '../BuyButton';
 
 const BUTTON_MESSAGES = {
   dashboard: 'ui.course.dashboard.student.button.dashboard',
