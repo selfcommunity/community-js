@@ -162,7 +162,13 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
   /**
    * if the category is a paid content and it isn't followed show the Buy button
    */
-  if (scCategory && scUserContext.user && isPaymentsEnabled && scCategory.paywalls?.length > 0 && !followed) {
+  if (
+    scCategory &&
+    scUserContext.user &&
+    isPaymentsEnabled &&
+    scCategory.paywalls?.length > 0 &&
+    (!followed || scCategoriesManager.isLoading(scCategory))
+  ) {
     return <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} disabled={disableBuyContentIfPaidContent} />;
   }
 

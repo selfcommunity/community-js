@@ -15,7 +15,7 @@ import {
 import {PREFIX} from './constants';
 import PaymentProductSkeleton from './Skeleton';
 import Accordion from '@mui/material/Accordion';
-import PaymentProductPrice from '../PaymentProductPrice';
+import PaymentProductPrice, {PaymentProductPriceProps} from '../PaymentProductPrice';
 import {ButtonProps} from '@mui/material/Button/Button';
 import {Logger} from '@selfcommunity/utils/src/utils/logger';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -40,6 +40,8 @@ export interface PaymentProductProps extends Pick<AccordionProps, Exclude<keyof 
   onUpdatePaymentOrder?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
   template?: SCPaymentProductTemplateType;
   expanded?: boolean;
+  hidePaymentProductPrices?: boolean;
+  PaymentProductPriceComponentProps?: PaymentProductPriceProps;
 }
 
 export default function PaymentProduct(inProps: PaymentProductProps) {
@@ -59,6 +61,8 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
     onUpdatePaymentOrder,
     template = SCPaymentProductTemplateType.DETAIL,
     expanded,
+    hidePaymentProductPrices = false,
+    PaymentProductPriceComponentProps = {},
     ...rest
   } = props;
 
@@ -97,7 +101,7 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
       {...rest}>
       <AccordionSummary aria-controls="panel1-content" id="panel1-header">
         <Typography variant="h5" component="div">
-          <b>{scPaymentProduct.name}</b>
+          <b>{scPaymentProduct.name && scPaymentProduct.name}</b>
         </Typography>
         {scPaymentProduct.description && (
           <Typography variant="body1" component="div">
@@ -106,15 +110,17 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
         )}
       </AccordionSummary>
       <AccordionDetails>
-        {scPaymentProduct.payment_prices.map((price, index) => (
-          <PaymentProductPrice
-            price={price}
-            key={index}
-            {...(contentType && {contentType})}
-            {...(content ? {content} : {contentId})}
-            {...(paymentOrder && {paymentOrder, onHandleActionBuy: onUpdatePaymentOrder})}
-          />
-        ))}
+        {!hidePaymentProductPrices &&
+          scPaymentProduct.payment_prices.map((price, index) => (
+            <PaymentProductPrice
+              price={price}
+              key={index}
+              {...PaymentProductPriceComponentProps}
+              {...(contentType && {contentType})}
+              {...(content ? {content} : {contentId})}
+              {...(paymentOrder && {paymentOrder, onHandleActionBuy: onUpdatePaymentOrder})}
+            />
+          ))}
       </AccordionDetails>
     </Root>
   );

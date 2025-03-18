@@ -36,6 +36,7 @@ export interface PaymentProductPriceProps {
   actions?: React.ReactNode;
   paymentOrder?: SCPaymentOrder;
   onHandleActionBuy?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
+  returnUrlParams?: Record<string, string>;
 }
 
 export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
@@ -44,7 +45,7 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, id, price, contentType, contentId, content, actions, onHandleActionBuy, paymentOrder, ...rest} = props;
+  const {className, id, price, contentType, contentId, content, actions, onHandleActionBuy, paymentOrder, returnUrlParams, ...rest} = props;
 
   // ROUTING
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -128,11 +129,11 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
                 component={Link}
                 startIcon={<Icon>card_giftcard</Icon>}
                 {...(onHandleActionBuy && {onClick: handleActionBuy})}
-                to={scRoutingContext.url(SCRoutes.CHECKOUT_PAYMENT, {
+                to={`${scRoutingContext.url(SCRoutes.CHECKOUT_PAYMENT, {
                   content_type: contentType.toLowerCase(),
                   content_id: content ? content.id : contentId,
                   price_id: price.id
-                })}>
+                })}?${returnUrlParams ? new URLSearchParams(returnUrlParams) : ''}`}>
                 {paymentOrder && paymentOrder.payment_price.id === price.id ? (
                   <FormattedMessage defaultMessage="ui.paymentProduct.action.purchased" id="ui.paymentProduct.action.purchased" />
                 ) : (

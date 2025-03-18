@@ -3,8 +3,8 @@ import Grid from '@mui/material/Unstable_Grid2';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {PaymentApiClient} from '@selfcommunity/api-services';
-import {SCCommunityPaymentProducts, SCContentType, SCPaymentOrder, SCPaymentPrice, SCPaymentProduct} from '@selfcommunity/types';
+import {CommunityApiClient, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {SCCommunity, SCContentType, SCPaymentOrder, SCPaymentPrice, SCPaymentProduct} from '@selfcommunity/types';
 import {useIsComponentMountedRef, useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import CommunityPaywallSkeleton from './Skeleton';
@@ -26,6 +26,7 @@ export interface CommunityPaywallProps {
   prefetchedProducts?: SCPaymentProduct[];
   paymentOrder?: SCPaymentOrder;
   onUpdatePaymentOrder?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
+  callBackUrl?: string;
 }
 
 export default function CommunityPaywall(inProps: CommunityPaywallProps) {
@@ -34,7 +35,7 @@ export default function CommunityPaywall(inProps: CommunityPaywallProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, prefetchedProducts = [], paymentOrder = null, onUpdatePaymentOrder, ...rest} = props;
+  const {className, prefetchedProducts = [], paymentOrder = null, onUpdatePaymentOrder, callBackUrl, ...rest} = props;
 
   // STATE
   const [products, setProducts] = useState<SCPaymentProduct[]>([]);
@@ -54,11 +55,13 @@ export default function CommunityPaywall(inProps: CommunityPaywallProps) {
       setPayment(paymentOrder);
       setLoading(false);
     } else {
-      PaymentApiClient.getCommunityPaymentProducts()
-        .then((data: SCCommunityPaymentProducts) => {
+      CommunityApiClient.getCommunities()
+        .then((data: SCPaginatedResponse<SCCommunity>) => {
           if (isMountedRef.current) {
-            setProducts(data.paywalls);
-            setPayment(data.payment_order);
+            if (data.count && data.results.length) {
+              setProducts(data.results[0].paywalls);
+              setPayment(data.results[0].payment_order);
+            }
             setLoading(false);
           }
         })
@@ -86,6 +89,8 @@ export default function CommunityPaywall(inProps: CommunityPaywallProps) {
             contentType={SCContentType.COMMUNITY}
             contentId={p.id}
             {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
+            {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
+            {...(callBackUrl && {PaymentProductPriceComponentProps: {returnUrlParams: {callBackUrl}}})}
           />
         </Grid>
       ))}

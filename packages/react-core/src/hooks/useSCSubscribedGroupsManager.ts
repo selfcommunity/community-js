@@ -119,8 +119,8 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
         // Only if user is authenticated
         http
           .request({
-            url: Endpoints.GetUserGroups.url(),
-            method: Endpoints.GetUserGroups.method,
+            url: Endpoints.GetUserSubscribedGroups.url({id: user.id}),
+            method: Endpoints.GetUserSubscribedGroups.method,
           })
           .then((res: HttpResponse<any>) => {
             if (res.status >= 300) {

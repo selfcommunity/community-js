@@ -5,20 +5,20 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {SCCategoryType, SCCheckoutSessionStatus, SCContentType, SCCourseType, SCEventType, SCGroupType} from '@selfcommunity/types';
+import {SCCategoryType, SCCheckoutSessionStatus, SCContentType, SCCourseType, SCEventType, SCGroupType, SCPaymentProduct} from '@selfcommunity/types';
 import {CLAPPING} from '../../assets/courses/clapping';
-import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
-import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCPaymentsEnabled, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import Event from '../Event';
 import {SCEventTemplateType} from '../../types/event';
 import {SCCourseTemplateType} from '../../types/course';
 import {PaymentApiClient} from '@selfcommunity/api-services';
-import {Logger} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import Category from '../Category';
 import Course from '../Course';
 import Group from '../Group';
 import Grow from '@mui/material/Grow';
+import PaymentProduct from '../PaymentProduct';
 
 const PREFIX = 'SCCheckoutReturnDialog';
 
@@ -57,10 +57,13 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     name: PREFIX
   });
   const {className, checkoutSessionId, disableInitialTransition = false, onHandleViewContentPurchased, ...rest} = props;
+
+  // STATE
   const [loading, setLoading] = useState<boolean>(true);
   const [contentType, setContentType] = useState<SCContentType | null>(null);
   const [contentId, setContentId] = useState<number | null>(null);
   const [content, setContent] = useState<SCEventType | SCGroupType | SCCourseType | SCCategoryType | null>(null);
+  const [paymentProduct, setPaymentProduct] = useState<SCPaymentProduct | null>(null);
 
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
@@ -68,6 +71,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scUserContext: SCUserContextType = useSCUser();
 
   /**
    * Handle view new object purchased
@@ -97,6 +101,28 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     }
   }, [scRoutingContext, onHandleViewContentPurchased, content, contentType]);
 
+  /**
+   * Handle refresh content status
+   */
+  const refreshContentStatus = useCallback(() => {
+    switch (contentType) {
+      case SCContentType.GROUP:
+        scUserContext.managers.groups.refresh();
+        break;
+      case SCContentType.EVENT:
+        scUserContext.managers.events.refresh();
+        break;
+      case SCContentType.CATEGORY:
+        scUserContext.managers.categories.refresh();
+        break;
+      case SCContentType.COURSE:
+        scUserContext.managers.courses.refresh();
+        break;
+      default:
+        break;
+    }
+  }, [scUserContext, content, contentType]);
+
   useEffect(() => {
     PaymentApiClient.getCheckoutSession({session_id: checkoutSessionId})
       .then((r) => {
@@ -105,6 +131,11 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
             setContentType(r.content_type);
             setContentId(r.content_id);
             setContent(r[r.content_type]);
+            if (r.payment_price.payment_product) {
+              setPaymentProduct(r.payment_price.payment_product);
+            }
+            // Refresh subscription status
+            refreshContentStatus();
             setLoading(false);
           });
         } else if (r.status === SCCheckoutSessionStatus.OPEN) {
@@ -125,9 +156,13 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     if (contentType === SCContentType.EVENT) {
       footer = (
         <>
+          <Typography variant="body2" color="textSecondary">
+            <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
+          </Typography>
           <Box className={classes.contentObject}>
             <Event
               event={content as SCEventType}
+              cacheStrategy={CacheStrategies.NETWORK_ONLY}
               template={SCEventTemplateType.PREVIEW}
               actions={<></>}
               variant="outlined"
@@ -142,8 +177,17 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     } else if (contentType === SCContentType.CATEGORY) {
       footer = (
         <>
+          <Typography variant="body2" color="textSecondary">
+            <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
+          </Typography>
           <Box className={classes.contentObject}>
-            <Category category={content as SCCategoryType} actions={<></>} variant="outlined" className={classes.object} />
+            <Category
+              category={content as SCCategoryType}
+              cacheStrategy={CacheStrategies.NETWORK_ONLY}
+              actions={<></>}
+              variant="outlined"
+              className={classes.object}
+            />
           </Box>
           <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />
@@ -153,9 +197,13 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     } else if (contentType === SCContentType.COURSE) {
       footer = (
         <>
+          <Typography variant="body2" color="textSecondary">
+            <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
+          </Typography>
           <Box className={classes.contentObject}>
             <Course
               course={content as SCCourseType}
+              cacheStrategy={CacheStrategies.NETWORK_ONLY}
               template={SCCourseTemplateType.PREVIEW}
               actions={<></>}
               hideEventParticipants
@@ -172,11 +220,15 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     } else if (contentType === SCContentType.GROUP) {
       footer = (
         <>
+          <Typography variant="body2" color="textSecondary">
+            <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
+          </Typography>
           <Box className={classes.contentObject}>
             <Group
               group={content as SCGroupType}
+              cacheStrategy={CacheStrategies.NETWORK_ONLY}
               hideActions
-							variant="outlined"
+              variant="outlined"
               hideEventParticipants
               hideEventPlanner
               className={classes.object}
@@ -184,6 +236,24 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
           </Box>
           <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />
+          </Button>
+        </>
+      );
+    } else if (contentType === SCContentType.COMMUNITY) {
+      footer = (
+        <>
+          {paymentProduct && (
+            <>
+              <Typography variant="body2" color="textSecondary">
+                <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
+              </Typography>
+              <Box className={classes.contentObject}>
+                <PaymentProduct hidePaymentProductPrices paymentProduct={paymentProduct} />
+              </Box>
+            </>
+          )}
+          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
+            <FormattedMessage id="ui.checkoutReturnDialog.community.button" defaultMessage="ui.checkoutReturnDialog.community.button" />
           </Button>
         </>
       );
@@ -202,9 +272,6 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
             height={100}
           />
         </Grow>
-        <Typography variant="body2" color="textSecondary">
-          <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
-        </Typography>
         {footer}
       </Stack>
     );

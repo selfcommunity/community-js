@@ -1,4 +1,4 @@
-import { Endpoints, http, HttpResponse } from '@selfcommunity/api-services';
+import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {
   SCEventSubscriptionStatusType,
   SCEventType,
@@ -7,15 +7,15 @@ import {
   SCNotificationTypologyType,
   SCUserType,
 } from '@selfcommunity/types';
-import { Logger } from '@selfcommunity/utils';
+import {Logger} from '@selfcommunity/utils';
 import PubSub from 'pubsub-js';
-import { useEffect, useMemo, useRef } from 'react';
-import { useDeepCompareEffectNoCheck } from 'use-deep-compare-effect';
-import { useSCPreferences } from '../components/provider/SCPreferencesProvider';
-import { SCOPE_SC_CORE } from '../constants/Errors';
-import { SCNotificationMapping } from '../constants/Notification';
-import { CONFIGURATIONS_EVENTS_ENABLED } from '../constants/Preferences';
-import { getEventStatus } from '../utils/event';
+import {useEffect, useMemo, useRef} from 'react';
+import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
+import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
+import {SCOPE_SC_CORE} from '../constants/Errors';
+import {SCNotificationMapping} from '../constants/Notification';
+import {CONFIGURATIONS_EVENTS_ENABLED} from '../constants/Preferences';
+import {getEventStatus} from '../utils/event';
 import useSCCachingManager from './useSCCachingManager';
 
 /**
@@ -118,8 +118,8 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
         // Only if user is authenticated
         http
           .request({
-            url: Endpoints.GetUserEvents.url(),
-            method: Endpoints.GetUserEvents.method,
+            url: Endpoints.GetUserSubscribedEvents.url({id: user.id}),
+            method: Endpoints.GetUserSubscribedEvents.method,
           })
           .then((res: HttpResponse<any>) => {
             if (res.status >= 300) {
@@ -301,7 +301,6 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
     () =>
       (event: SCEventType): string => {
         const d = data.filter((k) => parseInt(Object.keys(k)[0]) === event.id);
-
         return d.length ? d[0][event.id] : !data.length ? event.subscription_status : null;
       },
     [data]
@@ -314,7 +313,6 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
     () => (event: SCEventType) => {
       updateCache([event.id]);
       setData((prev) => getDataUpdated(prev, event.id, event.subscription_status));
-
       return event.subscription_status;
     },
     [data, cache]

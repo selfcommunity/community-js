@@ -55,6 +55,7 @@ import LiveStreamService, {LiveStreamApiClient, LiveStreamApiClientInterface} fr
 import OnBoardingService, {OnBoardingApiClient, OnBoardingApiClientInterface} from './services/onboarding';
 import CourseService, {CourseApiClient, CourseApiClientInterface} from './services/course';
 import PaymentService, {PaymentApiClient, PaymentApiClientInterface} from './services/payment';
+import CommunityService, {CommunityApiClient, CommunityApiClientInterface} from './services/community';
 
 /**
  * Types
@@ -131,7 +132,12 @@ import {
   CourseLessonCommentsParams,
   CourseUserRoleParams,
   CourseUsersParams,
-  CourseDashboardUsersParams
+  CourseDashboardUsersParams,
+  PaymentContentStatusParams,
+  PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams
 } from './types';
 
 /**
@@ -329,5 +335,13 @@ export {
   CourseDashboardUsersParams,
   PaymentService,
   PaymentApiClientInterface,
-  PaymentApiClient
+  PaymentApiClient,
+  CommunityService,
+  CommunityApiClient,
+  CommunityApiClientInterface,
+  PaymentContentStatusParams,
+  PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams
 };

@@ -92,6 +92,25 @@ export default function useSCFetchEvent({
   );
 
   /**
+   * Refresh event
+   */
+  const refreshEvent = useMemo(
+    () => () => () => {
+      fetchEvent(id)
+        .then((e: SCEventType) => {
+          setSCEvent(e);
+        })
+        .catch((err) => {
+          LRUCache.delete(__eventCacheKey);
+          setError(`Error on refresh event with id ${id}`);
+          Logger.error(SCOPE_SC_CORE, `Error on refresh event with id ${id}`);
+          Logger.error(SCOPE_SC_CORE, err.message);
+        });
+    },
+    [id, setSCEvent, __eventCacheKey]
+  );
+
+  /**
    * If id attempt to get the event by id
    */
   useEffect(() => {
@@ -115,5 +134,5 @@ export default function useSCFetchEvent({
     }
   }, [event, authUserId]);
 
-  return {scEvent, setSCEvent, error};
+  return {scEvent, setSCEvent, error, refreshEvent};
 }

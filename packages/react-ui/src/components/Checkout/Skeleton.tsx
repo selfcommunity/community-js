@@ -33,6 +33,15 @@ const Root = styled(Grid, {
     },
     padding: theme.spacing(1, 5)
   },
+  [`& .${classes.header}`]: {
+    display: 'flex',
+    flexGrow: 1,
+    justifyContent: 'center',
+    paddingTop: theme.spacing(2),
+    '& span.MuiSkeleton-root': {
+      maxWidth: 450
+    }
+  },
   [`& .${classes.right}`]: {
     display: 'flex',
     justifyContent: 'center',
@@ -41,15 +50,6 @@ const Root = styled(Grid, {
       justifyContent: 'left'
     },
     padding: theme.spacing(1, 5)
-  },
-  [`& .${classes.header}`]: {
-    display: 'flex',
-    flexGrow: 1,
-    justifyContent: 'center',
-    paddingTop: theme.spacing(2),
-    '& div': {
-      maxWidth: 515
-    }
   },
   [`& .${classes.content}`]: {
     position: 'relative',
@@ -89,18 +89,16 @@ export default function CheckoutSkeleton(inProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} container {...rest}>
-      <Grid container xs={12} className={classes.header}>
-        <Grid item xs={12} md={6} className={classNames(classes.left, classes.paper)}>
-          <Skeleton variant="rounded" height={150} width={'100%'} />
-        </Grid>
-        <Grid item xs={12} md={6} className={classes.right}>
-          <Hidden mdDown>
-            <Stack direction="column" spacing={2} pt={2}>
-              <Skeleton variant="rounded" height={20} width={190} />
-              <Skeleton variant="rounded" height={90} width={'100%'} />
-            </Stack>
-          </Hidden>
-        </Grid>
+      <Grid item xs={12} md={6} className={classNames(classes.left, classes.paper, classes.header)}>
+        <Skeleton variant="rounded" height={150} width={'100%'} />
+      </Grid>
+      <Grid item xs={12} md={6} className={classNames(classes.right, classes.header)}>
+        <Hidden mdDown>
+          <Stack direction="column" spacing={2} pt={2}>
+            <Skeleton variant="rounded" height={20} width={190} />
+            <Skeleton variant="rounded" height={90} width={'100%'} />
+          </Stack>
+        </Hidden>
       </Grid>
       <Grid item xs={12} md={6} className={classNames(classes.left, classes.paper)}>
         <Box className={classes.content}>

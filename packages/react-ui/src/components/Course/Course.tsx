@@ -14,6 +14,7 @@ import CourseSkeleton, {CourseSkeletonProps} from './Skeleton';
 import BaseItem from '../../shared/BaseItem';
 import {isCourseCompleted, isCourseNew} from '../../utils/course';
 import UserAvatar from '../../shared/UserAvatar';
+import {CacheStrategies} from '@selfcommunity/utils/src/utils/cache';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -90,6 +91,10 @@ export interface CourseProps extends WidgetProps {
    */
   CourseSkeletonComponentProps?: CourseSkeletonProps;
   /**
+   * Override default cache strategy on fetch element
+   */
+  cacheStrategy?: CacheStrategies;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -158,11 +163,12 @@ export default function Course(inProps: CourseProps): JSX.Element {
     actions,
     CourseParticipantsButtonComponentProps = {},
     CourseSkeletonComponentProps = {},
+    cacheStrategy,
     ...rest
   } = props;
 
   // STATE
-  const {scCourse} = useSCFetchCourse({id: courseId, course});
+  const {scCourse} = useSCFetchCourse({id: courseId, course, ...(cacheStrategy && {cacheStrategy})});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();

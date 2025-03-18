@@ -3,15 +3,14 @@ import {Box} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Endpoints, PaymentApiClient} from '@selfcommunity/api-services';
+import {PaymentApiClient} from '@selfcommunity/api-services';
 import {SCPaymentProduct, SCContentType, SCPurchasableContent, SCPaymentOrder, SCPaymentPrice} from '@selfcommunity/types';
 import {useIsComponentMountedRef, useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import PaymentProductsSkeleton from './Skeleton';
-import PaymentProduct from '../PaymentProduct';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {AxiosRequestConfig} from 'axios';
+import PaymentProducts from '../PaymentProducts';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -22,27 +21,26 @@ const Root = styled(Box, {
   name: PREFIX
 })(({theme}) => ({}));
 
-export interface PaymentProductsProps {
+export interface PaywallsProps {
   className?: string;
-  id?: number | string;
   contentType?: SCContentType;
   contentId?: number | string;
   content?: SCPurchasableContent;
-  prefetchedProducts?: SCPaymentProduct[];
-  paymentOrder?: SCPaymentOrder;
+  prefetchedPaymentContentStatus?: SCPurchasableContent;
   onUpdatePaymentOrder?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
 }
 
-export default function PaymentProducts(inProps: PaymentProductsProps) {
+export default function Paywalls(inProps: PaywallsProps) {
   // PROPS
-  const props: PaymentProductsProps = useThemeProps({
+  const props: PaywallsProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {className, id, contentId, contentType, content, prefetchedProducts = [], paymentOrder, onUpdatePaymentOrder, ...rest} = props;
+  const {className, contentId, contentType, content, prefetchedPaymentContentStatus, onUpdatePaymentOrder, ...rest} = props;
 
   // STATE
   const [products, setProducts] = useState<SCPaymentProduct[]>([]);
+  const [paymentOrder, setPaymentOrder] = useState<SCPaymentOrder>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   // HOOKS
@@ -50,38 +48,31 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
   const isMountedRef = useIsComponentMountedRef();
 
   /**
-   * Fetches products list
-   */
-  const fetchProducts = async (next: string = Endpoints.GetPaymentProducts.url({})): Promise<SCPaymentProduct[]> => {
-    const data = await PaymentApiClient.getPaymentProducts(id !== undefined ? {id} : {content_id: contentId, content_type: contentType}, {
-      url: next
-    } as AxiosRequestConfig);
-    return data.next ? data.results.concat(await fetchProducts(data.next)) : data.results;
-  };
-
-  /**
-   * On mount, fetches products/prices list
+   * On mount, fetch payment content status
    */
   useEffect(() => {
-    if (prefetchedProducts.length) {
-      setProducts(prefetchedProducts);
+    if (prefetchedPaymentContentStatus) {
+      setProducts(prefetchedPaymentContentStatus.paywalls);
+      setPaymentOrder(prefetchedPaymentContentStatus.payment_order);
       setLoading(false);
-    } else if (id !== undefined || (contentId !== undefined && contentType)) {
-      fetchProducts()
+    } else if (content && contentType) {
+      setProducts(content.paywalls || []);
+      setPaymentOrder(content.payment_order || null);
+      setLoading(false);
+    } else if (contentId !== undefined && contentType) {
+      PaymentApiClient.getPaymentContentStatus({content_id: contentId, content_type: contentType})
         .then((data) => {
           if (isMountedRef.current) {
-            setProducts(data);
+            setProducts(data.paywalls);
+            setPaymentOrder(data.payment_order);
             setLoading(false);
           }
         })
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
         });
-    } else if (content && contentType) {
-      setProducts(content.paywalls || []);
-      setLoading(false);
     }
-  }, [prefetchedProducts.length]);
+  }, [prefetchedPaymentContentStatus]);
 
   if (!isPaymentsEnabled) {
     return null;
@@ -92,17 +83,13 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
       {loading ? (
         <PaymentProductsSkeleton />
       ) : (
-        <>
-          {products.map((p, i) => (
-            <PaymentProduct
-              paymentProduct={p}
-              key={i}
-              contentType={contentType}
-              {...(content ? {content} : {contentId})}
-              {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
-            />
-          ))}
-        </>
+        <PaymentProducts
+          contentType={contentType}
+          contentId={contentId}
+          prefetchedProducts={products}
+          paymentOrder={paymentOrder}
+          {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
+        />
       )}
     </Root>
   );

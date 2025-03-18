@@ -1,3 +1,5 @@
+import theme from '@selfcommunity/react-theme-default';
+
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
@@ -24,7 +26,13 @@ const Component = {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          alignItems: 'flex-start'
+          alignItems: 'flex-start',
+          [theme.breakpoints.down('sm')]: {
+            width: '90%'
+          },
+          '& .SCWidget-root': {
+            width: '93%'
+          }
         },
         ['& .SCCheckout-content-desc']: {
           display: 'flex',
@@ -43,10 +51,23 @@ const Component = {
         bottom: theme.spacing(2)
       },
       ['& .SCCheckout-object']: {
-        marginTop: theme.spacing(2),
-        width: 'auto',
+        margin: theme.spacing(2, 2, 0.5, 0),
+        width: '100%',
         [theme.breakpoints.up('sm')]: {
-          minWidth: 395
+          minWidth: 395,
+          width: 'auto'
+        }
+      },
+      ['& .SCCategory-root']: {
+        borderRadius: theme.shape.borderRadius,
+        '& a': {
+          padding: theme.spacing(2)
+        }
+      },
+      ['& .SCGroup-root']: {
+        borderRadius: theme.shape.borderRadius,
+        '& a': {
+          padding: theme.spacing(2)
         }
       }
     })
