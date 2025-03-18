@@ -50,7 +50,8 @@ import {
 	PaymentProductsParams,
   CustomerPortalCreateSessionParams,
   CheckoutSessionParams,
-  CheckoutCreateSessionParams
+  CheckoutCreateSessionParams,
+	PaymentOrderParams
 } from './payment';
 
 export {
@@ -133,5 +134,6 @@ export {
 	PaymentProductsParams,
   CustomerPortalCreateSessionParams,
   CheckoutSessionParams,
-  CheckoutCreateSessionParams
+  CheckoutCreateSessionParams,
+	PaymentOrderParams
 };

@@ -12,7 +12,7 @@ import {
   TableRow,
   Typography,
   Stack,
-  CircularProgress,
+  CircularProgress
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -26,7 +26,7 @@ import {getConvertedAmount} from '../../utils/payment';
 import Event from '../Event';
 import {SCCategoryType, SCCommunityType, SCContentType, SCCourseType, SCEventType, SCGroupType, SCPaymentOrder} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils';
-import {SCCourseTemplateType, SCEventTemplateType} from '@selfcommunity/react-ui';
+import {SCCourseTemplateType, SCEventTemplateType} from '../../types';
 import Category from '../Category';
 import Course from '../Course';
 import Group from '../Group';
@@ -97,7 +97,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
   const loadMore = useCallback(async () => {
     const loadItems = async () => {
       try {
-        const res = await PaymentService.getPaymentsOrder({offset: orders.length});
+        const res = await PaymentService.getPaymentsOrder({offset: orders.length, order_by: '-created_at'});
         if (res) {
           setHasMore(res.next !== null);
           setNext(res.next);

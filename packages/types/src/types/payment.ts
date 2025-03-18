@@ -190,6 +190,14 @@ export interface SCPaymentOrder {
    * Content community
    */
   community?: SCCommunityType;
+  /**
+   * Created at
+   */
+  created_at?: Date;
+  /**
+   * Expired at
+   */
+  expire_at?: Date;
 }
 
 export interface SCPaymentsCustomerPortalSession {
