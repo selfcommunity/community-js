@@ -288,7 +288,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           <Icon>courses</Icon>
         </IconButton>
       )}
-      {groupsEnabled && (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY]) && (
+      {groupsEnabled && scUserContext.user && (
         <IconButton
           className={classNames(classes.groups, {
             [classes.active]:
