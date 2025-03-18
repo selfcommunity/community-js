@@ -26,7 +26,7 @@ import {getConvertedAmount} from '../../utils/payment';
 import Event from '../Event';
 import {SCCategoryType, SCCommunityType, SCContentType, SCCourseType, SCEventType, SCGroupType, SCPaymentOrder} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils';
-import {SCCourseTemplateType, SCEventTemplateType} from '@selfcommunity/react-ui';
+import {SCCourseTemplateType, SCEventTemplateType} from '../../types';
 import Category from '../Category';
 import Course from '../Course';
 import Group from '../Group';
