@@ -208,6 +208,7 @@ import SCPaymentProductPrice from './components/SCPaymentProductPrice';
 import SCCheckout from './components/SCCheckout';
 import SCCheckoutReturnDialog from './components/SCCheckoutReturnDialog';
 import SCHiddenPurchasableContent from './components/SCHiddenPurchasableContent';
+import SCPaywalls from './components/SCPaywalls';
 
 /**
  * Style fragments - Imports - End
@@ -326,7 +327,7 @@ const theme = {
     SCCategoryAutocomplete,
     SCCategoryFeedTemplate,
     SCCategoryFollowersButton,
-		SCCategoryFollowButton,
+    SCCategoryFollowButton,
     SCCategoryHeader,
     SCCategoryTemplate,
     SCCategoryTrendingFeedWidget,
@@ -496,7 +497,8 @@ const theme = {
     SCPaymentProductPrice,
     SCCheckout,
     SCCheckoutReturnDialog,
-		SCHiddenPurchasableContent
+    SCHiddenPurchasableContent,
+    SCPaywalls
   },
   selfcommunity: {
     user: {

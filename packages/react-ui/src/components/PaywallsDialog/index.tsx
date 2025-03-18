@@ -1,3 +1,3 @@
-import PaywallsDialog, {PaymentProductDialogProps} from './PaywallsDialog';
+import PaywallsDialog, {PaywallsDialogProps} from './PaywallsDialog';
 export default PaywallsDialog;
-export {PaymentProductDialogProps};
+export {PaywallsDialogProps};

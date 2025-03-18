@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Box} from '@mui/material';
+import React, {useEffect, useMemo, useState} from 'react';
+import {Alert, Box} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -11,9 +11,11 @@ import PaymentProductsSkeleton from './Skeleton';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import PaymentProducts from '../PaymentProducts';
+import {FormattedMessage} from 'react-intl';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  error: `${PREFIX}-error`
 };
 
 const Root = styled(Box, {
@@ -46,6 +48,25 @@ export default function Paywalls(inProps: PaywallsProps) {
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
   const isMountedRef = useIsComponentMountedRef();
+
+  // Check if the payment price is in the current list
+  const isPaymentProductPriceIncluded = useMemo(() => {
+    let _included = false;
+    if (!products.length) {
+      return true;
+    }
+    products.map((p) => {
+      if (p.payment_prices) {
+        const _ids = p.payment_prices.map((price) => price.id);
+        console.log(_ids);
+        if (_ids.indexOf(paymentOrder.payment_price.id) > -1) {
+          console.log('found payment order', paymentOrder.payment_price.id, _ids);
+          _included = _included || true;
+        }
+      }
+    });
+    return _included;
+  }, [products, paymentOrder]);
 
   /**
    * On mount, fetch payment content status
@@ -83,13 +104,20 @@ export default function Paywalls(inProps: PaywallsProps) {
       {loading ? (
         <PaymentProductsSkeleton />
       ) : (
-        <PaymentProducts
-          contentType={contentType}
-          contentId={contentId}
-          prefetchedProducts={products}
-          paymentOrder={paymentOrder}
-          {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
-        />
+        <>
+          <PaymentProducts
+            contentType={contentType}
+            {...(content ? {content} : {contentId})}
+            prefetchedProducts={products}
+            paymentOrder={paymentOrder}
+            {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
+          />
+          {paymentOrder && !isPaymentProductPriceIncluded && (
+            <Alert severity="error" className={classes.error}>
+              <FormattedMessage id="ui.paywalls.priceNotIncluded" defaultMessage="ui.paywalls.priceNotIncluded" />
+            </Alert>
+          )}
+        </>
       )}
     </Root>
   );

@@ -206,7 +206,7 @@ import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from './components/
 import LiveStreamForm, {LiveStreamFormProps} from './components/LiveStreamForm';
 import LiveStreamRoom, {LiveStreamRoomProps} from './components/LiveStreamRoom';
 import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './components/LiveStreamRoom/LiveStreamVideoConference';
-import PaywallsDialog, {PaymentProductDialogProps} from './components/PaywallsDialog';
+import PaywallsDialog, {PaywallsDialogProps} from './components/PaywallsDialog';
 import PaymentProducts, {PaymentProductsProps} from './components/PaymentProducts';
 import PaymentProduct, {PaymentProductProps} from './components/PaymentProduct';
 import PaymentDetailDialog, {PaymentDetailDialogProps} from './components/PaymentDetailDialog';
@@ -802,7 +802,7 @@ export {
   PROVIDER_ICONS_CONTAINED,
   PROVIDER_ICONS_OUTLINED,
   PaywallsDialog,
-  PaymentProductDialogProps,
+	PaywallsDialogProps,
   PaymentProducts,
   PaymentProductsProps,
   PaymentProduct,
