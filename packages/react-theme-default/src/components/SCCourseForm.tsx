@@ -1,8 +1,16 @@
-import {alpha} from '@mui/system';
+import {alpha, getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      '& .SCCourseForm-contrast-color': {
+        color: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
+      },
+
+      '& .SCCourseForm-contrast-bg-color': {
+        backgroundColor: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
+      },
+
       '& .SCCourseForm-cover': {
         position: 'relative',
         height: 103,
