@@ -1,3 +1,3 @@
-import Paywalls, {PaymentProductsProps} from './Paywalls';
+import Paywalls, {PaywallsProps} from './Paywalls';
 export default Paywalls;
-export {PaymentProductsProps};
+export {PaywallsProps};
