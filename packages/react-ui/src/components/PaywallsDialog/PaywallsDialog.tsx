@@ -29,15 +29,15 @@ const NoTransition = React.forwardRef(function NoTransition(props: {children: Re
   return <React.Fragment> {props.children} </React.Fragment>;
 });
 
-export interface PaymentProductDialogProps extends BaseDialogProps {
+export interface PaywallsDialogProps extends BaseDialogProps {
   className?: string;
   PaywallsComponentProps: PaywallsProps;
   disableInitialTransition?: boolean;
 }
 
-export default function PaywallsDialog(inProps: PaymentProductDialogProps) {
+export default function PaywallsDialog(inProps: PaywallsDialogProps) {
   // PROPS
-  const props: PaymentProductDialogProps = useThemeProps({
+  const props: PaywallsDialogProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
