@@ -46,11 +46,6 @@ export interface UserCreatedCoursesWidgetProps extends VirtualScrollerItemProps,
    */
   userId: number;
   /**
-   * Hides this component
-   * @default false
-   */
-  autoHide?: boolean;
-  /**
    * Limit the number of courses to show
    * @default false
    */
@@ -113,7 +108,6 @@ export default function UserCreatedCoursesWidget(inProps: UserCreatedCoursesWidg
   });
   const {
     userId,
-    autoHide,
     limit = 3,
     className,
     CourseProps = {},
@@ -210,7 +204,7 @@ export default function UserCreatedCoursesWidget(inProps: UserCreatedCoursesWidg
   };
 
   // RENDER
-  if (!coursesEnabled || (autoHide && !state.count && state.initialized) || !userId) {
+  if (!coursesEnabled || (!state.count && state.initialized) || !userId) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {
