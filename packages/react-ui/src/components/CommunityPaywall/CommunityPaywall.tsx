@@ -4,7 +4,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {CommunityApiClient, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {SCCommunity, SCContentType, SCPaymentOrder, SCPaymentPrice, SCPaymentProduct} from '@selfcommunity/types';
+import {SCCommunityType, SCContentType, SCPaymentOrder, SCPaymentPrice, SCPaymentProduct} from '@selfcommunity/types';
 import {useIsComponentMountedRef, useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import CommunityPaywallSkeleton from './Skeleton';
@@ -56,7 +56,7 @@ export default function CommunityPaywall(inProps: CommunityPaywallProps) {
       setLoading(false);
     } else {
       CommunityApiClient.getCommunities()
-        .then((data: SCPaginatedResponse<SCCommunity>) => {
+        .then((data: SCPaginatedResponse<SCCommunityType>) => {
           if (isMountedRef.current) {
             if (data.count && data.results.length) {
               setProducts(data.results[0].paywalls);
