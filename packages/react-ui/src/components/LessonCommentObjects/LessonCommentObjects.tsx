@@ -229,46 +229,45 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
     }
     commentsObject.updateLessonComments([...updated]);
   };
-
+  console.log(commentsObject.isLoadingNext);
   /**
    * Renders root object(if obj)
    */
   if (!commentsObject.lessonObject) {
     return <HiddenPlaceholder />;
   }
+  if (!commentsObject.comments.length && commentsObject.isLoadingNext) {
+    return <LessonCommentsObjectSkeleton count={5} {...CommentsObjectSkeletonProps} />;
+  }
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <>
-        {!commentsObject.comments.length && commentsObject.isLoadingNext ? (
-          <LessonCommentsObjectSkeleton count={5} {...CommentsObjectSkeletonProps} />
-        ) : (
-          <>
-            {commentsObject.comments.length > 0 ? (
-              <InfiniteScroll
-                height={'100%'}
-                dataLength={commentsObject.comments.length}
-                next={handleNext}
-                hasMoreNext={Boolean(commentsObject.next)}
-                loaderNext={<LessonCommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}>
-                <List ref={commentsEndRef}>
-                  {commentsObject.comments.map((c: SCCourseCommentType, index) => (
-                    <ListItem key={index}>
-                      <LessonCommentObject
-                        key={c.id}
-                        commentObject={c}
-                        lessonObject={commentsObject.lessonObject}
-                        onDelete={(comment) => handleCommentsUpdate(comment, true)}
-                        isEditing={(editing) => setIsEditing(editing)}
-                        {...CommentComponentProps}
-                        CommentObjectSkeletonProps={CommentObjectSkeletonProps}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              </InfiniteScroll>
-            ) : null}
-          </>
-        )}
+        <>
+          {commentsObject.comments.length > 0 ? (
+            <InfiniteScroll
+              height={'100%'}
+              dataLength={commentsObject.comments.length}
+              next={handleNext}
+              hasMoreNext={Boolean(commentsObject.next)}
+              loaderNext={<LessonCommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}>
+              <List ref={commentsEndRef}>
+                {commentsObject.comments.map((c: SCCourseCommentType, index) => (
+                  <ListItem key={index}>
+                    <LessonCommentObject
+                      key={c.id}
+                      commentObject={c}
+                      lessonObject={commentsObject.lessonObject}
+                      onDelete={(comment) => handleCommentsUpdate(comment, true)}
+                      isEditing={(editing) => setIsEditing(editing)}
+                      {...CommentComponentProps}
+                      CommentObjectSkeletonProps={CommentObjectSkeletonProps}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </InfiniteScroll>
+          ) : null}
+        </>
         {commentsObject.comments.length > 0 && !editing && (
           <CommentObjectReply
             key={replyKey}

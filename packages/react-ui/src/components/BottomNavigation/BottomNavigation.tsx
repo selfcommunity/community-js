@@ -164,7 +164,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 icon={<Icon>courses</Icon>}
               />
             ) : null,
-            groupsEnabled && (scUserContext.user || contentAvailable) ? (
+            groupsEnabled && scUserContext.user ? (
               <BottomNavigationAction
                 key="groups"
                 className={classes.action}

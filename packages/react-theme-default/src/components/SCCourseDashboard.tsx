@@ -28,6 +28,8 @@ const Component = {
           borderBottomLeftRadius: '10px',
           borderBottomRightRadius: '10px',
           marginBottom: '17px',
+          objectFit: 'cover',
+          objectPosition: 'center',
 
           [theme.breakpoints.down('sm')]: {
             display: 'none'
