@@ -38,6 +38,16 @@ const Component = {
             height: theme.spacing(2),
             borderRadius: '9999px',
             backgroundColor: theme.palette.grey['300']
+          },
+
+          '& .SCAccordionLessons-link': {
+            textDecoration: 'underline',
+            padding: 0,
+
+            '&:hover': {
+              backgroundColor: 'unset',
+              textDecoration: 'underline'
+            }
           }
         }
       }

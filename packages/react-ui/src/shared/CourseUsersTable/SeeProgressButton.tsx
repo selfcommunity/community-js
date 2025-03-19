@@ -130,7 +130,7 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
               )}
             </Stack>
 
-            <AccordionLessons course={student} />
+            <AccordionLessons course={student} viewerJoinStatus={course.join_status} />
           </Stack>
         </DialogRoot>
       )}
