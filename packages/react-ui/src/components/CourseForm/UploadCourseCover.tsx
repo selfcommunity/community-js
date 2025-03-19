@@ -7,11 +7,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 import {LoadingButton} from '@mui/lab';
-import {SCOPE_SC_UI} from '../../constants/Errors';
-import {CourseService} from '@selfcommunity/api-services';
-import {SCCourseType} from '@selfcommunity/types';
-import {Logger} from '@selfcommunity/utils';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages} from 'react-intl';
 
 const messages = defineMessages({
   errorLoadImage: {
@@ -31,10 +27,10 @@ const Root = styled(LoadingButton, {
 
 export interface UploadCourseCoverProps {
   /**
-   * Id of the course. It is optional only for course creation modal.
-   * @default null
+   * If the image is in uploadingstate
+   * @default false
    */
-  courseId?: number;
+  isUploading: boolean;
   /**
    * On change function.
    * @default null
@@ -45,11 +41,6 @@ export interface UploadCourseCoverProps {
    * @default null
    */
   className?: string;
-  /**
-   * Prop to handle cover loading in the create course modal.
-   * @default false
-   */
-  isCreationMode?: boolean;
   /**
    * Any other properties
    */
@@ -85,18 +76,14 @@ export default function UploadCourseCover(inProps: UploadCourseCoverProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {courseId = null, onChange, className = false, isCreationMode = false, ...rest} = props;
+  const {isUploading = false, onChange, className = false, ...rest} = props;
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   //STATE
   let fileInput = useRef(null);
-  const [loading, setLoading] = useState<boolean>(false);
   const [alert, setAlert] = useState<string | null>(null);
-
-  // INTL
-  const intl = useIntl();
 
   // Anonymous
   if (!scUserContext.user) {
@@ -115,41 +102,12 @@ export default function UploadCourseCover(inProps: UploadCourseCoverProps): JSX.
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
-        if (isCreationMode) {
-          onChange(fileInput);
-        } else {
-          onChange(fileInput);
-          handleSave();
-        }
+        onChange(fileInput);
       };
       img.src = e.target.result as string;
     };
     reader.readAsDataURL(selectedFile);
   };
-
-  /**
-   * Handles cover saving after upload action
-   */
-  function handleSave() {
-    if (!fileInput) {
-      return;
-    }
-    setLoading(true);
-    const formData = new FormData();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    formData.append('image_original', fileInput);
-    CourseService.changeCourseCover(courseId, formData, {headers: {'Content-Type': 'multipart/form-data'}})
-      .then((data: SCCourseType) => {
-        // onChange && onChange(data.image_medium);
-        setLoading(false);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        setLoading(false);
-        setAlert(intl.formatMessage(messages.errorLoadImage));
-      });
-  }
 
   /**
    * If there is an error
@@ -169,9 +127,9 @@ export default function UploadCourseCover(inProps: UploadCourseCoverProps): JSX.
         className={classNames(classes.root, className)}
         size="medium"
         variant="contained"
-        disabled={loading}
+        disabled={isUploading}
         onClick={() => fileInput.current.click()}
-        loading={loading}
+        loading={isUploading}
         {...rest}>
         <Icon>image</Icon>
       </Root>

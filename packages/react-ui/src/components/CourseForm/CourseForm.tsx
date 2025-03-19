@@ -244,33 +244,27 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
    */
   const handleSubmit = useCallback(() => {
     setField((prev) => ({...prev, isSubmitting: true}));
+    const formData = new FormData();
+    if (field.imageOriginalFile) {
+      formData.append('image_original', field.imageOriginalFile);
+    }
+    formData.append('name', field.name);
+    formData.append('description', field.description);
+    formData.append('type', field.type);
+    if (field.privacy) {
+      formData.append('privacy', field.privacy);
+    }
+    if (field.categories) {
+      for (const key in field.categories) {
+        formData.append(key, field.categories[key]);
+      }
+    }
     let courseService: Promise<SCCourseType>;
     if (course) {
-      // Update
-      const data: any = {
-        name: field.name,
-        description: field.description,
-        type: field.type,
-        categories: field.categories,
-        ...(field.privacy && {privacy: field.privacy})
-      };
-      courseService = CourseService.updateCourse(course.id, data, {
-        headers: {'Content-Type': 'application/json'}
+      courseService = CourseService.updateCourse(course.id, formData, {
+        headers: {'Content-Type': 'multipart/form-data'}
       });
     } else {
-      // Create
-      const formData = new FormData();
-      if (field.imageOriginalFile) {
-        formData.append('image_original', field.imageOriginalFile);
-      }
-      formData.append('name', field.name);
-      formData.append('description', field.description);
-      formData.append('type', field.type);
-      if (field.categories) {
-        for (const key in field.categories) {
-          formData.append(key, field.categories[key]);
-        }
-      }
       courseService = CourseService.createCourse(formData, {
         headers: {'Content-Type': 'multipart/form-data'}
       });
@@ -278,7 +272,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     courseService
       .then((data) => {
         notifyChanges(data);
-        setField((prev) => ({...prev, ['isSubmitting']: false}));
+        setField((prev) => ({...prev, isSubmitting: false}));
         onSuccess?.(data);
       })
       .catch((e) => {
@@ -286,12 +280,12 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         if (Object.values(_error)[0]['error'] === 'unique') {
           setError({
             ...error,
-            ['nameError']: <FormattedMessage id="ui.courseForm.name.error.unique" defaultMessage="ui.courseForm.name.error.unique" />
+            nameError: <FormattedMessage id="ui.courseForm.name.error.unique" defaultMessage="ui.courseForm.name.error.unique" />
           });
         } else {
           setError({...error, ..._error});
         }
-        setField((prev) => ({...prev, ['isSubmitting']: false}));
+        setField((prev) => ({...prev, isSubmitting: false}));
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
       });
@@ -354,7 +348,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                 </Typography>
               )}
               <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-                <UploadCourseCover courseId={course?.id ?? null} isCreationMode={!course} onChange={handleChangeCover} />
+                <UploadCourseCover isUploading={field.isSubmitting} onChange={handleChangeCover} />
               </Paper>
               <TextField
                 required

@@ -42,7 +42,7 @@ export interface CourseApiClientInterface {
 
   // Courses CRUD
   createCourse(data: CourseCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCCourseType>;
-  updateCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType>;
+  updateCourse(id: number | string, data: SCCourseType | FormData, config?: AxiosRequestConfig): Promise<SCCourseType>;
   patchCourse(id: number | string, data: Partial<SCCourseType>, config?: AxiosRequestConfig): Promise<SCCourseType>;
   deleteCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
 
@@ -265,7 +265,7 @@ export class CourseApiClient {
    * @param data
    * @param config
    */
-  static updateCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType> {
+  static updateCourse(id: number | string, data: SCCourseType | FormData, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return apiRequest({...config, url: Endpoints.UpdateCourse.url({id}), method: Endpoints.UpdateCourse.method, data});
   }
 
@@ -844,7 +844,7 @@ export default class CourseService {
   static async createCourse(data: CourseCreateParams | FormData, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return CourseApiClient.createCourse(data, config);
   }
-  static async updateCourse(id: number | string, data: SCCourseType, config?: AxiosRequestConfig): Promise<SCCourseType> {
+  static async updateCourse(id: number | string, data: SCCourseType | FormData, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return CourseApiClient.updateCourse(id, data, config);
   }
   static async patchCourse(id: number | string, data: Partial<SCCourseType>, config?: AxiosRequestConfig): Promise<SCCourseType> {
