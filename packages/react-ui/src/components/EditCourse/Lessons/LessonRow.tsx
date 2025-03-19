@@ -66,7 +66,7 @@ function LessonRow(props: LessonRowProps) {
   const {enqueueSnackbar} = useSnackbar();
 
   // HANDLERS
-  const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true), 100), [setEditMode]);
+  const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true)), [setEditMode]);
   const handleDisableEditMode = useCallback(() => setEditMode(false), [setEditMode]);
 
   const handleDeleteLesson = useCallback(() => {

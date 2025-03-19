@@ -136,13 +136,19 @@ function Lessons(props: LessonsProps) {
   const handleManageSection = useCallback(
     (section: SCCourseSectionType, type: ActionLessonType, newRow = false) => {
       switch (type) {
-        case ActionLessonType.ADD:
+        case ActionLessonType.ADD: {
+          const newSection: SCCourseSectionType = {
+            ...section,
+            lessons: []
+          };
+
           setCourse({
             ...course,
             num_sections: course.num_sections + 1,
-            sections: [...course.sections, section]
+            sections: [...course.sections, newSection]
           });
           break;
+        }
         case ActionLessonType.RENAME:
           setCourse({
             ...course,
