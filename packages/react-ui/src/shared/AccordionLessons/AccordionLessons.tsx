@@ -1,11 +1,30 @@
-import {Accordion, AccordionDetails, AccordionSummary, Box, Icon, styled, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Icon,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  useThemeProps
+} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
-import {SCCourseLessonCompletionStatusType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
-import {SCThemeType} from '@selfcommunity/react-core';
+import {
+  SCCourseJoinStatusType,
+  SCCourseLessonCompletionStatusType,
+  SCCourseLessonType,
+  SCCourseSectionType,
+  SCCourseType
+} from '@selfcommunity/types';
+import {SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import AccordionLessonSkeleton from './Skeleton';
+import {Link} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -13,8 +32,25 @@ const classes = {
   accordion: `${PREFIX}-accordion`,
   summary: `${PREFIX}-summary`,
   details: `${PREFIX}-details`,
-  circle: `${PREFIX}-circle`
+  circle: `${PREFIX}-circle`,
+  link: `${PREFIX}-link`
 };
+
+type DataUrlLesson = {
+  id: number;
+  slug: string;
+  section_id: number;
+  lesson_id: number;
+};
+
+function getUrlLesson(course: SCCourseType, section: SCCourseSectionType, lesson: SCCourseLessonType): DataUrlLesson {
+  return {
+    id: course.id,
+    slug: course.slug,
+    section_id: section.id,
+    lesson_id: lesson.id
+  };
+}
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -24,6 +60,7 @@ const Root = styled(Box, {
 
 export interface AccordionLessonsProps {
   course: SCCourseType | null;
+  viewerJoinStatus?: SCCourseJoinStatusType;
   className?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
@@ -34,7 +71,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
     name: PREFIX
   });
 
-  const {course, className} = props;
+  const {course, viewerJoinStatus, className} = props;
 
   //STATES
   const [expanded, setExpanded] = useState<number | false>(false);
@@ -42,6 +79,9 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  // CONTEXTS
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HANDLERS
   const handleChange = useCallback(
@@ -94,7 +134,18 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
                 ) : (
                   <Box className={classes.circle} />
                 )}
-                <Typography>{lesson.name}</Typography>
+                {course.join_status === null || viewerJoinStatus === SCCourseJoinStatusType.CREATOR || lesson.locked ? (
+                  <Typography>{lesson.name}</Typography>
+                ) : (
+                  <Button
+                    component={Link}
+                    to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlLesson(course, section, lesson))}
+                    variant="text"
+                    color="inherit"
+                    className={classes.link}>
+                    <Typography>{lesson.name}</Typography>
+                  </Button>
+                )}
               </AccordionDetails>
             ))}
           </Accordion>

@@ -106,6 +106,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
 
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
+  const [count, setCount] = useState<number>(0);
   const [next, setNext] = useState<string | null>(null);
   const [offset, setOffset] = useState<number | null>(null);
   const [enrolled, setEnrolled] = useState<SCUserType[]>([]);
@@ -129,16 +130,17 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
       return;
     }
 
-    if (!enrolled.length && participantsAvailable) {
+    if (!count && participantsAvailable) {
       CourseService.getCourseJoinedUsers(scCourse.id, {limit: 3}).then((res: SCPaginatedResponse<SCUserType>) => {
         setEnrolled([...res.results]);
         setOffset(4);
+        setCount(res.count);
         setLoading(false);
       });
     } else {
       setOffset(0);
     }
-  }, [scCourse, participantsAvailable, enrolled]);
+  }, [scCourse, participantsAvailable, count, setEnrolled, setOffset, setLoading]);
 
   useEffect(() => {
     if (open && offset !== null) {
@@ -150,7 +152,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
         setOffset(null);
       });
     }
-  }, [open, enrolled, offset]);
+  }, [open, enrolled, offset, setLoading, setNext]);
 
   /**
    * Memoized fetchEnrolledUsers
@@ -170,9 +172,9 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
       })
       .catch((error) => Logger.error(SCOPE_SC_UI, error))
       .then(() => setLoading(false));
-  }, [enrolled, scCourse, next]);
+  }, [enrolled, next, setLoading]);
 
-  const renderSurplus = useCallback(() => numberFormatter(enrolled.length), [enrolled]);
+  const renderSurplus = useCallback(() => numberFormatter(count), [count]);
 
   /**
    * Opens participants dialog
@@ -194,7 +196,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
       <Root
         className={classNames(classes.root, className)}
         onClick={handleToggleDialogOpen}
-        disabled={loading || !scCourse || enrolled.length === 0}
+        disabled={loading || !scCourse || count === 0}
         // @ts-expect-error this is needed to use enrolled into SCCourseParticipantsButton
         enrolled={enrolled}
         {...rest}>
@@ -204,15 +206,15 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
             <FormattedMessage
               defaultMessage="ui.courseParticipantsButton.participants"
               id="ui.courseParticipantsButton.participants"
-              values={{total: enrolled.length}}
+              values={{total: count}}
             />
           </Typography>
         )}
 
-        {!enrolled.length && (loading || !scCourse) ? (
+        {!count && (loading || !scCourse) ? (
           <AvatarGroupSkeleton {...rest} {...(!participantsAvailable && {skeletonsAnimation: false})} count={4} />
         ) : (
-          <AvatarGroup total={enrolled.length} renderSurplus={renderSurplus}>
+          <AvatarGroup total={count} renderSurplus={renderSurplus}>
             {enrolled.map((c: SCUserType) => (
               <Avatar key={c.id} alt={c.username} src={c.avatar} />
             ))}
@@ -227,14 +229,14 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
             <FormattedMessage
               defaultMessage="ui.courseParticipantsButton.dialogTitle"
               id="ui.courseParticipantsButton.dialogTitle"
-              values={{total: enrolled.length}}
+              values={{total: count}}
             />
           }
           onClose={handleToggleDialogOpen}
           open
           {...DialogProps}>
           <InfiniteScroll
-            dataLength={enrolled.length}
+            dataLength={count}
             next={fetchEnrolledUsers}
             hasMoreNext={next !== null || loading}
             loaderNext={<UserSkeleton elevation={0} />}
