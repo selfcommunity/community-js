@@ -13,7 +13,17 @@ import {
 import {FormattedMessage, useIntl} from 'react-intl';
 import ActionButton from './Student/ActionButton';
 import {CLAPPING} from '../../assets/courses/clapping';
-import {SCRoutes, SCRoutingContextType, useSCFetchCourse, useSCRouting, Link} from '@selfcommunity/react-core';
+import {
+  SCRoutes,
+  SCRoutingContextType,
+  useSCFetchCourse,
+  useSCRouting,
+  Link,
+  SCUserContextType,
+  useSCUser,
+  SCContextType,
+  useSCContext
+} from '@selfcommunity/react-core';
 import AccordionLessons from '../../shared/AccordionLessons';
 import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -132,6 +142,8 @@ function Student(inProps: StudentCourseDashboardProps) {
 
   // CONTEXTS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
   const {scCourse, setSCCourse} = useSCFetchCourse({id: courseId, course});
@@ -195,6 +207,10 @@ function Student(inProps: StudentCourseDashboardProps) {
       });
   }, [scCourse, sentRequest, setLoadingRequest]);
 
+  const handleAnonymousAction = useCallback(() => {
+    scContext.settings.handleAnonymousAction();
+  }, [scContext.settings.handleAnonymousAction]);
+
   // MEMOS
   const actionButton = useMemo(() => {
     if (!scCourse) {
@@ -229,7 +245,7 @@ function Student(inProps: StudentCourseDashboardProps) {
             color={scCourse.user_completion_rate === 100 ? 'inherit' : undefined}
             variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
             loading={scCourse.join_status === null ? loadingRequest : undefined}
-            onClick={scCourse.join_status === null ? handleRequest : undefined}
+            onClick={!scUserContext.user ? handleAnonymousAction : scCourse.join_status === null ? handleRequest : undefined}
           />
         )}
         {scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
