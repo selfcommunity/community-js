@@ -26,7 +26,7 @@ export const EditMode: StoryObj<typeof Lesson> = {
     courseId: 1,
     sectionId: 1,
     lessonId: 1,
-    editMode: true
+    isEditor: true
   },
   render: template,
 };

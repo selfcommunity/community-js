@@ -148,7 +148,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
     id: lessonObject.id,
     lessonObject: lessonObject,
     pageSize: 8,
-    orderBy: SCCommentsOrderBy.CONNECTION_ASC,
+    orderBy: SCCommentsOrderBy.ADDED_AT_ASC,
     cacheStrategy
   });
 
@@ -229,7 +229,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
     }
     commentsObject.updateLessonComments([...updated]);
   };
-  console.log(commentsObject.isLoadingNext);
+
   /**
    * Renders root object(if obj)
    */
