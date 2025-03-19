@@ -79,7 +79,7 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
     return data;
   }
 
-  course.sections.some((section: SCCourseSectionType) => {
+  course.sections?.some((section: SCCourseSectionType) => {
     const isNextLessonInThisSection = section.num_lessons_completed < section.num_lessons;
 
     if (isNextLessonInThisSection) {
@@ -96,7 +96,7 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
 }
 
 function getIsNextLessonLocked(course: SCCourseType): boolean {
-  return course.sections.every((section: SCCourseSectionType) => {
+  return course.sections?.every((section: SCCourseSectionType) => {
     return (
       section.num_lessons_completed < section.num_lessons &&
       section.lessons?.find((lesson) => lesson.completion_status === SCCourseLessonCompletionStatusType.UNCOMPLETED)?.locked
