@@ -1315,6 +1315,7 @@
   "ui.buyButton.subscribed": "Iscritto",
   "ui.buyButton.disabled": "Al momento non è possbile acquistare questo contenuto. Potrai farlo successivamente.",
   "ui.paywalls.priceNotIncluded": "Il tuo acquisto si riferisce ad un prodotto non più disponibile.",
+  "ui.paywalls.contentPurchasedAt": "Contenuto acquistato il {purchasedAt} al prezzo di {price}.",
   "ui.paywallsDialog.title": "Scegli tra i seguenti prezzi",
   "ui.paywallsDialog.title.purchased": "Il tuo acquisto",
   "ui.paymentProduct.action.buy": "Acquista",

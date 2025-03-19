@@ -1,14 +1,15 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useCallback} from 'react';
 import {Avatar, Box, Button, Icon, Typography, useMediaQuery, useTheme, Zoom} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCContentType, SCPaymentOrder, SCPaymentPrice, SCPaymentPriceCurrencyType, SCPurchasableContent} from '@selfcommunity/types';
+import {SCContentType, SCPaymentOrder, SCPaymentPrice, SCPurchasableContent} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import PaymentProductPriceSkeleton from './Skeleton';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCPaymentsEnabled, useSCRouting} from '@selfcommunity/react-core';
 import BaseItem from '../../shared/BaseItem';
 import classNames from 'classnames';
+import {getConvertedAmount} from '../../utils/payment';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -56,15 +57,6 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
   const intl = useIntl();
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
-  const formattedPrice = useMemo(() => {
-    return (
-      <b>
-        {(price.unit_amount / 100).toFixed(2)}
-        {price.currency === SCPaymentPriceCurrencyType.EUR && '€'}
-      </b>
-    );
-  }, [price]);
-
   const handleActionBuy = useCallback(
     (e) => {
       e.preventDefault();
@@ -93,7 +85,11 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
           </Avatar>
         </Box>
       }
-      primary={<Typography variant="body1">{formattedPrice}</Typography>}
+      primary={
+        <Typography variant="body1">
+          <b>{getConvertedAmount(price)}</b>
+        </Typography>
+      }
       secondary={
         <>
           {!isMobile && (
@@ -108,7 +104,7 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
                   defaultMessage="ui.paymentProduct.action.purchasedAt"
                   id="ui.paymentProduct.action.purchasedAt"
                   values={{
-                    purchasedAt: intl.formatDate(new Date(), {day: 'numeric', year: 'numeric', month: 'long'})
+                    purchasedAt: intl.formatDate(new Date(paymentOrder.created_at), {day: 'numeric', year: 'numeric', month: 'long'})
                   }}
                 />
               </Typography>

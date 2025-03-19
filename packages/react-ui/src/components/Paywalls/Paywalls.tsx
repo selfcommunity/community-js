@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {Alert, Box} from '@mui/material';
+import {Alert, Box, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -11,7 +11,10 @@ import PaymentProductsSkeleton from './Skeleton';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import PaymentProducts from '../PaymentProducts';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
+import PaymentProduct from '../PaymentProduct';
+import PaymentProductPrice from '../PaymentProductPrice';
+import {getConvertedAmount} from '../../utils/payment';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -48,6 +51,7 @@ export default function Paywalls(inProps: PaywallsProps) {
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
   const isMountedRef = useIsComponentMountedRef();
+  const intl = useIntl();
 
   // Check if the payment price of the purchase is in the current list
   const isPricePurchasedIncluded = useMemo(() => {
@@ -112,7 +116,24 @@ export default function Paywalls(inProps: PaywallsProps) {
           />
           {paymentOrder && !isPricePurchasedIncluded && (
             <Alert severity="error" className={classes.error}>
-              <FormattedMessage id="ui.paywalls.priceNotIncluded" defaultMessage="ui.paywalls.priceNotIncluded" />
+              <Typography component="p" variant="body2">
+                <FormattedMessage id="ui.paywalls.priceNotIncluded" defaultMessage="ui.paywalls.priceNotIncluded" />
+              </Typography>
+              <Typography component="p" variant="body2">
+                <FormattedMessage
+                  defaultMessage="ui.paywalls.contentPurchasedAt"
+                  id="ui.paywalls.contentPurchasedAt"
+                  values={{
+                    purchasedAt: intl.formatDate(new Date(paymentOrder.created_at), {day: 'numeric', year: 'numeric', month: 'long'}),
+                    price: getConvertedAmount(paymentOrder.payment_price)
+                  }}
+                />
+              </Typography>
+              <PaymentProduct
+                paymentProduct={paymentOrder.payment_price.payment_product}
+                contentType={contentType}
+                {...(content ? {content} : {contentId})}
+              />
             </Alert>
           )}
         </>

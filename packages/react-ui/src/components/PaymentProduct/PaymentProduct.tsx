@@ -72,7 +72,7 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
 
   // CONST
   const productPaymentPriceIds = useMemo(() => {
-    if (scPaymentProduct) {
+    if (scPaymentProduct && scPaymentProduct.payment_prices) {
       return scPaymentProduct.payment_prices.map((p) => p.id);
     }
     return [];
@@ -111,6 +111,7 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
       </AccordionSummary>
       <AccordionDetails>
         {!hidePaymentProductPrices &&
+          scPaymentProduct.payment_prices &&
           scPaymentProduct.payment_prices.map((price, index) => (
             <PaymentProductPrice
               price={price}
