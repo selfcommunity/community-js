@@ -9,6 +9,7 @@ import AccordionLessons from '../AccordionLessons';
 import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
+import UserAvatar from '../UserAvatar';
 
 const classes = {
   dialogRoot: `${PREFIX}-dialog-root`,
@@ -89,7 +90,14 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
             <Stack className={classes.infoOuterWrapper}>
               <Stack className={classes.infoInnerWrapper}>
                 <Stack className={classes.avatarWrapper}>
-                  <Avatar className={classes.avatar} src={user.avatar} alt={user.username} />
+                  <Link
+                    {...(!course.created_by.deleted && {
+                      to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, course.created_by)
+                    })}>
+                    <UserAvatar hide={!course.created_by.community_badge} smaller={true}>
+                      <Avatar className={classes.avatar} src={user.avatar} alt={user.username} />
+                    </UserAvatar>
+                  </Link>
                   <Typography variant="body1">{user.username}</Typography>
                 </Stack>
 

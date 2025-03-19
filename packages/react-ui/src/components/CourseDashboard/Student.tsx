@@ -151,6 +151,7 @@ function Student(inProps: StudentCourseDashboardProps) {
 
     let request: Promise<any>;
     let updatedCourse: SCCourseType;
+
     if (sentRequest) {
       request = CourseService.leaveOrRemoveCourseRequest(scCourse.id);
       updatedCourse = {
