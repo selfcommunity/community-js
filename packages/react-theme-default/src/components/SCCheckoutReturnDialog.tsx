@@ -12,7 +12,8 @@ const Component = {
         justifyContent: 'center',
         alignItems: 'center',
         '& .SCWidget-root': {
-          minWidth: 310
+          minWidth: 310,
+          paddingLeft: theme.spacing()
         }
       },
       '& .SCCheckoutSuccessDialog-content-object': {

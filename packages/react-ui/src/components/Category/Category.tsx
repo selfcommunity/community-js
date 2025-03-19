@@ -135,7 +135,8 @@ export default function Category(inProps: CategoryProps): JSX.Element {
 
   // MEMO
   const _ButtonBaseProps = useMemo(
-    () => (ButtonBaseProps ? ButtonBaseProps : {component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, scCategory)}),
+    () =>
+      ButtonBaseProps ? ButtonBaseProps : {component: Link, to: scCategory ? scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, scCategory) : ''},
     [ButtonBaseProps, scRoutingContext, scCategory]
   );
 
