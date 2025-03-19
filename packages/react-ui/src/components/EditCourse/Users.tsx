@@ -57,7 +57,6 @@ function Users(props: UsersProps) {
   const [state, dispatch] = useReducer(
     dataWidgetReducer,
     {
-      isLoadingPrevious: false,
       isLoadingNext: false,
       next: null,
       cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_PARTECIPANTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
@@ -131,6 +130,14 @@ function Users(props: UsersProps) {
             type: actionWidgetTypes.LOAD_PREVIOUS_SUCCESS,
             payload: {count: state.count + newUsers.length, results: newUsers, initialized: true}
           });
+
+          enqueueSnackbar(
+            <FormattedMessage id="ui.editCourse.tab.users.table.snackbar.success" defaultMessage="ui.editCourse.tab.users.table.snackbar.success" />,
+            {
+              variant: 'success',
+              autoHideDuration: 3000
+            }
+          );
         })
         .catch((error) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
@@ -165,7 +172,6 @@ function Users(props: UsersProps) {
             method: Endpoints.GetCourseSuggestedUsers.method
           }}
           onConfirm={handleConfirm}
-          isUpdating={state.isLoadingPrevious}
           className={classes.contrastBgColor}
         />
       </Stack>
