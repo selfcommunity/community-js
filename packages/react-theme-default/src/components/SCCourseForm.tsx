@@ -86,6 +86,13 @@ const Component = {
             },
             '& .SCCourseForm-edit-privacy-item-info': {
               marginLeft: theme.spacing(2)
+            },
+            '& .SCCourseForm-disabled': {
+              opacity: 0.5
+            },
+            '& .SCCourseForm-edit-card': {
+              alignItems: 'center',
+              margin: theme.spacing(1)
             }
           }
         }

@@ -531,6 +531,7 @@
   "ui.courseForm.edit.access.info.visibility": "<icon>visibility_off</icon>Visibilità: nessuno può vedere o accedere a questo Corso, tranne te e gli altri amministratori.",
   "ui.courseForm.edit.publication.title": "Pubblica il tuo Corso",
   "ui.courseForm.edit.publication.subtitle": "Quando sei pronto a pubblicare il tuo Corso, seleziona le impostazioni di accesso qui sotto:",
+  "ui.courseForm.edit.publication.subtitle.info": "Ricorda che devi avere almeno una lezione pubblicata per poter procedere",
   "ui.courseForm.edit.publication.option.open.title": "Aperto",
   "ui.courseForm.edit.publication.option.open.access": "<icon>private</icon>Accesso: aperto. Tutti gli utenti della tua Community possono visualizzare questo spazio e partecipare.",
   "ui.courseForm.edit.publication.option.open.visibility": "<icon>visibility</icon>Visibilità: Visibile a tutti i membri della tua Community.",
