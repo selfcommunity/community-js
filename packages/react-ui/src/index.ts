@@ -216,6 +216,7 @@ import PaymentProductPrice, {PaymentProductPriceProps} from './components/Paymen
 import UserPaymentMethods, {UserPaymentMethodsProps, UserPaymentMethodsSkeleton} from './components/UserPaymentMethods';
 import Checkout, {CheckoutProps} from './components/Checkout';
 import CheckoutReturnDialog, {CheckoutReturnDialogProps} from './components/CheckoutReturnDialog';
+import CommunityPaywalls, {CommunityPaywallsProps, CommunityPaywallsSkeleton} from './components/CommunityPaywalls';
 import BaseDialog, {BaseDialogProps} from './shared/BaseDialog';
 import BaseItem, {BaseItemProps} from './shared/BaseItem';
 import Calendar, {CalendarProps} from './shared/Calendar';
@@ -806,7 +807,7 @@ export {
   PROVIDER_ICONS_CONTAINED,
   PROVIDER_ICONS_OUTLINED,
   PaywallsDialog,
-	PaywallsDialogProps,
+  PaywallsDialogProps,
   PaymentProducts,
   PaymentProductsProps,
   PaymentProduct,
@@ -821,5 +822,8 @@ export {
   CheckoutProps,
   CheckoutReturnDialog,
   CheckoutReturnDialogProps,
-  HiddenPurchasableContent
+  HiddenPurchasableContent,
+  CommunityPaywalls,
+  CommunityPaywallsProps,
+  CommunityPaywallsSkeleton
 };
