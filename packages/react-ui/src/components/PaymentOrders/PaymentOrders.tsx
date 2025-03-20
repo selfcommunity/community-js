@@ -97,7 +97,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
   const loadMore = useCallback(async () => {
     const loadItems = async () => {
       try {
-        const res = await PaymentService.getPaymentsOrder({offset: orders.length, order_by: '-created_at'});
+        const res = await PaymentService.getPaymentsOrder({offset: orders.length, ordering: '-created_at'});
         if (res) {
           setHasMore(res.next !== null);
           setNext(res.next);

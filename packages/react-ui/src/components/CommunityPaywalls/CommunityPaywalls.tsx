@@ -23,8 +23,7 @@ const Root = styled(Grid, {
 
 export interface CommunityPaywallsProps {
   className?: string;
-  prefetchedProducts?: SCPaymentProduct[];
-  paymentOrder?: SCPaymentOrder;
+  community?: SCCommunityType;
   onUpdatePaymentOrder?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
   callBackUrl?: string;
 }
@@ -35,11 +34,10 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, prefetchedProducts = [], paymentOrder = null, onUpdatePaymentOrder, callBackUrl, ...rest} = props;
+  const {className, community, onUpdatePaymentOrder, callBackUrl, ...rest} = props;
 
   // STATE
-  const [products, setProducts] = useState<SCPaymentProduct[]>([]);
-  const [payment, setPayment] = useState<SCPaymentOrder | null>(null);
+  const [scCommunity, setSCCommunity] = useState<SCCommunityType>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   // HOOKS
@@ -50,17 +48,15 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
    * On mount, fetches community products
    */
   useEffect(() => {
-    if (prefetchedProducts.length) {
-      setProducts(prefetchedProducts);
-      setPayment(paymentOrder);
+    if (community) {
+      setSCCommunity(community);
       setLoading(false);
     } else {
       CommunityApiClient.getCommunities()
         .then((data: SCPaginatedResponse<SCCommunityType>) => {
           if (isMountedRef.current) {
             if (data.count && data.results.length) {
-              setProducts(data.results[0].paywalls);
-              setPayment(data.results[0].payment_order);
+              setSCCommunity(data.results[0]);
             }
             setLoading(false);
           }
@@ -69,7 +65,7 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [prefetchedProducts.length]);
+  }, [community]);
 
   if (!isPaymentsEnabled) {
     return null;
@@ -81,15 +77,15 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
 
   return (
     <Root className={classNames(classes.root, className)} container spacing={4} {...rest}>
-      {products.map((p, i) => (
-        <Grid xs={4} key={i}>
+      {scCommunity.paywalls.map((p, i) => (
+        <Grid xs={12} sm={6} md={4} key={i}>
           <PaymentProduct
             expanded
             paymentProduct={p}
             contentType={SCContentType.COMMUNITY}
-            contentId={p.id}
-            {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
-            {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
+            contentId={scCommunity.id}
+            {...(scCommunity.payment_order && {paymentOrder: scCommunity.payment_order, onUpdatePaymentOrder})}
+            {...(scCommunity.payment_order && {paymentOrder: scCommunity.payment_order, onUpdatePaymentOrder})}
             {...(callBackUrl && {PaymentProductPriceComponentProps: {returnUrlParams: {callBackUrl}}})}
           />
         </Grid>
