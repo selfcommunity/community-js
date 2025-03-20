@@ -75,6 +75,10 @@ function SectionRow(props: SectionRowProps) {
   }, []);
 
   // HANDLERS
+  const handleOpenDialog = useCallback(() => {
+    setOpen((prev) => !prev);
+  }, [setOpen]);
+
   const handleExpandAccordion = useCallback(() => setExpand((prev) => !prev), [setExpand]);
 
   const handleDragEnd = useCallback(
@@ -122,7 +126,7 @@ function SectionRow(props: SectionRowProps) {
 
   const handleAddTempLesson = useCallback(() => {
     setLessons((prevLessons) => (prevLessons?.length > 0 ? [...prevLessons, getLesson(prevLessons.length + 1)] : [getLesson(1)]));
-  }, [setLessons]);
+  }, [setLessons, getLesson]);
 
   const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true)), [setEditMode]);
   const handleDisableEditMode = useCallback(() => setEditMode(false), [setEditMode]);
@@ -136,6 +140,7 @@ function SectionRow(props: SectionRowProps) {
         };
 
         handleManageSection(tempSection, ActionLessonType.DELETE);
+        handleOpenDialog();
 
         enqueueSnackbar(
           <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.delete" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.delete" />,
@@ -153,7 +158,7 @@ function SectionRow(props: SectionRowProps) {
           autoHideDuration: 3000
         });
       });
-  }, [course, section, handleManageSection]);
+  }, [course, section, handleManageSection, handleOpenDialog]);
 
   const handleManageLesson = useCallback(
     (lesson: SCCourseLessonType, type: ActionLessonType, newRow?: boolean) => {
@@ -198,10 +203,6 @@ function SectionRow(props: SectionRowProps) {
     [section, handleManageSection]
   );
 
-  const handleOpenDialog = useCallback(() => {
-    setOpen((prev) => !prev);
-  }, [setOpen]);
-
   return (
     <Fragment>
       <TableRow {...provider.draggableProps} ref={provider.innerRef} className={classes.tableBodyAccordion}>
@@ -232,7 +233,7 @@ function SectionRow(props: SectionRowProps) {
         </TableCell>
         <TableCell className={classes.cellAlignCenter}>
           {isDisabled ? (
-            <Skeleton animation={false} variant="rectangular" width="250px" height="53px" sx={{margin: 'auto', borderRadius: '5px'}} />
+            <Skeleton animation={false} variant="rectangular" width="250px" height="38px" sx={{margin: 'auto', borderRadius: '5px'}} />
           ) : (
             <LessonReleaseMenu course={course} section={section} />
           )}
