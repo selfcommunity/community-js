@@ -43,6 +43,7 @@ const Component = {
           '& .SCAccordionLessons-link': {
             textDecoration: 'underline',
             padding: 0,
+            justifyContent: 'space-between',
 
             '&:hover': {
               backgroundColor: 'unset',
