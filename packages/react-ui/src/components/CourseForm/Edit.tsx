@@ -1,7 +1,7 @@
 import {Box, BoxProps, FormControl, FormControlLabel, Icon, Radio, RadioGroup, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
+import {SCCourseLessonCompletionStatusType, SCCourseLessonStatusType, SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
@@ -57,7 +57,9 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
 
   // STATE
   const [privacy, setPrivacy] = useState<SCCoursePrivacyType>(course.privacy);
-  const notPublishable = course.num_lessons === 0;
+  const notPublishable =
+    course.num_lessons === 0 ||
+    !course.sections.some((section) => section.lessons.some((lesson) => lesson.status === SCCourseLessonStatusType.PUBLISHED));
 
   //HANDLERS
 
