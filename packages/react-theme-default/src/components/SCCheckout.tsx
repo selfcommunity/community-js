@@ -21,6 +21,7 @@ const Component = {
           alignItems: 'center'
         },
         ['& .SCCheckout-content-object']: {
+          position: 'relative',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -31,6 +32,12 @@ const Component = {
           '& .SCWidget-root': {
             width: '93%'
           }
+        },
+        ['& .SCCheckout-content-coverage']: {
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          backgroundColor: 'transparent'
         },
         ['& .SCCheckout-content-desc']: {
           display: 'flex',

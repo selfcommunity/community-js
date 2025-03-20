@@ -24,7 +24,7 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const FollowButton = styled(LoadingButton, {
+const Root = styled(LoadingButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -159,6 +159,14 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     return null;
   }
 
+  if (scCategoriesManager.isLoading(scCategory) || followed === null) {
+    return (
+      <Root size="small" variant="outlined" loading className={classNames(classes.root, className)}>
+        <FormattedMessage defaultMessage="ui.categoryFollowButton.follow" id="ui.categoryFollowButton.follow" />
+      </Root>
+    );
+  }
+
   /**
    * if the category is a paid content and it isn't followed show the Buy button
    */
@@ -173,11 +181,11 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
   }
 
   return (
-    <FollowButton
+    <Root
       size="small"
       variant="outlined"
       onClick={handleFollowAction}
-      loading={scUserContext.user ? followed === null || scCategoriesManager.isLoading(scCategory) : null}
+      loading={scUserContext.user ? scCategoriesManager.isLoading(scCategory) : null}
       className={classNames(classes.root, className)}
       disabled={isActionFollowDisabled}
       {...rest}>
@@ -186,6 +194,6 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
       ) : (
         <FormattedMessage defaultMessage="ui.categoryFollowButton.follow" id="ui.categoryFollowButton.follow" />
       )}
-    </FollowButton>
+    </Root>
   );
 }

@@ -20,7 +20,7 @@ const Root = styled(Grid, {
   overflow: 'hidden'
 }));
 
-export interface CommunityPaywallSkeletonProps extends Grid2Props {
+export interface CommunityPaywallsSkeletonProps extends Grid2Props {
   className?: string;
   PaymentProductSkeletonComponentProps?: PaymentProductSkeletonProps;
 }
@@ -45,9 +45,9 @@ export interface CommunityPaywallSkeletonProps extends Grid2Props {
  |root|.SCCommunityPaywallSkeleton-skeleton-root|Styles applied to the root element.|
  *
  */
-export default function CommunityPaywallSkeleton(inProps): JSX.Element {
+export default function CommunityPaywallsSkeleton(inProps): JSX.Element {
   // PROPS
-  const props: CommunityPaywallSkeletonProps = useThemeProps({
+  const props: CommunityPaywallsSkeletonProps = useThemeProps({
     props: inProps,
     name: `${PREFIX}Skeleton`
   });

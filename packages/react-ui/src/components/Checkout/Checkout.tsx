@@ -25,6 +25,7 @@ const classes = {
   content: `${PREFIX}-content`,
   contentObject: `${PREFIX}-content-object`,
   contentDesc: `${PREFIX}-content-desc`,
+  contentCoverage: `${PREFIX}-content-coverage`,
   checkout: `${PREFIX}-checkout`,
   object: `${PREFIX}-object`
 };
@@ -173,7 +174,10 @@ export default function Checkout(inProps: CheckoutProps) {
     <Root className={classNames(classes.root, className)} {...rest}>
       {isContentObject && contentType !== SCContentType.COMMUNITY && (
         <Box className={classes.content}>
-          <Box className={classes.contentObject}>{renderContentObject()}</Box>
+          <Box className={classes.contentObject}>
+            <Box className={classes.contentCoverage} />
+            {renderContentObject()}
+          </Box>
           <Box className={classes.contentDesc}>
             <Typography variant="h5" mb={1}>
               <b>

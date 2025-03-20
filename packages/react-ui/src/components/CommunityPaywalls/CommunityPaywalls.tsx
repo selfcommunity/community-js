@@ -21,7 +21,7 @@ const Root = styled(Grid, {
   name: PREFIX
 })(({theme}) => ({}));
 
-export interface CommunityPaywallProps {
+export interface CommunityPaywallsProps {
   className?: string;
   prefetchedProducts?: SCPaymentProduct[];
   paymentOrder?: SCPaymentOrder;
@@ -29,9 +29,9 @@ export interface CommunityPaywallProps {
   callBackUrl?: string;
 }
 
-export default function CommunityPaywall(inProps: CommunityPaywallProps) {
+export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
   // PROPS
-  const props: CommunityPaywallProps = useThemeProps({
+  const props: CommunityPaywallsProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });

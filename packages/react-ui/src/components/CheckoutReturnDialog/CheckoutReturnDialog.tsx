@@ -255,7 +255,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
             />
           </Box>
           <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
-            <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />
+            <FormattedMessage id="ui.checkoutReturnDialog.group.button" defaultMessage="ui.checkoutReturnDialog.group.button" />
           </Button>
         </>
       );

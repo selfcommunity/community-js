@@ -265,6 +265,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
           startIcon={<Icon>card_giftcard</Icon>}
           loading={scUserContext.user === undefined || purchased === null}
           onClick={handleOpen}
+          disabled={disabled}
           {...rest}>
           {btnLabel}
         </RequestRoot>
