@@ -55,6 +55,7 @@ const classes = {
   actionsWrapper: `${PREFIX}-actions-wrapper`,
   user: `${PREFIX}-user`,
   avatar: `${PREFIX}-avatar`,
+  description: `${PREFIX}-description`,
   progress: `${PREFIX}-progress`,
   lessonsSections: `${PREFIX}-lessons-sections`,
   circle: `${PREFIX}-circle`,
@@ -314,7 +315,9 @@ function Student(inProps: StudentCourseDashboardProps) {
             </Typography>
 
             <Stack className={classNames(classes.box, classes.contrastBgColor)}>
-              <Typography variant="body1">{scCourse.description}</Typography>
+              <Typography variant="body1" className={classes.description}>
+                {scCourse.description}
+              </Typography>
             </Stack>
           </Fragment>
         )}
