@@ -37,6 +37,14 @@ const messages = defineMessages({
   pickerCancelMessage: {
     id: 'ui.lessonReleaseMenu.scheduled.picker.cancel',
     defaultMessage: 'ui.lessonReleaseMenu.scheduled.picker.cancel'
+  },
+  pickerClearMessage: {
+    id: 'ui.lessonReleaseMenu.scheduled.picker.clear',
+    defaultMessage: 'ui.lessonReleaseMenu.scheduled.picker.clear'
+  },
+  pickerOkMessage: {
+    id: 'ui.lessonReleaseMenu.scheduled.picker.ok',
+    defaultMessage: 'ui.lessonReleaseMenu.scheduled.picker.ok'
   }
 });
 
@@ -139,7 +147,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
   };
 
   const handleUpdate = (value) => {
-    CourseService.patchCourseSection(course.id, section.id, {dripped_at: value.toISOString()})
+    CourseService.patchCourseSection(course.id, section.id, {dripped_at: value ? value.toISOString() : null})
       .then((data: SCCourseSectionType) => {
         setOpen(false);
         onSuccess(data);
@@ -170,7 +178,9 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
           dateAdapter={AdapterDateFns}
           adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
           localeText={{
-            cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelMessage)}`
+            okButtonLabel: `${intl.formatMessage(messages.pickerOkMessage)}`,
+            cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelMessage)}`,
+            clearButtonLabel: `${intl.formatMessage(messages.pickerClearMessage)}`
           }}>
           <MobileDateTimePicker
             className={classes.picker}
@@ -190,6 +200,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
               textField: (params) => (
                 <TextField
                   {...params}
+                  error={false}
                   InputProps={{
                     ...params.InputProps,
                     placeholder: `${intl.formatMessage(messages.pickerPlaceholder)}`,
@@ -217,10 +228,14 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
                     defaultMessage="ui.lessonReleaseMenu.scheduled.picker.placeholder"
                   />
                 )
+              },
+              actionBar: {
+                actions: ['cancel', 'clear', 'accept']
               }
             }}
             onChange={(value) => setDrippedAt(value)}
             onAccept={handleUpdate}
+            onClear={() => setDrippedAt(null)}
           />
         </LocalizationProvider>
       ) : (

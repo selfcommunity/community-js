@@ -127,7 +127,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
     CommentComponentProps = {},
     CommentObjectSkeletonProps = {elevation: 0},
     CommentsObjectSkeletonProps = {},
-    cacheStrategy = CacheStrategies.CACHE_FIRST,
+    cacheStrategy = CacheStrategies.STALE_WHILE_REVALIDATE,
     ...rest
   } = props;
 
@@ -165,7 +165,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
   }
 
   const scrollToBottom = () => {
-    commentsEndRef.current?.scrollIntoView({block: 'end', behavior: 'instant'});
+    commentsEndRef.current?.scrollIntoView({block: 'end', behavior: 'smooth'});
   };
 
   useEffect(() => {

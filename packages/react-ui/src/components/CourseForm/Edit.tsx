@@ -1,7 +1,7 @@
 import {Box, BoxProps, FormControl, FormControlLabel, Icon, Radio, RadioGroup, Typography} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
+import {SCCourseLessonCompletionStatusType, SCCourseLessonStatusType, SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
@@ -16,7 +16,8 @@ const classes = {
   publish: `${PREFIX}-edit-publish`,
   publishInfo: `${PREFIX}-edit-publish-info`,
   privacyItem: `${PREFIX}-edit-privacy-item`,
-  privacyItemInfo: `${PREFIX}-edit-privacy-item-info`
+  privacyItemInfo: `${PREFIX}-edit-privacy-item-info`,
+  disabled: `${PREFIX}-disabled`
 };
 
 const Root = styled(Box, {
@@ -56,6 +57,9 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
 
   // STATE
   const [privacy, setPrivacy] = useState<SCCoursePrivacyType>(course.privacy);
+  const notPublishable =
+    course.num_lessons === 0 ||
+    !course.sections.some((section) => section.lessons.some((lesson) => lesson.status === SCCourseLessonStatusType.PUBLISHED));
 
   //HANDLERS
 
@@ -109,16 +113,27 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
         <Typography variant="h5">
           <FormattedMessage id="ui.courseForm.edit.publication.title" defaultMessage="ui.courseForm.edit.publication.title" />
         </Typography>
-        <Typography variant="body1" className={classes.publishInfo}>
-          <FormattedMessage id="ui.courseForm.edit.publication.subtitle" defaultMessage="ui.courseForm.edit.publication.subtitle" />
-        </Typography>
+        {notPublishable ? (
+          <Widget className={classes.card}>
+            <Icon fontSize="medium" color="warning">
+              error
+            </Icon>
+            <Typography>
+              <FormattedMessage id="ui.courseForm.edit.publication.subtitle.info" defaultMessage="ui.courseForm.edit.publication.subtitle.info" />
+            </Typography>
+          </Widget>
+        ) : (
+          <Typography variant="body1" className={classes.publishInfo}>
+            <FormattedMessage id="ui.courseForm.edit.publication.subtitle" defaultMessage="ui.courseForm.edit.publication.subtitle" />
+          </Typography>
+        )}
         <RadioGroup>
           {Object.values(SCCoursePrivacyType)
             .filter((option) => option !== SCCoursePrivacyType.DRAFT)
             .map((option, index) => (
-              <FormControl key={index} className={classes.privacyItem}>
+              <FormControl key={index} className={classes.privacyItem} disabled={notPublishable}>
                 <FormControlLabel
-                  control={<Radio size="small" value={option} checked={option === privacy} onChange={handleChange} />}
+                  control={<Radio size="small" value={option} checked={option === privacy} onChange={handleChange} disabled={notPublishable} />}
                   label={
                     <FormattedMessage
                       id={`ui.courseForm.edit.publication.option.${option}.title`}
@@ -127,14 +142,14 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
                   }
                 />
                 <>
-                  <Typography variant="body1" className={classes.privacyItemInfo}>
+                  <Typography variant="body1" className={classNames(classes.privacyItemInfo, {[classes.disabled]: notPublishable})}>
                     <FormattedMessage
                       id={`ui.courseForm.edit.publication.option.${option}.access`}
                       defaultMessage={`ui.courseForm.edit.publication.option.${option}.access`}
                       values={{icon: (...chunks) => <Icon>{chunks}</Icon>}}
                     />
                   </Typography>
-                  <Typography variant="body1" className={classes.privacyItemInfo}>
+                  <Typography variant="body1" className={classNames(classes.privacyItemInfo, {[classes.disabled]: notPublishable})}>
                     <FormattedMessage
                       id={`ui.courseForm.edit.publication.option.${option}.visibility`}
                       defaultMessage={`ui.courseForm.edit.publication.option.${option}.visibility`}

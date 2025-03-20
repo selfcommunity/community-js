@@ -139,7 +139,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [lessonContent, setLessonContent] = useState<string>('');
   const [lessonMedias, setLessonMedias] = useState<SCMediaType[]>(scLesson?.medias ?? []);
   const [loading, setLoading] = useState<boolean>(false);
-  const [completed, setCompleted] = useState<boolean>(scLesson?.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
+  const [completed, setCompleted] = useState<boolean | null>(null);
   const currentData = useMemo(() => {
     if (!scCourse || !scLesson) return null;
     return getCurrentSectionAndLessonIndex(scCourse, sectionId, lessonId);
@@ -163,6 +163,12 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       setCurrentSection(scCourse.sections[currentData.currentSectionIndex] || null);
     }
   }, [scCourse, currentData]);
+
+  useEffect(() => {
+    if (scLesson) {
+      setCompleted(scLesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
+    }
+  }, [scLesson]);
 
   // HANDLERS
   /**
@@ -262,14 +268,14 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   /**
    * Handles toggle lesson complete/uncompleted
    */
-  const toggleLessonCompletion = (c: boolean) => {
+  const toggleLessonCompletion = () => {
     setLoading(true);
     const service = completed
       ? () => CourseService.markLessonIncomplete(scLesson.course_id, scLesson.section_id, scLesson.id)
       : () => CourseService.markLessonComplete(scLesson.course_id, scLesson.section_id, scLesson.id);
     service()
       .then(() => {
-        setCompleted(!c);
+        setCompleted(!completed);
         setLoading(false);
         const updatedCourse = {
           ...scCourse,
@@ -277,11 +283,14 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
             ...section,
             lessons: section.lessons.map((lesson: SCCourseLessonType) =>
               lesson.id === scLesson.id
-                ? {...lesson, completion_status: c ? SCCourseLessonCompletionStatusType.UNCOMPLETED : SCCourseLessonCompletionStatusType.COMPLETED}
+                ? {
+                    ...lesson,
+                    completion_status: completed ? SCCourseLessonCompletionStatusType.UNCOMPLETED : SCCourseLessonCompletionStatusType.COMPLETED
+                  }
                 : lesson
             )
           })),
-          num_lessons_completed: c ? scCourse.num_lessons_completed - 1 : scCourse.num_lessons_completed + 1
+          num_lessons_completed: completed ? scCourse.num_lessons_completed - 1 : scCourse.num_lessons_completed + 1
         };
         setSCCourse(updatedCourse);
         if (updatedCourse.num_lessons === updatedCourse.num_lessons_completed) {
@@ -358,7 +367,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
               variant={completed ? 'outlined' : 'contained'}
               startIcon={!completed && <Icon>arrow_next</Icon>}
               endIcon={completed && <Icon>circle_checked</Icon>}
-              onClick={() => toggleLessonCompletion(completed)}>
+              onClick={toggleLessonCompletion}>
               {completed ? (
                 <FormattedMessage id="templates.lesson.button.completed" defaultMessage="templates.lesson.button.completed" />
               ) : (

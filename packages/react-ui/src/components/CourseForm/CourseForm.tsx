@@ -419,7 +419,8 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                     (!field.name ||
                       Object.keys(error).length !== 0 ||
                       field.name.length > COURSE_TITLE_MAX_LENGTH ||
-                      field.description.length > COURSE_DESCRIPTION_MAX_LENGTH)
+                      field.description.length > COURSE_DESCRIPTION_MAX_LENGTH ||
+                      (!!field.privacy && (!field.description || course.num_sections === 0 || course.num_lessons === 0)))
               }
               variant="contained"
               onClick={
