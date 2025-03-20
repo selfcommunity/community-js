@@ -167,6 +167,10 @@ const Component = {
       },
 
       '&.SCCourseDashboard-student-container': {
+        '& .SCCourseDashboard-description': {
+          whiteSpace: 'pre-line'
+        },
+
         '& .SCCourseDashboard-accordion': {
           borderTopLeftRadius: 'unset',
           borderTopRightRadius: 'unset'
