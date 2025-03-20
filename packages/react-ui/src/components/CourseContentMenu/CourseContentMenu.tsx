@@ -91,7 +91,7 @@ export default function CourseContentMenu(inProps: CourseContentMenuProps): JSX.
                   key={_lesson.id}
                   className={classes.item}
                   onClick={() => onLessonClick(_lesson, section)}
-                  selected={_lesson.name === lesson.name}
+                  selected={_lesson.id === lesson.id}
                   disabled={_lesson.locked}>
                   {course.join_status !== SCCourseJoinStatusType.MANAGER && (
                     <ListItemIcon className={classes.itemIcon}>
