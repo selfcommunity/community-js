@@ -81,5 +81,5 @@ export interface PaymentOrderParams extends BaseSearchParams {
   /**
    * Ordering
    */
-  order_by?: string;
+  ordering?: string;
 }
