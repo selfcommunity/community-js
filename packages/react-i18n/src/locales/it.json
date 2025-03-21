@@ -577,7 +577,7 @@
   "ui.courses.filterByCreatedByMe": "Creati da me",
   "ui.courses.filterByName": "Cerca Corso",
   "ui.courses.filterByCoursesForMe": "I Corsi per me",
-  "ui.courses.button.seeMore": "Vedi di più",
+  "ui.courses.endMessage": "Non ci sono altri contenuti. <button> Torna in alto</button>",
   "ui.courseStatus.new": "NUOVO",
   "ui.courseStatus.draft": "BOZZA",
   "ui.courseStatus.published": "PUBBLICATO",

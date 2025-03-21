@@ -576,7 +576,7 @@
   "ui.courses.filterByCreatedByMe": "Created by me",
   "ui.courses.filterByName": "Search Course",
   "ui.courses.filterByCoursesForMe": "Courses for me",
-  "ui.courses.button.seeMore": "See more",
+  "ui.courses.endMessage": "There is no other content. <button>Scroll up</button>",
   "ui.courseStatus.new": "NEW",
   "ui.courseStatus.draft": "DRAFT",
   "ui.courseStatus.published": "PUBLISHED",
