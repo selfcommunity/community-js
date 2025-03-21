@@ -3,13 +3,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
-import {
-  SCCourseJoinStatusType,
-  SCCourseLessonCompletionStatusType,
-  SCCourseLessonType,
-  SCCourseSectionType,
-  SCMediaType,
-} from '@selfcommunity/types';
+import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
 import {SCThemeType, useSCFetchCourse, useSCFetchLesson} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {
