@@ -108,10 +108,15 @@ const Component = {
           }
         }
       },
-      '& .SCCourses-show-more': {
-        paddingLeft: theme.spacing(1),
-        '&.Mui-selected, &:hover': {
-          backgroundColor: 'transparent'
+      '& .SCCourses-end-message': {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        '& .MuiButtonBase-root': {
+          paddingLeft: theme.spacing(1),
+          '&.Mui-selected, &:hover': {
+            backgroundColor: 'transparent'
+          }
         }
       }
     }),
