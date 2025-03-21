@@ -13,7 +13,7 @@ import EmptyStatus from '../../shared/EmptyStatus';
 import AddButton from './Lessons/AddButton';
 import SectionRow from './Lessons/SectionRow';
 import {ActionLessonType} from './types';
-import {useDisabled} from './hooks';
+import {useIsDisabled} from './hooks';
 import classNames from 'classnames';
 
 const classes = {
@@ -65,7 +65,7 @@ function Lessons(props: LessonsProps) {
   const [sections, setSections] = useState<SCCourseSectionType[]>([]);
 
   // HOOKS
-  const {isDisabled} = useDisabled();
+  const {isDisabled} = useIsDisabled();
   const {enqueueSnackbar} = useSnackbar();
   const intl = useIntl();
 
