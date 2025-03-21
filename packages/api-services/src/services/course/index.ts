@@ -3,7 +3,6 @@ import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
 import {
   BaseGetParams,
-  BaseSearchParams,
   CourseCreateParams,
   CourseDashboardUsersParams,
   CourseInfoParams,
@@ -168,7 +167,7 @@ export interface CourseApiClientInterface {
   getCourseJoinedUsers(id: number | string, params?: CourseUsersParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
 
   // Subscribe/Unsubscribe
-  joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseType>;
   leaveOrRemoveCourseRequest(id: number | string, params?: {user: number}, config?: AxiosRequestConfig): Promise<any>;
 
   // To invite a user or to accept a request to participate in the course (in the end the user is ONLY subscribed to the course)
@@ -723,7 +722,7 @@ export class CourseApiClient {
    * @param id
    * @param config
    */
-  static joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return apiRequest({...config, url: Endpoints.JoinOrAcceptInviteToCourse.url({id}), method: Endpoints.JoinOrAcceptInviteToCourse.method});
   }
 
@@ -1033,7 +1032,7 @@ export default class CourseService {
   ): Promise<SCPaginatedResponse<SCUserType>> {
     return CourseApiClient.getCourseJoinedUsers(id, params, config);
   }
-  static async joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+  static async joinOrAcceptInviteToCourse(id: number | string, config?: AxiosRequestConfig): Promise<SCCourseType> {
     return CourseApiClient.joinOrAcceptInviteToCourse(id, config);
   }
   static async leaveOrRemoveCourseRequest(id: number | string, params?: {user: number}, config?: AxiosRequestConfig): Promise<any> {
