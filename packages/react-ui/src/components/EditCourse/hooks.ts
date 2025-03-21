@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import PubSub from 'pubsub-js';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 
-export const useDisabled = () => {
+export const useIsDisabled = () => {
   // STATES
   const [isDisabled, setIsDisabled] = useState(false);
 
