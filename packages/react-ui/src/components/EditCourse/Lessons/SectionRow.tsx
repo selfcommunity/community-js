@@ -1,6 +1,6 @@
 import {DragDropContext, Draggable, DraggableProvided, Droppable, DropResult} from '@hello-pangea/dnd';
 import {Fragment, memo, useCallback, useEffect, useMemo, useState} from 'react';
-import {Collapse, Icon, IconButton, MenuItem, Skeleton, Stack, Table, TableBody, TableCell, TableRow, Typography} from '@mui/material';
+import {Collapse, Icon, IconButton, MenuItem, Stack, Table, TableBody, TableCell, TableRow, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {PREFIX} from '../constants';
 import LessonRow from './LessonRow';
@@ -15,7 +15,7 @@ import LessonReleaseMenu from '../../LessonReleaseMenu';
 import {SCCourseLessonType, SCCourseLessonTypologyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService, Endpoints} from '@selfcommunity/api-services';
 import {ActionLessonType} from '../types';
-import {useDisabled} from '../hooks';
+import {useIsDisabled} from '../hooks';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 
 const classes = {
@@ -48,7 +48,7 @@ function SectionRow(props: SectionRowProps) {
   const [lessons, setLessons] = useState<SCCourseLessonType[]>([]);
 
   // HOOKS
-  const {isDisabled} = useDisabled();
+  const {isDisabled} = useIsDisabled();
   const intl = useIntl();
   const {enqueueSnackbar} = useSnackbar();
 
@@ -232,11 +232,7 @@ function SectionRow(props: SectionRowProps) {
           />
         </TableCell>
         <TableCell className={classes.cellAlignCenter}>
-          {isDisabled ? (
-            <Skeleton animation={false} variant="rectangular" width="250px" height="38px" sx={{margin: 'auto', borderRadius: '5px'}} />
-          ) : (
-            <LessonReleaseMenu course={course} section={section} />
-          )}
+          <LessonReleaseMenu course={course} section={section} />
         </TableCell>
         <TableCell className={classes.cellAlignRight}>
           <Stack className={classes.actionsWrapper}>

@@ -3,7 +3,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
-import {SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
+import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
 import {SCThemeType, useSCFetchCourse, useSCFetchLesson} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {
@@ -155,6 +155,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       ? currentSection.lessons[currentLessonIndex + 1]?.locked
       : scCourse?.sections[currentSectionIndex + 1]?.lessons[0]?.locked);
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const isCourseAdmin = useMemo(() => scCourse && scCourse.join_status === SCCourseJoinStatusType.CREATOR, [scCourse]);
 
   //EFFECTS
 
@@ -359,7 +360,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
             onContentChange={handleLessonContentEdit}
             onMediaChange={handleLessonMediaEdit}
           />
-          {!isEditor && !editMode && (
+          {!isCourseAdmin && !editMode && (
             <LoadingButton
               className={classes.button}
               loading={loading}

@@ -14,8 +14,8 @@ import {useSnackbar} from 'notistack';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {ActionLessonType} from '../types';
-import {useDisabled} from '../hooks';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
+import {useIsDisabled} from '../hooks';
 
 const classes = {
   cellWidth: `${PREFIX}-cell-width`,
@@ -62,7 +62,7 @@ function LessonRow(props: LessonRowProps) {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HOOKS
-  const {isDisabled} = useDisabled();
+  const {isDisabled} = useIsDisabled();
   const {enqueueSnackbar} = useSnackbar();
 
   // HANDLERS

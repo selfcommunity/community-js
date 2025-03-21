@@ -163,33 +163,45 @@ function Student(inProps: StudentCourseDashboardProps) {
     setLoadingRequest(true);
 
     let request: Promise<any>;
-    let updatedCourse: SCCourseType;
 
     if (sentRequest) {
       request = CourseService.leaveOrRemoveCourseRequest(scCourse.id);
-      updatedCourse = {
-        ...scCourse,
-        join_status: null
-      };
     } else {
       request = CourseService.joinOrAcceptInviteToCourse(scCourse.id);
-      updatedCourse = {
-        ...scCourse,
-        join_status: scCourse.privacy === SCCoursePrivacyType.PRIVATE ? SCCourseJoinStatusType.REQUESTED : SCCourseJoinStatusType.JOINED
-      };
     }
 
     request
-      .then(() => {
+      .then((data: any) => {
+        let updatedCourse: SCCourseType;
+
+        if (data) {
+          updatedCourse = data;
+        } else {
+          updatedCourse = {
+            ...scCourse,
+            join_status: null
+          };
+        }
+
         setSCCourse(updatedCourse);
         setSentRequest((prev) => !prev);
         setLoadingRequest(false);
 
         enqueueSnackbar(
           <FormattedMessage
-            id={sentRequest ? SNACKBAR_MESSAGES.request : scCourse.join_status === null ? SNACKBAR_MESSAGES.enroll : SNACKBAR_MESSAGES.cancel}
+            id={
+              updatedCourse.join_status === SCCourseJoinStatusType.REQUESTED
+                ? SNACKBAR_MESSAGES.request
+                : updatedCourse.join_status === SCCourseJoinStatusType.JOINED
+                ? SNACKBAR_MESSAGES.enroll
+                : SNACKBAR_MESSAGES.cancel
+            }
             defaultMessage={
-              sentRequest ? SNACKBAR_MESSAGES.request : scCourse.join_status === null ? SNACKBAR_MESSAGES.enroll : SNACKBAR_MESSAGES.cancel
+              updatedCourse.join_status === SCCourseJoinStatusType.REQUESTED
+                ? SNACKBAR_MESSAGES.request
+                : updatedCourse.join_status === SCCourseJoinStatusType.JOINED
+                ? SNACKBAR_MESSAGES.enroll
+                : SNACKBAR_MESSAGES.cancel
             }
           />,
           {

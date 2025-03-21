@@ -28,6 +28,7 @@ import {CourseService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import {getDripDelayAndUnit} from '../../utils/course';
+import {useIsDisabled} from '../EditCourse/hooks';
 
 const messages = defineMessages({
   pickerPlaceholder: {
@@ -61,14 +62,14 @@ const classes = {
 const Root = styled(FormControl, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root]
+  overridesResolver: (_props, styles) => [styles.root]
 })(() => ({}));
 
 const PopoverRoot = styled(Popover, {
   name: PREFIX,
   slot: 'PopoverRoot',
-  overridesResolver: (props, styles) => styles.popoverRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.popoverRoot
+})(() => ({}));
 
 export interface LessonReleaseMenuProps {
   /**
@@ -112,6 +113,9 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
   const [unit, setUnit] = useState(_unit);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
+
+  // HOOKS
+  const {isDisabled} = useIsDisabled();
 
   //INTL
   const intl = useIntl();
@@ -206,7 +210,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
                     placeholder: `${intl.formatMessage(messages.pickerPlaceholder)}`,
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton>
+                        <IconButton disabled={isDisabled}>
                           <Icon>expand_more</Icon>
                         </IconButton>
                       </InputAdornment>
@@ -236,6 +240,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
             onChange={(value) => setDrippedAt(value)}
             onAccept={handleUpdate}
             onClear={() => setDrippedAt(null)}
+            disabled={isDisabled}
           />
         </LocalizationProvider>
       ) : (
@@ -244,16 +249,17 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
             size="small"
             placeholder={placeholderStructured}
             defaultValue={null}
-            onClick={handleClick}
+            onClick={isDisabled ? undefined : handleClick}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={handleClick}>
+                  <IconButton onClick={handleClick} disabled={isDisabled}>
                     <Icon>expand_more</Icon>
                   </IconButton>
                 </InputAdornment>
               )
             }}
+            disabled={isDisabled}
           />
           <PopoverRoot
             className={classes.popoverRoot}
