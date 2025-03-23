@@ -7,7 +7,7 @@ import {useThemeProps} from '@mui/system';
 import nodes from './nodes';
 import {InitialConfigType, LexicalComposer} from '@lexical/react/LexicalComposer';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
-import {EditorThemeClasses, LexicalEditor, Lex} from 'lexical';
+import {EditorThemeClasses, LexicalEditor} from 'lexical';
 import ToolbarPlugin from './plugins/ToolbarPlugin';
 import {PREFIX} from './constants';
 import {HorizontalRulePlugin} from './plugins/HorizontalRulePlugin';
