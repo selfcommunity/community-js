@@ -44,7 +44,7 @@ export const Community: StoryObj<typeof Checkout> = {
 	args: {
 		contentId: 1,
 		contentType: SCContentType.COMMUNITY,
-		priceId: 1
+		priceId: 7
 	},
 	render: template
 };

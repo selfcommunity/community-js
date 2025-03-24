@@ -4,7 +4,6 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {EmbeddedCheckout, EmbeddedCheckoutProvider} from '@stripe/react-stripe-js';
-import * as stripeJs from '@stripe/stripe-js';
 import {loadStripe, Stripe} from '@stripe/stripe-js';
 import {PaymentApiClient} from '@selfcommunity/api-services';
 import CheckoutSkeleton from './Skeleton';
@@ -46,7 +45,6 @@ export interface CheckoutProps {
   successUrl?: string;
   uiMode?: SCCheckoutSessionUIMode;
   onComplete?: () => void;
-  onShippingDetailsChange?: (event: stripeJs.StripeEmbeddedCheckoutShippingDetailsChangeEvent) => Promise<stripeJs.ResultAction>;
 }
 
 export default function Checkout(inProps: CheckoutProps) {
@@ -55,7 +53,7 @@ export default function Checkout(inProps: CheckoutProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, contentType, contentId, content, priceId, returnUrl, successUrl, uiMode, onComplete, onShippingDetailsChange, ...rest} = props;
+  const {className, contentType, contentId, content, priceId, returnUrl, successUrl, uiMode, onComplete, ...rest} = props;
 
   const [loading, setLoading] = useState<boolean>(false);
   const [initialized, setInitialized] = useState<boolean>(false);
@@ -114,10 +112,10 @@ export default function Checkout(inProps: CheckoutProps) {
   const providerOptions = useMemo(
     () => ({
       clientSecret,
-      ...(onComplete && {onComplete}),
-      ...(onShippingDetailsChange && {onShippingDetailsChange})
+      ...(onComplete && {onComplete})
+      // ...(onShippingDetailsChange && {onShippingDetailsChange})
     }),
-    [clientSecret, onComplete, onShippingDetailsChange]
+    [clientSecret, onComplete]
   );
 
   if (!isPaymentsEnabled) {
