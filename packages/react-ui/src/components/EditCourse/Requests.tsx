@@ -53,7 +53,7 @@ function Requests(props: RequestsProps) {
       isLoadingPrevious: false,
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_REQUESTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USERS_REQUESTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
       cacheStrategy: CacheStrategies.CACHE_FIRST,
       visibleItems: endpointQueryParams.limit
     },
