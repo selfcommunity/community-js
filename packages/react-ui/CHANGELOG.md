@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.35...@selfcommunity/react-ui@0.11.0-alpha.36) (2025-03-24)
+
+
+### Bug Fixes
+
+* fixed counter showed on followers button. Linear issue: https://linear.app/quentral/issue/QUE-1353/bug-counter-categorie-al-follow ([a2103fc](https://github.com/selfcommunity/community-js/commit/a2103fc6aa768cbe4d31dd465339d25a06921873))
+
+
+
+
+
 # [0.11.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.34...@selfcommunity/react-ui@0.11.0-alpha.35) (2025-03-24)
 
 
