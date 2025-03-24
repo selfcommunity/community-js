@@ -1,4 +1,4 @@
-import {Badge, BottomNavigationAction, Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
+import {Badge, Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
 import React, {useCallback, useMemo, useState} from 'react';
 import {
   Link,
@@ -55,7 +55,7 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
   /**
    * Props spread to SearchAutocomplete component
    */
-  SearchAutocompleteProps?: SearchAutocompleteProps;
+  SearchAutocompleteComponentProps?: SearchAutocompleteProps;
   /**
    * Actions to be inserted before composer IconButton
    */
@@ -122,7 +122,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     className = '',
     disableSearch = false,
     preserveDesktopLogo = false,
-    SearchAutocompleteProps = {},
+    SearchAutocompleteComponentProps = {},
     children = null,
     startActions = null,
     endActions = null,
@@ -170,10 +170,10 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   // HANDLERS
   const handleOpenSearch = useCallback(() => {
     setSearchOpen(true);
-  }, []);
+  }, [setSearchOpen]);
   const handleCloseSearch = useCallback(() => {
     setSearchOpen(false);
-  }, []);
+  }, [setSearchOpen]);
 
   // RENDER
   if (scUserContext.loading) {
@@ -215,7 +215,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
             className={classes.searchDialog}
             fullScreen
             open={searchOpen}
-            SearchAutocompleteProps={{...SearchAutocompleteProps, onClear: handleCloseSearch}}></SearchDialog>
+            SearchAutocompleteComponentProps={{...SearchAutocompleteComponentProps, onClear: handleCloseSearch}}></SearchDialog>
         </>
       )}
       {endActions}

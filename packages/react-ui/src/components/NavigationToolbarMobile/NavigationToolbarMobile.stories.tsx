@@ -26,7 +26,7 @@ const template = (args) => (
 export const Base: StoryObj<NavigationToolbarMobileProps> = {
   args: {
     /* the args you need here will depend on your component */
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q), autoFocus: true},
+		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q), autoFocus: true, onSuggestionSelect: (type) => console.log(type)},
     value: '/'
   },
   parameters: {
@@ -40,7 +40,7 @@ export const Base: StoryObj<NavigationToolbarMobileProps> = {
 
 export const Custom: StoryObj<NavigationToolbarMobileProps> = {
   args: {
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q), autoFocus: true},
+		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q), autoFocus: true, onSuggestionSelect: (type) => console.log(type)},
     value: '/',
     children: <><IconButton><Icon>arrow_back</Icon></IconButton><Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography></>
   },
@@ -54,7 +54,7 @@ export const Custom: StoryObj<NavigationToolbarMobileProps> = {
 
 export const Actions: StoryObj<NavigationToolbarMobileProps> = {
   args: {
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q), autoFocus: true},
+		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q), autoFocus: true},
     value: '/',
     startActions: <>
       <IconButton>
