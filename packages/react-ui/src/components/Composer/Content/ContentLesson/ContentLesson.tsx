@@ -100,6 +100,7 @@ export default (props: ContentLessonProps): JSX.Element => {
   useEffect(() => {
     if (openLink && linkInputRef.current) {
       linkInputRef.current.scrollIntoView({behavior: 'smooth'});
+      console.log('scroll debug');
     }
   }, [openLink]);
 
