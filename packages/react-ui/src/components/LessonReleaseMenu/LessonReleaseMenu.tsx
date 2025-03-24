@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -107,7 +107,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
   const scContext: SCContextType = useSCContext();
 
   // STATE
-  const [drippedAt, setDrippedAt] = useState(section?.dripped_at ? new Date(section?.dripped_at) : null);
+  const [drippedAt, setDrippedAt] = useState<Date | null>(null);
   const {delay, _unit} = getDripDelayAndUnit(section?.drip_delay || 0);
   const [dripDelay, setDripDelay] = useState(delay);
   const [unit, setUnit] = useState(_unit);
@@ -123,6 +123,21 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
   const handleUnitChange = (e) => {
     setUnit(e.target.value);
   };
+
+  // EFFECTS
+  useEffect(() => {
+    if (section && section.dripped_at) {
+      setDrippedAt(new Date(section.dripped_at));
+    } else {
+      setDrippedAt(null);
+    }
+  }, [section, setDrippedAt]);
+
+  useEffect(() => {
+    if (section) {
+      setDripDelay(delay);
+    }
+  }, [section, setDripDelay]);
 
   // HANDLERS
 
@@ -197,7 +212,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
                 />
               )
             }
-            defaultValue={drippedAt}
+            value={drippedAt}
             slots={{
               //actionBar: PickerActionBar,
               tabs: (props) => <DateTimePickerTabs {...props} />,
@@ -247,8 +262,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
         <>
           <TextField
             size="small"
-            placeholder={placeholderStructured}
-            defaultValue={null}
+            value={placeholderStructured}
             onClick={isDisabled ? undefined : handleClick}
             InputProps={{
               endAdornment: (
