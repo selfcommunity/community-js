@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.33...@selfcommunity/react-ui@0.11.0-alpha.34) (2025-03-23)
+
+
+### Bug Fixes
+
+* editor ([74fd90b](https://github.com/selfcommunity/community-js/commit/74fd90b38fe6ddd8dcf912b95e4553bd758e309d))
+* editor ([fe1c776](https://github.com/selfcommunity/community-js/commit/fe1c7765f1a136a4b51146b4e3b7f7ddda34c1bf))
+
+
+
+
+
 # [0.11.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.32...@selfcommunity/react-ui@0.11.0-alpha.33) (2025-03-14)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
