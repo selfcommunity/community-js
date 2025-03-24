@@ -73,7 +73,7 @@ const templateContent = (args) => {
 export const Base: StoryObj<NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q)},
     value: '/',
     NotificationMenuProps: {
       SnippetNotificationsProps: {
@@ -90,7 +90,7 @@ export const Base: StoryObj<NavigationToolbar> = {
 export const Custom: StoryObj<NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q)},
     value: '/',
     children: <Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography>
   },
@@ -101,7 +101,7 @@ export const Custom: StoryObj<NavigationToolbar> = {
 export const Actions: StoryObj<NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q)},
     value: '/',
     startActions: <>
       <IconButton>

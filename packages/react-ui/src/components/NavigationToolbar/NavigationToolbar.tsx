@@ -62,7 +62,7 @@ export interface NavigationToolbarProps extends ToolbarProps {
   /**
    * Searchbar props
    */
-  SearchAutocompleteProps?: SearchAutocompleteProps;
+  SearchAutocompleteComponentProps?: SearchAutocompleteProps;
   /**
    * The navigation path
    */
@@ -173,7 +173,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     className = '',
     disableSearch = false,
     disableComposer = false,
-    SearchAutocompleteProps = {},
+    SearchAutocompleteComponentProps = {},
     startActions = null,
     endActions = null,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
@@ -322,7 +322,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       )}
       {_children}
       {(preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && !disableSearch ? (
-        <SearchAutocomplete className={classes.search} blurOnSelect {...SearchAutocompleteProps} />
+        <SearchAutocomplete className={classes.search} blurOnSelect {...SearchAutocompleteComponentProps} />
       ) : (
         <Box className={classes.search} />
       )}
