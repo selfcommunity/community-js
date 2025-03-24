@@ -77,11 +77,6 @@ export interface LessonProps {
    */
   editMode?: boolean;
   /**
-   * if the logged-in user is the  editor
-   * @default false
-   */
-  isEditor?: boolean;
-  /**
    * Callback fired on edit mode close
    * @default null
    */
@@ -115,7 +110,6 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     lessonId,
     LessonAppbarProps = {},
     LessonDrawerProps = {},
-    isEditor = false,
     editMode = false,
     onEditModeClose = null,
     onLessonChange = null,
@@ -129,7 +123,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [_lessonId, setLessonId] = useState<number | string>(lessonId);
   const [_sectionId, setSectionId] = useState<number | string>(sectionId);
   const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, courseId, sectionId: _sectionId});
-  const {scCourse, setSCCourse} = useSCFetchCourse({id: courseId, params: {view: isEditor ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
+  const {scCourse, setSCCourse} = useSCFetchCourse({id: courseId, params: {view: editMode ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
   const {enqueueSnackbar} = useSnackbar();
 
   // STATE

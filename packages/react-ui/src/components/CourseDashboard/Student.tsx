@@ -96,7 +96,7 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
     if (isNextLessonInThisSection) {
       Object.assign(data, {
         section_id: section.id,
-        lesson_id: section.lessons.find((lesson) => lesson.completion_status === SCCourseLessonCompletionStatusType.UNCOMPLETED).id
+        lesson_id: section.lessons.find((lesson) => lesson.completion_status === SCCourseLessonCompletionStatusType.UNCOMPLETED)?.id
       });
     }
 
