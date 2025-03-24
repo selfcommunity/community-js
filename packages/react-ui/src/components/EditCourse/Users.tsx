@@ -59,7 +59,7 @@ function Users(props: UsersProps) {
     {
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_PARTECIPANTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USERS_PARTECIPANTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
       cacheStrategy: CacheStrategies.CACHE_FIRST,
       visibleItems: endpointQueryParams.limit
     },
