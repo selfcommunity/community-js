@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.36...@selfcommunity/react-ui@0.11.0-alpha.37) (2025-03-24)
+
+
+### Bug Fixes
+
+* bump lexical deps to 0.28.0 ([a7dacb8](https://github.com/selfcommunity/community-js/commit/a7dacb8347f908bc0fe370e4a91f756d2001544e))
+* bump lexical deps to 0.28.0 ([de199e0](https://github.com/selfcommunity/community-js/commit/de199e0a54fd51c4e2a7b594505cab42d51af759))
+
+
+
+
+
 # [0.11.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.35...@selfcommunity/react-ui@0.11.0-alpha.36) (2025-03-24)
 
 
