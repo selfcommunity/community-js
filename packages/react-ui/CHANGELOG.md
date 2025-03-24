@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.34...@selfcommunity/react-ui@0.11.0-alpha.35) (2025-03-24)
+
+
+### Bug Fixes
+
+* rename SearchAutocompleteProps in NavigationToolbarMobile, NavigationToolbar, SearchDialog ([0238b49](https://github.com/selfcommunity/community-js/commit/0238b49acf2709ba778df179708a151191f94fca))
+
+
+
+
+
 # [0.11.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.33...@selfcommunity/react-ui@0.11.0-alpha.34) (2025-03-23)
 
 
