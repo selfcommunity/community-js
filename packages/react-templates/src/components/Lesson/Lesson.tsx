@@ -1,10 +1,17 @@
 import {Fragment, useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme, Alert} from '@mui/material';
 import {PREFIX} from './constants';
-import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
-import {SCThemeType, useSCFetchCourse, useSCFetchLesson} from '@selfcommunity/react-core';
+import {
+  SCCourseJoinStatusType,
+  SCCourseLessonCompletionStatusType,
+  SCCourseLessonType,
+  SCCourseSectionType,
+  SCCourseType,
+  SCMediaType
+} from '@selfcommunity/types';
+import {SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCFetchLesson, useSCRouting, Link} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {
   CourseCompletedDialog,
@@ -26,6 +33,7 @@ const classes = {
   containerRoot: `${PREFIX}-container-root`,
   navigation: `${PREFIX}-navigation`,
   navigationTitle: `${PREFIX}-navigation-title`,
+  previewInfo: `${PREFIX}-preview-info`,
   button: `${PREFIX}-button`
 };
 
@@ -76,6 +84,11 @@ export interface LessonProps {
    */
   editMode?: boolean;
   /**
+   * Renders preview mode
+   * @default false
+   */
+  previewMode?: boolean;
+  /**
    * Callback fired on edit mode close
    * @default null
    */
@@ -96,6 +109,15 @@ export interface LessonProps {
   [p: string]: any;
 }
 
+function getUrlLesson(course: SCCourseType, lesson: SCCourseLessonType): any {
+  return {
+    id: course.id,
+    slug: course.slug,
+    section_id: lesson.section_id,
+    lesson_id: lesson.id
+  };
+}
+
 export default function Lesson(inProps: LessonProps): JSX.Element {
   // PROPS
   const props: LessonProps = useThemeProps({
@@ -110,6 +132,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     LessonAppbarProps = {},
     LessonDrawerProps = {},
     editMode = false,
+    previewMode = false,
     onEditModeClose = null,
     onLessonChange = null,
     onActivePanelChange = null,
@@ -122,8 +145,12 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [_lessonId, setLessonId] = useState<number | string>(lessonId);
   const [_sectionId, setSectionId] = useState<number | string>(sectionId);
   const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, courseId, sectionId: _sectionId});
-  const {scCourse, setSCCourse} = useSCFetchCourse({id: courseId, params: {view: editMode ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
+  const {scCourse, setSCCourse} = useSCFetchCourse({
+    id: courseId,
+    params: {view: editMode || previewMode ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}
+  });
   const {enqueueSnackbar} = useSnackbar();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
   const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
@@ -138,10 +165,13 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     return scCourse.sections.flatMap((section: SCCourseSectionType) => section.lessons.map((lesson: SCCourseLessonType) => ({...lesson, section})));
   }, [scCourse]);
 
-  const [currentLessonIndex, setCurrentLessonIndex] = useState<number>(availableLessons.findIndex((lesson: SCCourseLessonType) => lesson.id === lessonId));
+  const [currentLessonIndex, setCurrentLessonIndex] = useState<number>(
+    availableLessons.findIndex((lesson: SCCourseLessonType) => lesson.id === lessonId)
+  );
   const [currentSection, setCurrentSection] = useState<SCCourseSectionType | null>(availableLessons[currentLessonIndex]?.section || null);
   const isPrevDisabled = availableLessons.length === 0 || currentLessonIndex <= 0;
-  const isNextDisabled = availableLessons.length === 0 || currentLessonIndex >= availableLessons.length - 1 || availableLessons[currentLessonIndex + 1]?.locked;
+  const isNextDisabled =
+    availableLessons.length === 0 || currentLessonIndex >= availableLessons.length - 1 || availableLessons[currentLessonIndex + 1]?.locked;
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const isCourseAdmin = useMemo(() => scCourse && scCourse.join_status === SCCourseJoinStatusType.CREATOR, [scCourse]);
 
@@ -316,6 +346,22 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
           {...LessonAppbarProps}
         />
         <Container open={Boolean(activePanel) || editMode} className={classes.containerRoot}>
+          {previewMode && (
+            <Alert severity="info" className={classes.previewInfo}>
+              <Typography variant="body1">
+                <FormattedMessage
+                  id="templates.lesson.previewMode"
+                  defaultMessage="templates.lesson.previewMode"
+                  values={{
+                    link: (...chunks) => (
+                      <Link to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(scCourse, scLesson))}>{chunks}</Link>
+                    ),
+                    linkBack: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)}>{chunks}</Link>
+                  }}
+                />
+              </Typography>
+            </Alert>
+          )}
           <Box className={classes.navigation}>
             <Typography variant="body2" color="text.secondary">
               <FormattedMessage
@@ -343,7 +389,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
             onContentChange={handleLessonContentEdit}
             onMediaChange={handleLessonMediaEdit}
           />
-          {!isCourseAdmin && !editMode && (
+          {!isCourseAdmin && !editMode && !previewMode && (
             <LoadingButton
               className={classes.button}
               loading={loading}
