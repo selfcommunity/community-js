@@ -410,6 +410,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
           course={scCourse}
           lesson={scLesson}
           editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : editMode}
+          previewMode={previewMode}
           activePanel={activePanel}
           handleClose={handleCloseDrawer}
           handleChangeLesson={handleChangeLesson}
