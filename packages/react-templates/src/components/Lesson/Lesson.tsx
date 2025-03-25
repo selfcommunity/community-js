@@ -162,14 +162,15 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [completed, setCompleted] = useState<boolean | null>(null);
   const availableLessons = useMemo(() => {
     if (!scCourse?.sections) return [];
-    return scCourse.sections.flatMap((section: SCCourseSectionType) => section.lessons.map((lesson: SCCourseLessonType) => ({...lesson, section})));
+    return scCourse.sections.flatMap((section: SCCourseSectionType) =>
+      section.lessons.filter((lesson: SCCourseLessonType) => !lesson.locked).map((lesson: SCCourseLessonType) => ({...lesson, section}))
+    );
   }, [scCourse]);
 
   const [currentLessonIndex, setCurrentLessonIndex] = useState<number>(
     availableLessons.findIndex((lesson: SCCourseLessonType) => lesson.id === lessonId)
   );
-  const [currentSection, setCurrentSection] = useState<SCCourseSectionType | null>(availableLessons[currentLessonIndex]?.section || null);
-  const isPrevDisabled = availableLessons.length === 0 || currentLessonIndex <= 0;
+  const isPrevDisabled = availableLessons.length === 0 || currentLessonIndex <= 0 || availableLessons[currentLessonIndex - 1]?.locked;
   const isNextDisabled =
     availableLessons.length === 0 || currentLessonIndex >= availableLessons.length - 1 || availableLessons[currentLessonIndex + 1]?.locked;
   const [openDialog, setOpenDialog] = useState<boolean>(false);
@@ -181,12 +182,6 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     const index = availableLessons.findIndex((lesson: SCCourseLessonType) => lesson.id === lessonId);
     setCurrentLessonIndex(index);
   }, [lessonId, availableLessons]);
-
-  useEffect(() => {
-    if (availableLessons.length > 0 && currentLessonIndex >= 0) {
-      setCurrentSection(availableLessons[currentLessonIndex]?.section || null);
-    }
-  }, [currentLessonIndex, availableLessons]);
 
   useEffect(() => {
     if (scLesson) {
@@ -224,7 +219,6 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const handleChangeLesson = (l: SCCourseLessonType, s: SCCourseSectionType) => {
     setLessonId(l.id);
     setSectionId(s.id);
-    setCurrentSection(s);
     onLessonChange && onLessonChange(l.id, s.id);
   };
 
@@ -263,7 +257,6 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     const newLessonIndex = currentLessonIndex - 1;
     const newLesson = availableLessons[newLessonIndex];
     setCurrentLessonIndex(newLessonIndex);
-    setCurrentSection(newLesson.section);
     handleChangeLesson(newLesson, newLesson.section);
   };
 
@@ -275,7 +268,6 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     const newLessonIndex = currentLessonIndex + 1;
     const newLesson = availableLessons[newLessonIndex];
     setCurrentLessonIndex(newLessonIndex);
-    setCurrentSection(newLesson.section);
     handleChangeLesson(newLesson, newLesson.section);
   };
 
