@@ -7,6 +7,9 @@ const Component = {
           '&:hover, &:focus, &:active': {
             backgroundColor: theme.palette.grey[300]
           }
+        },
+        '& .MuiButtonBase-root': {
+          paddingLeft: theme.spacing(5)
         }
       },
       '& .SCCourseContentMenu-list-item': {
@@ -19,7 +22,6 @@ const Component = {
         color: theme.palette.text.secondary
       },
       '& .SCCourseContentMenu-item': {
-        padding: theme.spacing(0.5, 0, 0.5, 3),
         '& .MuiListItemText-primary': {
           fontWeight: theme.typography.fontWeightMedium
         },
