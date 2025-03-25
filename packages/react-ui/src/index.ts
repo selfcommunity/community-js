@@ -274,7 +274,7 @@ import {getRelativeTime} from './utils/formatRelativeTime';
 import {bytesToSize} from './utils/sizeCoverter';
 import {generateRoomId, randomString, decodePassphrase, encodePassphrase} from './utils/liveStream';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
-import {getCurrentSectionAndLessonIndex} from './utils/course';
+
 /**
  * Import Assets
  */
@@ -319,7 +319,6 @@ export {
   randomString,
   decodePassphrase,
   encodePassphrase,
-  getCurrentSectionAndLessonIndex,
   Calendar,
   CalendarProps,
   Categories,

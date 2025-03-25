@@ -8,7 +8,6 @@ import {SCThemeType, useSCFetchCourse, useSCFetchLesson} from '@selfcommunity/re
 import classNames from 'classnames';
 import {
   CourseCompletedDialog,
-  getCurrentSectionAndLessonIndex,
   HiddenPlaceholder,
   LessonAppbar,
   LessonAppbarProps,
@@ -134,30 +133,30 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [lessonMedias, setLessonMedias] = useState<SCMediaType[]>(scLesson?.medias ?? []);
   const [loading, setLoading] = useState<boolean>(false);
   const [completed, setCompleted] = useState<boolean | null>(null);
-  const currentData = useMemo(() => {
-    if (!scCourse || !scLesson) return null;
-    return getCurrentSectionAndLessonIndex(scCourse, sectionId, lessonId);
-  }, [scCourse, sectionId, lessonId]);
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(currentData?.currentSectionIndex || 0);
-  const [currentLessonIndex, setCurrentLessonIndex] = useState(currentData?.currentLessonIndex || 0);
-  const [currentSection, setCurrentSection] = useState<SCCourseSectionType | null>(null);
-  const isPrevDisabled = !scCourse?.sections || (currentSectionIndex === 0 && currentLessonIndex === 0);
-  const isNextDisabled =
-    !scCourse?.sections ||
-    (currentSectionIndex === scCourse?.sections.length - 1 && currentLessonIndex === currentSection?.lessons?.length - 1) ||
-    (currentLessonIndex < currentSection?.lessons?.length - 1
-      ? currentSection.lessons[currentLessonIndex + 1]?.locked
-      : scCourse?.sections[currentSectionIndex + 1]?.lessons[0]?.locked);
+  const availableLessons = useMemo(() => {
+    if (!scCourse?.sections) return [];
+    return scCourse.sections.flatMap((section: SCCourseSectionType) => section.lessons.map((lesson: SCCourseLessonType) => ({...lesson, section})));
+  }, [scCourse]);
+
+  const [currentLessonIndex, setCurrentLessonIndex] = useState<number>(availableLessons.findIndex((lesson: SCCourseLessonType) => lesson.id === lessonId));
+  const [currentSection, setCurrentSection] = useState<SCCourseSectionType | null>(availableLessons[currentLessonIndex]?.section || null);
+  const isPrevDisabled = availableLessons.length === 0 || currentLessonIndex <= 0;
+  const isNextDisabled = availableLessons.length === 0 || currentLessonIndex >= availableLessons.length - 1 || availableLessons[currentLessonIndex + 1]?.locked;
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const isCourseAdmin = useMemo(() => scCourse && scCourse.join_status === SCCourseJoinStatusType.CREATOR, [scCourse]);
 
   //EFFECTS
 
   useEffect(() => {
-    if (scCourse?.sections && currentData) {
-      setCurrentSection(scCourse.sections[currentData.currentSectionIndex] || null);
+    const index = availableLessons.findIndex((lesson: SCCourseLessonType) => lesson.id === lessonId);
+    setCurrentLessonIndex(index);
+  }, [lessonId, availableLessons]);
+
+  useEffect(() => {
+    if (availableLessons.length > 0 && currentLessonIndex >= 0) {
+      setCurrentSection(availableLessons[currentLessonIndex]?.section || null);
     }
-  }, [scCourse, currentData]);
+  }, [currentLessonIndex, availableLessons]);
 
   useEffect(() => {
     if (scLesson) {
@@ -230,34 +229,24 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
    */
 
   const handlePrev = () => {
-    if (currentLessonIndex > 0) {
-      const newLessonIndex = currentLessonIndex - 1;
-      setCurrentLessonIndex(newLessonIndex);
-      handleChangeLesson(currentSection.lessons[newLessonIndex], currentSection);
-    } else if (currentSectionIndex > 0) {
-      const prevSectionIndex = currentSectionIndex - 1;
-      const prevSection = scCourse?.sections[prevSectionIndex];
-      const newLessonIndex = prevSection.lessons.length - 1;
-      setCurrentSectionIndex(prevSectionIndex);
-      setCurrentLessonIndex(newLessonIndex);
-      handleChangeLesson(prevSection.lessons[newLessonIndex], prevSection);
-    }
+    if (isPrevDisabled) return;
+    const newLessonIndex = currentLessonIndex - 1;
+    const newLesson = availableLessons[newLessonIndex];
+    setCurrentLessonIndex(newLessonIndex);
+    setCurrentSection(newLesson.section);
+    handleChangeLesson(newLesson, newLesson.section);
   };
 
   /**
    * Handles next lesson navigation
    */
   const handleNext = () => {
-    if (currentLessonIndex < currentSection.lessons.length - 1) {
-      const newLessonIndex = currentLessonIndex + 1;
-      setCurrentLessonIndex(newLessonIndex);
-      handleChangeLesson(currentSection.lessons[newLessonIndex], currentSection);
-    } else if (currentSectionIndex < scCourse?.sections.length - 1) {
-      const newSectionIndex = currentSectionIndex + 1;
-      setCurrentSectionIndex(newSectionIndex);
-      setCurrentLessonIndex(0);
-      handleChangeLesson(scCourse?.sections[newSectionIndex].lessons[0], scCourse.sections[newSectionIndex]);
-    }
+    if (isNextDisabled) return;
+    const newLessonIndex = currentLessonIndex + 1;
+    const newLesson = availableLessons[newLessonIndex];
+    setCurrentLessonIndex(newLessonIndex);
+    setCurrentSection(newLesson.section);
+    handleChangeLesson(newLesson, newLesson.section);
   };
 
   /**
@@ -332,7 +321,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
               <FormattedMessage
                 id="templates.lesson.number"
                 defaultMessage="templates.lesson.number"
-                values={{from: currentLessonIndex + 1, to: currentSection?.lessons?.length}}
+                values={{from: currentLessonIndex + 1, to: availableLessons.length}}
               />
             </Typography>
           </Box>
