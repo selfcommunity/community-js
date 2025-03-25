@@ -19,7 +19,9 @@ const Component = {
         backgroundColor: theme.palette.grey[200]
       },
       '& .SCLessonDrawer-header': {
-        minHeight: '60px',
+        [theme.breakpoints.up('sm')]: {
+          minHeight: '60px'
+        },
         display: 'block',
         padding: theme.spacing(1.5)
       },

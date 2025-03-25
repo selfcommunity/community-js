@@ -268,7 +268,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
             </InfiniteScroll>
           ) : null}
         </>
-        {commentsObject.comments.length > 0 && !editing && (
+        {!editing && (
           <CommentObjectReply
             key={replyKey}
             id={`reply-lessonCommentObjects`}
