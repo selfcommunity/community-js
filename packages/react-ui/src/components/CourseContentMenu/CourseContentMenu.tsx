@@ -93,7 +93,7 @@ export default function CourseContentMenu(inProps: CourseContentMenuProps): JSX.
                   onClick={() => onLessonClick(_lesson, section)}
                   selected={_lesson.id === lesson.id}
                   disabled={_lesson.locked}>
-                  {course.join_status !== SCCourseJoinStatusType.MANAGER && (
+                  {course.join_status !== SCCourseJoinStatusType.CREATOR && (
                     <ListItemIcon className={classes.itemIcon}>
                       {_lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED ? (
                         <Icon className={classes.iconComplete}>circle_checked</Icon>
