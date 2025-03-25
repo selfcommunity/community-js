@@ -131,9 +131,9 @@ function LessonRow(props: LessonRowProps) {
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.edit" defaultMessage="ui.editCourse.tab.lessons.table.menu.edit" />
               </Typography>
             </MenuItem>
-            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
+            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_PREVIEW_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
               <Typography variant="body1">
-                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.view" defaultMessage="ui.editCourse.tab.lessons.table.menu.view" />
+                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.preview" defaultMessage="ui.editCourse.tab.lessons.table.menu.preview" />
               </Typography>
             </MenuItem>
             <MenuItem onClick={handleAbleEditMode}>

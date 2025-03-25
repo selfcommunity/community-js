@@ -41,7 +41,8 @@ const Component = {
     }),
     skeletonRoot: ({theme}: any) => ({
       width: '100%',
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      padding: theme.spacing(2, 0, 0, 2)
     })
   }
 };

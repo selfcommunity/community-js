@@ -42,6 +42,11 @@ export interface CourseContentMenuProps {
    */
   onLessonClick: (lesson: SCCourseLessonType, section: SCCourseSectionType) => void;
   /**
+   * The preview mode
+   * @default false
+   */
+  previewMode: boolean;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -53,7 +58,7 @@ export default function CourseContentMenu(inProps: CourseContentMenuProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {className = null, lesson, course, onLessonClick, ...rest} = props;
+  const {className = null, lesson, course, onLessonClick, previewMode, ...rest} = props;
 
   //STATE
   const [expandedSections, setExpandedSections] = useState<number[]>(lesson?.section_id ? [lesson.section_id] : []);
@@ -93,7 +98,7 @@ export default function CourseContentMenu(inProps: CourseContentMenuProps): JSX.
                   onClick={() => onLessonClick(_lesson, section)}
                   selected={_lesson.id === lesson.id}
                   disabled={_lesson.locked}>
-                  {course.join_status !== SCCourseJoinStatusType.CREATOR && (
+                  {course.join_status !== SCCourseJoinStatusType.CREATOR && !previewMode && (
                     <ListItemIcon className={classes.itemIcon}>
                       {_lesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED ? (
                         <Icon className={classes.iconComplete}>circle_checked</Icon>
