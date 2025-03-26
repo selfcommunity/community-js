@@ -6,8 +6,8 @@ import {Box, List, ListItem} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCCommentsOrderBy, SCCourseCommentType, SCCourseLessonType} from '@selfcommunity/types';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCUserContextType, UserUtils, useSCFetchLessonCommentObjects, useSCUser} from '@selfcommunity/react-core';
+import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
+import {SCCache, SCUserContextType, UserUtils, useSCFetchLessonCommentObjects, useSCUser} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import LessonCommentsObjectSkeleton from './Skeleton';
 import CommentObjectReply from '../CommentObjectReply';
@@ -228,6 +228,8 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
       updated = [...commentsObject.comments, comment];
     }
     commentsObject.updateLessonComments([...updated]);
+    LRUCache.set(SCCache.getLessonCommentCacheKey(lessonObject.id), updated);
+    LRUCache.deleteKeysWithPrefix(SCCache.getLessonCommentsCachePrefixKeys(lessonObject.id));
   };
 
   /**
@@ -273,7 +275,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
             key={replyKey}
             id={`reply-lessonCommentObjects`}
             showAvatar={false}
-            replyIcon={!commenting}
+            replyIcon
             editable={!commenting}
             onReply={handleCommentAction}
             EditorProps={{placeholder: intl.formatMessage(messages.commentEditorPlaceholder), uploadFile: true, uploadImage: false}}
