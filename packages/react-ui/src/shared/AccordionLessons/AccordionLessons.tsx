@@ -5,15 +5,16 @@ import {
   Box,
   Button,
   Icon,
+  Stack,
   styled,
   Typography,
   useMediaQuery,
   useTheme,
   useThemeProps
 } from '@mui/material';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
-import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
+import {Fragment, HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
 import {
   SCCourseJoinStatusType,
   SCCourseLessonCompletionStatusType,
@@ -25,12 +26,14 @@ import {SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfco
 import {PREFIX} from './constants';
 import AccordionLessonSkeleton from './Skeleton';
 import {Link} from '@selfcommunity/react-core';
+import Bullet from '../Bullet';
 
 const classes = {
   root: `${PREFIX}-root`,
   empty: `${PREFIX}-empty`,
   accordion: `${PREFIX}-accordion`,
   summary: `${PREFIX}-summary`,
+  nameWrapper: `${PREFIX}-name-wrapper`,
   details: `${PREFIX}-details`,
   circle: `${PREFIX}-circle`,
   link: `${PREFIX}-link`
@@ -83,6 +86,9 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
   // CONTEXTS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
+  // INTL
+  const intl = useIntl();
+
   // HANDLERS
   const handleChange = useCallback(
     (panel: number) => (_: SyntheticEvent, newExpanded: boolean) => {
@@ -108,9 +114,28 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
             elevation={0}
             square>
             <AccordionSummary className={classes.summary} expandIcon={<Icon>expand_less</Icon>}>
-              <Typography component="span" variant="body1">
-                {section.name}
-              </Typography>
+              <Stack className={classes.nameWrapper}>
+                <Typography component="span" variant="body1">
+                  {section.name}
+                </Typography>
+
+                {viewerJoinStatus !== SCCourseJoinStatusType.CREATOR && viewerJoinStatus !== SCCourseJoinStatusType.MANAGER && section.locked && (
+                  <Fragment>
+                    <Bullet />
+
+                    <Typography component="span" variant="body1">
+                      <FormattedMessage
+                        id="ui.course.accordionLessons.date"
+                        defaultMessage="ui.course.accordionLessons.date"
+                        values={{
+                          date: intl.formatDate(section.available_date, {day: 'numeric', month: 'numeric', year: 'numeric'}),
+                          hour: intl.formatDate(section.available_date, {hour: 'numeric', minute: 'numeric'})
+                        }}
+                      />
+                    </Typography>
+                  </Fragment>
+                )}
+              </Stack>
               {!isMobile && (
                 <Typography component="span" variant="body1">
                   <FormattedMessage
@@ -134,7 +159,10 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
                 ) : (
                   <Box className={classes.circle} />
                 )}
-                {course.join_status === null || viewerJoinStatus === SCCourseJoinStatusType.CREATOR || lesson.locked ? (
+                {course.join_status === null ||
+                viewerJoinStatus === SCCourseJoinStatusType.CREATOR ||
+                viewerJoinStatus === SCCourseJoinStatusType.MANAGER ||
+                lesson.locked ? (
                   <Typography>{lesson.name}</Typography>
                 ) : (
                   <Button
