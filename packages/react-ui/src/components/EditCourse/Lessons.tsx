@@ -1,6 +1,6 @@
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {Fragment, memo, useCallback, useEffect, useMemo, useState} from 'react';
+import {Fragment, memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
 import {SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
@@ -12,9 +12,10 @@ import Status from './Status';
 import EmptyStatus from '../../shared/EmptyStatus';
 import AddButton from './Lessons/AddButton';
 import SectionRow from './Lessons/SectionRow';
-import {ActionLessonType} from './types';
+import {ActionLessonType, DeleteRowProps, DeleteRowRef, RowType} from './types';
 import {useIsDisabled} from './hooks';
 import classNames from 'classnames';
+import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
@@ -63,6 +64,10 @@ function Lessons(props: LessonsProps) {
 
   // STATES
   const [sections, setSections] = useState<SCCourseSectionType[]>([]);
+  const [dialog, setDialog] = useState<DeleteRowProps | null>(null);
+
+  // REFS
+  const ref = useRef<DeleteRowRef | null>(null);
 
   // HOOKS
   const {isDisabled} = useIsDisabled();
@@ -234,6 +239,25 @@ function Lessons(props: LessonsProps) {
     [course]
   );
 
+  const handleOpenDialog = useCallback(
+    (row: DeleteRowProps | null) => {
+      setDialog(row);
+    },
+    [setDialog]
+  );
+
+  const handleDeleteRow = useCallback(() => {
+    switch (dialog.row) {
+      case RowType.SECTION:
+        ref.current.handleDeleteSection(dialog.section);
+        break;
+      case RowType.LESSON:
+        ref.current.handleDeleteLesson(dialog.section, dialog.lesson);
+    }
+
+    handleOpenDialog(null);
+  }, [dialog, handleOpenDialog]);
+
   return (
     <Box>
       <Typography className={classNames(classes.lessonTitle, classes.contrastColor)} variant="h4">
@@ -345,6 +369,8 @@ function Lessons(props: LessonsProps) {
                               section={section}
                               isNewRow={isNewRow && i + 1 === array.length}
                               handleManageSection={handleManageSection}
+                              handleOpenDialog={handleOpenDialog}
+                              ref={ref}
                             />
                           )}
                         </Draggable>
@@ -356,6 +382,8 @@ function Lessons(props: LessonsProps) {
               </Table>
             </TableContainer>
           </DragDropContext>
+
+          {dialog && <ConfirmDialog open onClose={() => handleOpenDialog(null)} onConfirm={handleDeleteRow} />}
         </Fragment>
       )}
     </Box>

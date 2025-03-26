@@ -1,5 +1,5 @@
 import {DragDropContext, Draggable, DraggableProvided, Droppable, DropResult} from '@hello-pangea/dnd';
-import {Fragment, memo, useCallback, useEffect, useMemo, useState} from 'react';
+import {forwardRef, Fragment, memo, Ref, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import {Collapse, Icon, IconButton, MenuItem, Stack, Table, TableBody, TableCell, TableRow, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {PREFIX} from '../constants';
@@ -14,9 +14,8 @@ import {useSnackbar} from 'notistack';
 import LessonReleaseMenu from '../../LessonReleaseMenu';
 import {SCCourseLessonType, SCCourseLessonTypologyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService, Endpoints} from '@selfcommunity/api-services';
-import {ActionLessonType} from '../types';
+import {ActionLessonType, DeleteRowProps, DeleteRowRef, RowType} from '../types';
 import {useIsDisabled} from '../hooks';
-import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 
 const classes = {
   tableBodyIconWrapper: `${PREFIX}-table-body-icon-wrapper`,
@@ -30,22 +29,25 @@ const classes = {
 };
 
 interface SectionRowProps {
-  course: SCCourseType | null;
+  course: SCCourseType;
   provider: DraggableProvided;
   section: SCCourseSectionType;
   isNewRow: boolean;
   handleManageSection: (section: SCCourseSectionType, type: ActionLessonType, newRow?: boolean) => void;
+  handleOpenDialog: (row: DeleteRowProps) => void;
 }
 
-function SectionRow(props: SectionRowProps) {
+function SectionRow(props: SectionRowProps, ref: Ref<DeleteRowRef>) {
   // PROPS
-  const {course, provider, section, isNewRow, handleManageSection} = props;
+  const {course, provider, section, isNewRow, handleManageSection, handleOpenDialog} = props;
 
   // STATES
   const [expand, setExpand] = useState(true);
-  const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [lessons, setLessons] = useState<SCCourseLessonType[]>([]);
+
+  // REFS
+  const innerRef = useRef<DeleteRowRef | null>(null);
 
   // HOOKS
   const {isDisabled} = useIsDisabled();
@@ -73,11 +75,6 @@ function SectionRow(props: SectionRowProps) {
       )
     };
   }, []);
-
-  // HANDLERS
-  const handleOpenDialog = useCallback(() => {
-    setOpen((prev) => !prev);
-  }, [setOpen]);
 
   const handleExpandAccordion = useCallback(() => setExpand((prev) => !prev), [setExpand]);
 
@@ -131,34 +128,39 @@ function SectionRow(props: SectionRowProps) {
   const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true)), [setEditMode]);
   const handleDisableEditMode = useCallback(() => setEditMode(false), [setEditMode]);
 
-  const handleDeleteSection = useCallback(() => {
-    CourseService.deleteCourseSection(course.id, section.id)
-      .then(() => {
-        const tempSection: SCCourseSectionType = {
-          ...section,
-          num_lessons: section.lessons?.length || 0
-        };
+  const handleDeleteSection = useCallback(
+    (deleteSection: SCCourseSectionType) => {
+      CourseService.deleteCourseSection(course.id, deleteSection.id)
+        .then(() => {
+          const tempSection: SCCourseSectionType = {
+            ...deleteSection,
+            num_lessons: deleteSection.lessons?.length || 0
+          };
 
-        handleManageSection(tempSection, ActionLessonType.DELETE);
-        handleOpenDialog();
+          handleManageSection(tempSection, ActionLessonType.DELETE);
 
-        enqueueSnackbar(
-          <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.delete" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.delete" />,
-          {
-            variant: 'success',
+          enqueueSnackbar(
+            <FormattedMessage
+              id="ui.editCourse.tab.lessons.table.snackbar.delete"
+              defaultMessage="ui.editCourse.tab.lessons.table.snackbar.delete"
+            />,
+            {
+              variant: 'success',
+              autoHideDuration: 3000
+            }
+          );
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error',
             autoHideDuration: 3000
-          }
-        );
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
+          });
         });
-      });
-  }, [course, section, handleManageSection, handleOpenDialog]);
+    },
+    [course, handleManageSection]
+  );
 
   const handleManageLesson = useCallback(
     (lesson: SCCourseLessonType, type: ActionLessonType, newRow?: boolean) => {
@@ -201,6 +203,16 @@ function SectionRow(props: SectionRowProps) {
       }
     },
     [section, handleManageSection]
+  );
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      handleDeleteSection: (deleteSection: SCCourseSectionType) => handleDeleteSection(deleteSection),
+      handleDeleteLesson: (deleteSection: SCCourseSectionType, deleteLesson: SCCourseLessonType) =>
+        innerRef.current.handleDeleteLesson(deleteSection, deleteLesson)
+    }),
+    [handleDeleteSection]
   );
 
   return (
@@ -250,7 +262,7 @@ function SectionRow(props: SectionRowProps) {
                   <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
                 </Typography>
               </MenuItem>
-              <MenuItem onClick={handleOpenDialog}>
+              <MenuItem onClick={() => handleOpenDialog({row: RowType.SECTION, section})}>
                 <Typography variant="body1">
                   <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
                 </Typography>
@@ -279,6 +291,8 @@ function SectionRow(props: SectionRowProps) {
                               lesson={lesson}
                               isNewRow={isNewLocalRow && i + 1 === array.length}
                               handleManageLesson={handleManageLesson}
+                              handleOpenDialog={() => handleOpenDialog({row: RowType.LESSON, section, lesson})}
+                              ref={innerRef}
                             />
                           )}
                         </Draggable>
@@ -290,11 +304,10 @@ function SectionRow(props: SectionRowProps) {
               </Table>
             </DragDropContext>
           </Collapse>
-          {open && <ConfirmDialog open onClose={handleOpenDialog} onConfirm={handleDeleteSection} />}
         </TableCell>
       </TableRow>
     </Fragment>
   );
 }
 
-export default memo(SectionRow);
+export default memo(forwardRef(SectionRow));
