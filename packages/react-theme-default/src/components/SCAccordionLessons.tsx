@@ -18,7 +18,13 @@ const Component = {
 
           '& .MuiAccordionSummary-content': {
             justifyContent: 'space-between',
-            margin: 0
+            margin: 0,
+
+            '& .SCAccordionLessons-name-wrapper': {
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: '5px'
+            }
           }
         },
 

@@ -282,6 +282,7 @@
   "ui.contributionActionMenu.vulgar": "Vulgar",
   "ui.createEvent.title": "Create your Event now!",
   "ui.createEvent.description": "Engage your Community with an Event: whether it’s a link for a virtual Event or an address to meet in person. Decide if it will be open to everyone or accessible by invitation only. Discover how easy it is to engage your Community!",
+  "ui.course.accordionLessons.date": "Available from {date} hour {hour}",
   "ui.course.accordionLessons.empty": "No content present",
   "ui.course.completedDialog.btn.label": "Back to Courses",
   "ui.course.completedDialog.description.pt1": "Congratulations!",

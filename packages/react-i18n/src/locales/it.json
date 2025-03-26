@@ -282,6 +282,7 @@
   "ui.contributionActionMenu.vulgar": "Volgare",
   "ui.createEvent.title": "Crea il tuo Evento adesso!",
   "ui.createEvent.description": "Coinvolgi la tua Community con un Evento: sia che si tratti di un link per un Evento virtuale o di un indirizzo per incontrarsi di persona. Decidi se renderlo aperto a tutti o accessibile solo su invito. Scopri quanto è semplice coinvolgere la tua Community!",
+  "ui.course.accordionLessons.date": "Disponibile dal {date} ore {hour}",
   "ui.course.accordionLessons.empty": "Nessun contenuto presente",
   "ui.course.completedDialog.btn.label": "Torna ai Corsi",
   "ui.course.completedDialog.description.pt1": "Congratulazioni!",
