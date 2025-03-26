@@ -10,7 +10,7 @@ import {SCUserContextType} from '../types/context';
 
 /**
  :::info
- This custom hook is used to fetch an course object.
+ This custom hook is used to fetch a course object.
  :::
  * @param object
  * @param object.id
@@ -102,5 +102,21 @@ export default function useSCFetchCourse({
     }
   }, [course, authUserId]);
 
-  return {scCourse, setSCCourse, error};
+  /**
+   * Refreshes course data from the network
+   */
+  const refreshCourse = useCallback(() => {
+    if (id) {
+      fetchCourse(id)
+        .then((e: SCCourseType) => {
+          setSCCourse(e);
+        })
+        .catch((err) => {
+          setError(`Failed to refresh course data: ${err.message}`);
+          Logger.error(SCOPE_SC_CORE, err.message);
+        });
+    }
+  }, [id, fetchCourse]);
+
+  return {scCourse, setSCCourse, error, refreshCourse};
 }
