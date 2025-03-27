@@ -275,7 +275,6 @@ export default function Event(inProps: EventProps): JSX.Element {
             <Chip
               size="small"
               component="div"
-              color="secondary"
               label={<FormattedMessage id="ui.event.finished" defaultMessage="ui.event.finished" />}
               className={classes.finishedChip}
             />
@@ -326,7 +325,6 @@ export default function Event(inProps: EventProps): JSX.Element {
             {isEventFinished && (
               <Chip
                 size="small"
-                color="secondary"
                 component="div"
                 label={<FormattedMessage id="ui.event.finished" defaultMessage="ui.event.finished" />}
                 className={classes.finishedChip}

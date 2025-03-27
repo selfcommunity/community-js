@@ -62,16 +62,12 @@ const Component = {
           }
         },
         '& .SCEvent-finished-chip': {
-          textTransform: 'uppercase',
+          backgroundColor: theme.palette.common.black,
           position: 'absolute',
-          top: theme.spacing(1.5),
-          left: theme.spacing(1.5),
+          top: 10,
+          right: 10,
           color: theme.palette.common.white,
-          borderRadius: 0,
-          '& .MuiChip-label': {
-            fontWeight: 700,
-            padding: theme.spacing(0.5)
-          }
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px'
         }
       },
       '& .SCEvent-preview-content': {
@@ -130,16 +126,17 @@ const Component = {
           }
         },
         '& .SCEvent-finished-chip': {
-          textTransform: 'uppercase',
+          height: 18,
+          backgroundColor: theme.palette.common.black,
           position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
+          top: 5,
+          right: 3,
           color: theme.palette.common.white,
-          borderRadius: 0,
-          '& .MuiChip-label': {
-            fontWeight: 700,
-            padding: theme.spacing(0.5)
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
+          '& span': {
+            fontSize: '0.8rem',
+            paddingLeft: theme.spacing(0.5),
+            paddingRight: theme.spacing(0.5)
           }
         }
       },
