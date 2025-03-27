@@ -1341,5 +1341,14 @@
   "ui.paymentOrders.status": "Stato",
   "ui.paymentOrders.actions": "Azioni",
   "ui.paymentOrders.actions.pay": "Paga",
-  "ui.paymentOrders.noOrders": "Nessun ordine trovato al momento"
+  "ui.paymentOrders.noOrders": "Nessun ordine trovato al momento",
+  "ui.createPaymentProductForm.title": "Aggiungi un prodotto di pagamento",
+  "ui.createPaymentProductForm.name": "Nome",
+  "ui.createPaymentProductForm.description": "Descrizione",
+  "ui.createPaymentProductForm.price": "Prezzo",
+  "ui.createPaymentProductForm.btn.cancel": "Annulla",
+  "ui.createPaymentProductForm.btn.create": "Aggiungi",
+  "ui.createPaymentProductForm.error": "Si è verificato un errore nella creazione del prodotto. Prova più tardi!",
+  "ui.paywallsConfigurator.noProducts": "Nessun prodotto selezionabile",
+  "ui.paywallsConfigurator.filterByName": "Filtra per nome"
 }

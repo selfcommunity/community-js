@@ -22,8 +22,24 @@ import {useThemeProps} from '@mui/system';
 import {LocalizationProvider, MobileDatePicker, MobileTimePicker} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
-import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
+import {
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
+  useSCContext,
+  useSCPaymentsEnabled,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
+import {
+  SCContentType,
+  SCEventLocationType,
+  SCEventPrivacyType,
+  SCEventRecurrenceType,
+  SCEventType,
+  SCFeatureName,
+  SCPaymentProduct
+} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
@@ -41,6 +57,8 @@ import UploadEventCover from './UploadEventCover';
 import {combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
 import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
 import CoverPlaceholder from '../../assets/deafultCover';
+import CreatePaymentProductForm from '../CreatePaymentProductForm';
+import PaywallsConfigurator from '../PaywallsConfigurator';
 
 const messages = defineMessages({
   name: {
@@ -224,6 +242,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     liveStreamSettings: event?.live_stream ? event?.live_stream.settings : null,
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
     isPublic: event?.privacy === SCEventPrivacyType.PUBLIC || true,
+    product_ids: event?.paywalls.map((p) => p.id) || [],
     isSubmitting: false
   };
 
@@ -254,6 +273,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   );
   const disablePastStartTime = useMemo(() => field.startDate.getDate() === getNewDate().getDate(), [field]);
   const disablePastEndTime = useMemo(() => field.endDate.getDate() === getNewDate().getDate(), [field]);
+
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   const _backgroundCover = {
     ...(field.imageOriginal
@@ -435,6 +457,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     },
     [error, setField, setGenericError]
   );
+
+  const handleChangePaymentsProducts = (products) => {
+    setField((prev) => ({
+      ...prev,
+      product_ids: products.map((product) => product.id)
+    }));
+  };
 
   const shouldDisableDate = useCallback(
     (date: Date) => {
@@ -767,6 +796,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ) : null
           }
         />
+        {isPaymentsEnabled && (
+          <PaywallsConfigurator {...(event && {contentId: event.id})} contentType={SCContentType.EVENT} onChange={handleChangePaymentsProducts} />
+        )}
         {genericError && (
           <Box className={classes.genericError}>
             <Alert variant="filled" severity="error">

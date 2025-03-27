@@ -58,7 +58,6 @@ export interface CategoryFollowButtonProps {
   /**
    * Disable action if feature payments is enabled and the content is paid item
    */
-
   disableBuyContentIfPaidContent?: boolean;
 
   /**

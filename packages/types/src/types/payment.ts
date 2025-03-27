@@ -5,6 +5,46 @@ import {SCGroupType} from './group';
 import {SCCategoryType} from './category';
 import {SCCommunityType} from './community';
 
+export interface SCPaywall {
+  /**
+   * Id product
+   */
+  id: number;
+	/**
+	 * Content type
+	 */
+	content_type: SCContentType;
+	/**
+	 * Content event
+	 */
+  event?: SCEventType;
+  /**
+   * Content course
+   */
+  course?: SCCourseType;
+  /**
+   * Content group
+   */
+  group?: SCGroupType;
+  /**
+   * Content category
+   */
+  category?: SCCategoryType;
+  /**
+   * Content community
+   */
+  community?: SCCommunityType;
+
+  /**
+   * Active or not
+   */
+  active?: boolean;
+  /**
+   * Payment product
+   */
+  payment_product: SCPaymentProduct;
+}
+
 export interface SCPaymentProduct {
   /**
    * Id product
@@ -115,6 +155,7 @@ export interface SCPurchasableContent {
   id?: number;
   payment_order?: SCPaymentOrder;
   paywalls?: SCPaymentProduct[];
+	product_ids?: number[];
 }
 
 export interface SCCheckoutSessionDetail {

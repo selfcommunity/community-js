@@ -70,13 +70,13 @@
 		"@rpldy/upload-drop-zone": "^1.7.1",
 		"@rpldy/upload-preview": "^1.7.1",
 		"@rpldy/uploady": "^1.7.1",
+		"@stripe/react-stripe-js": "^3.1.1",
+		"@stripe/stripe-js": "^5.7.0",
 		"notistack": "^3.0.1",
 		"pdfjs-dist": "3.11.174",
 		"react": "^17.0.2 || 18",
 		"react-dom": "17 || 18",
-		"react-intl": "^6.4.7",
-		"@stripe/react-stripe-js": "^3.1.1",
-		"@stripe/stripe-js": "^5.7.0"
+		"react-intl": "^6.4.7"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.11.3",
@@ -105,6 +105,8 @@
 		"@selfcommunity/react-theme-default": "^0.4.5-payments.158",
 		"@selfcommunity/types": "^0.7.7-payments.158",
 		"@selfcommunity/utils": "^0.2.64-payments.158",
+		"@stripe/react-stripe-js": "^3.1.1",
+		"@stripe/stripe-js": "^5.7.0",
 		"@types/classnames": "^2.3.1",
 		"@types/sortablejs": "1",
 		"autosuggest-highlight": "^3.3.4",
@@ -128,6 +130,7 @@
 		"react-intersection-observer": "^9.4.3",
 		"react-intl": "^6.4.7",
 		"react-lazyload": "^3.2.1",
+		"react-number-format": "^5.4.3",
 		"react-photo-view": "^1.2.6",
 		"react-player": "^2.12.0",
 		"react-share": "^4.4.1",

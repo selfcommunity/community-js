@@ -170,7 +170,8 @@ import {
   type SCPaymentOrder,
   type SCPaymentsCustomerPortalSession,
   SCPaymentProductTemplateType,
-  SCCheckoutSessionUIMode
+  SCCheckoutSessionUIMode,
+	type SCPaywall
 } from './payment';
 import {type SCCommunityType} from './community';
 
@@ -358,6 +359,7 @@ export {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
+	type SCPaywall,
   type SCPaymentProduct,
   type SCPaymentPrice,
   SCPaymentPriceCurrencyType,

@@ -26,6 +26,7 @@ export type InitialFieldState = Geolocation & {
   description: string;
   isPublic: boolean;
   isSubmitting: boolean;
+	product_ids: number[];
 };
 
 export type FieldStateKeys = keyof InitialFieldState;

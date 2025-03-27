@@ -15354,6 +15354,11 @@ react-lazyload@^3.2.1:
   resolved "https://registry.npmjs.org/react-lazyload/-/react-lazyload-3.2.1.tgz"
   integrity sha512-oDLlLOI/rRLY0fUh/HYFCy4CqCe7zdJXv6oTl2pC30tN3ezWxvwcdHYfD/ZkrGOMOOT5pO7hNLSvg7WsmAij1w==
 
+react-number-format@^5.4.3:
+  version "5.4.3"
+  resolved "https://registry.yarnpkg.com/react-number-format/-/react-number-format-5.4.3.tgz#e634df907da7742faf597afab3f25f9a59689d60"
+  integrity sha512-VCY5hFg/soBighAoGcdE+GagkJq0230qN6jcS5sp8wQX1qy1fYN/RX7/BXkrs0oyzzwqR8/+eSUrqXbGeywdUQ==
+
 react-photo-view@^1.2.6:
   version "1.2.6"
   resolved "https://registry.npmjs.org/react-photo-view/-/react-photo-view-1.2.6.tgz"

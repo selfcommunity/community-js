@@ -3,21 +3,18 @@ import PaymentProducts from './index';
 import {SCContentType} from '@selfcommunity/types';
 
 export default {
-	title: 'Design System/React UI/Payments/PaymentProducts',
+	title: 'Design System/React UI/Payments/CreatePaymentProductForm',
 	component: PaymentProducts,
 } as Meta<typeof PaymentProducts>;
 
 const template = (args) => (
-	<div style={{ maxWidth: 600 }}>
+	<div style={{ maxWidth: 400 }}>
 		<PaymentProducts {...args} />
 	</div>
 );
 
 export const Base: StoryObj<typeof PaymentProducts> = {
-	args: {
-			contentId: 1,
-			contentType: SCContentType.EVENT
-	},
+	args: {},
 	render: template
 };
 

@@ -40,6 +40,7 @@ export interface PaymentProductProps extends Pick<AccordionProps, Exclude<keyof 
   onUpdatePaymentOrder?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
   template?: SCPaymentProductTemplateType;
   expanded?: boolean;
+  hideDescription?: boolean;
   hidePaymentProductPrices?: boolean;
   PaymentProductPriceComponentProps?: PaymentProductPriceProps;
 }
@@ -61,6 +62,7 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
     onUpdatePaymentOrder,
     template = SCPaymentProductTemplateType.DETAIL,
     expanded,
+    hideDescription = false,
     hidePaymentProductPrices = false,
     PaymentProductPriceComponentProps = {},
     ...rest
@@ -103,7 +105,7 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
         <Typography variant="h5" component="div">
           <b>{scPaymentProduct.name && scPaymentProduct.name}</b>
         </Typography>
-        {scPaymentProduct.description && (
+        {scPaymentProduct.description && !hideDescription && (
           <Typography variant="body1" component="div">
             {scPaymentProduct.description}
           </Typography>
