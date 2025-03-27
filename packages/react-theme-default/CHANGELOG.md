@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.18...@selfcommunity/react-theme-default@0.4.5-alpha.19) (2025-03-27)
+
+
+### Performance Improvements
+
+* added finished chip to events ([e1a70f8](https://github.com/selfcommunity/community-js/commit/e1a70f8090fc2c01c699d96923e76425e673769a))
+* changed finished event chip style ([b142055](https://github.com/selfcommunity/community-js/commit/b1420554f1d0d4a5ba4891126b4630d5331ca616))
+* moved events page title to community-js and hidden user events if none ([6b5f712](https://github.com/selfcommunity/community-js/commit/6b5f7121ba650471c08ed192d7cc57540668f3b0))
+
+
+
+
+
 ## [0.4.5-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.17...@selfcommunity/react-theme-default@0.4.5-alpha.18) (2025-02-27)
 
 
