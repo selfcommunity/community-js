@@ -141,6 +141,12 @@ export interface EventsProps {
   showFilters?: boolean;
 
   /**
+   * Hides my events title
+   * @default false
+   */
+  hideTitle?: boolean;
+
+  /**
    * Filters component
    * @param props
    */
@@ -204,6 +210,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     showFilters = false,
     filters,
     general = true,
+    hideTitle = false,
     ...rest
   } = props;
 
@@ -594,7 +601,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <>
-        {showUserEvents ? (
+        {showUserEvents && !hideTitle ? (
           <>
             <Typography variant="h4" className={classes.sectionTitle}>
               <FormattedMessage id="ui.events.myEvents.title" defaultMessage="ui.events.myEvents.title" />
