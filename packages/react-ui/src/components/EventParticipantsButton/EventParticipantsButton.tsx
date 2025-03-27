@@ -126,7 +126,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
 
   // FETCH FIRST FOLLOWERS
   useDeepCompareEffectNoCheck(() => {
-    if (!scEvent) {
+    if (!scEvent || !participantsAvailable) {
       return;
     }
 
