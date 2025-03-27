@@ -283,6 +283,8 @@
   "ui.eventHeader.user.manager": "Manager",
   "ui.eventHeader.inProgress": "In progress",
   "ui.eventHeader.finished": "Finished",
+  "ui.events.myEvents.title": "My Events",
+  "ui.events.allEvents.title": "All events",
   "ui.events.filterByName": "Search Event",
   "ui.events.filterByDate": "Event Date",
   "ui.events.select.any": "Any Date",

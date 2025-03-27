@@ -1,6 +1,16 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      '& .SCEvents-section-title': {
+        marginTop: theme.spacing(4),
+        marginBottom: theme.spacing(1),
+        color: theme.palette.primary.main,
+        fontWeight: 500,
+        fontSize: 18
+      },
+      '& .SCEvents-divider': {
+        marginBottom: theme.spacing(2)
+      },
       '& .SCEvents-filters': {
         alignItems: 'center',
         marginTop: theme.spacing(),

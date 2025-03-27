@@ -283,6 +283,8 @@
   "ui.eventHeader.user.manager": "Organizzatore",
   "ui.eventHeader.inProgress": "In corso",
   "ui.eventHeader.finished": "Terminato",
+  "ui.events.myEvents.title": "I miei eventi",
+  "ui.events.allEvents.title": "Tutti gli eventi",
   "ui.events.filterByName": "Cerca Evento",
   "ui.events.filterByDate": "Data Evento",
   "ui.events.select.any": "Qualsiasi data",

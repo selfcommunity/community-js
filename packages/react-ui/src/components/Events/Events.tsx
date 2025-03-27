@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Chip,
+  Divider,
   FormControl,
   Grid,
   GridProps,
@@ -50,6 +51,8 @@ const classes = {
   root: `${PREFIX}-root`,
   filters: `${PREFIX}-filters`,
   events: `${PREFIX}-events`,
+  sectionTitle: `${PREFIX}-section-title`,
+  divider: `${PREFIX}-divider`,
   item: `${PREFIX}-item`,
   itemSkeleton: `${PREFIX}-item-skeleton`,
   noResults: `${PREFIX}-no-results`,
@@ -215,6 +218,8 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const [showPastEvents, setShowPastEvents] = useState<boolean>(false);
   const [showOngoingEvents, setShowOngoingEvents] = useState<boolean>(false);
   const [showMyEvents, setShowMyEvents] = useState<boolean>(false);
+  const showUserEvents =
+    !general && (events.length || (!events.length && (showPastEvents || showMyEvents || location !== SCEventLocationFilterType.ANY)));
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -383,13 +388,13 @@ export default function Events(inProps: EventsProps): JSX.Element {
   /**
    * Renders events list
    */
-  const c = (
+  const content = (
     <>
       {showFilters && (
         <Grid container className={classes.filters} gap={2}>
           {filters ? (
             filters
-          ) : !general ? (
+          ) : showUserEvents ? (
             <>
               <Grid item>
                 <EventsChipRoot
@@ -416,7 +421,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
               </Grid>
             </>
-          ) : (
+          ) : general ? (
             <>
               <Grid item xs={12} md={3}>
                 <TextField
@@ -509,7 +514,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 />
               </Grid>
             </>
-          )}
+          ) : null}
         </Grid>
       )}
       <>
@@ -534,22 +539,13 @@ export default function Events(inProps: EventsProps): JSX.Element {
                       <FormattedMessage id="ui.events.noEvents.title" defaultMessage="ui.events.noEvents.title" />
                     </Typography>
                   </>
-                ) : (
+                ) : showUserEvents ? (
                   <>
-                    <EventSkeleton
-                      {...EventSkeletonComponentProps}
-                      skeletonsAnimation={false}
-                      actions={
-                        (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? (
-                          <CreateEventButton {...CreateEventButtonProps} />
-                        ) : null
-                      }
-                    />
                     <Typography variant="body1">
                       <FormattedMessage id="ui.events.noEvents.title.personal" defaultMessage="ui.events.noEvents.title.personal" />
                     </Typography>
                   </>
-                )}
+                ) : null}
               </Box>
             ) : (
               <>
@@ -597,7 +593,24 @@ export default function Events(inProps: EventsProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {c}
+      <>
+        {showUserEvents ? (
+          <>
+            <Typography variant="h4" className={classes.sectionTitle}>
+              <FormattedMessage id="ui.events.myEvents.title" defaultMessage="ui.events.myEvents.title" />
+            </Typography>
+            <Divider className={classes.divider} />
+          </>
+        ) : general ? (
+          <>
+            <Typography variant="h4" className={classes.sectionTitle}>
+              <FormattedMessage id="ui.events.allEvents.title" defaultMessage="ui.events.allEvents.title" />
+            </Typography>
+            <Divider className={classes.divider} />
+          </>
+        ) : null}
+      </>
+      {content}
     </Root>
   );
 }
