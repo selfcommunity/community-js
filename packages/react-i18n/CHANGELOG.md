@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.10...@selfcommunity/react-i18n@0.8.0-alpha.11) (2025-03-27)
+
+
+### Performance Improvements
+
+* added finished chip to events ([e1a70f8](https://github.com/selfcommunity/community-js/commit/e1a70f8090fc2c01c699d96923e76425e673769a))
+* moved events page title to community-js and hidden user events if none ([6b5f712](https://github.com/selfcommunity/community-js/commit/6b5f7121ba650471c08ed192d7cc57540668f3b0))
+
+
+
+
+
 # [0.8.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.9...@selfcommunity/react-i18n@0.8.0-alpha.10) (2025-03-14)
 
 

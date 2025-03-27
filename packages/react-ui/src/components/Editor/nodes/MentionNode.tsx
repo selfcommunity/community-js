@@ -67,6 +67,8 @@ export class MentionNode extends TextNode {
     if (inner === null) {
       return true;
     }
+		// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+		// @ts-ignore
     super.updateDOM(prevNode, inner, config);
     return false;
   }

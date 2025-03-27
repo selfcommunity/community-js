@@ -8,10 +8,18 @@ import nodes from './nodes';
 import {InitialConfigType, LexicalComposer} from '@lexical/react/LexicalComposer';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
 import {EditorThemeClasses, LexicalEditor} from 'lexical';
+import ToolbarPlugin from './plugins/ToolbarPlugin';
+import {PREFIX} from './constants';
+import {HorizontalRulePlugin} from './plugins/HorizontalRulePlugin';
+import {EditorThemeClasses, LexicalEditor} from 'lexical';
 import ToolbarPlugin, {ToolbarPluginProps} from './plugins/ToolbarPlugin';
 import {PREFIX} from './constants';
 import {HorizontalRulePlugin} from './plugins/HorizontalRulePlugin';
 import {RichTextPlugin} from './plugins/LexicalRichTextPlugin';
+import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
+import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin} from './plugins';
+import OnBlurPlugin from './plugins/OnBlurPlugin';
+import OnFocusPlugin from './plugins/OnFocusPlugin';
 import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
 import {
   AutoLinkPlugin,

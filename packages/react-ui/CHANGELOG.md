@@ -3,6 +3,71 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.37...@selfcommunity/react-ui@0.11.0-alpha.38) (2025-03-27)
+
+
+### Bug Fixes
+
+* fixed EventParticipantsButton 403 error on console ([42e05e5](https://github.com/selfcommunity/community-js/commit/42e05e5f40dd973a555a2f3cacac8fac78512fbe))
+
+
+### Performance Improvements
+
+* added condition to hide title in the pwa suggested events ([c6a5c8b](https://github.com/selfcommunity/community-js/commit/c6a5c8bffcff854a8d0bef74bc04cc4345c21577))
+* added finished chip to events ([e1a70f8](https://github.com/selfcommunity/community-js/commit/e1a70f8090fc2c01c699d96923e76425e673769a))
+* changed finished event chip style ([b142055](https://github.com/selfcommunity/community-js/commit/b1420554f1d0d4a5ba4891126b4630d5331ca616))
+* moved events page title to community-js and hidden user events if none ([6b5f712](https://github.com/selfcommunity/community-js/commit/6b5f7121ba650471c08ed192d7cc57540668f3b0))
+
+
+
+
+
+# [0.11.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.36...@selfcommunity/react-ui@0.11.0-alpha.37) (2025-03-24)
+
+
+### Bug Fixes
+
+* bump lexical deps to 0.28.0 ([a7dacb8](https://github.com/selfcommunity/community-js/commit/a7dacb8347f908bc0fe370e4a91f756d2001544e))
+* bump lexical deps to 0.28.0 ([de199e0](https://github.com/selfcommunity/community-js/commit/de199e0a54fd51c4e2a7b594505cab42d51af759))
+
+
+
+
+
+# [0.11.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.35...@selfcommunity/react-ui@0.11.0-alpha.36) (2025-03-24)
+
+
+### Bug Fixes
+
+* fixed counter showed on followers button. Linear issue: https://linear.app/quentral/issue/QUE-1353/bug-counter-categorie-al-follow ([a2103fc](https://github.com/selfcommunity/community-js/commit/a2103fc6aa768cbe4d31dd465339d25a06921873))
+
+
+
+
+
+# [0.11.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.34...@selfcommunity/react-ui@0.11.0-alpha.35) (2025-03-24)
+
+
+### Bug Fixes
+
+* rename SearchAutocompleteProps in NavigationToolbarMobile, NavigationToolbar, SearchDialog ([0238b49](https://github.com/selfcommunity/community-js/commit/0238b49acf2709ba778df179708a151191f94fca))
+
+
+
+
+
+# [0.11.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.33...@selfcommunity/react-ui@0.11.0-alpha.34) (2025-03-23)
+
+
+### Bug Fixes
+
+* editor ([74fd90b](https://github.com/selfcommunity/community-js/commit/74fd90b38fe6ddd8dcf912b95e4553bd758e309d))
+* editor ([fe1c776](https://github.com/selfcommunity/community-js/commit/fe1c7765f1a136a4b51146b4e3b7f7ddda34c1bf))
+
+
+
+
+
 # [0.11.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.32...@selfcommunity/react-ui@0.11.0-alpha.33) (2025-03-14)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
