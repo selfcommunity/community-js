@@ -30,7 +30,6 @@ const Component = {
           }
         },
         '& .SCLessonObject-medias-section': {
-          display: 'flex',
           '& .SCLessonFilePreview-root': {
             marginBottom: theme.spacing(1)
           },
