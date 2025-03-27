@@ -60,6 +60,18 @@ const Component = {
             paddingLeft: theme.spacing(0.5),
             paddingRight: theme.spacing(0.5)
           }
+        },
+        '& .SCEvent-finished-chip': {
+          textTransform: 'uppercase',
+          position: 'absolute',
+          top: theme.spacing(1.5),
+          left: theme.spacing(1.5),
+          color: theme.palette.common.white,
+          borderRadius: 0,
+          '& .MuiChip-label': {
+            fontWeight: 700,
+            padding: theme.spacing(0.5)
+          }
         }
       },
       '& .SCEvent-preview-content': {
@@ -115,6 +127,19 @@ const Component = {
             fontSize: '0.8rem',
             paddingLeft: theme.spacing(0.5),
             paddingRight: theme.spacing(0.5)
+          }
+        },
+        '& .SCEvent-finished-chip': {
+          textTransform: 'uppercase',
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          color: theme.palette.common.white,
+          borderRadius: 0,
+          '& .MuiChip-label': {
+            fontWeight: 700,
+            padding: theme.spacing(0.5)
           }
         }
       },

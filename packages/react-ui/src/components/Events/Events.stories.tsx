@@ -39,6 +39,22 @@ export const MyEvents: StoryObj<typeof Events> = {
 	render: template
 };
 
+export const EventsCards: StoryObj<typeof Events> = {
+  args: {
+    showFilters: true,
+    GridContainerComponentProps: {spacing: {md: 3}},
+    GridItemComponentProps: {md: 3},
+    EventComponentProps: {template: SCEventTemplateType.PREVIEW},
+    EventSkeletonComponentProps: {template: SCEventTemplateType.PREVIEW},
+    EventsSkeletonComponentProps: {
+      eventsNumber: 4,
+      GridContainerComponentProps: {spacing: {md: 3}},
+      GridItemComponentProps: {md: 3}
+    },
+  },
+  render: template
+};
+
 export const MyEventsCards: StoryObj<typeof Events> = {
 	args: {
 		endpoint: Endpoints.GetUserEvents,
