@@ -44,6 +44,7 @@ import Skeleton, {EventsSkeletonProps} from '../Events/Skeleton';
 import {PREFIX} from './constants';
 import LocationEventsFilter from './LocationEventsFilter';
 import PastEventsFilter from './PastEventsFilter';
+import OngoingEventsFilter from './OngoingEventsFilter';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -57,7 +58,7 @@ const classes = {
 };
 
 const options = [
-  {value: SCEventDateFilterType.ANY, label: <FormattedMessage id="ui.events.select.any" defaultMessage="ui.events.select.any" />},
+  {value: SCEventDateFilterType.ALL, label: <FormattedMessage id="ui.events.select.any" defaultMessage="ui.events.select.any" />},
   {value: SCEventDateFilterType.TODAY, label: <FormattedMessage id="ui.events.select.today" defaultMessage="ui.events.select.today" />},
   {value: SCEventDateFilterType.TOMORROW, label: <FormattedMessage id="ui.events.select.tomorrow" defaultMessage="ui.events.select.tomorrow" />},
   {value: SCEventDateFilterType.THIS_WEEK, label: <FormattedMessage id="ui.events.select.thisWeek" defaultMessage="ui.events.select.thisWeek" />},
@@ -73,7 +74,7 @@ const Root = styled(Box, {
 export const EventsChipRoot = styled(Chip, {
   name: PREFIX,
   slot: 'EventsChipRoot',
-  shouldForwardProp: (prop) => prop !== 'showFollowed' && prop !== 'showPastEvents'
+  shouldForwardProp: (prop) => prop !== 'showFollowed' && prop !== 'showPastEvents' && prop !== 'showOngoingEvents'
 })(() => ({}));
 
 export interface EventsProps {
@@ -212,6 +213,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const [location, setLocation] = useState<SCEventLocationFilterType>(SCEventLocationFilterType.ANY);
   const [showFollowed, setShowFollowed] = useState<boolean>(false);
   const [showPastEvents, setShowPastEvents] = useState<boolean>(false);
+  const [showOngoingEvents, setShowOngoingEvents] = useState<boolean>(false);
   const [showMyEvents, setShowMyEvents] = useState<boolean>(false);
 
   // CONTEXT
@@ -252,6 +254,13 @@ export default function Events(inProps: EventsProps): JSX.Element {
     setShowPastEvents(false);
   };
 
+  const handleChipOngoingClick = () => {
+    setShowOngoingEvents(!showOngoingEvents);
+  };
+  const handleDeleteOngoingClick = () => {
+    setShowOngoingEvents(false);
+  };
+
   /**
    * Fetches events list
    */
@@ -266,10 +275,10 @@ export default function Events(inProps: EventsProps): JSX.Element {
           ...(general
             ? {
                 ...(query && {search: query}),
-                ...(dateSearch !== SCEventDateFilterType.ANY && {date_filter: dateSearch}),
+                ...(dateSearch !== SCEventDateFilterType.ALL && {date_filter: dateSearch}),
                 ...(location !== SCEventLocationFilterType.ANY && {location}),
                 ...(showFollowed && {follows: showFollowed}),
-                ...(showPastEvents && {date_filter: SCEventDateFilterType.PAST})
+                ...(showOngoingEvents && {date_filter: SCEventDateFilterType.NOT_PAST})
               }
             : {
                 subscription_status: SCEventSubscriptionStatusType.GOING,
@@ -298,7 +307,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     } else {
       fetchEvents();
     }
-  }, [contentAvailability, authUserId, dateSearch, location, showFollowed, showPastEvents, showMyEvents]);
+  }, [contentAvailability, authUserId, dateSearch, location, showFollowed, showPastEvents, showMyEvents, showOngoingEvents]);
 
   /**
    * Subscriber for pubsub callback
@@ -453,7 +462,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     <FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />
                   </InputLabel>
                   <Select
-                    disabled={showPastEvents || loading}
+                    disabled={showOngoingEvents || loading}
                     size={'small'}
                     label={<FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />}
                     value={dateSearch as any}
@@ -492,11 +501,11 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 </Grid>
               )}
               <Grid item>
-                <PastEventsFilter
-                  showPastEvents={showPastEvents}
-                  handleClick={handleChipPastClick}
-                  handleDeleteClick={handleDeletePastClick}
-                  disabled={dateSearch !== SCEventDateFilterType.ANY || loading}
+                <OngoingEventsFilter
+                  showOngoingEvents={showOngoingEvents}
+                  handleClick={handleChipOngoingClick}
+                  handleDeleteClick={handleDeleteOngoingClick}
+                  disabled={dateSearch !== SCEventDateFilterType.ALL || loading}
                 />
               </Grid>
             </>

@@ -81,10 +81,10 @@ const Component = {
         }
       }
     }),
-    eventsChipRoot: ({theme, showFollowed, showPastEvents}: any) => ({
+    eventsChipRoot: ({theme, showFollowed, showPastEvents, showOngoingEvents}: any) => ({
       height: theme.spacing(4.75),
       borderRadius: theme.spacing(0.5),
-      color: showFollowed || showPastEvents ? theme.palette.common.white : theme.palette.text.primary,
+      color: showFollowed || showPastEvents || showOngoingEvents ? theme.palette.common.white : theme.palette.text.primary,
       '& .MuiIcon-root': {
         fontSize: '1rem',
         color: theme.palette.common.white

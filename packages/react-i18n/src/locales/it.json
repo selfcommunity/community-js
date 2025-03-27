@@ -296,6 +296,7 @@
   "ui.events.filterByFollowedInterest": "Persone che seguo",
   "ui.events.filterByCreatedByMe": "Creati da me",
   "ui.events.filterByPastEvents": "Eventi passati",
+  "ui.events.filterByOngoingEvents": "Eventi in programma",
   "ui.events.button.seeMore": "Vedi di più",
   "ui.events.noEvents.title.personal": "Gli eventi a cui parteciperai saranno visibili qui.",
   "ui.events.noEvents.title": "Tutti gli eventi saranno visibili qui.",

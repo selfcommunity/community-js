@@ -26,11 +26,11 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<EventsSkeleton> = {
+export const Base: StoryObj<typeof EventsSkeleton> = {
   render: template
 };
 
-export const MyEvents: StoryObj<Events> = {
+export const MyEvents: StoryObj<typeof Events> = {
 	args: {
     endpoint: Endpoints.GetUserEvents,
 		general: false,
@@ -39,7 +39,7 @@ export const MyEvents: StoryObj<Events> = {
 	render: template
 };
 
-export const MyEventsCards: StoryObj<Events> = {
+export const MyEventsCards: StoryObj<typeof Events> = {
 	args: {
 		endpoint: Endpoints.GetUserEvents,
 		general: false,
@@ -57,7 +57,7 @@ export const MyEventsCards: StoryObj<Events> = {
 	render: template
 };
 
-export const BasePrefetchedEvents: StoryObj<Events> = {
+export const BasePrefetchedEvents: StoryObj<typeof Events> = {
   args: {
     prefetchedEvents
   },
