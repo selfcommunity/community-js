@@ -11,7 +11,6 @@ import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../.
 import {Link, SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import {CourseService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
-import classNames from 'classnames';
 
 const classes = {
   container: `${PREFIX}-comments-container`,
@@ -22,8 +21,7 @@ const classes = {
   userInfo: `${PREFIX}-user-info`,
   circle: `${PREFIX}-circle`,
   button: `${PREFIX}-button`,
-  contrastColor: `${PREFIX}-contrast-color`,
-  contrastBgColor: `${PREFIX}-contrast-bg-color`
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 interface CommentsProps {
@@ -91,7 +89,7 @@ function Comments(props: CommentsProps) {
     stateWidgetInitializer
   );
 
-  const [isLoadingComments, setIsLoadingComments] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // CONTEXTS
   const scUserContext: SCUserContextType = useSCUser();
@@ -128,7 +126,7 @@ function Comments(props: CommentsProps) {
 
   // HANDLERS
   const handleNext = useCallback(() => {
-    setIsLoadingComments(true);
+    setIsLoading(true);
     dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
     http
@@ -138,12 +136,12 @@ function Comments(props: CommentsProps) {
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCCourseCommentType>>) => {
         dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
-        setIsLoadingComments(false);
+        setIsLoading(false);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
-  }, [state.next, dispatch, setIsLoadingComments]);
+  }, [state.next, dispatch, setIsLoading]);
 
   // MEMOS
   const renderComments = useMemo(() => {
@@ -159,7 +157,7 @@ function Comments(props: CommentsProps) {
     });
 
     return Array.from(map.entries()).map(([name, comments]) => (
-      <Box key={name} className={classNames(classes.outerWrapper, classes.contrastBgColor)}>
+      <Box key={name} className={classes.outerWrapper}>
         <Typography variant="h5">{name}</Typography>
         <Divider />
         <Stack className={classes.innerWrapper}>
@@ -208,7 +206,7 @@ function Comments(props: CommentsProps) {
     <Box className={classes.container}>
       {state.count > 0 ? (
         <Fragment>
-          <Typography variant="body1" className={classes.contrastColor}>
+          <Typography variant="body1">
             <FormattedMessage
               id="ui.course.dashboard.teacher.tab.comments.number"
               defaultMessage="ui.course.dashboard.teacher.tab.comments.number"
@@ -218,16 +216,9 @@ function Comments(props: CommentsProps) {
 
           {renderComments}
 
-          {isLoadingComments && <CommentSkeleton id={1} />}
+          {isLoading && <CommentSkeleton id={1} />}
 
-          <LoadingButton
-            size="small"
-            variant="outlined"
-            color="inherit"
-            loading={isLoadingComments}
-            disabled={!state.next}
-            onClick={handleNext}
-            className={classes.contrastBgColor}>
+          <LoadingButton size="small" variant="outlined" color="inherit" loading={isLoading} disabled={!state.next} onClick={handleNext}>
             <Typography variant="body2">
               <FormattedMessage
                 id="ui.course.dashboard.teacher.tab.comments.btn.label"
@@ -237,7 +228,7 @@ function Comments(props: CommentsProps) {
           </LoadingButton>
         </Fragment>
       ) : (
-        <Typography variant="body2" className={classes.contrastColor}>
+        <Typography variant="body2">
           <FormattedMessage id="ui.course.dashboard.teacher.tab.comments.empty" defaultMessage="ui.course.dashboard.teacher.tab.comments.empty" />
         </Typography>
       )}

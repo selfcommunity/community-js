@@ -11,10 +11,6 @@ const Component = {
         color: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
       },
 
-      '& .SCEditCourse-contrast-bg-color': {
-        backgroundColor: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
-      },
-
       '& .SCEditCourse-header': {
         flexDirection: 'row',
         alignItems: 'center',
@@ -93,6 +89,7 @@ const Component = {
           borderBottom: 'unset',
           borderTopLeftRadius: '5px',
           borderTopRightRadius: '5px',
+          backgroundColor: theme.palette.common.white,
 
           '& .SCEditCourse-lessons-sections': {
             flexDirection: 'row',
@@ -121,6 +118,7 @@ const Component = {
           border: `1px solid ${theme.palette.grey[300]}`,
           borderBottomLeftRadius: '5px',
           borderBottomRightRadius: '5px',
+          backgroundColor: theme.palette.common.white,
 
           '& .SCEditCourse-table': {
             '& .SCEditCourse-cell-width': {
@@ -222,21 +220,28 @@ const Component = {
           marginBottom: theme.spacing(2)
         },
 
-        '& .SCEditCourse-options-wrapper': {
-          gap: theme.spacing(5),
-          maxWidth: '600px',
-          margin: 'auto'
-        },
+        '& .SCEditCourse-options-container': {
+          border: `1px solid ${theme.palette.grey['300']}`,
+          borderRadius: '5px',
+          padding: '10px 0',
+          backgroundColor: theme.palette.common.white,
 
-        '& .SCEditCourse-options-divider': {
-          marginTop: '21px',
-          marginBottom: theme.spacing(3)
-        },
+          '& .SCEditCourse-options-wrapper': {
+            gap: theme.spacing(5),
+            maxWidth: '600px',
+            margin: 'auto'
+          },
 
-        '& .SCEditCourse-options-button-wrapper': {
-          alignItems: 'flex-end',
-          maxWidth: '600px',
-          margin: 'auto'
+          '& .SCEditCourse-options-divider': {
+            marginTop: '21px',
+            marginBottom: theme.spacing(3)
+          },
+
+          '& .SCEditCourse-options-button-wrapper': {
+            alignItems: 'flex-end',
+            maxWidth: '600px',
+            margin: 'auto'
+          }
         }
       }
     }),
@@ -289,7 +294,8 @@ const Component = {
         marginTop: '9px',
         padding: theme.spacing(2),
         border: `1px solid ${theme.palette.grey[300]}`,
-        borderRadius: '5px'
+        borderRadius: '5px',
+        backgroundColor: theme.palette.common.white
       },
 
       '& .SCEditCourse-table-container': {
@@ -297,6 +303,7 @@ const Component = {
         border: `1px solid ${theme.palette.grey[300]}`,
         borderBottomLeftRadius: '5px',
         borderBottomRightRadius: '5px',
+        backgroundColor: theme.palette.common.white,
 
         '& .SCEditCourse-margin': {
           margin: 'auto'
@@ -320,21 +327,28 @@ const Component = {
         marginBottom: theme.spacing(2)
       },
 
-      '& .SCEditCourse-options-wrapper': {
-        gap: theme.spacing(5),
-        maxWidth: '600px',
-        margin: 'auto'
-      },
+      '& .SCEditCourse-options-container': {
+        border: `1px solid ${theme.palette.grey['300']}`,
+        borderRadius: '5px',
+        paddingBottom: '10px',
+        backgroundColor: theme.palette.common.white,
 
-      '& .SCEditCourse-options-divider': {
-        marginTop: '21px',
-        marginBottom: theme.spacing(3)
-      },
+        '& .SCEditCourse-options-wrapper': {
+          gap: theme.spacing(5),
+          maxWidth: '600px',
+          margin: 'auto'
+        },
 
-      '& .SCEditCourse-options-button-wrapper': {
-        alignItems: 'flex-end',
-        maxWidth: '600px',
-        margin: 'auto'
+        '& .SCEditCourse-options-divider': {
+          marginTop: '21px',
+          marginBottom: theme.spacing(3)
+        },
+
+        '& .SCEditCourse-options-button-wrapper': {
+          alignItems: 'flex-end',
+          maxWidth: '600px',
+          margin: 'auto'
+        }
       }
     })
   }

@@ -16,7 +16,8 @@ import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import {SCCourseUsersTableModeType} from '../../types/course';
 
 const classes = {
-  usersStatusWrapper: `${PREFIX}-users-status-wrapper`
+  usersStatusWrapper: `${PREFIX}-users-status-wrapper`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const headerCells = [
@@ -117,7 +118,7 @@ function Requests(props: RequestsProps) {
 
   return (
     <Box>
-      <Typography variant="h6">
+      <Typography variant="h6" className={classes.contrastColor}>
         <FormattedMessage
           id="ui.editCourse.tab.requests.title"
           defaultMessage="ui.editCourse.tab.requests.title"

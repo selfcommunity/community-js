@@ -14,9 +14,9 @@ import AddButton from './Lessons/AddButton';
 import SectionRow from './Lessons/SectionRow';
 import {ActionLessonType, DeleteRowProps, DeleteRowRef, RowType} from './types';
 import {useIsDisabled} from './hooks';
-import classNames from 'classnames';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import CourseTypePopover from '../../shared/CourseTypePopover';
+import classNames from 'classnames';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
@@ -34,8 +34,7 @@ const classes = {
   cellAlignCenter: `${PREFIX}-cell-align-center`,
   lessonEmptyStatus: `${PREFIX}-lesson-empty-status`,
   emptyStatusButton: `${PREFIX}-empty-status-button`,
-  contrastColor: `${PREFIX}-contrast-color`,
-  contrastBgColor: `${PREFIX}-contrast-bg-color`
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const headerCells = [
@@ -283,13 +282,13 @@ function Lessons(props: LessonsProps) {
               variant="outlined"
             />
           }
-          className={classNames(classes.lessonEmptyStatus, classes.contrastBgColor)}
+          className={classes.lessonEmptyStatus}
         />
       )}
 
       {sections.length > 0 && (
         <Fragment>
-          <Stack className={classNames(classes.lessonsSectionsWrapper, classes.contrastBgColor)}>
+          <Stack className={classes.lessonsSectionsWrapper}>
             <Stack className={classes.lessonsSections}>
               <Typography variant="h5">
                 <FormattedMessage
@@ -324,7 +323,7 @@ function Lessons(props: LessonsProps) {
           </Stack>
 
           <DragDropContext onDragEnd={handleDragEnd}>
-            <TableContainer className={classNames(classes.tableContainer, classes.contrastBgColor)}>
+            <TableContainer className={classes.tableContainer}>
               <Table className={classes.table}>
                 <TableHead className={classes.tableHeader}>
                   <TableRow>

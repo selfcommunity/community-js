@@ -6,7 +6,7 @@ import classNames from 'classnames';
 
 const classes = {
   status: `${PREFIX}-status`,
-  contrastBgColor: `${PREFIX}-contrast-bg-color`
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 interface StatusProps {
@@ -40,7 +40,7 @@ export default function Status(props: StatusProps) {
           )}
         </Typography>
       }
-      className={classNames(classes.status, classes.contrastBgColor)}
+      className={classNames(classes.status, classes.contrastColor)}
     />
   );
 }

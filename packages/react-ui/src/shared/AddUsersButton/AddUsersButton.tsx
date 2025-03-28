@@ -32,7 +32,8 @@ const classes = {
   dialogRoot: `${PREFIX}-dialog-root`,
   dialogAutocompleteWrapper: `${PREFIX}-dialog-autocomplete-wrapper`,
   dialogUserWrapper: `${PREFIX}-dialog-user-wrapper`,
-  dialogChipWrapper: `${PREFIX}-dialog-chip-wrapper`
+  dialogChipWrapper: `${PREFIX}-dialog-chip-wrapper`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const messages = defineMessages({
@@ -218,7 +219,13 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
 
   return (
     <Fragment>
-      <Root onClick={handleToggleDialogOpen} variant={variant} color={color} size={size} className={classNames(classes.root, className)} {...rest}>
+      <Root
+        onClick={handleToggleDialogOpen}
+        variant={variant}
+        color={color}
+        size={size}
+        className={classNames(classes.root, classes.contrastColor, className)}
+        {...rest}>
         <FormattedMessage id={label} defaultMessage={label} />
       </Root>
 

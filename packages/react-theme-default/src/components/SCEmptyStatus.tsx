@@ -6,6 +6,7 @@ const Component = {
       gap: '10px',
       padding: theme.spacing(3),
       marginTop: '9px',
+      backgroundColor: theme.palette.common.white,
 
       '& .SCEmptyStatus-box': {
         width: '130px',
