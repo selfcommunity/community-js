@@ -242,7 +242,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
           ...(_categories.length && {categories: JSON.stringify(_categories)}),
           ...(query && {search: query}),
           ...(showManagedCourses && {statuses: JSON.stringify(['creator', 'manager'])}),
-          ...(showMine && {statuses: JSON.stringify(['joined'])})
+          ...(showMine && {statuses: JSON.stringify(['joined', 'manager'])})
         }
       })
       .then((res: HttpResponse<any>) => {
