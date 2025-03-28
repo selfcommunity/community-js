@@ -5,11 +5,9 @@ import {PREFIX} from '../constants';
 import CourseParticipantsButton from '../../CourseParticipantsButton';
 import {memo} from 'react';
 import {InfoPositionType} from '../types';
-import classNames from 'classnames';
 
 const classes = {
-  info: `${PREFIX}-info`,
-  contrastBgColor: `${PREFIX}-contrast-bg-color`
+  info: `${PREFIX}-info`
 };
 
 interface InfoCourseDashboardProps {
@@ -23,7 +21,7 @@ function InfoCourseDashboard(props: InfoCourseDashboardProps) {
   const {title, course, position} = props;
 
   return (
-    <Stack className={classNames(classes.info, classes.contrastBgColor)}>
+    <Stack className={classes.info}>
       <Typography variant="h4">
         <FormattedMessage id={title} defaultMessage={title} />
       </Typography>

@@ -19,8 +19,7 @@ import {SCCourseUsersTableModeType} from '../../types/course';
 
 const classes = {
   usersStatusWrapper: `${PREFIX}-users-status-wrapper`,
-  contrastColor: `${PREFIX}-contrast-color`,
-  contrastBgColor: `${PREFIX}-contrast-bg-color`
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const headerCells = [
@@ -173,7 +172,6 @@ function Users(props: UsersProps) {
             method: Endpoints.GetCourseSuggestedUsers.method
           }}
           onConfirm={handleConfirm}
-          className={classes.contrastBgColor}
         />
       </Stack>
 

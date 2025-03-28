@@ -2,13 +2,9 @@ import {alpha, getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {
-    root: ({theme}: any) => ({
+    root: ({theme}) => ({
       '& .SCCourseForm-contrast-color': {
         color: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
-      },
-
-      '& .SCCourseForm-contrast-bg-color': {
-        backgroundColor: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
       },
 
       '& .SCCourseForm-cover': {
@@ -28,10 +24,16 @@ const Component = {
         marginTop: theme.spacing(4.5),
         color: theme.palette.text.secondary
       },
+      '& h5': {
+        padding: theme.spacing(1)
+      },
       '& .SCCourseForm-form': {
-        '& h5': {
-          padding: theme.spacing(1)
-        },
+        border: `1px solid ${theme.palette.grey['300']}`,
+        borderBottom: 'unset',
+        borderRadius: '5px',
+        borderBottomLeftRadius: 'unset',
+        borderBottomRightRadius: 'unset',
+        backgroundColor: theme.palette.common.white,
         '& .SCCourseForm-name': {
           marginTop: theme.spacing(3)
         },
@@ -39,6 +41,7 @@ const Component = {
           marginTop: theme.spacing(1)
         },
         '& .SCCourseForm-edit-root': {
+          backgroundColor: theme.palette.common.white,
           marginTop: theme.spacing(1),
           '& .SCCourseForm-edit-card': {
             display: 'flex',
@@ -131,7 +134,13 @@ const Component = {
         color: theme.palette.error.main
       },
       '& .SCCourseForm-actions': {
-        marginTop: theme.spacing(2),
+        border: `1px solid ${theme.palette.grey['300']}`,
+        borderTop: 'unset',
+        borderRadius: '5px',
+        borderTopLeftRadius: 'unset',
+        borderTopRightRadius: 'unset',
+        backgroundColor: theme.palette.common.white,
+        padding: theme.spacing(2, 0),
         display: 'flex',
         justifyContent: 'flex-end',
         gap: theme.spacing(2),

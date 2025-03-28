@@ -64,8 +64,7 @@ const classes = {
   box: `${PREFIX}-box`,
   percentageWrapper: `${PREFIX}-percentage-wrapper`,
   completedWrapper: `${PREFIX}-completed-wrapper`,
-  contrastColor: `${PREFIX}-contrast-color`,
-  contrastBgColor: `${PREFIX}-contrast-bg-color`
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 type DataUrlLesson = {
@@ -285,7 +284,7 @@ function Student(inProps: StudentCourseDashboardProps) {
 
       <Divider />
 
-      <Stack className={classNames(classes.userWrapper, classes.contrastBgColor)}>
+      <Stack className={classes.userWrapper}>
         <Stack className={classes.user}>
           <Link
             {...(!scCourse.created_by.deleted && {
@@ -326,7 +325,7 @@ function Student(inProps: StudentCourseDashboardProps) {
               <FormattedMessage id="ui.course.dashboard.student.description" defaultMessage="ui.course.dashboard.student.description" />
             </Typography>
 
-            <Stack className={classNames(classes.box, classes.contrastBgColor)}>
+            <Stack className={classes.box}>
               <Typography variant="body1" className={classes.description}>
                 {scCourse.description}
               </Typography>
@@ -342,7 +341,7 @@ function Student(inProps: StudentCourseDashboardProps) {
             <FormattedMessage id="ui.course.dashboard.student.progress" defaultMessage="ui.course.dashboard.student.description" />
           </Typography>
 
-          <Stack className={classNames(classes.box, classes.contrastBgColor)}>
+          <Stack className={classes.box}>
             <Stack className={classes.percentageWrapper}>
               <Typography variant="body1">
                 <FormattedMessage
@@ -383,7 +382,7 @@ function Student(inProps: StudentCourseDashboardProps) {
             <FormattedMessage id="ui.course.dashboard.student.contents" defaultMessage="ui.course.dashboard.student.contents" />
           </Typography>
 
-          <Stack className={classNames(classes.lessonsSections, classes.contrastBgColor)}>
+          <Stack className={classes.lessonsSections}>
             <Typography variant="h5">
               <FormattedMessage
                 id="ui.course.table.sections.title"

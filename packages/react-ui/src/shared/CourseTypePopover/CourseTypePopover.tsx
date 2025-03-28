@@ -8,7 +8,8 @@ const PREFIX = 'SCCourseTypePopover';
 
 const classes = {
   root: `${PREFIX}-root`,
-  button: `${PREFIX}-button`
+  button: `${PREFIX}-button`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(Stack, {
@@ -46,7 +47,7 @@ function CourseTypePopover(props: CourseTypePopoverProps) {
   }, [setAnchorEl]);
 
   return (
-    <Root className={classNames(classes.root, className)}>
+    <Root className={classNames(classes.root, classes.contrastColor, className)}>
       <Icon fontSize="small">courses</Icon>
 
       <Button variant="text" color="inherit" size="small" className={classes.button} onClick={handleOpenPopover}>
