@@ -223,7 +223,7 @@ const Component = {
         '& .SCEditCourse-options-container': {
           border: `1px solid ${theme.palette.grey['300']}`,
           borderRadius: '5px',
-          paddingBottom: '10px',
+          padding: '10px 0',
           backgroundColor: theme.palette.common.white,
 
           '& .SCEditCourse-options-wrapper': {
