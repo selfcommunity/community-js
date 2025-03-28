@@ -337,31 +337,35 @@ function Student(inProps: StudentCourseDashboardProps) {
         (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
         (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) && (
         <Fragment>
-          <Typography variant="h6" className={classNames(classes.margin, classes.contrastColor)}>
-            <FormattedMessage id="ui.course.dashboard.student.progress" defaultMessage="ui.course.dashboard.student.description" />
-          </Typography>
-
-          <Stack className={classes.box}>
-            <Stack className={classes.percentageWrapper}>
-              <Typography variant="body1">
-                <FormattedMessage
-                  id="ui.course.dashboard.student.progress.described"
-                  defaultMessage="ui.course.dashboard.student.progress.described"
-                  values={{progress: scCourse.num_lessons_completed, end: scCourse.num_lessons}}
-                />
+          {scCourse.join_status !== null && (
+            <Fragment>
+              <Typography variant="h6" className={classNames(classes.margin, classes.contrastColor)}>
+                <FormattedMessage id="ui.course.dashboard.student.progress" defaultMessage="ui.course.dashboard.student.progress" />
               </Typography>
 
-              <Typography variant="body1">
-                <FormattedMessage
-                  id="ui.course.dashboard.student.progress.percentage"
-                  defaultMessage="ui.course.dashboard.student.progress.percentage"
-                  values={{percentage: scCourse.user_completion_rate}}
-                />
-              </Typography>
-            </Stack>
+              <Stack className={classes.box}>
+                <Stack className={classes.percentageWrapper}>
+                  <Typography variant="body1">
+                    <FormattedMessage
+                      id="ui.course.dashboard.student.progress.described"
+                      defaultMessage="ui.course.dashboard.student.progress.described"
+                      values={{progress: scCourse.num_lessons_completed, end: scCourse.num_lessons}}
+                    />
+                  </Typography>
 
-            <LinearProgress className={classes.progress} variant="determinate" value={scCourse.user_completion_rate} />
-          </Stack>
+                  <Typography variant="body1">
+                    <FormattedMessage
+                      id="ui.course.dashboard.student.progress.percentage"
+                      defaultMessage="ui.course.dashboard.student.progress.percentage"
+                      values={{percentage: scCourse.user_completion_rate}}
+                    />
+                  </Typography>
+                </Stack>
+
+                <LinearProgress className={classes.progress} variant="determinate" value={scCourse.user_completion_rate} />
+              </Stack>
+            </Fragment>
+          )}
 
           {scCourse.user_completion_rate === 100 && (
             <Stack className={classNames(classes.completedWrapper, classes.margin)}>
