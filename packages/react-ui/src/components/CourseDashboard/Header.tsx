@@ -1,11 +1,12 @@
-import {Box, Button, Icon, Popover, Stack, Typography} from '@mui/material';
+import {Box, Button, Icon, Stack, Typography} from '@mui/material';
 import {SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {memo, MouseEvent, useCallback, useState} from 'react';
+import {memo} from 'react';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCCourseEditTabType} from '../../types';
 import classNames from 'classnames';
+import CourseTypePopover from '../../shared/CourseTypePopover';
 
 const classes = {
   header: `${PREFIX}-header`,
@@ -40,27 +41,11 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
   // PROPS
   const {course, hasAction = false} = props;
 
-  // STATES
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
-  const open = Boolean(anchorEl);
-
   // CONTEXTS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // INTL
   const intl = useIntl();
-
-  // HANDLERS
-  const handleOpenPopover = useCallback(
-    (e: MouseEvent<HTMLElement>) => {
-      setAnchorEl(e.currentTarget);
-    },
-    [setAnchorEl]
-  );
-
-  const handlePopoverClose = useCallback(() => {
-    setAnchorEl(null);
-  }, [setAnchorEl]);
 
   return (
     <Box className={classes.header}>
@@ -89,44 +74,7 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
             </Typography>
           </Stack>
 
-          <Stack className={classNames(classes.iconWrapper, classes.contrastColor)}>
-            <Icon fontSize="small">courses</Icon>
-
-            <Button variant="text" color="inherit" size="small" className={classes.buttonPopover} onClick={handleOpenPopover}>
-              <Typography variant="body2">
-                <FormattedMessage
-                  id="ui.course.type"
-                  defaultMessage="ui.course.type"
-                  values={{
-                    typeOfCourse: intl.formatMessage({
-                      id: `ui.course.type.${course.type}`,
-                      defaultMessage: `ui.course.type.${course.type}`
-                    })
-                  }}
-                />
-              </Typography>
-            </Button>
-            {open && (
-              <Popover
-                open
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left'
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'left'
-                }}
-                onClose={handlePopoverClose}>
-                <Box sx={{padding: '10px'}}>
-                  <Typography component="span" variant="body2" sx={{whiteSpace: 'pre-line'}}>
-                    <FormattedMessage id={`ui.courseForm.${course.type}.info`} defaultMessage={`ui.courseForm.${course.type}.info`} />
-                  </Typography>
-                </Box>
-              </Popover>
-            )}
-          </Stack>
+          <CourseTypePopover course={course} />
         </Stack>
 
         {hasAction && (

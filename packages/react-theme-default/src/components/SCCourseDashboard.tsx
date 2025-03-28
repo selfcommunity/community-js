@@ -62,17 +62,7 @@ const Component = {
             '& .SCCourseDashboard-header-icon-wrapper': {
               flexDirection: 'row',
               alignItems: 'center',
-              gap: theme.spacing(1),
-
-              '& .SCCourseDashboard-header-button-popover': {
-                padding: 0,
-                textDecoration: 'underline',
-
-                '&:hover': {
-                  backgroundColor: 'unset',
-                  textDecoration: 'underline'
-                }
-              }
+              gap: theme.spacing(1)
             }
           }
         }

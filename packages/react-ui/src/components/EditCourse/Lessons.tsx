@@ -7,7 +7,7 @@ import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
-import {Box, Icon, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
+import {Box, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 import Status from './Status';
 import EmptyStatus from '../../shared/EmptyStatus';
 import AddButton from './Lessons/AddButton';
@@ -16,11 +16,11 @@ import {ActionLessonType, DeleteRowProps, DeleteRowRef, RowType} from './types';
 import {useIsDisabled} from './hooks';
 import classNames from 'classnames';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
+import CourseTypePopover from '../../shared/CourseTypePopover';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
   lessonInfoWrapper: `${PREFIX}-lesson-info-wrapper`,
-  lessonInfo: `${PREFIX}-lesson-info`,
   lessonsSectionsWrapper: `${PREFIX}-lessons-sections-wrapper`,
   lessonsSections: `${PREFIX}-lessons-sections`,
   circle: `${PREFIX}-circle`,
@@ -265,23 +265,7 @@ function Lessons(props: LessonsProps) {
       </Typography>
 
       <Stack className={classes.lessonInfoWrapper}>
-        <Stack className={classes.lessonInfo}>
-          <Icon className={classes.contrastColor}>courses</Icon>
-
-          <Typography variant="body2" className={classes.contrastColor}>
-            <FormattedMessage
-              id="ui.course.type"
-              defaultMessage="ui.course.type"
-              values={{
-                typeOfCourse: intl.formatMessage({
-                  id: `ui.course.type.${course.type}`,
-                  defaultMessage: `ui.course.type.${course.type}`
-                })
-              }}
-            />
-          </Typography>
-        </Stack>
-
+        <CourseTypePopover course={course} />
         <Status course={course} />
       </Stack>
 
