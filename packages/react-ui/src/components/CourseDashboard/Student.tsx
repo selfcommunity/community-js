@@ -361,7 +361,7 @@ function Student(inProps: StudentCourseDashboardProps) {
               </Typography>
             </Stack>
 
-            <LinearProgress className={classes.progress} variant="determinate" value={scCourse?.user_completion_rate} />
+            <LinearProgress className={classes.progress} variant="determinate" value={scCourse.user_completion_rate} />
           </Stack>
 
           {scCourse.user_completion_rate === 100 && (
