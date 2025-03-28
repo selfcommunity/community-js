@@ -492,7 +492,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     <Course courseId={course.id} {...CourseComponentProps} />
                   </Grid>
                 ))}
-                {authUserId && courses.length % 2 !== 0 && (
+                {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && courses.length % 2 !== 0 && (
                   <Grid item xs={12} sm={12} md={6} lg={3} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
                     <CourseCreatePlaceholder CreateCourseButtonComponentProps={CreateCourseButtonComponentProps} />
                   </Grid>
