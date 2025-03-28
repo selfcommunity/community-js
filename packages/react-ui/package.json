@@ -80,7 +80,6 @@
 		"@emotion/react": "^11.11.3",
 		"@emotion/styled": "^11.11.0",
 		"@hello-pangea/dnd": "^17.0.0",
-		"@lexical/react": "0.20.2",
 		"@lexical/html": "0.28.0",
 		"@lexical/react": "0.28.0",
 		"@livekit/components-react": "2.6.5",
