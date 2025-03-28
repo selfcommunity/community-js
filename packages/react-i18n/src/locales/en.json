@@ -305,7 +305,7 @@
   "ui.course.dashboard.student.snackbar.success.cancel": "Request canceled!",
   "ui.course.dashboard.student.snackbar.success.enroll": "Enroll completed!",
   "ui.course.dashboard.student.snackbar.success.request": "Request invited!",
-  "ui.course.dashboard.teacher.btn.label": "Edit lessons",
+  "ui.course.dashboard.teacher.btn.label": "Edit",
   "ui.course.dashboard.teacher.info.completion": "Average completion rate",
   "ui.course.dashboard.teacher.info.students": "Students",
   "ui.course.dashboard.teacher.tab.comments": "Comments",

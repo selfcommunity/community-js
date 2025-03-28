@@ -305,7 +305,7 @@
   "ui.course.dashboard.student.snackbar.success.cancel": "Richiesta annullata!",
   "ui.course.dashboard.student.snackbar.success.enroll": "Iscrizione effettuata!",
   "ui.course.dashboard.student.snackbar.success.request": "Richiesta inviata!",
-  "ui.course.dashboard.teacher.btn.label": "Modifica lezioni",
+  "ui.course.dashboard.teacher.btn.label": "Modifica",
   "ui.course.dashboard.teacher.info.completion": "Tasso medio di completamento",
   "ui.course.dashboard.teacher.info.students": "Studenti",
   "ui.course.dashboard.teacher.tab.comments": "Commenti",
