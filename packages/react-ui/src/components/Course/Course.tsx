@@ -214,6 +214,8 @@ export default function Course(inProps: CourseProps): JSX.Element {
       );
     } else if (isCourseCompleted(scCourse)) {
       return <FormattedMessage defaultMessage="ui.course.status.completed" id="ui.course.status.completed" />;
+    } else if (scCourse.join_status === SCCourseJoinStatusType.JOINED) {
+      return <FormattedMessage defaultMessage="ui.course.status.joined" id="ui.course.status.joined" />;
     } else if (isCourseNew(scCourse)) {
       return <FormattedMessage defaultMessage="ui.course.status.new" id="ui.course.status.new" />;
     }
@@ -229,7 +231,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
       <PreviewRoot className={classes.previewRoot}>
         <Box className={classes.previewImageWrapper}>
           <CardMedia component="img" image={scCourse.image_medium} alt={scCourse.name} className={classes.previewImage} />
-          {(isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse)) && (
+          {(isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse) || scCourse.join_status === SCCourseJoinStatusType.JOINED) && (
             <Chip
               size="small"
               component="div"
@@ -238,6 +240,8 @@ export default function Course(inProps: CourseProps): JSX.Element {
                   ? 'primary'
                   : isCourseAdmin && !scCourse.privacy
                   ? 'default'
+                  : scCourse.join_status === SCCourseJoinStatusType.JOINED
+                  ? 'warning'
                   : 'secondary'
               }
               label={chipLabel}
@@ -304,21 +308,24 @@ export default function Course(inProps: CourseProps): JSX.Element {
               src={scCourse.image_medium}
               className={userProfileSnippet ? classes.snippetAvatarUserProfile : classes.snippetAvatar}
             />
-            {!userProfileSnippet && (isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse)) && (
-              <Chip
-                size="small"
-                component="div"
-                color={
-                  isCourseCompleted(scCourse) || (isCourseAdmin && scCourse.privacy)
-                    ? 'primary'
-                    : isCourseAdmin && !scCourse.privacy
-                    ? 'default'
-                    : 'secondary'
-                }
-                label={chipLabel}
-                className={classes.chip}
-              />
-            )}
+            {!userProfileSnippet &&
+              (isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse) || scCourse.join_status === SCCourseJoinStatusType.JOINED) && (
+                <Chip
+                  size="small"
+                  component="div"
+                  color={
+                    isCourseCompleted(scCourse) || (isCourseAdmin && scCourse.privacy)
+                      ? 'primary'
+                      : isCourseAdmin && !scCourse.privacy
+                      ? 'default'
+                      : scCourse.join_status === SCCourseJoinStatusType.JOINED
+                      ? 'warning'
+                      : 'secondary'
+                  }
+                  label={chipLabel}
+                  className={classes.chip}
+                />
+              )}
           </Box>
         }
         primary={

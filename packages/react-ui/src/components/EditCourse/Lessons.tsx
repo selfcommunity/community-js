@@ -1,26 +1,27 @@
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {Fragment, memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {Fragment, memo, SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
 import {SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
-import {Box, Icon, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
+import {Box, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 import Status from './Status';
 import EmptyStatus from '../../shared/EmptyStatus';
 import AddButton from './Lessons/AddButton';
 import SectionRow from './Lessons/SectionRow';
 import {ActionLessonType, DeleteRowProps, DeleteRowRef, RowType} from './types';
 import {useIsDisabled} from './hooks';
-import classNames from 'classnames';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
+import CourseTypePopover from '../../shared/CourseTypePopover';
+import classNames from 'classnames';
+import {SCCourseEditTabType} from '../../types';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
   lessonInfoWrapper: `${PREFIX}-lesson-info-wrapper`,
-  lessonInfo: `${PREFIX}-lesson-info`,
   lessonsSectionsWrapper: `${PREFIX}-lessons-sections-wrapper`,
   lessonsSections: `${PREFIX}-lessons-sections`,
   circle: `${PREFIX}-circle`,
@@ -34,8 +35,7 @@ const classes = {
   cellAlignCenter: `${PREFIX}-cell-align-center`,
   lessonEmptyStatus: `${PREFIX}-lesson-empty-status`,
   emptyStatusButton: `${PREFIX}-empty-status-button`,
-  contrastColor: `${PREFIX}-contrast-color`,
-  contrastBgColor: `${PREFIX}-contrast-bg-color`
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const headerCells = [
@@ -56,11 +56,12 @@ const headerCells = [
 interface LessonsProps {
   course: SCCourseType;
   setCourse: (course: SCCourseType) => void;
+  handleTabChange: (_e: SyntheticEvent, newTabValue: SCCourseEditTabType) => void;
 }
 
 function Lessons(props: LessonsProps) {
   // PROPS
-  const {course, setCourse} = props;
+  const {course, setCourse, handleTabChange} = props;
 
   // STATES
   const [sections, setSections] = useState<SCCourseSectionType[]>([]);
@@ -265,24 +266,8 @@ function Lessons(props: LessonsProps) {
       </Typography>
 
       <Stack className={classes.lessonInfoWrapper}>
-        <Stack className={classes.lessonInfo}>
-          <Icon className={classes.contrastColor}>courses</Icon>
-
-          <Typography variant="body2" className={classes.contrastColor}>
-            <FormattedMessage
-              id="ui.course.type"
-              defaultMessage="ui.course.type"
-              values={{
-                typeOfCourse: intl.formatMessage({
-                  id: `ui.course.type.${course.type}`,
-                  defaultMessage: `ui.course.type.${course.type}`
-                })
-              }}
-            />
-          </Typography>
-        </Stack>
-
-        <Status course={course} />
+        <CourseTypePopover course={course} />
+        <Status course={course} handleTabChange={handleTabChange} />
       </Stack>
 
       {sections.length === 0 && (
@@ -299,13 +284,13 @@ function Lessons(props: LessonsProps) {
               variant="outlined"
             />
           }
-          className={classNames(classes.lessonEmptyStatus, classes.contrastBgColor)}
+          className={classes.lessonEmptyStatus}
         />
       )}
 
       {sections.length > 0 && (
         <Fragment>
-          <Stack className={classNames(classes.lessonsSectionsWrapper, classes.contrastBgColor)}>
+          <Stack className={classes.lessonsSectionsWrapper}>
             <Stack className={classes.lessonsSections}>
               <Typography variant="h5">
                 <FormattedMessage
@@ -340,7 +325,7 @@ function Lessons(props: LessonsProps) {
           </Stack>
 
           <DragDropContext onDragEnd={handleDragEnd}>
-            <TableContainer className={classNames(classes.tableContainer, classes.contrastBgColor)}>
+            <TableContainer className={classes.tableContainer}>
               <Table className={classes.table}>
                 <TableHead className={classes.tableHeader}>
                   <TableRow>

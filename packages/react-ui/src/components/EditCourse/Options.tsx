@@ -1,7 +1,7 @@
-import {Divider, Stack, Typography} from '@mui/material';
+import {Box, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
-import {Fragment, memo, useCallback, useState} from 'react';
+import {memo, useCallback, useState} from 'react';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {OptionsData} from './types';
@@ -11,13 +11,12 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 import {LoadingButton} from '@mui/lab';
 import {SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
-import classNames from 'classnames';
 
 const classes = {
+  optionsContainer: `${PREFIX}-options-container`,
   optionsWrapper: `${PREFIX}-options-wrapper`,
   optionsDivider: `${PREFIX}-options-divider`,
-  optionsButtonWrapper: `${PREFIX}-options-button-wrapper`,
-  contrastBgColor: `${PREFIX}-contrast-bg-color`
+  optionsButtonWrapper: `${PREFIX}-options-button-wrapper`
 };
 
 const OPTIONS = {
@@ -117,8 +116,8 @@ function Options(props: OptionsProps) {
   }, [course, tempOptions, setCanSave, setLoading]);
 
   return (
-    <Fragment>
-      <Stack className={classNames(classes.optionsWrapper, classes.contrastBgColor)}>
+    <Box className={classes.optionsContainer}>
+      <Stack className={classes.optionsWrapper}>
         {Object.entries(OPTIONS).map(([key, value], i) => (
           <SwitchForm
             key={i}
@@ -131,16 +130,14 @@ function Options(props: OptionsProps) {
         ))}
       </Stack>
 
-      <Divider className={classNames(classes.optionsDivider, classes.contrastBgColor)} />
-
-      <Stack className={classNames(classes.optionsButtonWrapper, classes.contrastBgColor)}>
+      <Stack className={classes.optionsButtonWrapper}>
         <LoadingButton size="small" variant="contained" disabled={!canSave} onClick={handleSubmit} loading={loading}>
           <Typography variant="body1">
             <FormattedMessage id="ui.editCourse.tab.options.button.save" defaultMessage="ui.editCourse.tab.options.button.save" />
           </Typography>
         </LoadingButton>
       </Stack>
-    </Fragment>
+    </Box>
   );
 }
 

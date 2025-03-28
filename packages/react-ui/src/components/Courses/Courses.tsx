@@ -62,7 +62,7 @@ const Root = styled(Box, {
 export const CoursesChipRoot = styled(Chip, {
   name: PREFIX,
   slot: 'CoursesChipRoot',
-  shouldForwardProp: (prop) => prop !== 'showForMe' && prop !== 'showMyCourses'
+  shouldForwardProp: (prop) => prop !== 'showMine' && prop !== 'showManagedCourses'
 })(() => ({}));
 
 export interface CoursesProps {
@@ -193,8 +193,8 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   const [next, setNext] = useState<string>(null);
   const [query, setQuery] = useState<string>('');
   const [_categories, setCategories] = useState<number[]>([]);
-  const [showForMe, setShowForMe] = useState<boolean>(false);
-  const [showMyCourses, setShowMyCourses] = useState<boolean>(false);
+  const [showMine, setShowMine] = useState<boolean>(false);
+  const [showManagedCourses, setShowManagedCourses] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -205,13 +205,11 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   const onlyStaffEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_COURSES_ONLY_STAFF_ENABLED]?.value, [preferences]);
   const canCreateCourse = useMemo(() => scUserContext?.user?.permission?.create_course, [scUserContext?.user?.permission]);
   const endpoint = useMemo(() => {
-    if (showMyCourses) {
+    if (showManagedCourses) {
       return Endpoints.GetJoinedCourses;
-    } else if (showForMe) {
-      return Endpoints.CourseSuggestion;
     }
     return Endpoints.SearchCourses;
-  }, [showMyCourses, showForMe]);
+  }, [showManagedCourses]);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -224,11 +222,11 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   // HANDLERS
 
   const handleChipClick = () => {
-    setShowForMe(!showForMe);
+    setShowMine(!showMine);
   };
 
   const handleDeleteClick = () => {
-    setShowForMe(false);
+    setShowMine(false);
   };
 
   /**
@@ -243,7 +241,8 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
           ...endpointQueryParams,
           ...(_categories.length && {categories: JSON.stringify(_categories)}),
           ...(query && {search: query}),
-          ...(showMyCourses && {statuses: JSON.stringify(['creator'])})
+          ...(showManagedCourses && {statuses: JSON.stringify(['creator', 'manager'])}),
+          ...(showMine && {statuses: JSON.stringify(['joined', 'manager'])})
         }
       })
       .then((res: HttpResponse<any>) => {
@@ -265,7 +264,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
     } else {
       fetchCourses();
     }
-  }, [contentAvailability, authUserId, showForMe, showMyCourses, _categories]);
+  }, [contentAvailability, authUserId, showMine, showManagedCourses, _categories]);
 
   /**
    * Subscriber for pubsub callback
@@ -302,7 +301,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
       return http
         .request({
           url: next,
-          method: showMyCourses ? Endpoints.GetJoinedCourses.method : showForMe ? Endpoints.CourseSuggestion : Endpoints.SearchCourses.method
+          method: showManagedCourses ? Endpoints.GetJoinedCourses.method : Endpoints.SearchCourses.method
         })
         .then((res: HttpResponse<any>) => {
           setCourses([...courses, ...res.data.results]);
@@ -387,15 +386,15 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
               {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && (
                 <Grid item>
                   <CoursesChipRoot
-                    color={showMyCourses ? 'primary' : 'default'}
-                    variant={showMyCourses ? 'filled' : 'outlined'}
-                    label={<FormattedMessage id="ui.courses.filterByCreatedByMe" defaultMessage="ui.courses.filterByCreatedByMe" />}
-                    onClick={() => setShowMyCourses(!showMyCourses)}
-                    // @ts-expect-error this is needed to use showForMe into SCCourses
-                    showForMe={showMyCourses}
-                    deleteIcon={showMyCourses ? <Icon>close</Icon> : null}
-                    onDelete={showMyCourses ? () => setShowMyCourses(false) : null}
-                    disabled={loading || showForMe}
+                    color={showManagedCourses ? 'primary' : 'default'}
+                    variant={showManagedCourses ? 'filled' : 'outlined'}
+                    label={<FormattedMessage id="ui.courses.filterByManagedByMe" defaultMessage="ui.courses.filterByManagedByMe" />}
+                    onClick={() => setShowManagedCourses(!showManagedCourses)}
+                    // @ts-expect-error this is needed to use showMine into SCCourses
+                    showManagedCourses={showManagedCourses}
+                    deleteIcon={showManagedCourses ? <Icon>close</Icon> : null}
+                    onDelete={showManagedCourses ? () => setShowManagedCourses(false) : null}
+                    disabled={loading || showMine}
                   />
                 </Grid>
               )}
@@ -407,15 +406,15 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
               {authUserId && (
                 <Grid item>
                   <CoursesChipRoot
-                    color={showForMe ? 'primary' : 'default'}
-                    variant={showForMe ? 'filled' : 'outlined'}
-                    label={<FormattedMessage id="ui.courses.filterByCoursesForMe" defaultMessage="ui.courses.filterByCoursesForMe" />}
+                    color={showMine ? 'primary' : 'default'}
+                    variant={showMine ? 'filled' : 'outlined'}
+                    label={<FormattedMessage id="ui.courses.filterByMine" defaultMessage="ui.courses.filterByMine" />}
                     onClick={handleChipClick}
-                    // @ts-expect-error this is needed to use showForMe into SCCourses
-                    showForMe={showForMe}
-                    deleteIcon={showForMe ? <Icon>close</Icon> : null}
-                    onDelete={showForMe ? handleDeleteClick : null}
-                    disabled={loading || showMyCourses}
+                    // @ts-expect-error this is needed to use showMine into SCCourses
+                    showMine={showMine}
+                    deleteIcon={showMine ? <Icon>close</Icon> : null}
+                    onDelete={showMine ? handleDeleteClick : null}
+                    disabled={loading || showManagedCourses}
                   />
                 </Grid>
               )}
@@ -441,7 +440,6 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                 <Typography variant="body1" textAlign="center">
                   <FormattedMessage id="ui.courses.empty.info" defaultMessage="ui.courses.empty.info" />
                 </Typography>
-                {!isMobile && <Skeleton coursesNumber={4} {...CoursesSkeletonComponentProps} CourseSkeletonProps={CourseSkeletonComponentProps} />}
               </Stack>
             ) : (
               <Box className={classes.teacherEmptyView}>
@@ -492,7 +490,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     <Course courseId={course.id} {...CourseComponentProps} />
                   </Grid>
                 ))}
-                {authUserId && courses.length % 2 !== 0 && (
+                {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && courses.length % 2 !== 0 && (
                   <Grid item xs={12} sm={12} md={6} lg={3} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
                     <CourseCreatePlaceholder CreateCourseButtonComponentProps={CreateCourseButtonComponentProps} />
                   </Grid>

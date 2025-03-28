@@ -1,7 +1,7 @@
-import {SCCourseType} from '@selfcommunity/types';
+import {SCCourseJoinStatusType, SCCourseType} from '@selfcommunity/types';
 
 export function isCourseNew(course: SCCourseType | null): boolean {
-  if (course && course.user_completion_rate !== 100) {
+  if (course && course.join_status === SCCourseJoinStatusType.JOINED) {
     const createdAtDate = new Date(course.created_at);
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);

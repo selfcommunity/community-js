@@ -128,10 +128,10 @@ const Component = {
         }
       }
     }),
-    coursesChipRoot: ({theme, showForMe, showMyCourses}: any) => ({
+    coursesChipRoot: ({theme, showMine, showManagedCourses}: any) => ({
       height: theme.spacing(5.25),
       borderRadius: theme.spacing(0.5),
-      color: showForMe || showMyCourses ? theme.palette.common.white : theme.palette.text.primary,
+      color: showMine || showManagedCourses ? theme.palette.common.white : theme.palette.text.primary,
       '& .MuiIcon-root': {
         fontSize: '1rem',
         color: theme.palette.common.white

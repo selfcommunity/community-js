@@ -11,10 +11,6 @@ const Component = {
         color: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
       },
 
-      '& .SCCourseDashboard-contrast-bg-color': {
-        backgroundColor: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
-      },
-
       '& .SCCourseDashboard-header': {
         [theme.breakpoints.down('sm')]: {
           paddingLeft: '14px',
@@ -62,17 +58,7 @@ const Component = {
             '& .SCCourseDashboard-header-icon-wrapper': {
               flexDirection: 'row',
               alignItems: 'center',
-              gap: theme.spacing(1),
-
-              '& .SCCourseDashboard-header-button-popover': {
-                padding: 0,
-                textDecoration: 'underline',
-
-                '&:hover': {
-                  backgroundColor: 'unset',
-                  textDecoration: 'underline'
-                }
-              }
+              gap: theme.spacing(1)
             }
           }
         }
@@ -96,8 +82,9 @@ const Component = {
           flex: 1,
           gap: '6px',
           border: `1px solid ${theme.palette.grey['300']}`,
-          borderRadius: '10px',
+          borderRadius: '5px',
           padding: theme.spacing('17px', 3, '19px'),
+          backgroundColor: theme.palette.common.white,
 
           '& .SCCourseParticipantsButton-root': {
             justifyContent: 'flex-start',
@@ -123,7 +110,7 @@ const Component = {
       },
 
       '& .SCCourseDashboard-tab-panel': {
-        padding: theme.spacing(3, 0, 0),
+        padding: theme.spacing(3, 0),
 
         [theme.breakpoints.down('md')]: {
           paddingLeft: '14px',
@@ -132,6 +119,11 @@ const Component = {
       },
 
       '& .SCCourseDashboard-comments-container': {
+        backgroundColor: theme.palette.common.white,
+        border: `1px solid ${theme.palette.grey['300']}`,
+        borderRadius: '5px',
+        padding: '5px 0',
+
         [theme.breakpoints.up('sm')]: {
           paddingLeft: '36px',
           paddingRight: '36px'
@@ -190,6 +182,7 @@ const Component = {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
+          backgroundColor: theme.palette.common.white,
 
           '& .SCCourseDashboard-user': {
             flexDirection: 'row',
@@ -231,6 +224,7 @@ const Component = {
           borderTopLeftRadius: '5px',
           borderTopRightRadius: '5px',
           padding: '19px 24px',
+          backgroundColor: theme.palette.common.white,
 
           '& .SCCourseDashboard-circle': {
             width: '6px',
@@ -249,7 +243,8 @@ const Component = {
           gap: '13px',
           border: `1px solid ${theme.palette.grey['300']}`,
           borderRadius: '5px',
-          padding: '11px 24px'
+          padding: '11px 24px',
+          backgroundColor: theme.palette.common.white
         },
 
         '& .SCCourseDashboard-percentage-wrapper': {
@@ -344,7 +339,7 @@ const Component = {
             flex: 1,
             gap: '6px',
             border: `1px solid ${theme.palette.grey['300']}`,
-            borderRadius: '10px',
+            borderRadius: '5px',
             padding: theme.spacing('17px', 3, '19px'),
 
             '& .SCCourseParticipantsButton-root': {

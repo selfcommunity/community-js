@@ -7,6 +7,7 @@ import {CourseService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../../utils/widget';
 import {DEFAULT_PAGINATION_OFFSET} from '../../../constants/Pagination';
+import {SCCourseUsersTableModeType} from '../../../types/course';
 
 const headerCells = [
   {
@@ -84,7 +85,7 @@ function Students(props: StudentsProps) {
       state={state}
       dispatch={dispatch}
       headerCells={headerCells}
-      mode="dashboard"
+      mode={SCCourseUsersTableModeType.DASHBOARD}
       emptyStatusTitle="ui.courseUsersTable.empty.users.title"
       emptyStatusDescription="ui.courseUsersTable.empty.users.description"
     />

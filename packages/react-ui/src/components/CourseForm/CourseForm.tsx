@@ -55,8 +55,7 @@ const classes = {
   stepOne: `${PREFIX}-step-one`,
   stepTwo: `${PREFIX}-step-two`,
   title: `${PREFIX}-title`,
-  contrastColor: `${PREFIX}-contrast-color`,
-  contrastBgColor: `${PREFIX}-contrast-bg-color`
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(Box, {
@@ -341,74 +340,69 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
             </>
           )}
           {_step === SCCourseFormStepType.CUSTOMIZATION && (
-            <FormGroup className={classes.form}>
+            <Fragment>
               {course && (
                 <Typography variant="h5" className={classes.contrastColor}>
                   <FormattedMessage id="ui.courseForm.edit.title.general" defaultMessage="ui.courseForm.edit.title.general" />
                 </Typography>
               )}
-              <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-                <UploadCourseCover isUploading={field.isSubmitting} onChange={handleChangeCover} />
-              </Paper>
-              <TextField
-                required
-                className={classNames(classes.name, classes.contrastBgColor)}
-                placeholder={`${intl.formatMessage(messages.name)}`}
-                margin="normal"
-                value={field.name}
-                name="name"
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: <Typography variant="body2">{COURSE_TITLE_MAX_LENGTH - field.name.length}</Typography>
-                }}
-                error={Boolean(field.name.length > COURSE_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
-                helperText={
-                  field.name.length > COURSE_TITLE_MAX_LENGTH ? (
-                    <FormattedMessage id="ui.courseForm.name.error.maxLength" defaultMessage="ui.courseForm.name.error.maxLength" />
-                  ) : error['nameError'] ? (
-                    error['nameError']
-                  ) : null
-                }
-              />
-              <TextField
-                multiline
-                className={classNames(classes.description, classes.contrastBgColor)}
-                placeholder={`${intl.formatMessage(messages.description)}`}
-                margin="normal"
-                value={field.description}
-                name="description"
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <Typography variant="body2">
-                      {field.description?.length ? COURSE_DESCRIPTION_MAX_LENGTH - field.description.length : COURSE_DESCRIPTION_MAX_LENGTH}
-                    </Typography>
-                  )
-                }}
-                error={Boolean(field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH)}
-                helperText={
-                  field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH ? (
-                    <FormattedMessage id="ui.courseForm.description.error.maxLength" defaultMessage="ui.courseForm.description.error.maxLength" />
-                  ) : null
-                }
-              />
-              <CategoryAutocomplete
-                defaultValue={field.categories}
-                TextFieldProps={{label: intl.formatMessage(Object.keys(field.categories).length ? messages.category : messages.categoryEmpty)}}
-                multiple={true}
-                onChange={handleOnChangeCategory}
-                className={classes.contrastBgColor}
-              />
-              {course && (
-                <CourseEdit
-                  course={course}
-                  onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))}
-                  className={classes.contrastBgColor}
+              <FormGroup className={classes.form}>
+                <Paper style={_backgroundCover} classes={{root: classes.cover}}>
+                  <UploadCourseCover isUploading={field.isSubmitting} onChange={handleChangeCover} />
+                </Paper>
+                <TextField
+                  required
+                  className={classes.name}
+                  placeholder={`${intl.formatMessage(messages.name)}`}
+                  margin="normal"
+                  value={field.name}
+                  name="name"
+                  onChange={handleChange}
+                  InputProps={{
+                    endAdornment: <Typography variant="body2">{COURSE_TITLE_MAX_LENGTH - field.name.length}</Typography>
+                  }}
+                  error={Boolean(field.name.length > COURSE_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
+                  helperText={
+                    field.name.length > COURSE_TITLE_MAX_LENGTH ? (
+                      <FormattedMessage id="ui.courseForm.name.error.maxLength" defaultMessage="ui.courseForm.name.error.maxLength" />
+                    ) : error['nameError'] ? (
+                      error['nameError']
+                    ) : null
+                  }
                 />
-              )}
-            </FormGroup>
+                <TextField
+                  multiline
+                  className={classes.description}
+                  placeholder={`${intl.formatMessage(messages.description)}`}
+                  margin="normal"
+                  value={field.description}
+                  name="description"
+                  onChange={handleChange}
+                  InputProps={{
+                    endAdornment: (
+                      <Typography variant="body2">
+                        {field.description?.length ? COURSE_DESCRIPTION_MAX_LENGTH - field.description.length : COURSE_DESCRIPTION_MAX_LENGTH}
+                      </Typography>
+                    )
+                  }}
+                  error={Boolean(field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH)}
+                  helperText={
+                    field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH ? (
+                      <FormattedMessage id="ui.courseForm.description.error.maxLength" defaultMessage="ui.courseForm.description.error.maxLength" />
+                    ) : null
+                  }
+                />
+                <CategoryAutocomplete
+                  defaultValue={field.categories}
+                  TextFieldProps={{label: intl.formatMessage(Object.keys(field.categories).length ? messages.category : messages.categoryEmpty)}}
+                  multiple={true}
+                  onChange={handleOnChangeCategory}
+                />
+                {course && <CourseEdit course={course} onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))} />}
+              </FormGroup>
+            </Fragment>
           )}
-          <Box className={classNames(classes.actions, classes.contrastBgColor)}>
+          <Box className={classes.actions}>
             <LoadingButton
               size="small"
               loading={field.isSubmitting}
