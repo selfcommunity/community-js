@@ -67,7 +67,17 @@ const Component = {
         },
 
         '& .SCEditCourse-status': {
-          borderRadius: theme.spacing(1)
+          borderRadius: theme.spacing(1),
+
+          '& .MuiButtonBase-root': {
+            padding: 0,
+            textDecoration: 'underline',
+
+            '&:hover': {
+              backgroundColor: 'unset',
+              textDecoration: 'underline'
+            }
+          }
         },
 
         '& .SCEditCourse-lesson-empty-status': {

@@ -1,6 +1,6 @@
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {Fragment, memo, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {Fragment, memo, SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
 import {SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
@@ -17,6 +17,7 @@ import {useIsDisabled} from './hooks';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import CourseTypePopover from '../../shared/CourseTypePopover';
 import classNames from 'classnames';
+import {SCCourseEditTabType} from '../../types';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
@@ -55,11 +56,12 @@ const headerCells = [
 interface LessonsProps {
   course: SCCourseType;
   setCourse: (course: SCCourseType) => void;
+  handleTabChange: (_e: SyntheticEvent, newTabValue: SCCourseEditTabType) => void;
 }
 
 function Lessons(props: LessonsProps) {
   // PROPS
-  const {course, setCourse} = props;
+  const {course, setCourse, handleTabChange} = props;
 
   // STATES
   const [sections, setSections] = useState<SCCourseSectionType[]>([]);
@@ -265,7 +267,7 @@ function Lessons(props: LessonsProps) {
 
       <Stack className={classes.lessonInfoWrapper}>
         <CourseTypePopover course={course} />
-        <Status course={course} />
+        <Status course={course} handleTabChange={handleTabChange} />
       </Stack>
 
       {sections.length === 0 && (
