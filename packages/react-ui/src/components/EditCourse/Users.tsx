@@ -1,7 +1,7 @@
 import {Box, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import AddUsersButton from '../../shared/AddUsersButton';
-import {memo, useCallback, useEffect, useReducer, useRef} from 'react';
+import {memo, SyntheticEvent, useCallback, useEffect, useReducer, useRef} from 'react';
 import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -15,7 +15,7 @@ import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../.
 import {CourseService, CourseUserRoleParams, Endpoints, SCPaginatedResponse} from '@selfcommunity/api-services';
 import PubSub from 'pubsub-js';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
-import {SCCourseUsersTableModeType} from '../../types/course';
+import {SCCourseEditTabType, SCCourseUsersTableModeType} from '../../types/course';
 
 const classes = {
   usersStatusWrapper: `${PREFIX}-users-status-wrapper`,
@@ -40,6 +40,7 @@ const headerCells = [
 interface UsersProps {
   course: SCCourseType;
   endpointQueryParams?: Record<string, string | number>;
+  handleTabChange: (_e: SyntheticEvent, newTabValue: SCCourseEditTabType) => void;
 }
 
 function Users(props: UsersProps) {
@@ -50,7 +51,8 @@ function Users(props: UsersProps) {
       limit: 6,
       offset: DEFAULT_PAGINATION_OFFSET,
       statuses: JSON.stringify(['joined', 'manager', 'creator'])
-    }
+    },
+    handleTabChange
   } = props;
 
   // STATES
@@ -163,7 +165,7 @@ function Users(props: UsersProps) {
       </Typography>
 
       <Stack className={classes.usersStatusWrapper}>
-        <Status course={course} />
+        <Status course={course} handleTabChange={handleTabChange} />
 
         <AddUsersButton
           label="ui.editCourse.tab.users.addUsersButton.label"
