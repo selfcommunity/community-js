@@ -13,6 +13,7 @@ import {CourseService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {PREFIX} from './constants';
 import PubSub from 'pubsub-js';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import {SCCourseUsersTableModeType} from '../../types/course';
 
 const classes = {
   usersStatusWrapper: `${PREFIX}-users-status-wrapper`
@@ -133,7 +134,7 @@ function Requests(props: RequestsProps) {
         state={state}
         dispatch={dispatch}
         headerCells={headerCells}
-        mode="requests"
+        mode={SCCourseUsersTableModeType.REQUESTS}
         emptyStatusTitle="ui.courseUsersTable.empty.requests.title"
       />
     </Box>

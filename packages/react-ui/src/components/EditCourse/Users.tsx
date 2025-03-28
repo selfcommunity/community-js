@@ -15,6 +15,7 @@ import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../.
 import {CourseService, CourseUserRoleParams, Endpoints, SCPaginatedResponse} from '@selfcommunity/api-services';
 import PubSub from 'pubsub-js';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import {SCCourseUsersTableModeType} from '../../types/course';
 
 const classes = {
   usersStatusWrapper: `${PREFIX}-users-status-wrapper`,
@@ -181,7 +182,7 @@ function Users(props: UsersProps) {
         state={state}
         dispatch={dispatch}
         headerCells={headerCells}
-        mode="edit"
+        mode={SCCourseUsersTableModeType.EDIT}
         emptyStatusTitle="ui.courseUsersTable.empty.users.title"
         emptyStatusDescription="ui.courseUsersTable.empty.users.description"
       />

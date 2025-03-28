@@ -21,3 +21,9 @@ export enum SCCourseEditTabType {
   REQUESTS = 'requests',
   OPTIONS = 'options'
 }
+
+export enum SCCourseUsersTableModeType {
+  DASHBOARD = 'dashboard',
+  EDIT = 'edit',
+  REQUESTS = 'requests'
+}

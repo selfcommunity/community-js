@@ -34,6 +34,7 @@ import ChangeUserStatus from './ChangeUsersStatus';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import RequestButton from './RequestButton';
 import classNames from 'classnames';
+import {SCCourseUsersTableModeType} from '../../types/course';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -60,7 +61,7 @@ export interface CourseUsersTableProps {
   dispatch: Dispatch<any>;
   course: SCCourseType;
   headerCells: HeaderCellsType[];
-  mode: 'dashboard' | 'edit' | 'requests';
+  mode: SCCourseUsersTableModeType;
   emptyStatusTitle: string;
   emptyStatusDescription?: string;
 }
@@ -163,12 +164,12 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           <TableHead>
             <TableRow>
               {headerCells.map((cell, i, array) => {
-                if (mode !== 'edit' && i === array.length - 1) {
+                if (mode !== SCCourseUsersTableModeType.EDIT && i === array.length - 1) {
                   return <TableCell width="14%" key={i} />;
                 }
 
                 return (
-                  <TableCell width={mode === 'dashboard' ? '20%' : '25%'} key={i}>
+                  <TableCell width={mode === SCCourseUsersTableModeType.DASHBOARD ? '20%' : '25%'} key={i}>
                     <Typography variant="body2">
                       <FormattedMessage id={cell.id} defaultMessage={cell.id} />
                     </Typography>
@@ -188,7 +189,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                       <Typography variant="body2">{user.username}</Typography>
                     </Stack>
                   </TableCell>
-                  {mode === 'dashboard' && (
+                  {mode === SCCourseUsersTableModeType.DASHBOARD && (
                     <TableCell>
                       <Stack className={classes.progressWrapper}>
                         <LinearProgress className={classes.progress} variant="determinate" value={user.user_completion_rate} />
@@ -197,7 +198,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                       </Stack>
                     </TableCell>
                   )}
-                  {mode === 'edit' && (
+                  {mode === SCCourseUsersTableModeType.EDIT && (
                     <TableCell>
                       {user.join_status !== SCCourseJoinStatusType.CREATOR && scUserContext.user.id !== user.id ? (
                         <ChangeUserStatus course={course} user={user} />
@@ -213,27 +214,29 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                   )}
                   <TableCell>
                     <Typography variant="body2">
-                      {new Date(mode === 'requests' ? user.date_joined : user.joined_at || new Date()).toLocaleDateString()}
+                      {new Date(mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.joined_at || new Date()).toLocaleDateString()}
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">
-                      {new Date(mode === 'requests' ? user.date_joined : user.last_active_at || new Date()).toLocaleDateString()}
+                      {new Date(
+                        mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.last_active_at || new Date()
+                      ).toLocaleDateString()}
                     </Typography>
                   </TableCell>
-                  {mode === 'dashboard' && (
+                  {mode === SCCourseUsersTableModeType.DASHBOARD && (
                     <TableCell>
                       <SeeProgressButton course={course} user={user} />
                     </TableCell>
                   )}
-                  {mode === 'requests' && (
+                  {mode === SCCourseUsersTableModeType.REQUESTS && (
                     <TableCell>
                       <RequestButton course={course} user={user} />
                     </TableCell>
                   )}
                 </TableRow>
               ))}
-            {state.isLoadingNext && <RowSkeleton editMode={mode !== 'dashboard'} />}
+            {state.isLoadingNext && <RowSkeleton editMode={mode !== SCCourseUsersTableModeType.DASHBOARD} />}
           </TableBody>
         </Table>
       </TableContainer>
