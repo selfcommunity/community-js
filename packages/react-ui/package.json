@@ -118,7 +118,7 @@
 		"pdfjs-dist": "3.11.174",
 		"prop-types": "^15.8.1",
 		"prop-types-extra": "^1.1.1",
-		"pubsub-js": "^1.9.4",
+		"pubsub-js": "^1.9.5",
 		"react": "^17.0.2 || 18",
 		"react-custom-scrollbars-2": "^4.5.0",
 		"react-dom": "17 || 18",
