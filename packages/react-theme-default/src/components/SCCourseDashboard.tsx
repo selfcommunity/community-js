@@ -122,11 +122,10 @@ const Component = {
         backgroundColor: theme.palette.common.white,
         border: `1px solid ${theme.palette.grey['300']}`,
         borderRadius: '5px',
-        padding: '5px 0',
+        padding: theme.spacing(1),
 
         [theme.breakpoints.up('sm')]: {
-          paddingLeft: '36px',
-          paddingRight: '36px'
+          padding: theme.spacing(2)
         },
 
         '& .SCCourseDashboard-outer-wrapper': {
@@ -183,13 +182,12 @@ const Component = {
           alignItems: 'center',
           justifyContent: 'space-between',
           backgroundColor: theme.palette.common.white,
+          padding: '6px',
 
           '& .SCCourseDashboard-user': {
             flexDirection: 'row',
             alignItems: 'center',
             gap: '4px',
-            marginTop: '6px',
-            marginBottom: '6px',
 
             '& .SCCourseDashboard-avatar': {
               width: '36px',

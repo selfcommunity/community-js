@@ -1,6 +1,6 @@
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {Fragment, memo, SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import {memo, SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
 import {SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
@@ -22,6 +22,7 @@ import {SCCourseEditTabType} from '../../types';
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
   lessonInfoWrapper: `${PREFIX}-lesson-info-wrapper`,
+  lessonsInnerWrapper: `${PREFIX}-lessons-inner-wrapper`,
   lessonsSectionsWrapper: `${PREFIX}-lessons-sections-wrapper`,
   lessonsSections: `${PREFIX}-lessons-sections`,
   circle: `${PREFIX}-circle`,
@@ -289,7 +290,7 @@ function Lessons(props: LessonsProps) {
       )}
 
       {sections.length > 0 && (
-        <Fragment>
+        <Box className={classes.lessonsInnerWrapper}>
           <Stack className={classes.lessonsSectionsWrapper}>
             <Stack className={classes.lessonsSections}>
               <Typography variant="h5">
@@ -369,7 +370,7 @@ function Lessons(props: LessonsProps) {
           </DragDropContext>
 
           {dialog && <ConfirmDialog open onClose={() => handleOpenDialog(null)} onConfirm={handleDeleteRow} />}
-        </Fragment>
+        </Box>
       )}
     </Box>
   );

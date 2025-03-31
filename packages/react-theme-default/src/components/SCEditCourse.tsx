@@ -89,133 +89,144 @@ const Component = {
           marginTop: '7px'
         },
 
-        '& .SCEditCourse-lessons-sections-wrapper': {
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          marginTop: '9px',
-          padding: theme.spacing(2),
+        '& .SCEditCourse-lessons-inner-wrapper': {
           border: `1px solid ${theme.palette.grey[300]}`,
-          borderBottom: 'unset',
-          borderTopLeftRadius: '5px',
-          borderTopRightRadius: '5px',
+          borderRadius: '5px',
           backgroundColor: theme.palette.common.white,
+          marginTop: '9px',
+          padding: theme.spacing(1),
 
-          '& .SCEditCourse-lessons-sections': {
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: '6px',
-
-            '& .SCEditCourse-circle': {
-              width: '6px',
-              height: '6px',
-              borderRadius: 9999,
-              backgroundColor: theme.palette.common.black
-            }
+          [theme.breakpoints.up('sm')]: {
+            padding: theme.spacing(2)
           },
 
-          '& .SCEditCourse-section-button': {
-            alignItems: 'flex-start',
+          '& .SCEditCourse-lessons-sections-wrapper': {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: theme.spacing(2),
+            border: `1px solid ${theme.palette.grey[300]}`,
+            borderBottom: 'unset',
+            borderTopLeftRadius: '5px',
+            borderTopRightRadius: '5px',
+            backgroundColor: theme.palette.common.white,
 
-            '& .SCEditCourse-section-button-typography': {
-              textTransform: 'inherit'
-            }
-          }
-        },
+            '& .SCEditCourse-lessons-sections': {
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: '6px',
 
-        '& .SCEditCourse-table-container': {
-          width: 'auto',
-          border: `1px solid ${theme.palette.grey[300]}`,
-          borderBottomLeftRadius: '5px',
-          borderBottomRightRadius: '5px',
-          backgroundColor: theme.palette.common.white,
-
-          '& .SCEditCourse-table': {
-            '& .SCEditCourse-cell-width': {
-              width: '3%'
-            },
-
-            '& .SCEditCourse-cell-align-center': {
-              textAlign: 'center'
-            },
-
-            '& .SCEditCourse-cell-align-right': {
-              textAlign: 'right'
-            },
-
-            '& .SCEditCourse-cell-padding': {
-              paddingRight: 0
-            },
-
-            '& .MuiTableCell-root': {
-              textWrapMode: 'nowrap'
-            },
-
-            '& .SCEditCourse-table-header': {
-              '& .SCEditCourse-table-header-typography': {
-                textTransform: 'uppercase'
+              '& .SCEditCourse-circle': {
+                width: '6px',
+                height: '6px',
+                borderRadius: 9999,
+                backgroundColor: theme.palette.common.black
               }
             },
 
-            '& .SCEditCourse-table-body': {
-              '& .SCEditCourse-table-body-icon-wrapper': {
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: '10px'
+            '& .SCEditCourse-section-button': {
+              alignItems: 'flex-start',
+
+              '& .SCEditCourse-section-button-typography': {
+                textTransform: 'inherit'
+              }
+            }
+          },
+
+          '& .SCEditCourse-table-container': {
+            width: 'auto',
+            border: `1px solid ${theme.palette.grey[300]}`,
+            borderBottomLeftRadius: '5px',
+            borderBottomRightRadius: '5px',
+            backgroundColor: theme.palette.common.white,
+
+            '& .SCEditCourse-table': {
+              '& .SCEditCourse-cell-width': {
+                width: '3%'
               },
 
-              '& .SCEditCourse-table-body-accordion': {
-                backgroundColor: theme.palette.grey[200]
+              '& .SCEditCourse-cell-align-center': {
+                textAlign: 'center'
               },
 
-              '& .SCEditCourse-edit-mode-wrapper': {
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: '5px',
+              '& .SCEditCourse-cell-align-right': {
+                textAlign: 'right'
+              },
 
-                '& .SCEditCourse-edit-mode-save-button': {
-                  minWidth: 'unset',
-                  borderRadius: '5px',
-                  padding: '8px'
-                },
+              '& .SCEditCourse-cell-padding': {
+                paddingRight: 0
+              },
 
-                '& .SCEditCourse-edit-mode-close-button': {
-                  border: `1px solid ${theme.palette.action.active}`,
-                  borderRadius: '5px',
-                  padding: '8px'
+              '& .MuiTableCell-root': {
+                textWrapMode: 'nowrap'
+              },
+
+              '& .SCEditCourse-table-header': {
+                '& .SCEditCourse-table-header-typography': {
+                  textTransform: 'uppercase'
                 }
               },
 
-              '& .SCEditCourse-actions-wrapper': {
-                display: 'inline-flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: '14px',
-
-                [theme.breakpoints.up('sm')]: {
-                  gap: '22px'
+              '& .SCEditCourse-table-body': {
+                '& .SCEditCourse-table-body-icon-wrapper': {
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: '10px'
                 },
 
-                '& .SCEditCourse-change-lesson-status-published-wrapper': {
-                  color: theme.palette.common.white,
-                  backgroundColor: theme.palette.primary.main,
+                '& .SCEditCourse-table-body-accordion': {
+                  backgroundColor: theme.palette.grey[200]
+                },
 
-                  '& .MuiIcon-root': {
-                    color: theme.palette.common.white
+                '& .SCEditCourse-edit-mode-wrapper': {
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: '5px',
+
+                  '& .SCEditCourse-edit-mode-save-button': {
+                    minWidth: 'unset',
+                    borderRadius: '5px',
+                    padding: '8px'
+                  },
+
+                  '& .SCEditCourse-edit-mode-close-button': {
+                    border: `1px solid ${theme.palette.action.active}`,
+                    borderRadius: '5px',
+                    padding: '8px'
                   }
                 },
 
-                '& .SCEditCourse-change-lesson-status-icon-draft': {
-                  width: '20px',
-                  height: '20px',
-                  borderRadius: 9999,
-                  backgroundColor: theme.palette.grey['600']
-                }
-              },
+                '& .SCEditCourse-actions-wrapper': {
+                  display: 'inline-flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: '14px',
 
-              '& .SCEditCourse-table-body-collapse-wrapper': {
-                padding: 0,
-                border: 0
+                  [theme.breakpoints.up('sm')]: {
+                    gap: '22px'
+                  },
+
+                  '& .SCEditCourse-change-lesson-status-published-wrapper': {
+                    color: theme.palette.common.white,
+                    backgroundColor: theme.palette.primary.main,
+
+                    '& .MuiIcon-root': {
+                      color: theme.palette.common.white
+                    }
+                  },
+
+                  '& .SCEditCourse-change-lesson-status-icon-draft': {
+                    width: '20px',
+                    height: '20px',
+                    borderRadius: 9999,
+                    backgroundColor: theme.palette.grey['600']
+                  }
+                },
+
+                '& .SCEditCourse-table-body-collapse-wrapper': {
+                  padding: 0,
+                  border: 0
+                }
               }
             }
           }
@@ -233,8 +244,12 @@ const Component = {
         '& .SCEditCourse-options-container': {
           border: `1px solid ${theme.palette.grey['300']}`,
           borderRadius: '5px',
-          padding: '10px 0',
+          padding: theme.spacing(1),
           backgroundColor: theme.palette.common.white,
+
+          [theme.breakpoints.up('sm')]: {
+            padding: theme.spacing(2)
+          },
 
           '& .SCEditCourse-options-wrapper': {
             gap: theme.spacing(5),
@@ -250,7 +265,7 @@ const Component = {
           '& .SCEditCourse-options-button-wrapper': {
             alignItems: 'flex-end',
             maxWidth: '600px',
-            margin: 'auto'
+            margin: theme.spacing(2, 'auto', 0)
           }
         }
       }
@@ -297,36 +312,45 @@ const Component = {
         }
       },
 
-      '& .SCEditCourse-lessons-sections-wrapper': {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: '9px',
-        padding: theme.spacing(2),
+      '& .SCEditCourse-lessons-inner-wrapper': {
         border: `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '5px',
-        backgroundColor: theme.palette.common.white
-      },
-
-      '& .SCEditCourse-table-container': {
-        width: 'auto',
-        border: `1px solid ${theme.palette.grey[300]}`,
-        borderBottomLeftRadius: '5px',
-        borderBottomRightRadius: '5px',
         backgroundColor: theme.palette.common.white,
+        marginTop: '9px',
+        padding: theme.spacing(1),
 
-        '& .SCEditCourse-margin': {
-          margin: 'auto'
+        [theme.breakpoints.up('sm')]: {
+          padding: theme.spacing(2)
         },
 
-        '& .SCEditCourse-margin-left': {
-          marginLeft: 'auto'
-        },
-
-        '& .SCEditCourse-actions-wrapper': {
+        '& .SCEditCourse-lessons-sections-wrapper': {
           flexDirection: 'row',
-          justifyContent: 'flex-end',
-          gap: '22px'
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: theme.spacing(2),
+          border: `1px solid ${theme.palette.grey[300]}`,
+          borderRadius: '5px'
+        },
+
+        '& .SCEditCourse-table-container': {
+          width: 'auto',
+          border: `1px solid ${theme.palette.grey[300]}`,
+          borderBottomLeftRadius: '5px',
+          borderBottomRightRadius: '5px',
+
+          '& .SCEditCourse-margin': {
+            margin: 'auto'
+          },
+
+          '& .SCEditCourse-margin-left': {
+            marginLeft: 'auto'
+          },
+
+          '& .SCEditCourse-actions-wrapper': {
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            gap: '22px'
+          }
         }
       },
 

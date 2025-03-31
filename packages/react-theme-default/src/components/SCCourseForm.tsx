@@ -34,6 +34,10 @@ const Component = {
         borderBottomLeftRadius: 'unset',
         borderBottomRightRadius: 'unset',
         backgroundColor: theme.palette.common.white,
+        padding: theme.spacing(1, 1, 0),
+        [theme.breakpoints.up('sm')]: {
+          padding: theme.spacing(2, 2, 0)
+        },
         '& .SCCourseForm-name': {
           marginTop: theme.spacing(3)
         },
@@ -140,10 +144,13 @@ const Component = {
         borderTopLeftRadius: 'unset',
         borderTopRightRadius: 'unset',
         backgroundColor: theme.palette.common.white,
-        padding: theme.spacing(2, 0),
+        padding: theme.spacing(0, 1, 1),
         display: 'flex',
         justifyContent: 'flex-end',
         gap: theme.spacing(2),
+        [theme.breakpoints.up('sm')]: {
+          padding: theme.spacing(0, 2, 2)
+        },
         '& button': {
           width: 'fit-content'
         }
