@@ -23,6 +23,7 @@ const classes = {
   title: `${PREFIX}-title`,
   text: `${PREFIX}-text`,
   mediasSection: `${PREFIX}-medias-section`,
+  files: `${PREFIX}-files`,
   navigation: `${PREFIX}-navigation`,
   editor: `${PREFIX}-editor`
 };
@@ -135,12 +136,20 @@ export default function LessonObject(inProps: LessonObjectProps): JSX.Element {
               />
               {lesson.medias && lesson.medias.length > 0 && (
                 <Box className={classes.mediasSection}>
-                  {lesson.medias.map((media) =>
-                    media.type === MediaTypes.URL ? (
+                  {lesson.medias
+                    .filter((media) => media.type === MediaTypes.URL)
+                    .map((media) => (
                       <DisplayComponent key={media.id} medias={[media]} />
-                    ) : (
-                      <LessonFilePreview key={media.id} media={media} />
-                    )
+                    ))}
+
+                  {lesson.medias.some((media) => media.type !== MediaTypes.URL) && (
+                    <Box className={classes.files}>
+                      {lesson.medias
+                        .filter((media) => media.type !== MediaTypes.URL)
+                        .map((media) => (
+                          <LessonFilePreview key={media.id} media={media} />
+                        ))}
+                    </Box>
                   )}
                 </Box>
               )}
