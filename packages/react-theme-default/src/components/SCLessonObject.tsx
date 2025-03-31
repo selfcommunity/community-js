@@ -30,8 +30,12 @@ const Component = {
           }
         },
         '& .SCLessonObject-medias-section': {
+          '& .SCLessonObject-files': {
+            display: 'flex'
+          },
           '& .SCLessonFilePreview-root': {
-            marginBottom: theme.spacing(1)
+            marginBottom: theme.spacing(1),
+            maxWidth: '140px'
           },
           '& .SCMediaLink-display-root': {
             marginBottom: theme.spacing(1),
