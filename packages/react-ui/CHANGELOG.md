@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.40...@selfcommunity/react-ui@0.11.0-alpha.41) (2025-03-31)
+
+
+### Bug Fixes
+
+* classnames ([3eaa996](https://github.com/selfcommunity/community-js/commit/3eaa9961d9c6d254e8e965b06fd40aa66595065a))
+
+
+
+
+
 # [0.11.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.39...@selfcommunity/react-ui@0.11.0-alpha.40) (2025-03-31)
 
 
