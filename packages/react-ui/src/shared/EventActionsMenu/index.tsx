@@ -15,7 +15,7 @@ import EventForm from '../../components/EventForm';
 import {ADD_EVENT_TO_CALENDAR, CANCEL_EVENT, GET_EVENT_LINK} from '../../constants/EventActionsMenu';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
-import {checkEventFinished} from '../../utils/events';
+import {checkEventFinished, formatDateForGC} from '../../utils/events';
 
 const PREFIX = 'SCEventActionsMenu';
 
@@ -165,9 +165,13 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
 
   const createGoogleCalendarLink = (event) => {
     const baseUrl = 'https://www.google.com/calendar/render?action=TEMPLATE';
-    return `${baseUrl}&text=${encodeURIComponent(event.name)}&details=${encodeURIComponent(event.description)}&location=${encodeURIComponent(
-      event.geolocation
-    )}&dates=${event.start_date}/${event.end_date}`;
+    const startDate = formatDateForGC(event.start_date);
+    const endDate = formatDateForGC(event.end_date);
+    const details = `${event.description ? event.description + '\n\n' : ''}${event.link ? 'Link: ' + event.link : ''}`;
+
+    return `${baseUrl}&text=${encodeURIComponent(event.name)}&details=${encodeURIComponent(details)}&location=${encodeURIComponent(
+      event.geolocation ?? ''
+    )}&dates=${startDate}/${endDate}`;
   };
 
   /**

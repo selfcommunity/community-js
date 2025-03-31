@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.39...@selfcommunity/react-ui@0.11.0-alpha.40) (2025-03-31)
+
+
+### Bug Fixes
+
+* add to calendar for events. Linear issue: https://linear.app/quentral/issue/QUE-1396/aggiungendo-al-calendario-un-evento-virtuale-mi-completa-la-posizione ([541d213](https://github.com/selfcommunity/community-js/commit/541d21390ff00d4733e29fdbfa5a56130937c7df))
+* Linear issue: https://linear.app/quentral/issue/QUE-1394/se-clicco-la-notifica-ha-accettato-la-tua-richiesta-per-levento-sulla ([7a58875](https://github.com/selfcommunity/community-js/commit/7a588754e8ff36ee0c0b1f13d0ae5c003ba1f814))
+
+
+
+
+
+# [0.11.0-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.38...@selfcommunity/react-ui@0.11.0-alpha.39) (2025-03-28)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 # [0.11.0-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.37...@selfcommunity/react-ui@0.11.0-alpha.38) (2025-03-27)
 
 

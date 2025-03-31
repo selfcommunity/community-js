@@ -20,11 +20,13 @@ export default function useSCFetchCustomAdv({
   id = null,
   position = null,
   categoriesId = null,
+  active = true,
   cacheStrategy = CacheStrategies.CACHE_FIRST,
 }: {
   id?: number;
   position?: SCCustomAdvPosition;
   categoriesId?: Array<number>;
+  active?: boolean;
   cacheStrategy?: CacheStrategies;
 }) {
   const [scCustomAdv, setSCCustomAdv] = useState<SCCustomAdvType | null>(
@@ -57,7 +59,7 @@ export default function useSCFetchCustomAdv({
       if (id !== null) {
         return http
           .request({
-            url: Endpoints.CustomAdv.url({id}),
+            url: `${Endpoints.CustomAdv.url({id})}?active=${Boolean(active)}`,
             method: Endpoints.CustomAdv.method,
           })
           .then((res: HttpResponse<any>) => {
@@ -69,7 +71,7 @@ export default function useSCFetchCustomAdv({
       }
       return http
         .request({
-          url: Endpoints.CustomAdvSearch.url({}),
+          url: `${Endpoints.CustomAdvSearch.url({})}?active=${Boolean(active)}`,
           method: Endpoints.CustomAdvSearch.method,
           params: {
             ...(position && {position: position}),
