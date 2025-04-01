@@ -1,5 +1,6 @@
 import {
   SCCommentType,
+  SCCourseType,
   SCEventType,
   SCFeedDiscussionType,
   SCFeedPostType,
@@ -67,7 +68,11 @@ export enum SCNotificationTypologyType {
   USER_INVITED_TO_JOIN_COURSE = 'user_invited_to_join_course',
   USER_REQUESTED_TO_JOIN_COURSE = 'user_requested_to_join_course',
   USER_ACCEPTED_TO_JOIN_COURSE = 'user_accepted_to_join_course',
-  USER_ADDED_TO_COURSE = 'user_added_to_course'
+  USER_COMMENTED_A_COURSE_LESSON = 'user_commented_a_course_lesson',
+  USER_ADDED_TO_COURSE = 'user_added_to_course',
+  USER_REMOVED_FROM_COURSE = 'user_removed_from_course',
+  MANAGER_ADDED_TO_COURSE = 'manager_added_to_course',
+  MANAGER_REMOVED_USER_FROM_COURSE = 'manager_removed_user_from_course'
 }
 
 /**
@@ -570,7 +575,7 @@ export interface SCNotificationGroupActivityType extends SCNotificationType {
 }
 
 /**
- * Interface SCNotificationGroupActivityType.
+ * Interface SCNotificationEventActivityType.
  */
 export interface SCNotificationEventActivityType extends SCNotificationType {
   /**
@@ -581,6 +586,16 @@ export interface SCNotificationEventActivityType extends SCNotificationType {
    * The event obj
    */
   event: Partial<SCEventType>;
+}
+
+/**
+ * Interface SCNotificationCourseActivityType.
+ */
+export interface SCNotificationCourseActivityType extends SCNotificationType {
+  /**
+   * The course obj
+   */
+  course: Partial<SCCourseType>;
 }
 
 /**
