@@ -573,6 +573,7 @@
   "ui.courseForm.name.error.maxLength": "Si raccomanda di accorciare il testo a un massimo di 40 caratteri. Attualmente è troppo lungo",
   "ui.courseForm.name.error.unique": "Esiste già un corso con questo nome. Prova con uno diverso.",
   "ui.courseForm.description.error.maxLength": "Si raccomanda di accorciare il testo a un massimo di 500 caratteri. Attualmente è troppo lungo",
+  "ui.courseForm.comingSoon.chip": "Disponibile a breve",
   "ui.courseJoinButton.waitingApproval": "In approvazione",
   "ui.courseJoinButton.join": "Inizia il corso",
   "ui.courseJoinButton.leave": "Abbandona corso",

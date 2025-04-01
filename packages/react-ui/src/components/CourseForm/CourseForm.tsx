@@ -1,5 +1,5 @@
 import {LoadingButton} from '@mui/lab';
-import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, TextField, Typography} from '@mui/material';
+import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, TextField, Typography, Chip} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {CourseService, formatHttpErrorCode} from '@selfcommunity/api-services';
@@ -8,7 +8,7 @@ import {SCCategoryType, SCCoursePrivacyType, SCCourseType, SCCourseTypologyType}
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import {ChangeEvent, Fragment, useCallback, useState} from 'react';
+import {ChangeEvent, Fragment, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
@@ -52,9 +52,11 @@ const classes = {
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
   selected: `${PREFIX}-selected`,
+  disabled: `${PREFIX}-disabled`,
   stepOne: `${PREFIX}-step-one`,
   stepTwo: `${PREFIX}-step-two`,
   stepCustomization: `${PREFIX}-step-customization`,
+  cardTitle: `${PREFIX}-card-title`,
   title: `${PREFIX}-title`,
   contrastColor: `${PREFIX}-contrast-color`
 };
@@ -170,12 +172,14 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   // PREFERENCES
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
+
+  const courseAdvancedEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_COURSES_ADVANCED_ENABLED].value, [preferences]);
 
   const _backgroundCover = {
     ...(field.imageOriginal
       ? {background: `url('${field.imageOriginal}') center / cover`}
-      : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
+      : {background: `url('${preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
 
   const handleChangeCover = useCallback(
@@ -332,11 +336,25 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
           {_step === SCCourseFormStepType.GENERAL && (
             <>
               {Object.values(SCCourseTypologyType).map((option, index) => (
-                <Card className={classNames(classes.card, {[classes.selected]: option === field.type})} key={index}>
+                <Card
+                  className={classNames(
+                    classes.card,
+                    {[classes.selected]: option === field.type},
+                    {[classes.disabled]: !courseAdvancedEnabled && option !== SCCourseTypologyType.SELF}
+                  )}
+                  key={index}>
                   <CardActionArea onClick={() => setField((prev) => ({...prev, ['type']: option}))}>
                     <CardContent>
-                      <Typography variant="subtitle2">
+                      <Typography variant="subtitle2" className={classes.cardTitle}>
                         <FormattedMessage id={`ui.courseForm.${option}.title`} defaultMessage={`ui.courseForm.${option}.title`} />
+                        {!courseAdvancedEnabled && option !== SCCourseTypologyType.SELF && (
+                          <Chip
+                            variant="outlined"
+                            color="warning"
+                            size="small"
+                            label={<FormattedMessage id="ui.courseForm.comingSoon.chip" defaultMessage="ui.courseForm.comingSoon.chip" />}
+                          />
+                        )}
                       </Typography>
                       <Typography variant="body2">
                         <FormattedMessage id={`ui.courseForm.${option}.info`} defaultMessage={`ui.courseForm.${option}.info`} />

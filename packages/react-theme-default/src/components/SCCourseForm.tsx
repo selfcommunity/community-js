@@ -119,6 +119,10 @@ const Component = {
             backgroundColor: alpha(theme.palette.success.main, theme.palette.action.selectedOpacity)
           }
         },
+        '& .SCCourseForm-disabled': {
+          pointerEvents: 'none',
+          opacity: 0.5
+        },
         '& .MuiCard-root': {
           boxShadow: 'none',
           border: `1px solid ${theme.palette.grey[300]}`,
@@ -132,6 +136,13 @@ const Component = {
             },
             '& .MuiTypography-body2': {
               whiteSpace: 'pre-line'
+            },
+            '& .SCCourseForm-card-title': {
+              display: 'flex',
+              justifyContent: 'space-between',
+              '& .MuiChip-root': {
+                borderRadius: 0
+              }
             }
           }
         }
