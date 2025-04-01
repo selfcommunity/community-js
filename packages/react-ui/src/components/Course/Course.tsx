@@ -275,7 +275,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
               id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
               defaultMessage={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
             />
-            -
+            {' - '}
             <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
           </Typography>
           <Box className={classes.previewCategory}>
@@ -361,7 +361,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
                   id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
                   defaultMessage={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
                 />
-                -
+                {' - '}
                 <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
               </>
             )}
