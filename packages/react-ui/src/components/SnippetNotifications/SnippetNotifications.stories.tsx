@@ -12,7 +12,7 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<SnippetNotifications> = {
+export const Base: StoryObj<typeof SnippetNotifications> = {
   args: {
     onNotificationClick: (e, n) => {
       /**
@@ -29,7 +29,7 @@ export const Base: StoryObj<SnippetNotifications> = {
   render: template
 };
 
-export const FewNotifications: StoryObj<SnippetNotifications> = {
+export const FewNotifications: StoryObj<typeof SnippetNotifications> = {
   args: {
     showMax: 3
   },

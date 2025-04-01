@@ -16,7 +16,7 @@ import {
   Typography,
   useThemeProps
 } from '@mui/material';
-import {ChangeEvent, Dispatch, memo, useCallback, useEffect, useState} from 'react';
+import {ChangeEvent, Dispatch, memo, useCallback, useEffect, useRef, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import RowSkeleton from './RowSkeleton';
 import {LoadingButton} from '@mui/lab';
@@ -34,6 +34,9 @@ import ChangeUserStatus from './ChangeUsersStatus';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import RequestButton from './RequestButton';
 import {SCCourseUsersTableModeType} from '../../types/course';
+import RemoveButton from './RemoveButton';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
+import {SCCourseEditManageUserProps, SCCourseEditManageUserRef, SCCourseEditTabType} from '../../types/course';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -65,7 +68,7 @@ export interface CourseUsersTableProps {
 }
 
 function filteredUsers(users: SCUserType[], value: string): SCUserType[] {
-  return users.filter((user) => (user.username || user.real_name).includes(value));
+  return users.filter((user) => (user.username || user.real_name).toLowerCase().includes(value.toLowerCase()));
 }
 
 function CourseUsersTable(inProps: CourseUsersTableProps) {
@@ -81,6 +84,10 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
   const [users, setUsers] = useState<SCUserType[] | null>(null);
   const [tempUsers, setTempUsers] = useState<SCUserType[] | null>(null);
   const [value, setValue] = useState('');
+  const [dialog, setDialog] = useState<SCCourseEditManageUserProps | null>(null);
+
+  // REFS
+  const ref = useRef<SCCourseEditManageUserRef | null>(null);
 
   // CONTEXTS
   const scUserContext: SCUserContextType = useSCUser();
@@ -132,6 +139,25 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
       });
   }, [state.next, dispatch]);
 
+  const handleOpenDialog = useCallback(
+    (tab: SCCourseEditManageUserProps | null) => {
+      setDialog(tab);
+    },
+    [setDialog]
+  );
+
+  const handleConfirm = useCallback(() => {
+    switch (dialog.tab) {
+      case SCCourseEditTabType.USERS:
+        ref.current.handleManageUser(dialog.user);
+        break;
+      case SCCourseEditTabType.REQUESTS:
+        ref.current.handleManageUser(dialog.request);
+    }
+
+    handleOpenDialog(null);
+  }, [dialog, handleOpenDialog]);
+
   if (!users) {
     return <CourseUsersTableSkeleton />;
   }
@@ -162,7 +188,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           <TableHead>
             <TableRow>
               {headerCells.map((cell, i, array) => {
-                if (mode !== SCCourseUsersTableModeType.EDIT && i === array.length - 1) {
+                if (i === array.length - 1) {
                   return <TableCell width="14%" key={i} />;
                 }
 
@@ -222,6 +248,15 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                       ).toLocaleDateString()}
                     </Typography>
                   </TableCell>
+                  {mode === SCCourseUsersTableModeType.EDIT &&
+                  user.join_status !== SCCourseJoinStatusType.CREATOR &&
+                  scUserContext.user.id !== user.id ? (
+                    <TableCell>
+                      <RemoveButton ref={ref} course={course} user={user} handleOpenDialog={handleOpenDialog} />
+                    </TableCell>
+                  ) : (
+                    mode === SCCourseUsersTableModeType.EDIT && <TableCell />
+                  )}
                   {mode === SCCourseUsersTableModeType.DASHBOARD && (
                     <TableCell>
                       <SeeProgressButton course={course} user={user} />
@@ -229,7 +264,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                   )}
                   {mode === SCCourseUsersTableModeType.REQUESTS && (
                     <TableCell>
-                      <RequestButton course={course} user={user} />
+                      <RequestButton ref={ref} course={course} user={user} handleOpenDialog={handleOpenDialog} />
                     </TableCell>
                   )}
                 </TableRow>
@@ -255,6 +290,8 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
       )}
 
       {users.length === 0 && value.length === 0 && <EmptyStatus icon="face" title={emptyStatusTitle} description={emptyStatusDescription} />}
+
+      {dialog && <ConfirmDialog open onClose={() => handleOpenDialog(null)} onConfirm={handleConfirm} />}
     </Root>
   );
 }

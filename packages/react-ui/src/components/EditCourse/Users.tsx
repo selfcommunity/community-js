@@ -14,7 +14,7 @@ import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {CourseService, CourseUserRoleParams, Endpoints, SCPaginatedResponse} from '@selfcommunity/api-services';
 import PubSub from 'pubsub-js';
-import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
 import {SCCourseEditTabType, SCCourseUsersTableModeType} from '../../types/course';
 
 const classes = {
@@ -34,7 +34,8 @@ const headerCells = [
   },
   {
     id: 'ui.editCourse.tab.users.table.header.latestActivity'
-  }
+  },
+  {}
 ];
 
 interface UsersProps {
@@ -76,6 +77,7 @@ function Users(props: UsersProps) {
 
   // REFS
   const updatedUsers = useRef(null);
+  const removedUsers = useRef(null);
 
   // CALLBACKS
   const _init = useCallback(() => {
@@ -101,6 +103,16 @@ function Users(props: UsersProps) {
     [state.count, dispatch]
   );
 
+  const handleRemoveUser = useCallback(
+    (_msg: string, user: SCUserType) => {
+      dispatch({
+        type: actionWidgetTypes.SET_RESULTS,
+        payload: {count: state.count - 1, results: state.results.filter((result: SCUserType) => result.id !== user.id), initialized: true}
+      });
+    },
+    [state.count, state.results, dispatch]
+  );
+
   // EFFECTS
   useEffect(() => {
     let _t: NodeJS.Timeout;
@@ -113,12 +125,14 @@ function Users(props: UsersProps) {
   }, [scUserContext.user, _init]);
 
   useEffect(() => {
-    updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCGroupEventType.ADD_MEMBER}`, handleAddUser);
+    updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCCourseEventType.ADD_MEMBER}`, handleAddUser);
+    removedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCCourseEventType.REMOVE_MEMBER}`, handleRemoveUser);
 
     return () => {
       updatedUsers.current && PubSub.unsubscribe(updatedUsers.current);
+      removedUsers.current && PubSub.unsubscribe(removedUsers.current);
     };
-  }, [handleAddUser]);
+  }, [handleAddUser, handleRemoveUser]);
 
   const handleConfirm = useCallback(
     (newUsers: SCUserType[]) => {
@@ -157,11 +171,7 @@ function Users(props: UsersProps) {
   return (
     <Box>
       <Typography variant="h6" className={classes.contrastColor}>
-        <FormattedMessage
-          id="ui.editCourse.tab.users.title"
-          defaultMessage="ui.editCourse.tab.users.title"
-          values={{usersNumber: state.results.length}}
-        />
+        <FormattedMessage id="ui.editCourse.tab.users.title" defaultMessage="ui.editCourse.tab.users.title" values={{usersNumber: state.count}} />
       </Typography>
 
       <Stack className={classes.usersStatusWrapper}>

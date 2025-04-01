@@ -44,7 +44,7 @@ import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
 import {PREFIX} from './constants';
 import GroupNotification from './Group';
-
+import CourseNotification from './Course';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -488,6 +488,14 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT
     ) {
       return <EventNotification notificationObject={n} key={i} />;
+    } else if (
+      n.type === SCNotificationTypologyType.USER_ADDED_TO_COURSE ||
+      n.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON ||
+      n.type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE ||
+      n.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE ||
+      n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE
+    ) {
+      return <CourseNotification notificationObject={n} key={i} />;
     } else if (n.type === SCNotificationTypologyType.LIVE_STREAM_STARTED) {
       return <LiveStreamNotification notificationObject={n} key={i} />;
     }
