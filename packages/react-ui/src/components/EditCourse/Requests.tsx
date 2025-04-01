@@ -12,7 +12,7 @@ import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../.
 import {CourseService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {PREFIX} from './constants';
 import PubSub from 'pubsub-js';
-import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
 import {SCCourseEditTabType, SCCourseUsersTableModeType} from '../../types/course';
 
 const classes = {
@@ -87,7 +87,7 @@ function Requests(props: RequestsProps) {
   }, [state.isLoadingNext, state.initialized, course, dispatch, endpointQueryParams]);
 
   // HANDLERS
-  const handleRemoveUser = useCallback(
+  const handleRejectUser = useCallback(
     (_msg: string, user: SCUserType) => {
       dispatch({
         type: actionWidgetTypes.SET_RESULTS,
@@ -111,12 +111,12 @@ function Requests(props: RequestsProps) {
   }, [scUserContext.user, _init]);
 
   useEffect(() => {
-    updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCGroupEventType.REMOVE_MEMBER}`, handleRemoveUser);
+    updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCCourseEventType.REJECT_MEMBER}`, handleRejectUser);
 
     return () => {
       updatedUsers.current && PubSub.unsubscribe(updatedUsers.current);
     };
-  }, [handleRemoveUser]);
+  }, [handleRejectUser]);
 
   return (
     <Box>

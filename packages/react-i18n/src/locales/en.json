@@ -383,6 +383,7 @@
   "ui.editCourse.tab.users.table.select.creator": "Creator",
   "ui.editCourse.tab.users.table.select.joined": "User",
   "ui.editCourse.tab.users.table.select.manager": "Manager",
+  "ui.editCourse.tab.requests.table.snackbar.removed": "User successfully removed!",
   "ui.editCourse.tab.users.table.snackbar.success": "Users added to the course successfully!",
   "ui.editCourse.tab.users.title": "{usersNumber, plural, =0 {# Course Users} one {# Course User} other {# Course Users}}",
   "ui.event.see": "See",
