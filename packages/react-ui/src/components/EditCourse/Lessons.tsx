@@ -2,7 +2,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {memo, SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
-import {SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {SCCourseSectionType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -39,21 +39,6 @@ const classes = {
   contrastColor: `${PREFIX}-contrast-color`
 };
 
-const headerCells = [
-  {
-    className: undefined,
-    id: 'ui.editCourse.tab.lessons.table.header.lessonName'
-  },
-  {
-    className: classes.cellAlignCenter,
-    id: 'ui.editCourse.tab.lessons.table.header.calendar'
-  },
-  {
-    className: classes.cellAlignRight,
-    id: 'ui.editCourse.tab.lessons.table.header.actions'
-  }
-];
-
 interface LessonsProps {
   course: SCCourseType;
   setCourse: (course: SCCourseType) => void;
@@ -85,6 +70,27 @@ function Lessons(props: LessonsProps) {
 
   // MEMOS
   const isNewRow = useMemo(() => sections.length > course.sections?.length, [course, sections]);
+  const headerCells = useMemo(
+    () => [
+      {
+        className: undefined,
+        id: 'ui.editCourse.tab.lessons.table.header.lessonName'
+      },
+      ...(course.type !== SCCourseTypologyType.SELF
+        ? [
+            {
+              className: classes.cellAlignCenter,
+              id: 'ui.editCourse.tab.lessons.table.header.calendar'
+            }
+          ]
+        : []),
+      {
+        className: classes.cellAlignRight,
+        id: 'ui.editCourse.tab.lessons.table.header.actions'
+      }
+    ],
+    [course]
+  );
 
   // FUNCTIONS
   const getSection = useCallback((id: number) => {
