@@ -334,7 +334,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
       <Root className={classNames(classes.root, className)} {...rest}>
         <Box className={_step === SCCourseFormStepType.GENERAL ? classes.stepOne : classes.stepTwo}>
           {_step === SCCourseFormStepType.GENERAL && (
-            <>
+            <Fragment>
               {Object.values(SCCourseTypologyType).map((option, index) => (
                 <Card
                   className={classNames(
@@ -363,7 +363,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   </CardActionArea>
                 </Card>
               ))}
-            </>
+            </Fragment>
           )}
           {_step === SCCourseFormStepType.CUSTOMIZATION && (
             <Fragment>
@@ -372,7 +372,8 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   <FormattedMessage id="ui.courseForm.edit.title.general" defaultMessage="ui.courseForm.edit.title.general" />
                 </Typography>
               )}
-              <FormGroup className={classNames(classes.form, _step === SCCourseFormStepType.CUSTOMIZATION ? classes.stepCustomization : undefined)}>
+              <FormGroup
+                className={classNames(classes.form, _step === SCCourseFormStepType.CUSTOMIZATION && course ? classes.stepCustomization : undefined)}>
                 <Paper style={_backgroundCover} classes={{root: classes.cover}}>
                   <UploadCourseCover isUploading={field.isSubmitting} onChange={handleChangeCover} />
                 </Paper>
@@ -428,7 +429,8 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
               </FormGroup>
             </Fragment>
           )}
-          <Box className={classNames(classes.actions, _step === SCCourseFormStepType.CUSTOMIZATION ? classes.stepCustomization : undefined)}>
+          <Box
+            className={classNames(classes.actions, _step === SCCourseFormStepType.CUSTOMIZATION && course ? classes.stepCustomization : undefined)}>
             <LoadingButton
               size="small"
               loading={field.isSubmitting}
