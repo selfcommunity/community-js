@@ -54,6 +54,7 @@ const classes = {
   selected: `${PREFIX}-selected`,
   stepOne: `${PREFIX}-step-one`,
   stepTwo: `${PREFIX}-step-two`,
+  stepCustomization: `${PREFIX}-step-customization`,
   title: `${PREFIX}-title`,
   contrastColor: `${PREFIX}-contrast-color`
 };
@@ -346,7 +347,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   <FormattedMessage id="ui.courseForm.edit.title.general" defaultMessage="ui.courseForm.edit.title.general" />
                 </Typography>
               )}
-              <FormGroup className={classes.form}>
+              <FormGroup className={classNames(classes.form, _step === SCCourseFormStepType.CUSTOMIZATION ? classes.stepCustomization : undefined)}>
                 <Paper style={_backgroundCover} classes={{root: classes.cover}}>
                   <UploadCourseCover isUploading={field.isSubmitting} onChange={handleChangeCover} />
                 </Paper>
@@ -402,7 +403,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
               </FormGroup>
             </Fragment>
           )}
-          <Box className={classes.actions}>
+          <Box className={classNames(classes.actions, _step === SCCourseFormStepType.CUSTOMIZATION ? classes.stepCustomization : undefined)}>
             <LoadingButton
               size="small"
               loading={field.isSubmitting}

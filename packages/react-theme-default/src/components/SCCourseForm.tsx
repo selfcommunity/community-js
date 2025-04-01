@@ -28,15 +28,17 @@ const Component = {
         padding: theme.spacing(1)
       },
       '& .SCCourseForm-form': {
-        border: `1px solid ${theme.palette.grey['300']}`,
-        borderBottom: 'unset',
-        borderRadius: '5px',
-        borderBottomLeftRadius: 'unset',
-        borderBottomRightRadius: 'unset',
-        backgroundColor: theme.palette.common.white,
-        padding: theme.spacing(1, 1, 0),
-        [theme.breakpoints.up('sm')]: {
-          padding: theme.spacing(2, 2, 0)
+        '&.SCCourseForm-step-customization': {
+          backgroundColor: theme.palette.common.white,
+          border: `1px solid ${theme.palette.grey['300']}`,
+          borderBottom: 'unset',
+          borderRadius: '5px',
+          borderBottomLeftRadius: 'unset',
+          borderBottomRightRadius: 'unset',
+          padding: theme.spacing(1, 1, 0),
+          [theme.breakpoints.up('sm')]: {
+            padding: theme.spacing(2, 2, 0)
+          }
         },
         '& .SCCourseForm-name': {
           marginTop: theme.spacing(3)
@@ -138,18 +140,20 @@ const Component = {
         color: theme.palette.error.main
       },
       '& .SCCourseForm-actions': {
-        border: `1px solid ${theme.palette.grey['300']}`,
-        borderTop: 'unset',
-        borderRadius: '5px',
-        borderTopLeftRadius: 'unset',
-        borderTopRightRadius: 'unset',
-        backgroundColor: theme.palette.common.white,
-        padding: theme.spacing(0, 1, 1),
         display: 'flex',
         justifyContent: 'flex-end',
         gap: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
-          padding: theme.spacing(0, 2, 2)
+        '&.SCCourseForm-step-customization': {
+          backgroundColor: theme.palette.common.white,
+          border: `1px solid ${theme.palette.grey['300']}`,
+          borderTop: 'unset',
+          borderRadius: '5px',
+          borderTopLeftRadius: 'unset',
+          borderTopRightRadius: 'unset',
+          padding: theme.spacing(0, 1, 1),
+          [theme.breakpoints.up('sm')]: {
+            padding: theme.spacing(0, 2, 2)
+          }
         },
         '& button': {
           width: 'fit-content'
