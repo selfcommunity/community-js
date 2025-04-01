@@ -13,7 +13,7 @@ import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
 import {PREFIX} from '../constants';
 import {default as CourseItem} from '../../Course';
-import {HiddenPlaceholder} from '@selfcommunity/react-ui';
+import HiddenPlaceholder from '../../../shared/HiddenPlaceholder';
 
 const classes = {
   root: `${PREFIX}-course-root`,
