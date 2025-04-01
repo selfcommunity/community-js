@@ -1,6 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
+      backgroundColor: theme.palette.common.white,
       border: `1px solid ${theme.palette.grey['300']}`,
       borderRadius: '5px',
 
