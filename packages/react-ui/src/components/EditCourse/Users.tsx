@@ -171,11 +171,7 @@ function Users(props: UsersProps) {
   return (
     <Box>
       <Typography variant="h6" className={classes.contrastColor}>
-        <FormattedMessage
-          id="ui.editCourse.tab.users.title"
-          defaultMessage="ui.editCourse.tab.users.title"
-          values={{usersNumber: state.results.length}}
-        />
+        <FormattedMessage id="ui.editCourse.tab.users.title" defaultMessage="ui.editCourse.tab.users.title" values={{usersNumber: state.count}} />
       </Typography>
 
       <Stack className={classes.usersStatusWrapper}>

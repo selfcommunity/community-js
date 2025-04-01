@@ -68,7 +68,7 @@ export interface CourseUsersTableProps {
 }
 
 function filteredUsers(users: SCUserType[], value: string): SCUserType[] {
-  return users.filter((user) => (user.username || user.real_name).includes(value));
+  return users.filter((user) => (user.username || user.real_name).toLowerCase().includes(value.toLowerCase()));
 }
 
 function CourseUsersTable(inProps: CourseUsersTableProps) {
