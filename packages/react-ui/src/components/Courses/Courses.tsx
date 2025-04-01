@@ -204,12 +204,6 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
     SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in preferences && preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
   const onlyStaffEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_COURSES_ONLY_STAFF_ENABLED]?.value, [preferences]);
   const canCreateCourse = useMemo(() => scUserContext?.user?.permission?.create_course, [scUserContext?.user?.permission]);
-  const endpoint = useMemo(() => {
-    if (showManagedCourses) {
-      return Endpoints.GetJoinedCourses;
-    }
-    return Endpoints.SearchCourses;
-  }, [showManagedCourses]);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -235,8 +229,8 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   const fetchCourses = () => {
     return http
       .request({
-        url: endpoint.url({}),
-        method: endpoint.method,
+        url: Endpoints.SearchCourses.url({}),
+        method: Endpoints.SearchCourses.method,
         params: {
           ...endpointQueryParams,
           ...(_categories.length && {categories: JSON.stringify(_categories)}),
@@ -301,7 +295,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
       return http
         .request({
           url: next,
-          method: showManagedCourses ? Endpoints.GetJoinedCourses.method : Endpoints.SearchCourses.method
+          method: Endpoints.SearchCourses.method
         })
         .then((res: HttpResponse<any>) => {
           setCourses([...courses, ...res.data.results]);

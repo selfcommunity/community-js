@@ -12,7 +12,7 @@ import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import LessonReleaseMenu from '../../LessonReleaseMenu';
-import {SCCourseLessonType, SCCourseLessonTypologyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {SCCourseLessonType, SCCourseLessonTypologyType, SCCourseSectionType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {CourseService, Endpoints} from '@selfcommunity/api-services';
 import {ActionLessonType, DeleteRowProps, DeleteRowRef, RowType} from '../types';
 import {useIsDisabled} from '../hooks';
@@ -243,9 +243,11 @@ function SectionRow(props: SectionRowProps, ref: Ref<DeleteRowRef>) {
             handleDisableEditMode={handleDisableEditMode}
           />
         </TableCell>
-        <TableCell className={classes.cellAlignCenter}>
-          <LessonReleaseMenu course={course} section={section} />
-        </TableCell>
+        {course.type !== SCCourseTypologyType.SELF && (
+          <TableCell className={classes.cellAlignCenter}>
+            <LessonReleaseMenu course={course} section={section} />
+          </TableCell>
+        )}
         <TableCell className={classes.cellAlignRight}>
           <Stack className={classes.actionsWrapper}>
             <AddButton
