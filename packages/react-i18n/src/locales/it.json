@@ -552,7 +552,7 @@
   "ui.courseForm.button.next": "Avanti",
   "ui.courseForm.button.create": "Crea Corso",
   "ui.courseForm.title.general": "Scegli il tipo di Corso",
-  "ui.courseForm.title.customization": "Crea il tuo Corso",
+  "ui.courseForm.title.customization": "Crea il tuo Corso {courseType}",
   "ui.courseForm.title.edit": "Modifica Corso",
   "ui.courseForm.self-paced.title": "Autodidatta",
   "ui.courseForm.self-paced.info": "Il Corso inizia appena l’utente completa la sottoscrizione.\nTutti i contenuti sono subito disponibili.",

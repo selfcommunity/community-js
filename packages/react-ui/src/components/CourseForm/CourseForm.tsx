@@ -90,6 +90,12 @@ export interface CourseFormProps extends BoxProps {
   step?: SCCourseFormStepType;
 
   /**
+   * On step change callback function
+   * @default null
+   */
+  onStepChange?: (step: SCCourseFormStepType, type: SCCourseType) => void;
+
+  /**
    * On error callback function
    * @default null
    */
@@ -141,7 +147,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, onSuccess, onError, course = null, step = SCCourseFormStepType.GENERAL, ...rest} = props;
+  const {className, onSuccess, onError, course = null, step = SCCourseFormStepType.GENERAL, onStepChange, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -199,6 +205,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
    */
   const handleChangeStep = (newStep: SCCourseFormStepType) => {
     setStep(newStep);
+    onStepChange(newStep, field.type);
   };
 
   /**

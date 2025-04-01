@@ -552,7 +552,7 @@
   "ui.courseForm.button.next": "Next",
   "ui.courseForm.button.create": "Create Course",
   "ui.courseForm.title.general": "Choose the Course type",
-  "ui.courseForm.title.customization": "Create your Course",
+  "ui.courseForm.title.customization": "Create your {courseType} Course",
   "ui.courseForm.title.edit": "Edit Course",
   "ui.courseForm.self-paced.title": "Self-Paced",
   "ui.courseForm.self-paced.info": "The course starts as soon as the user completes the subscription.\nAll content is immediately available.",
