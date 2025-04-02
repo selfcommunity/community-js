@@ -92,10 +92,9 @@ function Options(props: OptionsProps) {
 
   const handleSubmit = useCallback(() => {
     setLoading(true);
-
     CourseService.patchCourse(course.id, {id: course.id, ...tempOptions})
       .then((data) => {
-        setCourse(data);
+        setCourse({...course, ...data});
         setTempOptions(null);
         setCanSave(false);
         setLoading(false);
