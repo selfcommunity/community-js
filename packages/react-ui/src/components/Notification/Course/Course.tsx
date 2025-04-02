@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Stack, Typography} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
-import {SCNotificationCourseActivityType} from '@selfcommunity/types';
+import {SCNotificationCourseActivityType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
@@ -115,8 +115,18 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
               values={{
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
-                course: notificationObject.course.name,
-                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, notificationObject.course)}>{chunks}</Link>
+                name: notificationObject.course.name,
+                link: (...chunks) => (
+                  <Link
+                    to={scRoutingContext.url(
+                      notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
+                        ? SCRoutes.COURSE_LESSON_ROUTE_NAME
+                        : SCRoutes.COURSE_ROUTE_NAME,
+                      notificationObject.course
+                    )}>
+                    {chunks}
+                  </Link>
+                )
               }}
             />
           </Box>
@@ -126,7 +136,13 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <DateTimeAgo date={notificationObject.active_at} />
               <Typography color="primary">
-                <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, notificationObject.course)}>
+                <Link
+                  to={scRoutingContext.url(
+                    notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
+                      ? SCRoutes.COURSE_LESSON_ROUTE_NAME
+                      : SCRoutes.COURSE_ROUTE_NAME,
+                    notificationObject.course
+                  )}>
                   <FormattedMessage id="ui.notification.course.button.see" defaultMessage="ui.notification.course.button.see" />
                 </Link>
               </Typography>
@@ -179,11 +195,23 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
               values={{
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
-                course: notificationObject.course.name,
-                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, notificationObject.course)}>{chunks}</Link>
+                name: notificationObject.course.name,
+                link: (...chunks) => (
+                  <Link
+                    to={scRoutingContext.url(
+                      notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
+                        ? SCRoutes.COURSE_LESSON_ROUTE_NAME
+                        : SCRoutes.COURSE_ROUTE_NAME,
+                      notificationObject.course
+                    )}>
+                    {chunks}
+                  </Link>
+                )
               }}
             />
-            <CourseItem course={notificationObject.course as any} actions={<></>} template={SCCourseTemplateType.SNIPPET} elevation={0} />
+            {notificationObject.type !== SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON && (
+              <CourseItem course={notificationObject.course as any} actions={<></>} template={SCCourseTemplateType.SNIPPET} elevation={0} />
+            )}
           </>
         }
         actions={
@@ -195,7 +223,12 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
               size="small"
               classes={{root: classes.seeButton}}
               component={Link}
-              to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, notificationObject.course)}>
+              to={scRoutingContext.url(
+                notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
+                  ? SCRoutes.COURSE_LESSON_ROUTE_NAME
+                  : SCRoutes.COURSE_ROUTE_NAME,
+                notificationObject.course
+              )}>
               <FormattedMessage id="ui.notification.course.button.see" defaultMessage="ui.notification.course.button.see" />
             </LoadingButton>
           </Stack>

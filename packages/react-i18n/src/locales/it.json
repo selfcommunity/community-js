@@ -908,7 +908,7 @@
   "ui.notification.course.user_requested_to_join_course": "ha richiesto di partecipare al corso: <link>{name}</link>",
   "ui.notification.course.user_accepted_to_join_course": "ha accettato di partecipare al corso: <link>{name}</link>",
   "ui.notification.course.user_added_to_course": "ti ha aggiunto al corso: <link>{name}</link>",
-  "ui.notification.course.manager_added_to_course": "ti ha aggiunto al corso: <link>{name}</link>",
+  "ui.notification.course.manager_added_to_course": "ti ha aggiunto come manager del corso: <link>{name}</link>",
   "ui.notification.course.user_commented_a_course_lesson": "ha commentato la lezione: <link>{name}</link>",
   "ui.notification.event.button.see": "Vedi",
   "ui.notification.event.user_invited_to_join_event": "ti ha invitato all'evento: <icon>CalendarIcon</icon> <link>{event}</link>",

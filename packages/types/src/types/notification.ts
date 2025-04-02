@@ -70,9 +70,7 @@ export enum SCNotificationTypologyType {
   USER_ACCEPTED_TO_JOIN_COURSE = 'user_accepted_to_join_course',
   USER_COMMENTED_A_COURSE_LESSON = 'user_commented_a_course_lesson',
   USER_ADDED_TO_COURSE = 'user_added_to_course',
-  USER_REMOVED_FROM_COURSE = 'user_removed_from_course',
-  MANAGER_ADDED_TO_COURSE = 'manager_added_to_course',
-  MANAGER_REMOVED_USER_FROM_COURSE = 'manager_removed_user_from_course'
+  MANAGER_ADDED_TO_COURSE = 'manager_added_to_course'
 }
 
 /**
