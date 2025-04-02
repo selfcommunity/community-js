@@ -229,8 +229,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
    * @param categories
    */
   const handleOnChangeCategory = (categories: SCCategoryType[]) => {
-    const categoriesIds = categories.map((item) => item.id);
-    setField((prev: any) => ({...prev, ['categories']: course ? categoriesIds : convertToCategoriesObject(categories)}));
+    setField((prev: any) => ({...prev, ['categories']: convertToCategoriesObject(categories)}));
   };
 
   /**
@@ -272,7 +271,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     }
     let courseService: Promise<SCCourseType>;
     if (course) {
-      courseService = CourseService.updateCourse(course.id, formData, {
+      courseService = CourseService.patchCourse(course.id, formData, {
         headers: {'Content-Type': 'multipart/form-data'}
       });
     } else {

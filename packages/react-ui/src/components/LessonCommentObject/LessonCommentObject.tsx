@@ -291,7 +291,7 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
               onSave={handleUpdate}
               onCancel={handleCancel}
               editable={!isSavingComment}
-              EditorProps={{uploadFile: true, uploadImage: false}}
+              EditorProps={{uploadFile: true, uploadImage: false, isLessonCommentEditor: true}}
               {...CommentObjectReplyProps}
             />
           </Box>
