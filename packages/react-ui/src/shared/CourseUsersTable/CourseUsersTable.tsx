@@ -17,7 +17,7 @@ import {
   useThemeProps
 } from '@mui/material';
 import {ChangeEvent, Dispatch, memo, useCallback, useEffect, useRef, useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedDate, FormattedMessage, useIntl} from 'react-intl';
 import RowSkeleton from './RowSkeleton';
 import {LoadingButton} from '@mui/lab';
 import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
@@ -92,7 +92,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
   // CONTEXTS
   const scUserContext: SCUserContextType = useSCUser();
 
-  // HOOKS
+  // INTL
   const intl = useIntl();
 
   // EFFECTS
@@ -238,14 +238,12 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                   )}
                   <TableCell>
                     <Typography variant="body2">
-                      {new Date(mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.joined_at || new Date()).toLocaleDateString()}
+                      <FormattedDate value={mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.joined_at || new Date()} />
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">
-                      {new Date(
-                        mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.last_active_at || new Date()
-                      ).toLocaleDateString()}
+                      <FormattedDate value={mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.last_active_at || new Date()} />
                     </Typography>
                   </TableCell>
                   {mode === SCCourseUsersTableModeType.EDIT &&

@@ -20,7 +20,7 @@ function Customize(props: CustomizeProps) {
   // HANDLERS
   const handleSuccess = useCallback(
     (data: SCCourseType) => {
-      setCourse(data);
+      setCourse({...course, ...data});
 
       enqueueSnackbar(
         <FormattedMessage id="ui.editCourse.tab.customize.snackbar.save" defaultMessage="ui.editCourse.tab.customize.snackbar.save" />,
@@ -30,7 +30,7 @@ function Customize(props: CustomizeProps) {
         }
       );
     },
-    [setCourse]
+    [course]
   );
 
   const handleError = useCallback(() => {
