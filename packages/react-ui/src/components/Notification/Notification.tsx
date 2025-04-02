@@ -490,6 +490,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       return <EventNotification notificationObject={n} key={i} />;
     } else if (
       n.type === SCNotificationTypologyType.USER_ADDED_TO_COURSE ||
+      n.type === SCNotificationTypologyType.MANAGER_ADDED_TO_COURSE ||
       n.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON ||
       n.type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE ||
       n.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE ||

@@ -140,7 +140,8 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
         content = <EventNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (
         type === SCNotificationTypologyType.USER_ADDED_TO_COURSE ||
-        n.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON ||
+        type === SCNotificationTypologyType.MANAGER_ADDED_TO_COURSE ||
+        type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON ||
         type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE ||
         type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE ||
         type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE
