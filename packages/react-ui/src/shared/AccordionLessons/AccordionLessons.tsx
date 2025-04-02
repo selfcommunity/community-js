@@ -113,7 +113,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
             disableGutters
             elevation={0}
             square>
-            <AccordionSummary className={classes.summary} expandIcon={<Icon>expand_less</Icon>}>
+            <AccordionSummary className={classes.summary} expandIcon={<Icon>expand_more</Icon>}>
               <Stack className={classes.nameWrapper}>
                 <Typography component="span" variant="body1">
                   {section.name}
