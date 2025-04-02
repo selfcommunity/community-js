@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.7-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.7-alpha.22...@selfcommunity/react-core@0.6.7-alpha.23) (2025-03-31)
+
+
+### Bug Fixes
+
+* pubsub-js ([179ff95](https://github.com/selfcommunity/community-js/commit/179ff957e9ba5dd4247983d413b1b4625dddaa20))
+
+
+
+
+
 ## [0.6.7-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.7-alpha.21...@selfcommunity/react-core@0.6.7-alpha.22) (2025-03-28)
 
 
