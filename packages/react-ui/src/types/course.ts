@@ -39,3 +39,10 @@ export interface SCCourseEditManageUserProps {
 export interface SCCourseEditManageUserRef {
   handleManageUser: (user: SCUserType) => void;
 }
+
+export interface SCCourseGetUrlLessonData {
+  id: number;
+  slug: string;
+  section_id: number;
+  lesson_id: number;
+}

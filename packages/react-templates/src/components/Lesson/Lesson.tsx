@@ -3,14 +3,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme, Alert} from '@mui/material';
 import {PREFIX} from './constants';
-import {
-  SCCourseJoinStatusType,
-  SCCourseLessonCompletionStatusType,
-  SCCourseLessonType,
-  SCCourseSectionType,
-  SCCourseType,
-  SCMediaType
-} from '@selfcommunity/types';
+import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
 import {SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCFetchLesson, useSCRouting, Link} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {
@@ -27,6 +20,7 @@ import {CourseInfoViewType, CourseService} from '@selfcommunity/api-services';
 import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
+import {getUrlLesson} from '@selfcommunity/react-ui';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -40,13 +34,13 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root]
+  overridesResolver: (_props, styles) => [styles.root]
 })(() => ({}));
 
 const Container = styled(Box, {
   name: PREFIX,
   slot: 'ContainerRoot',
-  overridesResolver: (props, styles) => styles.containerRoot,
+  overridesResolver: (_props, styles) => styles.containerRoot,
   shouldForwardProp: (prop) => prop !== 'open'
 })<{open?: boolean}>(() => ({}));
 
@@ -107,15 +101,6 @@ export interface LessonProps {
    * Any other properties
    */
   [p: string]: any;
-}
-
-function getUrlLesson(course: SCCourseType, lesson: SCCourseLessonType): any {
-  return {
-    id: course.id,
-    slug: course.slug,
-    section_id: lesson.section_id,
-    lesson_id: lesson.id
-  };
 }
 
 export default function Lesson(inProps: LessonProps): JSX.Element {

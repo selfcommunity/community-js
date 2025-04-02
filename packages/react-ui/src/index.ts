@@ -275,6 +275,7 @@ import {getRelativeTime} from './utils/formatRelativeTime';
 import {bytesToSize} from './utils/sizeCoverter';
 import {generateRoomId, randomString, decodePassphrase, encodePassphrase} from './utils/liveStream';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
+import {getUrlLesson} from './utils/course';
 
 /**
  * Import Assets
@@ -499,6 +500,7 @@ export {
   getRelativeTime,
   getUnseenNotification,
   getUnseenNotificationCounter,
+  getUrlLesson,
   Group,
   GroupActionsMenu,
   GroupActionsMenuProps,
