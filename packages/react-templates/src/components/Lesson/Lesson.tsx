@@ -162,9 +162,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [completed, setCompleted] = useState<boolean | null>(null);
   const availableLessons = useMemo(() => {
     if (!scCourse?.sections) return [];
-    return scCourse.sections.flatMap((section: SCCourseSectionType) =>
-      section.lessons.filter((lesson: SCCourseLessonType) => !lesson.locked).map((lesson: SCCourseLessonType) => ({...lesson, section}))
-    );
+    return scCourse.sections.flatMap((section: SCCourseSectionType) => section.lessons.map((lesson: SCCourseLessonType) => ({...lesson, section})));
   }, [scCourse]);
 
   const [currentLessonIndex, setCurrentLessonIndex] = useState<number>(
