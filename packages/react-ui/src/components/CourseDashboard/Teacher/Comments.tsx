@@ -3,7 +3,7 @@ import {SCCourseCommentType, SCCourseType} from '@selfcommunity/types';
 import {Fragment, memo, useCallback, useEffect, useMemo, useReducer, useState} from 'react';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {FormattedMessage} from 'react-intl';
+import {FormattedDate, FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import {PREFIX} from '../constants';
 import {DEFAULT_PAGINATION_OFFSET} from '../../../constants/Pagination';
@@ -171,7 +171,9 @@ function Comments(props: CommentsProps) {
 
                   <Box className={classes.circle} />
 
-                  <Typography variant="body2">{new Date(comment.created_at).toLocaleDateString()}</Typography>
+                  <Typography variant="body2">
+                    <FormattedDate value={comment.created_at} />
+                  </Typography>
                 </Stack>
 
                 <Typography variant="body1" component="div" dangerouslySetInnerHTML={{__html: comment.html}} />
