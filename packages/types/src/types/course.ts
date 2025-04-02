@@ -17,8 +17,8 @@ export enum SCCoursePrivacyType {
  */
 export enum SCCourseTypologyType {
   SELF = 'self-paced',
-  SCHEDULED = 'scheduled',
-  STRUCTURED = 'structured'
+  STRUCTURED = 'structured',
+  SCHEDULED = 'scheduled'
 }
 
 /**
