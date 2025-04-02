@@ -278,6 +278,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             InputProps={{
               endAdornment: <Icon>play_circle_outline</Icon>
             }}
+            value={event ? event.link : ''}
             onChange={handleLinkChange}
           />
         )}
