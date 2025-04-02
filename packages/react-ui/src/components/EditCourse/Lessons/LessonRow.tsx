@@ -15,6 +15,7 @@ import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {ActionLessonType, DeleteRowRef} from '../types';
 import {useIsDisabled} from '../hooks';
+import {getUrlLesson} from '../../../utils/course';
 
 const classes = {
   cellWidth: `${PREFIX}-cell-width`,
@@ -23,22 +24,6 @@ const classes = {
   tableBodyIconWrapper: `${PREFIX}-table-body-icon-wrapper`,
   actionsWrapper: `${PREFIX}-actions-wrapper`
 };
-
-type DataUrlLesson = {
-  id: number;
-  slug: string;
-  section_id: number;
-  lesson_id: number;
-};
-
-function getUrlLesson(course: SCCourseType, section: SCCourseSectionType, lesson: SCCourseLessonType): DataUrlLesson {
-  return {
-    id: course.id,
-    slug: course.slug,
-    section_id: section.id,
-    lesson_id: lesson.id
-  };
-}
 
 interface LessonRowProps {
   provider: DraggableProvided;
@@ -135,12 +120,12 @@ function LessonRow(props: LessonRowProps, ref: Ref<DeleteRowRef>) {
           <ChangeLessonStatus course={course} section={section} lesson={lesson} disabled={isDisabled} />
 
           <MenuRow disabled={isDisabled}>
-            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
+            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(course, lesson, section))}>
               <Typography variant="body1">
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.edit" defaultMessage="ui.editCourse.tab.lessons.table.menu.edit" />
               </Typography>
             </MenuItem>
-            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_PREVIEW_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
+            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_PREVIEW_ROUTE_NAME, getUrlLesson(course, lesson, section))}>
               <Typography variant="body1">
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.preview" defaultMessage="ui.editCourse.tab.lessons.table.menu.preview" />
               </Typography>

@@ -15,18 +15,13 @@ import {
 import {FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {Fragment, HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
-import {
-  SCCourseJoinStatusType,
-  SCCourseLessonCompletionStatusType,
-  SCCourseLessonType,
-  SCCourseSectionType,
-  SCCourseType
-} from '@selfcommunity/types';
+import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import AccordionLessonSkeleton from './Skeleton';
 import {Link} from '@selfcommunity/react-core';
 import Bullet from '../Bullet';
+import {getUrlLesson} from '../../utils/course';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -38,22 +33,6 @@ const classes = {
   circle: `${PREFIX}-circle`,
   link: `${PREFIX}-link`
 };
-
-type DataUrlLesson = {
-  id: number;
-  slug: string;
-  section_id: number;
-  lesson_id: number;
-};
-
-function getUrlLesson(course: SCCourseType, section: SCCourseSectionType, lesson: SCCourseLessonType): DataUrlLesson {
-  return {
-    id: course.id,
-    slug: course.slug,
-    section_id: section.id,
-    lesson_id: lesson.id
-  };
-}
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -167,7 +146,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
                 ) : (
                   <Button
                     component={Link}
-                    to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlLesson(course, section, lesson))}
+                    to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlLesson(course, lesson, section))}
                     variant="text"
                     color="inherit"
                     className={classes.link}>

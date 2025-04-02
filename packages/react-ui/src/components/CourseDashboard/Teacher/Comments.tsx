@@ -11,6 +11,7 @@ import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../.
 import {Link, SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import {CourseService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
+import {getUrlLesson} from '../../../utils/course';
 
 const classes = {
   container: `${PREFIX}-comments-container`,
@@ -145,7 +146,7 @@ function Comments(props: CommentsProps) {
 
   // MEMOS
   const renderComments = useMemo(() => {
-    const map = new Map();
+    const map = new Map<string, SCCourseCommentType[]>();
     state.results.forEach((comment: SCCourseCommentType) => {
       const name = comment.extras.lesson.name;
 
@@ -183,7 +184,10 @@ function Comments(props: CommentsProps) {
 
           <Button
             component={Link}
-            to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, course)}
+            to={scRoutingContext.url(
+              SCRoutes.COURSE_LESSON_ROUTE_NAME,
+              getUrlLesson(comments[0].extras.course, comments[0].extras.lesson, comments[0].extras.section)
+            )}
             size="small"
             variant="outlined"
             color="inherit"
