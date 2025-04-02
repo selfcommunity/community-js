@@ -175,6 +175,12 @@ export interface EditorProps {
    * @default   <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
    */
   placeholder?: React.ReactNode;
+
+  /**
+   * Prop to customize emoji plugin position
+   * @default false
+   */
+  isLessonCommentEditor?: boolean;
 }
 
 /**
@@ -227,7 +233,8 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     action = null,
     ToolBarProps = {},
     MediaPluginProps = {},
-    placeholder = <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
+    placeholder = <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />,
+    isLessonCommentEditor = false
   } = props;
   const apiRef = useRef<ApiRef>();
 
@@ -300,8 +307,8 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
         ) : (
           <Stack className={classes.actions} direction="row">
             {uploadImage && <ImagePlugin />}
+            <EmojiPlugin isLessonCommentEditor={isLessonCommentEditor} />
             {uploadFile && <MediaPlugin {...MediaPluginProps} />}
-            <EmojiPlugin />
             {action && action}
           </Stack>
         )}

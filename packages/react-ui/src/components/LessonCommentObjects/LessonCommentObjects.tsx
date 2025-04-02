@@ -278,7 +278,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
             replyIcon
             editable={!commenting}
             onReply={handleCommentAction}
-            EditorProps={{placeholder: intl.formatMessage(messages.commentEditorPlaceholder), uploadFile: true, uploadImage: false}}
+            EditorProps={{placeholder: intl.formatMessage(messages.commentEditorPlaceholder), uploadFile: true, uploadImage: false, isLessonCommentEditor: true}}
           />
         )}
       </>
