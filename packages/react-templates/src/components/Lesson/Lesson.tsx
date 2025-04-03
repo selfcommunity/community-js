@@ -97,7 +97,11 @@ export interface LessonProps {
    * @default null
    */
   onActivePanelChange?: (panel) => void;
-
+  /**
+   * Handler on status change
+   * @default null
+   */
+  onLessonStatusChange?: () => void;
   /**
    * If passed renders the component with a specific section opened
    * @default null
@@ -127,6 +131,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     onEditModeClose = null,
     onLessonChange = null,
     onActivePanelChange = null,
+    onLessonStatusChange = null,
     lessonAction = null,
     ...rest
   } = props;
@@ -282,6 +287,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
         if (updatedCourse.num_lessons === updatedCourse.num_lessons_completed) {
           setOpenDialog(true);
         }
+        onLessonStatusChange?.();
       })
       .catch((error) => {
         setLoading(false);
