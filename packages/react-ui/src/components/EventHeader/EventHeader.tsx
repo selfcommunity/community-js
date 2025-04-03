@@ -146,7 +146,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
 
   // CONST
   const isEventAdmin = useMemo(
-    () => scUserContext.user && scEvent && scEvent?.managed_by.id === scUserContext.user.id,
+    () => scUserContext.user && scEvent && scEvent?.managed_by?.id === scUserContext.user.id,
     [scUserContext.user, scEvent?.managed_by]
   );
 

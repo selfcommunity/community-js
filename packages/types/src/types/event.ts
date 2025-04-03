@@ -57,12 +57,13 @@ export enum SCEventRecurrenceType {
  * SCEventRecurrenceType enum
  */
 export enum SCEventDateFilterType {
-  ANY = 'any',
+  ALL = 'all',
   TODAY = 'today',
   TOMORROW = 'tomorrow',
   THIS_WEEK = 'this_week',
   NEXT_WEEK = 'next_week',
   THIS_MONTH = 'this_month',
+  NOT_PAST = 'not_past',
   PAST = 'past'
 }
 

@@ -1,6 +1,16 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      '& .SCEvents-section-title': {
+        marginTop: theme.spacing(4),
+        marginBottom: theme.spacing(1),
+        color: theme.palette.primary.main,
+        fontWeight: 500,
+        fontSize: 18
+      },
+      '& .SCEvents-divider': {
+        marginBottom: theme.spacing(2)
+      },
       '& .SCEvents-filters': {
         alignItems: 'center',
         marginTop: theme.spacing(),
@@ -81,10 +91,10 @@ const Component = {
         }
       }
     }),
-    eventsChipRoot: ({theme, showFollowed, showPastEvents}: any) => ({
+    eventsChipRoot: ({theme, showFollowed, showPastEvents, showOngoingEvents}: any) => ({
       height: theme.spacing(4.75),
       borderRadius: theme.spacing(0.5),
-      color: showFollowed || showPastEvents ? theme.palette.common.white : theme.palette.text.primary,
+      color: showFollowed || showPastEvents || showOngoingEvents ? theme.palette.common.white : theme.palette.text.primary,
       '& .MuiIcon-root': {
         fontSize: '1rem',
         color: theme.palette.common.white

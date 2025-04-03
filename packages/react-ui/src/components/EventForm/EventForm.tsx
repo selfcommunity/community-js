@@ -221,7 +221,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     endDate: event?.end_date ? endDateTime : getNewDate(),
     endTime: event?.end_date ? endDateTime : getLaterHoursDate(3),
     location: event?.location
-      ? event.location === SCEventLocationType.ONLINE && event.live_stream
+      ? event.location === SCEventLocationType.PERSON
+        ? SCEventLocationType.PERSON
+        : event.location === SCEventLocationType.ONLINE && event.live_stream
         ? SCEventLocationType.LIVESTREAM
         : SCEventLocationType.ONLINE
       : EventAddressComponentProps.locations?.length
@@ -357,6 +359,11 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       formData.append('geolocation_lng', field.lng.toString());
       formData.append('link', '');
       formData.append('live_stream_settings', null);
+    }
+    if (field.location !== SCEventLocationType.PERSON) {
+      formData.append('geolocation', '');
+      formData.append('geolocation_lat', '');
+      formData.append('geolocation_lng', '');
     }
 
     if (privateEnabled) {
