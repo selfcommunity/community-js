@@ -55,6 +55,7 @@ const classes = {
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
   visibilitySection: `${PREFIX}-visibility-section`,
   visibilitySectionInfo: `${PREFIX}-visibility-section-info`,
+	paywallsConfiguratorWrap: `${PREFIX}-paywalls-configurator-wrap`,
   inviteSection: `${PREFIX}-invite-section`,
   error: `${PREFIX}-error`
 };
