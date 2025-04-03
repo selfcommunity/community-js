@@ -45,6 +45,15 @@ export interface NotificationCourseProps
   notificationObject: SCNotificationCourseActivityType;
 }
 
+function formatLessonUrl(notificationObject: SCNotificationCourseActivityType): any {
+  return {
+    id: notificationObject.course.id,
+    slug: notificationObject.course.slug,
+    section_id: notificationObject.comment.section_id,
+    lesson_id: notificationObject.comment.lesson_id
+  };
+}
+
 /**
  * This component render the content of the notification of type course
  * @constructor
@@ -85,15 +94,15 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
         disableTypography
         image={
           <Link
-            {...(!notificationObject.course.created_by.deleted && {
-              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.course.created_by)
+            {...(!notificationObject.user.deleted && {
+              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
             })}
-            onClick={notificationObject.course.created_by.deleted ? () => setOpenAlert(true) : null}>
-            <UserAvatar hide={!notificationObject.course.created_by.community_badge} smaller={true}>
+            onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}>
+            <UserAvatar hide={!notificationObject.user.community_badge} smaller={true}>
               <Avatar
-                alt={notificationObject.course.created_by.username}
+                alt={notificationObject.user.username}
                 variant="circular"
-                src={notificationObject.course.created_by.avatar}
+                src={notificationObject.user.avatar}
                 classes={{root: classes.avatar}}
               />
             </UserAvatar>
@@ -102,12 +111,12 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
         primary={
           <Box>
             <Link
-              {...(!notificationObject.course.created_by.deleted && {
-                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.course.created_by)
+              {...(!notificationObject.user.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
               })}
-              onClick={notificationObject.course.created_by.deleted ? () => setOpenAlert(true) : null}
+              onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}
               className={classes.username}>
-              {notificationObject.course.created_by.username}
+              {notificationObject.user.username}
             </Link>{' '}
             <FormattedMessage
               id={`ui.notification.course.${notificationObject.type}`}
@@ -115,14 +124,19 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
               values={{
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
-                name: notificationObject.course.name,
+                name:
+                  notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
+                    ? notificationObject.comment.lesson_name
+                    : notificationObject.course.name,
                 link: (...chunks) => (
                   <Link
                     to={scRoutingContext.url(
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                         ? SCRoutes.COURSE_LESSON_ROUTE_NAME
                         : SCRoutes.COURSE_ROUTE_NAME,
-                      notificationObject.course
+                      notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
+                        ? formatLessonUrl(notificationObject)
+                        : notificationObject.course
                     )}>
                     {chunks}
                   </Link>
@@ -141,7 +155,9 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
                     notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                       ? SCRoutes.COURSE_LESSON_ROUTE_NAME
                       : SCRoutes.COURSE_ROUTE_NAME,
-                    notificationObject.course
+                    notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
+                      ? formatLessonUrl(notificationObject)
+                      : notificationObject.course
                   )}>
                   <FormattedMessage id="ui.notification.course.button.see" defaultMessage="ui.notification.course.button.see" />
                 </Link>
@@ -165,29 +181,24 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
         disableTypography
         image={
           <Link
-            {...(!notificationObject.course.created_by.deleted && {
-              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.course.created_by)
+            {...(!notificationObject.user.deleted && {
+              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
             })}
-            onClick={notificationObject.course.created_by.deleted ? () => setOpenAlert(true) : null}>
-            <UserAvatar hide={!notificationObject.course.created_by.community_badge} smaller={true}>
-              <Avatar
-                className={classes.avatar}
-                alt={notificationObject.course.created_by.username}
-                variant="circular"
-                src={notificationObject.course.created_by.avatar}
-              />
+            onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}>
+            <UserAvatar hide={!notificationObject.user.community_badge} smaller={true}>
+              <Avatar className={classes.avatar} alt={notificationObject.user.username} variant="circular" src={notificationObject.user.avatar} />
             </UserAvatar>
           </Link>
         }
         primary={
           <>
             <Link
-              {...(!notificationObject.course.created_by.deleted && {
-                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.course.created_by)
+              {...(!notificationObject.user.deleted && {
+                to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.user)
               })}
-              onClick={notificationObject.course.created_by.deleted ? () => setOpenAlert(true) : null}
+              onClick={notificationObject.user.deleted ? () => setOpenAlert(true) : null}
               className={classes.username}>
-              {notificationObject.course.created_by.username}
+              {notificationObject.user.username}
             </Link>{' '}
             <FormattedMessage
               id={`ui.notification.course.${notificationObject.type}`}
@@ -195,14 +206,19 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
               values={{
                 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
                 // @ts-ignore
-                name: notificationObject.course.name,
+                name:
+                  notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
+                    ? notificationObject.comment.lesson_name
+                    : notificationObject.course.name,
                 link: (...chunks) => (
                   <Link
                     to={scRoutingContext.url(
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                         ? SCRoutes.COURSE_LESSON_ROUTE_NAME
                         : SCRoutes.COURSE_ROUTE_NAME,
-                      notificationObject.course
+                      notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
+                        ? formatLessonUrl(notificationObject)
+                        : notificationObject.course
                     )}>
                     {chunks}
                   </Link>
@@ -227,7 +243,9 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
                 notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                   ? SCRoutes.COURSE_LESSON_ROUTE_NAME
                   : SCRoutes.COURSE_ROUTE_NAME,
-                notificationObject.course
+                notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
+                  ? formatLessonUrl(notificationObject)
+                  : notificationObject.course
               )}>
               <FormattedMessage id="ui.notification.course.button.see" defaultMessage="ui.notification.course.button.see" />
             </LoadingButton>

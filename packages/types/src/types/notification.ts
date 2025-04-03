@@ -594,6 +594,21 @@ export interface SCNotificationCourseActivityType extends SCNotificationType {
    * The course obj
    */
   course: Partial<SCCourseType>;
+  /**
+   * The user who performed the action
+   */
+  user: SCUserType;
+  /**
+   * The info about course lesson comment
+   */
+  comment?: {
+    id: number;
+    course_id: number;
+    section_id: number;
+    lesson_id: number;
+    lesson_name: string;
+    html: string;
+  };
 }
 
 /**
