@@ -90,7 +90,7 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
   }
 
   course.sections?.some((section: SCCourseSectionType) => {
-    const isNextLessonInThisSection = section.num_lessons_completed < section.num_lessons;
+    const isNextLessonInThisSection = section.num_lessons_completed < section.num_lessons && !section.locked;
 
     if (isNextLessonInThisSection) {
       Object.assign(data, {
@@ -106,6 +106,10 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
 }
 
 function getIsNextLessonLocked(course: SCCourseType): boolean {
+  if (course.join_status === null) {
+    return undefined;
+  }
+
   return course.sections?.every((section: SCCourseSectionType) => {
     return (
       section.num_lessons_completed < section.num_lessons &&
@@ -253,7 +257,7 @@ function Student(inProps: StudentCourseDashboardProps) {
                 : BUTTON_MESSAGES.continue
             }
             to={scCourse.join_status !== null ? scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse)) : undefined}
-            disabled={scCourse.join_status !== null ? getIsNextLessonLocked(scCourse) : undefined}
+            disabled={getIsNextLessonLocked(scCourse)}
             color={scCourse.user_completion_rate === 100 ? 'inherit' : undefined}
             variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
             loading={scCourse.join_status === null ? loadingRequest : undefined}
