@@ -132,7 +132,7 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
                   <Link
                     to={scRoutingContext.url(
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
-                        ? SCRoutes.COURSE_LESSON_ROUTE_NAME
+                        ? SCRoutes.COURSE_LESSON_COMMENTS_ROUTE_NAME
                         : SCRoutes.COURSE_ROUTE_NAME,
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                         ? formatLessonUrl(notificationObject)
@@ -153,7 +153,7 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
                 <Link
                   to={scRoutingContext.url(
                     notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
-                      ? SCRoutes.COURSE_LESSON_ROUTE_NAME
+                      ? SCRoutes.COURSE_LESSON_COMMENTS_ROUTE_NAME
                       : SCRoutes.COURSE_ROUTE_NAME,
                     notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                       ? formatLessonUrl(notificationObject)
@@ -214,7 +214,7 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
                   <Link
                     to={scRoutingContext.url(
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
-                        ? SCRoutes.COURSE_LESSON_ROUTE_NAME
+                        ? SCRoutes.COURSE_LESSON_COMMENTS_ROUTE_NAME
                         : SCRoutes.COURSE_ROUTE_NAME,
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                         ? formatLessonUrl(notificationObject)
@@ -225,7 +225,9 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
                 )
               }}
             />
-            {notificationObject.type !== SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON && (
+            {notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON ? (
+              <Typography variant="body2" dangerouslySetInnerHTML={{__html: notificationObject.comment.html}} />
+            ) : (
               <CourseItem course={notificationObject.course as any} actions={<></>} template={SCCourseTemplateType.SNIPPET} elevation={0} />
             )}
           </>
@@ -241,7 +243,7 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
               component={Link}
               to={scRoutingContext.url(
                 notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
-                  ? SCRoutes.COURSE_LESSON_ROUTE_NAME
+                  ? SCRoutes.COURSE_LESSON_COMMENTS_ROUTE_NAME
                   : SCRoutes.COURSE_ROUTE_NAME,
                 notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                   ? formatLessonUrl(notificationObject)
