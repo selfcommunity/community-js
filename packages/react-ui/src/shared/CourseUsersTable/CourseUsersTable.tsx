@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Icon,
+  IconButton,
   InputAdornment,
   LinearProgress,
   Stack,
@@ -26,7 +27,7 @@ import EmptyStatus from '../EmptyStatus';
 import SeeProgressButton from './SeeProgressButton';
 import CourseUsersTableSkeleton from './Skeleton';
 import {actionWidgetTypes} from '../../utils/widget';
-import {http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {EndpointType, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -41,6 +42,8 @@ import {SCCourseEditManageUserProps, SCCourseEditManageUserRef, SCCourseEditTabT
 const classes = {
   root: `${PREFIX}-root`,
   search: `${PREFIX}-search`,
+  endAdornmentWrapper: `${PREFIX}-end-adornment-wrapper`,
+  searchButton: `${PREFIX}-search-button`,
   avatarWrapper: `${PREFIX}-avatar-wrapper`,
   progressWrapper: `${PREFIX}-progress-wrapper`,
   progress: `${PREFIX}-progress`,
@@ -61,14 +64,12 @@ export interface CourseUsersTableProps {
   state: any;
   dispatch: Dispatch<any>;
   course: SCCourseType;
+  endpointSearch: EndpointType;
+  endpointQueryParamsSearch?: Record<string, string | number>;
   headerCells: HeaderCellsType[];
   mode: SCCourseUsersTableModeType;
   emptyStatusTitle: string;
   emptyStatusDescription?: string;
-}
-
-function filteredUsers(users: SCUserType[], value: string): SCUserType[] {
-  return users.filter((user) => (user.username || user.real_name).toLowerCase().includes(value.toLowerCase()));
 }
 
 function CourseUsersTable(inProps: CourseUsersTableProps) {
@@ -78,11 +79,21 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
     name: PREFIX
   });
 
-  const {course, state, dispatch, headerCells, mode, emptyStatusTitle, emptyStatusDescription} = props;
+  const {
+    state,
+    dispatch,
+    course,
+    endpointSearch,
+    endpointQueryParamsSearch = {statuses: JSON.stringify([SCCourseJoinStatusType.JOINED, SCCourseJoinStatusType.MANAGER])},
+    headerCells,
+    mode,
+    emptyStatusTitle,
+    emptyStatusDescription
+  } = props;
 
   // STATES
   const [users, setUsers] = useState<SCUserType[] | null>(null);
-  const [tempUsers, setTempUsers] = useState<SCUserType[] | null>(null);
+  const [loadingSearch, setLoadingSearch] = useState(false);
   const [value, setValue] = useState('');
   const [dialog, setDialog] = useState<SCCourseEditManageUserProps | null>(null);
 
@@ -101,27 +112,6 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
   }, [state.results, setUsers]);
 
   // HANDLERS
-  const handleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const _value = e.target.value;
-
-      if (_value.length > 0) {
-        if (!tempUsers) {
-          setTempUsers(users);
-          setUsers((prevUsers) => filteredUsers(prevUsers, _value));
-        } else {
-          setUsers(filteredUsers(tempUsers, _value));
-        }
-      } else {
-        setUsers(tempUsers);
-        setTempUsers(null);
-      }
-
-      setValue(_value);
-    },
-    [users, tempUsers, setValue]
-  );
-
   const handleNext = useCallback(() => {
     dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
@@ -158,6 +148,46 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
     handleOpenDialog(null);
   }, [dialog, handleOpenDialog]);
 
+  const handleSearchClear = useCallback(() => {
+    setUsers(state.results);
+    setValue('');
+  }, [setValue, setUsers, state.results]);
+
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const _value = e.target.value;
+
+      if (_value.length === 0) {
+        handleSearchClear();
+      } else {
+        setValue(_value);
+      }
+    },
+    [setValue, handleSearchClear]
+  );
+
+  const handleSearchStart = useCallback(() => {
+    setLoadingSearch(true);
+
+    http
+      .request({
+        url: endpointSearch.url(),
+        method: endpointSearch.method,
+        params: {
+          ...endpointQueryParamsSearch,
+          search: value
+        }
+      })
+      .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
+        setUsers(res.data.results);
+        setLoadingSearch(false);
+      })
+      .catch((error) => {
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }, [value, endpointSearch, setUsers, setLoadingSearch, dispatch]);
+
   if (!users) {
     return <CourseUsersTableSkeleton />;
   }
@@ -174,7 +204,28 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
             <InputAdornment position="start">
               <Icon>search</Icon>
             </InputAdornment>
-          )
+          ),
+          endAdornment:
+            value.length > 0 ? (
+              <Stack className={classes.endAdornmentWrapper}>
+                <InputAdornment position="start">
+                  <IconButton color="inherit" onClick={handleSearchClear}>
+                    <Icon>close</Icon>
+                  </IconButton>
+                </InputAdornment>
+                <InputAdornment position="end">
+                  <LoadingButton
+                    color="primary"
+                    variant="contained"
+                    onClick={handleSearchStart}
+                    loading={loadingSearch}
+                    disabled={loadingSearch}
+                    className={classes.searchButton}>
+                    <Icon>search</Icon>
+                  </LoadingButton>
+                </InputAdornment>
+              </Stack>
+            ) : undefined
         }}
         value={value}
         onChange={handleChange}
@@ -278,7 +329,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           variant="outlined"
           color="inherit"
           loading={state.isLoadingNext}
-          disabled={!state.next}
+          disabled={value.length > 0 || !state.next}
           className={classes.loadingButton}
           onClick={handleNext}>
           <Typography variant="body2">
@@ -287,7 +338,13 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
         </LoadingButton>
       )}
 
-      {users.length === 0 && value.length === 0 && <EmptyStatus icon="face" title={emptyStatusTitle} description={emptyStatusDescription} />}
+      {users.length === 0 && (
+        <EmptyStatus
+          icon="face"
+          title={value.length > 0 ? 'ui.courseUsersTable.empty.search.title' : emptyStatusTitle}
+          description={value.length > 0 ? 'ui.courseUsersTable.empty.search.description' : emptyStatusDescription}
+        />
+      )}
 
       {dialog && <ConfirmDialog open onClose={() => handleOpenDialog(null)} onConfirm={handleConfirm} />}
     </Root>

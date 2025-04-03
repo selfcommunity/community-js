@@ -185,7 +185,8 @@ import {
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
-  SCCommunityEnvironment
+  SCCommunityEnvironment,
+  SCCourseOrderingUsersType
 } from './types';
 
 /**
@@ -240,7 +241,8 @@ export {
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
-  SCCommunityEnvironment
+  SCCommunityEnvironment,
+  SCCourseOrderingUsersType
 };
 export {
   type SCBannerType,

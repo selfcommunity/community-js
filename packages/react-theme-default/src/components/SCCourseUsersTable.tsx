@@ -14,6 +14,17 @@ const Component = {
         '& > .MuiInputBase-root': {
           borderBottomLeftRadius: 'unset',
           borderBottomRightRadius: 'unset'
+        },
+
+        '& .SCCourseUsersTable-end-adornment-wrapper': {
+          flexDirection: 'row',
+
+          '& .SCCourseUsersTable-search-button': {
+            minWidth: 'unset',
+            width: '36px',
+            height: '36px',
+            padding: theme.spacing(1)
+          }
         }
       },
 

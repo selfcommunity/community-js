@@ -144,7 +144,8 @@ import {
   SCCourseLessonTypologyType,
   SCCourseLessonStatusType,
   SCCourseTypologyType,
-  SCCourseLessonCompletionStatusType
+  SCCourseLessonCompletionStatusType,
+  SCCourseOrderingUsersType
 } from './course';
 import {
   type SCLiveStreamType,
@@ -335,6 +336,7 @@ export {
   SCCourseLessonStatusType,
   SCCourseTypologyType,
   SCCourseLessonCompletionStatusType,
+  SCCourseOrderingUsersType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamSettingsType,

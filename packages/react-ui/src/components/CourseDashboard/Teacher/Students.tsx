@@ -3,7 +3,7 @@ import {memo, useCallback, useEffect, useReducer} from 'react';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import CourseUsersTable from '../../../shared/CourseUsersTable';
-import {CourseService, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {CourseDashboardUsersParams, CourseService, Endpoints, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../../utils/widget';
 import {DEFAULT_PAGINATION_OFFSET} from '../../../constants/Pagination';
@@ -27,7 +27,7 @@ const headerCells = [
 
 interface StudentsProps {
   course: SCCourseType;
-  endpointQueryParams?: Record<string, string | number>;
+  endpointQueryParams?: CourseDashboardUsersParams;
 }
 
 function Students(props: StudentsProps) {
@@ -81,9 +81,13 @@ function Students(props: StudentsProps) {
 
   return (
     <CourseUsersTable
-      course={course}
       state={state}
       dispatch={dispatch}
+      course={course}
+      endpointSearch={{
+        url: () => Endpoints.GetCourseDashboardUsers.url({id: course.id}),
+        method: Endpoints.GetCourseDashboardUsers.method
+      }}
       headerCells={headerCells}
       mode={SCCourseUsersTableModeType.DASHBOARD}
       emptyStatusTitle="ui.courseUsersTable.empty.users.title"
