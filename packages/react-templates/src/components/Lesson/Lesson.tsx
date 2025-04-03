@@ -97,6 +97,12 @@ export interface LessonProps {
    * @default null
    */
   onActivePanelChange?: (panel) => void;
+
+  /**
+   * If passed renders the component with a specific section opened
+   * @default null
+   */
+  lessonAction?: SCLessonActionsType;
   /**
    * Any other properties
    */
@@ -121,6 +127,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     onEditModeClose = null,
     onLessonChange = null,
     onActivePanelChange = null,
+    lessonAction = null,
     ...rest
   } = props;
 
@@ -138,7 +145,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
-  const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
+  const [activePanel, setActivePanel] = useState<SCLessonActionsType>(lessonAction);
   const [settings, setSettings] = useState(null);
   const [updating, setUpdating] = useState(false);
   const [lessonContent, setLessonContent] = useState<string>('');
