@@ -185,7 +185,7 @@ function Comments(props: CommentsProps) {
           <Button
             component={Link}
             to={scRoutingContext.url(
-              SCRoutes.COURSE_LESSON_ROUTE_NAME,
+              SCRoutes.COURSE_LESSON_PREVIEW_ROUTE_NAME,
               getUrlLesson(comments[0].extras.course, comments[0].extras.lesson, comments[0].extras.section)
             )}
             size="small"
