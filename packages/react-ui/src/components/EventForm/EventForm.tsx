@@ -26,20 +26,13 @@ import {
   SCContextType,
   SCPreferences,
   SCPreferencesContextType,
+  UserUtils,
   useSCContext,
   useSCPaymentsEnabled,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {
-  SCContentType,
-  SCEventLocationType,
-  SCEventPrivacyType,
-  SCEventRecurrenceType,
-  SCEventType,
-  SCFeatureName,
-  SCPaymentProduct
-} from '@selfcommunity/types';
+import {SCContentType, SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
@@ -57,7 +50,6 @@ import UploadEventCover from './UploadEventCover';
 import {combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
 import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
 import CoverPlaceholder from '../../assets/deafultCover';
-import CreatePaymentProductForm from '../CreatePaymentProductForm';
 import PaywallsConfigurator from '../PaywallsConfigurator';
 
 const messages = defineMessages({
@@ -117,7 +109,8 @@ const classes = {
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
   error: `${PREFIX}-error`,
-  genericError: `${PREFIX}-generic-error`
+  genericError: `${PREFIX}-generic-error`,
+  paywallsConfiguratorWrap: `${PREFIX}-paywalls-configurator-wrap`
 };
 
 const Root = styled(Box, {
@@ -214,6 +207,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   // INTL
   const intl = useIntl();
 
+  const isStaff = useMemo(() => scUserContext.user && UserUtils.isStaff(scUserContext.user), [scUserContext.user]);
   const startDateTime = useMemo(() => getNewDate(event?.start_date), [event]);
   const endDateTime = useMemo(() => getNewDate(event?.end_date), [event]);
 
@@ -371,6 +365,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
     if (visibilityEnabled) {
       formData.append('visible', 'true');
+    }
+
+    if (field.product_ids && (isStaff || event.paywalls?.length)) {
+      field.product_ids.forEach((p, i) => {
+        formData.append(`product_ids[${i}]`, p.toString());
+      });
     }
 
     formData.append('description', field.description);
@@ -797,7 +797,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           }
         />
         {isPaymentsEnabled && (
-          <PaywallsConfigurator {...(event && {contentId: event.id})} contentType={SCContentType.EVENT} onChange={handleChangePaymentsProducts} />
+          <Box className={classes.paywallsConfiguratorWrap}>
+            <PaywallsConfigurator {...(event && {contentId: event.id})} contentType={SCContentType.EVENT} onChange={handleChangePaymentsProducts} />
+          </Box>
         )}
         {genericError && (
           <Box className={classes.genericError}>

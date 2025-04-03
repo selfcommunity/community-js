@@ -79,7 +79,7 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [unitAmount, setUnitAmount] = useState<number>(0.5);
+  const [unitAmount, setUnitAmount] = useState<number>(0.6);
   const [error, setError] = useState<string | null>(null);
 
   // HOOKS
@@ -113,7 +113,7 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
   const handleCreateProduct = useCallback(() => {
     setLoading(true);
     setError(null);
-    PaymentApiClient.createPaymentProduct({name, description, unit_amount: unitAmount})
+    PaymentApiClient.createPaymentProduct({name, unit_amount: unitAmount * 100, ...(description ? {description} : {})})
       .then((p) => {
         setLoading(false);
         onCreate && onCreate(p);

@@ -1,23 +1,24 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Autocomplete,
-  autocompleteClasses,
-  AutocompleteCloseReason,
-  Avatar,
-  Box,
-  Button,
-  Icon,
-  InputBase,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Radio,
-  Stack,
-  Typography,
-  useTheme
+	Accordion,
+	AccordionDetails,
+	AccordionSummary,
+	Autocomplete,
+	autocompleteClasses,
+	AutocompleteCloseReason,
+	Avatar,
+	Box,
+	Button,
+	Icon,
+	InputBase,
+	ListItem,
+	ListItemAvatar,
+	ListItemText,
+	Radio,
+	Slide,
+	Stack,
+	Typography,
+	useTheme, Zoom
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
@@ -36,12 +37,17 @@ import Popper from '@mui/material/Popper';
 import List from '@mui/material/List';
 import CreatePaymentProductForm from '../CreatePaymentProductForm';
 import {grey} from '@mui/material/colors';
+import Grow from '@mui/material/Grow';
 
 const classes = {
   root: `${PREFIX}-root`,
+  contentAccessType: `${PREFIX}-content-access-type`,
   newProduct: `${PREFIX}-new-product`,
   noProducts: `${PREFIX}-no-products`,
-  error: `${PREFIX}-error`
+  error: `${PREFIX}-error`,
+  selectedPaymentProductsList: `${PREFIX}-selected-payment-products-list`,
+  autoCompleteFooter: `${PREFIX}-autocomplete-footer`,
+  btnAddPaymentProduct: `${PREFIX}-add-payment-product`
 };
 
 const Root = styled(Box, {
@@ -49,13 +55,39 @@ const Root = styled(Box, {
   name: PREFIX
 })(({theme}) => ({
   [`& .${classes.newProduct}`]: {
-    border: '1px solid #dbdbdb',
+    background: '#eeeeee',
+    padding: theme.spacing(2),
+    marginTop: theme.spacing(),
     borderRadius: theme.spacing(1)
   },
   [`& .${classes.noProducts}`]: {
     textDecoration: 'italic',
     paddingLeft: 0,
     color: grey[400]
+  },
+  [`& .${classes.contentAccessType}`]: {
+    '& .MuiPaper-root': {
+      borderColor: '#c6c6c6'
+    },
+    '& .MuiAccordion-root:first-of-type': {
+      borderTopLeftRadius: 5,
+      borderTopRightRadius: 5
+    },
+    '& .MuiAccordion-root:last-of-type': {
+      borderBottomLeftRadius: 5,
+      borderBottomRightRadius: 5
+    },
+    [`& .${classes.selectedPaymentProductsList}`]: {
+      borderTop: '1px solid',
+      marginTop: 10
+    },
+    [`& .${classes.btnAddPaymentProduct}`]: {
+      position: 'relative',
+      left: -23,
+      '& .MuiButton-startIcon': {
+        fontSize: '15px'
+      }
+    }
   }
 }));
 
@@ -90,6 +122,9 @@ const StyledAutocompletePopper = styled('div')(({theme}) => ({
   },
   [`&.${autocompleteClasses.popperDisablePortal}`]: {
     position: 'relative'
+  },
+  [`& .${classes.autoCompleteFooter}`]: {
+    backgroundColor: grey[400]
   }
 }));
 
@@ -138,6 +173,7 @@ export interface PaywallsConfiguratorProps {
   prefetchedProducts?: SCPaymentProduct[];
   selectedProducts?: SCPaymentProduct[];
   onChange?: (products: SCPaymentProduct[]) => void;
+  disabled?: boolean;
 }
 
 export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps) {
@@ -146,7 +182,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
     props: inProps,
     name: PREFIX
   });
-  const {className, contentId, contentType, content, prefetchedProducts, selectedProducts = [], onChange, ...rest} = props;
+  const {className, contentId, contentType, content, prefetchedProducts, selectedProducts = [], onChange, disabled = false, ...rest} = props;
 
   // STATE
   const [products, setProducts] = useState<SCPaymentProduct[]>([]);
@@ -154,7 +190,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [value, setValue] = React.useState<SCPaymentProduct[]>(selectedProducts);
   const [pendingValue, setPendingValue] = React.useState<SCPaymentProduct[]>([]);
-  const [expanded, setExpanded] = React.useState<string | false>(false);
+  const [expanded, setExpanded] = React.useState<string | false>(value.length ? ContentAccessType.PAID : ContentAccessType.FREE);
   const [createPrice, setCreatePrice] = useState<boolean>(false);
 
   // HOOKS
@@ -180,6 +216,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
 
   const handleClose = () => {
     setValue(pendingValue);
+    onChange?.(pendingValue);
     if (anchorEl) {
       anchorEl.focus();
     }
@@ -302,7 +339,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
    * Fetch paywalls
    */
   const fetchPaywalls = async (
-    next = `${Endpoints.GetPaywalls.url({})}?content_id=${contentId}&content_type=${contentType}`
+    next = `${Endpoints.GetPaywalls.url({})}?content_id=${contentId}&content_type=${contentType}&active=1`
   ): Promise<SCPaywall[]> => {
     const response = await http.request({
       url: next,
@@ -321,7 +358,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
         .then((paywalls) => {
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          const products = paywalls.map((p) => p.payment_product_object);
+          const products = paywalls.map((p) => p.payment_product);
           setValue(products);
           setPendingValue(products);
           setExpanded(products.length ? ContentAccessType.PAID : ContentAccessType.FREE);
@@ -359,16 +396,18 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
     return null;
   }
 
-  console.log(value);
-
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       {loading ? (
         <PaywallsConfiguratorSkeleton />
       ) : (
-        <div>
+        <div className={classes.contentAccessType}>
           <Typography mb={1}>Seleziona il tipo di accesso al contenuto</Typography>
-          <Accordion expanded={expanded === ContentAccessType.FREE} onChange={handleChange(ContentAccessType.FREE)}>
+          <Accordion
+            expanded={expanded === ContentAccessType.FREE}
+            onChange={handleChange(ContentAccessType.FREE)}
+            disabled={disabled || loading}
+            variant="outlined">
             <AccordionSummary expandIcon={<Radio checked={expanded === ContentAccessType.FREE} />} aria-controls="free-content" id="free-header">
               <Typography>
                 <b>FREE</b>: contenuto gratuito
@@ -381,7 +420,11 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
               </Typography>
             </AccordionDetails>
           </Accordion>
-          <Accordion expanded={expanded === ContentAccessType.PAID} onChange={handleChange(ContentAccessType.PAID)}>
+          <Accordion
+            expanded={expanded === ContentAccessType.PAID}
+            onChange={handleChange(ContentAccessType.PAID)}
+            disabled={disabled || loading}
+            variant="outlined">
             <AccordionSummary expandIcon={<Radio checked={expanded === ContentAccessType.PAID} />} aria-controls="paid-content" id="paid-header">
               <Typography>
                 <b>A PAGAMENTO</b>: contenuto a pagamento
@@ -395,7 +438,13 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                 <Typography style={{flexGrow: 1}} component="div">
                   <b>Prezzi associati</b>
                 </Typography>
-                <Button variant="contained" size="small" disableRipple onClick={handleToggleCreatePaymentPrice} startIcon={<Icon>add</Icon>}>
+                <Button
+                  variant="contained"
+                  size="small"
+                  disableRipple
+                  onClick={handleToggleCreatePaymentPrice}
+                  startIcon={<Icon>add</Icon>}
+                  className={classes.btnAddPaymentProduct}>
                   New
                 </Button>
               </Stack>
@@ -403,51 +452,57 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                 <PaywallsConfiguratorSkeleton />
               ) : (
                 <Box>
-                  <List dense>
+                  <List dense className={classes.selectedPaymentProductsList}>
                     {createPrice && (
-                      <CreatePaymentProductForm
-                        className={classes.newProduct}
-                        onCreate={handleCreatePaymentPrice}
-                        onCancel={handleToggleCreatePaymentPrice}
-                      />
+                      <Zoom in={createPrice}>
+                        <Box>
+                          <CreatePaymentProductForm
+                            className={classes.newProduct}
+                            onCreate={handleCreatePaymentPrice}
+                            onCancel={handleToggleCreatePaymentPrice}
+                          />
+                        </Box>
+                      </Zoom>
                     )}
                     {!value.length && (
                       <ListItem key={-1} className={classes.noProducts} divider>
                         <ListItemText primary={'Al momento nessun prezzo associato'} />
                       </ListItem>
                     )}
-                    {value.map((p, i) => (
-                      <ListItem
-                        key={i}
-                        secondaryAction={
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            size="small"
-                            onClick={() => handleDeleteProduct(p, i)}
-                            startIcon={<Icon>delete</Icon>}>
-                            Remove
-                          </Button>
-                        }
-                        divider>
-                        <ListItemAvatar>
-                          <Avatar>
-                            <Icon>card_giftcard</Icon>
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={p.name}
-                          secondary={`Prices: ${
-                            p.payment_prices?.length
-                              ? p.payment_prices
-                                  .slice(0, 3)
-                                  .map((price) => getConvertedAmount(price))
-                                  .join(' - ')
-                              : '-'
-                          } ${p.payment_prices?.length > 3 ? `+ altri ${p.payment_prices?.length - 3}` : ''}`}
-                        />
-                      </ListItem>
-                    ))}
+                    {value.map((p, i) => {
+                      return (
+                        <ListItem
+                          key={i}
+                          secondaryAction={
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              size="small"
+                              onClick={() => handleDeleteProduct(p, i)}
+                              startIcon={<Icon>delete</Icon>}>
+                              Remove
+                            </Button>
+                          }
+                          divider>
+                          <ListItemAvatar>
+                            <Avatar>
+                              <Icon>card_giftcard</Icon>
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={p.name}
+                            secondary={`Prices: ${
+                              p.payment_prices?.length
+                                ? p.payment_prices
+                                    .slice(0, 3)
+                                    .map((price) => getConvertedAmount(price))
+                                    .join(' - ')
+                                : '-'
+                            } ${p.payment_prices?.length > 3 ? `+ altri ${p.payment_prices?.length - 3}` : ''}`}
+                          />
+                        </ListItem>
+                      );
+                    })}
                   </List>
                   <Button variant="outlined" size="small" fullWidth disableRipple onClick={handleClick} startIcon={<Icon>list</Icon>}>
                     Add selecting price from list
@@ -457,7 +512,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
               {!loading && (
                 <StyledPopper id={open ? 'payment-products' : undefined} open={open} anchorEl={anchorEl} placement="bottom-start">
                   <ClickAwayListener onClickAway={handleClose}>
-                    <div>
+                    <Box>
                       <Box
                         sx={{
                           borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#eaecef' : '#30363d'}`,
@@ -494,7 +549,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                         renderOption={renderOption}
                         options={getOptions}
                         isOptionEqualToValue={(option, value) => option.id === value.id}
-                        getOptionLabel={(option) => option.id.toString()}
+                        getOptionLabel={(option) => option.name.toString()}
                         renderInput={(params) => (
                           <StyledInput
                             ref={params.InputProps.ref}
@@ -507,7 +562,18 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                           />
                         )}
                       />
-                    </div>
+                      <Box sx={{borderTop: '1px solid #eaecef', padding: '8px', display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          disableRipple
+                          onClick={handleClose}
+                          startIcon={<Icon style={{fontSize: 12}}>check</Icon>}
+                          sx={{padding: '2px 8px'}}>
+                          Conferma
+                        </Button>
+                      </Box>
+                    </Box>
                   </ClickAwayListener>
                 </StyledPopper>
               )}

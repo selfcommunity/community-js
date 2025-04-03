@@ -173,6 +173,8 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
       : {background: `url('${preferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
 
+	console.log('*** event *** ', scEvent);
+
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
