@@ -72,7 +72,7 @@
 		"@selfcommunity/types": "^0.7.7-payments.158",
 		"@selfcommunity/react-ui": "^0.10.5-payments.156",
 		"@types/classnames": "^2.3.1",
-		"classnames": "^2.3.2"
+		"classnames": "^2.5.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.7.4",

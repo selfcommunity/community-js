@@ -3,7 +3,14 @@ import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Divider, FormGroup, Icon, Paper, Stack, Switch, TextField, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {
+	SCPreferences,
+	SCPreferencesContextType,
+	UserUtils,
+	useSCPaymentsEnabled,
+	useSCPreferences,
+	useSCUser
+} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
@@ -13,11 +20,12 @@ import ChangeGroupCover from '../ChangeGroupCover';
 import {GROUP_DESCRIPTION_MAX_LENGTH, GROUP_TITLE_MAX_LENGTH} from '../../constants/Group';
 import GroupInviteButton from '../GroupInviteButton';
 import PubSub from 'pubsub-js';
-import {SCGroupPrivacyType, SCGroupType} from '@selfcommunity/types';
+import {SCContentType, SCGroupPrivacyType, SCGroupType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {formatHttpErrorCode, GroupService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import PaywallsConfigurator from '../PaywallsConfigurator';
 
 const messages = defineMessages({
   name: {
@@ -143,8 +151,12 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     isPublic: group && group.privacy === SCGroupPrivacyType.PUBLIC,
     isVisible: group ? group.visible : true,
     invitedUsers: null,
-    isSubmitting: false
+    isSubmitting: false,
+    product_ids: group?.paywalls.map((p) => p.id) || []
   };
+
+  // CONTEXT
+  const scUserContext = useSCUser();
 
   // STATE
   const [field, setField] = useState<any>(initialFieldState);
@@ -152,6 +164,9 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
 
   // INTL
   const intl = useIntl();
+
+  // CONST
+  const isStaff = useMemo(() => scUserContext.user && UserUtils.isStaff(scUserContext.user), [scUserContext.user]);
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -163,6 +178,9 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_PRIVATE_ENABLED].value,
     [scPreferences.preferences]
   );
+
+	// PAYMENTS
+	const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   const _backgroundCover = {
     ...(field.emotionalImageOriginal
@@ -229,6 +247,11 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     if (field.emotionalImageOriginalFile) {
       formData.append('emotional_image_original', field.emotionalImageOriginalFile);
     }
+    if (field.product_ids && (isStaff || group.paywalls?.length)) {
+      field.product_ids.forEach((p, i) => {
+        formData.append(`product_ids[${i}]`, p.toString());
+      });
+    }
     if (!group) {
       for (const key in field.invitedUsers) {
         formData.append(key, field.invitedUsers[key]);
@@ -265,6 +288,13 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
       delete error[`${name}Error`];
       setError(error);
     }
+  };
+
+  const handleChangePaymentsProducts = (products) => {
+    setField((prev) => ({
+      ...prev,
+      product_ids: products.map((product) => product.id)
+    }));
   };
 
   /**
@@ -491,6 +521,11 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
             </Box>
           )}
         </FormGroup>
+        {isPaymentsEnabled && (
+          <Box className={classes.paywallsConfiguratorWrap}>
+            <PaywallsConfigurator {...(group && {contentId: group.id})} contentType={SCContentType.GROUP} onChange={handleChangePaymentsProducts} />
+          </Box>
+        )}
         {!group && (
           <>
             <Divider />

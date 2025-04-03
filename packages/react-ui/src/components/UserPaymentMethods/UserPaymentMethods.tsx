@@ -34,6 +34,12 @@ export interface UserPaymentMethodsProps {
   onHandleCustomerPortal?: (url) => void;
 
   /**
+   * Return url
+   * @default null
+   */
+  returnUrl?: string;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -67,7 +73,7 @@ export default function UserPaymentMethods(inProps: UserPaymentMethodsProps): JS
     props: inProps,
     name: PREFIX
   });
-  const {className = null, onHandleCustomerPortal, ...rest} = props;
+  const {className = null, onHandleCustomerPortal, returnUrl, ...rest} = props;
 
   // STATE
   const [initialized, setInitialized] = useState<boolean>(false);
@@ -102,7 +108,7 @@ export default function UserPaymentMethods(inProps: UserPaymentMethodsProps): JS
       if (!initialized && !isLoading) {
         setInitialized(true);
         setIsLoading(true);
-        PaymentApiClient.getPaymentsCustomerPortal({})
+        PaymentApiClient.getPaymentsCustomerPortal({...(returnUrl && {return_url: returnUrl})})
           .then((portalSession: SCPaymentsCustomerPortalSession) => {
             if (portalSession.url) {
               handleCustomerPortal(portalSession.url);

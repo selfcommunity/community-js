@@ -146,7 +146,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
 
   // CONST
   const isEventAdmin = useMemo(
-    () => scUserContext.user && scEvent && scEvent?.managed_by.id === scUserContext.user.id,
+    () => scUserContext.user && scEvent && scEvent?.managed_by?.id === scUserContext.user.id,
     [scUserContext.user, scEvent?.managed_by]
   );
 
@@ -172,6 +172,8 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
       ? {background: `url('${scEvent.image_bigger}') center / cover`}
       : {background: `url('${preferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
+
+	console.log('*** event *** ', scEvent);
 
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore

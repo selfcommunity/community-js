@@ -22,8 +22,17 @@ import {useThemeProps} from '@mui/system';
 import {LocalizationProvider, MobileDatePicker, MobileTimePicker} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
-import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
+import {
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
+  UserUtils,
+  useSCContext,
+  useSCPaymentsEnabled,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
+import {SCContentType, SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
@@ -41,6 +50,7 @@ import UploadEventCover from './UploadEventCover';
 import {combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
 import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
 import CoverPlaceholder from '../../assets/deafultCover';
+import PaywallsConfigurator from '../PaywallsConfigurator';
 
 const messages = defineMessages({
   name: {
@@ -99,7 +109,8 @@ const classes = {
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
   error: `${PREFIX}-error`,
-  genericError: `${PREFIX}-generic-error`
+  genericError: `${PREFIX}-generic-error`,
+  paywallsConfiguratorWrap: `${PREFIX}-paywalls-configurator-wrap`
 };
 
 const Root = styled(Box, {
@@ -196,6 +207,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   // INTL
   const intl = useIntl();
 
+  const isStaff = useMemo(() => scUserContext.user && UserUtils.isStaff(scUserContext.user), [scUserContext.user]);
   const startDateTime = useMemo(() => getNewDate(event?.start_date), [event]);
   const endDateTime = useMemo(() => getNewDate(event?.end_date), [event]);
 
@@ -209,7 +221,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     endDate: event?.end_date ? endDateTime : getNewDate(),
     endTime: event?.end_date ? endDateTime : getLaterHoursDate(3),
     location: event?.location
-      ? event.location === SCEventLocationType.ONLINE && event.live_stream
+      ? event.location === SCEventLocationType.PERSON
+        ? SCEventLocationType.PERSON
+        : event.location === SCEventLocationType.ONLINE && event.live_stream
         ? SCEventLocationType.LIVESTREAM
         : SCEventLocationType.ONLINE
       : EventAddressComponentProps.locations?.length
@@ -224,6 +238,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     liveStreamSettings: event?.live_stream ? event?.live_stream.settings : null,
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
     isPublic: event?.privacy === SCEventPrivacyType.PUBLIC || true,
+    product_ids: event?.paywalls.map((p) => p.id) || [],
     isSubmitting: false
   };
 
@@ -254,6 +269,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   );
   const disablePastStartTime = useMemo(() => field.startDate.getDate() === getNewDate().getDate(), [field]);
   const disablePastEndTime = useMemo(() => field.endDate.getDate() === getNewDate().getDate(), [field]);
+
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   const _backgroundCover = {
     ...(field.imageOriginal
@@ -342,6 +360,11 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       formData.append('link', '');
       formData.append('live_stream_settings', null);
     }
+    if (field.location !== SCEventLocationType.PERSON) {
+      formData.append('geolocation', '');
+      formData.append('geolocation_lat', '');
+      formData.append('geolocation_lng', '');
+    }
 
     if (privateEnabled) {
       formData.append('privacy', field.isPublic ? SCEventPrivacyType.PUBLIC : SCEventPrivacyType.PRIVATE);
@@ -349,6 +372,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
     if (visibilityEnabled) {
       formData.append('visible', 'true');
+    }
+
+    if (field.product_ids && (isStaff || event.paywalls?.length)) {
+      field.product_ids.forEach((p, i) => {
+        formData.append(`product_ids[${i}]`, p.toString());
+      });
     }
 
     formData.append('description', field.description);
@@ -435,6 +464,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     },
     [error, setField, setGenericError]
   );
+
+  const handleChangePaymentsProducts = (products) => {
+    setField((prev) => ({
+      ...prev,
+      product_ids: products.map((product) => product.id)
+    }));
+  };
 
   const shouldDisableDate = useCallback(
     (date: Date) => {
@@ -767,6 +803,11 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ) : null
           }
         />
+        {isPaymentsEnabled && (
+          <Box className={classes.paywallsConfiguratorWrap}>
+            <PaywallsConfigurator {...(event && {contentId: event.id})} contentType={SCContentType.EVENT} onChange={handleChangePaymentsProducts} />
+          </Box>
+        )}
         {genericError && (
           <Box className={classes.genericError}>
             <Alert variant="filled" severity="error">

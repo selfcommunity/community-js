@@ -124,7 +124,10 @@ export function VideoConference(inProps: VideoConferenceProps) {
   const tracksNoParticipants = useMemo(
     () =>
       tracks.filter(
-        (t) => t.participant.name === scUserContext.user.username || t.participant.name === speakerFocused.username || t.source === 'screen_share'
+        (t) =>
+          t.participant.name === scUserContext.user.username ||
+          (speakerFocused && t.participant.name === speakerFocused.username) ||
+          t.source === 'screen_share'
       ),
     [tracks, scUserContext.user]
   );

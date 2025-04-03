@@ -7,30 +7,20 @@ import {useThemeProps} from '@mui/system';
 import nodes from './nodes';
 import {InitialConfigType, LexicalComposer} from '@lexical/react/LexicalComposer';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
-import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
-import {RichTextPlugin} from './plugins/LexicalRichTextPlugin';
-import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
-import {HorizontalRulePlugin} from '@lexical/react/LexicalHorizontalRulePlugin';
-import {
-  AutoLinkPlugin,
-  DefaultHtmlValuePlugin,
-  EmojiPlugin,
-  ImagePlugin,
-  MediaPlugin,
-  MediaPluginProps,
-  MentionsPlugin,
-  OnChangePlugin
-} from './plugins';
-import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
-import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
 import {EditorThemeClasses, LexicalEditor} from 'lexical';
-import ToolbarPlugin, {ToolbarPluginProps} from './plugins/ToolbarPlugin';
-import {ListPlugin} from '@lexical/react/LexicalListPlugin';
-import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
+import ToolbarPlugin from './plugins/ToolbarPlugin';
+import {PREFIX} from './constants';
+import {HorizontalRulePlugin} from './plugins/HorizontalRulePlugin';
+import {RichTextPlugin} from './plugins/LexicalRichTextPlugin';
+import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
+import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin} from './plugins';
 import OnBlurPlugin from './plugins/OnBlurPlugin';
 import OnFocusPlugin from './plugins/OnFocusPlugin';
-import {PREFIX} from './constants';
-import {SCMediaType} from '@selfcommunity/types';
+import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
+import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
+import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
+import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
+import {ListPlugin} from '@lexical/react/LexicalListPlugin';
 
 const classes = {
   root: `${PREFIX}-root`,

@@ -16,6 +16,7 @@ import User from '../User';
 import Widget, {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
 import EventSkeleton, {EventSkeletonProps} from './Skeleton';
+import {checkEventFinished} from '../../utils/events';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -44,7 +45,8 @@ const classes = {
   snippetInProgress: `${PREFIX}-snippet-in-progress`,
   snippetPrimary: `${PREFIX}-snippet-primary`,
   snippetSecondary: `${PREFIX}-snippet-secondary`,
-  snippetActions: `${PREFIX}-snippet-actions`
+  snippetActions: `${PREFIX}-snippet-actions`,
+  finishedChip: `${PREFIX}-finished-chip`
 };
 
 const Root = styled(Widget, {
@@ -184,6 +186,7 @@ export default function Event(inProps: EventProps): JSX.Element {
   // STATE
   const {scEvent} = useSCFetchEvent({id: eventId, event, autoSubscribe: false, ...(cacheStrategy && {cacheStrategy})});
   const inProgress = useMemo(() => scEvent && scEvent.active && scEvent.running, [scEvent]);
+  const isEventFinished = useMemo(() => checkEventFinished(scEvent), [scEvent]);
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -274,6 +277,14 @@ export default function Event(inProps: EventProps): JSX.Element {
               className={classes.previewInProgress}
             />
           )}
+          {isEventFinished && (
+            <Chip
+              size="small"
+              component="div"
+              label={<FormattedMessage id="ui.event.finished" defaultMessage="ui.event.finished" />}
+              className={classes.finishedChip}
+            />
+          )}
         </Box>
         <CardContent className={classes.previewContent}>
           <EventInfoDetails
@@ -315,6 +326,14 @@ export default function Event(inProps: EventProps): JSX.Element {
                 component="div"
                 label={<FormattedMessage id="ui.event.inProgress" defaultMessage="ui.event.inProgress" />}
                 className={classes.snippetInProgress}
+              />
+            )}
+            {isEventFinished && (
+              <Chip
+                size="small"
+                component="div"
+                label={<FormattedMessage id="ui.event.finished" defaultMessage="ui.event.finished" />}
+                className={classes.finishedChip}
               />
             )}
           </Box>

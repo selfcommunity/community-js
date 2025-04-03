@@ -16,16 +16,14 @@ const template = (args) => (
 );
 
 // @ts-ignore
-export const Base: StoryObj<NavigationMenuIconButton> = {
+export const Base: StoryObj<typeof NavigationMenuIconButton> = {
   render: template
 };
 
 // @ts-ignore
-export const Custom: StoryObj<NavigationMenuIconButton> = {
+export const Custom: StoryObj<typeof NavigationMenuIconButton> = {
 	args: {
 		/* the args you need here will depend on your component */
-		SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
-		value: '/',
 		DrawerProps: {drawerContent: <Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography>, anchor: 'right'}
 	},
 	render: template

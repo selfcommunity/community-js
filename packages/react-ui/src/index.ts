@@ -207,6 +207,7 @@ import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from './components/
 import LiveStreamForm, {LiveStreamFormProps} from './components/LiveStreamForm';
 import LiveStreamRoom, {LiveStreamRoomProps} from './components/LiveStreamRoom';
 import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './components/LiveStreamRoom/LiveStreamVideoConference';
+import PaywallsConfigurator, {PaywallsConfiguratorProps, PaywallsConfiguratorSkeleton} from './components/PaywallsConfigurator';
 import PaywallsDialog, {PaywallsDialogProps} from './components/PaywallsDialog';
 import PaymentProducts, {PaymentProductsProps} from './components/PaymentProducts';
 import PaymentProduct, {PaymentProductProps} from './components/PaymentProduct';
@@ -806,8 +807,15 @@ export {
   X_SHARE,
   PROVIDER_ICONS_CONTAINED,
   PROVIDER_ICONS_OUTLINED,
+  getDefaultLocale,
+  getDefaultPaymentMethodConfiguration,
+  getDefaultAppearanceStyle,
+  getConvertedAmount,
   PaywallsDialog,
   PaywallsDialogProps,
+  PaywallsConfigurator,
+  PaywallsConfiguratorProps,
+  PaywallsConfiguratorSkeleton,
   PaymentProducts,
   PaymentProductsProps,
   PaymentProduct,

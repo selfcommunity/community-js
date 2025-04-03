@@ -256,7 +256,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
 
   return (
     <>
-      <Tooltip title={disabled == true ? <FormattedMessage id="ui.buyButton.disabled" defaultMessage="ui.buyButton.disabled" /> : ''}>
+      <Tooltip title={disabled ? <FormattedMessage id="ui.buyButton.disabled" defaultMessage="ui.buyButton.disabled" /> : ''}>
         <RequestRoot
           className={classNames(classes.requestRoot, className)}
           variant="contained"

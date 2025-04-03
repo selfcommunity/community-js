@@ -1,5 +1,5 @@
 import {BaseGetParams, BaseSearchParams} from './baseParams';
-import {SCCheckoutSessionUIMode, SCContentType} from '@selfcommunity/types';
+import {SCCheckoutSessionUIMode, SCContentType, SCPaymentPriceCurrencyType} from '@selfcommunity/types';
 
 /**
  * PaymentParams interface.
@@ -82,4 +82,29 @@ export interface PaymentOrderParams extends BaseSearchParams {
    * Ordering
    */
   ordering?: string;
+}
+
+/**
+ * CreatePaymentProduct interface.
+ */
+export interface CreatePaymentProductParams {
+  /**
+   * Product name
+   */
+  name: string;
+
+  /**
+   * Prduct price
+   */
+  unit_amount: number;
+
+  /**
+   * Description name
+   */
+  description?: string;
+
+  /**
+   * Price currency
+   */
+  currency?: SCPaymentPriceCurrencyType;
 }

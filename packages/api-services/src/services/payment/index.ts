@@ -9,17 +9,18 @@ import {
   PaymentProductsParams,
   CustomerPortalCreateSessionParams,
   PaymentContentStatusParams,
-  PaymentOrderParams
+  PaymentOrderParams,
+  CreatePaymentProductParams
 } from '../../types/payment';
 import {
-  SCCheckoutSession,
-  SCPaymentOrder,
-  SCCheckoutSessionDetail,
-  SCCheckoutSessionComplete,
-  SCPaymentProduct,
-  SCPaymentPrice,
-  SCPaymentsCustomerPortalSession,
-  SCPurchasableContent
+	SCCheckoutSession,
+	SCPaymentOrder,
+	SCCheckoutSessionDetail,
+	SCCheckoutSessionComplete,
+	SCPaymentProduct,
+	SCPaymentPrice,
+	SCPaymentsCustomerPortalSession,
+	SCPurchasableContent, SCPaywall
 } from '@selfcommunity/types';
 
 export interface PaymentApiClientInterface {
@@ -35,7 +36,7 @@ export interface PaymentApiClientInterface {
    * @param params
    * @param config
    */
-  getPaywalls(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>>;
+  getPaywalls(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaywall>>;
 
   /**
    * Get payment products
@@ -96,6 +97,13 @@ export interface PaymentApiClientInterface {
     data: CustomerPortalCreateSessionParams | FormData,
     config?: AxiosRequestConfig
   ): Promise<SCPaymentsCustomerPortalSession>;
+
+  /**
+   * Create payment product
+   * @param data
+   * @param config
+   */
+  createPaymentProduct(data: CreatePaymentProductParams | FormData, config?: AxiosRequestConfig): Promise<SCPaymentProduct>;
 }
 
 /**
@@ -121,7 +129,7 @@ export class PaymentApiClient {
    * @param params
    * @param config
    */
-  static getPaywalls(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
+  static getPaywalls(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaywall>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetPaywalls.url({})}?${p.toString()}`, method: Endpoints.GetPaywalls.method});
   }
@@ -171,6 +179,15 @@ export class PaymentApiClient {
    */
   static checkoutCreateSession(data: CheckoutCreateSessionParams | FormData, config?: AxiosRequestConfig): Promise<SCCheckoutSession> {
     return apiRequest({...config, url: Endpoints.CheckoutCreateSession.url({}), method: Endpoints.CheckoutCreateSession.method, data});
+  }
+
+  /**
+   * Create payment product
+   * @param data
+   * @param config
+   */
+  static createPaymentProduct(data: CreatePaymentProductParams | FormData, config?: AxiosRequestConfig): Promise<SCPaymentProduct> {
+    return apiRequest({...config, url: Endpoints.CreatePaymentProduct.url({}), method: Endpoints.CreatePaymentProduct.method, data});
   }
 
   /**
@@ -254,7 +271,7 @@ export default class PaymentService {
   static async getPaymentContentStatus(params?: PaymentContentStatusParams, config?: AxiosRequestConfig): Promise<SCPurchasableContent> {
     return PaymentApiClient.getPaymentContentStatus(params, config);
   }
-  static async getPaywalls(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
+  static async getPaywalls(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaywall>> {
     return PaymentApiClient.getPaywalls(params, config);
   }
   static async getPaymentProducts(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
@@ -288,5 +305,8 @@ export default class PaymentService {
     config?: AxiosRequestConfig
   ): Promise<SCPaymentsCustomerPortalSession> {
     return PaymentApiClient.getPaymentsCustomerPortal(data, config);
+  }
+  static async createPaymentProduct(data: CreatePaymentProductParams | FormData, config?: AxiosRequestConfig): Promise<SCPaymentProduct> {
+    return PaymentApiClient.createPaymentProduct(data, config);
   }
 }
