@@ -82,8 +82,8 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
 
   if (course.user_completion_rate === 100) {
     Object.assign(data, {
-      section_id: course.sections[0].id,
-      lesson_id: course.sections[0].lessons[0].id
+      section_id: course.sections?.[0].id,
+      lesson_id: course.sections?.[0].lessons[0].id
     });
 
     return data;
