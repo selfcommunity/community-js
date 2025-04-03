@@ -2,7 +2,7 @@ import {Box, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import AddUsersButton from '../../shared/AddUsersButton';
 import {memo, SyntheticEvent, useCallback, useEffect, useReducer, useRef} from 'react';
-import {SCCourseType, SCUserType} from '@selfcommunity/types';
+import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
@@ -51,7 +51,7 @@ function Users(props: UsersProps) {
     endpointQueryParams = {
       limit: 6,
       offset: DEFAULT_PAGINATION_OFFSET,
-      statuses: JSON.stringify(['joined', 'manager', 'creator'])
+      statuses: JSON.stringify([SCCourseJoinStatusType.JOINED, SCCourseJoinStatusType.MANAGER, SCCourseJoinStatusType.CREATOR])
     },
     handleTabChange
   } = props;
@@ -188,9 +188,16 @@ function Users(props: UsersProps) {
       </Stack>
 
       <CourseUsersTable
-        course={course}
         state={state}
         dispatch={dispatch}
+        course={course}
+        endpointSearch={{
+          url: () => Endpoints.GetCourseDashboardUsers.url({id: course.id}),
+          method: Endpoints.GetCourseDashboardUsers.method
+        }}
+        endpointQueryParamsSearch={{
+          statuses: JSON.stringify([SCCourseJoinStatusType.JOINED, SCCourseJoinStatusType.MANAGER, SCCourseJoinStatusType.CREATOR])
+        }}
         headerCells={headerCells}
         mode={SCCourseUsersTableModeType.EDIT}
         emptyStatusTitle="ui.courseUsersTable.empty.users.title"

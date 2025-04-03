@@ -9,7 +9,7 @@ import CourseUsersTable from '../../shared/CourseUsersTable';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
-import {CourseService, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {BaseGetParams, CourseService, Endpoints, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {PREFIX} from './constants';
 import PubSub from 'pubsub-js';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
@@ -35,7 +35,7 @@ const headerCells = [
 
 interface RequestsProps {
   course: SCCourseType;
-  endpointQueryParams?: Record<string, string | number>;
+  endpointQueryParams?: BaseGetParams;
   handleTabChange: (_e: SyntheticEvent, newTabValue: SCCourseEditTabType) => void;
 }
 
@@ -133,9 +133,13 @@ function Requests(props: RequestsProps) {
       </Stack>
 
       <CourseUsersTable
-        course={course}
         state={state}
         dispatch={dispatch}
+        course={course}
+        endpointSearch={{
+          url: () => Endpoints.GetCourseWaitingApproval.url({id: course.id}),
+          method: Endpoints.GetCourseWaitingApproval.method
+        }}
         headerCells={headerCells}
         mode={SCCourseUsersTableModeType.REQUESTS}
         emptyStatusTitle="ui.courseUsersTable.empty.requests.title"

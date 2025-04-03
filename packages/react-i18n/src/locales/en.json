@@ -339,6 +339,8 @@
   "ui.courseUsersTable.dialog.info.text2: ": "Course completed: {courseCompleted}%",
   "ui.courseUsersTable.dialog.title": "Corso progress",
   "ui.courseUsersTable.empty.requests.title": "There are currently no requests from users for the Course",
+  "ui.courseUsersTable.empty.search.description": "We invite you to try with another name",
+  "ui.courseUsersTable.empty.search.title": "There are currently no users with the name you are looking for",
   "ui.courseUsersTable.empty.users.description": "We invite you to add users to the list",
   "ui.courseUsersTable.empty.users.title": "There are currently no Users invited to the Course",
   "ui.courseUsersTable.searchBar.placeholder": "Search users",

@@ -33,6 +33,14 @@ export enum SCCourseJoinStatusType {
 }
 
 /**
+ * SCCourseOrderingUsersType enum
+ */
+export enum SCCourseOrderingUsersType {
+  JOINED_AT = 'joined_at',
+  LAST_ACTIVE_AT = 'last_active_at'
+}
+
+/**
  * Interface SCCourseType.
  * Course Schema.
  */

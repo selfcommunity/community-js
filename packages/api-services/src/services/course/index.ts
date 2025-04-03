@@ -3,6 +3,7 @@ import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
 import {
   BaseGetParams,
+  BaseSearchParams,
   CourseCreateParams,
   CourseDashboardUsersParams,
   CourseInfoParams,
@@ -1010,7 +1011,7 @@ export default class CourseService {
   }
   static async getCourseWaitingApproval(
     id: number | string,
-    params?: BaseGetParams,
+    params?: BaseSearchParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>> {
     return CourseApiClient.getCourseWaitingApproval(id, params, config);
