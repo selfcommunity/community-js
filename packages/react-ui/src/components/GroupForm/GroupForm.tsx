@@ -522,7 +522,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
             </Box>
           )}
         </FormGroup>
-        {isPaymentsEnabled && (
+        {isPaymentsEnabled && isStaff && (
           <Box className={classes.paywallsConfiguratorWrap}>
             <PaywallsConfigurator {...(group && {contentId: group.id})} contentType={SCContentType.GROUP} onChange={handleChangePaymentsProducts} />
           </Box>
