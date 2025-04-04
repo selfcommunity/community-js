@@ -147,7 +147,6 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
   const commentsObject = useSCFetchLessonCommentObjects({
     id: lessonObject.id,
     lessonObject: lessonObject,
-    pageSize: 8,
     orderBy: SCCommentsOrderBy.ADDED_AT_ASC,
     cacheStrategy
   });
@@ -278,7 +277,12 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
             replyIcon
             editable={!commenting}
             onReply={handleCommentAction}
-            EditorProps={{placeholder: intl.formatMessage(messages.commentEditorPlaceholder), uploadFile: true, uploadImage: false, isLessonCommentEditor: true}}
+            EditorProps={{
+              placeholder: intl.formatMessage(messages.commentEditorPlaceholder),
+              uploadFile: true,
+              uploadImage: false,
+              isLessonCommentEditor: true
+            }}
           />
         )}
       </>
