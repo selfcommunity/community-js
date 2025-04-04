@@ -22,6 +22,9 @@ const Component = {
             '& img': {
               height: theme.selfcommunity.group.avatar.sizeMedium,
               width: theme.selfcommunity.group.avatar.sizeMedium
+            },
+            '& .MuiIcon-root': {
+              color: theme.palette.common.white
             }
           }
         },
