@@ -178,7 +178,7 @@ export default function useSCFetchLessonCommentObjects(props: {
     id,
     lessonObject,
     offset = 0,
-    pageSize = 5,
+    pageSize = 15,
     orderBy = SCCommentsOrderBy.ADDED_AT_DESC,
     parent,
     onChangePage,
