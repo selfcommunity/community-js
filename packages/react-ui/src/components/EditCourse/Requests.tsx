@@ -58,7 +58,7 @@ function Requests(props: RequestsProps) {
       isLoadingNext: false,
       next: null,
       cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USERS_REQUESTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
-      cacheStrategy: CacheStrategies.CACHE_FIRST,
+      cacheStrategy: CacheStrategies.NETWORK_ONLY,
       visibleItems: endpointQueryParams.limit
     },
     stateWidgetInitializer
