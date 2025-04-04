@@ -98,18 +98,14 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
   const [dialog, setDialog] = useState<SCCourseEditManageUserProps | null>(null);
 
   // REFS
-  const ref = useRef<SCCourseEditManageUserRef | null>(null);
+  const buttonRef = useRef<SCCourseEditManageUserRef | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   // CONTEXTS
   const scUserContext: SCUserContextType = useSCUser();
 
   // INTL
   const intl = useIntl();
-
-  // EFFECTS
-  useEffect(() => {
-    setUsers(state.results);
-  }, [state.results, setUsers]);
 
   // HANDLERS
   const handleNext = useCallback(() => {
@@ -139,10 +135,10 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
   const handleConfirm = useCallback(() => {
     switch (dialog.tab) {
       case SCCourseEditTabType.USERS:
-        ref.current.handleManageUser(dialog.user);
+        buttonRef.current.handleManageUser(dialog.user);
         break;
       case SCCourseEditTabType.REQUESTS:
-        ref.current.handleManageUser(dialog.request);
+        buttonRef.current.handleManageUser(dialog.request);
     }
 
     handleOpenDialog(null);
@@ -188,6 +184,28 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
       });
   }, [value, endpointSearch, setUsers, setLoadingSearch, dispatch]);
 
+  const handleKeyUp = useCallback(
+    (e: KeyboardEvent) => {
+      if (value.length > 0 && e.key === 'Enter') {
+        handleSearchStart();
+      }
+    },
+    [value, handleSearchStart]
+  );
+
+  // EFFECTS
+  useEffect(() => {
+    setUsers(state.results);
+  }, [state.results, setUsers]);
+
+  useEffect(() => {
+    inputRef.current?.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      inputRef.current?.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [handleKeyUp]);
+
   if (!users) {
     return <CourseUsersTableSkeleton />;
   }
@@ -195,6 +213,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
   return (
     <Root className={classes.root}>
       <TextField
+        ref={inputRef}
         placeholder={intl.formatMessage({
           id: 'ui.courseUsersTable.searchBar.placeholder',
           defaultMessage: 'ui.courseUsersTable.searchBar.placeholder'
@@ -301,7 +320,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                   user.join_status !== SCCourseJoinStatusType.CREATOR &&
                   scUserContext.user.id !== user.id ? (
                     <TableCell>
-                      <RemoveButton ref={ref} course={course} user={user} handleOpenDialog={handleOpenDialog} />
+                      <RemoveButton ref={buttonRef} course={course} user={user} handleOpenDialog={handleOpenDialog} />
                     </TableCell>
                   ) : (
                     mode === SCCourseUsersTableModeType.EDIT && <TableCell />
@@ -313,7 +332,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                   )}
                   {mode === SCCourseUsersTableModeType.REQUESTS && (
                     <TableCell>
-                      <RequestButton ref={ref} course={course} user={user} handleOpenDialog={handleOpenDialog} />
+                      <RequestButton ref={buttonRef} course={course} user={user} handleOpenDialog={handleOpenDialog} />
                     </TableCell>
                   )}
                 </TableRow>
