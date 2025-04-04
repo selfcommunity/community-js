@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.19...@selfcommunity/react-theme-default@0.4.5-alpha.20) (2025-04-04)
+
+
+### Bug Fixes
+
+* fixed event create form on mobile ([dbc9c94](https://github.com/selfcommunity/community-js/commit/dbc9c946fa668cc6ac0ae1a001d9f2e86f887be0))
+* group form icon color ([5f33bf0](https://github.com/selfcommunity/community-js/commit/5f33bf0c5419d960ae30c965d3b8cd90a2f5926d))
+
+
+
+
+
 ## [0.4.5-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.18...@selfcommunity/react-theme-default@0.4.5-alpha.19) (2025-03-27)
 
 
