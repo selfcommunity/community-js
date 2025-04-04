@@ -477,7 +477,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                 />
               </Typography>
             }>
-            <Grid container spacing={{xs: 2}} className={classes.courses} {...GridContainerComponentProps}>
+            <Grid container spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
               <>
                 {courses.map((course: SCCourseType) => (
                   <Grid item xs={12} sm={12} md={6} lg={3} key={course.id} className={classes.item} {...GridItemComponentProps}>
