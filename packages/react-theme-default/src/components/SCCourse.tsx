@@ -143,7 +143,7 @@ const Component = {
             height: theme.spacing(4)
           },
           '& .MuiChip-root': {
-            marginRight: theme.spacing(0.5)
+            margin: theme.spacing(0.5)
           }
         }
       },

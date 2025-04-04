@@ -1,7 +1,21 @@
-import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Icon, LinearProgress, Typography} from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Chip,
+  Icon,
+  LinearProgress,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchCourse, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCRouting} from '@selfcommunity/react-core';
 import {SCCourseJoinStatusType, SCCourseType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
@@ -163,6 +177,9 @@ export default function Course(inProps: CourseProps): JSX.Element {
 
   // STATE
   const {scCourse} = useSCFetchCourse({id: courseId, course});
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.between('xs', 'md'));
+  const MAX_VISIBLE_CATEGORIES = isMobile ? 3 : 1;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -279,9 +296,22 @@ export default function Course(inProps: CourseProps): JSX.Element {
             <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
           </Typography>
           <Box className={classes.previewCategory}>
-            {scCourse.categories.map((category) => (
+            {scCourse.categories.slice(0, MAX_VISIBLE_CATEGORIES).map((category) => (
               <Chip key={category.id} size="small" label={category.name} />
             ))}
+
+            {scCourse.categories.length > MAX_VISIBLE_CATEGORIES && (
+              <Tooltip
+                title={
+                  <>
+                    {scCourse.categories.slice(MAX_VISIBLE_CATEGORIES).map((cat) => (
+                      <Box key={cat.id}>{cat.name}</Box>
+                    ))}
+                  </>
+                }>
+                <Chip size="small" label={`+${scCourse.categories.length - MAX_VISIBLE_CATEGORIES}`} sx={{cursor: 'pointer'}} />
+              </Tooltip>
+            )}
           </Box>
           <Box className={classes.previewProgress}>{renderProgress()}</Box>
         </CardContent>
