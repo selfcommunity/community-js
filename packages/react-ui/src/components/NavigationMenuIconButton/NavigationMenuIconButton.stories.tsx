@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import NavigationMenuIconButton from './index';
-import { Typography } from '@mui/material';
-import React from 'react';
+import {Typography} from '@mui/material';
 
 export default {
   title: 'Design System/React UI/Navigation Menu Icon Button',

@@ -1,12 +1,12 @@
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {PREFIX} from './constants';
 import EventForm, {EventFormProps} from '../EventForm';
 import {useCallback} from 'react';
+import {SCEventType} from '@selfcommunity/types';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -38,7 +38,7 @@ export interface EventFormDialogProps extends BaseDialogProps {
 
   /**
    * Props to spread to EventForm component
-   * @default undefined
+   * @default {}
    */
   EventFormComponentProps?: EventFormProps;
 
@@ -73,11 +73,11 @@ export default function EventFormDialog(inProps: EventFormDialogProps): JSX.Elem
     props: inProps,
     name: PREFIX
   });
-  const {className, open = true, onClose, EventFormComponentProps, ...rest} = props;
+  const {className, open = true, onClose, EventFormComponentProps = {}, ...rest} = props;
 
   const handleSuccess = useCallback(
     (event: SCEventType) => {
-      EventFormComponentProps?.onSuccess?.(event);
+      EventFormComponentProps.onSuccess?.(event);
       onClose?.();
     },
     [onClose, EventFormComponentProps]
@@ -100,7 +100,7 @@ export default function EventFormDialog(inProps: EventFormDialogProps): JSX.Elem
       onClose={onClose}
       className={classNames(classes.root, className)}
       {...rest}>
-      <EventForm {...(EventFormComponentProps && EventFormComponentProps)} onSuccess={handleSuccess} />
+      <EventForm {...EventFormComponentProps} onSuccess={handleSuccess} />
     </Root>
   );
 }

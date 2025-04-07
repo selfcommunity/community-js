@@ -916,6 +916,8 @@
   "ui.notification.event.user_accepted_to_join_event": "accepted to join <link>{event}</link> event",
   "ui.notification.event.user_added_to_event": "accepted your request for the event <link>{event}</link>",
   "ui.notification.event.button.see": "See",
+  "ui.notification.event.button.accept": "Accept",
+  "ui.notification.event.button.accepted": "Accepted",
   "ui.notification.event.privacy.public": "Public",
   "ui.notification.event.privacy.private": "Private",
   "ui.notification.event.address.live.label": "In Person",
