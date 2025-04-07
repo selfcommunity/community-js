@@ -34,12 +34,6 @@ export interface CreateLiveStreamButtonProps extends ButtonProps {
   CreateLiveStreamDialogComponentProps?: CreateLiveStreamDialogProps;
 
   /**
-   * On success callback function
-   * @default null
-   */
-  onSuccess?: (data: SCEventType | SCLiveStreamType) => void;
-
-  /**
    * Any other properties
    */
   [p: string]: any;
@@ -70,7 +64,7 @@ export default function CreateLiveStreamButton(inProps: CreateLiveStreamButtonPr
     props: inProps,
     name: PREFIX
   });
-  const {className, CreateLiveStreamDialogComponentProps = {}, onSuccess, children, ...rest} = props;
+  const {className, CreateLiveStreamDialogComponentProps = {}, children, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -110,14 +104,6 @@ export default function CreateLiveStreamButton(inProps: CreateLiveStreamButtonPr
   };
 
   /**
-   * Handle close
-   */
-  const handleSuccess = (data: SCEventType | SCLiveStreamType) => {
-    onSuccess && onSuccess(data);
-    setOpen((o) => !o);
-  };
-
-  /**
    * If there's no authUserId, component is hidden.
    */
   if (!liveStreamEnabled || !authUserId || (onlyStaffEnabled && !isStaff) || (isFreeTrialTier && !isCommunityOwner)) {
@@ -138,7 +124,7 @@ export default function CreateLiveStreamButton(inProps: CreateLiveStreamButtonPr
         {...rest}>
         {children ?? <FormattedMessage id="ui.createEventButton.goLive" defaultMessage="ui.createEventButton.goLive" />}
       </Root>
-      {open && <CreateLivestreamDialog open onClose={handleClose} onSuccess={handleSuccess} {...CreateLiveStreamDialogComponentProps} />}
+      {open && <CreateLivestreamDialog open onClose={handleClose} {...CreateLiveStreamDialogComponentProps} />}
     </React.Fragment>
   );
 }
