@@ -56,13 +56,11 @@ export interface CreateLiveStreamDialogProps extends BaseDialogProps {
    * @default null
    */
   onSuccess?: (data: SCEventType | SCLiveStreamType) => void;
-
   /**
    * Props to spread to EventForm component
    * @default {}
    */
   EventFormComponentProps?: EventFormProps;
-
   /**
    * Props to spread to LiveStreamForm component
    * @default {}
