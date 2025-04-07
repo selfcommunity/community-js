@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.50...@selfcommunity/react-ui@0.11.0-alpha.51) (2025-04-07)
+
+
+### Bug Fixes
+
+* NavigationToolbar ([19fb671](https://github.com/selfcommunity/community-js/commit/19fb671ac747e4ceca3839434183c4698c4f8c12))
+
+
+
+
+
 # [0.11.0-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.49...@selfcommunity/react-ui@0.11.0-alpha.50) (2025-04-07)
 
 
