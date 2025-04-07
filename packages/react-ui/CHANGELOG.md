@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.49...@selfcommunity/react-ui@0.11.0-alpha.50) (2025-04-07)
+
+
+### Bug Fixes
+
+* event notification accept action state ([7c80079](https://github.com/selfcommunity/community-js/commit/7c80079eb06c8aecf1849e0e0d39a31ad27b77bc))
+* notification event button loading condition ([9515922](https://github.com/selfcommunity/community-js/commit/951592256997c5b0757784cf2629adeadf18546f))
+
+
+
+
+
 # [0.11.0-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.48...@selfcommunity/react-ui@0.11.0-alpha.49) (2025-04-07)
 
 
