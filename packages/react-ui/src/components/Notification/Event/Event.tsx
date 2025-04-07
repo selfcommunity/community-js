@@ -10,7 +10,13 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventSubscriptionStatusType, SCNotificationEventActivityType, SCNotificationTypologyType} from '@selfcommunity/types';
+import {
+  SCEventLocationType,
+  SCEventSubscriptionStatusType,
+  SCEventType,
+  SCNotificationEventActivityType,
+  SCNotificationTypologyType
+} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
@@ -94,12 +100,8 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
   };
 
   useEffect(() => {
-    if (scUserContext.user) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      setStatus(scEventsManager?.subscriptionStatus(notificationObject.event));
-    }
-  }, [scUserContext.user, scEventsManager?.subscriptionStatus, notificationObject.event]);
+    setStatus(scEventsManager?.subscriptionStatus(notificationObject.event as SCEventType));
+  }, [scEventsManager?.subscriptionStatus, notificationObject.event]);
 
   // RENDER
   if (isSnippetTemplate || isToastTemplate) {
@@ -188,7 +190,7 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
                 {notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT ? (
                   <LoadingButton
                     disabled={status && status !== SCEventSubscriptionStatusType.REQUESTED}
-                    loading={loading}
+                    loading={loading || scEventsManager.isLoading(notificationObject.event as SCEventType)}
                     color={'primary'}
                     variant="text"
                     size="small"
@@ -267,7 +269,7 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
                   status &&
                   status !== SCEventSubscriptionStatusType.REQUESTED)
               }
-              loading={loading}
+              loading={loading || scEventsManager.isLoading(notificationObject.event as SCEventType)}
               color={'primary'}
               variant="outlined"
               size="small"
