@@ -14,6 +14,7 @@ import UserAvatar from '../../../shared/UserAvatar';
 import {PREFIX} from '../constants';
 import {default as CourseItem} from '../../Course';
 import HiddenPlaceholder from '../../../shared/HiddenPlaceholder';
+import {formatLessonUrl, getRouteName, getRouteParams} from './utils';
 
 const classes = {
   root: `${PREFIX}-course-root`,
@@ -43,15 +44,6 @@ export interface NotificationCourseProps
    * @default null
    */
   notificationObject: SCNotificationCourseActivityType;
-}
-
-function formatLessonUrl(notificationObject: SCNotificationCourseActivityType): any {
-  return {
-    id: notificationObject.course.id,
-    slug: notificationObject.course.slug,
-    section_id: notificationObject.comment.section_id,
-    lesson_id: notificationObject.comment.lesson_id
-  };
 }
 
 /**
@@ -132,7 +124,7 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
                   <Link
                     to={scRoutingContext.url(
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
-                        ? SCRoutes.COURSE_LESSON_COMMENTS_ROUTE_NAME
+                        ? SCRoutes.COURSE_LESSON_ROUTE_NAME
                         : SCRoutes.COURSE_ROUTE_NAME,
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                         ? formatLessonUrl(notificationObject)
@@ -150,15 +142,7 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <DateTimeAgo date={notificationObject.active_at} />
               <Typography color="primary">
-                <Link
-                  to={scRoutingContext.url(
-                    notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
-                      ? SCRoutes.COURSE_LESSON_COMMENTS_ROUTE_NAME
-                      : SCRoutes.COURSE_ROUTE_NAME,
-                    notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
-                      ? formatLessonUrl(notificationObject)
-                      : notificationObject.course
-                  )}>
+                <Link to={scRoutingContext.url(getRouteName(notificationObject), getRouteParams(notificationObject))}>
                   <FormattedMessage id="ui.notification.course.button.see" defaultMessage="ui.notification.course.button.see" />
                 </Link>
               </Typography>
@@ -214,7 +198,7 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
                   <Link
                     to={scRoutingContext.url(
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
-                        ? SCRoutes.COURSE_LESSON_COMMENTS_ROUTE_NAME
+                        ? SCRoutes.COURSE_LESSON_ROUTE_NAME
                         : SCRoutes.COURSE_ROUTE_NAME,
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                         ? formatLessonUrl(notificationObject)
@@ -241,14 +225,7 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
               size="small"
               classes={{root: classes.seeButton}}
               component={Link}
-              to={scRoutingContext.url(
-                notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
-                  ? SCRoutes.COURSE_LESSON_COMMENTS_ROUTE_NAME
-                  : SCRoutes.COURSE_ROUTE_NAME,
-                notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
-                  ? formatLessonUrl(notificationObject)
-                  : notificationObject.course
-              )}>
+              to={scRoutingContext.url(getRouteName(notificationObject), getRouteParams(notificationObject))}>
               <FormattedMessage id="ui.notification.course.button.see" defaultMessage="ui.notification.course.button.see" />
             </LoadingButton>
           </Stack>
