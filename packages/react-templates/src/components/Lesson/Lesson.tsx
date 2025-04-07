@@ -142,7 +142,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [_lessonId, setLessonId] = useState<number | string>(lessonId);
   const [_sectionId, setSectionId] = useState<number | string>(sectionId);
   const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, courseId, sectionId: _sectionId});
-  const {scCourse, setSCCourse, refreshCourse} = useSCFetchCourse({
+  const {scCourse, refreshCourse} = useSCFetchCourse({
     id: courseId,
     params: {view: editMode || previewMode ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}
   });
@@ -278,13 +278,8 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
       .then(() => {
         setCompleted(!completed);
         setLoading(false);
-        const updatedCourse = {
-          ...scCourse,
-          num_lessons_completed: completed ? scCourse.num_lessons_completed - 1 : scCourse.num_lessons_completed + 1
-        };
         refreshCourse();
-        setSCCourse(updatedCourse);
-        if (updatedCourse.num_lessons === updatedCourse.num_lessons_completed) {
+        if (!completed && scCourse.num_lessons === scCourse.num_lessons_completed + 1) {
           setOpenDialog(true);
         }
         onLessonStatusChange?.();
