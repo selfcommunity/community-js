@@ -7,10 +7,10 @@ import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {PREFIX} from './constants';
-import EventForm from '../EventForm';
+import EventForm, {EventFormProps} from '../EventForm';
 import LiveStreamSelector from './LiveStreamSelector/LiveStreamSelector';
 import {CreateLiveStreamStep, LiveStreamType} from './types';
-import LiveStreamForm from '../LiveStreamForm';
+import LiveStreamForm, {LiveStreamFormProps} from '../LiveStreamForm';
 import {TransitionProps} from '@mui/material/transitions';
 import Slide from '@mui/material/Slide';
 import {Box, Button, Icon} from '@mui/material';
@@ -56,6 +56,18 @@ export interface CreateLiveStreamDialogProps extends BaseDialogProps {
    * @default null
    */
   onSuccess?: (data: SCEventType | SCLiveStreamType) => void;
+
+  /**
+   * Props to spread to EventForm component
+   * @default {}
+   */
+  EventFormComponentProps?: EventFormProps;
+
+  /**
+   * Props to spread to LiveStreamForm component
+   * @default {}
+   */
+  LiveStreamFormComponentProps?: LiveStreamFormProps;
   /**
    * Any other properties
    */
@@ -97,7 +109,7 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
     props: inProps,
     name: PREFIX
   });
-  const {className, open = true, onClose, onSuccess, ...rest} = props;
+  const {className, open = true, onClose, EventFormComponentProps = {}, LiveStreamFormComponentProps = {}, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -127,9 +139,12 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
 
   const handleSubmit = useCallback(
     (e: SCEventType | SCLiveStreamType) => {
-      onSuccess && onSuccess(e);
+      liveType === LiveStreamType.EVENT_LIVE
+        ? EventFormComponentProps.onSuccess?.(e as SCEventType)
+        : LiveStreamFormComponentProps.onSuccess?.(e as SCLiveStreamType);
+      onClose?.();
     },
-    [onSuccess]
+    [liveType, onClose, EventFormComponentProps, LiveStreamFormComponentProps]
   );
 
   useEffect(() => {
@@ -177,9 +192,13 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
         {step === CreateLiveStreamStep.CREATE_LIVE && (
           <>
             {liveType === LiveStreamType.EVENT_LIVE ? (
-              <EventForm EventAddressComponentProps={{locations: [SCEventLocationType.LIVESTREAM]}} onSuccess={handleSubmit} />
+              <EventForm
+                {...EventFormComponentProps}
+                EventAddressComponentProps={{locations: [SCEventLocationType.LIVESTREAM]}}
+                onSuccess={handleSubmit}
+              />
             ) : (
-              <LiveStreamForm onSuccess={handleSubmit} />
+              <LiveStreamForm {...LiveStreamFormComponentProps} onSuccess={handleSubmit} />
             )}
           </>
         )}
