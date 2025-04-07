@@ -10,7 +10,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventSubscriptionStatusType, SCNotificationEventActivityType, SCNotificationTypologyType} from '@selfcommunity/types';
+import {SCEventLocationType, SCEventType, SCNotificationEventActivityType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
@@ -76,8 +76,7 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
   // STATE
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
-  const [disabled, setDisabled] = useState<boolean>(false);
-  const [status, setStatus] = useState<string | null | undefined>(undefined);
+  const [disabled, setDisabled] = useState<boolean>(!notificationObject.is_new);
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
@@ -92,14 +91,6 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
       setDisabled(true);
     });
   };
-
-  useEffect(() => {
-    if (scUserContext.user) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      setStatus(scEventsManager?.subscriptionStatus(notificationObject.event));
-    }
-  }, [scUserContext.user, scEventsManager?.subscriptionStatus, notificationObject.event]);
 
   // RENDER
   if (isSnippetTemplate || isToastTemplate) {
@@ -187,13 +178,13 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               <Typography color="primary">
                 {notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT ? (
                   <LoadingButton
-                    disabled={status && status !== SCEventSubscriptionStatusType.REQUESTED}
-                    loading={loading}
+                    disabled={disabled}
+                    loading={loading || scEventsManager.isLoading(notificationObject.event as SCEventType)}
                     color={'primary'}
                     variant="text"
                     size="small"
                     onClick={() => acceptRequest(notificationObject.event)}>
-                    {disabled || (status && status !== SCEventSubscriptionStatusType.REQUESTED) ? (
+                    {disabled ? (
                       <FormattedMessage id="ui.notification.event.button.accepted" defaultMessage="ui.notification.event.button.accepted" />
                     ) : (
                       <FormattedMessage id="ui.notification.event.button.accept" defaultMessage="ui.notification.event.button.accept" />
@@ -261,13 +252,8 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
             <LoadingButton
-              disabled={
-                disabled ||
-                (notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT &&
-                  status &&
-                  status !== SCEventSubscriptionStatusType.REQUESTED)
-              }
-              loading={loading}
+              disabled={disabled}
+              loading={loading || scEventsManager.isLoading(notificationObject.event as SCEventType)}
               color={'primary'}
               variant="outlined"
               size="small"
@@ -283,7 +269,7 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               }>
               {notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT ? (
                 <>
-                  {status && status !== SCEventSubscriptionStatusType.REQUESTED ? (
+                  {disabled ? (
                     <FormattedMessage id="ui.notification.event.button.accepted" defaultMessage="ui.notification.event.button.accepted" />
                   ) : (
                     <FormattedMessage id="ui.notification.event.button.accept" defaultMessage="ui.notification.event.button.accept" />
