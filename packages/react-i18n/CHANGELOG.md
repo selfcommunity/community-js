@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.11...@selfcommunity/react-i18n@0.8.0-alpha.12) (2025-04-07)
+
+
+### Performance Improvements
+
+* added action accept to event request notification. Linear issue: https://linear.app/quentral/issue/QUE-1441/notifiche-evento ([af939ce](https://github.com/selfcommunity/community-js/commit/af939ce5e6782699f51e16257630715f3a1a68de))
+
+
+
+
+
 # [0.8.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.10...@selfcommunity/react-i18n@0.8.0-alpha.11) (2025-03-27)
 
 

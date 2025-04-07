@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.47...@selfcommunity/react-ui@0.11.0-alpha.48) (2025-04-07)
+
+
+### Bug Fixes
+
+* liveStream ([5c30e40](https://github.com/selfcommunity/community-js/commit/5c30e401bf89116636a1b25c15928e7aa6bfed82))
+* liveStream ([a12f049](https://github.com/selfcommunity/community-js/commit/a12f049e4ce58fe7c912b237e3151c8635111bca))
+
+
+### Performance Improvements
+
+* added action accept to event request notification. Linear issue: https://linear.app/quentral/issue/QUE-1441/notifiche-evento ([af939ce](https://github.com/selfcommunity/community-js/commit/af939ce5e6782699f51e16257630715f3a1a68de))
+
+
+
+
+
 # [0.11.0-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.46...@selfcommunity/react-ui@0.11.0-alpha.47) (2025-04-07)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
