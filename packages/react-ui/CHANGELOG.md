@@ -3,6 +3,125 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.50...@selfcommunity/react-ui@0.11.0-alpha.51) (2025-04-07)
+
+
+### Bug Fixes
+
+* NavigationToolbar ([19fb671](https://github.com/selfcommunity/community-js/commit/19fb671ac747e4ceca3839434183c4698c4f8c12))
+
+
+
+
+
+# [0.11.0-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.49...@selfcommunity/react-ui@0.11.0-alpha.50) (2025-04-07)
+
+
+### Bug Fixes
+
+* event notification accept action state ([7c80079](https://github.com/selfcommunity/community-js/commit/7c80079eb06c8aecf1849e0e0d39a31ad27b77bc))
+* notification event button loading condition ([9515922](https://github.com/selfcommunity/community-js/commit/951592256997c5b0757784cf2629adeadf18546f))
+
+
+
+
+
+# [0.11.0-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.48...@selfcommunity/react-ui@0.11.0-alpha.49) (2025-04-07)
+
+
+### Bug Fixes
+
+* liveStream ([c459dfa](https://github.com/selfcommunity/community-js/commit/c459dfa3f87feaa95b78ccbaebd7b1a76e422d96))
+
+
+
+
+
+# [0.11.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.47...@selfcommunity/react-ui@0.11.0-alpha.48) (2025-04-07)
+
+
+### Bug Fixes
+
+* liveStream ([5c30e40](https://github.com/selfcommunity/community-js/commit/5c30e401bf89116636a1b25c15928e7aa6bfed82))
+* liveStream ([a12f049](https://github.com/selfcommunity/community-js/commit/a12f049e4ce58fe7c912b237e3151c8635111bca))
+
+
+### Performance Improvements
+
+* added action accept to event request notification. Linear issue: https://linear.app/quentral/issue/QUE-1441/notifiche-evento ([af939ce](https://github.com/selfcommunity/community-js/commit/af939ce5e6782699f51e16257630715f3a1a68de))
+
+
+
+
+
+# [0.11.0-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.46...@selfcommunity/react-ui@0.11.0-alpha.47) (2025-04-07)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.45...@selfcommunity/react-ui@0.11.0-alpha.46) (2025-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.44...@selfcommunity/react-ui@0.11.0-alpha.45) (2025-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.43...@selfcommunity/react-ui@0.11.0-alpha.44) (2025-04-02)
+
+
+### Bug Fixes
+
+* edit event ([c71d07f](https://github.com/selfcommunity/community-js/commit/c71d07fa3b32d20c30166260e09df6fe57e39a72))
+
+
+
+
+
+# [0.11.0-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.42...@selfcommunity/react-ui@0.11.0-alpha.43) (2025-04-02)
+
+
+### Bug Fixes
+
+* liveStream ([d1cdd45](https://github.com/selfcommunity/community-js/commit/d1cdd4575ffb4475504b0fd453e60dd4305a3dbd))
+
+
+
+
+
+# [0.11.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.41...@selfcommunity/react-ui@0.11.0-alpha.42) (2025-03-31)
+
+
+### Bug Fixes
+
+* pubsub-js ([179ff95](https://github.com/selfcommunity/community-js/commit/179ff957e9ba5dd4247983d413b1b4625dddaa20))
+
+
+
+
+
+# [0.11.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.40...@selfcommunity/react-ui@0.11.0-alpha.41) (2025-03-31)
+
+
+### Bug Fixes
+
+* classnames ([3eaa996](https://github.com/selfcommunity/community-js/commit/3eaa9961d9c6d254e8e965b06fd40aa66595065a))
+
+
+
+
+
 # [0.11.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.39...@selfcommunity/react-ui@0.11.0-alpha.40) (2025-03-31)
 
 
