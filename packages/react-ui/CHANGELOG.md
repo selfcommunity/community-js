@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.48...@selfcommunity/react-ui@0.11.0-alpha.49) (2025-04-07)
+
+
+### Bug Fixes
+
+* liveStream ([c459dfa](https://github.com/selfcommunity/community-js/commit/c459dfa3f87feaa95b78ccbaebd7b1a76e422d96))
+
+
+
+
+
 # [0.11.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.47...@selfcommunity/react-ui@0.11.0-alpha.48) (2025-04-07)
 
 
