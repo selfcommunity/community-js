@@ -38,7 +38,7 @@ export interface EventFormDialogProps extends BaseDialogProps {
 
   /**
    * Props to spread to EventForm component
-   * @default undefined
+   * @default {}
    */
   EventFormComponentProps?: EventFormProps;
 
