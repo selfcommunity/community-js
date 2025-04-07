@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {Box, BoxProps, Button, InputAdornment, Stack, TextField, Typography} from '@mui/material';
 import {NumericFormat, NumericFormatProps} from 'react-number-format';
 import {styled} from '@mui/material/styles';
@@ -12,6 +12,7 @@ import {PaymentApiClient} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage, useIntl} from 'react-intl';
+import {DEFAULT_MIN_PRICE} from '../../constants/Payments';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -62,7 +63,6 @@ const NumericFormatCustom = React.forwardRef<NumericFormatProps, CustomProps>(fu
       }}
       thousandSeparator
       valueIsNumericString
-      // prefix="€"
     />
   );
 });
@@ -90,22 +90,49 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
    * Handle change text
    * @param e
    */
-  const handleChange = useCallback((field: string, e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    switch (field) {
-      case 'name':
-        setName(e.target.value);
-        break;
-      case 'description':
-        setDescription(e.target.value);
-        break;
-      case 'unitAmount':
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        setUnitAmount(e.target.value);
-        break;
-    }
-    onChange?.({name, description, unitAmount});
-  }, []);
+  const handleChange = useCallback(
+    (field: string, e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      switch (field) {
+        case 'name':
+          setName(e.target.value);
+          break;
+        case 'description':
+          setDescription(e.target.value);
+          break;
+        case 'unitAmount':
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          setUnitAmount(e.target.value);
+          break;
+      }
+      onChange?.({name, description, unitAmount});
+    },
+    [setName, setDescription, setUnitAmount, onChange]
+  );
+
+  const isValid = useMemo(
+    () => () => {
+      if (!name) {
+        setError(
+          intl.formatMessage(
+            {id: 'ui.createPaymentProductForm.error.name.required', defaultMessage: 'ui.createPaymentProductForm.error.name.required'},
+            {min: DEFAULT_MIN_PRICE}
+          )
+        );
+        return false;
+      } else if (!unitAmount) {
+        setError(
+          intl.formatMessage(
+            {id: 'ui.createPaymentProductForm.error.price.required"', defaultMessage: 'ui.createPaymentProductForm.error.price.required'},
+            {min: DEFAULT_MIN_PRICE}
+          )
+        );
+        return false;
+      }
+      return true;
+    },
+    [setError]
+  );
 
   /**
    * Handle create product
@@ -113,16 +140,30 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
   const handleCreateProduct = useCallback(() => {
     setLoading(true);
     setError(null);
-    PaymentApiClient.createPaymentProduct({name, unit_amount: unitAmount * 100, ...(description ? {description} : {})})
-      .then((p) => {
-        setLoading(false);
-        onCreate && onCreate(p);
+    if (isValid()) {
+      PaymentApiClient.createPaymentProduct({
+        name,
+        unit_amount: unitAmount * 100,
+        ...(description ? {description} : {})
       })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-        setLoading(false);
-        onError && onError(intl.formatMessage({id: 'ui.createPaymentProductForm.title', defaultMessage: 'ui.createPaymentProductForm.title'}));
-      });
+        .then((p) => {
+          setLoading(false);
+          onCreate && onCreate(p);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          setLoading(false);
+          onError &&
+            onError(
+              intl.formatMessage({
+                id: 'ui.createPaymentProductForm.title',
+                defaultMessage: 'ui.createPaymentProductForm.title'
+              })
+            );
+        });
+    } else {
+      setLoading(true);
+    }
   }, [loading, name, description, unitAmount, error]);
 
   if (!isPaymentsEnabled) {
@@ -161,6 +202,15 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
         onChange={(e) => handleChange('unitAmount', e)}
         name="unitAmount"
         id="unitAmount"
+
+        helperText={
+          <>
+            {intl.formatMessage(
+              {id: 'ui.createPaymentProductForm.price', defaultMessage: 'ui.createPaymentProductForm.price'},
+              {min: DEFAULT_MIN_PRICE}
+            )}
+          </>
+        }
         InputProps={{
           startAdornment: <InputAdornment position="start">€</InputAdornment>,
           inputComponent: NumericFormatCustom as any
