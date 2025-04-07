@@ -52,11 +52,6 @@ export interface CreateLiveStreamDialogProps extends BaseDialogProps {
    */
   onClose?: () => void;
   /**
-   * On success callback function
-   * @default null
-   */
-  onSuccess?: (data: SCEventType | SCLiveStreamType) => void;
-  /**
    * Props to spread to EventForm component
    * @default {}
    */
