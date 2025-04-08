@@ -184,7 +184,10 @@ const Component = {
           marginBottom: theme.spacing(1),
           '& .SCMediaFile-media': {
             height: '60px !important',
-            maxWidth: 140
+            maxWidth: 140,
+            '& .SCMediaFile-title': {
+              maxWidth: '50% !important'
+            }
           }
         },
         '& .SCMediaLink-preview-root': {
