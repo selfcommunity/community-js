@@ -196,15 +196,12 @@ import {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
-<<<<<<< HEAD
   SCPaymentPriceCurrencyType,
   SCContentType,
   SCCheckoutSessionStatus,
   SCPaymentProductTemplateType,
-  SCCheckoutSessionUIMode
-=======
+  SCCheckoutSessionUIMode,
   SCCourseOrderingUsersType
->>>>>>> courses
 } from './types';
 
 /**
@@ -260,15 +257,12 @@ export {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
-<<<<<<< HEAD
   SCPaymentPriceCurrencyType,
   SCContentType,
   SCCheckoutSessionStatus,
   SCPaymentProductTemplateType,
-  SCCheckoutSessionUIMode
-=======
+  SCCheckoutSessionUIMode,
   SCCourseOrderingUsersType
->>>>>>> courses
 };
 export {
   type SCBannerType,
