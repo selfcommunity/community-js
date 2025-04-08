@@ -225,7 +225,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     link: event?.link || '',
     liveStreamSettings: event?.live_stream ? event?.live_stream.settings : null,
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
-    isPublic: event?.privacy === SCEventPrivacyType.PUBLIC || true,
+    isPublic: event?.privacy ? event.privacy === SCEventPrivacyType.PUBLIC : true,
     isSubmitting: false
   };
 
@@ -673,12 +673,6 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                         </InputAdornment>
                       )
                     }}
-                    error={Boolean(error['endDateError'])}
-                    helperText={
-                      error['endDateError']?.error ? (
-                        <FormattedMessage id="ui.eventForm.time.end.error.invalid" defaultMessage="ui.eventForm.time.end.error.invalid" />
-                      ) : null
-                    }
                   />
                 )
               }}
