@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.52...@selfcommunity/react-ui@0.11.0-alpha.53) (2025-04-08)
+
+
+### Bug Fixes
+
+* fixed groups search ([c17bd99](https://github.com/selfcommunity/community-js/commit/c17bd996f49c56b1f4b0ec8b4dfb11fca340750e))
+* fixed user link into RelatedEventsWidget. Linear: https://linear.app/quentral/issue/QUE-1395/il-widget-altri-eventi-di-xxx-ha-lavatar-con-link-sbagliato ([535947b](https://github.com/selfcommunity/community-js/commit/535947b0228e5c588d3e2f732d2d5b71ed8c4d1d))
+
+
+### Performance Improvements
+
+* added accept action for user requested to join event notification. Linear issue: https://linear.app/quentral/issue/QUE-1441/notifiche-evento ([5e8d3cf](https://github.com/selfcommunity/community-js/commit/5e8d3cf52ffb92cf9d6c4b1f5c6a0d45b53139fe))
+
+
+
+
+
 # [0.11.0-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.51...@selfcommunity/react-ui@0.11.0-alpha.52) (2025-04-07)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
