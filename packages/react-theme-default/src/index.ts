@@ -43,6 +43,7 @@ import SCCategoryHeader from './components/SCCategoryHeader';
 import SCCategoryTemplate from './components/SCCategoryTemplate';
 import SCCategoryTrendingFeedWidget from './components/SCCategoryTrendingFeedWidget';
 import SCCategoryTrendingUsersWidget from './components/SCCategoryTrendingUsersWidget';
+import SCCourseTypePopover from './components/SCCourseTypePopover';
 import SCCourseUsersTable from './components/SCCourseUsersTable';
 import SCChangeCoverButton from './components/SCChangeCoverButton';
 import SCChangeGroupCoverButton from './components/SCChangeGroupCoverButton';
@@ -353,6 +354,7 @@ const theme = {
     SCCourseFormDialog,
     SCCourseParticipantsButton,
     SCCourseInfoDetails,
+    SCCourseTypePopover,
     SCCourseUsersTable,
     SCCreateGroupButton,
     SCCustomAdv,

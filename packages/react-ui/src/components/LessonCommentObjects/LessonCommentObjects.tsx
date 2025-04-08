@@ -6,8 +6,8 @@ import {Box, List, ListItem} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCCommentsOrderBy, SCCourseCommentType, SCCourseLessonType} from '@selfcommunity/types';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCUserContextType, UserUtils, useSCFetchLessonCommentObjects, useSCUser} from '@selfcommunity/react-core';
+import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
+import {SCCache, SCUserContextType, UserUtils, useSCFetchLessonCommentObjects, useSCUser} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import LessonCommentsObjectSkeleton from './Skeleton';
 import CommentObjectReply from '../CommentObjectReply';
@@ -127,7 +127,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
     CommentComponentProps = {},
     CommentObjectSkeletonProps = {elevation: 0},
     CommentsObjectSkeletonProps = {},
-    cacheStrategy = CacheStrategies.CACHE_FIRST,
+    cacheStrategy = CacheStrategies.STALE_WHILE_REVALIDATE,
     ...rest
   } = props;
 
@@ -147,8 +147,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
   const commentsObject = useSCFetchLessonCommentObjects({
     id: lessonObject.id,
     lessonObject: lessonObject,
-    pageSize: 8,
-    orderBy: SCCommentsOrderBy.CONNECTION_ASC,
+    orderBy: SCCommentsOrderBy.ADDED_AT_ASC,
     cacheStrategy
   });
 
@@ -165,7 +164,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
   }
 
   const scrollToBottom = () => {
-    commentsEndRef.current?.scrollIntoView({block: 'end', behavior: 'instant'});
+    commentsEndRef.current?.scrollIntoView({block: 'end', behavior: 'smooth'});
   };
 
   useEffect(() => {
@@ -228,6 +227,8 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
       updated = [...commentsObject.comments, comment];
     }
     commentsObject.updateLessonComments([...updated]);
+    LRUCache.set(SCCache.getLessonCommentCacheKey(lessonObject.id), updated);
+    LRUCache.deleteKeysWithPrefix(SCCache.getLessonCommentsCachePrefixKeys(lessonObject.id));
   };
 
   /**
@@ -236,48 +237,52 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
   if (!commentsObject.lessonObject) {
     return <HiddenPlaceholder />;
   }
+  if (!commentsObject.comments.length && commentsObject.isLoadingNext) {
+    return <LessonCommentsObjectSkeleton count={5} {...CommentsObjectSkeletonProps} />;
+  }
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       <>
-        {!commentsObject.comments.length && commentsObject.isLoadingNext ? (
-          <LessonCommentsObjectSkeleton count={5} {...CommentsObjectSkeletonProps} />
-        ) : (
-          <>
-            {commentsObject.comments.length > 0 ? (
-              <InfiniteScroll
-                height={'100%'}
-                dataLength={commentsObject.comments.length}
-                next={handleNext}
-                hasMoreNext={Boolean(commentsObject.next)}
-                loaderNext={<LessonCommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}>
-                <List ref={commentsEndRef}>
-                  {commentsObject.comments.map((c: SCCourseCommentType, index) => (
-                    <ListItem key={index}>
-                      <LessonCommentObject
-                        key={c.id}
-                        commentObject={c}
-                        lessonObject={commentsObject.lessonObject}
-                        onDelete={(comment) => handleCommentsUpdate(comment, true)}
-                        isEditing={(editing) => setIsEditing(editing)}
-                        {...CommentComponentProps}
-                        CommentObjectSkeletonProps={CommentObjectSkeletonProps}
-                      />
-                    </ListItem>
-                  ))}
-                </List>
-              </InfiniteScroll>
-            ) : null}
-          </>
-        )}
-        {commentsObject.comments.length > 0 && !editing && (
+        <>
+          {commentsObject.comments.length > 0 ? (
+            <InfiniteScroll
+              height={'100%'}
+              dataLength={commentsObject.comments.length}
+              next={handleNext}
+              hasMoreNext={Boolean(commentsObject.next)}
+              loaderNext={<LessonCommentObjectSkeleton {...CommentObjectSkeletonProps} count={1} />}>
+              <List ref={commentsEndRef}>
+                {commentsObject.comments.map((c: SCCourseCommentType, index) => (
+                  <ListItem key={index}>
+                    <LessonCommentObject
+                      key={c.id}
+                      commentObject={c}
+                      lessonObject={commentsObject.lessonObject}
+                      onDelete={(comment) => handleCommentsUpdate(comment, true)}
+                      isEditing={(editing) => setIsEditing(editing)}
+                      {...CommentComponentProps}
+                      CommentObjectSkeletonProps={CommentObjectSkeletonProps}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </InfiniteScroll>
+          ) : null}
+        </>
+        {!editing && (
           <CommentObjectReply
             key={replyKey}
             id={`reply-lessonCommentObjects`}
             showAvatar={false}
-            replyIcon={!commenting}
+            replyIcon
             editable={!commenting}
             onReply={handleCommentAction}
-            EditorProps={{placeholder: intl.formatMessage(messages.commentEditorPlaceholder), uploadFile: true, uploadImage: false}}
+            EditorProps={{
+              placeholder: intl.formatMessage(messages.commentEditorPlaceholder),
+              uploadFile: true,
+              uploadImage: false,
+              isLessonCommentEditor: true
+            }}
           />
         )}
       </>

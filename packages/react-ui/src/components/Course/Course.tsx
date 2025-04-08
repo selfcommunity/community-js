@@ -1,7 +1,21 @@
-import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Icon, LinearProgress, Typography} from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Chip,
+  Icon,
+  LinearProgress,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchCourse, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCRouting} from '@selfcommunity/react-core';
 import {SCCourseJoinStatusType, SCCourseType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
@@ -169,6 +183,9 @@ export default function Course(inProps: CourseProps): JSX.Element {
 
   // STATE
   const {scCourse} = useSCFetchCourse({id: courseId, course, ...(cacheStrategy && {cacheStrategy})});
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.between('xs', 'md'));
+  const MAX_VISIBLE_CATEGORIES = isMobile ? 3 : 1;
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -220,6 +237,8 @@ export default function Course(inProps: CourseProps): JSX.Element {
       );
     } else if (isCourseCompleted(scCourse)) {
       return <FormattedMessage defaultMessage="ui.course.status.completed" id="ui.course.status.completed" />;
+    } else if (scCourse.join_status === SCCourseJoinStatusType.JOINED) {
+      return <FormattedMessage defaultMessage="ui.course.status.joined" id="ui.course.status.joined" />;
     } else if (isCourseNew(scCourse)) {
       return <FormattedMessage defaultMessage="ui.course.status.new" id="ui.course.status.new" />;
     }
@@ -235,7 +254,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
       <PreviewRoot className={classes.previewRoot}>
         <Box className={classes.previewImageWrapper}>
           <CardMedia component="img" image={scCourse.image_medium} alt={scCourse.name} className={classes.previewImage} />
-          {(isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse)) && (
+          {(isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse) || scCourse.join_status === SCCourseJoinStatusType.JOINED) && (
             <Chip
               size="small"
               component="div"
@@ -244,6 +263,8 @@ export default function Course(inProps: CourseProps): JSX.Element {
                   ? 'primary'
                   : isCourseAdmin && !scCourse.privacy
                   ? 'default'
+                  : scCourse.join_status === SCCourseJoinStatusType.JOINED
+                  ? 'warning'
                   : 'secondary'
               }
               label={chipLabel}
@@ -277,13 +298,26 @@ export default function Course(inProps: CourseProps): JSX.Element {
               id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
               defaultMessage={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
             />
-            -
+            {' - '}
             <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
           </Typography>
           <Box className={classes.previewCategory}>
-            {scCourse.categories.map((category) => (
+            {scCourse.categories.slice(0, MAX_VISIBLE_CATEGORIES).map((category) => (
               <Chip key={category.id} size="small" label={category.name} />
             ))}
+
+            {scCourse.categories.length > MAX_VISIBLE_CATEGORIES && (
+              <Tooltip
+                title={
+                  <>
+                    {scCourse.categories.slice(MAX_VISIBLE_CATEGORIES).map((cat) => (
+                      <Box key={cat.id}>{cat.name}</Box>
+                    ))}
+                  </>
+                }>
+                <Chip size="small" label={`+${scCourse.categories.length - MAX_VISIBLE_CATEGORIES}`} sx={{cursor: 'pointer'}} />
+              </Tooltip>
+            )}
           </Box>
           <Box className={classes.previewProgress}>{renderProgress()}</Box>
         </CardContent>
@@ -299,6 +333,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
   } else {
     contentObj = (
       <SnippetRoot
+        ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}}
         elevation={0}
         className={classes.snippetRoot}
         image={
@@ -309,21 +344,24 @@ export default function Course(inProps: CourseProps): JSX.Element {
               src={scCourse.image_medium}
               className={userProfileSnippet ? classes.snippetAvatarUserProfile : classes.snippetAvatar}
             />
-            {!userProfileSnippet && (isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse)) && (
-              <Chip
-                size="small"
-                component="div"
-                color={
-                  isCourseCompleted(scCourse) || (isCourseAdmin && scCourse.privacy)
-                    ? 'primary'
-                    : isCourseAdmin && !scCourse.privacy
-                    ? 'default'
-                    : 'secondary'
-                }
-                label={chipLabel}
-                className={classes.chip}
-              />
-            )}
+            {!userProfileSnippet &&
+              (isCourseAdmin || isCourseCompleted(scCourse) || isCourseNew(scCourse) || scCourse.join_status === SCCourseJoinStatusType.JOINED) && (
+                <Chip
+                  size="small"
+                  component="div"
+                  color={
+                    isCourseCompleted(scCourse) || (isCourseAdmin && scCourse.privacy)
+                      ? 'primary'
+                      : isCourseAdmin && !scCourse.privacy
+                      ? 'default'
+                      : scCourse.join_status === SCCourseJoinStatusType.JOINED
+                      ? 'warning'
+                      : 'secondary'
+                  }
+                  label={chipLabel}
+                  className={classes.chip}
+                />
+              )}
           </Box>
         }
         primary={
@@ -359,7 +397,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
                   id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
                   defaultMessage={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
                 />
-                -
+                {' - '}
                 <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
               </>
             )}

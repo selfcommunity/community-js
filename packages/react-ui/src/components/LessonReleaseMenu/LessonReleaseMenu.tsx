@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -28,6 +28,7 @@ import {CourseService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import {getDripDelayAndUnit} from '../../utils/course';
+import {useIsDisabled} from '../EditCourse/hooks';
 
 const messages = defineMessages({
   pickerPlaceholder: {
@@ -37,6 +38,14 @@ const messages = defineMessages({
   pickerCancelMessage: {
     id: 'ui.lessonReleaseMenu.scheduled.picker.cancel',
     defaultMessage: 'ui.lessonReleaseMenu.scheduled.picker.cancel'
+  },
+  pickerClearMessage: {
+    id: 'ui.lessonReleaseMenu.scheduled.picker.clear',
+    defaultMessage: 'ui.lessonReleaseMenu.scheduled.picker.clear'
+  },
+  pickerOkMessage: {
+    id: 'ui.lessonReleaseMenu.scheduled.picker.ok',
+    defaultMessage: 'ui.lessonReleaseMenu.scheduled.picker.ok'
   }
 });
 
@@ -53,14 +62,14 @@ const classes = {
 const Root = styled(FormControl, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root]
+  overridesResolver: (_props, styles) => [styles.root]
 })(() => ({}));
 
 const PopoverRoot = styled(Popover, {
   name: PREFIX,
   slot: 'PopoverRoot',
-  overridesResolver: (props, styles) => styles.popoverRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.popoverRoot
+})(() => ({}));
 
 export interface LessonReleaseMenuProps {
   /**
@@ -98,12 +107,15 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
   const scContext: SCContextType = useSCContext();
 
   // STATE
-  const [drippedAt, setDrippedAt] = useState(section?.dripped_at ? new Date(section?.dripped_at) : null);
+  const [drippedAt, setDrippedAt] = useState<Date | null>(null);
   const {delay, _unit} = getDripDelayAndUnit(section?.drip_delay || 0);
   const [dripDelay, setDripDelay] = useState(delay);
   const [unit, setUnit] = useState(_unit);
   const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
+
+  // HOOKS
+  const {isDisabled} = useIsDisabled();
 
   //INTL
   const intl = useIntl();
@@ -111,6 +123,21 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
   const handleUnitChange = (e) => {
     setUnit(e.target.value);
   };
+
+  // EFFECTS
+  useEffect(() => {
+    if (section && section.dripped_at) {
+      setDrippedAt(new Date(section.dripped_at));
+    } else {
+      setDrippedAt(null);
+    }
+  }, [section, setDrippedAt]);
+
+  useEffect(() => {
+    if (section) {
+      setDripDelay(delay);
+    }
+  }, [section, setDripDelay]);
 
   // HANDLERS
 
@@ -139,7 +166,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
   };
 
   const handleUpdate = (value) => {
-    CourseService.patchCourseSection(course.id, section.id, {dripped_at: value.toISOString()})
+    CourseService.patchCourseSection(course.id, section.id, {dripped_at: value ? value.toISOString() : null})
       .then((data: SCCourseSectionType) => {
         setOpen(false);
         onSuccess(data);
@@ -170,7 +197,9 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
           dateAdapter={AdapterDateFns}
           adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
           localeText={{
-            cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelMessage)}`
+            okButtonLabel: `${intl.formatMessage(messages.pickerOkMessage)}`,
+            cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelMessage)}`,
+            clearButtonLabel: `${intl.formatMessage(messages.pickerClearMessage)}`
           }}>
           <MobileDateTimePicker
             className={classes.picker}
@@ -183,19 +212,20 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
                 />
               )
             }
-            defaultValue={drippedAt}
+            value={drippedAt}
             slots={{
               //actionBar: PickerActionBar,
               tabs: (props) => <DateTimePickerTabs {...props} />,
               textField: (params) => (
                 <TextField
                   {...params}
+                  error={false}
                   InputProps={{
                     ...params.InputProps,
                     placeholder: `${intl.formatMessage(messages.pickerPlaceholder)}`,
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton>
+                        <IconButton disabled={isDisabled}>
                           <Icon>expand_more</Icon>
                         </IconButton>
                       </InputAdornment>
@@ -217,28 +247,33 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
                     defaultMessage="ui.lessonReleaseMenu.scheduled.picker.placeholder"
                   />
                 )
+              },
+              actionBar: {
+                actions: ['cancel', 'clear', 'accept']
               }
             }}
             onChange={(value) => setDrippedAt(value)}
             onAccept={handleUpdate}
+            onClear={() => setDrippedAt(null)}
+            disabled={isDisabled}
           />
         </LocalizationProvider>
       ) : (
         <>
           <TextField
             size="small"
-            placeholder={placeholderStructured}
-            defaultValue={null}
-            onClick={handleClick}
+            value={placeholderStructured}
+            onClick={isDisabled ? undefined : handleClick}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton onClick={handleClick}>
+                  <IconButton onClick={handleClick} disabled={isDisabled}>
                     <Icon>expand_more</Icon>
                   </IconButton>
                 </InputAdornment>
               )
             }}
+            disabled={isDisabled}
           />
           <PopoverRoot
             className={classes.popoverRoot}

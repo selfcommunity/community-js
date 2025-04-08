@@ -1,6 +1,6 @@
 import {Box, Icon, IconButton, Stack, styled, Tab, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
 import {PREFIX} from './constants';
-import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
+import {HTMLAttributes, SyntheticEvent, useCallback, useMemo, useState} from 'react';
 import classNames from 'classnames';
 import {TabContext, TabList, TabPanel} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
@@ -20,7 +20,8 @@ const classes = {
   header: `${PREFIX}-header`,
   tabList: `${PREFIX}-tab-list`,
   tab: `${PREFIX}-tab`,
-  tabPanel: `${PREFIX}-tab-panel`
+  tabPanel: `${PREFIX}-tab-panel`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const TAB_DATA = [
@@ -45,31 +46,6 @@ const TAB_DATA = [
     value: SCCourseEditTabType.OPTIONS
   }
 ];
-
-function getPanelData(course: SCCourseType | null, setCourse: (course: SCCourseType) => void) {
-  return [
-    {
-      value: SCCourseEditTabType.LESSONS,
-      children: <Lessons course={course} setCourse={setCourse} />
-    },
-    {
-      value: SCCourseEditTabType.CUSTOMIZE,
-      children: <Customize course={course} setCourse={setCourse} />
-    },
-    {
-      value: SCCourseEditTabType.USERS,
-      children: <Users course={course} />
-    },
-    {
-      value: SCCourseEditTabType.REQUESTS,
-      children: <Requests course={course} />
-    },
-    {
-      value: SCCourseEditTabType.OPTIONS,
-      children: <Options course={course} setCourse={setCourse} />
-    }
-  ];
-}
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -109,7 +85,7 @@ export default function EditCourse(inProps: EditCourseProps) {
 
   // HANDLERS
   const handleTabChange = useCallback(
-    (_evt: SyntheticEvent, newTabValue: SCCourseEditTabType) => {
+    (_e: SyntheticEvent, newTabValue: SCCourseEditTabType) => {
       if (onTabSelect) {
         onTabSelect(newTabValue);
       } else {
@@ -120,6 +96,32 @@ export default function EditCourse(inProps: EditCourseProps) {
     [setTabValue, onTabChange, onTabSelect]
   );
 
+  // MEMOS
+  const panelData = useMemo(() => {
+    return [
+      {
+        value: SCCourseEditTabType.LESSONS,
+        children: <Lessons course={scCourse} setCourse={setSCCourse} handleTabChange={handleTabChange} />
+      },
+      {
+        value: SCCourseEditTabType.CUSTOMIZE,
+        children: <Customize course={scCourse} setCourse={setSCCourse} />
+      },
+      {
+        value: SCCourseEditTabType.USERS,
+        children: <Users course={scCourse} handleTabChange={handleTabChange} />
+      },
+      {
+        value: SCCourseEditTabType.REQUESTS,
+        children: <Requests course={scCourse} handleTabChange={handleTabChange} />
+      },
+      {
+        value: SCCourseEditTabType.OPTIONS,
+        children: <Options course={scCourse} setCourse={setSCCourse} />
+      }
+    ];
+  }, [scCourse, handleTabChange]);
+
   if (!scCourse) {
     return <EditCourseSkeleton tab={tab} />;
   }
@@ -128,9 +130,11 @@ export default function EditCourse(inProps: EditCourseProps) {
     <Root className={classNames(classes.root, className)} {...rest}>
       <Stack className={classes.header}>
         <IconButton href={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)} size="small">
-          <Icon>arrow_back</Icon>
+          <Icon className={classes.contrastColor}>arrow_back</Icon>
         </IconButton>
-        <Typography variant="h5">{scCourse.name}</Typography>
+        <Typography variant="h5" className={classes.contrastColor}>
+          {scCourse.name}
+        </Typography>
       </Stack>
 
       <TabContext value={tabValue}>
@@ -151,12 +155,12 @@ export default function EditCourse(inProps: EditCourseProps) {
                 </Typography>
               }
               value={data.value}
-              className={classes.tab}
+              className={classNames(classes.tab, classes.contrastColor)}
             />
           ))}
         </TabList>
 
-        {getPanelData(scCourse, setSCCourse).map((data, i) => (
+        {panelData.map((data, i) => (
           <TabPanel key={i} className={classes.tabPanel} value={data.value}>
             {data.children}
           </TabPanel>

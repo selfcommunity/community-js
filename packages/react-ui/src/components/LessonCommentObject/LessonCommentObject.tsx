@@ -278,12 +278,6 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
    * @param comment
    */
   function renderComment(comment: SCCourseCommentType) {
-    if (!scUserContext.user || (scUserContext.user && !UserUtils.isStaff(scUserContext.user) && scUserContext.user.id !== comment.created_by.id)) {
-      // render the comment if user is logged and is staff (admin, moderator)
-      // or the comment author is the logged user
-      return null;
-    }
-
     const summaryHtml = getCommentContributionHtml(comment.html, scRoutingContext.url);
     return (
       <React.Fragment key={comment.id}>
@@ -297,7 +291,7 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
               onSave={handleUpdate}
               onCancel={handleCancel}
               editable={!isSavingComment}
-              EditorProps={{uploadFile: true, uploadImage: false}}
+              EditorProps={{uploadFile: true, uploadImage: false, isLessonCommentEditor: true}}
               {...CommentObjectReplyProps}
             />
           </Box>
@@ -338,7 +332,7 @@ export default function LessonCommentObject(inProps: LessonCommentObjectProps): 
                       </>
                     )}
                   </CardContent>
-                  {scUserContext.user && (
+                  {scUserContext.user && scUserContext.user.id === comment.created_by.id && (
                     <Box className={classes.commentActionsMenu}>
                       <LessonCommentActionsMenu lesson={lessonObject} commentObject={comment} onDelete={handleDelete} onEdit={handleEdit} />
                     </Box>

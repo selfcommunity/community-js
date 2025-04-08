@@ -123,21 +123,23 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
       <List className={classes.navigation}>
-        <ListItem disablePadding>
-          <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
-            <ListItemIcon>
-              <Icon>home</Icon>
-            </ListItemIcon>
-            <ListItemText
-              primary={
-                <FormattedMessage
-                  id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
-                  defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
-                />
-              }
-            />
-          </ListItemButton>
-        </ListItem>
+        {scUserContext.user && (
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
+              <ListItemIcon>
+                <Icon>home</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
+                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
+                  />
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
         {coursesEnabled && (scUserContext.user || contentAvailable) && (
           <ListItem disablePadding>
             <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}>
@@ -155,7 +157,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
             </ListItemButton>
           </ListItem>
         )}
-        {groupsEnabled && (scUserContext.user || contentAvailable) && (
+        {groupsEnabled && scUserContext.user && (
           <ListItem disablePadding>
             <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}>
               <ListItemIcon>

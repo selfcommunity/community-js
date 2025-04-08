@@ -1,10 +1,30 @@
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
+      border: `1px solid ${theme.palette.grey['300']}`,
+      borderRadius: '5px',
+      padding: theme.spacing(1),
+      backgroundColor: theme.palette.common.white,
+
+      [theme.breakpoints.up('sm')]: {
+        padding: theme.spacing(2)
+      },
+
       '& .SCCourseUsersTable-search': {
         '& > .MuiInputBase-root': {
           borderBottomLeftRadius: 'unset',
           borderBottomRightRadius: 'unset'
+        },
+
+        '& .SCCourseUsersTable-end-adornment-wrapper': {
+          flexDirection: 'row',
+
+          '& .SCCourseUsersTable-search-button': {
+            minWidth: 'unset',
+            width: '36px',
+            height: '36px',
+            padding: theme.spacing(1)
+          }
         }
       },
 

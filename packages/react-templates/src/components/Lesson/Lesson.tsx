@@ -1,14 +1,13 @@
 import {Fragment, useCallback, useEffect, useMemo, useState} from 'react';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme, Alert} from '@mui/material';
 import {PREFIX} from './constants';
-import {SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
-import {SCThemeType, useSCFetchCourse, useSCFetchLesson} from '@selfcommunity/react-core';
+import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
+import {SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCFetchLesson, useSCRouting, Link} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {
   CourseCompletedDialog,
-  getCurrentSectionAndLessonIndex,
   HiddenPlaceholder,
   LessonAppbar,
   LessonAppbarProps,
@@ -21,25 +20,27 @@ import {CourseInfoViewType, CourseService} from '@selfcommunity/api-services';
 import {FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
+import {getUrlLesson} from '@selfcommunity/react-ui';
 
 const classes = {
   root: `${PREFIX}-root`,
   containerRoot: `${PREFIX}-container-root`,
   navigation: `${PREFIX}-navigation`,
   navigationTitle: `${PREFIX}-navigation-title`,
+  previewInfo: `${PREFIX}-preview-info`,
   button: `${PREFIX}-button`
 };
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root]
+  overridesResolver: (_props, styles) => [styles.root]
 })(() => ({}));
 
 const Container = styled(Box, {
   name: PREFIX,
   slot: 'ContainerRoot',
-  overridesResolver: (props, styles) => styles.containerRoot,
+  overridesResolver: (_props, styles) => styles.containerRoot,
   shouldForwardProp: (prop) => prop !== 'open'
 })<{open?: boolean}>(() => ({}));
 
@@ -77,10 +78,10 @@ export interface LessonProps {
    */
   editMode?: boolean;
   /**
-   * if the logged-in user is the  editor
+   * Renders preview mode
    * @default false
    */
-  isEditor?: boolean;
+  previewMode?: boolean;
   /**
    * Callback fired on edit mode close
    * @default null
@@ -96,6 +97,16 @@ export interface LessonProps {
    * @default null
    */
   onActivePanelChange?: (panel) => void;
+  /**
+   * Handler on status change
+   * @default null
+   */
+  onLessonStatusChange?: () => void;
+  /**
+   * If passed renders the component with a specific section opened
+   * @default null
+   */
+  lessonAction?: SCLessonActionsType;
   /**
    * Any other properties
    */
@@ -115,11 +126,13 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
     lessonId,
     LessonAppbarProps = {},
     LessonDrawerProps = {},
-    isEditor = false,
     editMode = false,
+    previewMode = false,
     onEditModeClose = null,
     onLessonChange = null,
     onActivePanelChange = null,
+    onLessonStatusChange = null,
+    lessonAction = null,
     ...rest
   } = props;
 
@@ -129,40 +142,47 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const [_lessonId, setLessonId] = useState<number | string>(lessonId);
   const [_sectionId, setSectionId] = useState<number | string>(sectionId);
   const {scLesson, setSCLesson} = useSCFetchLesson({id: _lessonId, courseId, sectionId: _sectionId});
-  const {scCourse, setSCCourse} = useSCFetchCourse({id: courseId, params: {view: isEditor ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}});
+  const {scCourse, refreshCourse} = useSCFetchCourse({
+    id: courseId,
+    params: {view: editMode || previewMode ? CourseInfoViewType.EDIT : CourseInfoViewType.USER}
+  });
   const {enqueueSnackbar} = useSnackbar();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
-  const [activePanel, setActivePanel] = useState<SCLessonActionsType>(null);
+  const [activePanel, setActivePanel] = useState<SCLessonActionsType>(lessonAction);
   const [settings, setSettings] = useState(null);
   const [updating, setUpdating] = useState(false);
   const [lessonContent, setLessonContent] = useState<string>('');
   const [lessonMedias, setLessonMedias] = useState<SCMediaType[]>(scLesson?.medias ?? []);
   const [loading, setLoading] = useState<boolean>(false);
-  const [completed, setCompleted] = useState<boolean>(scLesson?.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
-  const currentData = useMemo(() => {
-    if (!scCourse || !scLesson) return null;
-    return getCurrentSectionAndLessonIndex(scCourse, sectionId, lessonId);
-  }, [scCourse, sectionId, lessonId]);
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(currentData?.currentSectionIndex || 0);
-  const [currentLessonIndex, setCurrentLessonIndex] = useState(currentData?.currentLessonIndex || 0);
-  const [currentSection, setCurrentSection] = useState<SCCourseSectionType | null>(null);
-  const isPrevDisabled = !scCourse?.sections || (currentSectionIndex === 0 && currentLessonIndex === 0);
+  const [completed, setCompleted] = useState<boolean | null>(null);
+  const availableLessons = useMemo(() => {
+    if (!scCourse?.sections) return [];
+    return scCourse.sections.flatMap((section: SCCourseSectionType) => section.lessons.map((lesson: SCCourseLessonType) => ({...lesson, section})));
+  }, [scCourse]);
+
+  const [currentLessonIndex, setCurrentLessonIndex] = useState<number>(
+    availableLessons.findIndex((lesson: SCCourseLessonType) => lesson.id === lessonId)
+  );
+  const isPrevDisabled = availableLessons.length === 0 || currentLessonIndex <= 0 || availableLessons[currentLessonIndex - 1]?.locked;
   const isNextDisabled =
-    !scCourse?.sections ||
-    (currentSectionIndex === scCourse?.sections.length - 1 && currentLessonIndex === currentSection?.lessons?.length - 1) ||
-    (currentLessonIndex < currentSection?.lessons?.length - 1
-      ? currentSection.lessons[currentLessonIndex + 1]?.locked
-      : scCourse?.sections[currentSectionIndex + 1]?.lessons[0]?.locked);
+    availableLessons.length === 0 || currentLessonIndex >= availableLessons.length - 1 || availableLessons[currentLessonIndex + 1]?.locked;
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const isCourseAdmin = useMemo(() => scCourse && scCourse.join_status === SCCourseJoinStatusType.CREATOR, [scCourse]);
 
   //EFFECTS
 
   useEffect(() => {
-    if (scCourse?.sections && currentData) {
-      setCurrentSection(scCourse.sections[currentData.currentSectionIndex] || null);
+    const index = availableLessons.findIndex((lesson: SCCourseLessonType) => lesson.id === lessonId);
+    setCurrentLessonIndex(index);
+  }, [lessonId, availableLessons]);
+
+  useEffect(() => {
+    if (scLesson) {
+      setCompleted(scLesson.completion_status === SCCourseLessonCompletionStatusType.COMPLETED);
     }
-  }, [scCourse, currentData]);
+  }, [scLesson]);
 
   // HANDLERS
   /**
@@ -194,7 +214,6 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
   const handleChangeLesson = (l: SCCourseLessonType, s: SCCourseSectionType) => {
     setLessonId(l.id);
     setSectionId(s.id);
-    setCurrentSection(s);
     onLessonChange && onLessonChange(l.id, s.id);
   };
 
@@ -229,64 +248,41 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
    */
 
   const handlePrev = () => {
-    if (currentLessonIndex > 0) {
-      const newLessonIndex = currentLessonIndex - 1;
-      setCurrentLessonIndex(newLessonIndex);
-      handleChangeLesson(currentSection.lessons[newLessonIndex], currentSection);
-    } else if (currentSectionIndex > 0) {
-      const prevSectionIndex = currentSectionIndex - 1;
-      const prevSection = scCourse?.sections[prevSectionIndex];
-      const newLessonIndex = prevSection.lessons.length - 1;
-      setCurrentSectionIndex(prevSectionIndex);
-      setCurrentLessonIndex(newLessonIndex);
-      handleChangeLesson(prevSection.lessons[newLessonIndex], prevSection);
-    }
+    if (isPrevDisabled) return;
+    const newLessonIndex = currentLessonIndex - 1;
+    const newLesson = availableLessons[newLessonIndex];
+    setCurrentLessonIndex(newLessonIndex);
+    handleChangeLesson(newLesson, newLesson.section);
   };
 
   /**
    * Handles next lesson navigation
    */
   const handleNext = () => {
-    if (currentLessonIndex < currentSection.lessons.length - 1) {
-      const newLessonIndex = currentLessonIndex + 1;
-      setCurrentLessonIndex(newLessonIndex);
-      handleChangeLesson(currentSection.lessons[newLessonIndex], currentSection);
-    } else if (currentSectionIndex < scCourse?.sections.length - 1) {
-      const newSectionIndex = currentSectionIndex + 1;
-      setCurrentSectionIndex(newSectionIndex);
-      setCurrentLessonIndex(0);
-      handleChangeLesson(scCourse?.sections[newSectionIndex].lessons[0], scCourse.sections[newSectionIndex]);
-    }
+    if (isNextDisabled) return;
+    const newLessonIndex = currentLessonIndex + 1;
+    const newLesson = availableLessons[newLessonIndex];
+    setCurrentLessonIndex(newLessonIndex);
+    handleChangeLesson(newLesson, newLesson.section);
   };
 
   /**
    * Handles toggle lesson complete/uncompleted
    */
-  const toggleLessonCompletion = (c: boolean) => {
+  const toggleLessonCompletion = () => {
     setLoading(true);
     const service = completed
       ? () => CourseService.markLessonIncomplete(scLesson.course_id, scLesson.section_id, scLesson.id)
       : () => CourseService.markLessonComplete(scLesson.course_id, scLesson.section_id, scLesson.id);
     service()
       .then(() => {
-        setCompleted(!c);
+        setCompleted(!completed);
         setLoading(false);
-        const updatedCourse = {
-          ...scCourse,
-          sections: scCourse.sections.map((section: SCCourseSectionType) => ({
-            ...section,
-            lessons: section.lessons.map((lesson: SCCourseLessonType) =>
-              lesson.id === scLesson.id
-                ? {...lesson, completion_status: c ? SCCourseLessonCompletionStatusType.UNCOMPLETED : SCCourseLessonCompletionStatusType.COMPLETED}
-                : lesson
-            )
-          })),
-          num_lessons_completed: c ? scCourse.num_lessons_completed - 1 : scCourse.num_lessons_completed + 1
-        };
-        setSCCourse(updatedCourse);
-        if (updatedCourse.num_lessons === updatedCourse.num_lessons_completed) {
+        refreshCourse();
+        if (!completed && scCourse.num_lessons === scCourse.num_lessons_completed + 1) {
           setOpenDialog(true);
         }
+        onLessonStatusChange?.();
       })
       .catch((error) => {
         setLoading(false);
@@ -323,12 +319,28 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
           {...LessonAppbarProps}
         />
         <Container open={Boolean(activePanel) || editMode} className={classes.containerRoot}>
+          {previewMode && (
+            <Alert severity="info" className={classes.previewInfo}>
+              <Typography variant="body1">
+                <FormattedMessage
+                  id="templates.lesson.previewMode"
+                  defaultMessage="templates.lesson.previewMode"
+                  values={{
+                    link: (...chunks) => (
+                      <Link to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(scCourse, scLesson))}>{chunks}</Link>
+                    ),
+                    linkBack: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)}>{chunks}</Link>
+                  }}
+                />
+              </Typography>
+            </Alert>
+          )}
           <Box className={classes.navigation}>
             <Typography variant="body2" color="text.secondary">
               <FormattedMessage
                 id="templates.lesson.number"
                 defaultMessage="templates.lesson.number"
-                values={{from: currentLessonIndex + 1, to: currentSection?.lessons?.length}}
+                values={{from: currentLessonIndex + 1, to: availableLessons.length}}
               />
             </Typography>
           </Box>
@@ -350,7 +362,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
             onContentChange={handleLessonContentEdit}
             onMediaChange={handleLessonMediaEdit}
           />
-          {!isEditor && !editMode && (
+          {!isCourseAdmin && !editMode && !previewMode && (
             <LoadingButton
               className={classes.button}
               loading={loading}
@@ -358,7 +370,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
               variant={completed ? 'outlined' : 'contained'}
               startIcon={!completed && <Icon>arrow_next</Icon>}
               endIcon={completed && <Icon>circle_checked</Icon>}
-              onClick={() => toggleLessonCompletion(completed)}>
+              onClick={toggleLessonCompletion}>
               {completed ? (
                 <FormattedMessage id="templates.lesson.button.completed" defaultMessage="templates.lesson.button.completed" />
               ) : (
@@ -371,6 +383,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
           course={scCourse}
           lesson={scLesson}
           editMode={isMobile ? activePanel === SCLessonActionsType.SETTINGS : editMode}
+          previewMode={previewMode}
           activePanel={activePanel}
           handleClose={handleCloseDrawer}
           handleChangeLesson={handleChangeLesson}

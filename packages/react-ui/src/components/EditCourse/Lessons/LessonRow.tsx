@@ -2,7 +2,7 @@ import {DraggableProvided} from '@hello-pangea/dnd';
 import {Icon, MenuItem, Stack, TableCell, TableRow, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {PREFIX} from '../constants';
-import {memo, useCallback, useState} from 'react';
+import {forwardRef, memo, Ref, useCallback, useImperativeHandle, useState} from 'react';
 import MenuRow from '../MenuRow';
 import {FormattedMessage} from 'react-intl';
 import FieldName from './FieldName';
@@ -13,9 +13,9 @@ import {Logger} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {ActionLessonType} from '../types';
-import {useDisabled} from '../hooks';
-import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
+import {ActionLessonType, DeleteRowRef} from '../types';
+import {useIsDisabled} from '../hooks';
+import {getUrlLesson} from '../../../utils/course';
 
 const classes = {
   cellWidth: `${PREFIX}-cell-width`,
@@ -25,76 +25,70 @@ const classes = {
   actionsWrapper: `${PREFIX}-actions-wrapper`
 };
 
-type DataUrlLesson = {
-  id: number;
-  slug: string;
-  section_id: number;
-  lesson_id: number;
-};
-
-function getUrlLesson(course: SCCourseType, section: SCCourseSectionType, lesson: SCCourseLessonType): DataUrlLesson {
-  return {
-    id: course.id,
-    slug: course.slug,
-    section_id: section.id,
-    lesson_id: lesson.id
-  };
-}
-
 interface LessonRowProps {
   provider: DraggableProvided;
-  course: SCCourseType | null;
+  course: SCCourseType;
   section: SCCourseSectionType;
   lesson: SCCourseLessonType;
   isNewRow: boolean;
   handleManageLesson: (lesson: SCCourseLessonType, type: ActionLessonType, newRow?: boolean) => void;
+  handleOpenDialog: () => void;
 }
 
-function LessonRow(props: LessonRowProps) {
+function LessonRow(props: LessonRowProps, ref: Ref<DeleteRowRef>) {
   // PROPS
-  const {provider, course, section, lesson, isNewRow, handleManageLesson} = props;
+  const {provider, course, section, lesson, isNewRow, handleManageLesson, handleOpenDialog} = props;
 
   // STATES
   const [editMode, setEditMode] = useState(false);
-  const [open, setOpen] = useState(false);
 
   // CONTEXTS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // HOOKS
-  const {isDisabled} = useDisabled();
+  const {isDisabled} = useIsDisabled();
   const {enqueueSnackbar} = useSnackbar();
 
   // HANDLERS
-  const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true), 100), [setEditMode]);
+  const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true)), [setEditMode]);
   const handleDisableEditMode = useCallback(() => setEditMode(false), [setEditMode]);
 
-  const handleDeleteLesson = useCallback(() => {
-    CourseService.deleteCourseLesson(course.id, section.id, lesson.id)
-      .then(() => {
-        handleManageLesson(lesson, ActionLessonType.DELETE);
+  const handleDeleteLesson = useCallback(
+    (deleteSection: SCCourseSectionType, deleteLesson: SCCourseLessonType) => {
+      CourseService.deleteCourseLesson(course.id, deleteSection.id, deleteLesson.id)
+        .then(() => {
+          handleManageLesson(deleteLesson, ActionLessonType.DELETE);
 
-        enqueueSnackbar(
-          <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.delete" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.delete" />,
-          {
-            variant: 'success',
+          enqueueSnackbar(
+            <FormattedMessage
+              id="ui.editCourse.tab.lessons.table.snackbar.delete"
+              defaultMessage="ui.editCourse.tab.lessons.table.snackbar.delete"
+            />,
+            {
+              variant: 'success',
+              autoHideDuration: 3000
+            }
+          );
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error',
             autoHideDuration: 3000
-          }
-        );
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-
-        enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-          variant: 'error',
-          autoHideDuration: 3000
+          });
         });
-      });
-  }, [course, section, lesson, handleManageLesson]);
+    },
+    [course, handleManageLesson]
+  );
 
-  const handleOpenDialog = useCallback(() => {
-    setOpen((prev) => !prev);
-  }, [setOpen]);
+  useImperativeHandle(
+    ref,
+    () => ({
+      handleDeleteLesson: (deleteSection: SCCourseSectionType, deleteLesson: SCCourseLessonType) => handleDeleteLesson(deleteSection, deleteLesson)
+    }),
+    [handleDeleteLesson]
+  );
 
   return (
     <TableRow {...provider.draggableProps} ref={provider.innerRef}>
@@ -126,14 +120,14 @@ function LessonRow(props: LessonRowProps) {
           <ChangeLessonStatus course={course} section={section} lesson={lesson} disabled={isDisabled} />
 
           <MenuRow disabled={isDisabled}>
-            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
+            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(course, lesson, section))}>
               <Typography variant="body1">
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.edit" defaultMessage="ui.editCourse.tab.lessons.table.menu.edit" />
               </Typography>
             </MenuItem>
-            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlLesson(course, section, lesson))}>
+            <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_PREVIEW_ROUTE_NAME, getUrlLesson(course, lesson, section))}>
               <Typography variant="body1">
-                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.view" defaultMessage="ui.editCourse.tab.lessons.table.menu.view" />
+                <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.preview" defaultMessage="ui.editCourse.tab.lessons.table.menu.preview" />
               </Typography>
             </MenuItem>
             <MenuItem onClick={handleAbleEditMode}>
@@ -148,10 +142,9 @@ function LessonRow(props: LessonRowProps) {
             </MenuItem>
           </MenuRow>
         </Stack>
-        {open && <ConfirmDialog open onClose={handleOpenDialog} onConfirm={handleDeleteLesson} />}
       </TableCell>
     </TableRow>
   );
 }
 
-export default memo(LessonRow);
+export default memo(forwardRef(LessonRow));

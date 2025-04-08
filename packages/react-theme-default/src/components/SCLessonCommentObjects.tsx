@@ -24,11 +24,12 @@ const Component = {
             marginLeft: 'auto'
           }
         },
-        marginTop: theme.spacing(2),
+        marginTop: 'auto',
         marginBottom: 0
       },
       '& .infinite-scroll-component__outerdiv': {
         overflowY: 'auto',
+        marginBottom: theme.spacing(2),
         '& .infinite-scroll-component': {
           '& .MuiList-root ': {
             padding: 0,
@@ -41,7 +42,8 @@ const Component = {
     }),
     skeletonRoot: ({theme}: any) => ({
       width: '100%',
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      padding: theme.spacing(2, 0, 0, 2)
     })
   }
 };

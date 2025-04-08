@@ -143,6 +143,7 @@ export enum SCPreferenceName {
   COURSES_VISIBILITY_ENABLED = 'courses_visibility_enabled',
   COURSES_PRIVATE_ENABLED = 'courses_private_enabled',
   COURSES_ONLY_STAFF_ENABLED = 'courses_only_staff_enabled',
+  COURSES_ADVANCED_ENABLED = 'courses_advanced_enabled',
   LIVE_STREAM_ENABLED = 'live_stream_enabled',
   LIVE_STREAM_ONLY_STAFF_ENABLED = 'live_stream_only_staff_enabled',
   LIVE_STREAM_VIDEO_CONFERENCE_ENABLED = 'live_stream_video_conference_enabled',

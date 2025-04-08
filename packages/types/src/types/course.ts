@@ -18,8 +18,8 @@ export enum SCCoursePrivacyType {
  */
 export enum SCCourseTypologyType {
   SELF = 'self-paced',
-  SCHEDULED = 'scheduled',
-  STRUCTURED = 'structured'
+  STRUCTURED = 'structured',
+  SCHEDULED = 'scheduled'
 }
 
 /**
@@ -31,6 +31,14 @@ export enum SCCourseJoinStatusType {
   INVITED = 'invited',
   MANAGER = 'manager',
   CREATOR = 'creator'
+}
+
+/**
+ * SCCourseOrderingUsersType enum
+ */
+export enum SCCourseOrderingUsersType {
+  JOINED_AT = 'joined_at',
+  LAST_ACTIVE_AT = 'last_active_at'
 }
 
 /**

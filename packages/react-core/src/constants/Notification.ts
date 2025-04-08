@@ -51,6 +51,16 @@ export const SCNotificationMapping = {
   32: SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP,
   33: SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP,
   34: SCNotificationTypologyType.USER_ADDED_TO_GROUP,
+  7: SCNotificationTypologyType.USER_INVITED_TO_JOIN_EVENT,
+  10: SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT,
+  14: SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_EVENT,
+  15: SCNotificationTypologyType.USER_ADDED_TO_EVENT,
+  27: SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE,
+  29: SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE,
+  30: SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE,
+  46: SCNotificationTypologyType.USER_ADDED_TO_COURSE,
+  80: SCNotificationTypologyType.MANAGER_ADDED_TO_COURSE,
+  82: SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON,
 };
 
 /**

@@ -80,6 +80,7 @@ import {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationCourseActivityType,
   type SCNotificationLiveStreamActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
@@ -195,11 +196,15 @@ import {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
+<<<<<<< HEAD
   SCPaymentPriceCurrencyType,
   SCContentType,
   SCCheckoutSessionStatus,
   SCPaymentProductTemplateType,
   SCCheckoutSessionUIMode
+=======
+  SCCourseOrderingUsersType
+>>>>>>> courses
 } from './types';
 
 /**
@@ -255,11 +260,15 @@ export {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
+<<<<<<< HEAD
   SCPaymentPriceCurrencyType,
   SCContentType,
   SCCheckoutSessionStatus,
   SCPaymentProductTemplateType,
   SCCheckoutSessionUIMode
+=======
+  SCCourseOrderingUsersType
+>>>>>>> courses
 };
 export {
   type SCBannerType,
@@ -340,6 +349,7 @@ export {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationCourseActivityType,
   type SCNotificationLiveStreamActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,

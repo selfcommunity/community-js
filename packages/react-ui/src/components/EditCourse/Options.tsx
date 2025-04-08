@@ -1,7 +1,7 @@
-import {Divider, Stack, Typography} from '@mui/material';
+import {Box, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
-import {Fragment, memo, useCallback, useState} from 'react';
+import {memo, useCallback, useState} from 'react';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {OptionsData} from './types';
@@ -13,6 +13,7 @@ import {SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
 
 const classes = {
+  optionsContainer: `${PREFIX}-options-container`,
   optionsWrapper: `${PREFIX}-options-wrapper`,
   optionsDivider: `${PREFIX}-options-divider`,
   optionsButtonWrapper: `${PREFIX}-options-button-wrapper`
@@ -91,10 +92,9 @@ function Options(props: OptionsProps) {
 
   const handleSubmit = useCallback(() => {
     setLoading(true);
-
     CourseService.patchCourse(course.id, {id: course.id, ...tempOptions})
       .then((data) => {
-        setCourse(data);
+        setCourse({...course, ...data});
         setTempOptions(null);
         setCanSave(false);
         setLoading(false);
@@ -115,7 +115,7 @@ function Options(props: OptionsProps) {
   }, [course, tempOptions, setCanSave, setLoading]);
 
   return (
-    <Fragment>
+    <Box className={classes.optionsContainer}>
       <Stack className={classes.optionsWrapper}>
         {Object.entries(OPTIONS).map(([key, value], i) => (
           <SwitchForm
@@ -129,8 +129,6 @@ function Options(props: OptionsProps) {
         ))}
       </Stack>
 
-      <Divider className={classes.optionsDivider} />
-
       <Stack className={classes.optionsButtonWrapper}>
         <LoadingButton size="small" variant="contained" disabled={!canSave} onClick={handleSubmit} loading={loading}>
           <Typography variant="body1">
@@ -138,7 +136,7 @@ function Options(props: OptionsProps) {
           </Typography>
         </LoadingButton>
       </Stack>
-    </Fragment>
+    </Box>
   );
 }
 

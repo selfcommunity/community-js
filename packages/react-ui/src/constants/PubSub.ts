@@ -32,7 +32,9 @@ export enum SCCourseEventType {
   EDIT = 'edit',
   DELETE = 'delete',
   ADD_MEMBER = 'members.add_member',
-  INVITE_MEMBER = 'members.invite_member'
+  INVITE_MEMBER = 'members.invite_member',
+  REMOVE_MEMBER = 'members.remove_member',
+  REJECT_MEMBER = 'members.reject_member'
 }
 
 /**

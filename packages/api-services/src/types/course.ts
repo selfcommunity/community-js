@@ -1,7 +1,7 @@
 /**
  * CourseCreateParams interface
  */
-import {SCCoursePrivacyType, SCCourseJoinStatusType, SCCourseTypologyType} from '@selfcommunity/types';
+import {SCCoursePrivacyType, SCCourseJoinStatusType, SCCourseTypologyType, SCCourseOrderingUsersType} from '@selfcommunity/types';
 import {BaseGetParams, BaseSearchParams} from './baseParams';
 
 export interface CourseCreateParams {
@@ -130,4 +130,8 @@ export interface CourseDashboardUsersParams extends BaseSearchParams {
    *  Filter by join_status; default: ["manager", "joined"]
    */
   statuses?: SCCourseJoinStatusType[];
+  /**
+   * The order of the users. Default to -joined_at
+   */
+  ordering?: SCCourseOrderingUsersType;
 }

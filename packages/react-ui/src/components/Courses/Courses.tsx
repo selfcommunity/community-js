@@ -27,13 +27,15 @@ import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
-import Course, {CourseProps, CourseSkeletonProps} from '../Course';
+import Course, {CourseProps, CourseSkeleton, CourseSkeletonProps} from '../Course';
 import Skeleton, {CoursesSkeletonProps} from '../Courses/Skeleton';
 import {PREFIX} from './constants';
 import {SCCourseTemplateType} from '../../types/course';
 import CategoryAutocomplete from '../CategoryAutocomplete';
 import CourseCreatePlaceholder from '../Course/CreatePlaceholder';
 import {CreateCourseButtonProps} from '../CreateCourseButton';
+import InfiniteScroll from '../../shared/InfiniteScroll';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -47,9 +49,9 @@ const classes = {
   itemPlaceholder: `${PREFIX}-item-placeholder`,
   noResults: `${PREFIX}-no-results`,
   search: `${PREFIX}-search`,
-  showMore: `${PREFIX}-show-more`,
   studentEmptyView: `${PREFIX}-student-empty-view`,
-  teacherEmptyView: `${PREFIX}-teacher-empty-view`
+  teacherEmptyView: `${PREFIX}-teacher-empty-view`,
+  endMessage: `${PREFIX}-end-message`
 };
 
 const Root = styled(Box, {
@@ -60,7 +62,7 @@ const Root = styled(Box, {
 export const CoursesChipRoot = styled(Chip, {
   name: PREFIX,
   slot: 'CoursesChipRoot',
-  shouldForwardProp: (prop) => prop !== 'showForMe' && prop !== 'showMyCourses'
+  shouldForwardProp: (prop) => prop !== 'showMine' && prop !== 'showManagedCourses'
 })(() => ({}));
 
 export interface CoursesProps {
@@ -158,7 +160,6 @@ export interface CoursesProps {
  |itemPlaceholder|.SCCourses-item-placeholder|Styles applied to the placeholder for an item.|
  |noResults|.SCCourses-no-results|Styles applied when there are no results.|
  |search|.SCCourses-search|Styles applied to the search element.|
- |showMore|.SCCourses-show-more|Styles applied to the show more button or section.|
  |studentEmptyView|.SCCourses-student-empty-view|Styles applied to the student empty view.|
  |teacherEmptyView|.SCCourses-teacher-empty-view|Styles applied to the teacher empty view.|
 
@@ -192,8 +193,8 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   const [next, setNext] = useState<string>(null);
   const [query, setQuery] = useState<string>('');
   const [_categories, setCategories] = useState<number[]>([]);
-  const [showForMe, setShowForMe] = useState<boolean>(false);
-  const [showMyCourses, setShowMyCourses] = useState<boolean>(false);
+  const [showMine, setShowMine] = useState<boolean>(false);
+  const [showManagedCourses, setShowManagedCourses] = useState<boolean>(false);
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -203,14 +204,6 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
     SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in preferences && preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
   const onlyStaffEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_COURSES_ONLY_STAFF_ENABLED]?.value, [preferences]);
   const canCreateCourse = useMemo(() => scUserContext?.user?.permission?.create_course, [scUserContext?.user?.permission]);
-  const endpoint = useMemo(() => {
-    if (showMyCourses) {
-      return Endpoints.GetJoinedCourses;
-    } else if (showForMe) {
-      return Endpoints.CourseSuggestion;
-    }
-    return Endpoints.SearchCourses;
-  }, [showMyCourses, showForMe]);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -223,27 +216,27 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   // HANDLERS
 
   const handleChipClick = () => {
-    setShowForMe(!showForMe);
+    setShowMine(!showMine);
   };
 
   const handleDeleteClick = () => {
-    setShowForMe(false);
+    setShowMine(false);
   };
 
   /**
    * Fetches courses list
    */
   const fetchCourses = () => {
-    setLoading(true);
     return http
       .request({
-        url: endpoint.url({}),
-        method: endpoint.method,
+        url: Endpoints.SearchCourses.url({}),
+        method: Endpoints.SearchCourses.method,
         params: {
           ...endpointQueryParams,
           ...(_categories.length && {categories: JSON.stringify(_categories)}),
           ...(query && {search: query}),
-          ...(showMyCourses && {statuses: JSON.stringify(['creator'])})
+          ...(showManagedCourses && {statuses: JSON.stringify(['creator', 'manager'])}),
+          ...(showMine && {statuses: JSON.stringify(['joined', 'manager'])})
         }
       })
       .then((res: HttpResponse<any>) => {
@@ -265,7 +258,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
     } else {
       fetchCourses();
     }
-  }, [contentAvailability, authUserId, showForMe, showMyCourses, _categories]);
+  }, [contentAvailability, authUserId, showMine, showManagedCourses, _categories]);
 
   /**
    * Subscriber for pubsub callback
@@ -302,7 +295,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
       return http
         .request({
           url: next,
-          method: showMyCourses ? Endpoints.GetJoinedCourses.method : Endpoints.SearchCourses.method
+          method: Endpoints.SearchCourses.method
         })
         .then((res: HttpResponse<any>) => {
           setCourses([...courses, ...res.data.results]);
@@ -329,6 +322,10 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   const handleOnChangeCategory = (categories: SCCategoryType[]) => {
     const categoriesIds = categories.map((item) => item.id);
     setCategories(categoriesIds);
+  };
+
+  const handleScrollUp = () => {
+    window.scrollTo({left: 0, top: 0, behavior: 'smooth'});
   };
 
   /**
@@ -380,18 +377,18 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                   }}
                 />
               </Grid>
-              {((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && (
+              {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && (
                 <Grid item>
                   <CoursesChipRoot
-                    color={showMyCourses ? 'primary' : 'default'}
-                    variant={showMyCourses ? 'filled' : 'outlined'}
-                    label={<FormattedMessage id="ui.courses.filterByCreatedByMe" defaultMessage="ui.courses.filterByCreatedByMe" />}
-                    onClick={() => setShowMyCourses(!showMyCourses)}
-                    // @ts-expect-error this is needed to use showForMe into SCCourses
-                    showForMe={showMyCourses}
-                    deleteIcon={showMyCourses ? <Icon>close</Icon> : null}
-                    onDelete={showMyCourses ? () => setShowMyCourses(false) : null}
-                    disabled={loading || showForMe}
+                    color={showManagedCourses ? 'primary' : 'default'}
+                    variant={showManagedCourses ? 'filled' : 'outlined'}
+                    label={<FormattedMessage id="ui.courses.filterByManagedByMe" defaultMessage="ui.courses.filterByManagedByMe" />}
+                    onClick={() => setShowManagedCourses(!showManagedCourses)}
+                    // @ts-expect-error this is needed to use showMine into SCCourses
+                    showManagedCourses={showManagedCourses}
+                    deleteIcon={showManagedCourses ? <Icon>close</Icon> : null}
+                    onDelete={showManagedCourses ? () => setShowManagedCourses(false) : null}
+                    disabled={loading || showMine}
                   />
                 </Grid>
               )}
@@ -403,15 +400,15 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
               {authUserId && (
                 <Grid item>
                   <CoursesChipRoot
-                    color={showForMe ? 'primary' : 'default'}
-                    variant={showForMe ? 'filled' : 'outlined'}
-                    label={<FormattedMessage id="ui.courses.filterByCoursesForMe" defaultMessage="ui.courses.filterByCoursesForMe" />}
+                    color={showMine ? 'primary' : 'default'}
+                    variant={showMine ? 'filled' : 'outlined'}
+                    label={<FormattedMessage id="ui.courses.filterByMine" defaultMessage="ui.courses.filterByMine" />}
                     onClick={handleChipClick}
-                    // @ts-expect-error this is needed to use showForMe into SCCourses
-                    showForMe={showForMe}
-                    deleteIcon={showForMe ? <Icon>close</Icon> : null}
-                    onDelete={showForMe ? handleDeleteClick : null}
-                    disabled={loading || showMyCourses}
+                    // @ts-expect-error this is needed to use showMine into SCCourses
+                    showMine={showMine}
+                    deleteIcon={showMine ? <Icon>close</Icon> : null}
+                    onDelete={showMine ? handleDeleteClick : null}
+                    disabled={loading || showManagedCourses}
                   />
                 </Grid>
               )}
@@ -420,66 +417,81 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
         </Grid>
       )}
       <>
-        {loading ? (
-          <Skeleton {...CoursesSkeletonComponentProps} CourseSkeletonProps={CourseSkeletonComponentProps} />
-        ) : (
-          <>
-            {!courses.length ? (
-              <Box className={classes.noResults}>
-                {!canCreateCourse && onlyStaffEnabled ? (
-                  <Stack className={classes.studentEmptyView}>
-                    <Stack className={classes.emptyBox}>
-                      <Stack className={classes.emptyRotatedBox}>
-                        <Icon className={classes.emptyIcon} color="disabled" fontSize="large">
-                          courses
-                        </Icon>
-                      </Stack>
-                    </Stack>
-                    <Typography variant="h5" textAlign="center">
-                      <FormattedMessage id="ui.courses.empty.title" defaultMessage="ui.courses.empty.title" />
-                    </Typography>
-                    <Typography variant="body1" textAlign="center">
-                      <FormattedMessage id="ui.courses.empty.info" defaultMessage="ui.courses.empty.info" />
-                    </Typography>
-                    {!isMobile && (
-                      <Skeleton coursesNumber={4} {...CoursesSkeletonComponentProps} CourseSkeletonProps={CourseSkeletonComponentProps} />
-                    )}
+        {!courses.length ? (
+          <Box className={classes.noResults}>
+            {!canCreateCourse && onlyStaffEnabled ? (
+              <Stack className={classes.studentEmptyView}>
+                <Stack className={classes.emptyBox}>
+                  <Stack className={classes.emptyRotatedBox}>
+                    <Icon className={classes.emptyIcon} color="disabled" fontSize="large">
+                      courses
+                    </Icon>
                   </Stack>
-                ) : (
-                  <Box className={classes.teacherEmptyView}>
-                    <Skeleton
-                      teacherView={(onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled}
-                      coursesNumber={1}
-                      {...CoursesSkeletonComponentProps}
-                      CourseSkeletonProps={CourseSkeletonComponentProps}
-                    />
-                  </Box>
-                )}
-              </Box>
+                </Stack>
+                <Typography variant="h5" textAlign="center">
+                  <FormattedMessage id="ui.courses.empty.title" defaultMessage="ui.courses.empty.title" />
+                </Typography>
+                <Typography variant="body1" textAlign="center">
+                  <FormattedMessage id="ui.courses.empty.info" defaultMessage="ui.courses.empty.info" />
+                </Typography>
+              </Stack>
             ) : (
+              <Box className={classes.teacherEmptyView}>
+                <Skeleton
+                  teacherView={(onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled}
+                  coursesNumber={1}
+                  {...CoursesSkeletonComponentProps}
+                  CourseSkeletonProps={CourseSkeletonComponentProps}
+                />
+              </Box>
+            )}
+          </Box>
+        ) : (
+          <InfiniteScroll
+            dataLength={courses.length}
+            next={handleNext}
+            hasMoreNext={Boolean(next)}
+            loaderNext={
+              isMobile ? (
+                <CourseSkeleton template={SCCourseTemplateType.PREVIEW} />
+              ) : (
+                <Skeleton coursesNumber={4} {...CoursesSkeletonComponentProps} CourseSkeletonProps={CourseSkeletonComponentProps} />
+              )
+            }
+            endMessage={
+              <Typography component="div" className={classes.endMessage}>
+                <FormattedMessage
+                  id="ui.courses.endMessage"
+                  defaultMessage="ui.courses.endMessage"
+                  values={{
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    button: (chunk) => (
+                      <Button color="secondary" variant="text" onClick={handleScrollUp}>
+                        {/*eslint-disable-next-line @typescript-eslint/ban-ts-ignore*/}
+                        {/*@ts-ignore*/}
+                        {chunk}
+                      </Button>
+                    )
+                  }}
+                />
+              </Typography>
+            }>
+            <Grid container spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
               <>
-                <Grid container spacing={{xs: 2}} className={classes.courses} {...GridContainerComponentProps}>
-                  <>
-                    {courses.map((course: SCCourseType) => (
-                      <Grid item xs={12} sm={12} md={6} lg={3} key={course.id} className={classes.item} {...GridItemComponentProps}>
-                        <Course courseId={course.id} {...CourseComponentProps} />
-                      </Grid>
-                    ))}
-                    {authUserId && courses.length % 2 !== 0 && (
-                      <Grid item xs={12} sm={12} md={6} lg={3} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
-                        <CourseCreatePlaceholder CreateCourseButtonComponentProps={CreateCourseButtonComponentProps} />
-                      </Grid>
-                    )}
-                  </>
-                </Grid>
-                {Boolean(next) && (
-                  <Button color="secondary" variant="text" onClick={handleNext} className={classes.showMore}>
-                    <FormattedMessage id="ui.courses.button.seeMore" defaultMessage="ui.courses.button.seeMore" />
-                  </Button>
+                {courses.map((course: SCCourseType) => (
+                  <Grid item xs={12} sm={12} md={6} lg={3} key={course.id} className={classes.item} {...GridItemComponentProps}>
+                    <Course courseId={course.id} {...CourseComponentProps} />
+                  </Grid>
+                ))}
+                {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && courses.length % 2 !== 0 && (
+                  <Grid item xs={12} sm={12} md={6} lg={3} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
+                    <CourseCreatePlaceholder CreateCourseButtonComponentProps={CreateCourseButtonComponentProps} />
+                  </Grid>
                 )}
               </>
-            )}
-          </>
+            </Grid>
+          </InfiniteScroll>
         )}
       </>
     </>
@@ -489,7 +501,10 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
    * Renders root object (if content availability community option is false and user is anonymous, component is hidden)
    */
   if (!contentAvailability && !scUserContext.user) {
-    return null;
+    return <HiddenPlaceholder />;
+  }
+  if (loading) {
+    return <Skeleton {...CoursesSkeletonComponentProps} CourseSkeletonProps={CourseSkeletonComponentProps} />;
   }
 
   return (

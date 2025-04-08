@@ -88,7 +88,8 @@ import {
   type SCNotificationVoteUpType,
   type SCNotificationGroupActivityType,
   SCNotificationEventActivityType,
-  SCNotificationLiveStreamActivityType
+  SCNotificationLiveStreamActivityType,
+  SCNotificationCourseActivityType
 } from './notification';
 import {type SCWebhookEndpointAttemptType, type SCWebhookEndpointSecretType, type SCWebhookEndpointType, type SCWebhookEventsType} from './webhook';
 import {type SCVoteType} from './vote';
@@ -143,7 +144,8 @@ import {
   SCCourseLessonTypologyType,
   SCCourseLessonStatusType,
   SCCourseTypologyType,
-  SCCourseLessonCompletionStatusType
+  SCCourseLessonCompletionStatusType,
+  SCCourseOrderingUsersType
 } from './course';
 import {
   type SCLiveStreamType,
@@ -278,6 +280,7 @@ export {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationCourseActivityType,
   type SCNotificationLiveStreamActivityType,
   type SCPrizeType,
   type SCPrizeUserType,
@@ -350,6 +353,7 @@ export {
   SCCourseLessonStatusType,
   SCCourseTypologyType,
   SCCourseLessonCompletionStatusType,
+  SCCourseOrderingUsersType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamSettingsType,

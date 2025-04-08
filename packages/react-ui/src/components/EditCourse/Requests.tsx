@@ -1,6 +1,6 @@
 import {Box, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {memo, useCallback, useEffect, useReducer, useRef} from 'react';
+import {memo, SyntheticEvent, useCallback, useEffect, useReducer, useRef} from 'react';
 import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -9,13 +9,15 @@ import CourseUsersTable from '../../shared/CourseUsersTable';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
-import {CourseService, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {BaseGetParams, CourseService, Endpoints, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {PREFIX} from './constants';
 import PubSub from 'pubsub-js';
-import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
+import {SCCourseEditTabType, SCCourseUsersTableModeType} from '../../types/course';
 
 const classes = {
-  usersStatusWrapper: `${PREFIX}-users-status-wrapper`
+  usersStatusWrapper: `${PREFIX}-users-status-wrapper`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const headerCells = [
@@ -33,7 +35,8 @@ const headerCells = [
 
 interface RequestsProps {
   course: SCCourseType;
-  endpointQueryParams?: Record<string, string | number>;
+  endpointQueryParams?: BaseGetParams;
+  handleTabChange: (_e: SyntheticEvent, newTabValue: SCCourseEditTabType) => void;
 }
 
 function Requests(props: RequestsProps) {
@@ -43,7 +46,8 @@ function Requests(props: RequestsProps) {
     endpointQueryParams = {
       limit: 6,
       offset: DEFAULT_PAGINATION_OFFSET
-    }
+    },
+    handleTabChange
   } = props;
 
   // STATES
@@ -53,8 +57,8 @@ function Requests(props: RequestsProps) {
       isLoadingPrevious: false,
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_REQUESTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
-      cacheStrategy: CacheStrategies.CACHE_FIRST,
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USERS_REQUESTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
+      cacheStrategy: CacheStrategies.NETWORK_ONLY,
       visibleItems: endpointQueryParams.limit
     },
     stateWidgetInitializer
@@ -83,7 +87,7 @@ function Requests(props: RequestsProps) {
   }, [state.isLoadingNext, state.initialized, course, dispatch, endpointQueryParams]);
 
   // HANDLERS
-  const handleRemoveUser = useCallback(
+  const handleRejectUser = useCallback(
     (_msg: string, user: SCUserType) => {
       dispatch({
         type: actionWidgetTypes.SET_RESULTS,
@@ -107,16 +111,16 @@ function Requests(props: RequestsProps) {
   }, [scUserContext.user, _init]);
 
   useEffect(() => {
-    updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCGroupEventType.REMOVE_MEMBER}`, handleRemoveUser);
+    updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCCourseEventType.REJECT_MEMBER}`, handleRejectUser);
 
     return () => {
       updatedUsers.current && PubSub.unsubscribe(updatedUsers.current);
     };
-  }, [handleRemoveUser]);
+  }, [handleRejectUser]);
 
   return (
     <Box>
-      <Typography variant="h6">
+      <Typography variant="h6" className={classes.contrastColor}>
         <FormattedMessage
           id="ui.editCourse.tab.requests.title"
           defaultMessage="ui.editCourse.tab.requests.title"
@@ -125,15 +129,19 @@ function Requests(props: RequestsProps) {
       </Typography>
 
       <Stack className={classes.usersStatusWrapper}>
-        <Status course={course} />
+        <Status course={course} handleTabChange={handleTabChange} />
       </Stack>
 
       <CourseUsersTable
-        course={course}
         state={state}
         dispatch={dispatch}
+        course={course}
+        endpointSearch={{
+          url: () => Endpoints.GetCourseWaitingApproval.url({id: course.id}),
+          method: Endpoints.GetCourseWaitingApproval.method
+        }}
         headerCells={headerCells}
-        mode="requests"
+        mode={SCCourseUsersTableModeType.REQUESTS}
         emptyStatusTitle="ui.courseUsersTable.empty.requests.title"
       />
     </Box>
