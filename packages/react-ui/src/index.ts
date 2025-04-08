@@ -287,13 +287,8 @@ import {getRelativeTime} from './utils/formatRelativeTime';
 import {bytesToSize} from './utils/sizeCoverter';
 import {generateRoomId, randomString, decodePassphrase, encodePassphrase} from './utils/liveStream';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
-<<<<<<< HEAD
-import {getCurrentSectionAndLessonIndex} from './utils/course';
 import {getDefaultLocale, getDefaultPaymentMethodConfiguration, getDefaultAppearanceStyle, getConvertedAmount} from './utils/payment';
-=======
 import {getUrlLesson} from './utils/course';
-
->>>>>>> courses
 /**
  * Import Assets
  */

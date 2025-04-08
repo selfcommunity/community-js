@@ -32,6 +32,9 @@ const Root = styled(Box, {
   },
   '& .MuiButton-root': {
     maxWidth: 50
+  },
+  [`& .${classes.error}`]: {
+    color: theme.palette.error.main
   }
 }));
 
@@ -67,6 +70,11 @@ const NumericFormatCustom = React.forwardRef<NumericFormatProps, CustomProps>(fu
   );
 });
 
+/**
+ * Initial Errors
+ */
+const _initialFieldsError = {name: null, description: null, unitAmount: null};
+
 export default function CreatePaymentProductForm(inProps: CreatePaymentProductFormProps) {
   // PROPS
   const props: CreatePaymentProductFormProps = useThemeProps({
@@ -79,7 +87,8 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [unitAmount, setUnitAmount] = useState<number>(0.6);
+  const [unitAmount, setUnitAmount] = useState<number>(0.5);
+  const [fieldsError, setFieldsError] = useState<Record<string, string>>(_initialFieldsError);
   const [error, setError] = useState<string | null>(null);
 
   // HOOKS
@@ -112,26 +121,31 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
 
   const isValid = useMemo(
     () => () => {
+      setFieldsError(_initialFieldsError);
+      let _invalid = true;
       if (!name) {
-        setError(
-          intl.formatMessage(
-            {id: 'ui.createPaymentProductForm.error.name.required', defaultMessage: 'ui.createPaymentProductForm.error.name.required'},
-            {min: DEFAULT_MIN_PRICE}
-          )
-        );
-        return false;
-      } else if (!unitAmount) {
-        setError(
-          intl.formatMessage(
-            {id: 'ui.createPaymentProductForm.error.price.required"', defaultMessage: 'ui.createPaymentProductForm.error.price.required'},
-            {min: DEFAULT_MIN_PRICE}
-          )
-        );
-        return false;
+        setFieldsError({
+          ...fieldsError,
+          name: intl.formatMessage({
+            id: 'ui.createPaymentProductForm.error.name.required',
+            defaultMessage: 'ui.createPaymentProductForm.error.name.required'
+          })
+        });
+        _invalid = _invalid && false;
       }
-      return true;
+      if (!unitAmount || unitAmount < 0.5) {
+        setFieldsError({
+          ...fieldsError,
+          unitAmount: intl.formatMessage(
+            {id: 'ui.createPaymentProductForm.error.price.required', defaultMessage: 'ui.createPaymentProductForm.error.price.required'},
+            {min: DEFAULT_MIN_PRICE}
+          )
+        });
+        _invalid = _invalid && false;
+      }
+      return _invalid;
     },
-    [setError]
+    [setFieldsError, name, unitAmount]
   );
 
   /**
@@ -153,16 +167,15 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
         .catch((error) => {
           Logger.error(SCOPE_SC_UI, error);
           setLoading(false);
-          onError &&
-            onError(
-              intl.formatMessage({
-                id: 'ui.createPaymentProductForm.title',
-                defaultMessage: 'ui.createPaymentProductForm.title'
-              })
-            );
+          const _e = intl.formatMessage({
+            id: 'ui.createPaymentProductForm.title',
+            defaultMessage: 'ui.createPaymentProductForm.title'
+          });
+          onError?.(_e);
+          setError(_e);
         });
     } else {
-      setLoading(true);
+      setLoading(false);
     }
   }, [loading, name, description, unitAmount, error]);
 
@@ -170,6 +183,7 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
     return null;
   }
 
+  console.log(fieldsError);
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Typography mb={1}>
@@ -182,6 +196,8 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
         variant="outlined"
         fullWidth
         value={name}
+        error={Boolean(fieldsError && fieldsError.name)}
+        {...(Boolean(fieldsError && fieldsError.name) && {helperText: fieldsError.name})}
         onChange={(e) => handleChange('name', e)}
       />
       <TextField
@@ -194,6 +210,8 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
         onChange={(e) => handleChange('description', e)}
         multiline
         maxRows={2}
+        error={Boolean(fieldsError && fieldsError.description)}
+        {...(Boolean(fieldsError && fieldsError.description) && {helperText: fieldsError.description})}
       />
       <TextField
         label={<FormattedMessage id="ui.createPaymentProductForm.price" defaultMessage="ui.createPaymentProductForm.price" />}
@@ -202,20 +220,24 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
         onChange={(e) => handleChange('unitAmount', e)}
         name="unitAmount"
         id="unitAmount"
-
         helperText={
-          <>
-            {intl.formatMessage(
-              {id: 'ui.createPaymentProductForm.price', defaultMessage: 'ui.createPaymentProductForm.price'},
-              {min: DEFAULT_MIN_PRICE}
-            )}
-          </>
+          fieldsError && fieldsError.unitAmount ? (
+            <>{fieldsError.unitAmount}</>
+          ) : (
+            <>
+              {intl.formatMessage(
+                {id: 'ui.createPaymentProductForm.minPrice', defaultMessage: 'ui.createPaymentProductForm.minPrice'},
+                {min: DEFAULT_MIN_PRICE}
+              )}
+            </>
+          )
         }
         InputProps={{
           startAdornment: <InputAdornment position="start">€</InputAdornment>,
           inputComponent: NumericFormatCustom as any
         }}
         fullWidth
+        error={Boolean(fieldsError && fieldsError.unitAmount)}
       />
       {error && (
         <Typography component="div" className={classes.error} variant="body2">
@@ -224,7 +246,7 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
       )}
       <Stack direction="row" justifyContent="flex-end" alignItems="flex-end" spacing={1}>
         {onCancel && (
-          <Button variant="text" size="small" color="error" onClick={onCancel}>
+          <Button variant="text" size="small" color="inherit" onClick={onCancel}>
             <FormattedMessage id="ui.createPaymentProductForm.btn.cancel" defaultMessage="ui.createPaymentProductForm.btn.cancel" />
           </Button>
         )}
