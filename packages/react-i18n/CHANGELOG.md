@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.12...@selfcommunity/react-i18n@0.8.0-alpha.13) (2025-04-08)
+
+
+### Bug Fixes
+
+* fixed groups search ([c17bd99](https://github.com/selfcommunity/community-js/commit/c17bd996f49c56b1f4b0ec8b4dfb11fca340750e))
+
+
+
+
+
 # [0.8.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.11...@selfcommunity/react-i18n@0.8.0-alpha.12) (2025-04-07)
 
 
