@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.5-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.20...@selfcommunity/react-theme-default@0.4.5-alpha.21) (2025-04-08)
+
+
+### Bug Fixes
+
+* fixed groups search ([c17bd99](https://github.com/selfcommunity/community-js/commit/c17bd996f49c56b1f4b0ec8b4dfb11fca340750e))
+
+
+
+
+
 ## [0.4.5-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.19...@selfcommunity/react-theme-default@0.4.5-alpha.20) (2025-04-04)
 
 
