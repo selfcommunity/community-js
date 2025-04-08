@@ -29,7 +29,7 @@ import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
 import itLocale from 'date-fns/locale/it';
 import PubSub from 'pubsub-js';
-import React, {ChangeEvent, useCallback, useMemo, useState} from 'react';
+import {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../constants/Event';
@@ -536,7 +536,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
                 }
               }}
-              onChange={(value) => handleChangeDateTime(value, 'startDate')}
+              onChange={(value) => {
+                handleChangeDateTime(value, 'startDate');
+                handleChangeDateTime(value, 'startTime');
+              }}
             />
             <MobileTimePicker
               className={classes.picker}
@@ -644,7 +647,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
                 }
               }}
-              onChange={(value) => handleChangeDateTime(value, 'endDate')}
+              onChange={(value) => {
+                handleChangeDateTime(value, 'endDate');
+                handleChangeDateTime(value, 'endTime');
+              }}
               shouldDisableDate={shouldDisableDate}
             />
             <MobileTimePicker
