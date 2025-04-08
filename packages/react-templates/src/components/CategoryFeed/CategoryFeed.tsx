@@ -1,19 +1,20 @@
 import React, {useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {
-	CategoryTrendingFeedWidget,
-	CategoryTrendingUsersWidget,
-	ContributionUtils,
-	Feed,
-	FeedObject,
-	FeedObjectProps,
-	FeedObjectSkeleton,
-	FeedProps,
-	FeedRef,
-	FeedSidebarProps, HiddenPurchasableContent,
-	InlineComposerWidget,
-	SCFeedObjectTemplateType,
-	SCFeedWidgetType
+  CategoryTrendingFeedWidget,
+  CategoryTrendingUsersWidget,
+  ContributionUtils,
+  Feed,
+  FeedObject,
+  FeedObjectProps,
+  FeedObjectSkeleton,
+  FeedProps,
+  FeedRef,
+  FeedSidebarProps,
+  HiddenPurchasableContent,
+  InlineComposerWidget,
+  SCFeedObjectTemplateType,
+  SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {
@@ -220,7 +221,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
 
   if (!scCategory) {
     return <CategoryFeedSkeleton />;
-  } else if (scCategory && isPaymentsEnabled && !scCategory.followed && scCategory.paywalls?.length > 0) {
+  } else if (scCategory && isPaymentsEnabled && !scCategory.followed && !scCategory.payment_order && scCategory.paywalls?.length > 0) {
     return <HiddenPurchasableContent />;
   }
 
