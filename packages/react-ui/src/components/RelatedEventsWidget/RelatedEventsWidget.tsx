@@ -198,10 +198,7 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
     <Root className={classes.root} {...rest}>
       <CardContent className={classes.content}>
         <Stack className={classes.header}>
-          <Button
-            component={Link}
-            to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: scUserContext.user?.id})}
-            className={classes.avatarWrapper}>
+          <Button component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scEvent.managed_by)} className={classes.avatarWrapper}>
             <Avatar variant="rounded" src={scEvent.managed_by.avatar} alt={scEvent.managed_by.username} className={classes.avatar} />
           </Button>
           <Typography variant="h4">
