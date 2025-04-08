@@ -715,7 +715,7 @@
   "ui.groups.noGroups.title.onlyStaff": "Join a Group",
   "ui.groups.noGroups.subtitle.onlyStaff": "Make your activity in the Community even more interesting by joining a group.",
   "ui.groups.noGroups.subtitle": "Make your activity in the Community even more interesting with the people you prefer.",
-  "ui.groups.noOtherGroups": "There are no other contents",
+  "ui.groups.noResults": "There are no results matching your search",
   "ui.groups.filterByName": "Search Group...",
   "ui.groups.endMessage": "There is no other content. <button>Scroll up</button>",
   "ui.groupSubscribeButton.enter": "Join the Group",
