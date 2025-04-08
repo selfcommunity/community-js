@@ -41,6 +41,11 @@ export interface LessonDrawerProps {
    */
   editMode: boolean;
   /**
+   * The preview mode
+   * @default false
+   */
+  previewMode: boolean;
+  /**
    * The active panel
    */
   activePanel: SCLessonActionsType | null;
@@ -79,6 +84,7 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
     lesson,
     course,
     editMode = false,
+    previewMode = false,
     activePanel = null,
     LessonCommentObjectsProps = {},
     LessonEditFormProps,
@@ -110,7 +116,7 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
         <LessonCommentObjects lessonObject={lesson} {...LessonCommentObjectsProps} />
       ) : (
         <ScrollContainer>
-          <CourseContentMenu course={course} lesson={lesson} onLessonClick={handleChangeLesson} />
+          <CourseContentMenu course={course} lesson={lesson} onLessonClick={handleChangeLesson} previewMode={previewMode} />
         </ScrollContainer>
       )}
     </Root>

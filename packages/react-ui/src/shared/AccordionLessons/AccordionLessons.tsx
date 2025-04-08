@@ -1,19 +1,37 @@
-import {Accordion, AccordionDetails, AccordionSummary, Box, Icon, styled, Typography, useMediaQuery, useTheme, useThemeProps} from '@mui/material';
-import {FormattedMessage} from 'react-intl';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Icon,
+  Stack,
+  styled,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  useThemeProps
+} from '@mui/material';
+import {FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
-import {HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
-import {SCCourseLessonCompletionStatusType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
-import {SCThemeType} from '@selfcommunity/react-core';
+import {Fragment, HTMLAttributes, SyntheticEvent, useCallback, useState} from 'react';
+import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import AccordionLessonSkeleton from './Skeleton';
+import {Link} from '@selfcommunity/react-core';
+import Bullet from '../Bullet';
+import {getUrlLesson} from '../../utils/course';
 
 const classes = {
   root: `${PREFIX}-root`,
   empty: `${PREFIX}-empty`,
   accordion: `${PREFIX}-accordion`,
   summary: `${PREFIX}-summary`,
+  nameWrapper: `${PREFIX}-name-wrapper`,
   details: `${PREFIX}-details`,
-  circle: `${PREFIX}-circle`
+  circle: `${PREFIX}-circle`,
+  link: `${PREFIX}-link`
 };
 
 const Root = styled(Box, {
@@ -24,6 +42,7 @@ const Root = styled(Box, {
 
 export interface AccordionLessonsProps {
   course: SCCourseType | null;
+  viewerJoinStatus?: SCCourseJoinStatusType;
   className?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
@@ -34,7 +53,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
     name: PREFIX
   });
 
-  const {course, className} = props;
+  const {course, viewerJoinStatus, className} = props;
 
   //STATES
   const [expanded, setExpanded] = useState<number | false>(false);
@@ -42,6 +61,12 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+  // CONTEXTS
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // INTL
+  const intl = useIntl();
 
   // HANDLERS
   const handleChange = useCallback(
@@ -67,10 +92,29 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
             disableGutters
             elevation={0}
             square>
-            <AccordionSummary className={classes.summary} expandIcon={<Icon>expand_less</Icon>}>
-              <Typography component="span" variant="body1">
-                {section.name}
-              </Typography>
+            <AccordionSummary className={classes.summary} expandIcon={<Icon>expand_more</Icon>}>
+              <Stack className={classes.nameWrapper}>
+                <Typography component="span" variant="body1">
+                  {section.name}
+                </Typography>
+
+                {viewerJoinStatus !== SCCourseJoinStatusType.CREATOR && viewerJoinStatus !== SCCourseJoinStatusType.MANAGER && section.locked && (
+                  <Fragment>
+                    <Bullet />
+
+                    <Typography component="span" variant="body1">
+                      <FormattedMessage
+                        id="ui.course.accordionLessons.date"
+                        defaultMessage="ui.course.accordionLessons.date"
+                        values={{
+                          date: intl.formatDate(section.available_date, {day: 'numeric', month: 'numeric', year: 'numeric'}),
+                          hour: intl.formatDate(section.available_date, {hour: 'numeric', minute: 'numeric'})
+                        }}
+                      />
+                    </Typography>
+                  </Fragment>
+                )}
+              </Stack>
               {!isMobile && (
                 <Typography component="span" variant="body1">
                   <FormattedMessage
@@ -94,7 +138,21 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
                 ) : (
                   <Box className={classes.circle} />
                 )}
-                <Typography>{lesson.name}</Typography>
+                {course.join_status === null ||
+                viewerJoinStatus === SCCourseJoinStatusType.CREATOR ||
+                viewerJoinStatus === SCCourseJoinStatusType.MANAGER ||
+                lesson.locked ? (
+                  <Typography>{lesson.name}</Typography>
+                ) : (
+                  <Button
+                    component={Link}
+                    to={scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlLesson(course, lesson, section))}
+                    variant="text"
+                    color="inherit"
+                    className={classes.link}>
+                    <Typography>{lesson.name}</Typography>
+                  </Button>
+                )}
               </AccordionDetails>
             ))}
           </Accordion>

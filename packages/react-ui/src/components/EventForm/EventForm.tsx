@@ -803,7 +803,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ) : null
           }
         />
-        {isPaymentsEnabled && (
+        {isPaymentsEnabled && isStaff && (
           <Box className={classes.paywallsConfiguratorWrap}>
             <PaywallsConfigurator {...(event && {contentId: event.id})} contentType={SCContentType.EVENT} onChange={handleChangePaymentsProducts} />
           </Box>

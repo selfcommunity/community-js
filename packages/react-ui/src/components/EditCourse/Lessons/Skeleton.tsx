@@ -1,6 +1,5 @@
-import {Stack, Skeleton, TableContainer, Table, TableHead, TableRow, TableCell, TableBody} from '@mui/material';
+import {Stack, Skeleton, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Box} from '@mui/material';
 import {PREFIX} from '../constants';
-import {Fragment} from 'react';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
@@ -16,7 +15,7 @@ const classes = {
 
 export default function LessonsSkeleton() {
   return (
-    <Fragment>
+    <Box>
       <Skeleton animation="wave" variant="text" width="150px" height="21px" className={classes.lessonTitle} />
 
       <Stack className={classes.lessonInfoWrapper}>
@@ -69,6 +68,6 @@ export default function LessonsSkeleton() {
           </TableBody>
         </Table>
       </TableContainer>
-    </Fragment>
+    </Box>
   );
 }

@@ -16,17 +16,28 @@ export const Base: StoryObj<typeof Lesson> = {
   args: {
     courseId: 1,
     sectionId: 1,
-    lessonId: 1,
+    lessonId: 1
   },
   render: template,
 };
 
 export const EditMode: StoryObj<typeof Lesson> = {
   args: {
-    courseId: 1,
-    sectionId: 1,
-    lessonId: 1,
-    editMode: true
+    courseId: 20,
+    sectionId: 89,
+    lessonId: 101,
+    editMode: true,
   },
   render: template,
 };
+
+export const PreviewMode: StoryObj<typeof Lesson> = {
+  args: {
+    courseId: 1,
+    sectionId: 1,
+    lessonId: 1,
+    previewMode: true,
+  },
+  render: template,
+};
+

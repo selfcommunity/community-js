@@ -23,6 +23,7 @@ import {AxiosResponse} from 'axios';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
+import classNames from 'classnames';
 
 const PREFIX = 'SCAddUsersButton';
 
@@ -31,7 +32,8 @@ const classes = {
   dialogRoot: `${PREFIX}-dialog-root`,
   dialogAutocompleteWrapper: `${PREFIX}-dialog-autocomplete-wrapper`,
   dialogUserWrapper: `${PREFIX}-dialog-user-wrapper`,
-  dialogChipWrapper: `${PREFIX}-dialog-chip-wrapper`
+  dialogChipWrapper: `${PREFIX}-dialog-chip-wrapper`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const messages = defineMessages({
@@ -55,12 +57,6 @@ const DialogRoot = styled(BaseDialog, {
 
 export interface AddUsersButtonProps extends ButtonProps {
   label: string;
-
-  /**
-   * Handles component update
-   * @default false
-   */
-  isUpdating?: boolean;
 
   /**
    * Event API Endpoint
@@ -98,10 +94,10 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
     variant = 'outlined',
     color = 'inherit',
     size = 'small',
-    isUpdating = false,
     endpoint = Endpoints.GetCourseSuggestedUsers,
     endpointQueryParams = {limit: DEFAULT_PAGINATION_LIMIT, offset: DEFAULT_PAGINATION_OFFSET, search: ''},
     onConfirm,
+    className,
     ...rest
   } = props;
 
@@ -159,10 +155,8 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
    * @param reason
    */
   const handleToggleDialogOpen = useCallback(() => {
-    if (!isUpdating) {
-      setOpenDialog((prev) => !prev);
-    }
-  }, [isUpdating, setOpenDialog]);
+    setOpenDialog((prev) => !prev);
+  }, [setOpenDialog]);
 
   /**
    * Handles action confirm
@@ -170,7 +164,8 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
   const handleConfirm = useCallback(() => {
     onConfirm?.(invited);
     setInvited([]);
-  }, [invited, onConfirm]);
+    handleToggleDialogOpen();
+  }, [invited, onConfirm, handleToggleDialogOpen]);
 
   // HANDLERS AUTOCOMPLETE
   const handleInputChange = useCallback(
@@ -224,7 +219,13 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
 
   return (
     <Fragment>
-      <Root onClick={handleToggleDialogOpen} variant={variant} color={color} size={size} className={classes.root} {...rest}>
+      <Root
+        onClick={handleToggleDialogOpen}
+        variant={variant}
+        color={color}
+        size={size}
+        className={classNames(classes.root, classes.contrastColor, className)}
+        {...rest}>
         <FormattedMessage id={label} defaultMessage={label} />
       </Root>
 
@@ -239,7 +240,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
             </Typography>
           }
           actions={
-            <LoadingButton onClick={handleConfirm} size="medium" variant="contained" autoFocus disabled={!invited.length} loading={isUpdating}>
+            <LoadingButton onClick={handleConfirm} size="medium" variant="contained" autoFocus disabled={!invited.length}>
               <Typography variant="body1">
                 <FormattedMessage id="ui.addUserButton.dialog.confirm" defaultMessage="ui.addUserButton.dialog.confirm" />
               </Typography>

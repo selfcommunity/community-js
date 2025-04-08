@@ -1,6 +1,7 @@
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
+      backgroundColor: theme.palette.common.white,
       border: `1px solid ${theme.palette.grey['300']}`,
       borderRadius: '5px',
 
@@ -18,7 +19,13 @@ const Component = {
 
           '& .MuiAccordionSummary-content': {
             justifyContent: 'space-between',
-            margin: 0
+            margin: 0,
+
+            '& .SCAccordionLessons-name-wrapper': {
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: '5px'
+            }
           }
         },
 
@@ -38,6 +45,17 @@ const Component = {
             height: theme.spacing(2),
             borderRadius: '9999px',
             backgroundColor: theme.palette.grey['300']
+          },
+
+          '& .SCAccordionLessons-link': {
+            textDecoration: 'underline',
+            padding: 0,
+            justifyContent: 'space-between',
+
+            '&:hover': {
+              backgroundColor: 'unset',
+              textDecoration: 'underline'
+            }
           }
         }
       }

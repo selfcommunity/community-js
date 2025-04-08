@@ -2,6 +2,7 @@ import {
   Avatar,
   Box,
   Icon,
+  IconButton,
   InputAdornment,
   LinearProgress,
   Stack,
@@ -16,8 +17,8 @@ import {
   Typography,
   useThemeProps
 } from '@mui/material';
-import {ChangeEvent, Dispatch, memo, useCallback, useEffect, useState} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {ChangeEvent, Dispatch, memo, useCallback, useEffect, useRef, useState} from 'react';
+import {FormattedDate, FormattedMessage, useIntl} from 'react-intl';
 import RowSkeleton from './RowSkeleton';
 import {LoadingButton} from '@mui/lab';
 import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
@@ -26,16 +27,23 @@ import EmptyStatus from '../EmptyStatus';
 import SeeProgressButton from './SeeProgressButton';
 import CourseUsersTableSkeleton from './Skeleton';
 import {actionWidgetTypes} from '../../utils/widget';
-import {http, SCPaginatedResponse} from '@selfcommunity/api-services';
+import {EndpointType, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import ChangeUserStatus from './ChangeUsersStatus';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import RequestButton from './RequestButton';
+import {SCCourseUsersTableModeType} from '../../types/course';
+import RemoveButton from './RemoveButton';
+import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
+import {SCCourseEditManageUserProps, SCCourseEditManageUserRef, SCCourseEditTabType} from '../../types/course';
 
 const classes = {
+  root: `${PREFIX}-root`,
   search: `${PREFIX}-search`,
+  endAdornmentWrapper: `${PREFIX}-end-adornment-wrapper`,
+  searchButton: `${PREFIX}-search-button`,
   avatarWrapper: `${PREFIX}-avatar-wrapper`,
   progressWrapper: `${PREFIX}-progress-wrapper`,
   progress: `${PREFIX}-progress`,
@@ -56,14 +64,12 @@ export interface CourseUsersTableProps {
   state: any;
   dispatch: Dispatch<any>;
   course: SCCourseType;
+  endpointSearch: EndpointType;
+  endpointQueryParamsSearch?: Record<string, string | number>;
   headerCells: HeaderCellsType[];
-  mode: 'dashboard' | 'edit' | 'requests';
+  mode: SCCourseUsersTableModeType;
   emptyStatusTitle: string;
   emptyStatusDescription?: string;
-}
-
-function filteredUsers(users: SCUserType[], value: string): SCUserType[] {
-  return users.filter((user) => (user.username || user.real_name).includes(value));
 }
 
 function CourseUsersTable(inProps: CourseUsersTableProps) {
@@ -73,46 +79,35 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
     name: PREFIX
   });
 
-  const {course, state, dispatch, headerCells, mode, emptyStatusTitle, emptyStatusDescription} = props;
+  const {
+    state,
+    dispatch,
+    course,
+    endpointSearch,
+    endpointQueryParamsSearch = {statuses: JSON.stringify([SCCourseJoinStatusType.JOINED, SCCourseJoinStatusType.MANAGER])},
+    headerCells,
+    mode,
+    emptyStatusTitle,
+    emptyStatusDescription
+  } = props;
 
   // STATES
   const [users, setUsers] = useState<SCUserType[] | null>(null);
-  const [tempUsers, setTempUsers] = useState<SCUserType[] | null>(null);
+  const [loadingSearch, setLoadingSearch] = useState(false);
   const [value, setValue] = useState('');
+  const [dialog, setDialog] = useState<SCCourseEditManageUserProps | null>(null);
+
+  // REFS
+  const buttonRef = useRef<SCCourseEditManageUserRef | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   // CONTEXTS
   const scUserContext: SCUserContextType = useSCUser();
 
-  // HOOKS
+  // INTL
   const intl = useIntl();
 
-  // EFFECTS
-  useEffect(() => {
-    setUsers(state.results);
-  }, [state.results, setUsers]);
-
   // HANDLERS
-  const handleChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const _value = e.target.value;
-
-      if (_value.length > 0) {
-        if (!tempUsers) {
-          setTempUsers(users);
-          setUsers((prevUsers) => filteredUsers(prevUsers, _value));
-        } else {
-          setUsers(filteredUsers(tempUsers, _value));
-        }
-      } else {
-        setUsers(tempUsers);
-        setTempUsers(null);
-      }
-
-      setValue(_value);
-    },
-    [users, tempUsers, setValue]
-  );
-
   const handleNext = useCallback(() => {
     dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
@@ -130,13 +125,95 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
       });
   }, [state.next, dispatch]);
 
+  const handleOpenDialog = useCallback(
+    (tab: SCCourseEditManageUserProps | null) => {
+      setDialog(tab);
+    },
+    [setDialog]
+  );
+
+  const handleConfirm = useCallback(() => {
+    switch (dialog.tab) {
+      case SCCourseEditTabType.USERS:
+        buttonRef.current.handleManageUser(dialog.user);
+        break;
+      case SCCourseEditTabType.REQUESTS:
+        buttonRef.current.handleManageUser(dialog.request);
+    }
+
+    handleOpenDialog(null);
+  }, [dialog, handleOpenDialog]);
+
+  const handleSearchClear = useCallback(() => {
+    setUsers(state.results);
+    setValue('');
+  }, [setValue, setUsers, state.results]);
+
+  const handleChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const _value = e.target.value;
+
+      if (_value.length === 0) {
+        handleSearchClear();
+      } else {
+        setValue(_value);
+      }
+    },
+    [setValue, handleSearchClear]
+  );
+
+  const handleSearchStart = useCallback(() => {
+    setLoadingSearch(true);
+
+    http
+      .request({
+        url: endpointSearch.url(),
+        method: endpointSearch.method,
+        params: {
+          ...endpointQueryParamsSearch,
+          search: value
+        }
+      })
+      .then((res: AxiosResponse<SCPaginatedResponse<SCUserType>>) => {
+        setUsers(res.data.results);
+        setLoadingSearch(false);
+      })
+      .catch((error) => {
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }, [value, endpointSearch, setUsers, setLoadingSearch, dispatch]);
+
+  const handleKeyUp = useCallback(
+    (e: KeyboardEvent) => {
+      if (value.length > 0 && e.key === 'Enter') {
+        handleSearchStart();
+      }
+    },
+    [value, handleSearchStart]
+  );
+
+  // EFFECTS
+  useEffect(() => {
+    setUsers(state.results);
+  }, [state.results, setUsers]);
+
+  useEffect(() => {
+    inputRef.current?.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      inputRef.current?.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [handleKeyUp]);
+
   if (!users) {
     return <CourseUsersTableSkeleton />;
   }
 
   return (
-    <Root>
+    <Root className={classes.root}>
       <TextField
+        ref={inputRef}
         placeholder={intl.formatMessage({
           id: 'ui.courseUsersTable.searchBar.placeholder',
           defaultMessage: 'ui.courseUsersTable.searchBar.placeholder'
@@ -146,7 +223,28 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
             <InputAdornment position="start">
               <Icon>search</Icon>
             </InputAdornment>
-          )
+          ),
+          endAdornment:
+            value.length > 0 ? (
+              <Stack className={classes.endAdornmentWrapper}>
+                <InputAdornment position="start">
+                  <IconButton color="inherit" onClick={handleSearchClear}>
+                    <Icon>close</Icon>
+                  </IconButton>
+                </InputAdornment>
+                <InputAdornment position="end">
+                  <LoadingButton
+                    color="primary"
+                    variant="contained"
+                    onClick={handleSearchStart}
+                    loading={loadingSearch}
+                    disabled={loadingSearch}
+                    className={classes.searchButton}>
+                    <Icon>search</Icon>
+                  </LoadingButton>
+                </InputAdornment>
+              </Stack>
+            ) : undefined
         }}
         value={value}
         onChange={handleChange}
@@ -160,12 +258,12 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           <TableHead>
             <TableRow>
               {headerCells.map((cell, i, array) => {
-                if (mode !== 'edit' && i === array.length - 1) {
+                if (i === array.length - 1) {
                   return <TableCell width="14%" key={i} />;
                 }
 
                 return (
-                  <TableCell width={mode === 'dashboard' ? '20%' : '25%'} key={i}>
+                  <TableCell width={mode === SCCourseUsersTableModeType.DASHBOARD ? '20%' : '25%'} key={i}>
                     <Typography variant="body2">
                       <FormattedMessage id={cell.id} defaultMessage={cell.id} />
                     </Typography>
@@ -185,7 +283,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                       <Typography variant="body2">{user.username}</Typography>
                     </Stack>
                   </TableCell>
-                  {mode === 'dashboard' && (
+                  {mode === SCCourseUsersTableModeType.DASHBOARD && (
                     <TableCell>
                       <Stack className={classes.progressWrapper}>
                         <LinearProgress className={classes.progress} variant="determinate" value={user.user_completion_rate} />
@@ -194,7 +292,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                       </Stack>
                     </TableCell>
                   )}
-                  {mode === 'edit' && (
+                  {mode === SCCourseUsersTableModeType.EDIT && (
                     <TableCell>
                       {user.join_status !== SCCourseJoinStatusType.CREATOR && scUserContext.user.id !== user.id ? (
                         <ChangeUserStatus course={course} user={user} />
@@ -210,27 +308,36 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                   )}
                   <TableCell>
                     <Typography variant="body2">
-                      {new Date(mode === 'requests' ? user.date_joined : user.joined_at || new Date()).toLocaleDateString()}
+                      <FormattedDate value={mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.joined_at || new Date()} />
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography variant="body2">
-                      {new Date(mode === 'requests' ? user.date_joined : user.last_active_at || new Date()).toLocaleDateString()}
+                      <FormattedDate value={mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.last_active_at || new Date()} />
                     </Typography>
                   </TableCell>
-                  {mode === 'dashboard' && (
+                  {mode === SCCourseUsersTableModeType.EDIT &&
+                  user.join_status !== SCCourseJoinStatusType.CREATOR &&
+                  scUserContext.user.id !== user.id ? (
+                    <TableCell>
+                      <RemoveButton ref={buttonRef} course={course} user={user} handleOpenDialog={handleOpenDialog} />
+                    </TableCell>
+                  ) : (
+                    mode === SCCourseUsersTableModeType.EDIT && <TableCell />
+                  )}
+                  {mode === SCCourseUsersTableModeType.DASHBOARD && (
                     <TableCell>
                       <SeeProgressButton course={course} user={user} />
                     </TableCell>
                   )}
-                  {mode === 'requests' && (
+                  {mode === SCCourseUsersTableModeType.REQUESTS && (
                     <TableCell>
-                      <RequestButton course={course} user={user} />
+                      <RequestButton ref={buttonRef} course={course} user={user} handleOpenDialog={handleOpenDialog} />
                     </TableCell>
                   )}
                 </TableRow>
               ))}
-            {state.isLoadingNext && <RowSkeleton editMode={mode !== 'dashboard'} />}
+            {state.isLoadingNext && <RowSkeleton editMode={mode !== SCCourseUsersTableModeType.DASHBOARD} />}
           </TableBody>
         </Table>
       </TableContainer>
@@ -241,7 +348,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           variant="outlined"
           color="inherit"
           loading={state.isLoadingNext}
-          disabled={!state.next}
+          disabled={value.length > 0 || !state.next}
           className={classes.loadingButton}
           onClick={handleNext}>
           <Typography variant="body2">
@@ -250,7 +357,15 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
         </LoadingButton>
       )}
 
-      {users.length === 0 && value.length === 0 && <EmptyStatus icon="face" title={emptyStatusTitle} description={emptyStatusDescription} />}
+      {users.length === 0 && (
+        <EmptyStatus
+          icon="face"
+          title={value.length > 0 ? 'ui.courseUsersTable.empty.search.title' : emptyStatusTitle}
+          description={value.length > 0 ? 'ui.courseUsersTable.empty.search.description' : emptyStatusDescription}
+        />
+      )}
+
+      {dialog && <ConfirmDialog open onClose={() => handleOpenDialog(null)} onConfirm={handleConfirm} />}
     </Root>
   );
 }

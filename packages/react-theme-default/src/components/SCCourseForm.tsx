@@ -1,8 +1,12 @@
-import {alpha} from '@mui/system';
+import {alpha, getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {
-    root: ({theme}: any) => ({
+    root: ({theme}) => ({
+      '& .SCCourseForm-contrast-color': {
+        color: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
+      },
+
       '& .SCCourseForm-cover': {
         position: 'relative',
         height: 103,
@@ -20,9 +24,21 @@ const Component = {
         marginTop: theme.spacing(4.5),
         color: theme.palette.text.secondary
       },
+      '& h5': {
+        padding: theme.spacing(1)
+      },
       '& .SCCourseForm-form': {
-        '& h5': {
-          padding: theme.spacing(1)
+        '&.SCCourseForm-step-customization': {
+          backgroundColor: theme.palette.common.white,
+          border: `1px solid ${theme.palette.grey['300']}`,
+          borderBottom: 'unset',
+          borderRadius: '5px',
+          borderBottomLeftRadius: 'unset',
+          borderBottomRightRadius: 'unset',
+          padding: theme.spacing(1, 1, 0),
+          [theme.breakpoints.up('sm')]: {
+            padding: theme.spacing(2, 2, 0)
+          }
         },
         '& .SCCourseForm-name': {
           marginTop: theme.spacing(3)
@@ -31,6 +47,7 @@ const Component = {
           marginTop: theme.spacing(1)
         },
         '& .SCCourseForm-edit-root': {
+          backgroundColor: theme.palette.common.white,
           marginTop: theme.spacing(1),
           '& .SCCourseForm-edit-card': {
             display: 'flex',
@@ -78,6 +95,13 @@ const Component = {
             },
             '& .SCCourseForm-edit-privacy-item-info': {
               marginLeft: theme.spacing(2)
+            },
+            '& .SCCourseForm-disabled': {
+              opacity: 0.5
+            },
+            '& .SCCourseForm-edit-card': {
+              alignItems: 'center',
+              margin: theme.spacing(1)
             }
           }
         }
@@ -95,6 +119,10 @@ const Component = {
             backgroundColor: alpha(theme.palette.success.main, theme.palette.action.selectedOpacity)
           }
         },
+        '& .SCCourseForm-disabled': {
+          pointerEvents: 'none',
+          opacity: 0.5
+        },
         '& .MuiCard-root': {
           boxShadow: 'none',
           border: `1px solid ${theme.palette.grey[300]}`,
@@ -108,6 +136,13 @@ const Component = {
             },
             '& .MuiTypography-body2': {
               whiteSpace: 'pre-line'
+            },
+            '& .SCCourseForm-card-title': {
+              display: 'flex',
+              justifyContent: 'space-between',
+              '& .MuiChip-root': {
+                borderRadius: 0
+              }
             }
           }
         }
@@ -116,10 +151,21 @@ const Component = {
         color: theme.palette.error.main
       },
       '& .SCCourseForm-actions': {
-        marginTop: theme.spacing(2),
         display: 'flex',
         justifyContent: 'flex-end',
         gap: theme.spacing(2),
+        '&.SCCourseForm-step-customization': {
+          backgroundColor: theme.palette.common.white,
+          border: `1px solid ${theme.palette.grey['300']}`,
+          borderTop: 'unset',
+          borderRadius: '5px',
+          borderTopLeftRadius: 'unset',
+          borderTopRightRadius: 'unset',
+          padding: theme.spacing(0, 1, 1),
+          [theme.breakpoints.up('sm')]: {
+            padding: theme.spacing(0, 2, 2)
+          }
+        },
         '& button': {
           width: 'fit-content'
         }

@@ -1,5 +1,5 @@
 import {LoadingButton} from '@mui/lab';
-import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, TextField, Typography} from '@mui/material';
+import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, TextField, Typography, Chip} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {CourseService, formatHttpErrorCode} from '@selfcommunity/api-services';
@@ -8,7 +8,7 @@ import {SCCategoryType, SCCoursePrivacyType, SCCourseType, SCCourseTypologyType}
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import {ChangeEvent, Fragment, useCallback, useState} from 'react';
+import {ChangeEvent, Fragment, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
@@ -52,9 +52,13 @@ const classes = {
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
   selected: `${PREFIX}-selected`,
+  disabled: `${PREFIX}-disabled`,
   stepOne: `${PREFIX}-step-one`,
   stepTwo: `${PREFIX}-step-two`,
-  title: `${PREFIX}-title`
+  stepCustomization: `${PREFIX}-step-customization`,
+  cardTitle: `${PREFIX}-card-title`,
+  title: `${PREFIX}-title`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(Box, {
@@ -86,6 +90,12 @@ export interface CourseFormProps extends BoxProps {
    * @default `SCCourseFormStepType.GENERAL`
    */
   step?: SCCourseFormStepType;
+
+  /**
+   * On step change callback function
+   * @default null
+   */
+  onStepChange?: (step: SCCourseFormStepType, type: SCCourseType) => void;
 
   /**
    * On error callback function
@@ -139,7 +149,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, onSuccess, onError, course = null, step = SCCourseFormStepType.GENERAL, ...rest} = props;
+  const {className, onSuccess, onError, course = null, step = SCCourseFormStepType.GENERAL, onStepChange, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -162,12 +172,14 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   // PREFERENCES
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
+
+  const courseAdvancedEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_COURSES_ADVANCED_ENABLED].value, [preferences]);
 
   const _backgroundCover = {
     ...(field.imageOriginal
       ? {background: `url('${field.imageOriginal}') center / cover`}
-      : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
+      : {background: `url('${preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
 
   const handleChangeCover = useCallback(
@@ -197,6 +209,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
    */
   const handleChangeStep = (newStep: SCCourseFormStepType) => {
     setStep(newStep);
+    onStepChange(newStep, field.type);
   };
 
   /**
@@ -216,8 +229,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
    * @param categories
    */
   const handleOnChangeCategory = (categories: SCCategoryType[]) => {
-    const categoriesIds = categories.map((item) => item.id);
-    setField((prev: any) => ({...prev, ['categories']: course ? categoriesIds : convertToCategoriesObject(categories)}));
+    setField((prev: any) => ({...prev, ['categories']: convertToCategoriesObject(categories)}));
   };
 
   /**
@@ -242,33 +254,27 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
    */
   const handleSubmit = useCallback(() => {
     setField((prev) => ({...prev, isSubmitting: true}));
+    const formData = new FormData();
+    if (field.imageOriginalFile) {
+      formData.append('image_original', field.imageOriginalFile);
+    }
+    formData.append('name', field.name);
+    formData.append('description', field.description);
+    formData.append('type', field.type);
+    if (field.privacy) {
+      formData.append('privacy', field.privacy);
+    }
+    if (field.categories) {
+      for (const key in field.categories) {
+        formData.append(key, field.categories[key]);
+      }
+    }
     let courseService: Promise<SCCourseType>;
     if (course) {
-      // Update
-      const data: any = {
-        name: field.name,
-        description: field.description,
-        type: field.type,
-        categories: field.categories,
-        ...(field.privacy && {privacy: field.privacy})
-      };
-      courseService = CourseService.updateCourse(course.id, data, {
-        headers: {'Content-Type': 'application/json'}
+      courseService = CourseService.patchCourse(course.id, formData, {
+        headers: {'Content-Type': 'multipart/form-data'}
       });
     } else {
-      // Create
-      const formData = new FormData();
-      if (field.imageOriginalFile) {
-        formData.append('image_original', field.imageOriginalFile);
-      }
-      formData.append('name', field.name);
-      formData.append('description', field.description);
-      formData.append('type', field.type);
-      if (field.categories) {
-        for (const key in field.categories) {
-          formData.append(key, field.categories[key]);
-        }
-      }
       courseService = CourseService.createCourse(formData, {
         headers: {'Content-Type': 'multipart/form-data'}
       });
@@ -276,7 +282,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     courseService
       .then((data) => {
         notifyChanges(data);
-        setField((prev) => ({...prev, ['isSubmitting']: false}));
+        setField((prev) => ({...prev, isSubmitting: false}));
         onSuccess?.(data);
       })
       .catch((e) => {
@@ -284,12 +290,12 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         if (Object.values(_error)[0]['error'] === 'unique') {
           setError({
             ...error,
-            ['nameError']: <FormattedMessage id="ui.courseForm.name.error.unique" defaultMessage="ui.courseForm.name.error.unique" />
+            nameError: <FormattedMessage id="ui.courseForm.name.error.unique" defaultMessage="ui.courseForm.name.error.unique" />
           });
         } else {
           setError({...error, ..._error});
         }
-        setField((prev) => ({...prev, ['isSubmitting']: false}));
+        setField((prev) => ({...prev, isSubmitting: false}));
         Logger.error(SCOPE_SC_UI, e);
         onError?.(e);
       });
@@ -327,13 +333,27 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
       <Root className={classNames(classes.root, className)} {...rest}>
         <Box className={_step === SCCourseFormStepType.GENERAL ? classes.stepOne : classes.stepTwo}>
           {_step === SCCourseFormStepType.GENERAL && (
-            <>
+            <Fragment>
               {Object.values(SCCourseTypologyType).map((option, index) => (
-                <Card className={classNames(classes.card, {[classes.selected]: option === field.type})} key={index}>
+                <Card
+                  className={classNames(
+                    classes.card,
+                    {[classes.selected]: option === field.type},
+                    {[classes.disabled]: !courseAdvancedEnabled && option !== SCCourseTypologyType.SELF}
+                  )}
+                  key={index}>
                   <CardActionArea onClick={() => setField((prev) => ({...prev, ['type']: option}))}>
                     <CardContent>
-                      <Typography variant="subtitle2">
+                      <Typography variant="subtitle2" className={classes.cardTitle}>
                         <FormattedMessage id={`ui.courseForm.${option}.title`} defaultMessage={`ui.courseForm.${option}.title`} />
+                        {!courseAdvancedEnabled && option !== SCCourseTypologyType.SELF && (
+                          <Chip
+                            variant="outlined"
+                            color="warning"
+                            size="small"
+                            label={<FormattedMessage id="ui.courseForm.comingSoon.chip" defaultMessage="ui.courseForm.comingSoon.chip" />}
+                          />
+                        )}
                       </Typography>
                       <Typography variant="body2">
                         <FormattedMessage id={`ui.courseForm.${option}.info`} defaultMessage={`ui.courseForm.${option}.info`} />
@@ -342,70 +362,74 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   </CardActionArea>
                 </Card>
               ))}
-            </>
+            </Fragment>
           )}
           {_step === SCCourseFormStepType.CUSTOMIZATION && (
-            <FormGroup className={classes.form}>
+            <Fragment>
               {course && (
-                <Typography variant="h5">
+                <Typography variant="h5" className={classes.contrastColor}>
                   <FormattedMessage id="ui.courseForm.edit.title.general" defaultMessage="ui.courseForm.edit.title.general" />
                 </Typography>
               )}
-              <Paper style={_backgroundCover} classes={{root: classes.cover}}>
-                <UploadCourseCover courseId={course?.id ?? null} isCreationMode={!course} onChange={handleChangeCover} />
-              </Paper>
-              <TextField
-                required
-                className={classes.name}
-                placeholder={`${intl.formatMessage(messages.name)}`}
-                margin="normal"
-                value={field.name}
-                name="name"
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: <Typography variant="body2">{COURSE_TITLE_MAX_LENGTH - field.name.length}</Typography>
-                }}
-                error={Boolean(field.name.length > COURSE_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
-                helperText={
-                  field.name.length > COURSE_TITLE_MAX_LENGTH ? (
-                    <FormattedMessage id="ui.courseForm.name.error.maxLength" defaultMessage="ui.courseForm.name.error.maxLength" />
-                  ) : error['nameError'] ? (
-                    error['nameError']
-                  ) : null
-                }
-              />
-              <TextField
-                multiline
-                className={classes.description}
-                placeholder={`${intl.formatMessage(messages.description)}`}
-                margin="normal"
-                value={field.description}
-                name="description"
-                onChange={handleChange}
-                InputProps={{
-                  endAdornment: (
-                    <Typography variant="body2">
-                      {field.description?.length ? COURSE_DESCRIPTION_MAX_LENGTH - field.description.length : COURSE_DESCRIPTION_MAX_LENGTH}
-                    </Typography>
-                  )
-                }}
-                error={Boolean(field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH)}
-                helperText={
-                  field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH ? (
-                    <FormattedMessage id="ui.courseForm.description.error.maxLength" defaultMessage="ui.courseForm.description.error.maxLength" />
-                  ) : null
-                }
-              />
-              <CategoryAutocomplete
-                defaultValue={field.categories}
-                TextFieldProps={{label: intl.formatMessage(Object.keys(field.categories).length ? messages.category : messages.categoryEmpty)}}
-                multiple={true}
-                onChange={handleOnChangeCategory}
-              />
-              {course && <CourseEdit course={course} onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))} />}
-            </FormGroup>
+              <FormGroup
+                className={classNames(classes.form, _step === SCCourseFormStepType.CUSTOMIZATION && course ? classes.stepCustomization : undefined)}>
+                <Paper style={_backgroundCover} classes={{root: classes.cover}}>
+                  <UploadCourseCover isUploading={field.isSubmitting} onChange={handleChangeCover} />
+                </Paper>
+                <TextField
+                  required
+                  className={classes.name}
+                  placeholder={`${intl.formatMessage(messages.name)}`}
+                  margin="normal"
+                  value={field.name}
+                  name="name"
+                  onChange={handleChange}
+                  InputProps={{
+                    endAdornment: <Typography variant="body2">{COURSE_TITLE_MAX_LENGTH - field.name.length}</Typography>
+                  }}
+                  error={Boolean(field.name.length > COURSE_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
+                  helperText={
+                    field.name.length > COURSE_TITLE_MAX_LENGTH ? (
+                      <FormattedMessage id="ui.courseForm.name.error.maxLength" defaultMessage="ui.courseForm.name.error.maxLength" />
+                    ) : error['nameError'] ? (
+                      error['nameError']
+                    ) : null
+                  }
+                />
+                <TextField
+                  multiline
+                  className={classes.description}
+                  placeholder={`${intl.formatMessage(messages.description)}`}
+                  margin="normal"
+                  value={field.description}
+                  name="description"
+                  onChange={handleChange}
+                  InputProps={{
+                    endAdornment: (
+                      <Typography variant="body2">
+                        {field.description?.length ? COURSE_DESCRIPTION_MAX_LENGTH - field.description.length : COURSE_DESCRIPTION_MAX_LENGTH}
+                      </Typography>
+                    )
+                  }}
+                  error={Boolean(field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH)}
+                  helperText={
+                    field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH ? (
+                      <FormattedMessage id="ui.courseForm.description.error.maxLength" defaultMessage="ui.courseForm.description.error.maxLength" />
+                    ) : null
+                  }
+                />
+                <CategoryAutocomplete
+                  defaultValue={field.categories}
+                  TextFieldProps={{label: intl.formatMessage(Object.keys(field.categories).length ? messages.category : messages.categoryEmpty)}}
+                  multiple={true}
+                  onChange={handleOnChangeCategory}
+                />
+                {course && <CourseEdit course={course} onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))} />}
+              </FormGroup>
+            </Fragment>
           )}
-          <Box className={classes.actions}>
+          <Box
+            className={classNames(classes.actions, _step === SCCourseFormStepType.CUSTOMIZATION && course ? classes.stepCustomization : undefined)}>
             <LoadingButton
               size="small"
               loading={field.isSubmitting}

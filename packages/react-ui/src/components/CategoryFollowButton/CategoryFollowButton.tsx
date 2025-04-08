@@ -174,6 +174,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     scUserContext.user &&
     isPaymentsEnabled &&
     scCategory.paywalls?.length > 0 &&
+		!scCategory.payment_order &&
     (!followed || scCategoriesManager.isLoading(scCategory))
   ) {
     return <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} disabled={disableBuyContentIfPaidContent} />;

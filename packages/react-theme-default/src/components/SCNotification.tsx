@@ -281,6 +281,28 @@ const Component = {
         maxWidth: '40%'
       }
     }),
+    courseRoot: ({theme}: any) => ({
+      '& .SCNotification-username, & a': {
+        fontWeight: theme.typography.fontWeightBold
+      },
+      '& .SCNotificationItem-primary': {
+        '& .SCCourse-root': {
+          width: '100%',
+          '& .SCCourse-snippet-root': {
+            paddingLeft: '0 !important'
+          }
+        }
+      },
+      '& .SCNotificationItem-secondary': {
+        textTransform: 'capitalize'
+      },
+      '& .SCNotification-snippet-time': {
+        paddingLeft: theme.spacing(5)
+      },
+      '& .SCCourse-snippet-root': {
+        backgroundColor: 'transparent !important'
+      }
+    }),
     eventRoot: ({theme}: any) => ({
       '& .SCNotification-username, & a': {
         fontWeight: theme.typography.fontWeightBold

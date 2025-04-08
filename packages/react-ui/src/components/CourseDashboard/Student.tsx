@@ -13,7 +13,18 @@ import {
 import {FormattedMessage, useIntl} from 'react-intl';
 import ActionButton from './Student/ActionButton';
 import {CLAPPING} from '../../assets/courses/clapping';
-import {SCRoutes, SCRoutingContextType, useSCFetchCourse, useSCRouting, Link, useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import {
+  SCRoutes,
+  SCRoutingContextType,
+  useSCFetchCourse,
+  useSCRouting,
+  Link,
+  SCUserContextType,
+  useSCUser,
+  SCContextType,
+  useSCContext,
+  useSCPaymentsEnabled
+} from '@selfcommunity/react-core';
 import AccordionLessons from '../../shared/AccordionLessons';
 import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -45,6 +56,7 @@ const classes = {
   actionsWrapper: `${PREFIX}-actions-wrapper`,
   user: `${PREFIX}-user`,
   avatar: `${PREFIX}-avatar`,
+  description: `${PREFIX}-description`,
   progress: `${PREFIX}-progress`,
   lessonsSections: `${PREFIX}-lessons-sections`,
   circle: `${PREFIX}-circle`,
@@ -52,7 +64,8 @@ const classes = {
   margin: `${PREFIX}-margin`,
   box: `${PREFIX}-box`,
   percentageWrapper: `${PREFIX}-percentage-wrapper`,
-  completedWrapper: `${PREFIX}-completed-wrapper`
+  completedWrapper: `${PREFIX}-completed-wrapper`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 type DataUrlLesson = {
@@ -70,20 +83,20 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
 
   if (course.user_completion_rate === 100) {
     Object.assign(data, {
-      section_id: course.sections[0].id,
-      lesson_id: course.sections[0].lessons[0].id
+      section_id: course.sections?.[0].id,
+      lesson_id: course.sections?.[0].lessons[0].id
     });
 
     return data;
   }
 
-  course.sections.some((section: SCCourseSectionType) => {
-    const isNextLessonInThisSection = section.num_lessons_completed < section.num_lessons;
+  course.sections?.some((section: SCCourseSectionType) => {
+    const isNextLessonInThisSection = section.num_lessons_completed < section.num_lessons && !section.locked;
 
     if (isNextLessonInThisSection) {
       Object.assign(data, {
         section_id: section.id,
-        lesson_id: section.lessons.find((lesson) => lesson.completion_status === SCCourseLessonCompletionStatusType.UNCOMPLETED).id
+        lesson_id: section.lessons.find((lesson) => lesson.completion_status === SCCourseLessonCompletionStatusType.UNCOMPLETED)?.id
       });
     }
 
@@ -94,7 +107,11 @@ function getUrlNextLesson(course: SCCourseType): DataUrlLesson {
 }
 
 function getIsNextLessonLocked(course: SCCourseType): boolean {
-  return course.sections.every((section: SCCourseSectionType) => {
+  if (course.join_status === null) {
+    return undefined;
+  }
+
+  return course.sections?.every((section: SCCourseSectionType) => {
     return (
       section.num_lessons_completed < section.num_lessons &&
       section.lessons?.find((lesson) => lesson.completion_status === SCCourseLessonCompletionStatusType.UNCOMPLETED)?.locked
@@ -130,6 +147,8 @@ function Student(inProps: StudentCourseDashboardProps) {
 
   // CONTEXTS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scContext: SCContextType = useSCContext();
+  const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
   const {scCourse, setSCCourse} = useSCFetchCourse({id: courseId, course});
@@ -151,32 +170,45 @@ function Student(inProps: StudentCourseDashboardProps) {
     setLoadingRequest(true);
 
     let request: Promise<any>;
-    let updatedCourse: SCCourseType;
+
     if (sentRequest) {
       request = CourseService.leaveOrRemoveCourseRequest(scCourse.id);
-      updatedCourse = {
-        ...scCourse,
-        join_status: null
-      };
     } else {
       request = CourseService.joinOrAcceptInviteToCourse(scCourse.id);
-      updatedCourse = {
-        ...scCourse,
-        join_status: scCourse.privacy === SCCoursePrivacyType.PRIVATE ? SCCourseJoinStatusType.REQUESTED : SCCourseJoinStatusType.JOINED
-      };
     }
 
     request
-      .then(() => {
+      .then((data: any) => {
+        let updatedCourse: SCCourseType;
+
+        if (data) {
+          updatedCourse = data;
+        } else {
+          updatedCourse = {
+            ...scCourse,
+            join_status: null
+          };
+        }
+
         setSCCourse(updatedCourse);
         setSentRequest((prev) => !prev);
         setLoadingRequest(false);
 
         enqueueSnackbar(
           <FormattedMessage
-            id={sentRequest ? SNACKBAR_MESSAGES.request : scCourse.join_status === null ? SNACKBAR_MESSAGES.enroll : SNACKBAR_MESSAGES.cancel}
+            id={
+              updatedCourse.join_status === SCCourseJoinStatusType.REQUESTED
+                ? SNACKBAR_MESSAGES.request
+                : updatedCourse.join_status === SCCourseJoinStatusType.JOINED
+                ? SNACKBAR_MESSAGES.enroll
+                : SNACKBAR_MESSAGES.cancel
+            }
             defaultMessage={
-              sentRequest ? SNACKBAR_MESSAGES.request : scCourse.join_status === null ? SNACKBAR_MESSAGES.enroll : SNACKBAR_MESSAGES.cancel
+              updatedCourse.join_status === SCCourseJoinStatusType.REQUESTED
+                ? SNACKBAR_MESSAGES.request
+                : updatedCourse.join_status === SCCourseJoinStatusType.JOINED
+                ? SNACKBAR_MESSAGES.enroll
+                : SNACKBAR_MESSAGES.cancel
             }
           />,
           {
@@ -194,6 +226,10 @@ function Student(inProps: StudentCourseDashboardProps) {
         Logger.error(SCOPE_SC_UI, error);
       });
   }, [scCourse, sentRequest, setLoadingRequest]);
+
+  const handleAnonymousAction = useCallback(() => {
+    scContext.settings.handleAnonymousAction();
+  }, [scContext.settings.handleAnonymousAction]);
 
   // MEMOS
   const actionButton = useMemo(() => {
@@ -231,10 +267,9 @@ function Student(inProps: StudentCourseDashboardProps) {
               color={scCourse.user_completion_rate === 100 ? 'inherit' : undefined}
               variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
               loading={scCourse.join_status === null ? loadingRequest : undefined}
-              onClick={scCourse.join_status === null ? handleRequest : undefined}
+              onClick={!scUserContext.user ? handleAnonymousAction : scCourse.join_status === null ? handleRequest : undefined}
             />
           )}
-
         {scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
           (scCourse.join_status === null || scCourse.join_status === SCCourseJoinStatusType.REQUESTED) && (
             <ActionButton
@@ -293,51 +328,58 @@ function Student(inProps: StudentCourseDashboardProps) {
           scCourse.join_status === SCCourseJoinStatusType.MANAGER ||
           scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
         scCourse.privacy === SCCoursePrivacyType.OPEN ||
-        scCourse.privacy === SCCoursePrivacyType.DRAFT) && (
-        <Fragment>
-          <Typography variant="h6" className={classes.margin}>
-            <FormattedMessage id="ui.course.dashboard.student.description" defaultMessage="ui.course.dashboard.student.description" />
-          </Typography>
+        scCourse.privacy === SCCoursePrivacyType.DRAFT) &&
+        scCourse.description && (
+          <Fragment>
+            <Typography variant="h6" className={classNames(classes.margin, classes.contrastColor)}>
+              <FormattedMessage id="ui.course.dashboard.student.description" defaultMessage="ui.course.dashboard.student.description" />
+            </Typography>
 
-          <Stack className={classes.box}>
-            <Typography variant="body1">{scCourse.description}</Typography>
-          </Stack>
-        </Fragment>
-      )}
+            <Stack className={classes.box}>
+              <Typography variant="body1" className={classes.description}>
+                {scCourse.description}
+              </Typography>
+            </Stack>
+          </Fragment>
+        )}
 
       {(((scCourse.privacy === SCCoursePrivacyType.PRIVATE || scCourse.privacy === SCCoursePrivacyType.SECRET) &&
         (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
         (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) && (
         <Fragment>
-          <Typography variant="h6" className={classes.margin}>
-            <FormattedMessage id="ui.course.dashboard.student.progress" defaultMessage="ui.course.dashboard.student.description" />
-          </Typography>
-
-          <Stack className={classes.box}>
-            <Stack className={classes.percentageWrapper}>
-              <Typography variant="body1">
-                <FormattedMessage
-                  id="ui.course.dashboard.student.progress.described"
-                  defaultMessage="ui.course.dashboard.student.progress.described"
-                  values={{progress: scCourse.num_lessons_completed, end: scCourse.num_lessons}}
-                />
+          {scCourse.join_status !== null && (
+            <Fragment>
+              <Typography variant="h6" className={classNames(classes.margin, classes.contrastColor)}>
+                <FormattedMessage id="ui.course.dashboard.student.progress" defaultMessage="ui.course.dashboard.student.progress" />
               </Typography>
 
-              <Typography variant="body1">
-                <FormattedMessage
-                  id="ui.course.dashboard.student.progress.percentage"
-                  defaultMessage="ui.course.dashboard.student.progress.percentage"
-                  values={{percentage: scCourse.user_completion_rate}}
-                />
-              </Typography>
-            </Stack>
+              <Stack className={classes.box}>
+                <Stack className={classes.percentageWrapper}>
+                  <Typography variant="body1">
+                    <FormattedMessage
+                      id="ui.course.dashboard.student.progress.described"
+                      defaultMessage="ui.course.dashboard.student.progress.described"
+                      values={{progress: scCourse.num_lessons_completed, end: scCourse.num_lessons}}
+                    />
+                  </Typography>
 
-            <LinearProgress className={classes.progress} variant="determinate" value={scCourse?.user_completion_rate} />
-          </Stack>
+                  <Typography variant="body1">
+                    <FormattedMessage
+                      id="ui.course.dashboard.student.progress.percentage"
+                      defaultMessage="ui.course.dashboard.student.progress.percentage"
+                      values={{percentage: scCourse.user_completion_rate}}
+                    />
+                  </Typography>
+                </Stack>
+
+                <LinearProgress className={classes.progress} variant="determinate" value={scCourse.user_completion_rate} />
+              </Stack>
+            </Fragment>
+          )}
 
           {scCourse.user_completion_rate === 100 && (
             <Stack className={classNames(classes.completedWrapper, classes.margin)}>
-              <Typography variant="h3">
+              <Typography variant="h3" className={classes.contrastColor}>
                 <FormattedMessage id="ui.course.dashboard.student.completed" defaultMessage="ui.course.dashboard.student.completed" />
               </Typography>
               <img
@@ -349,7 +391,7 @@ function Student(inProps: StudentCourseDashboardProps) {
             </Stack>
           )}
 
-          <Typography variant="h6" className={classes.margin}>
+          <Typography variant="h6" className={classNames(classes.margin, classes.contrastColor)}>
             <FormattedMessage id="ui.course.dashboard.student.contents" defaultMessage="ui.course.dashboard.student.contents" />
           </Typography>
 

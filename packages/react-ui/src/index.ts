@@ -223,6 +223,7 @@ import BaseItem, {BaseItemProps} from './shared/BaseItem';
 import Calendar, {CalendarProps} from './shared/Calendar';
 import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
 import CourseUsersTable, {CourseUsersTableProps, CourseUsersTableSkeleton} from './shared/CourseUsersTable';
+import CourseTypePopover, {CourseTypePopoverProps} from './shared/CourseTypePopover';
 import EmailTextField from './shared/EmailTextField';
 import EventActionsMenu, {EventActionsMenuProps} from './shared/EventActionsMenu';
 import EventInfoDetails, {EventInfoDetailsProps} from './shared/EventInfoDetails';
@@ -286,8 +287,8 @@ import {getRelativeTime} from './utils/formatRelativeTime';
 import {bytesToSize} from './utils/sizeCoverter';
 import {generateRoomId, randomString, decodePassphrase, encodePassphrase} from './utils/liveStream';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
-import {getCurrentSectionAndLessonIndex} from './utils/course';
 import {getDefaultLocale, getDefaultPaymentMethodConfiguration, getDefaultAppearanceStyle, getConvertedAmount} from './utils/payment';
+import {getUrlLesson} from './utils/course';
 /**
  * Import Assets
  */
@@ -332,7 +333,6 @@ export {
   randomString,
   decodePassphrase,
   encodePassphrase,
-  getCurrentSectionAndLessonIndex,
   Calendar,
   CalendarProps,
   Categories,
@@ -403,11 +403,13 @@ export {
   CourseJoinButton,
   CourseJoinButtonProps,
   Courses,
-  CreateCourseButton,
-  CreateCourseButtonProps,
   CoursesProps,
   CoursesSkeleton,
   CoursesSkeletonProps,
+  CourseTypePopover,
+  CourseTypePopoverProps,
+  CreateCourseButton,
+  CreateCourseButtonProps,
   CourseContentMenu,
   CourseContentMenuProps,
   CourseDashboard,
@@ -510,6 +512,7 @@ export {
   getRelativeTime,
   getUnseenNotification,
   getUnseenNotificationCounter,
+  getUrlLesson,
   Group,
   GroupActionsMenu,
   GroupActionsMenuProps,

@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {styled} from '@mui/material/styles';
 import {Box, Divider, Drawer, DrawerProps, Icon, IconButton, List} from '@mui/material';
 import classNames from 'classnames';
@@ -7,7 +7,6 @@ import ScrollContainer from '../../shared/ScrollContainer';
 import DefaultDrawerContent from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
 import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from '../CreateLiveStreamButton';
-import {useSCUser} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCNavigationMenuDrawer';
 
@@ -54,7 +53,9 @@ export interface NavigationMenuDrawerProps extends DrawerProps {
    * Custom Drawer footer content
    * @default null
    */
-  drawerFooterContent?: React.ReactNode;
+  drawerFooterContent?:
+    | React.ReactNode
+    | ((props: {handleCloseMenuDrawer: (event: any, reason: 'backdropClick' | 'escapeKeyDown') => void}) => React.ReactNode);
   /**
    * Props to spread to ScrollContainer component
    * This lib use 'react-custom-scrollbars' component to perform scrollbars
@@ -93,8 +94,19 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
     ...rest
   } = props;
 
-  const scUserContext = useSCUser();
-  const canCreateLiveStream = useMemo(() => scUserContext?.user?.permission?.create_live_stream, [scUserContext?.user?.permission]);
+  const footerContent = (() => {
+    if (typeof drawerFooterContent === 'function') {
+      return drawerFooterContent({handleCloseMenuDrawer: onClose});
+    }
+
+    if (React.isValidElement(drawerFooterContent)) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      return React.cloneElement(drawerFooterContent, {handleCloseMenuDrawer: onClose});
+    }
+
+    return drawerFooterContent;
+  })();
 
   return (
     <Root anchor="left" className={classNames(classes.root, className)} open={open} onClose={onClose} {...rest}>
@@ -120,10 +132,8 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
       </ScrollContainer>
       {showDrawerFooterContent && (
         <>
-          <Box className={classes.drawerFooter}>
-            {drawerFooterContent ? (
-              drawerFooterContent
-            ) : (
+          <Box component="div" className={classes.drawerFooter}>
+            {footerContent || (
               <Box className={classes.drawerFooterLiveStream}>
                 <CreateLiveStreamButton
                   color="primary"

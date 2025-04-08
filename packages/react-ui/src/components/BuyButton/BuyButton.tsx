@@ -191,8 +191,8 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
       case SCContentType.CATEGORY:
         // Get status category followed
         CategoryApiClient.getSpecificCategory(contentId ? contentId : (content as SCCategoryType).id).then((data) => {
-          if (data.followed) {
-            setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.subscribed" id="ui.buyButton.subscribed" />);
+          if (data.followed || data.payment_order) {
+            setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.purchased" id="ui.buyButton.purchased" />);
           }
           if (data.paywalls) {
             setProducts(data.paywalls);
@@ -200,7 +200,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
           if (data.payment_order) {
             setPaymentOrder(data.payment_order);
           }
-          setPurchased(data.followed);
+          setPurchased(Boolean(data.followed || data.payment_order));
         });
         break;
       case SCContentType.GROUP:
@@ -225,7 +225,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
         CourseApiClient.getCourseStatus(contentId ? contentId : (content as SCCourseType).id).then((data) => {
           if (scUserContext.user && data?.managed_by?.id !== scUserContext.user.id) {
             if (data.subscription_status === SCCourseJoinStatusType.JOINED) {
-              setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.subscribed" id="ui.buyButton.subscribed" />);
+              setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.purchased" id="ui.buyButton.purchased" />);
             }
             if (data.paywalls) {
               setProducts(data.paywalls);

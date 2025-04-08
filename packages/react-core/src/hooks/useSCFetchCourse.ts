@@ -10,7 +10,7 @@ import {SCUserContextType} from '../types/context';
 
 /**
  :::info
- This custom hook is used to fetch an course object.
+ This custom hook is used to fetch a course object.
  :::
  * @param object
  * @param object.id

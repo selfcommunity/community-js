@@ -3,7 +3,7 @@ import {SCCourseCommentType, SCCourseType} from '@selfcommunity/types';
 import {Fragment, memo, useCallback, useEffect, useMemo, useReducer, useState} from 'react';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {FormattedMessage} from 'react-intl';
+import {FormattedDate, FormattedMessage} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import {PREFIX} from '../constants';
 import {DEFAULT_PAGINATION_OFFSET} from '../../../constants/Pagination';
@@ -11,6 +11,7 @@ import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../.
 import {Link, SCCache, SCRoutes, SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import {CourseService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {AxiosResponse} from 'axios';
+import {getUrlLesson} from '../../../utils/course';
 
 const classes = {
   container: `${PREFIX}-comments-container`,
@@ -20,7 +21,8 @@ const classes = {
   avatar: `${PREFIX}-avatar`,
   userInfo: `${PREFIX}-user-info`,
   circle: `${PREFIX}-circle`,
-  button: `${PREFIX}-button`
+  button: `${PREFIX}-button`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 interface CommentsProps {
@@ -88,7 +90,7 @@ function Comments(props: CommentsProps) {
     stateWidgetInitializer
   );
 
-  const [isLoadingComments, setIsLoadingComments] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // CONTEXTS
   const scUserContext: SCUserContextType = useSCUser();
@@ -125,7 +127,7 @@ function Comments(props: CommentsProps) {
 
   // HANDLERS
   const handleNext = useCallback(() => {
-    setIsLoadingComments(true);
+    setIsLoading(true);
     dispatch({type: actionWidgetTypes.LOADING_NEXT});
 
     http
@@ -135,16 +137,16 @@ function Comments(props: CommentsProps) {
       })
       .then((res: AxiosResponse<SCPaginatedResponse<SCCourseCommentType>>) => {
         dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: res.data});
-        setIsLoadingComments(false);
+        setIsLoading(false);
       })
       .catch((error) => {
         Logger.error(SCOPE_SC_UI, error);
       });
-  }, [state.next, dispatch, setIsLoadingComments]);
+  }, [state.next, dispatch, setIsLoading]);
 
   // MEMOS
   const renderComments = useMemo(() => {
-    const map = new Map();
+    const map = new Map<string, SCCourseCommentType[]>();
     state.results.forEach((comment: SCCourseCommentType) => {
       const name = comment.extras.lesson.name;
 
@@ -170,7 +172,9 @@ function Comments(props: CommentsProps) {
 
                   <Box className={classes.circle} />
 
-                  <Typography variant="body2">{new Date(comment.created_at).toLocaleDateString()}</Typography>
+                  <Typography variant="body2">
+                    <FormattedDate value={comment.created_at} />
+                  </Typography>
                 </Stack>
 
                 <Typography variant="body1" component="div" dangerouslySetInnerHTML={{__html: comment.html}} />
@@ -180,7 +184,10 @@ function Comments(props: CommentsProps) {
 
           <Button
             component={Link}
-            to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, course)}
+            to={scRoutingContext.url(
+              SCRoutes.COURSE_LESSON_COMMENTS_ROUTE_NAME,
+              getUrlLesson(comments[0].extras.course, comments[0].extras.lesson, comments[0].extras.section)
+            )}
             size="small"
             variant="outlined"
             color="inherit"
@@ -215,9 +222,9 @@ function Comments(props: CommentsProps) {
 
           {renderComments}
 
-          {isLoadingComments && <CommentSkeleton id={1} />}
+          {isLoading && <CommentSkeleton id={1} />}
 
-          <LoadingButton size="small" variant="outlined" color="inherit" loading={isLoadingComments} disabled={!state.next} onClick={handleNext}>
+          <LoadingButton size="small" variant="outlined" color="inherit" loading={isLoading} disabled={!state.next} onClick={handleNext}>
             <Typography variant="body2">
               <FormattedMessage
                 id="ui.course.dashboard.teacher.tab.comments.btn.label"

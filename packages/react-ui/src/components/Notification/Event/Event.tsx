@@ -64,11 +64,22 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
 
   // STATE
   const [openAlert, setOpenAlert] = useState<boolean>(false);
+  // const [loading, setLoading] = useState<boolean>(false);
+  // const [disabled, setDisabled] = useState<boolean>(!notificationObject.is_new);
 
   // CONST
   const isSnippetTemplate = template === SCNotificationObjectTemplateType.SNIPPET;
   const isToastTemplate = template === SCNotificationObjectTemplateType.TOAST;
   const intl = useIntl();
+
+  //HANDLERS
+  // const acceptRequest = (event) => {
+  //   setLoading(true);
+  //   EventService.inviteOrAcceptEventRequest(event.id, {users: [notificationObject.user.id]}).then(() => {
+  //     setLoading(false);
+  //     setDisabled(true);
+  //   });
+  // };
 
   // RENDER
   if (isSnippetTemplate || isToastTemplate) {
@@ -154,6 +165,25 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <DateTimeAgo date={notificationObject.active_at} />
               <Typography color="primary">
+                {/*{notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT ? (*/}
+                {/*  <LoadingButton*/}
+                {/*    disabled={disabled}*/}
+                {/*    loading={loading || scEventsManager.isLoading(notificationObject.event as SCEventType)}*/}
+                {/*    color={'primary'}*/}
+                {/*    variant="text"*/}
+                {/*    size="small"*/}
+                {/*    onClick={() => acceptRequest(notificationObject.event)}>*/}
+                {/*    {disabled ? (*/}
+                {/*      <FormattedMessage id="ui.notification.event.button.accepted" defaultMessage="ui.notification.event.button.accepted" />*/}
+                {/*    ) : (*/}
+                {/*      <FormattedMessage id="ui.notification.event.button.accept" defaultMessage="ui.notification.event.button.accept" />*/}
+                {/*    )}*/}
+                {/*  </LoadingButton>*/}
+                {/*) : (*/}
+                {/*  <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>*/}
+                {/*    <FormattedMessage id="ui.notification.event.button.see" defaultMessage="ui.notification.event.button.see" />*/}
+                {/*  </Link>*/}
+                {/*)}*/}
                 <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>
                   <FormattedMessage id="ui.notification.event.button.see" defaultMessage="ui.notification.event.button.see" />
                 </Link>
@@ -222,6 +252,34 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>
               <FormattedMessage id="ui.notification.event.button.see" defaultMessage="ui.notification.event.button.see" />
             </LoadingButton>
+            {/*<LoadingButton*/}
+            {/*  disabled={disabled}*/}
+            {/*  loading={loading || scEventsManager.isLoading(notificationObject.event as SCEventType)}*/}
+            {/*  color={'primary'}*/}
+            {/*  variant="outlined"*/}
+            {/*  size="small"*/}
+            {/*  classes={{root: classes.seeButton}}*/}
+            {/*  {...(notificationObject.type !== SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT && {*/}
+            {/*    component: Link,*/}
+            {/*    to: scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)*/}
+            {/*  })}*/}
+            {/*  onClick={*/}
+            {/*    notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT*/}
+            {/*      ? () => acceptRequest(notificationObject.event)*/}
+            {/*      : null*/}
+            {/*  }>*/}
+            {/*  {notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT ? (*/}
+            {/*    <>*/}
+            {/*      {disabled ? (*/}
+            {/*        <FormattedMessage id="ui.notification.event.button.accepted" defaultMessage="ui.notification.event.button.accepted" />*/}
+            {/*      ) : (*/}
+            {/*        <FormattedMessage id="ui.notification.event.button.accept" defaultMessage="ui.notification.event.button.accept" />*/}
+            {/*      )}*/}
+            {/*    </>*/}
+            {/*  ) : (*/}
+            {/*    <FormattedMessage id="ui.notification.event.button.see" defaultMessage="ui.notification.event.button.see" />*/}
+            {/*  )}*/}
+            {/*</LoadingButton>*/}
           </Stack>
         }
         {...rest}

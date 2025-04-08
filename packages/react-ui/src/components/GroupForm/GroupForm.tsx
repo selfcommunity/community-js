@@ -266,10 +266,10 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     }
     groupService
       .then((data: SCGroupType) => {
-        onSuccess && onSuccess(data);
+        onSuccess?.(data);
         notifyChanges(data);
-        onClose && onClose();
         setField((prev: any) => ({...prev, ['isSubmitting']: false}));
+        onClose?.();
       })
       .catch((e) => {
         setError({...error, ...formatHttpErrorCode(e)});
@@ -522,7 +522,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
             </Box>
           )}
         </FormGroup>
-        {isPaymentsEnabled && (
+        {isPaymentsEnabled && isStaff && (
           <Box className={classes.paywallsConfiguratorWrap}>
             <PaywallsConfigurator {...(group && {contentId: group.id})} contentType={SCContentType.GROUP} onChange={handleChangePaymentsProducts} />
           </Box>

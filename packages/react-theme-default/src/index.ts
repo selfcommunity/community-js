@@ -43,6 +43,7 @@ import SCCategoryHeader from './components/SCCategoryHeader';
 import SCCategoryTemplate from './components/SCCategoryTemplate';
 import SCCategoryTrendingFeedWidget from './components/SCCategoryTrendingFeedWidget';
 import SCCategoryTrendingUsersWidget from './components/SCCategoryTrendingUsersWidget';
+import SCCourseTypePopover from './components/SCCourseTypePopover';
 import SCCourseUsersTable from './components/SCCourseUsersTable';
 import SCChangeCoverButton from './components/SCChangeCoverButton';
 import SCChangeGroupCoverButton from './components/SCChangeGroupCoverButton';
@@ -210,6 +211,7 @@ import SCCheckout from './components/SCCheckout';
 import SCCheckoutReturnDialog from './components/SCCheckoutReturnDialog';
 import SCHiddenPurchasableContent from './components/SCHiddenPurchasableContent';
 import SCPaywalls from './components/SCPaywalls';
+import SCPaywallsConfigurator from './components/SCPaywallsConfigurator';
 
 /**
  * Style fragments - Imports - End
@@ -353,6 +355,7 @@ const theme = {
     SCCourseFormDialog,
     SCCourseParticipantsButton,
     SCCourseInfoDetails,
+    SCCourseTypePopover,
     SCCourseUsersTable,
     SCCreateGroupButton,
     SCCustomAdv,
@@ -500,7 +503,8 @@ const theme = {
     SCCheckout,
     SCCheckoutReturnDialog,
     SCHiddenPurchasableContent,
-    SCPaywalls
+    SCPaywalls,
+    SCPaywallsConfigurator
   },
   selfcommunity: {
     user: {

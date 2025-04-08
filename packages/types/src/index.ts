@@ -80,6 +80,7 @@ import {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationCourseActivityType,
   type SCNotificationLiveStreamActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
@@ -199,7 +200,8 @@ import {
   SCContentType,
   SCCheckoutSessionStatus,
   SCPaymentProductTemplateType,
-  SCCheckoutSessionUIMode
+  SCCheckoutSessionUIMode,
+  SCCourseOrderingUsersType
 } from './types';
 
 /**
@@ -259,7 +261,8 @@ export {
   SCContentType,
   SCCheckoutSessionStatus,
   SCPaymentProductTemplateType,
-  SCCheckoutSessionUIMode
+  SCCheckoutSessionUIMode,
+  SCCourseOrderingUsersType
 };
 export {
   type SCBannerType,
@@ -340,6 +343,7 @@ export {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationCourseActivityType,
   type SCNotificationLiveStreamActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,

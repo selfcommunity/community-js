@@ -1,8 +1,8 @@
 import {Box, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import AddUsersButton from '../../shared/AddUsersButton';
-import {memo, useCallback, useEffect, useReducer, useRef} from 'react';
-import {SCCourseType, SCUserType} from '@selfcommunity/types';
+import {memo, SyntheticEvent, useCallback, useEffect, useReducer, useRef} from 'react';
+import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
@@ -14,10 +14,12 @@ import {SCCache, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import {CourseService, CourseUserRoleParams, Endpoints, SCPaginatedResponse} from '@selfcommunity/api-services';
 import PubSub from 'pubsub-js';
-import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
+import {SCCourseEditTabType, SCCourseUsersTableModeType} from '../../types/course';
 
 const classes = {
-  usersStatusWrapper: `${PREFIX}-users-status-wrapper`
+  usersStatusWrapper: `${PREFIX}-users-status-wrapper`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const headerCells = [
@@ -32,12 +34,14 @@ const headerCells = [
   },
   {
     id: 'ui.editCourse.tab.users.table.header.latestActivity'
-  }
+  },
+  {}
 ];
 
 interface UsersProps {
   course: SCCourseType;
   endpointQueryParams?: Record<string, string | number>;
+  handleTabChange: (_e: SyntheticEvent, newTabValue: SCCourseEditTabType) => void;
 }
 
 function Users(props: UsersProps) {
@@ -47,19 +51,19 @@ function Users(props: UsersProps) {
     endpointQueryParams = {
       limit: 6,
       offset: DEFAULT_PAGINATION_OFFSET,
-      statuses: JSON.stringify(['joined', 'manager', 'creator'])
-    }
+      statuses: JSON.stringify([SCCourseJoinStatusType.JOINED, SCCourseJoinStatusType.MANAGER, SCCourseJoinStatusType.CREATOR])
+    },
+    handleTabChange
   } = props;
 
   // STATES
   const [state, dispatch] = useReducer(
     dataWidgetReducer,
     {
-      isLoadingPrevious: false,
       isLoadingNext: false,
       next: null,
-      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USER_PARTECIPANTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
-      cacheStrategy: CacheStrategies.CACHE_FIRST,
+      cacheKey: SCCache.getWidgetStateCacheKey(SCCache.USERS_PARTECIPANTS_COURSES_STATE_CACHE_PREFIX_KEY, course.id),
+      cacheStrategy: CacheStrategies.NETWORK_ONLY,
       visibleItems: endpointQueryParams.limit
     },
     stateWidgetInitializer
@@ -73,6 +77,7 @@ function Users(props: UsersProps) {
 
   // REFS
   const updatedUsers = useRef(null);
+  const removedUsers = useRef(null);
 
   // CALLBACKS
   const _init = useCallback(() => {
@@ -98,6 +103,16 @@ function Users(props: UsersProps) {
     [state.count, dispatch]
   );
 
+  const handleRemoveUser = useCallback(
+    (_msg: string, user: SCUserType) => {
+      dispatch({
+        type: actionWidgetTypes.SET_RESULTS,
+        payload: {count: state.count - 1, results: state.results.filter((result: SCUserType) => result.id !== user.id), initialized: true}
+      });
+    },
+    [state.count, state.results, dispatch]
+  );
+
   // EFFECTS
   useEffect(() => {
     let _t: NodeJS.Timeout;
@@ -110,12 +125,14 @@ function Users(props: UsersProps) {
   }, [scUserContext.user, _init]);
 
   useEffect(() => {
-    updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCGroupEventType.ADD_MEMBER}`, handleAddUser);
+    updatedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCCourseEventType.ADD_MEMBER}`, handleAddUser);
+    removedUsers.current = PubSub.subscribe(`${SCTopicType.COURSE}.${SCCourseEventType.REMOVE_MEMBER}`, handleRemoveUser);
 
     return () => {
       updatedUsers.current && PubSub.unsubscribe(updatedUsers.current);
+      removedUsers.current && PubSub.unsubscribe(removedUsers.current);
     };
-  }, [handleAddUser]);
+  }, [handleAddUser, handleRemoveUser]);
 
   const handleConfirm = useCallback(
     (newUsers: SCUserType[]) => {
@@ -129,6 +146,14 @@ function Users(props: UsersProps) {
             type: actionWidgetTypes.LOAD_PREVIOUS_SUCCESS,
             payload: {count: state.count + newUsers.length, results: newUsers, initialized: true}
           });
+
+          enqueueSnackbar(
+            <FormattedMessage id="ui.editCourse.tab.users.table.snackbar.success" defaultMessage="ui.editCourse.tab.users.table.snackbar.success" />,
+            {
+              variant: 'success',
+              autoHideDuration: 3000
+            }
+          );
         })
         .catch((error) => {
           dispatch({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
@@ -145,16 +170,12 @@ function Users(props: UsersProps) {
 
   return (
     <Box>
-      <Typography variant="h6">
-        <FormattedMessage
-          id="ui.editCourse.tab.users.title"
-          defaultMessage="ui.editCourse.tab.users.title"
-          values={{usersNumber: state.results.length}}
-        />
+      <Typography variant="h6" className={classes.contrastColor}>
+        <FormattedMessage id="ui.editCourse.tab.users.title" defaultMessage="ui.editCourse.tab.users.title" values={{usersNumber: state.count}} />
       </Typography>
 
       <Stack className={classes.usersStatusWrapper}>
-        <Status course={course} />
+        <Status course={course} handleTabChange={handleTabChange} />
 
         <AddUsersButton
           label="ui.editCourse.tab.users.addUsersButton.label"
@@ -163,16 +184,22 @@ function Users(props: UsersProps) {
             method: Endpoints.GetCourseSuggestedUsers.method
           }}
           onConfirm={handleConfirm}
-          isUpdating={state.isLoadingPrevious}
         />
       </Stack>
 
       <CourseUsersTable
-        course={course}
         state={state}
         dispatch={dispatch}
+        course={course}
+        endpointSearch={{
+          url: () => Endpoints.GetCourseDashboardUsers.url({id: course.id}),
+          method: Endpoints.GetCourseDashboardUsers.method
+        }}
+        endpointQueryParamsSearch={{
+          statuses: JSON.stringify([SCCourseJoinStatusType.JOINED, SCCourseJoinStatusType.MANAGER, SCCourseJoinStatusType.CREATOR])
+        }}
         headerCells={headerCells}
-        mode="edit"
+        mode={SCCourseUsersTableModeType.EDIT}
         emptyStatusTitle="ui.courseUsersTable.empty.users.title"
         emptyStatusDescription="ui.courseUsersTable.empty.users.description"
       />

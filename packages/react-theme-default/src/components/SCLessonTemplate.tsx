@@ -21,6 +21,11 @@ const Component = {
         justifyContent: 'space-between',
         marginBottom: theme.spacing(1)
       },
+      '& .SCLessonTemplate-preview-info': {
+        justifyContent: 'center',
+        borderRadius: 5,
+        marginBottom: theme.spacing(1)
+      },
       '& .SCLessonTemplate-button': {
         alignSelf: 'center',
         marginTop: 'auto'

@@ -1,7 +1,8 @@
-import {SCCourseType} from '@selfcommunity/types';
+import {SCCourseJoinStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {SCCourseGetUrlLessonData} from '../types/course';
 
 export function isCourseNew(course: SCCourseType | null): boolean {
-  if (course && course.user_completion_rate !== 100) {
+  if (course && course.join_status === SCCourseJoinStatusType.JOINED) {
     const createdAtDate = new Date(course.created_at);
     const twoWeeksAgo = new Date();
     twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
@@ -19,21 +20,18 @@ enum unitType {
   WEEKS = 'weeks'
 }
 
-export const getDripDelayAndUnit = (value: number) => {
+export function getDripDelayAndUnit(value: number) {
   if (value > 7 && value % 7 === 0) {
     return {delay: value / 7, _unit: unitType.WEEKS};
   }
   return {delay: value, _unit: unitType.DAYS};
-};
+}
 
-export function getCurrentSectionAndLessonIndex(course: SCCourseType, sectionId: string | number, lessonId: string | number) {
-  const currentSectionIndex = course.sections.findIndex((section) => section.id === sectionId);
-  if (currentSectionIndex === -1) {
-    return {currentSectionIndex: null, currentLessonIndex: null};
-  }
-  const currentLessonIndex = course.sections[currentSectionIndex].lessons.findIndex((lesson) => lesson.id === lessonId);
-  if (currentLessonIndex === -1) {
-    return {currentSectionIndex, currentLessonIndex: null};
-  }
-  return {currentSectionIndex, currentLessonIndex};
+export function getUrlLesson(course: SCCourseType, lesson: Partial<SCCourseLessonType>, section?: SCCourseSectionType): SCCourseGetUrlLessonData {
+  return {
+    id: course.id,
+    slug: course.slug,
+    section_id: section ? section.id : lesson.section_id,
+    lesson_id: lesson.id
+  };
 }

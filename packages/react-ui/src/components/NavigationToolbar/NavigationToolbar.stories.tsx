@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import NavigationToolbar from './index';
-import {AppBar, Badge, Box, Grid, IconButton, Typography} from '@mui/material';
+import {AppBar, Badge, Box, Button, Grid, IconButton, Typography} from '@mui/material';
 import Icon from '@mui/material/Icon';
 import React, {useCallback, useState} from 'react';
 import {NavigationMenuDrawer} from '../NavigationMenuIconButton';
@@ -81,7 +81,12 @@ export const Base: StoryObj<NavigationToolbar> = {
           console.log(data);
         }
       }
-    }
+    },
+		NavigationMenuIconButtonComponentProps: {
+			DrawerProps: {
+				drawerFooterContent: ({handleCloseMenuDrawer}) => <Button onClick={handleCloseMenuDrawer}>Close</Button>
+			}
+		}
   },
   render: template
 };

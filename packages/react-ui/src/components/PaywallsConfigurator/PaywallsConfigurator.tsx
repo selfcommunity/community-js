@@ -1,31 +1,29 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {
-	Accordion,
-	AccordionDetails,
-	AccordionSummary,
-	Autocomplete,
-	autocompleteClasses,
-	AutocompleteCloseReason,
-	Avatar,
-	Box,
-	Button,
-	Icon,
-	InputBase,
-	ListItem,
-	ListItemAvatar,
-	ListItemText,
-	Radio,
-	Slide,
-	Stack,
-	Typography,
-	useTheme, Zoom
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Autocomplete,
+  AutocompleteCloseReason,
+  Avatar,
+  Box,
+  Button,
+  Icon,
+  InputBase,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Radio,
+  Stack,
+  Typography,
+  Zoom
 } from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {Endpoints, http} from '@selfcommunity/api-services';
 import {SCPaymentProduct, SCContentType, SCPurchasableContent, SCPaywall} from '@selfcommunity/types';
-import {SCThemeType, useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {ContentAccessType, PREFIX} from './constants';
 import PaywallsConfiguratorSkeleton from './Skeleton';
 import {Logger} from '@selfcommunity/utils';
@@ -36,60 +34,31 @@ import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Popper from '@mui/material/Popper';
 import List from '@mui/material/List';
 import CreatePaymentProductForm from '../CreatePaymentProductForm';
-import {grey} from '@mui/material/colors';
-import Grow from '@mui/material/Grow';
 
 const classes = {
   root: `${PREFIX}-root`,
+  paymentProductsAutocompletePopperRoot: `${PREFIX}-payment-products-autocomplete-popper-root`,
+  paymentProductsPopperRoot: `${PREFIX}-payment-products-popper-root`,
+  filterInputRoot: `${PREFIX}-filter-input-root`,
   contentAccessType: `${PREFIX}-content-access-type`,
   newProduct: `${PREFIX}-new-product`,
   noProducts: `${PREFIX}-no-products`,
   error: `${PREFIX}-error`,
   selectedPaymentProductsList: `${PREFIX}-selected-payment-products-list`,
   autoCompleteFooter: `${PREFIX}-autocomplete-footer`,
-  btnAddPaymentProduct: `${PREFIX}-add-payment-product`
+  btnAddPaymentProduct: `${PREFIX}-add-payment-product`,
+  paymentProductsPopperTitle: `${PREFIX}-payment-products-popper-title`,
+  paymentProductsPopperFooter: `${PREFIX}-payment-products-popper-footer`,
+  productItemCheckIcon: `${PREFIX}-product-check-icon`,
+  productItemCardIcon: `${PREFIX}-product-card-icon`,
+  productItemContent: `${PREFIX}-product-content`,
+  productItemRemoveIcon: `${PREFIX}-product-remove-icon`
 };
 
 const Root = styled(Box, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({
-  [`& .${classes.newProduct}`]: {
-    background: '#eeeeee',
-    padding: theme.spacing(2),
-    marginTop: theme.spacing(),
-    borderRadius: theme.spacing(1)
-  },
-  [`& .${classes.noProducts}`]: {
-    textDecoration: 'italic',
-    paddingLeft: 0,
-    color: grey[400]
-  },
-  [`& .${classes.contentAccessType}`]: {
-    '& .MuiPaper-root': {
-      borderColor: '#c6c6c6'
-    },
-    '& .MuiAccordion-root:first-of-type': {
-      borderTopLeftRadius: 5,
-      borderTopRightRadius: 5
-    },
-    '& .MuiAccordion-root:last-of-type': {
-      borderBottomLeftRadius: 5,
-      borderBottomRightRadius: 5
-    },
-    [`& .${classes.selectedPaymentProductsList}`]: {
-      borderTop: '1px solid',
-      marginTop: 10
-    },
-    [`& .${classes.btnAddPaymentProduct}`]: {
-      position: 'relative',
-      left: -23,
-      '& .MuiButton-startIcon': {
-        fontSize: '15px'
-      }
-    }
-  }
-}));
+})(() => ({}));
 
 interface PopperComponentProps {
   anchorEl?: any;
@@ -97,73 +66,28 @@ interface PopperComponentProps {
   open: boolean;
 }
 
-const StyledAutocompletePopper = styled('div')(({theme}) => ({
-  [`& .${autocompleteClasses.paper}`]: {
-    boxShadow: 'none',
-    margin: 0,
-    color: 'inherit',
-    fontSize: 13
-  },
-  [`& .${autocompleteClasses.listbox}`]: {
-    backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#1c2128',
-    padding: 0,
-    [`& .${autocompleteClasses.option}`]: {
-      minHeight: 'auto',
-      alignItems: 'flex-start',
-      padding: 8,
-      borderBottom: `1px solid  ${theme.palette.mode === 'light' ? ' #eaecef' : '#30363d'}`,
-      '&[aria-selected="true"]': {
-        backgroundColor: 'transparent'
-      },
-      [`&.${autocompleteClasses.focused}, &.${autocompleteClasses.focused}[aria-selected="true"]`]: {
-        backgroundColor: theme.palette.action.hover
-      }
-    }
-  },
-  [`&.${autocompleteClasses.popperDisablePortal}`]: {
-    position: 'relative'
-  },
-  [`& .${classes.autoCompleteFooter}`]: {
-    backgroundColor: grey[400]
-  }
-}));
+const PaymentProductsAutocompletePopper = styled(Box, {
+  name: PREFIX,
+  slot: 'PaymentProductsAutocompletePopperRoot',
+  overridesResolver: (_props, styles) => styles.paymentProductsAutocompletePopperRoot
+})(() => ({}));
+
+const PaymentProductsPopper = styled(Popper, {
+  name: PREFIX,
+  slot: 'PaymentProductsPopperRoot',
+  overridesResolver: (_props, styles) => styles.paymentProductsPopperRoot
+})(() => ({}));
+
+const FilterInputRoot = styled(InputBase, {
+  name: PREFIX,
+  slot: 'FilterInputRoot',
+  overridesResolver: (_props, styles) => styles.filterInputRoot
+})(() => ({}));
 
 function PopperComponent(props: PopperComponentProps) {
   const {disablePortal, anchorEl, open, ...other} = props;
-  return <StyledAutocompletePopper {...other} />;
+  return <PaymentProductsAutocompletePopper {...other} />;
 }
-
-const StyledPopper = styled(Popper)(({theme}) => ({
-  border: `1px solid ${theme.palette.mode === 'light' ? '#e1e4e8' : '#30363d'}`,
-  boxShadow: `0 8px 24px ${theme.palette.mode === 'light' ? 'rgba(149, 157, 165, 0.2)' : 'rgb(1, 4, 9)'}`,
-  borderRadius: 6,
-  width: 300,
-  zIndex: theme.zIndex.modal,
-  fontSize: 13,
-  color: theme.palette.mode === 'light' ? '#24292e' : '#c9d1d9',
-  backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#1c2128',
-  '& .MuiPaper-root': {
-    borderRadius: 0
-  }
-}));
-
-const StyledInput = styled(InputBase)(({theme}) => ({
-  padding: 10,
-  width: '100%',
-  borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#eaecef' : '#30363d'}`,
-  '& input': {
-    borderRadius: 4,
-    backgroundColor: theme.palette.mode === 'light' ? '#fff' : '#0d1117',
-    padding: 8,
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    border: `1px solid ${theme.palette.mode === 'light' ? '#eaecef' : '#30363d'}`,
-    fontSize: 14,
-    '&:focus': {
-      boxShadow: `0px 0px 0px 3px ${theme.palette.mode === 'light' ? 'rgba(3, 102, 214, 0.3)' : 'rgb(12, 45, 107)'}`,
-      borderColor: theme.palette.mode === 'light' ? '#0366d6' : '#388bfd'
-    }
-  }
-}));
 
 export interface PaywallsConfiguratorProps {
   className?: string;
@@ -195,7 +119,6 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
 
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
-  const theme = useTheme<SCThemeType>();
   const intl = useIntl();
 
   // CONST
@@ -269,35 +192,14 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
     // @ts-ignore
     const {key, ...optionProps} = props;
     return (
-      <li key={key} {...optionProps} {...(selected && {style: {backgroundColor: '#f9fafc'}})}>
-        <Box
-          sx={{width: 17, height: 17, mr: '5px', ml: '-1px', mt: '3px'}}
-          style={{
-            visibility: selected ? 'visible' : 'hidden'
-          }}>
+      <li key={option.id} {...optionProps} {...(selected && {style: {backgroundColor: '#f9fafc'}})}>
+        <Box className={classes.productItemCheckIcon} style={{visibility: selected ? 'visible' : 'hidden'}}>
           <Icon>check</Icon>
         </Box>
-        <Box
-          component="span"
-          sx={{
-            width: 14,
-            height: 14,
-            flexShrink: 0,
-            borderRadius: '3px',
-            mr: 1,
-            mt: '2px',
-            p: '3px'
-          }}
-          style={{backgroundColor: 'red', color: 'white'}}>
+        <Box component="span" className={classes.productItemCardIcon}>
           <Icon>card_giftcard</Icon>
         </Box>
-        <Box
-          sx={(t) => ({
-            flexGrow: 1,
-            '& span': {
-              color: '#8b949e'
-            }
-          })}>
+        <Box className={classes.productItemContent}>
           {option.name}
           <br />
           {option.payment_prices && option.payment_prices[0] && (
@@ -307,11 +209,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
             </>
           )}
         </Box>
-        <Box
-          sx={{opacity: 0.6, width: 18, height: 18}}
-          style={{
-            visibility: selected ? 'visible' : 'hidden'
-          }}>
+        <Box className={classes.productItemRemoveIcon} style={{visibility: selected ? 'visible' : 'hidden'}}>
           <Icon>arrow</Icon>
         </Box>
       </li>
@@ -402,7 +300,9 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
         <PaywallsConfiguratorSkeleton />
       ) : (
         <div className={classes.contentAccessType}>
-          <Typography mb={1}>Seleziona il tipo di accesso al contenuto</Typography>
+          <Typography>
+            <FormattedMessage id="ui.paywallsConfigurator.selectAccessType" defaultMessage="ui.paywallsConfigurator.selectAccessType" />
+          </Typography>
           <Accordion
             expanded={expanded === ContentAccessType.FREE}
             onChange={handleChange(ContentAccessType.FREE)}
@@ -410,13 +310,15 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
             variant="outlined">
             <AccordionSummary expandIcon={<Radio checked={expanded === ContentAccessType.FREE} />} aria-controls="free-content" id="free-header">
               <Typography>
-                <b>FREE</b>: contenuto gratuito
+                <b>
+                  <FormattedMessage id="ui.paywallsConfigurator.free" defaultMessage="ui.paywallsConfigurator.free" />
+                </b>
+                : <FormattedMessage id="ui.paywallsConfigurator.free.label" defaultMessage="ui.paywallsConfigurator.free.label" />
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                Un contenuto ad uso gratuito è un contenuto accessibile senza alcun costo per l'utente. Non è previsto nessun paywall e quindi non
-                richiede nessun pagamento o abbonamento.
+                <FormattedMessage id="ui.paywallsConfigurator.free.info" defaultMessage="ui.paywallsConfigurator.free.info" />
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -427,16 +329,21 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
             variant="outlined">
             <AccordionSummary expandIcon={<Radio checked={expanded === ContentAccessType.PAID} />} aria-controls="paid-content" id="paid-header">
               <Typography>
-                <b>A PAGAMENTO</b>: contenuto a pagamento
+                <b>
+                  <FormattedMessage id="ui.paywallsConfigurator.paid" defaultMessage="ui.paywallsConfigurator.paid" />
+                </b>
+                : <FormattedMessage id="ui.paywallsConfigurator.paid.label" defaultMessage="ui.paywallsConfigurator.paid.label" />
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography mb={2}>
-                Il contenuto è accessibile solo previo pagamento, che può avvenire tramite acquisto singolo o abbonamento.
+                <FormattedMessage id="ui.paywallsConfigurator.paid.info" defaultMessage="ui.paywallsConfigurator.paid.info" />
               </Typography>
               <Stack direction="row" justifyContent="space-around" alignItems="center" spacing={2}>
                 <Typography style={{flexGrow: 1}} component="div">
-                  <b>Prezzi associati</b>
+                  <b>
+                    <FormattedMessage id="ui.paywallsConfigurator.connected.products" defaultMessage="ui.paywallsConfigurator.connected.products" />
+                  </b>
                 </Typography>
                 <Button
                   variant="contained"
@@ -445,28 +352,36 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                   onClick={handleToggleCreatePaymentPrice}
                   startIcon={<Icon>add</Icon>}
                   className={classes.btnAddPaymentProduct}>
-                  New
+                  <FormattedMessage
+                    id="ui.paywallsConfigurator.connected.products.btnNew"
+                    defaultMessage="ui.paywallsConfigurator.connected.products.btnNew"
+                  />
                 </Button>
               </Stack>
               {loading ? (
                 <PaywallsConfiguratorSkeleton />
               ) : (
                 <Box>
+                  {createPrice && (
+                    <Zoom in={createPrice}>
+                      <Box>
+                        <CreatePaymentProductForm
+                          className={classes.newProduct}
+                          onCreate={handleCreatePaymentPrice}
+                          onCancel={handleToggleCreatePaymentPrice}
+                        />
+                      </Box>
+                    </Zoom>
+                  )}
                   <List dense className={classes.selectedPaymentProductsList}>
-                    {createPrice && (
-                      <Zoom in={createPrice}>
-                        <Box>
-                          <CreatePaymentProductForm
-                            className={classes.newProduct}
-                            onCreate={handleCreatePaymentPrice}
-                            onCancel={handleToggleCreatePaymentPrice}
-                          />
-                        </Box>
-                      </Zoom>
-                    )}
                     {!value.length && (
                       <ListItem key={-1} className={classes.noProducts} divider>
-                        <ListItemText primary={'Al momento nessun prezzo associato'} />
+                        <ListItemText
+                          primary={intl.formatMessage({
+                            id: 'ui.paywallsConfigurator.connected.noProducts',
+                            defaultMessage: 'ui.paywallsConfigurator.connected.noProducts'
+                          })}
+                        />
                       </ListItem>
                     )}
                     {value.map((p, i) => {
@@ -480,7 +395,10 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                               size="small"
                               onClick={() => handleDeleteProduct(p, i)}
                               startIcon={<Icon>delete</Icon>}>
-                              Remove
+                              <FormattedMessage
+                                id="ui.paywallsConfigurator.connected.products.btnRemove"
+                                defaultMessage="ui.paywallsConfigurator.connected.products.btnRemove"
+                              />
                             </Button>
                           }
                           divider>
@@ -498,7 +416,17 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                                     .map((price) => getConvertedAmount(price))
                                     .join(' - ')
                                 : '-'
-                            } ${p.payment_prices?.length > 3 ? `+ altri ${p.payment_prices?.length - 3}` : ''}`}
+                            } ${
+                              p.payment_prices?.length > 3
+                                ? intl.formatMessage(
+                                    {
+                                      id: 'ui.paywallsConfigurator.connected.products.others',
+                                      defaultMessage: 'ui.paywallsConfigurator.connected.products.others'
+                                    },
+                                    {count: p.payment_prices?.length - 3}
+                                  )
+                                : ''
+                            }`}
                           />
                         </ListItem>
                       );
@@ -510,16 +438,14 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                 </Box>
               )}
               {!loading && (
-                <StyledPopper id={open ? 'payment-products' : undefined} open={open} anchorEl={anchorEl} placement="bottom-start">
+                <PaymentProductsPopper id={open ? 'payment-products' : undefined} open={open} anchorEl={anchorEl} placement="bottom-start">
                   <ClickAwayListener onClickAway={handleClose}>
                     <Box>
-                      <Box
-                        sx={{
-                          borderBottom: `1px solid ${theme.palette.mode === 'light' ? '#eaecef' : '#30363d'}`,
-                          padding: '8px 10px',
-                          fontWeight: 600
-                        }}>
-                        Prezzi applicabili al contenuto
+                      <Box className={classes.paymentProductsPopperTitle}>
+                        <FormattedMessage
+                          id="ui.paywallsConfigurator.connected.products.content"
+                          defaultMessage="ui.paywallsConfigurator.connected.products.content"
+                        />
                       </Box>
                       <Autocomplete
                         open
@@ -551,7 +477,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                         isOptionEqualToValue={(option, value) => option.id === value.id}
                         getOptionLabel={(option) => option.name.toString()}
                         renderInput={(params) => (
-                          <StyledInput
+                          <FilterInputRoot
                             ref={params.InputProps.ref}
                             inputProps={params.inputProps}
                             autoFocus
@@ -562,20 +488,17 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                           />
                         )}
                       />
-                      <Box sx={{borderTop: '1px solid #eaecef', padding: '8px', display: 'flex', alignItems: 'flex-end', justifyContent: 'center'}}>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          disableRipple
-                          onClick={handleClose}
-                          startIcon={<Icon style={{fontSize: 12}}>check</Icon>}
-                          sx={{padding: '2px 8px'}}>
-                          Conferma
+                      <Box className={classes.paymentProductsPopperFooter}>
+                        <Button variant="contained" size="small" disableRipple onClick={handleClose} startIcon={<Icon>check</Icon>}>
+                          <FormattedMessage
+                            id="ui.paywallsConfigurator.popper.btnConfirm"
+                            defaultMessage="ui.paywallsConfigurator.popper.btnConfirm"
+                          />
                         </Button>
                       </Box>
                     </Box>
                   </ClickAwayListener>
-                </StyledPopper>
+                </PaymentProductsPopper>
               )}
             </AccordionDetails>
           </Accordion>

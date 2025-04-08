@@ -1,24 +1,28 @@
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {Fragment, memo, useCallback, useEffect, useMemo, useState} from 'react';
+import {memo, SyntheticEvent, useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {DragDropContext, Draggable, Droppable, DropResult} from '@hello-pangea/dnd';
-import {SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
+import {SCCourseSectionType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
-import {Box, Icon, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
+import {Box, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography} from '@mui/material';
 import Status from './Status';
 import EmptyStatus from '../../shared/EmptyStatus';
 import AddButton from './Lessons/AddButton';
 import SectionRow from './Lessons/SectionRow';
-import {ActionLessonType} from './types';
-import {useDisabled} from './hooks';
+import {ActionLessonType, DeleteRowProps, DeleteRowRef, RowType} from './types';
+import {useIsDisabled} from './hooks';
+import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
+import CourseTypePopover from '../../shared/CourseTypePopover';
+import classNames from 'classnames';
+import {SCCourseEditTabType} from '../../types';
 
 const classes = {
   lessonTitle: `${PREFIX}-lesson-title`,
   lessonInfoWrapper: `${PREFIX}-lesson-info-wrapper`,
-  lessonInfo: `${PREFIX}-lesson-info`,
+  lessonsInnerWrapper: `${PREFIX}-lessons-inner-wrapper`,
   lessonsSectionsWrapper: `${PREFIX}-lessons-sections-wrapper`,
   lessonsSections: `${PREFIX}-lessons-sections`,
   circle: `${PREFIX}-circle`,
@@ -31,38 +35,29 @@ const classes = {
   cellAlignRight: `${PREFIX}-cell-align-right`,
   cellAlignCenter: `${PREFIX}-cell-align-center`,
   lessonEmptyStatus: `${PREFIX}-lesson-empty-status`,
-  emptyStatusButton: `${PREFIX}-empty-status-button`
+  emptyStatusButton: `${PREFIX}-empty-status-button`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
-
-const headerCells = [
-  {
-    className: undefined,
-    id: 'ui.editCourse.tab.lessons.table.header.lessonName'
-  },
-  {
-    className: classes.cellAlignCenter,
-    id: 'ui.editCourse.tab.lessons.table.header.calendar'
-  },
-  {
-    className: classes.cellAlignRight,
-    id: 'ui.editCourse.tab.lessons.table.header.actions'
-  }
-];
 
 interface LessonsProps {
   course: SCCourseType;
   setCourse: (course: SCCourseType) => void;
+  handleTabChange: (_e: SyntheticEvent, newTabValue: SCCourseEditTabType) => void;
 }
 
 function Lessons(props: LessonsProps) {
   // PROPS
-  const {course, setCourse} = props;
+  const {course, setCourse, handleTabChange} = props;
 
   // STATES
   const [sections, setSections] = useState<SCCourseSectionType[]>([]);
+  const [dialog, setDialog] = useState<DeleteRowProps | null>(null);
+
+  // REFS
+  const ref = useRef<DeleteRowRef | null>(null);
 
   // HOOKS
-  const {isDisabled} = useDisabled();
+  const {isDisabled} = useIsDisabled();
   const {enqueueSnackbar} = useSnackbar();
   const intl = useIntl();
 
@@ -75,6 +70,27 @@ function Lessons(props: LessonsProps) {
 
   // MEMOS
   const isNewRow = useMemo(() => sections.length > course.sections?.length, [course, sections]);
+  const headerCells = useMemo(
+    () => [
+      {
+        className: undefined,
+        id: 'ui.editCourse.tab.lessons.table.header.lessonName'
+      },
+      ...(course.type !== SCCourseTypologyType.SELF
+        ? [
+            {
+              className: classes.cellAlignCenter,
+              id: 'ui.editCourse.tab.lessons.table.header.calendar'
+            }
+          ]
+        : []),
+      {
+        className: classes.cellAlignRight,
+        id: 'ui.editCourse.tab.lessons.table.header.actions'
+      }
+    ],
+    [course]
+  );
 
   // FUNCTIONS
   const getSection = useCallback((id: number) => {
@@ -133,13 +149,19 @@ function Lessons(props: LessonsProps) {
   const handleManageSection = useCallback(
     (section: SCCourseSectionType, type: ActionLessonType, newRow = false) => {
       switch (type) {
-        case ActionLessonType.ADD:
+        case ActionLessonType.ADD: {
+          const newSection: SCCourseSectionType = {
+            ...section,
+            lessons: []
+          };
+
           setCourse({
             ...course,
             num_sections: course.num_sections + 1,
-            sections: [...course.sections, section]
+            sections: [...course.sections, newSection]
           });
           break;
+        }
         case ActionLessonType.RENAME:
           setCourse({
             ...course,
@@ -225,31 +247,34 @@ function Lessons(props: LessonsProps) {
     [course]
   );
 
+  const handleOpenDialog = useCallback(
+    (row: DeleteRowProps | null) => {
+      setDialog(row);
+    },
+    [setDialog]
+  );
+
+  const handleDeleteRow = useCallback(() => {
+    switch (dialog.row) {
+      case RowType.SECTION:
+        ref.current.handleDeleteSection(dialog.section);
+        break;
+      case RowType.LESSON:
+        ref.current.handleDeleteLesson(dialog.section, dialog.lesson);
+    }
+
+    handleOpenDialog(null);
+  }, [dialog, handleOpenDialog]);
+
   return (
     <Box>
-      <Typography className={classes.lessonTitle} variant="h4">
+      <Typography className={classNames(classes.lessonTitle, classes.contrastColor)} variant="h4">
         <FormattedMessage id="ui.editCourse.tab.lessons" defaultMessage="ui.editCourse.tab.lessons" />
       </Typography>
 
       <Stack className={classes.lessonInfoWrapper}>
-        <Stack className={classes.lessonInfo}>
-          <Icon>courses</Icon>
-
-          <Typography variant="body2">
-            <FormattedMessage
-              id="ui.course.type"
-              defaultMessage="ui.course.type"
-              values={{
-                typeOfCourse: intl.formatMessage({
-                  id: `ui.course.type.${course.type}`,
-                  defaultMessage: `ui.course.type.${course.type}`
-                })
-              }}
-            />
-          </Typography>
-        </Stack>
-
-        <Status course={course} />
+        <CourseTypePopover course={course} />
+        <Status course={course} handleTabChange={handleTabChange} />
       </Stack>
 
       {sections.length === 0 && (
@@ -271,7 +296,7 @@ function Lessons(props: LessonsProps) {
       )}
 
       {sections.length > 0 && (
-        <Fragment>
+        <Box className={classes.lessonsInnerWrapper}>
           <Stack className={classes.lessonsSectionsWrapper}>
             <Stack className={classes.lessonsSections}>
               <Typography variant="h5">
@@ -336,6 +361,8 @@ function Lessons(props: LessonsProps) {
                               section={section}
                               isNewRow={isNewRow && i + 1 === array.length}
                               handleManageSection={handleManageSection}
+                              handleOpenDialog={handleOpenDialog}
+                              ref={ref}
                             />
                           )}
                         </Draggable>
@@ -347,7 +374,9 @@ function Lessons(props: LessonsProps) {
               </Table>
             </TableContainer>
           </DragDropContext>
-        </Fragment>
+
+          {dialog && <ConfirmDialog open onClose={() => handleOpenDialog(null)} onConfirm={handleDeleteRow} />}
+        </Box>
       )}
     </Box>
   );
