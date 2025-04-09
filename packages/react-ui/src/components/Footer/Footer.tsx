@@ -5,11 +5,11 @@ import {Box, Button, Typography} from '@mui/material';
 import classNames from 'classnames';
 import {CustomMenuService} from '@selfcommunity/api-services';
 import {SCCustomMenuItemType, SCCustomMenuType} from '@selfcommunity/types';
-import { Logger, sortByAttr } from '@selfcommunity/utils';
+import {Logger, sortByAttr} from '@selfcommunity/utils';
 import {Link, SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import FooterSkeleton from './Skeleton';
-import {PREFIX} from './constants';
+import {PREFIX, EXPLORE_MENU_ITEM} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -21,7 +21,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface FooterProps {
   /**
@@ -89,12 +89,13 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   const {className, menu = null, startActions = null, endActions = null, ...rest} = props;
 
   // PREFERENCES
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
   const copyright = useMemo(() => {
-    return scPreferences.preferences && SCPreferences.TEXT_APPLICATION_COPYRIGHT in scPreferences.preferences
-      ? scPreferences.preferences[SCPreferences.TEXT_APPLICATION_COPYRIGHT].value.replace('$year', new Date().getFullYear())
+    return preferences && SCPreferences.TEXT_APPLICATION_COPYRIGHT in preferences
+      ? preferences[SCPreferences.TEXT_APPLICATION_COPYRIGHT].value.replace('$year', new Date().getFullYear())
       : null;
-  }, [scPreferences.preferences]);
+  }, [preferences]);
+  const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
 
   // STATE
   const [_menu, setMenu] = useState<SCCustomMenuType>(menu);
@@ -135,11 +136,13 @@ export default function Footer(inProps: FooterProps): JSX.Element {
     <Root {...rest} className={classNames(classes.root, className)}>
       {startActions}
       <Box className={classes.itemList}>
-        {sortByAttr(_menu.items, 'order').map((item: SCCustomMenuItemType, index) => (
-          <Button component={Link} key={item.id} className={classes.item} to={item.url} variant="text">
-            {item.label}
-          </Button>
-        ))}
+        {sortByAttr(_menu.items, 'order')
+          .filter((item) => exploreStreamEnabled || item.url !== EXPLORE_MENU_ITEM)
+          .map((item: SCCustomMenuItemType, index) => (
+            <Button component={Link} key={item.id} className={classes.item} to={item.url} variant="text">
+              {item.label}
+            </Button>
+          ))}
       </Box>
       {endActions}
       <Typography textAlign="center" className={classes.copyright} variant="body2" dangerouslySetInnerHTML={{__html: copyright}} />
