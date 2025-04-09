@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.55...@selfcommunity/react-ui@0.11.0-alpha.56) (2025-04-09)
+
+
+### Bug Fixes
+
+* fixing cache problems ([f0737d7](https://github.com/selfcommunity/community-js/commit/f0737d7ea877e103de042f66bfef18c33a46977d))
+
+
+
+
+
 # [0.11.0-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.54...@selfcommunity/react-ui@0.11.0-alpha.55) (2025-04-09)
 
 
