@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.53...@selfcommunity/react-ui@0.11.0-alpha.54) (2025-04-08)
+
+
+### Bug Fixes
+
+* fixed cache problems into EventMembersWidget. Linear: https://linear.app/quentral/issue/QUE-1391/widget-richieste-di-partecipazione-ad-un-evento-non-fa-un-refresh ([2b09634](https://github.com/selfcommunity/community-js/commit/2b09634b4328a2e6b53797d06308e1ac0bc8a2aa))
+* fixed end time event form. Linear: https://linear.app/quentral/issue/QUE-1398/in-creazione-evento-problema-ora-di-fine-evento ([ebf4ff4](https://github.com/selfcommunity/community-js/commit/ebf4ff4457e45271ea89e5d25f0ad61bf06bb568))
+* fixed privacy switch. Linear: https://linear.app/quentral/issue/QUE-1449/modificando-un-evento-privato-ci-sono-alcuni-problemi ([c49979d](https://github.com/selfcommunity/community-js/commit/c49979d14067bda76591aa673abea7255bc11058))
+
+
+
+
+
 # [0.11.0-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.52...@selfcommunity/react-ui@0.11.0-alpha.53) (2025-04-08)
 
 
