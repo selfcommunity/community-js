@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.54...@selfcommunity/react-ui@0.11.0-alpha.55) (2025-04-09)
+
+
+### Bug Fixes
+
+* fixed footer menu entries when explore feed preference is disabled. Linear issue: https://linear.app/quentral/issue/QUE-1450/footer-con-esplora-disabilitato ([03a564c](https://github.com/selfcommunity/community-js/commit/03a564c1604b4c814508e9ead0315a518f1b6488))
+
+
+
+
+
 # [0.11.0-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.53...@selfcommunity/react-ui@0.11.0-alpha.54) (2025-04-08)
 
 
