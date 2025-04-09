@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.56...@selfcommunity/react-ui@0.11.0-alpha.57) (2025-04-09)
+
+
+### Bug Fixes
+
+* fixing caache problems. Linear: https://linear.app/quentral/issue/QUE-1397/problema-con-linvito-ricevuto ([0b8bff9](https://github.com/selfcommunity/community-js/commit/0b8bff9fd18443d60927bd4c5cf2810ffd191f15))
+
+
+
+
+
 # [0.11.0-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.55...@selfcommunity/react-ui@0.11.0-alpha.56) (2025-04-09)
 
 
