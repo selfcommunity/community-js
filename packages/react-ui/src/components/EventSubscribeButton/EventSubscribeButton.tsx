@@ -163,7 +163,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   const {scEvent, setSCEvent} = useSCFetchEvent({
     id: eventId,
     event,
-    cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
+    cacheStrategy: authUserId ? CacheStrategies.NETWORK_ONLY : CacheStrategies.STALE_WHILE_REVALIDATE
   });
 
   const isEventAdmin = useMemo(
