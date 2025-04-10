@@ -720,7 +720,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 className={classes.switch}
                 checked={field.isPublic}
                 onChange={() => setField((prev) => ({...prev, ['isPublic']: !field.isPublic}))}
-                disabled={event && !field.isPublic}
+                disabled={event?.privacy === SCEventPrivacyType.PRIVATE}
               />
               <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isPublic})}>
                 <Icon>public</Icon>
