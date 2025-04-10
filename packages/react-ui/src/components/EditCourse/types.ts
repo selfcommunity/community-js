@@ -7,7 +7,8 @@ export enum ActionLessonType {
   UPDATE = 'update',
   ADD_UPDATE = 'add_update',
   RENAME_UPDATE = 'rename_update',
-  DELETE_UPDATE = 'delete_update'
+  DELETE_UPDATE = 'delete_update',
+  UPDATE_UPDATE = 'update_update'
 }
 
 export interface OptionsData {

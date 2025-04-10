@@ -117,7 +117,7 @@ function LessonRow(props: LessonRowProps, ref: Ref<DeleteRowRef>) {
       <TableCell />
       <TableCell className={classes.cellAlignRight}>
         <Stack className={classes.actionsWrapper}>
-          <ChangeLessonStatus course={course} section={section} lesson={lesson} disabled={isDisabled} />
+          <ChangeLessonStatus course={course} section={section} lesson={lesson} onChange={handleManageLesson} disabled={isDisabled} />
 
           <MenuRow disabled={isDisabled}>
             <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(course, lesson, section))}>
