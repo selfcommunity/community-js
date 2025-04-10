@@ -268,7 +268,10 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
         </IconButton>
       )}
       {preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] &&
-        (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && (
+        (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) &&
+        !groupsEnabled &&
+        !coursesEnabled &&
+        !eventsEnabled && (
           <IconButton
             className={classNames(classes.explore, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {}))})}
             aria-label="Explore"
