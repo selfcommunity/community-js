@@ -565,6 +565,7 @@
   "ui.courseForm.structured.info": "Il Corso inizia appena l’utente completa la sottoscrizione.\nLe sezioni del Corso sono rilasciate progressivamente in base alla data d’inizio.",
   "ui.courseForm.name.placeholder": "Dai un nome al tuo corso",
   "ui.courseForm.description.placeholder": "Aggiungi una descrizione",
+  "ui.courseForm.required": "Campo Obbligatorio",
   "ui.courseForm.date.placeholder": "Data di inizio",
   "ui.courseForm.date.title": "Seleziona Data",
   "ui.courseForm.time.placeholder": "Ora di inizio",

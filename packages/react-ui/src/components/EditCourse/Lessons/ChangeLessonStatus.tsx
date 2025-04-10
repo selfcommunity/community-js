@@ -10,6 +10,7 @@ import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
 import {SCCourseLessonStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
+import {ActionLessonType} from '../types';
 
 const OPTIONS = [
   {
@@ -31,15 +32,15 @@ interface ChangeLessonStatusProps {
   course: SCCourseType;
   section: SCCourseSectionType;
   lesson: SCCourseLessonType;
+  onChange: (lesson: SCCourseLessonType, type: ActionLessonType) => void;
   disabled?: boolean;
 }
 
 function ChangeLessonStatus(props: ChangeLessonStatusProps) {
   // PROPS
-  const {course, section, lesson, disabled} = props;
+  const {course, section, lesson, onChange, disabled} = props;
 
   // HOOKS
-  // const intl = useIntl();
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {enqueueSnackbar} = useSnackbar();
@@ -70,15 +71,23 @@ function ChangeLessonStatus(props: ChangeLessonStatusProps) {
   const handleAction = useCallback(
     (newValue: string) => {
       setLoading(true);
+      const newStatus = newValue.endsWith(SCCourseLessonStatusType.DRAFT) ? SCCourseLessonStatusType.DRAFT : SCCourseLessonStatusType.PUBLISHED;
 
       const data: Partial<SCCourseLessonType> = {
-        status: newValue.endsWith(SCCourseLessonStatusType.DRAFT) ? SCCourseLessonStatusType.DRAFT : SCCourseLessonStatusType.PUBLISHED
+        status: newStatus
       };
 
       CourseService.patchCourseLesson(course.id, section.id, lesson.id, data)
         .then(() => {
           setValue(newValue);
           setLoading(false);
+          onChange(
+            {
+              ...lesson,
+              status: newStatus
+            },
+            ActionLessonType.UPDATE
+          );
 
           enqueueSnackbar(
             <FormattedMessage id="ui.editCourse.tab.lessons.table.snackbar.save" defaultMessage="ui.editCourse.tab.lessons.table.snackbar.save" />,
