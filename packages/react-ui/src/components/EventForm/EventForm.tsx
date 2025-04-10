@@ -238,7 +238,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     liveStreamSettings: event?.live_stream ? event?.live_stream.settings : null,
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
     isPublic: event?.privacy === SCEventPrivacyType.PUBLIC || true,
-    product_ids: event?.paywalls.map((p) => p.id) || [],
+    product_ids: event?.paywalls?.map((p) => p.id) || [],
     isSubmitting: false
   };
 
@@ -465,6 +465,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     [error, setField, setGenericError]
   );
 
+	/**
+	 * Handle change payment products
+	 * @param products
+	 */
   const handleChangePaymentsProducts = (products) => {
     setField((prev) => ({
       ...prev,

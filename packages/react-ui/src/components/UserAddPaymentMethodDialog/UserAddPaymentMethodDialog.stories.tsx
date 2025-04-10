@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import UserPaymentMethods from './index';
+import UserAddPaymentMethodDialog from './index';
 
 export default {
-  title: 'Design System/React UI/Payments/UserPaymentMethods',
-  component: UserPaymentMethods,
+  title: 'Design System/React UI/Payments/UserAddPaymentMethodDialog',
+  component: UserAddPaymentMethodDialog,
   argTypes: {
     userId: {
       control: {type: 'number'},
@@ -11,15 +11,15 @@ export default {
       table: {defaultValue: {summary: 7}}
     }
   }
-} as Meta<typeof UserPaymentMethods>;
+} as Meta<typeof UserAddPaymentMethodDialog>;
 
 const template = (args) => (
   <div style={{width: '100%'}}>
-    <UserPaymentMethods {...args} />
+    <UserAddPaymentMethodDialog {...args} />
   </div>
 );
 
-export const Base: StoryObj<typeof UserPaymentMethods> = {
+export const Base: StoryObj<typeof UserAddPaymentMethodDialog> = {
   args: {},
   render: template
 };

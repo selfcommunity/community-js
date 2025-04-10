@@ -9,6 +9,7 @@ import {SCUserProfileFields, SCUserProfileSettings, SCUserSocialAssociations} fr
 import {PlatformWidgetActionType} from './platformWidget';
 import {SCEventTemplateType} from './event';
 import {SCCourseTemplateType, SCLessonActionsType, SCLessonModeType, SCCourseEditTabType} from './course';
+import {StripeCurrency, StripeCurrencySymbol, StripeCurrencyRightSymbol} from './payment';
 
 export {
   SCFeedWidgetType,
@@ -28,5 +29,8 @@ export {
   SCCourseTemplateType,
   SCLessonActionsType,
   SCLessonModeType,
-  SCCourseEditTabType
+  SCCourseEditTabType,
+  StripeCurrency,
+  StripeCurrencySymbol,
+  StripeCurrencyRightSymbol
 };

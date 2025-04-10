@@ -3,12 +3,12 @@ import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, Text
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {CourseService, formatHttpErrorCode} from '@selfcommunity/api-services';
-import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {SCCategoryType, SCCoursePrivacyType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
+import {SCPreferences, SCPreferencesContextType, UserUtils, useSCPaymentsEnabled, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {SCCategoryType, SCContentType, SCCoursePrivacyType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import {ChangeEvent, Fragment, useCallback, useMemo, useState} from 'react';
+import React, {ChangeEvent, Fragment, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
@@ -18,6 +18,7 @@ import {COURSE_DESCRIPTION_MAX_LENGTH, COURSE_TITLE_MAX_LENGTH, SCCourseFormStep
 import CategoryAutocomplete from '../CategoryAutocomplete';
 import CourseEdit from './Edit';
 import CoursePublicationDialog from './Dialog';
+import PaywallsConfigurator from '../PaywallsConfigurator';
 
 const messages = defineMessages({
   name: {
@@ -58,7 +59,8 @@ const classes = {
   stepCustomization: `${PREFIX}-step-customization`,
   cardTitle: `${PREFIX}-card-title`,
   title: `${PREFIX}-title`,
-  contrastColor: `${PREFIX}-contrast-color`
+  contrastColor: `${PREFIX}-contrast-color`,
+  paywallsConfiguratorWrap: `${PREFIX}-paywalls-configurator-wrap`
 };
 
 const Root = styled(Box, {
@@ -162,6 +164,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     description: course ? course.description : '',
     categories: course ? course.categories : [],
     privacy: course ? course.privacy : '',
+    product_ids: course?.paywalls?.map((p) => p.id) || [],
     isSubmitting: false
   };
 
@@ -171,9 +174,16 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   const [error, setError] = useState<any>({});
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
+  // CONTEXT
+  const scUserContext = useSCUser();
+
   // PREFERENCES
   const {preferences}: SCPreferencesContextType = useSCPreferences();
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
+  const isStaff = useMemo(() => scUserContext.user && UserUtils.isStaff(scUserContext.user), [scUserContext.user]);
   const courseAdvancedEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_COURSES_ADVANCED_ENABLED].value, [preferences]);
 
   const _backgroundCover = {
@@ -269,6 +279,11 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         formData.append(key, field.categories[key]);
       }
     }
+    if (field.product_ids && (isStaff || course.paywalls?.length)) {
+      field.product_ids.forEach((p, i) => {
+        formData.append(`product_ids[${i}]`, p.toString());
+      });
+    }
     let courseService: Promise<SCCourseType>;
     if (course) {
       courseService = CourseService.patchCourse(course.id, formData, {
@@ -317,6 +332,17 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     },
     [setField, error]
   );
+
+  /**
+   * Handle change payment products
+   * @param products
+   */
+  const handleChangePaymentsProducts = (products) => {
+    setField((prev) => ({
+      ...prev,
+      product_ids: products.map((product) => product.id)
+    }));
+  };
 
   /**
    * Handles for closing confirm dialog
@@ -425,6 +451,15 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   onChange={handleOnChangeCategory}
                 />
                 {course && <CourseEdit course={course} onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))} />}
+                {isPaymentsEnabled && isStaff && (
+                  <Box className={classes.paywallsConfiguratorWrap}>
+                    <PaywallsConfigurator
+                      {...(course && {contentId: course.id})}
+                      contentType={SCContentType.COURSE}
+                      onChange={handleChangePaymentsProducts}
+                    />
+                  </Box>
+                )}
               </FormGroup>
             </Fragment>
           )}
@@ -463,7 +498,6 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
           </Box>
         </Box>
       </Root>
-
       {openDialog && <CoursePublicationDialog onSubmit={handleSubmit} onClose={handleClose} />}
     </Fragment>
   );

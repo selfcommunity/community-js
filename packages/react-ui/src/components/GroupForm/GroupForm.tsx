@@ -153,7 +153,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     isVisible: group ? group.visible : true,
     invitedUsers: null,
     isSubmitting: false,
-    product_ids: group?.paywalls.map((p) => p.id) || []
+    product_ids: group?.paywalls?.map((p) => p.id) || []
   };
 
   // CONTEXT

@@ -173,8 +173,9 @@ import {
   type SCPaymentsCustomerPortalSession,
   SCPaymentProductTemplateType,
   SCCheckoutSessionUIMode,
-	type SCPaywall
+  type SCPaywall
 } from './payment';
+import {type SCCustomerBillingInfo, type SCCountryType} from './billing';
 import {type SCCommunityType} from './community';
 
 /**
@@ -363,7 +364,7 @@ export {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
-	type SCPaywall,
+  type SCPaywall,
   type SCPaymentProduct,
   type SCPaymentPrice,
   SCPaymentPriceCurrencyType,
@@ -377,5 +378,7 @@ export {
   type SCPaymentsCustomerPortalSession,
   SCPaymentProductTemplateType,
   SCCheckoutSessionUIMode,
-  type SCCommunityType
+  type SCCommunityType,
+  type SCCustomerBillingInfo,
+  type SCCountryType
 };
