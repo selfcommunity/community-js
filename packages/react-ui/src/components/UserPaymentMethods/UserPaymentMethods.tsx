@@ -25,7 +25,7 @@ import UserPaymentMethodsSkeleton from './Skeleton';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useInView} from 'react-intersection-observer';
 import {useSnackbar} from 'notistack';
-import {ConfirmDialog} from '@selfcommunity/react-ui';
+import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import UserChangeAddressDialog from '../UserChangeAddressDialog';
 import {PaymentMethod as StripePaymentMethod} from '@stripe/stripe-js';
 import UserAddPaymentMethodDialog from '../UserAddPaymentMethodDialog';

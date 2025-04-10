@@ -10,7 +10,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {LoadingButton} from '@mui/lab';
 import {AddressElement, Elements} from '@stripe/react-stripe-js';
 import {loadStripe, Stripe, StripeElementsOptions} from '@stripe/stripe-js';
-import {getDefaultAppearanceStyle, getDefaultLocale} from '@selfcommunity/react-ui';
+import {getDefaultAppearanceStyle, getDefaultLocale} from '../../utils/payment';
 
 const classes = {
   root: `${PREFIX}-root`
