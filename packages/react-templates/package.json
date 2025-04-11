@@ -1,6 +1,6 @@
 {
 	"name": "@selfcommunity/react-templates",
-	"version": "0.4.8-payments.156",
+	"version": "0.4.8-payments.169",
 	"license": "MIT",
 	"private": false,
 	"main": "./lib/cjs/index.js",
