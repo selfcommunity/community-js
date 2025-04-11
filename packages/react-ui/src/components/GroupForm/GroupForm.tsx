@@ -3,14 +3,7 @@ import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Divider, FormGroup, Icon, Paper, Stack, Switch, TextField, Typography} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {
-	SCPreferences,
-	SCPreferencesContextType,
-	UserUtils,
-	useSCPaymentsEnabled,
-	useSCPreferences,
-	useSCUser
-} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, UserUtils, useSCPaymentsEnabled, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
@@ -55,7 +48,7 @@ const classes = {
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
   visibilitySection: `${PREFIX}-visibility-section`,
   visibilitySectionInfo: `${PREFIX}-visibility-section-info`,
-	paywallsConfiguratorWrap: `${PREFIX}-paywalls-configurator-wrap`,
+  paywallsConfiguratorWrap: `${PREFIX}-paywalls-configurator-wrap`,
   inviteSection: `${PREFIX}-invite-section`,
   error: `${PREFIX}-error`
 };
@@ -180,8 +173,8 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     [scPreferences.preferences]
   );
 
-	// PAYMENTS
-	const {isPaymentsEnabled} = useSCPaymentsEnabled();
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   const _backgroundCover = {
     ...(field.emotionalImageOriginal
@@ -298,12 +291,12 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     }));
   };
 
-	const handleClose = (_event: any, reason: string) => {
-		if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
-			return;
-		}
-		onClose?.();
-	};
+  const handleClose = (_event: any, reason: string) => {
+    if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+      return;
+    }
+    onClose?.();
+  };
 
   /**
    * Renders root object
@@ -319,8 +312,8 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
         )
       }
       open={open}
-			disableEscapeKeyDown={true}
-			onClose={handleClose}
+      disableEscapeKeyDown={true}
+      onClose={handleClose}
       className={classNames(classes.root, className)}
       actions={
         <LoadingButton
