@@ -5656,16 +5656,10 @@
     "@rpldy/shared-ui" "1.7.1"
     "@rpldy/uploader" "1.7.1"
 
-"@selfcommunity/react-theme-default@^0.4.5-payments.158":
-  version "0.4.5-payments.158"
-  resolved "https://registry.yarnpkg.com/@selfcommunity/react-theme-default/-/react-theme-default-0.4.5-payments.158.tgz#af62424e620f11a8800467fd40d91d78b01ee1d3"
-  integrity sha512-lwthLAdCL328g87BeZQwsaElEoh1AseA3RvR7o616xdw5of3TFfyaiauwHktT5FiNc5FGOH66DsW4vVFyqMyvw==
-  dependencies:
-    "@emotion/react" "^11.11.3"
-    "@emotion/styled" "^11.11.0"
-    "@mui/material" "^5.15.3"
-    react "^17.0.2 || 18"
-    react-dom "17 || 18"
+"@selfcommunity/react-i18n@0.7.7-payments.158":
+  version "0.7.7-payments.158"
+  resolved "https://registry.yarnpkg.com/@selfcommunity/react-i18n/-/react-i18n-0.7.7-payments.158.tgz#6ec4ec7609b903a94f681af1c7d10847a38123a4"
+  integrity sha512-7F+ucWi4MBeb4ifzzrgxf6V99XqMrEdSRh0wJvg4WDyfUBHUDgB9BqWwdhvzmnv6Nvze+Mj7DZVF+SKu/k2qeQ==
 
 "@sinclair/typebox@^0.25.16":
   version "0.25.24"
