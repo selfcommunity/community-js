@@ -214,7 +214,12 @@ import PaymentProduct, {PaymentProductProps} from './components/PaymentProduct';
 import PaymentDetailDialog, {PaymentDetailDialogProps} from './components/PaymentDetailDialog';
 import PaymentOrders, {PaymentOrdersProps} from './components/PaymentOrders';
 import PaymentProductPrice, {PaymentProductPriceProps} from './components/PaymentProductPrice';
+import UserPaymentMethodsPortal, {UserPaymentMethodsPortalProps, UserPaymentMethodsPortalSkeleton} from './components/UserPaymentMethodsPortal';
 import UserPaymentMethods, {UserPaymentMethodsProps, UserPaymentMethodsSkeleton} from './components/UserPaymentMethods';
+import UserAddPaymentMethodForm, {UserAddPaymentMethodFormProps} from './components/UserAddPaymentMethodForm';
+import UserAddPaymentMethodDialog, {UserAddPaymentMethodDialogProps} from './components/UserAddPaymentMethodDialog';
+import UserChangeAddressDialog, {UserChangeAddressDialogProps} from './components/UserChangeAddressDialog';
+import UserBillingInfo, {UserBillingInfoProps, UserBillingInfoSkeleton} from './components/UserBillingInfo';
 import Checkout, {CheckoutProps} from './components/Checkout';
 import CheckoutReturnDialog, {CheckoutReturnDialogProps} from './components/CheckoutReturnDialog';
 import CommunityPaywalls, {CommunityPaywallsProps, CommunityPaywallsSkeleton} from './components/CommunityPaywalls';
@@ -778,9 +783,9 @@ export {
   UserLiveStreamWidget,
   UserLiveStreamWidgetProps,
   UserLiveStreamWidgetSkeleton,
-  UserPaymentMethods,
-  UserPaymentMethodsProps,
-  UserPaymentMethodsSkeleton,
+  UserPaymentMethodsPortal,
+  UserPaymentMethodsPortalProps,
+  UserPaymentMethodsPortalSkeleton,
   useStickyBox,
   UseStickyBoxProps,
   LiveStream,
@@ -829,6 +834,18 @@ export {
   PaymentOrdersProps,
   PaymentProductPrice,
   PaymentProductPriceProps,
+  UserPaymentMethods,
+  UserPaymentMethodsProps,
+  UserPaymentMethodsSkeleton,
+  UserAddPaymentMethodForm,
+  UserAddPaymentMethodFormProps,
+  UserAddPaymentMethodDialog,
+  UserAddPaymentMethodDialogProps,
+  UserChangeAddressDialog,
+  UserChangeAddressDialogProps,
+  UserBillingInfo,
+  UserBillingInfoProps,
+  UserBillingInfoSkeleton,
   Checkout,
   CheckoutProps,
   CheckoutReturnDialog,

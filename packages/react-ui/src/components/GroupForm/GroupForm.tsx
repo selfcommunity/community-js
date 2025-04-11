@@ -153,7 +153,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     isVisible: group ? group.visible : true,
     invitedUsers: null,
     isSubmitting: false,
-    product_ids: group?.paywalls.map((p) => p.id) || []
+    product_ids: group?.paywalls?.map((p) => p.id) || []
   };
 
   // CONTEXT
@@ -298,6 +298,13 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     }));
   };
 
+	const handleClose = (_event: any, reason: string) => {
+		if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+			return;
+		}
+		onClose?.();
+	};
+
   /**
    * Renders root object
    */
@@ -312,7 +319,8 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
         )
       }
       open={open}
-      onClose={onClose}
+			disableEscapeKeyDown={true}
+			onClose={handleClose}
       className={classNames(classes.root, className)}
       actions={
         <LoadingButton

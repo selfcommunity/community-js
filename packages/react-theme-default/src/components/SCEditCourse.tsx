@@ -267,6 +267,14 @@ const Component = {
             maxWidth: '600px',
             margin: theme.spacing(2, 'auto', 0)
           }
+        },
+
+        '& .SCCourseForm-paywalls-configurator-wrap': {
+          marginBottom: theme.spacing(3),
+          '& .SCPaywallsConfigurator-content-access-type': {
+            fontSize: '14px',
+            padding: theme.spacing()
+          }
         }
       }
     }),
