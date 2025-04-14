@@ -102,8 +102,8 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
           _status = SCCourseJoinStatusType.JOINED;
           break;
       }
-      updateCache([dataMsg.data.course.id]);
-      setData((prev) => getDataUpdated(prev, dataMsg.data.course.id, _status));
+      updateCache([dataMsg.data.course]);
+      setData((prev) => getDataUpdated(prev, dataMsg.data.course, _status));
     }
   };
   /**
