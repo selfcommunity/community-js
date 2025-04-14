@@ -106,6 +106,15 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
       preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
     [preferences, features]
   );
+  const coursesEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_COURSES_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_COURSES_ENABLED].value,
+    [preferences, features]
+  );
   const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
   const postOnlyStaffEnabled = preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value;
   const contentAvailable = preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
@@ -125,16 +134,16 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
               value={scUserContext.user ? scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}) : '/'}
               icon={<Icon>home</Icon>}
             />,
-            (scUserContext.user || contentAvailable) && exploreStreamEnabled ? (
-              <BottomNavigationAction
-                key="explore"
-                className={classes.action}
-                component={Link}
-                to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
-                value={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
-                icon={<Icon>explore</Icon>}
-              />
-            ) : null,
+            // (scUserContext.user || contentAvailable) && exploreStreamEnabled ? (
+            //   <BottomNavigationAction
+            //     key="explore"
+            //     className={classes.action}
+            //     component={Link}
+            //     to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
+            //     value={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
+            //     icon={<Icon>explore</Icon>}
+            //   />
+            // ) : null,
             (!postOnlyStaffEnabled || (UserUtils.isStaff(scUserContext.user) && postOnlyStaffEnabled)) &&
             ((groupsEnabled && !eventsEnabled) || (!groupsEnabled && eventsEnabled)) &&
             !exploreStreamEnabled ? (
@@ -143,6 +152,16 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 className={classNames(classes.composer, classes.action)}
                 component={ComposerIconButton}
                 disableRipple
+              />
+            ) : null,
+            coursesEnabled && (scUserContext.user || contentAvailable) ? (
+              <BottomNavigationAction
+                key="courses"
+                className={classes.action}
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}
+                value={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}
+                icon={<Icon>courses</Icon>}
               />
             ) : null,
             groupsEnabled && scUserContext.user ? (
@@ -166,7 +185,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 disableRipple
               />
             ) : null,
-            eventsEnabled ? (
+            eventsEnabled && (scUserContext.user || contentAvailable) ? (
               <BottomNavigationAction
                 key="events"
                 className={classes.action}

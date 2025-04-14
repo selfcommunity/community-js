@@ -1,5 +1,6 @@
 import {
   SCCommentType,
+  SCCourseType,
   SCEventType,
   SCFeedDiscussionType,
   SCFeedPostType,
@@ -63,7 +64,13 @@ export enum SCNotificationTypologyType {
   USER_REQUESTED_TO_JOIN_EVENT = 'user_requested_to_join_event',
   USER_ACCEPTED_TO_JOIN_EVENT = 'user_accepted_to_join_event',
   USER_ADDED_TO_EVENT = 'user_added_to_event',
-  LIVE_STREAM_STARTED = 'live_stream_started'
+  LIVE_STREAM_STARTED = 'live_stream_started',
+  USER_INVITED_TO_JOIN_COURSE = 'user_invited_to_join_course',
+  USER_REQUESTED_TO_JOIN_COURSE = 'user_requested_to_join_course',
+  USER_ACCEPTED_TO_JOIN_COURSE = 'user_accepted_to_join_course',
+  USER_COMMENTED_A_COURSE_LESSON = 'user_commented_a_course_lesson',
+  USER_ADDED_TO_COURSE = 'user_added_to_course',
+  MANAGER_ADDED_TO_COURSE = 'manager_added_to_course'
 }
 
 /**
@@ -566,7 +573,7 @@ export interface SCNotificationGroupActivityType extends SCNotificationType {
 }
 
 /**
- * Interface SCNotificationGroupActivityType.
+ * Interface SCNotificationEventActivityType.
  */
 export interface SCNotificationEventActivityType extends SCNotificationType {
   /**
@@ -577,6 +584,31 @@ export interface SCNotificationEventActivityType extends SCNotificationType {
    * The event obj
    */
   event: Partial<SCEventType>;
+}
+
+/**
+ * Interface SCNotificationCourseActivityType.
+ */
+export interface SCNotificationCourseActivityType extends SCNotificationType {
+  /**
+   * The course obj
+   */
+  course: Partial<SCCourseType>;
+  /**
+   * The user who performed the action
+   */
+  user: SCUserType;
+  /**
+   * The info about course lesson comment
+   */
+  comment?: {
+    id: number;
+    course_id: number;
+    section_id: number;
+    lesson_id: number;
+    lesson_name: string;
+    html: string;
+  };
 }
 
 /**

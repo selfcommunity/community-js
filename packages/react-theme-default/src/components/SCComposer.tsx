@@ -102,7 +102,7 @@ const Component = {
         }
       }
     }),
-    attributesRoot: ({theme}: any) => ({}),
+    attributesRoot: () => ({}),
     contentDiscussionRoot: ({theme}: any) => ({
       '& .SCComposer-content-discussion-title': {
         '& .MuiInputBase-root': {
@@ -172,6 +172,29 @@ const Component = {
         }
       }
     }),
+    contentLessonRoot: ({theme}: any) => ({
+      padding: theme.spacing(2),
+      '& .SCEditor-root': {
+        '& .SCEditor-content': {
+          paddingTop: theme.spacing(1.5)
+        }
+      },
+      '& .SCComposer-content-lesson-medias': {
+        '& .SCMediaFile-preview-root': {
+          marginBottom: theme.spacing(1),
+          '& .SCMediaFile-media': {
+            height: '60px !important',
+            maxWidth: 140,
+            '& .SCMediaFile-title': {
+              maxWidth: '50% !important'
+            }
+          }
+        },
+        '& .SCMediaLink-preview-root': {
+          marginBottom: theme.spacing(1)
+        }
+      }
+    }),
     layerTransitionRoot: ({theme}: any) => ({
       position: 'absolute',
       top: 0,
@@ -205,8 +228,8 @@ const Component = {
         marginBottom: theme.spacing(4)
       }
     }),
-    layerCategoryRoot: ({theme}: any) => ({}),
-    layerGroupRoot: ({theme}: any) => ({}),
+    layerCategoryRoot: () => ({}),
+    layerGroupRoot: () => ({}),
     layerCloseRoot: ({theme}: any) => ({
       '& .SCComposer-layer-content': {
         '& .MuiTypography-root': {
@@ -225,8 +248,8 @@ const Component = {
         }
       }
     }),
-    layerLocationRoot: ({theme}: any) => ({}),
-    skeletonRoot: ({theme}: any) => ({}),
+    layerLocationRoot: () => ({}),
+    skeletonRoot: () => ({}),
     typeSwitchButtonGroupRoot: ({theme}: any) => ({
       '& .MuiToggleButton-root': {
         backgroundColor: theme.palette.common.black,

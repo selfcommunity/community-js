@@ -1,0 +1,80 @@
+import {HTMLAttributes} from 'react';
+import {PREFIX} from './constants';
+import {Box, styled, useThemeProps} from '@mui/material';
+import {SCCourseType} from '@selfcommunity/types';
+import {useSCFetchCourse} from '@selfcommunity/react-core';
+import classNames from 'classnames';
+import {CourseDashboard} from '@selfcommunity/react-ui';
+import {CourseInfoViewType} from '@selfcommunity/api-services';
+
+const classes = {
+  root: `${PREFIX}-root`
+};
+
+const Root = styled(Box, {
+  name: PREFIX,
+  slot: 'Root'
+})(() => ({}));
+
+export interface CourseProps {
+  /**
+   * Id of the feed object
+   * @default 'course'
+   */
+  id?: string;
+
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
+  className?: HTMLAttributes<HTMLDivElement>['className'];
+
+  /**
+   * Course Object
+   * @default null
+   */
+  course?: SCCourseType;
+
+  /**
+   * Id of the course for filter the feed
+   * @default null
+   */
+  courseId?: number;
+
+  viewDashboard?: boolean;
+}
+
+export default function Course(inProps: CourseProps) {
+  // PROPS
+  const props: CourseProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+
+  const {id = 'course', className = null, course = null, courseId = null, viewDashboard} = props;
+
+  // HOOKS
+  const {scCourse, error} = useSCFetchCourse({
+    id: courseId,
+    course,
+    params: {view: viewDashboard ? CourseInfoViewType.DASHBOARD : CourseInfoViewType.USER}
+  });
+
+  if (error) {
+    return null;
+  }
+
+  if (viewDashboard) {
+    return (
+      <Root id={id} className={classNames(classes.root, className)}>
+        <CourseDashboard.Teacher course={scCourse} />
+      </Root>
+    );
+  }
+
+  return (
+    <Root id={id} className={classNames(classes.root, className)}>
+      <CourseDashboard.Student course={scCourse} />
+    </Root>
+  );
+}

@@ -588,6 +588,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/suggestion/category/'),
     method: 'GET'
   },
+  CourseSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/course/'),
+    method: 'GET'
+  },
   GetIncubatorSuggestion: {
     url: urlReplacer('/api/v2/suggestion/incubator/'),
     method: 'GET'
@@ -1422,6 +1426,169 @@ const Endpoints: {[key: string]: EndpointType} = {
   CompleteAStep: {
     url: urlReplacer('/api/v2/onboarding/$(step)/complete/'),
     method: 'POST'
+  },
+  /**
+   * Courses
+   */
+  ChangeCourseUserRole: {
+    url: urlReplacer('/api/v2/course/$(id)/role/'),
+    method: 'POST'
+  },
+  CreateCourse: {
+    url: urlReplacer('/api/v2/course/'),
+    method: 'POST'
+  },
+  CreateCourseComment: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/'),
+    method: 'POST'
+  },
+  CreateCourseLesson: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/'),
+    method: 'POST'
+  },
+  CreateCourseSection: {
+    url: urlReplacer('/api/v2/course/$(id)/section/'),
+    method: 'POST'
+  },
+  DeleteCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/'),
+    method: 'DELETE'
+  },
+  DeleteCourseComment: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/$(comment_id)/'),
+    method: 'DELETE'
+  },
+  DeleteCourseLesson: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/'),
+    method: 'DELETE'
+  },
+  DeleteCourseSection: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/'),
+    method: 'DELETE'
+  },
+  GetCourseComments: {
+    url: urlReplacer('/api/v2/course/$(id)/comment/'),
+    method: 'GET'
+  },
+  GetCourseDashboardUsers: {
+    url: urlReplacer('/api/v2/course/$(id)/users/'),
+    method: 'GET'
+  },
+  GetCourseInfo: {
+    url: urlReplacer('/api/v2/course/$(id)/'),
+    method: 'GET'
+  },
+  GetCourseInvitedUsers: {
+    url: urlReplacer('/api/v2/course/$(id)/invite/'),
+    method: 'GET'
+  },
+  GetCourseJoinedUsers: {
+    url: urlReplacer('/api/v2/course/$(id)/join/'),
+    method: 'GET'
+  },
+  GetCourseLesson: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/'),
+    method: 'GET'
+  },
+  GetCourseLessonComment: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/$(comment_id)/'),
+    method: 'GET'
+  },
+  GetCourseLessonComments: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/'),
+    method: 'GET'
+  },
+  GetCourseLessons: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/'),
+    method: 'GET'
+  },
+  GetCourseSection: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/'),
+    method: 'GET'
+  },
+  GetCourseSections: {
+    url: urlReplacer('/api/v2/course/$(id)/section/'),
+    method: 'GET'
+  },
+  GetCourseStatus: {
+    url: urlReplacer('/api/v2/course/$(id)/status/'),
+    method: 'GET'
+  },
+  GetCourseWaitingApproval: {
+    url: urlReplacer('/api/v2/course/$(id)/request_join/'),
+    method: 'GET'
+  },
+  GetJoinedCourses: {
+    url: urlReplacer('/api/v2/course/'),
+    method: 'GET'
+  },
+  InviteOrAcceptUsersToCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/invite/'),
+    method: 'POST'
+  },
+  JoinOrAcceptInviteToCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/join/'),
+    method: 'POST'
+  },
+  LeaveOrRemoveCourseRequest: {
+    url: urlReplacer('/api/v2/course/$(id)/join/'),
+    method: 'DELETE'
+  },
+  MarkLessonComplete: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/complete/'),
+    method: 'POST'
+  },
+  MarkLessonIncomplete: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/incomplete/'),
+    method: 'POST'
+  },
+  PatchCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/'),
+    method: 'PATCH'
+  },
+  PatchCourseComment: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/$(comment_id)/'),
+    method: 'PATCH'
+  },
+  PatchCourseLesson: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/'),
+    method: 'PATCH'
+  },
+  PatchCourseSection: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/'),
+    method: 'PATCH'
+  },
+  RemoveInvitationToCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/invite/'),
+    method: 'DELETE'
+  },
+  SearchCourses: {
+    url: urlReplacer('/api/v2/course/search/'),
+    method: 'GET'
+  },
+  GetCourseSuggestedUsers: {
+    url: urlReplacer('/api/v2/course/$(id)/user/'),
+    method: 'GET'
+  },
+  UpdateCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/'),
+    method: 'PUT'
+  },
+  UpdateCourseComment: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/$(comment_id)/'),
+    method: 'PUT'
+  },
+  UpdateCourseLesson: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/'),
+    method: 'PUT'
+  },
+  UpdateCourseSection: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/'),
+    method: 'PUT'
+  },
+  GetUserJoinedCourses: {
+    url: urlReplacer('/api/v2/user/$(id)/courses/'),
+    method: 'GET'
   }
 };
 

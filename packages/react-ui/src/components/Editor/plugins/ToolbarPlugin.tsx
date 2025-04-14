@@ -37,6 +37,7 @@ import ImagePlugin from './ImagePlugin';
 import EmojiPlugin from './EmojiPlugin';
 import {INSERT_HORIZONTAL_RULE_COMMAND} from '@lexical/react/LexicalHorizontalRuleNode';
 import {PREFIX} from '../constants';
+import MediaPlugin, {MediaPluginProps} from './MediaPlugin';
 
 const blockTypeToBlockIcon = {
   h1: 'format_heading_1',
@@ -180,6 +181,9 @@ const Root = styled(Box, {
 
 export interface ToolbarPluginProps {
   uploadImage: boolean;
+  uploadFile?: boolean;
+  MediaPluginProps?: MediaPluginProps;
+  customLink?: React.ReactNode;
 }
 
 export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element {
@@ -188,7 +192,7 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const {uploadImage = false} = props;
+  const {uploadImage = false, uploadFile = false, MediaPluginProps = {}, customLink = null} = props;
 
   // STATE
   const [editor] = useLexicalComposerContext();
@@ -224,8 +228,7 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
       setFormats(FORMATS.filter((f: TextFormatType) => selection.hasFormat(f)));
       // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
       // @ts-ignore
-      setAlignment(ALIGNMENTS.find((a: ElementFormatType) => element.getFormatType?.() === a) || ALIGNMENTS[0]
-      );
+      setAlignment(ALIGNMENTS.find((a: ElementFormatType) => element.getFormatType?.() === a) || ALIGNMENTS[0]);
 
       // Update links
       const node = getSelectedNode(selection);
@@ -390,11 +393,14 @@ export default function ToolbarPlugin(inProps: ToolbarPluginProps): JSX.Element 
         </Tooltip>
       </IconButton>
       {uploadImage && <ImagePlugin />}
-      <IconButton disabled={!isEditable} onClick={insertLink}>
-        <Tooltip title={<FormattedMessage id="ui.editor.toolbarPlugin.link" defaultMessage="ui.editor.toolbarPlugin.link" />}>
-          <Icon>format_link</Icon>
-        </Tooltip>
-      </IconButton>
+      {uploadFile && <MediaPlugin {...MediaPluginProps} />}
+      {customLink ?? (
+        <IconButton disabled={!isEditable} onClick={insertLink}>
+          <Tooltip title={<FormattedMessage id="ui.editor.toolbarPlugin.link" defaultMessage="ui.editor.toolbarPlugin.link" />}>
+            <Icon>format_link</Icon>
+          </Tooltip>
+        </IconButton>
+      )}
       <EmojiPlugin />
     </Root>
   );

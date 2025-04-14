@@ -19,7 +19,7 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<GroupMembersButton> = {
+export const Base: StoryObj<typeof GroupMembersButton> = {
   args: {
     groupId: 1
   },

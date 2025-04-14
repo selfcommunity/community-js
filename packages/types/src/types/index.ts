@@ -88,7 +88,8 @@ import {
   type SCNotificationVoteUpType,
   type SCNotificationGroupActivityType,
   SCNotificationEventActivityType,
-  SCNotificationLiveStreamActivityType
+  SCNotificationLiveStreamActivityType,
+  SCNotificationCourseActivityType
 } from './notification';
 import {type SCWebhookEndpointAttemptType, type SCWebhookEndpointSecretType, type SCWebhookEndpointType, type SCWebhookEventsType} from './webhook';
 import {type SCVoteType} from './vote';
@@ -133,6 +134,19 @@ import {
   SCEventLocationFilterType,
   SCEventSubscriptionStatusType
 } from './event';
+import {
+  type SCCourseType,
+  type SCCourseLessonType,
+  type SCCourseSectionType,
+  type SCCourseCommentType,
+  SCCoursePrivacyType,
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseLessonStatusType,
+  SCCourseTypologyType,
+  SCCourseLessonCompletionStatusType,
+  SCCourseOrderingUsersType
+} from './course';
 import {
   type SCLiveStreamType,
   SCLiveStreamViewType,
@@ -249,6 +263,7 @@ export {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationCourseActivityType,
   type SCNotificationLiveStreamActivityType,
   type SCPrizeType,
   type SCPrizeUserType,
@@ -310,6 +325,18 @@ export {
   type SCStepType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
+  SCOnBoardingStepIdType,
+  type SCCourseType,
+  type SCCourseCommentType,
+  type SCCourseSectionType,
+  type SCCourseLessonType,
+  SCCoursePrivacyType,
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseLessonStatusType,
+  SCCourseTypologyType,
+  SCCourseLessonCompletionStatusType,
+  SCCourseOrderingUsersType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamSettingsType,
@@ -317,7 +344,6 @@ export {
   type SCLiveStreamMonthlyDurationType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
-  SCOnBoardingStepIdType,
   SCCommunitySubscriptionTier,
-	SCCommunityEnvironment
+  SCCommunityEnvironment
 };
