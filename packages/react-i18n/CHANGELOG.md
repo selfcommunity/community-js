@@ -3,6 +3,92 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.13...@selfcommunity/react-i18n@0.8.0-alpha.14) (2025-04-14)
+
+
+### Bug Fixes
+
+* added date clear button for LessonReleaseMenu component/removed error.Linear issues: https://linear.app/quentral/issue/QUE-1341/manca-bottone-clear-date-nel-selettore-data and https://linear.app/quentral/issue/QUE-1338/problema-dopo-pubblicazione-sezione ([92cba3c](https://github.com/selfcommunity/community-js/commit/92cba3c9f9101d1e1b2dac5960096ff16bf92876))
+* added infinite scroll to courses component. Linear issue: https://linear.app/quentral/issue/QUE-1328/paginazione-corsi ([faa6493](https://github.com/selfcommunity/community-js/commit/faa6493f827679f73eb681dfe20e8cebb16107d3))
+* added missing transl. Linear issue: https://linear.app/quentral/issue/QUE-1262/traduzione-mancante ([f8719f9](https://github.com/selfcommunity/community-js/commit/f8719f941b037916a4c6f0fd5eedbbaa9ffae4cc))
+* finished adding course api, fixed build, changed some translation and types ([574a544](https://github.com/selfcommunity/community-js/commit/574a544b8ddc8497ebddbc156d7a71ff79b3db81))
+* finished course card/chip ([7179226](https://github.com/selfcommunity/community-js/commit/7179226ec55607648d5033761bf09cdf67c5d0ba))
+* fixed course card ([be77e03](https://github.com/selfcommunity/community-js/commit/be77e0367c470af21810701220bcaaf3f672b78c))
+* fixed course form component ([3bac9e2](https://github.com/selfcommunity/community-js/commit/3bac9e2ded30d8376fab115233fa8c285c785dbe))
+* fixed course form titles. Linear issue: https://linear.app/quentral/issue/QUE-1401/quando-creo-un-corso-la-finestra-riporta-il-titolo-scegli-il-tipo-di ([27fe5b7](https://github.com/selfcommunity/community-js/commit/27fe5b79c91c893a8415596026256a765e9c20f2))
+* fixed course form translations ([c34c560](https://github.com/selfcommunity/community-js/commit/c34c56013f4a11f7d393d7b16efdbd2925c9de41))
+* fixed course type transl. Linear issue: https://linear.app/quentral/issue/QUE-1402/credo-che-le-descrizioni-di-calendarizzato-e-programmato-siano ([a948760](https://github.com/selfcommunity/community-js/commit/a948760df573eeaacee549349ba094fdd7a9af37))
+* fixed courses ([61cfbd8](https://github.com/selfcommunity/community-js/commit/61cfbd83d4ad2a2d5413fc35dd93344a64767a63))
+* fixed enroll to the course on student's dashboard ([0073cdb](https://github.com/selfcommunity/community-js/commit/0073cdbb384b42bc13b6753d28c8c37d3e40c30c))
+* fixed groups search ([4944a92](https://github.com/selfcommunity/community-js/commit/4944a9296f1a4130888867f1eecdbdcf09bb3be7))
+* fixed helper text on course description; fixed updating scCourse when change lesson status. Linear: https://linear.app/quentral/issue/QUE-1446/modificando-le-opzioni-di-un-corso-non-si-riesce-a-salvare-i ([9ee5111](https://github.com/selfcommunity/community-js/commit/9ee51115705609970a4f08a3b57db43d0232b21e))
+* fixed inverted course types. Linear issue: https://linear.app/quentral/issue/QUE-1339/problema-creazione-corso-calendarizzato-e-programmato ([14254c5](https://github.com/selfcommunity/community-js/commit/14254c5e44c63e6a2956e35edd1decb25bf8d629))
+* fixed missing translation ([50e27f5](https://github.com/selfcommunity/community-js/commit/50e27f5e069fd949a9338f72c403420117754aef))
+* fixed mobile edit mode for lesson/ updated icon font ([891463d](https://github.com/selfcommunity/community-js/commit/891463d609795da35e45de70c3997ea7290f6085))
+* fixed some bugs into stundets' dashboard; refactored some codes ([d8c3d18](https://github.com/selfcommunity/community-js/commit/d8c3d180b8563f69d5a99da6d995c10d665cab52))
+* fixed some codes ([eba1a69](https://github.com/selfcommunity/community-js/commit/eba1a695be1443f4220bf1f35f8025f6bab393cd))
+* fixed some codes ([267adb5](https://github.com/selfcommunity/community-js/commit/267adb5419911e40285b419fee0dbfedc8a2f264))
+* fixed some codes ([da37684](https://github.com/selfcommunity/community-js/commit/da37684a363ee7729e76bce420edffc8fd23d72c))
+* fixed some codes; wip edit mode ([5655d21](https://github.com/selfcommunity/community-js/commit/5655d21f331874416113562a1ae61c61c0656bbb))
+* fixed transl ([a301fa0](https://github.com/selfcommunity/community-js/commit/a301fa02141b5be6423cb4ddd09c2cdf6c877f77))
+* fixed translations for course form errors. Linear issues: https://linear.app/quentral/issue/QUE-1304/indicare-la-dimensione-massima and  https://linear.app/quentral/issue/QUE-1303/gestione-errore-corso-gia-esistente ([a0983c1](https://github.com/selfcommunity/community-js/commit/a0983c11cbbcae86c07bf17de1e9654b0f482428))
+* fixes ([506901e](https://github.com/selfcommunity/community-js/commit/506901ef102049d431ce44c0639ea2a3da9dcd86))
+* inverted course types description. Linear issue: https://linear.app/quentral/issue/QUE-1402/credo-che-le-descrizioni-di-calendarizzato-e-programmato-siano ([696137e](https://github.com/selfcommunity/community-js/commit/696137e5d72c944e69da4a6a5a535e5bcccc1761))
+* moved components from lesson template to ui ([a98ca04](https://github.com/selfcommunity/community-js/commit/a98ca04412c50a154c3eaa6d7ae9199f3843ad66))
+* moved logic from lesson template to ui components ([159484e](https://github.com/selfcommunity/community-js/commit/159484eb9bb26f90d79a14ca362b26efc4c33081))
+* restored course condition to block publishing if there are no lessons and added a box to inform user. Linear issues: https://linear.app/quentral/issue/QUE-1294/dalledit-dei-corsi-non-riesco-a-salvare-le-modifiche and https://linear.app/quentral/issue/QUE-1243/aggiungere-condizione-che-il-corso-per-passare-da-draft-pubblicato ([b9eaf27](https://github.com/selfcommunity/community-js/commit/b9eaf272e81fe2e2023cd3dd7c2a11ec322d7e9a))
+* toggle complete lesson, lesson component props ([f374be0](https://github.com/selfcommunity/community-js/commit/f374be00d035b37ae2b447ebfcc1f11b8d30a8d6))
+* updated lesson template component(still in progress) ([1aaedc5](https://github.com/selfcommunity/community-js/commit/1aaedc5e0c9033d65f387c953c152ab929f0dbd1))
+
+
+### Features
+
+* added api on student's dashboard; fixed some codes into teacher's dashboard ([eaa28f9](https://github.com/selfcommunity/community-js/commit/eaa28f9afa0113ee47f2b03173fcbacdb2a493dd))
+* added available data next to the section name; added popover on course type. Linear: https://linear.app/quentral/issue/QUE-1335/sarebbe-bello-capire-quando-una-sezione-verra-resa-pubblica ([7087471](https://github.com/selfcommunity/community-js/commit/70874718effa5d426847782a0cb97c8bcd530b79))
+* added confirm dialog when reject or remove user from course. Linear: https://linear.app/quentral/issue/QUE-1382/nella-lista-utenti-dovrebbe-essere-possibile-rimuovere-un-utente-se ([b562d9d](https://github.com/selfcommunity/community-js/commit/b562d9d4a8ed21a59072417c973a9edaf0d820d9))
+* added create course into ComposerIconButton ([30c6767](https://github.com/selfcommunity/community-js/commit/30c676709976b1508d39877642a5ee56eda9ebfa))
+* added request tab and fixed some codes ([689c250](https://github.com/selfcommunity/community-js/commit/689c250ea5c81155c35775902a3a5c1204208b71))
+* added snackbar when move section or lesson; added control to not save if destination is equal to source ([7489f99](https://github.com/selfcommunity/community-js/commit/7489f993dd92b1858089da639e70816e05a1b4c4))
+* added snackbar when users are added to the course ([f0809f4](https://github.com/selfcommunity/community-js/commit/f0809f4be4b08de377047823d75d67b10e3a453f))
+* added user created courses widget. Linear issue: https://linear.app/quentral/issue/QUE-1244/widget-corsi-creati-nel-profilo-utente. fix: fixed course component and style ([3a9155f](https://github.com/selfcommunity/community-js/commit/3a9155f56ade13b6f0131ffd6c76da33a8d0cec1))
+* created AddUsersButton ([7bbe784](https://github.com/selfcommunity/community-js/commit/7bbe784eedf19008fc914814d2eb8a10de13a8a3))
+* finished Users tab with mocked data ([a52ac61](https://github.com/selfcommunity/community-js/commit/a52ac61ef97215949dfb9406aceecb084404997c))
+* implemented LessonCompletedDialog ([1b83427](https://github.com/selfcommunity/community-js/commit/1b834273d8391a483c105acd4eb227c7e3cb7e4b))
+* implemented options tab component ([2a7a55b](https://github.com/selfcommunity/community-js/commit/2a7a55bda02622b4869b0ef79d1bda98f9e3e040))
+* push customize tab ([90f507b](https://github.com/selfcommunity/community-js/commit/90f507bb115a9b4aba5e87a80060710e28f9bba0))
+* pushed comments tab ([27a098f](https://github.com/selfcommunity/community-js/commit/27a098f693cda9d5fda49263ae046cad2b8dffc8))
+* pushed dialog to confirm course publishing ([dc8efcb](https://github.com/selfcommunity/community-js/commit/dc8efcb14566076e688f244ceea97ccfdb25a3cb))
+* pushed Info component ([765d4f8](https://github.com/selfcommunity/community-js/commit/765d4f8eb590c01133e82b917ad32fa53b08e775))
+* pushed student dashboard ([ce44044](https://github.com/selfcommunity/community-js/commit/ce440441d0616fb59f0464bd63389b3c479bb758))
+* refactore, fixed and wip some components ([ac0bbfb](https://github.com/selfcommunity/community-js/commit/ac0bbfb710ec09c077cba64229b1984c4235a59c))
+* tab Students almost completed ([f8af79e](https://github.com/selfcommunity/community-js/commit/f8af79e5d8940ca083c40f12b5ee05d28fe6be62))
+* updated CourseUsersTable search from backend ([ce3038f](https://github.com/selfcommunity/community-js/commit/ce3038fd835f1e8e25b7e505bda3199125403df3))
+* wip ActionButton ([29d2659](https://github.com/selfcommunity/community-js/commit/29d2659d66c8373cec31e8626c9846897c8861b3))
+* wip edit tab lessons ([639a23c](https://github.com/selfcommunity/community-js/commit/639a23c0ae3f0c0cfe2c7ab72a8c8d4b37dc8b96))
+* wip edit tab lessons api ([657cf2e](https://github.com/selfcommunity/community-js/commit/657cf2ee21a3031ddad5ff3a24d765713e1b853b))
+* wip edit tab lessons api ([1175b09](https://github.com/selfcommunity/community-js/commit/1175b09450c568082db6be6982c1d65d9f1f6d7d))
+* wip from mock to api ([4c646b0](https://github.com/selfcommunity/community-js/commit/4c646b02aa38f028db48d8b101202e9a5c313525))
+* wip Lessons tab into EditCourse component ([e9594d6](https://github.com/selfcommunity/community-js/commit/e9594d6adef829b2cb2914271437cbce277b89cb))
+* wip tab users; refactored some components ([f9a0bc2](https://github.com/selfcommunity/community-js/commit/f9a0bc2537c9e5dd97497e98979415e87e435b7c))
+
+
+### Performance Improvements
+
+* added api to course create/course edit form ([839d0ca](https://github.com/selfcommunity/community-js/commit/839d0ca5b29321ae54ab525bff3ac3ccf03c1b52))
+* added api to lesson release menu component ([21ac441](https://github.com/selfcommunity/community-js/commit/21ac441820684f322dec45e3116b4962ddf4acf3))
+* added badge for joined courses. Linear issue: https://linear.app/quentral/issue/QUE-1385/aggiunta-badge-stai-partecipando/fixed translations for courses button + edit course. linear issues: https://linear.app/quentral/issue/QUE-1378/ce-scritto-spazio-ma-credo-fosse-corso-controllare-anche-in-inglese and https://linear.app/quentral/issue/QUE-1388/bottone-i-corsi-per-me-diventa-i-miei-corsi/https://linear.app/quentral/issue/QUE-1386/bottone-creati-da-me-diventa-gestiti-da-me ([136b8be](https://github.com/selfcommunity/community-js/commit/136b8be5de4ea2f26567e87c7f8a032603ec9f0f))
+* added course advanced enabled in course form. Linear issue: https://linear.app/quentral/issue/QUE-1404/in-base-alla-dynamic-preference-configurationscourses-advanced-enabled ([4b455c0](https://github.com/selfcommunity/community-js/commit/4b455c00f1373fa6b34327004bdc5b57ca7f98ce))
+* added CourseJoinButton, fixed some errors ([7d74837](https://github.com/selfcommunity/community-js/commit/7d74837e5c4fe78ee02388b10024e9ca8f68b835))
+* added lesson list/comments draft ([17b336e](https://github.com/selfcommunity/community-js/commit/17b336e9aac3db72a9f7343aaff6ff98ae4f8eb8))
+* added lesson save snackbar. Linear issue: https://linear.app/quentral/issue/QUE-1264/messaggio-salvataggio-lezione-avvenuto-correttamente ([46eb272](https://github.com/selfcommunity/community-js/commit/46eb272a383461d7e1cb4d7ce12ddb43a66fa620))
+* added preview mode ([e9a11c5](https://github.com/selfcommunity/community-js/commit/e9a11c585ae515b400befc7e4fc62366a1ce0a2e))
+* added resizable drawer to lesson component. Added placeholder to editor component ([383e016](https://github.com/selfcommunity/community-js/commit/383e0168ca3b5f10d1c69645cb78991c29b07b86))
+* moved lesson component to templates.(still in progress) ([a5ea48f](https://github.com/selfcommunity/community-js/commit/a5ea48f1122f1225e226492fd5785837ab86d58d))
+
+
+
+
+
 # [0.8.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.12...@selfcommunity/react-i18n@0.8.0-alpha.13) (2025-04-08)
 
 

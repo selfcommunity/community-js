@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.7.7-alpha.4...@selfcommunity/types@0.8.0-alpha.0) (2025-04-14)
+
+
+### Bug Fixes
+
+* added media in course lesson comment and edit, added props to editor. ([4acd38f](https://github.com/selfcommunity/community-js/commit/4acd38f3fd1ea1c6515ae2945c7da182f97864e1))
+* finished adding course api, fixed build, changed some translation and types ([574a544](https://github.com/selfcommunity/community-js/commit/574a544b8ddc8497ebddbc156d7a71ff79b3db81))
+* finished course card/chip ([7179226](https://github.com/selfcommunity/community-js/commit/7179226ec55607648d5033761bf09cdf67c5d0ba))
+* fixed course type transl. Linear issue: https://linear.app/quentral/issue/QUE-1402/credo-che-le-descrizioni-di-calendarizzato-e-programmato-siano ([a948760](https://github.com/selfcommunity/community-js/commit/a948760df573eeaacee549349ba094fdd7a9af37))
+* fixed some errors ([b066226](https://github.com/selfcommunity/community-js/commit/b066226e0ad09e370f8008c1d4c7a45d4ca7f435))
+* moved logic from lesson template to ui components ([159484e](https://github.com/selfcommunity/community-js/commit/159484eb9bb26f90d79a14ca362b26efc4c33081))
+* types index file ([5fb6976](https://github.com/selfcommunity/community-js/commit/5fb69760f1925d42009b6cb523398c0c4e118dd7))
+* updated courses endpoints/services ([3910469](https://github.com/selfcommunity/community-js/commit/3910469f64f1abf151db61aefc92d997e0ea5c87))
+
+
+### Features
+
+* added api on student's dashboard; fixed some codes into teacher's dashboard ([eaa28f9](https://github.com/selfcommunity/community-js/commit/eaa28f9afa0113ee47f2b03173fcbacdb2a493dd))
+* added user created courses widget. Linear issue: https://linear.app/quentral/issue/QUE-1244/widget-corsi-creati-nel-profilo-utente. fix: fixed course component and style ([3a9155f](https://github.com/selfcommunity/community-js/commit/3a9155f56ade13b6f0131ffd6c76da33a8d0cec1))
+* course notifications. Linear issue: https://linear.app/quentral/issue/QUE-1405/notifiche-corsi ([c437994](https://github.com/selfcommunity/community-js/commit/c437994399810b2d261992c239144f9168949b70))
+* updated CourseUsersTable search from backend ([ce3038f](https://github.com/selfcommunity/community-js/commit/ce3038fd835f1e8e25b7e505bda3199125403df3))
+* wip edit tab lessons api ([1175b09](https://github.com/selfcommunity/community-js/commit/1175b09450c568082db6be6982c1d65d9f1f6d7d))
+* wip from mock to api ([4c646b0](https://github.com/selfcommunity/community-js/commit/4c646b02aa38f028db48d8b101202e9a5c313525))
+
+
+### Performance Improvements
+
+* added api to course create/course edit form ([839d0ca](https://github.com/selfcommunity/community-js/commit/839d0ca5b29321ae54ab525bff3ac3ccf03c1b52))
+* added api to lesson release menu component ([21ac441](https://github.com/selfcommunity/community-js/commit/21ac441820684f322dec45e3116b4962ddf4acf3))
+* added CourseJoinButton, fixed some errors ([7d74837](https://github.com/selfcommunity/community-js/commit/7d74837e5c4fe78ee02388b10024e9ca8f68b835))
+* added courses advanced enabled preference ([4c336c6](https://github.com/selfcommunity/community-js/commit/4c336c6449582fb34b389bb8315b0920829758d5))
+* added fields to course types ([04f1c84](https://github.com/selfcommunity/community-js/commit/04f1c84ac0a3cc4052718401f85d5ddd04bd0e54))
+* updated SCCourseType ([5e9acb6](https://github.com/selfcommunity/community-js/commit/5e9acb613e861316b79a28818cb07d0ebfb4af8f))
+
+
+
+
+
 ## [0.7.7-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.7.7-alpha.3...@selfcommunity/types@0.7.7-alpha.4) (2025-03-27)
 
 **Note:** Version bump only for package @selfcommunity/types

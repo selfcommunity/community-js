@@ -3,6 +3,79 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.78...@selfcommunity/react-templates@0.5.0-alpha.0) (2025-04-14)
+
+
+### Bug Fixes
+
+* added media in course lesson comment and edit, added props to editor. ([4acd38f](https://github.com/selfcommunity/community-js/commit/4acd38f3fd1ea1c6515ae2945c7da182f97864e1))
+* added prop to lesson component to check drawer state ([3f1c692](https://github.com/selfcommunity/community-js/commit/3f1c6924cc3f279f1a3bbf8a683a6c6eb7250939))
+* edit event ([920bc1f](https://github.com/selfcommunity/community-js/commit/920bc1fb6bc1ff4842cc6ac6a80169b41454570b))
+* export teacher and student skeletons ([bd5294f](https://github.com/selfcommunity/community-js/commit/bd5294f3ff6562123529cb75e5d0492ae465d501))
+* fixed comments not appearing. Linear issue: https://linear.app/quentral/issue/QUE-1292/i-commenti-non-vengono-visualizzati ([a6b5f6d](https://github.com/selfcommunity/community-js/commit/a6b5f6de3dc61773523982eccd2de7288039062f))
+* fixed condition to show CourseCompletedDialog ([6e38a54](https://github.com/selfcommunity/community-js/commit/6e38a54cf43d76e81bbf76536ef57289e9a52b2a))
+* fixed course refresh on toggle complete/uncomplete. Linear issue: https://linear.app/quentral/issue/QUE-1313/le-lezioni-successive-non-si-sbloccano ([71eb6ed](https://github.com/selfcommunity/community-js/commit/71eb6ed5354f5129ddfbce9821d453fb08635c93))
+* fixed fetch lesson hook deps. Linear issue: https://linear.app/quentral/issue/QUE-1222/bug-navigazione-lezioni ([3beb6ec](https://github.com/selfcommunity/community-js/commit/3beb6ecac61462e92a924e1ebe67d7b0e6f9f778))
+* fixed lesson ([a82e0c2](https://github.com/selfcommunity/community-js/commit/a82e0c25e92eb64157c60b289facfe58b76e7b87))
+* fixed lesson edit mode flag ([9a5a44d](https://github.com/selfcommunity/community-js/commit/9a5a44df8d0a6d9322f4487520c062ad418e4447))
+* fixed lesson editor ([2dca1c9](https://github.com/selfcommunity/community-js/commit/2dca1c9f63bd4ce9e413349dd317e45abe70b410))
+* fixed lesson next ([a782cb7](https://github.com/selfcommunity/community-js/commit/a782cb7a48cbad508a5acee929060ce8f2ce67bd))
+* fixed mobile edit mode for lesson/ updated icon font ([891463d](https://github.com/selfcommunity/community-js/commit/891463d609795da35e45de70c3997ea7290f6085))
+* fixed some codes ([4f46aa9](https://github.com/selfcommunity/community-js/commit/4f46aa97910ded44af192b1fd50d1b6114601657))
+* fixed some codes ([267adb5](https://github.com/selfcommunity/community-js/commit/267adb5419911e40285b419fee0dbfedc8a2f264))
+* fixed some codes; wip edit mode ([5655d21](https://github.com/selfcommunity/community-js/commit/5655d21f331874416113562a1ae61c61c0656bbb))
+* fixed some errors ([1a948e8](https://github.com/selfcommunity/community-js/commit/1a948e863bf4dfac52c4558098f941a3b5e53cc2))
+* fixed toggle lesson complete button appearance for course manager ([4f5f85f](https://github.com/selfcommunity/community-js/commit/4f5f85ff0199926da0f36d2b10ee068a4623890d))
+* fixed toggle lesson complete button appearance for course manager ([618a68b](https://github.com/selfcommunity/community-js/commit/618a68b8ddde1862743899ef28fc97e70e4a7cbb))
+* fixes ([47920c9](https://github.com/selfcommunity/community-js/commit/47920c9108ce1ae54f083031ccf47af98ca4a2c9))
+* fixes ([172533c](https://github.com/selfcommunity/community-js/commit/172533c774f41b928c37e609e799a5e7f41ce41e))
+* fixes ([b9f6385](https://github.com/selfcommunity/community-js/commit/b9f6385c26ed684de1ec83ee8ad253b465d184b6))
+* fixes ([04e7c90](https://github.com/selfcommunity/community-js/commit/04e7c9053574a57f2646c2a8dd015be275559906))
+* increased lesson comment obj page size ([d8dfbf9](https://github.com/selfcommunity/community-js/commit/d8dfbf9fd27208b634dd75c21fe553999b08b93c))
+* lesson completion status update ([f4736ef](https://github.com/selfcommunity/community-js/commit/f4736efba637e34cf021d9646ac139f1279ea423))
+* lesson component ([b8c5e3d](https://github.com/selfcommunity/community-js/commit/b8c5e3df391b68e106f5c5558a57ad2e65b6205a))
+* lesson component ([d935547](https://github.com/selfcommunity/community-js/commit/d9355478ae6810e0309dcdb39dbb30640099bb2b))
+* lesson template fixes ([88ba1aa](https://github.com/selfcommunity/community-js/commit/88ba1aa91e2b4c052f91df4f2dd5312cff61894f))
+* moved components from lesson template to ui ([a98ca04](https://github.com/selfcommunity/community-js/commit/a98ca04412c50a154c3eaa6d7ae9199f3843ad66))
+* moved logic from lesson template to ui components ([159484e](https://github.com/selfcommunity/community-js/commit/159484eb9bb26f90d79a14ca362b26efc4c33081))
+* refactored dashboard skeletons; fixed some codes ([60adba9](https://github.com/selfcommunity/community-js/commit/60adba95ee0e6ff1b498ce3f6b6eed4f898f3148))
+* refactored ed exported many templates ([7479a13](https://github.com/selfcommunity/community-js/commit/7479a13cb5f6f924ce2802cfd80b6c415ee31d8b))
+* refactored getUrlLesson function; fixed other comments link ([3b2b3c0](https://github.com/selfcommunity/community-js/commit/3b2b3c0b676ebf15bfa21780ffd84ce81ca75f06))
+* refactored lesson media uploading/rendering for media files. Fixed also linear issues: https://linear.app/quentral/issue/QUE-1240/componente-video-incastonato-con-preview-ebeddata and  https://linear.app/quentral/issue/QUE-1269/a-volte-aggiungendo-un-pdf-ad-una-lezione-non-appare-la-preview ([2259b28](https://github.com/selfcommunity/community-js/commit/2259b28ad86f1798ca56c31b132e4efacd1b6a0b))
+* removed is editor ([4a6a08f](https://github.com/selfcommunity/community-js/commit/4a6a08f694d1c414e564934fe3bd0fed61cdcd22))
+* removed manager role from course join button, fixed course button. ([e0358b4](https://github.com/selfcommunity/community-js/commit/e0358b4da9ff806fab822d1428709faa4914fc0d))
+* toggle complete lesson, lesson component props ([f374be0](https://github.com/selfcommunity/community-js/commit/f374be00d035b37ae2b447ebfcc1f11b8d30a8d6))
+* update classnames and pubsub-js libs ([d566302](https://github.com/selfcommunity/community-js/commit/d56630291b8871fad03a2e23a53b15735d25cfa2))
+* updated lesson template component(still in progress) ([1aaedc5](https://github.com/selfcommunity/community-js/commit/1aaedc5e0c9033d65f387c953c152ab929f0dbd1))
+
+
+### Features
+
+* added api on student's dashboard; fixed some codes into teacher's dashboard ([eaa28f9](https://github.com/selfcommunity/community-js/commit/eaa28f9afa0113ee47f2b03173fcbacdb2a493dd))
+* added callback on Lesson template to try to fix cache problems ([3deae37](https://github.com/selfcommunity/community-js/commit/3deae3743f41b74da90965f859b7a34e0ef17d6c))
+* added CourseDashboard template ([f0f01c9](https://github.com/selfcommunity/community-js/commit/f0f01c9be743ffcfb4eaffe5585944d32704fc93))
+* added Courses template ([2bbc77e](https://github.com/selfcommunity/community-js/commit/2bbc77edfce0f720160a2546edde917cb68e1556))
+* added EditCourse template ([f792ca0](https://github.com/selfcommunity/community-js/commit/f792ca0b4a02a529da862aff7dd76433200e7fc3))
+* wip dashboard and edit ([fcffd42](https://github.com/selfcommunity/community-js/commit/fcffd426571d270688f87eb76d92eabea8a3ddfd))
+* wip edit tab lessons api ([1175b09](https://github.com/selfcommunity/community-js/commit/1175b09450c568082db6be6982c1d65d9f1f6d7d))
+* wip from mock to api ([4c646b0](https://github.com/selfcommunity/community-js/commit/4c646b02aa38f028db48d8b101202e9a5c313525))
+
+
+### Performance Improvements
+
+* added CourseJoinButton, fixed some errors ([7d74837](https://github.com/selfcommunity/community-js/commit/7d74837e5c4fe78ee02388b10024e9ca8f68b835))
+* added lesson comments route ([765bf79](https://github.com/selfcommunity/community-js/commit/765bf79b3ad59905a67286e297b5c9a3f60a738a))
+* added lesson save snackbar. Linear issue: https://linear.app/quentral/issue/QUE-1264/messaggio-salvataggio-lezione-avvenuto-correttamente ([46eb272](https://github.com/selfcommunity/community-js/commit/46eb272a383461d7e1cb4d7ce12ddb43a66fa620))
+* added mark complete/incomplete a lesson, fixed lesson template component ([579aade](https://github.com/selfcommunity/community-js/commit/579aade220cdec86991e32b1f79e0e4547f0c42a))
+* added preview mode ([e9a11c5](https://github.com/selfcommunity/community-js/commit/e9a11c585ae515b400befc7e4fc62366a1ce0a2e))
+* added UserCreatedCoursesWidget to UserProfile ([3a7236d](https://github.com/selfcommunity/community-js/commit/3a7236d5b02d004fa2678b8f8beab5306e5ad161))
+* check between all lessons(even locked ones) for navigation counter. Linear issue: https://linear.app/quentral/issue/QUE-1410/il-contatore-delle-lezioni-totali-e-errato-se-le-lezioni-vanno ([281fc48](https://github.com/selfcommunity/community-js/commit/281fc4830c88cf27f1c23f00a9746c87fcaa6408))
+* moved lesson component to templates.(still in progress) ([a5ea48f](https://github.com/selfcommunity/community-js/commit/a5ea48f1122f1225e226492fd5785837ab86d58d))
+
+
+
+
+
 ## [0.4.8-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.77...@selfcommunity/react-templates@0.4.8-alpha.78) (2025-04-14)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

@@ -3,6 +3,51 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.7-alpha.26...@selfcommunity/react-core@0.7.0-alpha.0) (2025-04-14)
+
+
+### Bug Fixes
+
+* fetch lesson hook ([2030dbe](https://github.com/selfcommunity/community-js/commit/2030dbecd4702791bd1c0d44218da64b9e128aca))
+* finished adding course api, fixed build, changed some translation and types ([574a544](https://github.com/selfcommunity/community-js/commit/574a544b8ddc8497ebddbc156d7a71ff79b3db81))
+* fixed cache problem between students tab and users tab. Linear: https://linear.app/quentral/issue/QUE-1351/problema-cache-tra-dashboard-insegnante-tab-studenti-e-edit-del-corso ([5f483d5](https://github.com/selfcommunity/community-js/commit/5f483d53f595d76984c186f7bcc6c4da706a7e22))
+* fixed course refresh on toggle complete/uncomplete. Linear issue: https://linear.app/quentral/issue/QUE-1313/le-lezioni-successive-non-si-sbloccano ([71eb6ed](https://github.com/selfcommunity/community-js/commit/71eb6ed5354f5129ddfbce9821d453fb08635c93))
+* fixed fetch lesson hook deps. Linear issue: https://linear.app/quentral/issue/QUE-1222/bug-navigazione-lezioni ([3beb6ec](https://github.com/selfcommunity/community-js/commit/3beb6ecac61462e92a924e1ebe67d7b0e6f9f778))
+* fixed some codes ([04d00fc](https://github.com/selfcommunity/community-js/commit/04d00fc51b600c008d5cb216b1fec7ca2108f3d9))
+* increased lesson comment obj page size ([d8dfbf9](https://github.com/selfcommunity/community-js/commit/d8dfbf9fd27208b634dd75c21fe553999b08b93c))
+* lesson template fixes ([88ba1aa](https://github.com/selfcommunity/community-js/commit/88ba1aa91e2b4c052f91df4f2dd5312cff61894f))
+* manager courses ([a8d2b28](https://github.com/selfcommunity/community-js/commit/a8d2b2837980c9a4c7e02005edd0ea83c9e01745))
+* manager groups/events ([4e4883c](https://github.com/selfcommunity/community-js/commit/4e4883c40761808f395d5f4bd72a361e592ab320))
+* refactored getUrlLesson function; fixed other comments link ([3b2b3c0](https://github.com/selfcommunity/community-js/commit/3b2b3c0b676ebf15bfa21780ffd84ce81ca75f06))
+* update classnames and pubsub-js libs ([d566302](https://github.com/selfcommunity/community-js/commit/d56630291b8871fad03a2e23a53b15735d25cfa2))
+* updated courses endpoints/services ([3910469](https://github.com/selfcommunity/community-js/commit/3910469f64f1abf151db61aefc92d997e0ea5c87))
+* updated lesson template component(still in progress) ([1aaedc5](https://github.com/selfcommunity/community-js/commit/1aaedc5e0c9033d65f387c953c152ab929f0dbd1))
+* updated SCNotificationMapping for events/courses toast notifications ([c51f78e](https://github.com/selfcommunity/community-js/commit/c51f78e186b1df6cf54fc8feb92e28c4c861ab88))
+
+
+### Features
+
+* added api on student's dashboard; fixed some codes into teacher's dashboard ([eaa28f9](https://github.com/selfcommunity/community-js/commit/eaa28f9afa0113ee47f2b03173fcbacdb2a493dd))
+* added request tab and fixed some codes ([689c250](https://github.com/selfcommunity/community-js/commit/689c250ea5c81155c35775902a3a5c1204208b71))
+* added user created courses widget. Linear issue: https://linear.app/quentral/issue/QUE-1244/widget-corsi-creati-nel-profilo-utente. fix: fixed course component and style ([3a9155f](https://github.com/selfcommunity/community-js/commit/3a9155f56ade13b6f0131ffd6c76da33a8d0cec1))
+* wip dashboard and edit ([fcffd42](https://github.com/selfcommunity/community-js/commit/fcffd426571d270688f87eb76d92eabea8a3ddfd))
+* wip from mock to api ([4c646b0](https://github.com/selfcommunity/community-js/commit/4c646b02aa38f028db48d8b101202e9a5c313525))
+
+
+### Performance Improvements
+
+* added api to lesson release menu component ([21ac441](https://github.com/selfcommunity/community-js/commit/21ac441820684f322dec45e3116b4962ddf4acf3))
+* added CourseJoinButton, fixed some errors ([7d74837](https://github.com/selfcommunity/community-js/commit/7d74837e5c4fe78ee02388b10024e9ca8f68b835))
+* added courses advanced enabled preference ([4c336c6](https://github.com/selfcommunity/community-js/commit/4c336c6449582fb34b389bb8315b0920829758d5))
+* added lesson comments route ([765bf79](https://github.com/selfcommunity/community-js/commit/765bf79b3ad59905a67286e297b5c9a3f60a738a))
+* added lesson list/comments draft ([17b336e](https://github.com/selfcommunity/community-js/commit/17b336e9aac3db72a9f7343aaff6ff98ae4f8eb8))
+* added preview mode ([e9a11c5](https://github.com/selfcommunity/community-js/commit/e9a11c585ae515b400befc7e4fc62366a1ce0a2e))
+* fix courses component/added api ([9dd896e](https://github.com/selfcommunity/community-js/commit/9dd896e79384b920ba4f5ee62e9cbc59142651e7))
+
+
+
+
+
 ## [0.6.7-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.7-alpha.25...@selfcommunity/react-core@0.6.7-alpha.26) (2025-04-08)
 
 **Note:** Version bump only for package @selfcommunity/react-core

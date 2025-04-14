@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.7-alpha.4...@selfcommunity/api-services@0.7.0-alpha.0) (2025-04-14)
+
+
+### Bug Fixes
+
+* course form image uploading before save. Linear issue: https://linear.app/quentral/issue/QUE-1305/quando-cambio-la-cover-del-corso-viene-lanciata-la-patch ([71d7f8b](https://github.com/selfcommunity/community-js/commit/71d7f8b26d6890fb76ed8dd9424da72420e722aa))
+* course services ([b57a89e](https://github.com/selfcommunity/community-js/commit/b57a89e508e1578979b636bef0b6c3ea0c90139e))
+* finished adding course api, fixed build, changed some translation and types ([574a544](https://github.com/selfcommunity/community-js/commit/574a544b8ddc8497ebddbc156d7a71ff79b3db81))
+* fixed some codes; wip edit mode ([5655d21](https://github.com/selfcommunity/community-js/commit/5655d21f331874416113562a1ae61c61c0656bbb))
+* updated courses endpoints/services ([3910469](https://github.com/selfcommunity/community-js/commit/3910469f64f1abf151db61aefc92d997e0ea5c87))
+* updated updateCourse with pathCourse. Linear: https://linear.app/quentral/issue/QUE-1406/quando-aggiorno-la-categoria-di-un-corso-viene-sempre-passata-la-lista ([8c8656c](https://github.com/selfcommunity/community-js/commit/8c8656c1955ef1bc193de42cba5ecb41795e9d51))
+
+
+### Features
+
+* added api on student's dashboard; fixed some codes into teacher's dashboard ([eaa28f9](https://github.com/selfcommunity/community-js/commit/eaa28f9afa0113ee47f2b03173fcbacdb2a493dd))
+* added request tab and fixed some codes ([689c250](https://github.com/selfcommunity/community-js/commit/689c250ea5c81155c35775902a3a5c1204208b71))
+* added user created courses widget. Linear issue: https://linear.app/quentral/issue/QUE-1244/widget-corsi-creati-nel-profilo-utente. fix: fixed course component and style ([3a9155f](https://github.com/selfcommunity/community-js/commit/3a9155f56ade13b6f0131ffd6c76da33a8d0cec1))
+* updated api joinOrAcceptInviteToCourse. Linear: https://linear.app/quentral/issue/QUE-1343/problema-lezioni-dopo-iscrizione-ad-un-corso ([427bf35](https://github.com/selfcommunity/community-js/commit/427bf35860c795c9116d6b3882ddd36002247afa))
+* updated CourseUsersTable search from backend ([ce3038f](https://github.com/selfcommunity/community-js/commit/ce3038fd835f1e8e25b7e505bda3199125403df3))
+* wip dashboard and edit ([fcffd42](https://github.com/selfcommunity/community-js/commit/fcffd426571d270688f87eb76d92eabea8a3ddfd))
+* wip edit tab lessons ([639a23c](https://github.com/selfcommunity/community-js/commit/639a23c0ae3f0c0cfe2c7ab72a8c8d4b37dc8b96))
+* wip edit tab lessons api ([1175b09](https://github.com/selfcommunity/community-js/commit/1175b09450c568082db6be6982c1d65d9f1f6d7d))
+* wip from mock to api ([4c646b0](https://github.com/selfcommunity/community-js/commit/4c646b02aa38f028db48d8b101202e9a5c313525))
+
+
+### Performance Improvements
+
+* added course dashboard users api and params ([ee013d8](https://github.com/selfcommunity/community-js/commit/ee013d8d577ed0c38e1a97b19f7e16a720da52f0))
+* fix courses component/added api ([9dd896e](https://github.com/selfcommunity/community-js/commit/9dd896e79384b920ba4f5ee62e9cbc59142651e7))
+* renamed course comment endpoint ([1a5b74b](https://github.com/selfcommunity/community-js/commit/1a5b74b956202dce6d69f9b09c4f650936b4d49b))
+
+
+
+
+
 ## [0.6.7-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.7-alpha.3...@selfcommunity/api-services@0.6.7-alpha.4) (2025-03-27)
 
 **Note:** Version bump only for package @selfcommunity/api-services
