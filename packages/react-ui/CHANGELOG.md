@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.58...@selfcommunity/react-ui@0.11.0-alpha.59) (2025-04-14)
+
+
+### Bug Fixes
+
+* social share visibility when community is closed. Linear issue: https://linear.app/quentral/issue/QUE-1458/bug-social-share-visibile-nonostante-la-community-chiusa-e-con-i ([2824bd4](https://github.com/selfcommunity/community-js/commit/2824bd4357fce1a6d035ff127d350851f6d12e66))
+
+
+
+
+
 # [0.11.0-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.57...@selfcommunity/react-ui@0.11.0-alpha.58) (2025-04-10)
 
 
