@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.61...@selfcommunity/react-ui@0.11.0-alpha.62) (2025-04-14)
+
+
+### Bug Fixes
+
+* explore visible on anonymous view ([d4507b8](https://github.com/selfcommunity/community-js/commit/d4507b8679e76ffa03c1e125f149b4132a5a86ad))
+
+
+
+
+
 # [0.11.0-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.60...@selfcommunity/react-ui@0.11.0-alpha.61) (2025-04-14)
 
 
