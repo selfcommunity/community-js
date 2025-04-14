@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material/styles';
-import {Box, Button, Grid, TextField, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Box, Button, Grid, Icon, IconButton, InputAdornment, TextField, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {SCGroupType} from '@selfcommunity/types';
 import {Endpoints, GroupService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {Logger, sortByAttr} from '@selfcommunity/utils';
+import {Logger} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContextType, SCThemeType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import Skeleton from './Skeleton';
 import {FormattedMessage} from 'react-intl';
@@ -21,6 +21,7 @@ import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 const classes = {
   root: `${PREFIX}-root`,
   filters: `${PREFIX}-filter`,
+  search: `${PREFIX}-search`,
   groups: `${PREFIX}-groups`,
   item: `${PREFIX}-item`,
   noResults: `${PREFIX}-no-results`,
@@ -159,12 +160,13 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   /**
    * Fetches groups list
    */
-  const fetchGroups = () => {
+  const fetchGroups = (searchValue: string = search) => {
+    setLoading(true);
     let groupService;
     if (general) {
-      groupService = GroupService.searchGroups({...endpointQueryParams, ...(search !== '' && {search: search})});
+      groupService = GroupService.searchGroups({...endpointQueryParams, ...(searchValue && {search: searchValue})});
     } else {
-      groupService = GroupService.getUserGroups({...endpointQueryParams, ...(search !== '' && {search: search})});
+      groupService = GroupService.getUserGroups({...endpointQueryParams, ...(searchValue && {search: searchValue})});
     }
     groupService
       .then((res: SCPaginatedResponse<SCGroupType>) => {
@@ -186,7 +188,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
     } else {
       fetchGroups();
     }
-  }, [contentAvailability, authUserId, search]);
+  }, [contentAvailability, authUserId]);
 
   /**
    * Subscriber for pubsub callback
@@ -236,16 +238,6 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   );
 
   /**
-   * Get groups filtered
-   */
-  const getFilteredGroups = () => {
-    if (search) {
-      return groups.filter((g) => g.name.toLowerCase().includes(search.toLowerCase()));
-    }
-    return groups;
-  };
-
-  /**
    * Handle change filter name
    * @param event
    */
@@ -256,22 +248,58 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   /**
    * Renders groups list
    */
-  const filteredGroups = sortByAttr(getFilteredGroups(), 'order');
   const content = (
     <>
-      {showFilters && groups.length !== 0 && (
+      {showFilters && (groups.length !== 0 || search.length !== 0) && (
         <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
           {filters ? (
             filters
           ) : (
             <Grid item xs={12} md={6}>
               <TextField
+                className={classes.search}
                 fullWidth
                 value={search}
                 label={<FormattedMessage id="ui.groups.filterByName" defaultMessage="ui.groups.filterByName" />}
                 variant="outlined"
                 onChange={handleOnChangeFilterName}
                 disabled={loading}
+                onKeyUp={(e) => {
+                  e.preventDefault();
+                  if (e.key === 'Enter') {
+                    fetchGroups();
+                  }
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {search.length > 0 && (
+                        <IconButton
+                          onClick={() => {
+                            setSearch('');
+                            fetchGroups('');
+                          }}
+                          disabled={loading}>
+                          <Icon>close</Icon>
+                        </IconButton>
+                      )}
+                      {isMobile ? (
+                        <IconButton onClick={() => fetchGroups()} disabled={loading}>
+                          <Icon>search</Icon>
+                        </IconButton>
+                      ) : (
+                        <Button
+                          size="small"
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => fetchGroups()}
+                          endIcon={<Icon>search</Icon>}
+                          disabled={loading}
+                        />
+                      )}
+                    </InputAdornment>
+                  )
+                }}
               />
             </Grid>
           )}
@@ -280,7 +308,11 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
       <>
         {!groups.length ? (
           <Box className={classes.noResults}>
-            {!onlyStaffEnabled ? (
+            {search.length ? (
+              <Typography variant="body1">
+                <FormattedMessage id="ui.groups.noResults" defaultMessage="ui.groups.noResults" />
+              </Typography>
+            ) : !onlyStaffEnabled ? (
               <>
                 <Typography variant="h4">
                   <FormattedMessage id="ui.groups.noGroups.title" defaultMessage="ui.groups.noGroups.title" />
@@ -326,7 +358,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
               </Typography>
             }>
             <Grid container spacing={{xs: 2}} className={classes.groups}>
-              {filteredGroups.map((group: SCGroupType) => (
+              {groups.map((group: SCGroupType) => (
                 <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
                   <Group group={group} groupId={group.id} actionRedirect={true} {...GroupComponentProps} />
                 </Grid>

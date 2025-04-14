@@ -38,7 +38,7 @@ import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
 import itLocale from 'date-fns/locale/it';
 import PubSub from 'pubsub-js';
-import React, {ChangeEvent, useCallback, useMemo, useState} from 'react';
+import {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {EVENT_DESCRIPTION_MAX_LENGTH, EVENT_TITLE_MAX_LENGTH} from '../../constants/Event';
@@ -47,7 +47,7 @@ import {DAILY_LATER_DAYS, MONTHLY_LATER_DAYS, NEVER_LATER_DAYS, PREFIX, WEEKLY_L
 import EventAddress, {EventAddressProps} from './EventAddress';
 import {FieldStateKeys, FieldStateValues, Geolocation, InitialFieldState} from './types';
 import UploadEventCover from './UploadEventCover';
-import {combineDateAndTime, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
+import {combineDateAndTime, getDateAndHours, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
 import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
 import CoverPlaceholder from '../../assets/deafultCover';
 import PaywallsConfigurator from '../PaywallsConfigurator';
@@ -237,8 +237,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     link: event?.link || '',
     liveStreamSettings: event?.live_stream ? event?.live_stream.settings : null,
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
-    isPublic: event?.privacy === SCEventPrivacyType.PUBLIC || true,
     product_ids: event?.paywalls?.map((p) => p.id) || [],
+    isPublic: event?.privacy ? event.privacy === SCEventPrivacyType.PUBLIC : true,
     isSubmitting: false
   };
 
@@ -482,17 +482,17 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
 
       switch (field.recurring) {
         case SCEventRecurrenceType.DAILY:
-          disabled = date.getTime() > getLaterDaysDate(DAILY_LATER_DAYS, field.startDate).getTime();
+          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(DAILY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
           break;
         case SCEventRecurrenceType.WEEKLY:
-          disabled = date.getTime() > getLaterDaysDate(WEEKLY_LATER_DAYS, field.startDate).getTime();
+          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(WEEKLY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
           break;
         case SCEventRecurrenceType.MONTHLY:
-          disabled = date.getTime() > getLaterDaysDate(MONTHLY_LATER_DAYS, field.startDate).getTime();
+          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(MONTHLY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
           break;
         case SCEventRecurrenceType.NEVER:
         default:
-          disabled = date.getTime() > getLaterDaysDate(NEVER_LATER_DAYS, field.startDate).getTime();
+          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(NEVER_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
       }
 
       return disabled;
@@ -569,7 +569,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
                 }
               }}
-              onChange={(value) => handleChangeDateTime(value, 'startDate')}
+              onChange={(value) => {
+                handleChangeDateTime(value, 'startDate');
+                handleChangeDateTime(value, 'startTime');
+              }}
             />
             <MobileTimePicker
               className={classes.picker}
@@ -601,7 +604,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   toolbarTitle: <FormattedMessage id="ui.eventForm.time.title" defaultMessage="ui.eventForm.time.title" />
                 }
               }}
-              onChange={(value) => handleChangeDateTime(value, 'startTime')}
+              onChange={(value) => {
+                handleChangeDateTime(value, 'startDate');
+                handleChangeDateTime(value, 'startTime');
+              }}
             />
           </LocalizationProvider>
         </Box>
@@ -677,7 +683,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
                 }
               }}
-              onChange={(value) => handleChangeDateTime(value, 'endDate')}
+              onChange={(value) => {
+                handleChangeDateTime(value, 'endDate');
+                handleChangeDateTime(value, 'endTime');
+              }}
               shouldDisableDate={shouldDisableDate}
             />
             <MobileTimePicker
@@ -700,12 +709,6 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                         </InputAdornment>
                       )
                     }}
-                    error={Boolean(error['endDateError'])}
-                    helperText={
-                      error['endDateError']?.error ? (
-                        <FormattedMessage id="ui.eventForm.time.end.error.invalid" defaultMessage="ui.eventForm.time.end.error.invalid" />
-                      ) : null
-                    }
                   />
                 )
               }}
@@ -716,7 +719,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   toolbarTitle: <FormattedMessage id="ui.eventForm.time.title" defaultMessage="ui.eventForm.time.title" />
                 }
               }}
-              onChange={(value) => handleChangeDateTime(value, 'endTime')}
+              onChange={(value) => {
+                handleChangeDateTime(value, 'endDate');
+                handleChangeDateTime(value, 'endTime');
+              }}
               shouldDisableTime={shouldDisableTime}
             />
           </LocalizationProvider>
@@ -753,7 +759,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 className={classes.switch}
                 checked={field.isPublic}
                 onChange={() => setField((prev) => ({...prev, ['isPublic']: !field.isPublic}))}
-                disabled={event && !field.isPublic}
+                disabled={event?.privacy === SCEventPrivacyType.PRIVATE}
               />
               <Typography className={classNames(classes.switchLabel, {[classes.active]: field.isPublic})}>
                 <Icon>public</Icon>

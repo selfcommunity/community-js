@@ -26,6 +26,7 @@ import User from '../User';
 import {PREFIX} from './constants';
 import EventHeaderSkeleton from './Skeleton';
 import BuyButton from '../BuyButton';
+import {CacheStrategies} from '@selfcommunity/utils';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -137,7 +138,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
-  const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event});
+  const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event, cacheStrategy: CacheStrategies.NETWORK_ONLY});
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 

@@ -267,16 +267,19 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           <Icon>home</Icon>
         </IconButton>
       )}
-      {/*{preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] &&*/}
-      {/*  (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && (*/}
-      {/*    <IconButton*/}
-      {/*      className={classNames(classes.explore, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {}))})}*/}
-      {/*      aria-label="Explore"*/}
-      {/*      to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}*/}
-      {/*      component={Link}>*/}
-      {/*      <Icon>explore</Icon>*/}
-      {/*    </IconButton>*/}
-      {/*  )}*/}
+      {preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] &&
+        (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) &&
+        (!scUserContext.user || (!groupsEnabled && !coursesEnabled && !eventsEnabled)) && (
+          <IconButton
+            className={classNames(classes.explore, {
+              [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {}))
+            })}
+            aria-label="Explore"
+            to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
+            component={Link}>
+            <Icon>explore</Icon>
+          </IconButton>
+        )}
       {coursesEnabled && (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY]) && (
         <IconButton
           className={classNames(classes.courses, {

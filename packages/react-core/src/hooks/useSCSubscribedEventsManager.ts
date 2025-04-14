@@ -101,8 +101,8 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
           _status = SCEventSubscriptionStatusType.SUBSCRIBED;
           break;
       }
-      updateCache([dataMsg.data.event.id]);
-      setData((prev) => getDataUpdated(prev, dataMsg.data.event.id, _status));
+      updateCache([dataMsg.data.event]);
+      setData((prev) => getDataUpdated(prev, dataMsg.data.event, _status));
     }
   };
   /**

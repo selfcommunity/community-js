@@ -199,6 +199,24 @@ function SectionRow(props: SectionRowProps, ref: Ref<DeleteRowRef>) {
           };
 
           handleManageSection(tempSection, ActionLessonType.DELETE_UPDATE, newRow);
+          break;
+        }
+        case ActionLessonType.UPDATE: {
+          const tempSection: SCCourseSectionType = {
+            ...section,
+            lessons: section.lessons.map((prevLesson) => {
+              if (prevLesson.id === lesson.id) {
+                return {
+                  ...prevLesson,
+                  status: lesson.status
+                };
+              }
+
+              return prevLesson;
+            })
+          };
+
+          handleManageSection(tempSection, ActionLessonType.UPDATE_UPDATE);
         }
       }
     },

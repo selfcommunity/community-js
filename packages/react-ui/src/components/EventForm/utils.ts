@@ -30,3 +30,9 @@ export const combineDateAndTime = (date: Date, time: Date) => {
 
   return combined.toISOString();
 };
+
+export function getDateAndHours(date: Date, hours: number, min?: number, sec?: number, ms?: number) {
+  date.setHours(hours, min, sec, ms);
+
+  return date;
+}
