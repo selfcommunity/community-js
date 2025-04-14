@@ -413,9 +413,11 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   InputProps={{
                     endAdornment: <Typography variant="body2">{COURSE_TITLE_MAX_LENGTH - field.name.length}</Typography>
                   }}
-                  error={Boolean(field.name.length > COURSE_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
+                  error={Boolean((!!course && !field.name) || field.name.length > COURSE_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
                   helperText={
-                    field.name.length > COURSE_TITLE_MAX_LENGTH ? (
+                    !!course && !field.name ? (
+                      <FormattedMessage id="ui.courseForm.required" defaultMessage="ui.courseForm.required" />
+                    ) : field.name.length > COURSE_TITLE_MAX_LENGTH ? (
                       <FormattedMessage id="ui.courseForm.name.error.maxLength" defaultMessage="ui.courseForm.name.error.maxLength" />
                     ) : error['nameError'] ? (
                       error['nameError']
@@ -437,11 +439,15 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                       </Typography>
                     )
                   }}
-                  error={Boolean(field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH)}
+                  error={Boolean((!!field.privacy && !field.description) || field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH)}
                   helperText={
-                    field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH ? (
-                      <FormattedMessage id="ui.courseForm.description.error.maxLength" defaultMessage="ui.courseForm.description.error.maxLength" />
-                    ) : null
+                    !!field.privacy && !field.description ? (
+                      <FormattedMessage id="ui.courseForm.required" defaultMessage="ui.courseForm.required" />
+                    ) : (
+                      field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH && (
+                        <FormattedMessage id="ui.courseForm.description.error.maxLength" defaultMessage="ui.courseForm.description.error.maxLength" />
+                      )
+                    )
                   }
                 />
                 <CategoryAutocomplete

@@ -95,7 +95,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     eventId,
     userProps = {},
     endpointQueryParams = {limit: 5, offset: DEFAULT_PAGINATION_OFFSET},
-    cacheStrategy,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
     dialogProps,
     limit = 5,
     ...rest
