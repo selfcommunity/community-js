@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.57...@selfcommunity/react-ui@0.11.0-alpha.58) (2025-04-10)
+
+
+### Bug Fixes
+
+* fixed event end date. Linear: https://linear.app/quentral/issue/QUE-1454/eventi-il-campo-data-di-fine-si-comporta-in-maniera-strana-segnala ([d0b9cd4](https://github.com/selfcommunity/community-js/commit/d0b9cd4ba80e5f53af27b2a686bff8307198ac80))
+* fixed switch event privacy. Linear: https://linear.app/quentral/issue/QUE-1455/eventi-se-cambio-la-privacy-dellevento-privato-pubblico-poi-non-posso ([3651870](https://github.com/selfcommunity/community-js/commit/3651870d98f1a71ee4467e9a2d4568bfb4c36d5a))
+
+
+
+
+
 # [0.11.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.56...@selfcommunity/react-ui@0.11.0-alpha.57) (2025-04-09)
 
 
