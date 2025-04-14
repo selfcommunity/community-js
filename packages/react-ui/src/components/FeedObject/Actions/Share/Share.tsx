@@ -153,7 +153,7 @@ export default function Share(props: ShareProps): JSX.Element {
     return !scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value || UserUtils.isStaff(scUserContext.user);
   }, [scPreferencesContext, scUserContext.user]);
   const showSocialShareActions = useMemo(() => {
-    return !scPreferencesContext.preferences[SCPreferences.ADDONS_CLOSED_COMMUNITY].value;
+    return scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
   }, [scPreferencesContext]);
 
   // INTL
