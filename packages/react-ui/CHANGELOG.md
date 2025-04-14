@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.59...@selfcommunity/react-ui@0.11.0-alpha.60) (2025-04-14)
+
+
+### Bug Fixes
+
+* fixed social share ([8a41094](https://github.com/selfcommunity/community-js/commit/8a4109480227ac0d47e67bbe7a78665eb322fcef))
+
+
+
+
+
 # [0.11.0-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.58...@selfcommunity/react-ui@0.11.0-alpha.59) (2025-04-14)
 
 
