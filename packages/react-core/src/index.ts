@@ -27,6 +27,7 @@ import {
   SCThemeType,
   SCSubscribedGroupsManagerType,
   SCSubscribedEventsManagerType,
+  SCJoinedCoursesManagerType,
 } from './types';
 
 /**
@@ -82,6 +83,8 @@ import useSCFetchVote from './hooks/useSCFetchVote';
 import useSCFetchFeedObject from './hooks/useSCFetchFeedObject';
 import useSCFetchCommentObject from './hooks/useSCFetchCommentObject';
 import useSCFetchCommentObjects from './hooks/useSCFetchCommentObjects';
+import useSCFetchLessonCommentObject from './hooks/useSCFetchLessonCommentObject';
+import useSCFetchLessonCommentObjects from './hooks/useSCFetchLessonCommentObjects';
 import useSCFetchCustomAdv from './hooks/useSCFetchCustomAdv';
 import useSCFetchTag from './hooks/useSCFetchTag';
 import useSCFetchAddressingTagList from './hooks/useSCFetchAddressingTagList';
@@ -101,6 +104,9 @@ import useSCFetchEvent from './hooks/useSCFetchEvent';
 import useSCFetchEvents from './hooks/useSCFetchEvents';
 import useSCFetchLiveStream from './hooks/useSCFetchLiveStream';
 import useSCGoogleApiLoader from './hooks/useSCGoogleApiLoader';
+import useSCFetchCourse from './hooks/useSCFetchCourse';
+import useSCFetchCourses from './hooks/useSCFetchCourses';
+import useSCFetchLesson from './hooks/useSCFetchLesson';
 
 /**
  * Routing component
@@ -159,6 +165,7 @@ export {
   SCThemeType,
   SCSubscribedGroupsManagerType,
   SCSubscribedEventsManagerType,
+  SCJoinedCoursesManagerType,
   SCContext,
   SCUserContext,
   SCThemeContext,
@@ -202,6 +209,8 @@ export {
   useSCFetchFeedObject,
   useSCFetchCommentObject,
   useSCFetchCommentObjects,
+  useSCFetchLessonCommentObject,
+  useSCFetchLessonCommentObjects,
   useSCFetchCustomAdv,
   useSCFetchTag,
   useSCFetchAddressingTagList,
@@ -227,4 +236,7 @@ export {
   useSCFetchEvents,
   useSCFetchLiveStream,
   useSCGoogleApiLoader,
+  useSCFetchCourse,
+  useSCFetchCourses,
+  useSCFetchLesson,
 };

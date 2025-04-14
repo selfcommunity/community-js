@@ -24,6 +24,7 @@ import ContributionNotification from '../Notification/Contribution';
 import GroupNotification from '../Notification/Group';
 import EventNotification from '../Notification/Event/Event';
 import LiveStreamNotification from '../Notification/LiveStream';
+import CourseNotification from '../Notification/Course';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -137,6 +138,15 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
         type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT
       ) {
         content = <EventNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
+      } else if (
+        type === SCNotificationTypologyType.USER_ADDED_TO_COURSE ||
+        type === SCNotificationTypologyType.MANAGER_ADDED_TO_COURSE ||
+        type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON ||
+        type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE ||
+        type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE ||
+        type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE
+      ) {
+        content = <CourseNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       } else if (type === SCNotificationTypologyType.LIVE_STREAM_STARTED) {
         content = <LiveStreamNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       }

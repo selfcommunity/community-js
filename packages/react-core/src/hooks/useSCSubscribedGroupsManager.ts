@@ -102,8 +102,8 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
           _status = SCGroupSubscriptionStatusType.SUBSCRIBED;
           break;
       }
-      updateCache([dataMsg.data.group.id]);
-      setData((prev) => getDataUpdated(prev, dataMsg.data.group.id, _status));
+      updateCache([dataMsg.data.group]);
+      setData((prev) => getDataUpdated(prev, dataMsg.data.group, _status));
     }
   };
   /**

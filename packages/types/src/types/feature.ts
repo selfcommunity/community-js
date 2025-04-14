@@ -43,7 +43,8 @@ export enum SCFeatureName {
   PRIVATE_MESSAGING = 'private_messaging',
   GROUPING = 'grouping',
   EVENT = 'event',
-	LIVE_STREAM = 'live_stream'
+  LIVE_STREAM = 'live_stream',
+  COURSE = 'course'
 }
 
 /**

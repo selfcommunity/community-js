@@ -41,7 +41,7 @@ export interface DateTimeAgoProps {
    * Date obj
    * @default null
    */
-  date: Date;
+  date: Date | string;
 
   /**
    * Handles icon showing

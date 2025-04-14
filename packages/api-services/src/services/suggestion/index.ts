@@ -1,12 +1,13 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
 import {BaseGetParams, SCPaginatedResponse} from '../../types';
-import {SCCategoryType, SCEventType, SCFeedObjectType, SCIncubatorType, SCSuggestionType, SCUserType} from '@selfcommunity/types';
+import {SCCategoryType, SCCourseType, SCEventType, SCFeedObjectType, SCIncubatorType, SCSuggestionType, SCUserType} from '@selfcommunity/types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
 
 export interface SuggestionApiClientInterface {
   getCategorySuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>>;
+  getCourseSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>>;
   getIncubatorSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCIncubatorType>>;
   getPollSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFeedObjectType>>;
   getUserSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
@@ -25,6 +26,15 @@ export class SuggestionApiClient {
    */
   static getCategorySuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
     return apiRequest({...config, url: Endpoints.CategoriesSuggestion.url({}), method: Endpoints.CategoriesSuggestion.method, params});
+  }
+
+  /**
+   * This endpoint retrieves a list of courses suggested to the current user.
+   * @param params
+   * @param config
+   */
+  static getCourseSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
+    return apiRequest({...config, url: Endpoints.CourseSuggestion.url({}), method: Endpoints.CourseSuggestion.method, params});
   }
 
   /**
@@ -104,6 +114,10 @@ export class SuggestionApiClient {
 export default class SuggestionService {
   static async getCategorySuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCategoryType>> {
     return SuggestionApiClient.getCategorySuggestion(params, config);
+  }
+
+  static async getCourseSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCourseType>> {
+    return SuggestionApiClient.getCourseSuggestion(params, config);
   }
 
   static async getIncubatorSuggestion(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCIncubatorType>> {

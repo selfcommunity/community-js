@@ -80,6 +80,7 @@ import {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationCourseActivityType,
   type SCNotificationLiveStreamActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
@@ -121,6 +122,10 @@ import {
   type SCGroupType,
   type SCEventType,
   type SCStepType,
+  type SCCourseType,
+  type SCCourseCommentType,
+  type SCCourseLessonType,
+  type SCCourseSectionType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamMonthlyDurationType,
@@ -171,10 +176,17 @@ import {
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
   SCOnBoardingStepIdType,
+  SCCoursePrivacyType,
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseTypologyType,
+  SCCourseLessonStatusType,
+  SCCourseLessonCompletionStatusType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
-  SCCommunityEnvironment
+  SCCommunityEnvironment,
+  SCCourseOrderingUsersType
 } from './types';
 
 /**
@@ -220,10 +232,17 @@ export {
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
   SCOnBoardingStepIdType,
+  SCCoursePrivacyType,
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseTypologyType,
+  SCCourseLessonCompletionStatusType,
+  SCCourseLessonStatusType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
-  SCCommunityEnvironment
+  SCCommunityEnvironment,
+  SCCourseOrderingUsersType
 };
 export {
   type SCBannerType,
@@ -304,6 +323,7 @@ export {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationCourseActivityType,
   type SCNotificationLiveStreamActivityType,
   type SCIncubatorType,
   type SCIncubatorSubscriptionType,
@@ -345,6 +365,10 @@ export {
   type SCGroupType,
   type SCEventType,
   type SCStepType,
+  type SCCourseType,
+  type SCCourseCommentType,
+  type SCCourseSectionType,
+  type SCCourseLessonType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamMonthlyDurationType,

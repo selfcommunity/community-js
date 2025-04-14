@@ -28,9 +28,11 @@ import {
   SCBlockedUsersManagerType,
   SCSubscribedGroupsManagerType,
   SCSubscribedEventsManagerType,
+  SCJoinedCoursesManagerType,
 } from '../../../types';
 import useSCSubscribedGroupsManager from '../../../hooks/useSCSubscribedGroupsManager';
 import useSCSubscribedEventsManager from '../../../hooks/useSCSubscribedEventsManager';
+import useSCJoinedCoursesManager from '../../../hooks/useSCJoinedCoursesManager';
 
 /**
  * SCUserContext (Authentication Context)
@@ -89,6 +91,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
   const blockedUsersManager: SCBlockedUsersManagerType = useSCBlockedUsersManager(state.user);
   const subscribedGroupsManager: SCSubscribedGroupsManagerType = useSCSubscribedGroupsManager(state.user);
   const subscribedEventsManager: SCSubscribedEventsManagerType = useSCSubscribedEventsManager(state.user);
+  const joinedCoursesManager: SCJoinedCoursesManagerType = useSCJoinedCoursesManager(state.user);
   /**
    * Ref notifications subscribers: BLOCKED_USER, UNBLOCKED_USER
    */
@@ -143,6 +146,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       blockedUsersManager.refresh && blockedUsersManager.refresh();
       subscribedGroupsManager.refresh && subscribedGroupsManager.refresh();
       subscribedEventsManager.refresh && subscribedEventsManager.refresh();
+      joinedCoursesManager.refresh && joinedCoursesManager.refresh();
     }
   }
 
@@ -270,6 +274,7 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
         blockedUsers: blockedUsersManager,
         groups: subscribedGroupsManager,
         events: subscribedEventsManager,
+        courses: joinedCoursesManager,
       },
     }),
     [
@@ -291,6 +296,8 @@ export default function SCUserProvider({children}: {children: React.ReactNode}):
       subscribedGroupsManager.groups,
       subscribedEventsManager.loading,
       subscribedEventsManager.events,
+      joinedCoursesManager.loading,
+      joinedCoursesManager.emptyCache,
     ]
   );
 
