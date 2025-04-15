@@ -63,7 +63,7 @@ export default function CreateCourseButton(inProps: CreateCourseButtonProps): JS
     props: inProps,
     name: PREFIX
   });
-  const {className, CourseFormDialogComponentProps = {}, children, ...rest} = props;
+  const {className, CourseFormDialogComponentProps = {CourseFormComponentProps: {hidePaywalls: true}}, children, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -114,7 +114,7 @@ export default function CreateCourseButton(inProps: CreateCourseButtonProps): JS
         {...rest}>
         {children ?? <FormattedMessage id="ui.createCourseButton" defaultMessage="ui.createCourseButton" />}
       </Root>
-      {open && <CourseFormDialog hidePaywalls {...CourseFormDialogComponentProps} open onClose={handleClick} />}
+      {open && <CourseFormDialog {...CourseFormDialogComponentProps} open onClose={handleClick} />}
     </React.Fragment>
   );
 }
