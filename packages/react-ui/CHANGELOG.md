@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.62...@selfcommunity/react-ui@0.11.0-alpha.63) (2025-04-15)
+
+
+### Bug Fixes
+
+* test course enabled ([72216c5](https://github.com/selfcommunity/community-js/commit/72216c51f526773011fc3c46565679f9bbb84e20))
+
+
+
+
+
 # [0.11.0-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.61...@selfcommunity/react-ui@0.11.0-alpha.62) (2025-04-14)
 
 
