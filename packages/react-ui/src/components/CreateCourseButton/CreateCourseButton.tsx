@@ -114,7 +114,7 @@ export default function CreateCourseButton(inProps: CreateCourseButtonProps): JS
         {...rest}>
         {children ?? <FormattedMessage id="ui.createCourseButton" defaultMessage="ui.createCourseButton" />}
       </Root>
-      {open && <CourseFormDialog {...CourseFormDialogComponentProps} open onClose={handleClick} />}
+      {open && <CourseFormDialog hidePaywalls {...CourseFormDialogComponentProps} open onClose={handleClick} />}
     </React.Fragment>
   );
 }

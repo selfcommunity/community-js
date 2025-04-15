@@ -241,7 +241,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     if (field.emotionalImageOriginalFile) {
       formData.append('emotional_image_original', field.emotionalImageOriginalFile);
     }
-    if (field.product_ids && (isStaff || group.paywalls?.length)) {
+    if (field.product_ids && (isStaff || (group && group.paywalls?.length))) {
       field.product_ids.forEach((p, i) => {
         formData.append(`product_ids[${i}]`, p.toString());
       });
