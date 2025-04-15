@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.0...@selfcommunity/react-core@0.7.0-alpha.1) (2025-04-15)
+
+
+### Bug Fixes
+
+* test course enabled ([8c77e25](https://github.com/selfcommunity/community-js/commit/8c77e25d530bd152ce44b5aff0aa934041cb8088))
+
+
+
+
+
 # [0.7.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.7-alpha.26...@selfcommunity/react-core@0.7.0-alpha.0) (2025-04-14)
 
 
