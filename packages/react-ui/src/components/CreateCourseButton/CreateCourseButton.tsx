@@ -63,7 +63,7 @@ export default function CreateCourseButton(inProps: CreateCourseButtonProps): JS
     props: inProps,
     name: PREFIX
   });
-  const {className, CourseFormDialogComponentProps = {}, children, ...rest} = props;
+  const {className, CourseFormDialogComponentProps = {CourseFormComponentProps: {hidePaywalls: true}}, children, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -78,7 +78,7 @@ export default function CreateCourseButton(inProps: CreateCourseButtonProps): JS
     () =>
       preferences &&
       features &&
-      features.includes(SCFeatureName.TAGGING) &&
+      features.includes(SCFeatureName.COURSE) &&
       SCPreferences.CONFIGURATIONS_COURSES_ENABLED in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_COURSES_ENABLED].value,
     [preferences, features]

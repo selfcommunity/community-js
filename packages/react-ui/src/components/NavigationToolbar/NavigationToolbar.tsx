@@ -224,7 +224,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     () =>
       scPreferences.preferences &&
       scPreferences.features &&
-      scPreferences.features.includes(SCFeatureName.TAGGING) &&
+      scPreferences.features.includes(SCFeatureName.COURSE) &&
       SCPreferences.CONFIGURATIONS_COURSES_ENABLED in scPreferences.preferences &&
       scPreferences.preferences[SCPreferences.CONFIGURATIONS_COURSES_ENABLED].value,
     [scPreferences.preferences, scPreferences.features]

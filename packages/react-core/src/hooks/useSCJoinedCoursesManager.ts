@@ -40,7 +40,6 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
     () =>
       preferences &&
       features &&
-      features.includes(SCFeatureName.TAGGING) &&
       features.includes(SCFeatureName.COURSE) &&
       CONFIGURATIONS_COURSES_ENABLED in preferences &&
       preferences[CONFIGURATIONS_COURSES_ENABLED].value,

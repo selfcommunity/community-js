@@ -105,6 +105,12 @@ export interface CourseFormProps extends BoxProps {
    */
   onError?: (error: any) => void;
 
+	/**
+	 * Hide paywalls configuration
+	 * @default false
+	 */
+	hidePaywalls?: boolean;
+
   /**
    * Any other properties
    */
@@ -151,7 +157,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, onSuccess, onError, course = null, step = SCCourseFormStepType.GENERAL, onStepChange, ...rest} = props;
+  const {className, onSuccess, onError, course = null, step = SCCourseFormStepType.GENERAL, hidePaywalls = false, onStepChange, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -279,7 +285,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         formData.append(key, field.categories[key]);
       }
     }
-    if (field.product_ids && (isStaff || course.paywalls?.length)) {
+    if (field.product_ids && (isStaff || (course && course.paywalls?.length))) {
       field.product_ids.forEach((p, i) => {
         formData.append(`product_ids[${i}]`, p.toString());
       });
@@ -457,7 +463,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   onChange={handleOnChangeCategory}
                 />
                 {course && <CourseEdit course={course} onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))} />}
-                {isPaymentsEnabled && isStaff && (
+                {isPaymentsEnabled && isStaff && !hidePaywalls && (
                   <Box className={classes.paywallsConfiguratorWrap}>
                     <PaywallsConfigurator
                       {...(course && {contentId: course.id})}

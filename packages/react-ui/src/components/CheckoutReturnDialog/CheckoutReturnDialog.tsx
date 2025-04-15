@@ -58,7 +58,7 @@ export interface CheckoutReturnDialogProps extends DialogProps {
   className?: string;
   checkoutSessionId: string;
   disableInitialTransition?: boolean;
-  onHandleViewContentPurchased?: (redirectUrl: string) => void;
+  onHandleViewContentPurchased?: (redirectUrl: string, contentType: SCContentType) => void;
   returnUrl?: string;
 }
 
@@ -115,7 +115,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
         break;
     }
     if (onHandleViewContentPurchased) {
-      onHandleViewContentPurchased(returnUrl ? returnUrl : _redirectUrl);
+      onHandleViewContentPurchased(returnUrl ? returnUrl : _redirectUrl, contentType);
     } else if (_redirectUrl) {
       window.location.href = returnUrl ? returnUrl : _redirectUrl;
     }
