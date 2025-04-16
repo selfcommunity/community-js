@@ -4,7 +4,7 @@ import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {CommunityApiClient, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {SCCommunityType, SCContentType, SCPaymentOrder, SCPaymentPrice, SCPaymentProduct} from '@selfcommunity/types';
+import {SCCommunityType, SCContentType, SCPaymentPrice} from '@selfcommunity/types';
 import {useIsComponentMountedRef, useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import CommunityPaywallSkeleton from './Skeleton';
@@ -78,7 +78,7 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
   return (
     <Root className={classNames(classes.root, className)} container spacing={4} {...rest}>
       {scCommunity.paywalls.map((p, i) => (
-        <Grid xs={12} sm={6} md={4} key={i}>
+        <Grid xs={12} sm={12} md={4} key={i}>
           <PaymentProduct
             expanded
             paymentProduct={p}
