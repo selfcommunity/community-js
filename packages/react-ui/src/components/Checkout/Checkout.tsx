@@ -53,7 +53,7 @@ export default function Checkout(inProps: CheckoutProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, contentType, contentId, content, priceId, returnUrl, successUrl, uiMode, onComplete, ...rest} = props;
+  const {className, clientSecret, contentType, contentId, content, priceId, returnUrl, successUrl, uiMode, onComplete, ...rest} = props;
 
   const [loading, setLoading] = useState<boolean>(false);
   const [initialized, setInitialized] = useState<boolean>(false);
@@ -70,7 +70,7 @@ export default function Checkout(inProps: CheckoutProps) {
       : null;
 
   // STATE
-  const [clientSecret, setClientSecret] = useState<string | null>(props.clientSecret);
+  const [clientSecretKey, setClientSecretKey] = useState<string | null>(clientSecret);
 
   const isContentObject = useMemo(() => contentType && contentId !== undefined, [contentType, contentId]);
 
@@ -88,7 +88,7 @@ export default function Checkout(inProps: CheckoutProps) {
         ...(uiMode && {ui_mode: uiMode})
       })
         .then((r) => {
-          setClientSecret(r.client_secret);
+          setClientSecretKey(r.client_secret);
           setLoading(false);
         })
         .catch((error) => {
@@ -100,22 +100,22 @@ export default function Checkout(inProps: CheckoutProps) {
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (scUserContext.user && contentType && (contentId || content) && priceId && !clientSecret && Boolean(stripePromise) && !initialized) {
+    if (scUserContext.user && contentType && (contentId || content) && priceId && !clientSecretKey && Boolean(stripePromise) && !initialized) {
       _t = setTimeout(fetchClientSecret);
       return (): void => {
         _t && clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, clientSecret, stripePromise, contentType, contentId, content, priceId, loading, initialized]);
+  }, [scUserContext.user, clientSecretKey, stripePromise, contentType, contentId, content, priceId, loading, initialized]);
 
   // Payment provider options
   const providerOptions = useMemo(
     () => ({
-      clientSecret,
+      clientSecret: clientSecretKey,
       ...(onComplete && {onComplete})
       // ...(onShippingDetailsChange && {onShippingDetailsChange})
     }),
-    [clientSecret, onComplete]
+    [clientSecretKey, onComplete]
   );
 
   if (!isPaymentsEnabled) {
@@ -123,7 +123,7 @@ export default function Checkout(inProps: CheckoutProps) {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  if (!stripePromise || !clientSecret || !scUserContext.user) {
+  if (!stripePromise || !clientSecretKey || !scUserContext.user) {
     return <CheckoutSkeleton />;
   }
 
