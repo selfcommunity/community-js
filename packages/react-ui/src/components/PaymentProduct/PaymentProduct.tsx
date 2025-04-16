@@ -3,7 +3,7 @@ import {AccordionDetails, AccordionProps, AccordionSummary, Typography} from '@m
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {useSCFetchEvent, useSCFetchPaymentProduct, useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import {useSCFetchPaymentProduct, useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {
   SCPaymentProduct,
   SCContentType,
@@ -16,9 +16,6 @@ import {PREFIX} from './constants';
 import PaymentProductSkeleton from './Skeleton';
 import Accordion from '@mui/material/Accordion';
 import PaymentProductPrice, {PaymentProductPriceProps} from '../PaymentProductPrice';
-import {ButtonProps} from '@mui/material/Button/Button';
-import {Logger} from '@selfcommunity/utils/src/utils/logger';
-import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const classes = {
   root: `${PREFIX}-root`

@@ -40,6 +40,15 @@ export const Category: StoryObj<typeof Checkout> = {
 	render: template
 };
 
+export const Course: StoryObj<typeof Checkout> = {
+	args: {
+		contentId: 5,
+		contentType: SCContentType.COURSE,
+		priceId: 33
+	},
+	render: template
+};
+
 export const Community: StoryObj<typeof Checkout> = {
 	args: {
 		contentId: 1,

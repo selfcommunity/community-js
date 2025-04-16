@@ -126,7 +126,7 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
                 startIcon={<Icon>card_giftcard</Icon>}
                 {...(onHandleActionBuy && {onClick: handleActionBuy})}
                 to={`${scRoutingContext.url(SCRoutes.CHECKOUT_PAYMENT, {
-                  content_type: contentType.toLowerCase(),
+                  content_type: contentType?.toLowerCase(),
                   content_id: content ? content.id : contentId,
                   price_id: price.id
                 })}?${returnUrlParams ? new URLSearchParams(returnUrlParams) : ''}`}>

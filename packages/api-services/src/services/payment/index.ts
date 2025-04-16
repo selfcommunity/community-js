@@ -1,6 +1,6 @@
 import {AxiosRequestConfig} from 'axios';
 import Endpoints from '../../constants/Endpoints';
-import {BaseGetParams, SCPaginatedResponse} from '../../types';
+import {BaseGetParams, PaymentContentStatus, SCPaginatedResponse} from '../../types';
 import {apiRequest} from '../../utils/apiRequest';
 import {urlParams} from '../../utils/url';
 import {
@@ -13,14 +13,15 @@ import {
   CreatePaymentProductParams
 } from '../../types/payment';
 import {
-	SCCheckoutSession,
-	SCPaymentOrder,
-	SCCheckoutSessionDetail,
-	SCCheckoutSessionComplete,
-	SCPaymentProduct,
-	SCPaymentPrice,
-	SCPaymentsCustomerPortalSession,
-	SCPurchasableContent, SCPaywall
+  SCCheckoutSession,
+  SCPaymentOrder,
+  SCCheckoutSessionDetail,
+  SCCheckoutSessionComplete,
+  SCPaymentProduct,
+  SCPaymentPrice,
+  SCPaymentsCustomerPortalSession,
+  SCPurchasableContent,
+  SCPaywall
 } from '@selfcommunity/types';
 
 export interface PaymentApiClientInterface {
@@ -29,7 +30,7 @@ export interface PaymentApiClientInterface {
    * @param params
    * @param config
    */
-  getPaymentContentStatus(params?: PaymentContentStatusParams, config?: AxiosRequestConfig): Promise<SCPurchasableContent>;
+  getPaymentContentStatus(params?: PaymentContentStatusParams, config?: AxiosRequestConfig): Promise<PaymentContentStatus>;
 
   /**
    * Get payment products related to an object (aka paywalls) of type <content_type> and id <content_id>
@@ -115,11 +116,11 @@ export class PaymentApiClient {
    * @param params
    * @param config
    */
-  static getPaymentContentStatus(params?: PaymentContentStatusParams, config?: AxiosRequestConfig): Promise<SCPurchasableContent> {
-    const p = urlParams(params);
+  static getPaymentContentStatus(params?: PaymentContentStatusParams, config?: AxiosRequestConfig): Promise<PaymentContentStatus> {
     return apiRequest({
       ...config,
-      url: `${Endpoints.GetPaymentContentStatus.url({})}?${p.toString()}`,
+      params,
+      url: `${Endpoints.GetPaymentContentStatus.url({})}`,
       method: Endpoints.GetPaymentContentStatus.method
     });
   }
@@ -141,7 +142,11 @@ export class PaymentApiClient {
    */
   static getPaymentProducts(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentProduct>> {
     const p = urlParams(params);
-    return apiRequest({...config, url: `${Endpoints.GetPaymentProducts.url({})}?${p.toString()}`, method: Endpoints.GetPaymentProducts.method});
+    return apiRequest({
+      url: `${Endpoints.GetPaymentProducts.url({})}?${p.toString()}`,
+      method: Endpoints.GetPaymentProducts.method,
+      ...config
+    });
   }
 
   /**
@@ -268,7 +273,7 @@ export class PaymentApiClient {
  :::
  */
 export default class PaymentService {
-  static async getPaymentContentStatus(params?: PaymentContentStatusParams, config?: AxiosRequestConfig): Promise<SCPurchasableContent> {
+  static async getPaymentContentStatus(params?: PaymentContentStatusParams, config?: AxiosRequestConfig): Promise<PaymentContentStatus> {
     return PaymentApiClient.getPaymentContentStatus(params, config);
   }
   static async getPaywalls(params?: PaymentProductsParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaywall>> {

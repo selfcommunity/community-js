@@ -11,7 +11,6 @@ export default {
   },
   args: {
     id: undefined,
-    courseId: 3,
     course: undefined,
     className: '',
   },
@@ -22,14 +21,23 @@ export default {
   )
 } as Meta<typeof Course>;
 
-export const Student: StoryObj<typeof Course> = {
+export const StudentFree: StoryObj<typeof Course> = {
   args: {
+		courseId: 7,
     viewDashboard: false
   }
 };
 
+export const StudentNotFree: StoryObj<typeof Course> = {
+	args: {
+		courseId: 5,
+		viewDashboard: false
+	}
+};
+
 export const Teacher: StoryObj<typeof Course> = {
   args: {
+		courseId: 6,
     viewDashboard: true
   }
 };

@@ -15,10 +15,10 @@ const Component = {
         color: grey[400]
       },
       [`& .SCPaywallsConfigurator-content-access-type`]: {
-				'& > p': {
-					marginBottom: theme.spacing(2),
-				},
-				'& .MuiPaper-root': {
+        '& > p': {
+          marginBottom: theme.spacing(2)
+        },
+        '& .MuiPaper-root': {
           borderColor: '#c6c6c6'
         },
         '& .MuiAccordion-root:first-of-type': {

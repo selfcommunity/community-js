@@ -55,7 +55,7 @@ export default function PaywallsDialog(inProps: PaywallsDialogProps) {
       maxWidth={'sm'}
       fullWidth
       title={
-        (PaywallsComponentProps && PaywallsComponentProps.prefetchedPaymentContentStatus.payment_order) ||
+        (PaywallsComponentProps && PaywallsComponentProps.prefetchedPaymentContentStatus?.payment_order) ||
         (PaywallsComponentProps.content && PaywallsComponentProps.content.payment_order) ? (
           <FormattedMessage id="ui.paywallsDialog.title.purchased" defaultMessage="ui.paywallsDialog.title.purchased" />
         ) : (

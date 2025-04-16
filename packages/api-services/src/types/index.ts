@@ -47,11 +47,12 @@ import {
 } from './course';
 import {
   PaymentContentStatusParams,
-	PaymentProductsParams,
+  PaymentContentStatus,
+  PaymentProductsParams,
   CustomerPortalCreateSessionParams,
   CheckoutSessionParams,
   CheckoutCreateSessionParams,
-	PaymentOrderParams
+  PaymentOrderParams
 } from './payment';
 
 export {
@@ -131,9 +132,10 @@ export {
   CourseUsersParams,
   CourseDashboardUsersParams,
   PaymentContentStatusParams,
-	PaymentProductsParams,
+  PaymentContentStatus,
+  PaymentProductsParams,
   CustomerPortalCreateSessionParams,
   CheckoutSessionParams,
   CheckoutCreateSessionParams,
-	PaymentOrderParams
+  PaymentOrderParams
 };

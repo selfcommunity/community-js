@@ -11,7 +11,14 @@ import {
   useSCPreferences,
   useSCRouting
 } from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
+import {
+  SCEventLocationType,
+  SCEventPrivacyType,
+  SCEventRecurrenceType,
+  SCEventSubscriptionStatusType,
+  SCEventType,
+  SCFeatureName
+} from '@selfcommunity/types';
 import React, {ReactNode, useContext, useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
@@ -194,32 +201,37 @@ export default function EventInfoDetails(inProps: EventInfoDetailsProps) {
       {beforeLocationInfo}
       {hasLocationInfo && (
         <Stack className={classes.iconTextWrapper}>
-          {!hideLocationIcon && (
-            <Icon fontSize="small">{scEvent.location === SCEventLocationType.ONLINE ? 'play_circle_outline' : 'add_location_alt'}</Icon>
-          )}
-          {scEvent.location === SCEventLocationType.ONLINE ? (
-            scEvent.live_stream ? (
-              <Button
-                size="small"
-                variant="contained"
-                color="secondary"
-                component={Link}
-                disabled={disableJoinEvent}
-                to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, scEvent.live_stream)}
-                className={classes.joinLive}>
-                <FormattedMessage defaultMessage="ui.eventInfoDetails.live.join" id="ui.eventInfoDetails.live.join" />
-              </Button>
-            ) : (
-              <Link to={scEvent.link} target="_blank" className={classes.link}>
-                <Typography variant="body1" className={classes.url}>
-                  {scEvent.link}
-                </Typography>
-              </Link>
-            )
+          {scEvent.location === SCEventLocationType.PERSON ? (
+            <>
+              {!hideLocationIcon && <Icon fontSize="small">add_location_alt</Icon>}
+              <Typography variant="body1" className={classes.url}>
+                {scEvent.geolocation}
+              </Typography>
+            </>
+          ) : scEvent.paywalls.length && scEvent.subscription_status !== SCEventSubscriptionStatusType.GOING ? (
+            <></>
           ) : (
-            <Typography variant="body1" className={classes.url}>
-              {scEvent.geolocation}
-            </Typography>
+            <>
+              {!hideLocationIcon && <Icon fontSize="small">play_circle_outline</Icon>}
+              {scEvent.live_stream ? (
+                <Button
+                  size="small"
+                  variant="contained"
+                  color="secondary"
+                  component={Link}
+                  disabled={disableJoinEvent}
+                  to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, scEvent.live_stream)}
+                  className={classes.joinLive}>
+                  <FormattedMessage defaultMessage="ui.eventInfoDetails.live.join" id="ui.eventInfoDetails.live.join" />
+                </Button>
+              ) : (
+                <Link to={scEvent.link} target="_blank" className={classes.link}>
+                  <Typography variant="body1" className={classes.url}>
+                    {scEvent.link}
+                  </Typography>
+                </Link>
+              )}
+            </>
           )}
         </Stack>
       )}
