@@ -4,11 +4,13 @@ import {Avatar, Box, Divider, LinearProgress, Skeleton, Stack, styled, Typograph
 import classNames from 'classnames';
 import HeaderCourseDashboard from './Header';
 import {
+  SCContentType,
   SCCourseJoinStatusType,
   SCCourseLessonCompletionStatusType,
   SCCoursePrivacyType,
   SCCourseSectionType,
-  SCCourseType
+  SCCourseType,
+  SCEventSubscriptionStatusType
 } from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import ActionButton from './Student/ActionButton';
@@ -32,6 +34,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import StudentSkeleton from './Student/Skeleton';
 import UserAvatar from '../../shared/UserAvatar';
+import BuyButton from '../BuyButton';
 
 const BUTTON_MESSAGES = {
   dashboard: 'ui.course.dashboard.student.button.dashboard',
@@ -270,6 +273,9 @@ function Student(inProps: StudentCourseDashboardProps) {
               onClick={!scUserContext.user ? handleAnonymousAction : scCourse.join_status === null ? handleRequest : undefined}
             />
           )}
+        {isPaymentsEnabled && scCourse.paywalls?.length > 0 && !scCourse.join_status && (
+          <BuyButton contentType={SCContentType.COURSE} content={scCourse} />
+        )}
         {scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
           (scCourse.join_status === null || scCourse.join_status === SCCourseJoinStatusType.REQUESTED) && (
             <ActionButton

@@ -174,8 +174,6 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
       : {background: `url('${preferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
 
-	console.log('*** event *** ', scEvent);
-
   return (
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
     // @ts-ignore
@@ -309,7 +307,11 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                 </Box>
               ) : (
                 <>
-                  {isPaymentsEnabled && scEvent.paywalls?.length > 0 && scEvent.subscription_status !== SCEventSubscriptionStatusType.REQUESTED ? (
+                  {isPaymentsEnabled &&
+                  scEvent.paywalls?.length > 0 &&
+                  (scEvent.privacy === SCEventPrivacyType.PUBLIC ||
+                    (scEvent.privacy === SCEventPrivacyType.PRIVATE &&
+                      (!scEvent.subscription_status || scEvent.subscription_status !== SCEventSubscriptionStatusType.REQUESTED))) ? (
                     <BuyButton contentType={SCContentType.EVENT} content={scEvent} />
                   ) : (
                     <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />
