@@ -8,7 +8,7 @@ export default {
 } as Meta<typeof CommunityPaywalls>;
 
 const template = (args) => (
-	<div style={{ maxWidth: 1024 }}>
+	<div style={{ maxWidth: 1600 }}>
 		<CommunityPaywalls {...args} />
 	</div>
 );
