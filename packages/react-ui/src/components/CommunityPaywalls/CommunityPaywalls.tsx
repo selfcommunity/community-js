@@ -25,7 +25,7 @@ export interface CommunityPaywallsProps {
   className?: string;
   community?: SCCommunityType;
   onUpdatePaymentOrder?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
-  callBackUrl?: string;
+  callbackUrl?: string;
 }
 
 export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
@@ -34,7 +34,7 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, community, onUpdatePaymentOrder, callBackUrl, ...rest} = props;
+  const {className, community, onUpdatePaymentOrder, callbackUrl, ...rest} = props;
 
   // STATE
   const [scCommunity, setSCCommunity] = useState<SCCommunityType>(null);
@@ -86,7 +86,7 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
             contentId={scCommunity.id}
             {...(scCommunity.payment_order && {paymentOrder: scCommunity.payment_order, onUpdatePaymentOrder})}
             {...(scCommunity.payment_order && {paymentOrder: scCommunity.payment_order, onUpdatePaymentOrder})}
-            {...(callBackUrl && {PaymentProductPriceComponentProps: {returnUrlParams: {callBackUrl}}})}
+            {...(callbackUrl && {PaymentProductPriceComponentProps: {returnUrlParams: {callbackUrl}}})}
           />
         </Grid>
       ))}
