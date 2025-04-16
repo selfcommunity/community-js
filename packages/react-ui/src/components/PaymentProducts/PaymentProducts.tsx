@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Box} from '@mui/material';
 import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Endpoints, PaymentApiClient} from '@selfcommunity/api-services';
+import {PaymentService} from '@selfcommunity/api-services';
 import {SCPaymentProduct, SCContentType, SCPurchasableContent, SCPaymentOrder, SCPaymentPrice} from '@selfcommunity/types';
 import {useIsComponentMountedRef, useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
@@ -12,6 +12,7 @@ import PaymentProduct from '../PaymentProduct';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {AxiosRequestConfig} from 'axios';
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -24,7 +25,6 @@ const Root = styled(Box, {
 
 export interface PaymentProductsProps {
   className?: string;
-  id?: number | string;
   contentType?: SCContentType;
   contentId?: number | string;
   content?: SCPurchasableContent;
@@ -39,7 +39,10 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, id, contentId, contentType, content, prefetchedProducts = [], paymentOrder, onUpdatePaymentOrder, ...rest} = props;
+  const {className, contentId, contentType, content, prefetchedProducts = [], paymentOrder, onUpdatePaymentOrder, ...rest} = props;
+
+  // CONST
+  const prefetchedProductsIds = prefetchedProducts.map((product) => product.id);
 
   // STATE
   const [products, setProducts] = useState<SCPaymentProduct[]>([]);
@@ -52,9 +55,9 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
   /**
    * Fetches products list
    */
-  const fetchProducts = async (next: string = Endpoints.GetPaymentProducts.url({})): Promise<SCPaymentProduct[]> => {
-    const data = await PaymentApiClient.getPaymentProducts(id !== undefined ? {id} : {content_id: contentId, content_type: contentType}, {
-      url: next
+  const fetchProducts = async (next?: string | undefined): Promise<SCPaymentProduct[]> => {
+    const data = await PaymentService.getPaymentProducts({content_id: contentId, content_type: contentType}, {
+      ...(next && {url: next})
     } as AxiosRequestConfig);
     return data.next ? data.results.concat(await fetchProducts(data.next)) : data.results;
   };
@@ -62,11 +65,11 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
   /**
    * On mount, fetches products/prices list
    */
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (prefetchedProducts.length) {
       setProducts(prefetchedProducts);
       setLoading(false);
-    } else if (id !== undefined || (contentId !== undefined && contentType)) {
+    } else if (contentId !== undefined && contentType) {
       fetchProducts()
         .then((data) => {
           if (isMountedRef.current) {
@@ -81,7 +84,7 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
       setProducts(content.paywalls || []);
       setLoading(false);
     }
-  }, [prefetchedProducts.length]);
+  }, [prefetchedProductsIds, contentId, contentType]);
 
   if (!isPaymentsEnabled) {
     return null;
@@ -93,7 +96,7 @@ export default function PaymentProducts(inProps: PaymentProductsProps) {
         <PaymentProductsSkeleton />
       ) : (
         <>
-          {products.map((p, i) => (
+          {products.map((p: SCPaymentProduct, i) => (
             <PaymentProduct
               paymentProduct={p}
               key={i}

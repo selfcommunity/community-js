@@ -11,7 +11,7 @@ export default {
   },
   args: {
     id: undefined,
-    courseId: 3,
+    courseId: 6,
     course: undefined,
     className: '',
   },

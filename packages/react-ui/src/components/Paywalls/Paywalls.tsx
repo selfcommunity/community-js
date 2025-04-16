@@ -13,7 +13,6 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import PaymentProducts from '../PaymentProducts';
 import {FormattedMessage, useIntl} from 'react-intl';
 import PaymentProduct from '../PaymentProduct';
-import PaymentProductPrice from '../PaymentProductPrice';
 import {getConvertedAmount} from '../../utils/payment';
 
 const classes = {
@@ -86,7 +85,7 @@ export default function Paywalls(inProps: PaywallsProps) {
       PaymentApiClient.getPaymentContentStatus({content_id: contentId, content_type: contentType})
         .then((data) => {
           if (isMountedRef.current) {
-            setProducts(data.paywalls);
+            setProducts(data.paywalls.map((p) => p.payment_product));
             setPaymentOrder(data.payment_order);
             setLoading(false);
           }
@@ -95,7 +94,7 @@ export default function Paywalls(inProps: PaywallsProps) {
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [prefetchedPaymentContentStatus]);
+  }, [prefetchedPaymentContentStatus, contentId, contentType]);
 
   if (!isPaymentsEnabled) {
     return null;

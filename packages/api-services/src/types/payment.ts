@@ -1,5 +1,5 @@
 import {BaseGetParams, BaseSearchParams} from './baseParams';
-import {SCCheckoutSessionUIMode, SCContentType, SCPaymentPriceCurrencyType} from '@selfcommunity/types';
+import {SCCheckoutSessionUIMode, SCContentType, SCPaymentOrder, SCPaymentPriceCurrencyType, SCPaywall} from '@selfcommunity/types';
 
 /**
  * PaymentParams interface.
@@ -107,4 +107,28 @@ export interface CreatePaymentProductParams {
    * Price currency
    */
   currency?: SCPaymentPriceCurrencyType;
+}
+
+/**
+ * PaymentContentStatus response interface.
+ */
+export interface PaymentContentStatus {
+  /**
+   * Content id
+   */
+  content_id?: number | string;
+  /**
+   * Content type
+   */
+  content_type?: SCContentType;
+
+  /**
+   * Payment Order
+   */
+  payment_order?: SCPaymentOrder;
+
+  /**
+   * Price currency
+   */
+  paywalls?: SCPaywall[];
 }

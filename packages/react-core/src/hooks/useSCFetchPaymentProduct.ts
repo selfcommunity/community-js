@@ -54,8 +54,8 @@ export default function useSCFetchPaymentProduct({
     () => (id: string | number) => {
       return http
         .request({
-          url: Endpoints.GetProduct.url({id}),
-          method: Endpoints.GetProduct.method,
+          url: Endpoints.GetPaymentProduct.url({id}),
+          method: Endpoints.GetPaymentProduct.method,
         })
         .then((res: HttpResponse<SCCourseType>) => {
           if (res.status >= 300) {
