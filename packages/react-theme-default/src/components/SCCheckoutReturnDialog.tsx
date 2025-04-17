@@ -18,7 +18,10 @@ const Component = {
       },
       '& .SCCheckoutSuccessDialog-content-object': {
         width: '100%'
-      }
+      },
+			'& .SCCourse-preview-root': {
+				minHeight: 'auto'
+			},
     })
   }
 };

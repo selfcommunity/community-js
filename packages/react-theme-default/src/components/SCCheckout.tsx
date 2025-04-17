@@ -74,6 +74,9 @@ const Component = {
         '& a': {
           padding: theme.spacing(2)
         }
+      },
+      ['& .SCCourse-preview-root']: {
+        minHeight: 'auto'
       }
     })
   }
