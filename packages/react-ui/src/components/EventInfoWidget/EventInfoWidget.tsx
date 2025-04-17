@@ -1,6 +1,7 @@
 import {Box, Button, CardContent, Icon, Stack, styled, Typography, useThemeProps} from '@mui/material';
 import {useSCFetchEvent} from '@selfcommunity/react-core';
-import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
+import {SCEventLocationType, SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
+import {CacheStrategies} from '@selfcommunity/utils';
 import PubSub from 'pubsub-js';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
@@ -76,7 +77,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
   const [loading, setLoading] = useState(true);
 
   // HOOKS
-  const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event});
+  const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event, cacheStrategy: CacheStrategies.NETWORK_ONLY});
 
   // REFS
   const updatesSubscription = useRef(null);
@@ -108,11 +109,21 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
 
   const showInfo = useMemo(
     () =>
-      (scEvent?.privacy === SCEventPrivacyType.PUBLIC && hasGeolocationOrLink) ||
-      ([SCEventSubscriptionStatusType.SUBSCRIBED, SCEventSubscriptionStatusType.GOING, SCEventSubscriptionStatusType.NOT_GOING].indexOf(
-        scEvent?.subscription_status
-      ) > -1 &&
-        hasGeolocationOrLink),
+      hasGeolocationOrLink &&
+      ((scEvent?.privacy === SCEventPrivacyType.PUBLIC &&
+        (!scEvent.paywalls?.length ||
+          (scEvent.paywalls?.length &&
+            (scEvent?.geolocation === SCEventLocationType.PERSON || scEvent?.subscription_status === SCEventSubscriptionStatusType.GOING)))) ||
+        (scEvent?.privacy === SCEventPrivacyType.PRIVATE &&
+          ((!scEvent.paywalls?.length &&
+            [
+              SCEventSubscriptionStatusType.INVITED,
+              SCEventSubscriptionStatusType.SUBSCRIBED,
+              SCEventSubscriptionStatusType.GOING,
+              SCEventSubscriptionStatusType.NOT_GOING
+            ].indexOf(scEvent?.subscription_status) > -1) ||
+            (scEvent.paywalls?.length &&
+              (scEvent?.geolocation === SCEventLocationType.PERSON || scEvent?.subscription_status === SCEventSubscriptionStatusType.GOING))))),
     [scEvent]
   );
 
