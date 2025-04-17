@@ -25,7 +25,7 @@ import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {LocalUserChoices} from '@livekit/components-react';
-import React, {useCallback, useContext, useMemo, useState} from 'react';
+import React, {ReactNode, useCallback, useContext, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
 import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './LiveStreamVideoConference';
 import '@livekit/components-styles';
@@ -238,7 +238,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 <FormattedMessage
                   id="ui.liveStreamRoom.connect.error.generic"
                   defaultMessage="'ui.liveStreamRoom.connect.error.generic"
-                  values={{link: (...chunks) => <Link to={'/'}>{chunks}</Link>}}
+                  values={{link: (...chunks: [parts: ReactNode[]]) => <Link to={'/'}>{chunks}</Link>}}
                 />
               );
               if (error.response.data.errors[0].code) {
@@ -248,7 +248,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                     id={_error}
                     defaultMessage={_error}
                     values={{
-                      link: (...chunks) => (
+                      link: (...chunks: [parts: ReactNode[]]) => (
                         <a
                           style={{color: '#FFF'}}
                           href={
