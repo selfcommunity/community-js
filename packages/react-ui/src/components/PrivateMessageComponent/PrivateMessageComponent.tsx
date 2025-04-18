@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Grid, useMediaQuery, useTheme} from '@mui/material';
+import {Grid, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCPreferencesContextType, SCThemeType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';

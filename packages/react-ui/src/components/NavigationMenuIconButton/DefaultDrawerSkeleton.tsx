@@ -1,7 +1,6 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
 import CategorySkeleton from '../Category/Skeleton';
-import {Box, BoxProps, ListItem} from '@mui/material';
+import {Box, BoxProps, ListItem, styled} from '@mui/material';
 
 export const PREFIX = 'SCDefaultDrawerSkeleton';
 

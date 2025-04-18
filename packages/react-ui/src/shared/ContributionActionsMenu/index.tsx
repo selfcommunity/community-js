@@ -1,8 +1,5 @@
 import React, {useContext, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import Popper from '@mui/material/Popper';
-import Icon from '@mui/material/Icon';
 import CentralProgress from '../CentralProgress';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {copyTextToClipboard, Logger} from '@selfcommunity/utils';
@@ -27,7 +24,10 @@ import {
   SwipeableDrawer,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
+  styled,
+  Popper,
+  Icon
 } from '@mui/material';
 import {
   MODERATION_CONTRIBUTION_STATE_DELETED,

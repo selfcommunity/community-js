@@ -1,11 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import NavigationToolbar from './index';
-import {AppBar, Badge, Box, Button, Grid, IconButton, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {AppBar, Box, Button, Grid, IconButton, Typography, Icon, Paper} from '@mui/material';
 import React, {useCallback, useState} from 'react';
 import {NavigationMenuDrawer} from '../NavigationMenuIconButton';
-import Paper from '@mui/material/Paper';
 
 export default {
   title: 'Design System/React UI/Navigation Toolbar ',

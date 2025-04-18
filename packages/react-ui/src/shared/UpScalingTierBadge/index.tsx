@@ -1,8 +1,7 @@
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {FormattedMessage} from 'react-intl';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {Chip, Tooltip, TooltipProps} from '@mui/material';
+import {Chip, Tooltip, TooltipProps, styled} from '@mui/material';
 import React, {useMemo} from 'react';
 import {SCCommunitySubscriptionTier} from '@selfcommunity/types';
 import classNames from 'classnames';

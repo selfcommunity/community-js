@@ -1,8 +1,5 @@
 import React, {useContext, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
-import Popper from '@mui/material/Popper';
-import Icon from '@mui/material/Icon';
 import CentralProgress from '../CentralProgress';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
@@ -22,7 +19,10 @@ import {
   Paper,
   SwipeableDrawer,
   useMediaQuery,
-  useTheme
+  useTheme,
+  Icon,
+  styled,
+  Popper
 } from '@mui/material';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {

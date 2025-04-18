@@ -1,8 +1,6 @@
 import React, {useCallback} from 'react';
-import {Box, BoxProps, Chip} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import Icon from '@mui/material/Icon';
-import {SCCategoryType, SCTagType} from '@selfcommunity/types/src/index';
+import {Box, BoxProps, Chip, styled, Icon} from '@mui/material';
+import {SCCategoryType, SCTagType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import TagChip from '../../../shared/TagChip';
 import {ComposerContentType} from '../../../types/composer';

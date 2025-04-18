@@ -1,14 +1,11 @@
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
-import {Box, Button, Divider, Tooltip, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Box, Button, Divider, Tooltip, Typography, Icon, styled, Skeleton} from '@mui/material';
 import {Link, SCRoutingContextType, useSCFetchFeedObject, useSCRouting} from '@selfcommunity/react-core';
 import {SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
-import {styled} from '@mui/material/styles';
 import {SCFeedObjectTemplateType} from '../../../../types/feedObject';
 import {getContributionRouteName, getRouteData} from '../../../../utils/contribution';
 import classNames from 'classnames';
-import Skeleton from '@mui/material/Skeleton';
 import {PREFIX} from '../../constants';
 
 const messages = defineMessages({

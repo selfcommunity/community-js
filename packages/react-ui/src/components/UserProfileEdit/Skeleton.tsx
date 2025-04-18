@@ -1,7 +1,5 @@
 import React from 'react';
-import {Box, Grid} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
+import {Box, Grid, styled, Skeleton} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {

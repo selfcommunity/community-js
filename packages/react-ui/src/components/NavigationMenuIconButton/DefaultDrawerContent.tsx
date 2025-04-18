@@ -1,4 +1,4 @@
-import {Box, BoxProps, Divider, Icon, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, Zoom} from '@mui/material';
+import {Box, BoxProps, Divider, Icon, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, Zoom, styled} from '@mui/material';
 import {
   Link,
   SCPreferences,
@@ -16,7 +16,6 @@ import Category, {CategoryProps} from '../Category';
 import {FormattedMessage} from 'react-intl';
 import {sortByAttr} from '@selfcommunity/utils';
 import {SCCategoryType, SCFeatureName} from '@selfcommunity/types';
-import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 

@@ -1,20 +1,27 @@
 import React, {forwardRef, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
-import {Alert, Button, Checkbox, DialogProps, FormControlLabel, Typography} from '@mui/material';
+import {
+  Alert,
+  Button,
+  Checkbox,
+  DialogProps,
+  FormControlLabel,
+  Typography,
+  styled,
+  Icon,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Slide,
+  DialogTitle
+} from '@mui/material';
 import classNames from 'classnames';
-import Icon from '@mui/material/Icon';
 import {LegalPageService, UserService} from '@selfcommunity/api-services';
 import {SCDataPortabilityType, SCLegalPagePoliciesType, SCLegalPageType, SCUserType} from '@selfcommunity/types';
 import {arraysEqual, capitalize, Logger} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import ConsentSolutionSwitch from '../../shared/ConsentSolutionSwitch';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
 import {TransitionProps} from '@mui/material/transitions';
 import {LEGAL_POLICIES} from './../../constants/LegalPolicies';
 import ConsentSolutionSkeleton from './Skeleton';

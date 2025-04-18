@@ -1,5 +1,4 @@
-import {Alert, AlertTitle, Box, BoxProps, Button, CircularProgress, Stack, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Alert, AlertTitle, Box, BoxProps, Button, CircularProgress, Stack, Typography, styled, DialogContent} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {
   Link,
@@ -14,13 +13,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {
-  SCFeatureName,
-  SCLiveStreamConnectionDetailsErrorType,
-  SCLiveStreamConnectionDetailsType,
-  SCLiveStreamType,
-  SCNotificationTypologyType
-} from '@selfcommunity/types';
+import {SCFeatureName, SCLiveStreamConnectionDetailsErrorType, SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
@@ -35,7 +28,6 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {PreJoin} from './LiveStreamVideoConference/PreJoin';
 import {LiveStreamContext} from './LiveStreamVideoConference/LiveStreamProvider';
 import {useSnackbar} from 'notistack';
-import DialogContent from '@mui/material/DialogContent';
 import BaseDialog from '../../shared/BaseDialog';
 import CopyTextField from '../../shared/CopyTextArea';
 

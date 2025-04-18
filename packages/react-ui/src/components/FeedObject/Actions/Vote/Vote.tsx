@@ -1,6 +1,5 @@
 import React from 'react';
-import {Box, Divider} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, Divider, styled} from '@mui/material';
 import classNames from 'classnames';
 import {SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import VoteButton from '../../../VoteButton';

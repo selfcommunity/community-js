@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Button, CardContent} from '@mui/material';
+import {Avatar, Box, Button, CardContent, styled} from '@mui/material';
 import PubSub from 'pubsub-js';
 import {useThemeProps} from '@mui/system';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';

@@ -1,5 +1,4 @@
-import {Box, CardContent, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, CardContent, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {GoogleMap, MarkerF} from '@react-google-maps/api';
 import {useSCGoogleApiLoader, useSCFetchEvent} from '@selfcommunity/react-core';

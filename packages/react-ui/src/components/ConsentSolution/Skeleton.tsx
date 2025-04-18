@@ -1,7 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
-import {Box, DialogActions, DialogContent, DialogTitle} from '@mui/material';
+import {Box, DialogActions, DialogContent, DialogTitle, styled, Skeleton} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {

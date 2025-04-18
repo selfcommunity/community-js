@@ -1,7 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Avatar, Box, Stack, Typography, styled, Icon} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {getContributionType, getContributionSnippet, getRouteData} from '../../../utils/contribution';
 import DateTimeAgo from '../../../shared/DateTimeAgo';

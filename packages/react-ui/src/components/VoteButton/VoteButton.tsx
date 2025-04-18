@@ -1,11 +1,9 @@
 import React, {useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {LoadingButton, LoadingButtonProps} from '@mui/lab';
 import classNames from 'classnames';
 import {SCCommentType, SCContributionType, SCFeedObjectType, SCReactionType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
-import Icon from '@mui/material/Icon';
-import {IconButton, Paper, Popper, Tooltip, useMediaQuery, useTheme} from '@mui/material';
+import {IconButton, Paper, Popper, Tooltip, useMediaQuery, useTheme, styled, Icon} from '@mui/material';
 import {SCContextType, SCThemeType, SCUserContextType, UserUtils, useSCContext, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';

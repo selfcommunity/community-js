@@ -1,6 +1,5 @@
 import {LoadingButton} from '@mui/lab';
-import {Alert, Box, BoxProps, FormGroup, Paper, TextField, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Alert, Box, BoxProps, FormGroup, Paper, TextField, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCCommunityEnvironment, SCCommunitySubscriptionTier, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';

@@ -1,7 +1,5 @@
 import React from 'react';
-import CardContent from '@mui/material/CardContent';
-import List from '@mui/material/List';
-import {styled} from '@mui/material/styles';
+import {styled, List, CardContent} from '@mui/material';
 import {IncubatorSkeleton} from '../Incubator';
 import Widget from '../Widget';
 import {PREFIX} from './constants';

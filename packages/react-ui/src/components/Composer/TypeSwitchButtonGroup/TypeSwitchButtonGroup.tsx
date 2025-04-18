@@ -1,5 +1,4 @@
-import {styled} from '@mui/material/styles';
-import {ToggleButton, ToggleButtonGroup, ToggleButtonGroupProps} from '@mui/material';
+import {ToggleButton, ToggleButtonGroup, ToggleButtonGroupProps, styled} from '@mui/material';
 import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';

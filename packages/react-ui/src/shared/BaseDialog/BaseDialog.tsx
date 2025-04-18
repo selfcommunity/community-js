@@ -1,15 +1,18 @@
 import React, {ReactNode} from 'react';
-import {styled} from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent, {DialogContentProps} from '@mui/material/DialogContent';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import classNames from 'classnames';
-import {useTheme} from '@mui/material';
+import {
+  useTheme,
+  styled,
+  useMediaQuery,
+  DialogTitle as MuiDialogTitle,
+  IconButton,
+  Icon,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentProps
+} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
-import MuiDialogTitle from '@mui/material/DialogTitle';
-import IconButton from '@mui/material/IconButton';
-import Icon from '@mui/material/Icon';
 import {isClientSideRendering} from '@selfcommunity/utils';
 
 const PREFIX = 'SCBaseDialog';

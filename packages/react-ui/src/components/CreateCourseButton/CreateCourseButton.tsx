@@ -1,5 +1,4 @@
-import {Button, ButtonProps, Icon} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Button, ButtonProps, Icon, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {SCFeatureName} from '@selfcommunity/types';

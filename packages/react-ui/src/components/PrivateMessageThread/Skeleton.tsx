@@ -1,7 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Card, CardContent, ListSubheader, Skeleton, useMediaQuery, useTheme} from '@mui/material';
-import List from '@mui/material/List';
+import {Box, Card, CardContent, ListSubheader, Skeleton, useMediaQuery, useTheme, styled, List} from '@mui/material';
 import PrivateMessageThreadItemSkeleton from '../PrivateMessageThreadItem/Skeleton';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';

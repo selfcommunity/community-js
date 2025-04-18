@@ -1,4 +1,4 @@
-import {getContrastRatio} from '@mui/material/styles';
+import {getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {

@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack, Typography} from '@mui/material';
+import {Avatar, Box, Stack, Typography, styled} from '@mui/material';
 import {
   Link,
   SCConnectionsManagerType,

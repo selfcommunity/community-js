@@ -1,7 +1,6 @@
 import React, {useMemo} from 'react';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Badge, BadgeProps, Avatar} from '@mui/material';
+import {styled, Badge, BadgeProps, Avatar} from '@mui/material';
 import classNames from 'classnames';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 

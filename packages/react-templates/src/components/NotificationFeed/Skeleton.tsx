@@ -1,5 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {FeedSkeleton, GenericSkeleton, NotificationSkeleton} from '@selfcommunity/react-ui';
 import {PREFIX} from './constants';
 

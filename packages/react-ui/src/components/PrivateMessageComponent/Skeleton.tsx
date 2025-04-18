@@ -1,6 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Grid, useMediaQuery, useTheme} from '@mui/material';
+import {Grid, useMediaQuery, useTheme, styled} from '@mui/material';
 import PrivateMessageSnippetsSkeleton from '../PrivateMessageSnippets/Skeleton';
 import PrivateMessageThreadSkeleton from '../PrivateMessageThread/Skeleton';
 import classNames from 'classnames';

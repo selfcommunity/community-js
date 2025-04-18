@@ -1,7 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Divider, FormGroup, Icon, Paper, Stack, Switch, TextField, Typography} from '@mui/material';
+import {Avatar, Box, Divider, FormGroup, Icon, Paper, Stack, Switch, TextField, Typography, styled} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';

@@ -15,9 +15,9 @@ import {
   Stack,
   Switch,
   TextField,
-  Typography
+  Typography,
+  styled
 } from '@mui/material';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {LocalizationProvider, MobileDatePicker, MobileTimePicker} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';

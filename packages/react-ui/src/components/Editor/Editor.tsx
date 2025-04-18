@@ -1,7 +1,6 @@
 import React, {ForwardedRef, forwardRef, ForwardRefRenderFunction, useCallback, useImperativeHandle, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
-import {Box, Stack} from '@mui/material';
+import {Box, Stack, styled} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import nodes from './nodes';

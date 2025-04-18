@@ -1,5 +1,4 @@
-import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Divider, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Divider, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventType} from '@selfcommunity/types';

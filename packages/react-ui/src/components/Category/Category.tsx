@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Tooltip, Typography} from '@mui/material';
+import {Avatar, Tooltip, Typography, styled} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
 import {SCCategoryAutoFollowType, SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';

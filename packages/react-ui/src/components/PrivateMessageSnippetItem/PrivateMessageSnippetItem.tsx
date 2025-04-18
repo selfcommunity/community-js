@@ -1,6 +1,5 @@
 import React, {useContext, useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, ListItem} from '@mui/material';
+import {Avatar, ListItemButton, ListItemAvatar, ListItemText, Typography, Chip, ListItem, styled} from '@mui/material';
 import PrivateMessageSnippetItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageSnippetType, SCPrivateMessageStatusType} from '@selfcommunity/types';
