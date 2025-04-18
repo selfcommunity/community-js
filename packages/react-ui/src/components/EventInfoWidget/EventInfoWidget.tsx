@@ -123,7 +123,14 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
               SCEventSubscriptionStatusType.NOT_GOING
             ].indexOf(scEvent?.subscription_status) > -1) ||
             (scEvent.paywalls?.length &&
-              (scEvent?.geolocation === SCEventLocationType.PERSON || scEvent?.subscription_status === SCEventSubscriptionStatusType.GOING))))),
+              ((scEvent?.geolocation === SCEventLocationType.PERSON &&
+                [
+                  SCEventSubscriptionStatusType.INVITED,
+                  SCEventSubscriptionStatusType.SUBSCRIBED,
+                  SCEventSubscriptionStatusType.GOING,
+                  SCEventSubscriptionStatusType.NOT_GOING
+                ].indexOf(scEvent?.subscription_status) > -1) ||
+                scEvent?.subscription_status === SCEventSubscriptionStatusType.GOING))))),
     [scEvent]
   );
 

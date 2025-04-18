@@ -312,7 +312,10 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                   (scEvent.privacy === SCEventPrivacyType.PUBLIC ||
                     (scEvent.privacy === SCEventPrivacyType.PRIVATE &&
                       (!scEvent.subscription_status || scEvent.subscription_status !== SCEventSubscriptionStatusType.REQUESTED))) ? (
-                    <BuyButton contentType={SCContentType.EVENT} content={scEvent} />
+                    <>
+                      <BuyButton contentType={SCContentType.EVENT} content={scEvent} />
+                      {/*<PaymentOrderTicket paymentOrder={scEvent.payment_order} />*/}
+                    </>
                   ) : (
                     <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />
                   )}

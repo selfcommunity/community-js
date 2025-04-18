@@ -1652,6 +1652,14 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/payments/payment_order/'),
     method: 'GET'
   },
+  GetPaymentOrder: {
+    url: urlReplacer('/api/v2/payments/payment_order/$(id)/'),
+    method: 'GET'
+  },
+  GetPaymentOrderPdf: {
+    url: urlReplacer('/api/v2/payments/payment_order/$(id)/pdf/'),
+    method: 'GET'
+  },
   CreateCustomerPortalSession: {
     url: urlReplacer('/api/v2/payments/customer_portal_session/'),
     method: 'POST'

@@ -19,7 +19,8 @@ export enum SCGroupPrivacyType {
 export enum SCGroupSubscriptionStatusType {
   SUBSCRIBED = 'subscribed',
   REQUESTED = 'requested',
-  INVITED = 'invited'
+  INVITED = 'invited',
+  PAYMENT_WAITING = 'payment_waiting'
 }
 
 export interface SCGroupType extends SCPurchasableContent {

@@ -254,7 +254,11 @@ function Student(inProps: StudentCourseDashboardProps) {
         {(((scCourse.privacy === SCCoursePrivacyType.PRIVATE || scCourse.privacy === SCCoursePrivacyType.SECRET) &&
           (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
           (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) &&
-          (!isPaymentsEnabled || !scCourse.paywalls?.length || (isPaymentsEnabled && scCourse.paywalls?.length > 0 && scCourse.payment_order)) && (
+          (!isPaymentsEnabled ||
+            !scCourse.paywalls?.length ||
+            (isPaymentsEnabled &&
+              scCourse.paywalls?.length > 0 &&
+              (scCourse.join_status === SCCourseJoinStatusType.JOINED || scCourse.join_status === SCCourseJoinStatusType.MANAGER))) && (
             <ActionButton
               labelId={
                 scCourse.join_status === null
@@ -273,19 +277,22 @@ function Student(inProps: StudentCourseDashboardProps) {
               onClick={!scUserContext.user ? handleAnonymousAction : scCourse.join_status === null ? handleRequest : undefined}
             />
           )}
-        {isPaymentsEnabled && scCourse.paywalls?.length > 0 && !scCourse.join_status && (
-          <BuyButton contentType={SCContentType.COURSE} content={scCourse} />
-        )}
         {scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
-          (scCourse.join_status === null || scCourse.join_status === SCCourseJoinStatusType.REQUESTED) && (
-            <ActionButton
-              labelId={sentRequest ? BUTTON_MESSAGES.cancel : BUTTON_MESSAGES.request}
-              color="inherit"
-              variant="outlined"
-              loading={loadingRequest}
-              onClick={handleRequest}
-            />
-          )}
+        (scCourse.join_status === null || scCourse.join_status === SCCourseJoinStatusType.REQUESTED) ? (
+          <ActionButton
+            labelId={sentRequest ? BUTTON_MESSAGES.cancel : BUTTON_MESSAGES.request}
+            color="inherit"
+            variant="outlined"
+            loading={loadingRequest}
+            onClick={handleRequest}
+          />
+        ) : (
+          isPaymentsEnabled &&
+          scCourse.paywalls?.length > 0 &&
+          !(scCourse.join_status === SCCourseJoinStatusType.CREATOR || scCourse.join_status === SCCourseJoinStatusType.MANAGER) && (
+            <BuyButton contentType={SCContentType.COURSE} content={scCourse} />
+          )
+        )}
       </Stack>
     );
   }, [scCourse, sentRequest, loadingRequest, handleRequest]);

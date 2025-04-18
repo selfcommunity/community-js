@@ -174,7 +174,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-	// PAYMENTS
+  // PAYMENTS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   // REFS
@@ -252,6 +252,16 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
       ? {background: `url('${scGroup.emotional_image}') center / cover`}
       : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
+
+  /**
+   * Define if the buyButton is visible
+   */
+  const showBuyButton =
+    isPaymentsEnabled &&
+    scGroup.paywalls?.length > 0 &&
+    (scGroup.privacy === SCGroupPrivacyType.PUBLIC ||
+      (scGroup.privacy === SCGroupPrivacyType.PRIVATE &&
+        (!scGroup.subscription_status || scGroup.subscription_status !== SCGroupSubscriptionStatusType.REQUESTED)));
 
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
@@ -338,7 +348,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
             <GroupInviteButton group={scGroup} groupId={scGroup.id} />
             {isMobile && <GroupActionsMenu group={scGroup} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} {...GroupActionsProps} />}
           </Box>
-        ) : isPaymentsEnabled && scGroup.paywalls?.length > 0 && scGroup.subscription_status !== SCGroupSubscriptionStatusType.REQUESTED ? (
+        ) : showBuyButton ? (
           <BuyButton contentType={SCContentType.GROUP} content={scGroup} />
         ) : (
           <GroupSubscribeButton group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />
