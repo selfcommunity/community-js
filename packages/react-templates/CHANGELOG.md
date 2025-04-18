@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.4...@selfcommunity/react-templates@0.5.0-alpha.5) (2025-04-18)
+
+
+### Bug Fixes
+
+* fixes imports for doc ([7c7292b](https://github.com/selfcommunity/community-js/commit/7c7292bfb050ffc73a0985eaa307326ec48ca65c))
+
+
+
+
+
 # [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.3...@selfcommunity/react-templates@0.5.0-alpha.4) (2025-04-17)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
