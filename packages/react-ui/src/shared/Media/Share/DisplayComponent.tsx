@@ -1,12 +1,10 @@
 import React, {ReactElement, useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import FeedObject from '../../../components/FeedObject';
 import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {SCEventType, SCMediaType} from '@selfcommunity/types/src/types';
 import classNames from 'classnames';
-import {BoxProps} from '@mui/material';
+import {BoxProps, styled, Box} from '@mui/material';
 import filter from './filter';
 import {PREFIX} from './constants';
 import {MEDIA_EMBED_SC_SHARED_EVENT, MEDIA_TYPE_EVENT} from '../../../constants/Media';

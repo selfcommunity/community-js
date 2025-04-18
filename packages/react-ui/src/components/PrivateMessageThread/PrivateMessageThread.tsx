@@ -1,5 +1,4 @@
 import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {Endpoints, http, HttpResponse, PrivateMessageService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, UserUtils, useSCFetchUser} from '@selfcommunity/react-core';
 import {
@@ -12,12 +11,25 @@ import {
 import PrivateMessageThreadItem, {PrivateMessageThreadItemSkeleton} from '../PrivateMessageThreadItem';
 import PubSub from 'pubsub-js';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {Avatar, Box, Card, CardContent, CardProps, IconButton, List, ListItemAvatar, ListSubheader, TextField, Typography} from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Card,
+  CardContent,
+  CardProps,
+  IconButton,
+  List,
+  ListItemAvatar,
+  ListSubheader,
+  TextField,
+  Typography,
+  styled,
+  Autocomplete,
+  Icon
+} from '@mui/material';
 import PrivateMessageEditor from '../PrivateMessageEditor';
-import Autocomplete from '@mui/material/Autocomplete';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import Icon from '@mui/material/Icon';
 import PrivateMessageThreadSkeleton from './Skeleton';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {groupBy, Logger} from '@selfcommunity/utils';

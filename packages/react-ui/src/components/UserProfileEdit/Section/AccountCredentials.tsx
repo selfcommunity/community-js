@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Button, CircularProgress, FormGroup, IconButton, InputAdornment, Popover, Typography} from '@mui/material';
+import {Box, Button, CircularProgress, FormGroup, IconButton, InputAdornment, Popover, Typography, styled, Icon} from '@mui/material';
 import classNames from 'classnames';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {formatHttpErrorCode, UserService} from '@selfcommunity/api-services';
@@ -11,7 +10,6 @@ import PasswordTextField from '../../../shared/PasswordTextField';
 import EmailTextField from '../../../shared/EmailTextField';
 import {SCUserChangeEmailType, SCUserType} from '@selfcommunity/types';
 import {LoadingButton} from '@mui/lab';
-import Icon from '@mui/material/Icon';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from '../constants';
 

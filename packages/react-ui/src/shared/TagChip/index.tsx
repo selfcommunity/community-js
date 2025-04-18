@@ -1,13 +1,9 @@
 import React from 'react';
-import Chip from '@mui/material/Chip';
+import {styled, Chip, ChipClasses, Theme, ChipPropsSizeOverrides, ChipPropsVariantOverrides} from '@mui/material';
 import classNames from 'classnames';
-import {styled} from '@mui/material/styles';
 import {SCTagType} from '@selfcommunity/types';
-import {ChipClasses} from '@mui/material/Chip/chipClasses';
 import {OverridableStringUnion} from '@mui/types';
 import {SxProps} from '@mui/system';
-import {Theme} from '@mui/material';
-import {ChipPropsSizeOverrides, ChipPropsVariantOverrides} from '@mui/material/Chip/Chip';
 
 const PREFIX = 'SCTagChip';
 

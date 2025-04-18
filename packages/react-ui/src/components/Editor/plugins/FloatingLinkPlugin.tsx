@@ -18,9 +18,7 @@ import * as React from 'react';
 import {Dispatch, useCallback, useEffect, useState} from 'react';
 import {getSelectedNode} from '../../../utils/editor';
 import {isValidUrl} from '@selfcommunity/utils';
-import {styled} from '@mui/material/styles';
-import {IconButton, InputAdornment, Paper, Popper, TextField} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {styled, IconButton, InputAdornment, Paper, Popper, TextField, Icon} from '@mui/material';
 import {PREFIX} from '../constants';
 
 const classes = {

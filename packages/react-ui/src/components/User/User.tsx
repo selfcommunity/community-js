@@ -1,6 +1,5 @@
-import { Avatar, Badge, Button, ButtonBaseProps, Chip } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { useThemeProps } from '@mui/system';
+import {Avatar, Badge, Button, ButtonBaseProps, Chip, styled} from '@mui/material';
+import {useThemeProps} from '@mui/system';
 import {
   Link,
   SCPreferences,
@@ -11,18 +10,18 @@ import {
   useSCPreferences,
   useSCRouting
 } from '@selfcommunity/react-core';
-import { SCUserType } from '@selfcommunity/types';
+import {SCUserType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import React, { ReactNode, useMemo, useState } from 'react';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import React, {ReactNode, useMemo, useState} from 'react';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import BaseItemButton from '../../shared/BaseItemButton';
 import UserAvatar from '../../shared/UserAvatar';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import ConnectionUserButton from '../ConnectionUserButton';
-import { FollowUserButtonProps } from '../FollowUserButton/FollowUserButton';
-import { FriendshipButtonProps } from '../FriendshipUserButton/FriendshipUserButton';
-import { WidgetProps } from '../Widget';
-import { PREFIX } from './constants';
+import {FollowUserButtonProps} from '../FollowUserButton/FollowUserButton';
+import {FriendshipButtonProps} from '../FriendshipUserButton/FriendshipUserButton';
+import {WidgetProps} from '../Widget';
+import {PREFIX} from './constants';
 import UserSkeleton from './Skeleton';
 
 const messages = defineMessages({
@@ -43,7 +42,7 @@ const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({ theme }: any) => ({}));
+})(({theme}: any) => ({}));
 
 export interface UserProps extends WidgetProps {
   /**
@@ -150,7 +149,7 @@ export default function User(inProps: UserProps): JSX.Element {
   } = props;
 
   // STATE
-  const { scUser } = useSCFetchUser({ id: userId, user });
+  const {scUser} = useSCFetchUser({id: userId, user});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -204,12 +203,12 @@ export default function User(inProps: UserProps): JSX.Element {
         ButtonBaseProps={
           buttonProps ??
           (scUser.deleted
-            ? { onClick: () => setOpenAlert(true) }
-            : { component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser) })
+            ? {onClick: () => setOpenAlert(true)}
+            : {component: Link, to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUser)})
         }
         image={
           badgeContent ? (
-            <Badge overlap="circular" anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} badgeContent={badgeContent}>
+            <Badge overlap="circular" anchorOrigin={{vertical: 'bottom', horizontal: 'right'}} badgeContent={badgeContent}>
               <Avatar alt={scUser.username} src={scUser.avatar} className={classes.avatar} />
             </Badge>
           ) : (
@@ -240,7 +239,7 @@ export default function User(inProps: UserProps): JSX.Element {
           )
         }
         secondary={
-          secondary || (showFollowers ? `${intl.formatMessage(messages.userFollowers, { total: scUser.followers_counter })}` : scUser.description)
+          secondary || (showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description)
         }
         actions={actions ?? renderAuthenticatedActions()}
       />

@@ -1,5 +1,4 @@
-import {Autocomplete, AutocompleteProps, Avatar, Box, Fade, IconButton, styled, TextField, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Autocomplete, AutocompleteProps, Avatar, Box, Fade, IconButton, styled, TextField, Typography, Icon} from '@mui/material';
 import React, {useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';

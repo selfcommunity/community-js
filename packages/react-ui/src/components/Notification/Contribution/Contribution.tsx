@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Stack, Typography} from '@mui/material';
+import {Avatar, Stack, Typography, styled} from '@mui/material';
 import {SCCommentType, SCContributionType, SCFeedObjectType, SCNotificationContributionType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';

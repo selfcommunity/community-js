@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Stack, Typography} from '@mui/material';
+import {Avatar, Stack, Typography, styled} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import {SCNotificationConnectionAcceptType, SCNotificationConnectionRequestType, SCNotificationTypologyType} from '@selfcommunity/types';

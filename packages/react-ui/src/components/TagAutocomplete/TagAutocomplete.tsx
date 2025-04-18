@@ -1,13 +1,10 @@
 import React, {SyntheticEvent, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField, {TextFieldProps} from '@mui/material/TextField';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {AutocompleteProps} from '@mui/material';
+import {Autocomplete, AutocompleteProps, TextField, TextFieldProps, styled} from '@mui/material';
 import {useSCFetchAddressingTagList} from '@selfcommunity/react-core';
-import {styled} from '@mui/material/styles';
-import {SCTagType} from '@selfcommunity/types/src/index';
+import {SCTagType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import TagChip, {TagChipProps} from '../../shared/TagChip';
 

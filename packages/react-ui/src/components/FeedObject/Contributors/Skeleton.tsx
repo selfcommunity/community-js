@@ -1,6 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, BoxProps, Button} from '@mui/material';
+import {Box, BoxProps, Button, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import AvatarGroupSkeleton from '../../Skeleton/AvatarGroupSkeleton';
 import classNames from 'classnames';

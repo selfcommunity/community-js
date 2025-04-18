@@ -20,7 +20,7 @@ import {createHashtagNode, HashtagNode} from '../nodes/HashtagNode';
 import {CategoryService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCCategoryType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {PREFIX} from '../constants';
 
 type HashtagMatch = {

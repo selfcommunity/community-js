@@ -1,6 +1,4 @@
-import {Avatar, AvatarGroup, Button, List, ListItem, Typography} from '@mui/material';
-import {ButtonProps} from '@mui/material/Button/Button';
-import {styled} from '@mui/material/styles';
+import {Avatar, AvatarGroup, Button, ButtonProps, styled, List, ListItem, Typography} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {Endpoints, EventService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {useSCFetchEvent} from '@selfcommunity/react-core';

@@ -1,12 +1,9 @@
 import * as React from 'react';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import {Box, FormControlLabel, Icon, Switch, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, FormControlLabel, Icon, Switch, Typography, Menu, Button, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 // import {useIsRecording, useMaybeLayoutContext, useRoomContext} from '@livekit/components-react';
-import {Fragment, useEffect, useMemo, useState} from 'react';
+import {Fragment, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCLiveStreamSettingsMenu';

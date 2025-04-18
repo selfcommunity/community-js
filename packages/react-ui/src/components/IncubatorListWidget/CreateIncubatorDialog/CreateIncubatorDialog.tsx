@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {TextField, Typography, FormGroup} from '@mui/material';
+import {TextField, Typography, FormGroup, styled} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';

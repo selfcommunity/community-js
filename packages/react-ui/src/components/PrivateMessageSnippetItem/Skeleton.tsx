@@ -1,10 +1,5 @@
 import React from 'react';
-import ListItem from '@mui/material/ListItem';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemText from '@mui/material/ListItemText';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
-import {useTheme} from '@mui/material';
+import {useTheme, styled, ListItem, ListItemAvatar, ListItemText, Skeleton} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 

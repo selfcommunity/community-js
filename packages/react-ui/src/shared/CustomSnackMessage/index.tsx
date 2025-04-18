@@ -1,8 +1,6 @@
 import React, {forwardRef, useCallback} from 'react';
 import {useSnackbar, SnackbarContent} from 'notistack';
-import {styled} from '@mui/material/styles';
-import {CardContent, IconButton} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {CardContent, IconButton, styled, Icon} from '@mui/material';
 import Widget from '../../components/Widget';
 
 const PREFIX = 'SCCustomSnackMessage';

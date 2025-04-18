@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {IconButton, InputAdornment, TextField, TextFieldProps} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {styled, IconButton, InputAdornment, TextField, TextFieldProps, Icon} from '@mui/material';
 
 const PREFIX = 'SCPasswordTextField';
 

@@ -1,13 +1,10 @@
 import React, {ReactElement, useCallback, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {Box, BoxProps, Button, DialogTitle, IconButton, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, BoxProps, Button, DialogTitle, IconButton, Typography, styled, Icon, DialogContent} from '@mui/material';
 import {SCUserContextType, UserUtils, useSCUser} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import {ComposerLayerProps} from '../../../../types/composer';
-import Icon from '@mui/material/Icon';
 import CategoryAutocomplete from '../../../CategoryAutocomplete';
-import DialogContent from '@mui/material/DialogContent';
 import classNames from 'classnames';
 import {PREFIX} from '../../constants';
 

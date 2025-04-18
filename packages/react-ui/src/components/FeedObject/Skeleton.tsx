@@ -1,9 +1,7 @@
 import React from 'react';
 import Widget from '../Widget';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
-import {CardContent, CardHeader, CardProps, useTheme} from '@mui/material';
+import {CardContent, CardHeader, CardProps, useTheme, styled, Skeleton} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {PREFIX} from './constants';

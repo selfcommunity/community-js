@@ -1,13 +1,25 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import CardContent from '@mui/material/CardContent';
-import {Avatar, Box, Button, CardActions, CardHeader, CardProps, Chip, Collapse, Stack, Tooltip, Typography} from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  CardActions,
+  CardHeader,
+  CardProps,
+  Chip,
+  Collapse,
+  Stack,
+  Tooltip,
+  Typography,
+  styled,
+  CardContent,
+  Icon
+} from '@mui/material';
 import FeedObjectSkeleton, {FeedObjectSkeletonProps} from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
 import Bullet from '../../shared/Bullet';
 import Tags from '../../shared/Tags';
 import Actions, {ActionsProps} from './Actions';
-import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import PollObject, {PollObjectProps} from './Poll';
 import ContributorsFeedObject, {ContributorsFeedObjectProps} from './Contributors';

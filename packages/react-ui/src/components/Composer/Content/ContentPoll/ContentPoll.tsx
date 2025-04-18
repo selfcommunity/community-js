@@ -1,4 +1,4 @@
-import React, { forwardRef, SyntheticEvent, useCallback, useMemo } from 'react';
+import React, {forwardRef, SyntheticEvent, useCallback, useMemo} from 'react';
 import {
   Box,
   BoxProps,
@@ -11,27 +11,23 @@ import {
   TextField,
   Tooltip,
   Typography,
+  styled,
+  Icon,
+  InputAdornment
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
-import Icon from '@mui/material/Icon';
-import { ReactSortable } from 'react-sortablejs';
-import InputAdornment from '@mui/material/InputAdornment';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import {
-  COMPOSER_POLL_MIN_CHOICES,
-  COMPOSER_POLL_MIN_CLOSE_DATE_DELTA,
-  COMPOSER_POLL_TITLE_MAX_LENGTH,
-} from '../../../../constants/Composer';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
+import {ReactSortable} from 'react-sortablejs';
+import {DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
+import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
+import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_POLL_MIN_CLOSE_DATE_DELTA, COMPOSER_POLL_TITLE_MAX_LENGTH} from '../../../../constants/Composer';
 import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
-import { SCPollChoiceType } from '@selfcommunity/types/src/index';
+import {SCPollChoiceType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import { useThemeProps } from '@mui/system';
-import { parseISO } from 'date-fns';
-import { ComposerContentType } from '../../../../types/composer';
-import { PREFIX } from '../../constants';
+import {useThemeProps} from '@mui/system';
+import {parseISO} from 'date-fns';
+import {ComposerContentType} from '../../../../types/composer';
+import {PREFIX} from '../../constants';
 
 const localeMap = {
   en: enLocale,
@@ -114,59 +110,80 @@ export default (inProps: ContentPollProps): JSX.Element => {
   const {titleError = null, error: generalError = null} = {...error};
 
   // MEMO
-  const poll = useMemo(() => value.poll ? value.poll : {...DEFAULT_POLL}, [value, DEFAULT_POLL]);
+  const poll = useMemo(() => (value.poll ? value.poll : {...DEFAULT_POLL}), [value, DEFAULT_POLL]);
 
   // INTL
   const intl = useIntl();
 
   // HANDLERS
-  const handleChangeTitle = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange({...value, poll: {...poll, title: event.target.value}})
-  }, [value, poll]);
+  const handleChangeTitle = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChange({...value, poll: {...poll, title: event.target.value}});
+    },
+    [value, poll]
+  );
 
-  const handleSortChoices = useCallback((choices) => {
-    onChange({...value, poll: {...poll, choices}})
-  }, [value, poll]);
+  const handleSortChoices = useCallback(
+    (choices) => {
+      onChange({...value, poll: {...poll, choices}});
+    },
+    [value, poll]
+  );
 
-  const handleChangeChoice = useCallback((index: number) => {
-    return (event: React.ChangeEvent<HTMLInputElement>) => {
-      const _choices = [...poll.choices];
-      _choices[index].choice = event.target.value;
-      onChange({...value, poll: {...poll, choices: _choices}})
-    };
-  }, [value, poll]);
+  const handleChangeChoice = useCallback(
+    (index: number) => {
+      return (event: React.ChangeEvent<HTMLInputElement>) => {
+        const _choices = [...poll.choices];
+        _choices[index].choice = event.target.value;
+        onChange({...value, poll: {...poll, choices: _choices}});
+      };
+    },
+    [value, poll]
+  );
 
   const handleAddChoice = useCallback(() => {
     onChange({...value, poll: {...poll, choices: [...poll.choices, {...DEFAULT_CHOICE}]}});
   }, [value, poll]);
 
-  const handleDeleteChoice = useCallback((index: number) => {
-    return (event: SyntheticEvent) => {
-      const _choices = [...poll.choices];
-      _choices.splice(index, 1);
-      onChange({...value, poll: {...poll, choices: _choices}})
-    };
-  }, [value, poll]);
+  const handleDeleteChoice = useCallback(
+    (index: number) => {
+      return (event: SyntheticEvent) => {
+        const _choices = [...poll.choices];
+        _choices.splice(index, 1);
+        onChange({...value, poll: {...poll, choices: _choices}});
+      };
+    },
+    [value, poll]
+  );
 
-  const handleChangeMultiple = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange({...value, poll: {...poll, multiple_choices: event.target.checked}});
-  }, [value, poll]);
+  const handleChangeMultiple = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChange({...value, poll: {...poll, multiple_choices: event.target.checked}});
+    },
+    [value, poll]
+  );
 
-  const handleChangeExpiration = useCallback((expiration: any) => {
-    onChange({...value, poll: {...poll, expiration_at: expiration}});
-  }, [value, poll]);
-
+  const handleChangeExpiration = useCallback(
+    (expiration: any) => {
+      onChange({...value, poll: {...poll, expiration_at: expiration}});
+    },
+    [value, poll]
+  );
 
   // RENDER
   const minDate = useMemo(() => {
     const minDate = new Date();
     minDate.setDate(minDate.getDate() + COMPOSER_POLL_MIN_CLOSE_DATE_DELTA);
     return minDate;
-    }, []);
+  }, []);
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {generalError && <Typography className={classes.generalError}><FormattedMessage id={`ui.composer.content.poll.error.${generalError}`} defaultMessage={`ui.composer.content.poll.error.${generalError}`} /></Typography>}
+      {generalError && (
+        <Typography className={classes.generalError}>
+          <FormattedMessage id={`ui.composer.content.poll.error.${generalError}`} defaultMessage={`ui.composer.content.poll.error.${generalError}`} />
+        </Typography>
+      )}
       <Box className={classes.title}>
         <TextField
           autoFocus
@@ -204,7 +221,10 @@ export default (inProps: ContentPollProps): JSX.Element => {
                     <Tooltip
                       title={
                         poll.choices.length <= COMPOSER_POLL_MIN_CHOICES ? (
-                          <FormattedMessage id="ui.composer.content.poll.choice.delete.disabled" defaultMessage="ui.composer.content.poll.choice.delete.disabled" />
+                          <FormattedMessage
+                            id="ui.composer.content.poll.choice.delete.disabled"
+                            defaultMessage="ui.composer.content.poll.choice.delete.disabled"
+                          />
                         ) : (
                           <FormattedMessage id="ui.composer.content.poll.choice.delete" defaultMessage="ui.composer.content.poll.choice.delete" />
                         )

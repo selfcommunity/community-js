@@ -1,5 +1,4 @@
-import {Box, BoxProps, Button, CircularProgress, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, BoxProps, Button, CircularProgress, Typography, styled, DialogContent} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {
   Link,
@@ -32,7 +31,6 @@ import {defaultVideoOptions} from '../constants';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {VideoConference} from './VideoConference';
 import {useLiveStream} from './LiveStreamProvider';
-import DialogContent from '@mui/material/DialogContent';
 import BaseDialog from '../../../shared/BaseDialog';
 import {closeSnackbar} from 'notistack';
 

@@ -1,6 +1,18 @@
 import {LoadingButton} from '@mui/lab';
-import {Button, CardActions, CardContent, CardHeader, Divider, Icon, Stack, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {
+  Button,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Divider,
+  Icon,
+  Stack,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  styled
+} from '@mui/material';
 import {Box, useThemeProps} from '@mui/system';
 import {Endpoints, EventService, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCCache, SCThemeType, SCUserContextType, useSCFetchEvent, useSCUser} from '@selfcommunity/react-core';

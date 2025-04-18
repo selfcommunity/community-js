@@ -1,6 +1,5 @@
 import React, {useCallback, useContext, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Backdrop, Box, Button, Collapse, Divider, Grid, Icon, IconButton, Stack, Tooltip, Typography} from '@mui/material';
+import {Backdrop, Box, Button, Collapse, Divider, Grid, Icon, IconButton, Stack, Tooltip, Typography, styled, Grow} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Link, SCContextType, SCUserContext, SCUserContextType, UserUtils, useSCContext} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
@@ -12,7 +11,6 @@ import {PlatformWidgetActionType} from '../../types/platformWidget';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {CONTACT_PROD, CONTACT_STAGE, HUB_PROD, HUB_STAGE, PREFIX} from './constants';
 import LogoPlaceholder from '../../assets/logo';
-import Grow from '@mui/material/Grow';
 
 const classes = {
   root: `${PREFIX}-root`,

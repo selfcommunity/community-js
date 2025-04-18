@@ -4,7 +4,7 @@
 import React, {useEffect, useState} from 'react';
 import {Waypoint} from 'react-waypoint';
 import ReactPlayer from 'react-player';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 
 const PREFIX = 'SCAutoPlayer';
 

@@ -13,8 +13,7 @@ import {
   usePreviousValue,
   useSCFetchFeed
 } from '@selfcommunity/react-core';
-import {styled, useTheme} from '@mui/material/styles';
-import {Box, Button, CardContent, Grid, Hidden, Theme, Typography, useMediaQuery} from '@mui/material';
+import {styled, useTheme, Box, Button, CardContent, Grid, Hidden, Theme, Typography, useMediaQuery} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';

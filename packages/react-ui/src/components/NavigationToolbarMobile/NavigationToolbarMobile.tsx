@@ -1,4 +1,4 @@
-import {Badge, Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
+import {Badge, Button, IconButton, styled, Toolbar, ToolbarProps, Icon} from '@mui/material';
 import React, {useCallback, useMemo, useState} from 'react';
 import {
   Link,
@@ -12,7 +12,6 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import NavigationToolbarMobileSkeleton from './Skeleton';

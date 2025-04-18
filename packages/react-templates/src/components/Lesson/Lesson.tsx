@@ -1,7 +1,6 @@
 import {Fragment, useCallback, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme, Alert} from '@mui/material';
+import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme, Alert, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
 import {SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCFetchLesson, useSCRouting, Link} from '@selfcommunity/react-core';

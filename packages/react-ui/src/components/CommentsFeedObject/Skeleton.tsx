@@ -1,7 +1,7 @@
 import React from 'react';
 import {CommentsObjectSkeleton} from '../CommentsObject';
 import {PREFIX} from './constants';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`

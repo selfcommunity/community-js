@@ -1,4 +1,4 @@
-import React, { forwardRef, ReactElement, useCallback, useMemo, useState } from 'react';
+import React, {forwardRef, ReactElement, useCallback, useMemo, useState} from 'react';
 import {
   CircularProgress,
   IconButton,
@@ -13,19 +13,19 @@ import {
   SwipeableDrawer,
   useMediaQuery,
   useTheme,
+  Icon,
+  styled
 } from '@mui/material';
-import Icon from '@mui/material/Icon';
-import { PREFIX } from './constants';
-import { styled } from '@mui/material/styles';
+import {PREFIX} from './constants';
 import classNames from 'classnames';
-import { SCContextType, SCThemeType, useSCContext } from '@selfcommunity/react-core';
-import { FormattedMessage } from 'react-intl';
+import {SCContextType, SCThemeType, useSCContext} from '@selfcommunity/react-core';
+import {FormattedMessage} from 'react-intl';
 import MediaChunkUploader from '../../MediaChunkUploader';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import { SCMediaType } from '@selfcommunity/types';
-import { Endpoints } from '@selfcommunity/api-services';
+import {SCMediaType} from '@selfcommunity/types';
+import {Endpoints} from '@selfcommunity/api-services';
 import asUploadButton from './asUploadButton';
-import { useSnackbar } from 'notistack';
+import {useSnackbar} from 'notistack';
 import {SCMediaChunkType} from '../../../types/media';
 
 const classes = {
@@ -33,9 +33,8 @@ const classes = {
   triggerDrawerRoot: `${PREFIX}-trigger-drawer-root`,
   triggerMenuRoot: `${PREFIX}-trigger-menu-root`,
   paper: `${PREFIX}-paper`,
-  item: `${PREFIX}-item`,
+  item: `${PREFIX}-item`
 };
-
 
 const Root = styled(IconButton, {
   name: PREFIX,
@@ -53,33 +52,28 @@ const MenuRoot = styled(Menu, {
 })(() => ({}));
 
 const PhotoUploadListItemButton = asUploadButton(
-  forwardRef((props: ListItemButtonProps, ref: any) => (
-    <ListItemButton {...props} aria-label="upload" ref={ref} />
-  )), {accept: 'image/*', capture: 'camera'}
+  forwardRef((props: ListItemButtonProps, ref: any) => <ListItemButton {...props} aria-label="upload" ref={ref} />),
+  {accept: 'image/*', capture: 'camera'}
 );
 
 const GalleryUploadListItemButton = asUploadButton(
-  forwardRef((props: ListItemButtonProps, ref: any) => (
-    <ListItemButton {...props} aria-label="upload" ref={ref} />
-  )), {accept: 'image/*'}
+  forwardRef((props: ListItemButtonProps, ref: any) => <ListItemButton {...props} aria-label="upload" ref={ref} />),
+  {accept: 'image/*'}
 );
 
 const DocumentUploadListItemButton = asUploadButton(
-  forwardRef((props: ListItemButtonProps, ref: any) => (
-    <ListItemButton {...props} aria-label="upload" ref={ref} />
-  )), {accept: 'application/pdf'}
+  forwardRef((props: ListItemButtonProps, ref: any) => <ListItemButton {...props} aria-label="upload" ref={ref} />),
+  {accept: 'application/pdf'}
 );
 
 const GalleryUploadMenuItem = asUploadButton(
-  forwardRef((props: MenuItemProps, ref: any) => (
-    <MenuItem {...props} aria-label="upload" ref={ref} />
-  )), {accept: 'image/*'}
+  forwardRef((props: MenuItemProps, ref: any) => <MenuItem {...props} aria-label="upload" ref={ref} />),
+  {accept: 'image/*'}
 );
 
 const DocumentUploadMenuItem = asUploadButton(
-  forwardRef((props: MenuItemProps, ref: any) => (
-    <MenuItem {...props} aria-label="upload" ref={ref} />
-  )), {accept: 'application/pdf'}
+  forwardRef((props: MenuItemProps, ref: any) => <MenuItem {...props} aria-label="upload" ref={ref} />),
+  {accept: 'application/pdf'}
 );
 
 export interface TriggerIconButtonProps extends IconButtonProps {
@@ -89,7 +83,6 @@ export interface TriggerIconButtonProps extends IconButtonProps {
    */
   onAdd?: (media: SCMediaType) => void;
 }
-
 
 export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): ReactElement => {
   // STATE
@@ -114,25 +107,31 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
   const handleFilterByMime = useCallback((file) => {
     return file.type.startsWith('image/') || file.type === 'application/pdf';
   }, []);
-  const handleSuccess = useCallback((media: SCMediaType) => {
-    onAdd && onAdd(media);
-  }, [onAdd]);
+  const handleSuccess = useCallback(
+    (media: SCMediaType) => {
+      onAdd && onAdd(media);
+    },
+    [onAdd]
+  );
   const handleProgress = useCallback((chunks: any) => {
     //console.log(chunks);
     setIsUploading(Object.keys(chunks).length > 0);
   }, []);
-  const handleError = useCallback((chunk: SCMediaChunkType, error: string) => {
-    const _snackBar = enqueueSnackbar(`${chunk.name}: ${error}`, {
-      variant: 'error',
-      anchorOrigin: {horizontal: 'center', vertical: 'top'},
-      autoHideDuration: 2000,
-      SnackbarProps: {
-        onClick: () => {
-          closeSnackbar(_snackBar);
+  const handleError = useCallback(
+    (chunk: SCMediaChunkType, error: string) => {
+      const _snackBar = enqueueSnackbar(`${chunk.name}: ${error}`, {
+        variant: 'error',
+        anchorOrigin: {horizontal: 'center', vertical: 'top'},
+        autoHideDuration: 2000,
+        SnackbarProps: {
+          onClick: () => {
+            closeSnackbar(_snackBar);
+          }
         }
-      }
-    });
-  }, [enqueueSnackbar]);
+      });
+    },
+    [enqueueSnackbar]
+  );
 
   const list = useMemo(() => {
     if (isMobile) {
@@ -148,9 +147,9 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
           </GalleryUploadListItemButton>
         </ListItem>,
         <ListItem className={classes.item} key="document">
-            <DocumentUploadListItemButton inputFieldName="document">
-              <FormattedMessage id="ui.composer.media.file.document" defaultMessage="ui.composer.media.file.document" />
-            </DocumentUploadListItemButton>
+          <DocumentUploadListItemButton inputFieldName="document">
+            <FormattedMessage id="ui.composer.media.file.document" defaultMessage="ui.composer.media.file.document" />
+          </DocumentUploadListItemButton>
         </ListItem>
       ];
     } else {
@@ -173,8 +172,7 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
       }}
       fileFilter={handleFilterByMime}
       chunkSize={204800}
-      multiple
-    >
+      multiple>
       <MediaChunkUploader onSuccess={handleSuccess} onProgress={handleProgress} onError={handleError} />
       <Root className={classNames(className, classes.triggerRoot)} {...rest} aria-label="add media" disabled={isUploading} onClick={handleOpen}>
         {isUploading ? <CircularProgress size={20} /> : <Icon>photo_file</Icon>}
@@ -189,7 +187,7 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
           onOpen={handleOpen}
           PaperProps={{className: classes.paper}}
           disableSwipeToOpen>
-            <List>{list}</List>
+          <List>{list}</List>
         </SwipeableDrawerRoot>
       ) : (
         <MenuRoot

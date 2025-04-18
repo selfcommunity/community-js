@@ -1,6 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Typography, Grid, Skeleton, Box, useTheme, useMediaQuery} from '@mui/material';
+import {Typography, Grid, Skeleton, Box, useTheme, useMediaQuery, styled} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 import PrizeItemSkeleton from './PrizeItemSkeleton';
 import {PREFIX} from './constants';

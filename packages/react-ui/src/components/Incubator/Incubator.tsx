@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Typography, Grid, Box, Button, ButtonProps, CardActions} from '@mui/material';
+import {Typography, Grid, Box, Button, ButtonProps, CardContent, CardActions, styled, LinearProgress, LinearProgressProps} from '@mui/material';
 import {SCIncubatorType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchIncubator, useSCRouting} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
-import CardContent from '@mui/material/CardContent';
 import Skeleton from './Skeleton';
-import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';

@@ -1,9 +1,8 @@
 import React from 'react';
-import {ChipProps, FormControl, InputLabel, MenuItem, Radio, Select} from '@mui/material';
+import {ChipProps, FormControl, InputLabel, MenuItem, Radio, Select, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
-import {styled} from '@mui/material/styles';
 import {SCEventLocationFilterType} from '@selfcommunity/types';
 import classNames from 'classnames';
 

@@ -1,11 +1,6 @@
 import * as React from 'react';
 import {useContext} from 'react';
-import Box from '@mui/material/Box';
-import Menu from '@mui/material/Menu';
-import Tooltip from '@mui/material/Tooltip';
-import {Button, ListItemButton, ListItemText, SwipeableDrawer, useMediaQuery, useTheme} from '@mui/material';
-import Icon from '@mui/material/Icon';
-import {styled} from '@mui/material/styles';
+import {Button, ListItemButton, ListItemText, SwipeableDrawer, useMediaQuery, useTheme, Box, Menu, Tooltip, Icon, styled} from '@mui/material';
 import {SCFeedObjectActivitiesType} from '../../../../types/feedObject';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {camelCase} from '@selfcommunity/utils';

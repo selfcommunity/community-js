@@ -1,12 +1,10 @@
-import {Button, Divider, Icon} from '@mui/material';
-import {ButtonProps} from '@mui/material/Button/Button';
-import {styled} from '@mui/material/styles';
+import {Button, ButtonProps, Icon, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import React, {useContext, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {SCCommunitySubscriptionTier, SCEventType, SCFeatureName, SCLiveStreamType} from '@selfcommunity/types';
+import {SCCommunitySubscriptionTier, SCFeatureName} from '@selfcommunity/types';
 import CreateLivestreamDialog, {CreateLiveStreamDialogProps} from '../CreateLiveStreamDialog';
 
 const PREFIX = 'SCCreateLivestreamButton';

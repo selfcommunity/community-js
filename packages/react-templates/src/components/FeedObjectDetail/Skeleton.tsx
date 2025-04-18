@@ -1,7 +1,6 @@
 import React from 'react';
 import {CommentsFeedObjectSkeleton, FeedObjectSkeleton, SCFeedObjectTemplateType, RelatedFeedObjectsWidgetSkeleton} from '@selfcommunity/react-ui';
-import {Box, Grid} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, Grid, styled} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {

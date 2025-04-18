@@ -1,9 +1,7 @@
 import React, {useContext, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Button} from '@mui/material';
+import {Button, styled, Icon} from '@mui/material';
 import ChangePictureDialog from './ChangePictureDialog/ChangePictureDialog';
 import {FormattedMessage} from 'react-intl';
-import Icon from '@mui/material/Icon';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';

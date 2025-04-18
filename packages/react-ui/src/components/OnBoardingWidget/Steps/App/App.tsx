@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {PREFIX} from '../../constants';
-import {Button, CardMedia, Icon, Tab, Tabs, Typography} from '@mui/material';
+import {Button, CardMedia, Icon, Tab, Tabs, Typography, Box, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCOnBoardingStepStatusType, SCStepType} from '@selfcommunity/types';
 import AndroidPlaceholder from '../../../../assets/onBoarding/android';

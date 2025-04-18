@@ -1,10 +1,7 @@
-import { LoadingButton } from '@mui/lab';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import { styled } from '@mui/material/styles';
+import {LoadingButton} from '@mui/lab';
+import {styled, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card} from '@mui/material';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCConfirmDialog';
 
@@ -12,7 +9,7 @@ const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({ theme }) => ({
+})(({theme}) => ({
   maxWidth: 800,
   marginBottom: theme.spacing(2)
 }));

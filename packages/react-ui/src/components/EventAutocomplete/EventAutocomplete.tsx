@@ -1,14 +1,10 @@
 import React, {SyntheticEvent, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField, {TextFieldProps} from '@mui/material/TextField';
-import CircularProgress from '@mui/material/CircularProgress';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {AutocompleteProps, Avatar, Box, Typography} from '@mui/material';
+import {AutocompleteProps, Avatar, Box, Typography, styled, Autocomplete, TextField, TextFieldProps, CircularProgress} from '@mui/material';
 import {useSCFetchEvents} from '@selfcommunity/react-core';
-import {styled} from '@mui/material/styles';
-import {SCEventType} from '@selfcommunity/types/src/index';
+import {SCEventType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCEventAutocomplete';

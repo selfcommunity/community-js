@@ -1,5 +1,5 @@
 import React, {useMemo, useRef} from 'react';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContextType, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';

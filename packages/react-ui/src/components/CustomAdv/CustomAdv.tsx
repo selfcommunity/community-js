@@ -1,6 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
+import {Box, styled} from '@mui/material';
 import {useIsComponentMountedRef, useSCFetchCustomAdv} from '@selfcommunity/react-core';
 import {SCCustomAdvPosition} from '@selfcommunity/types';
 import classNames from 'classnames';

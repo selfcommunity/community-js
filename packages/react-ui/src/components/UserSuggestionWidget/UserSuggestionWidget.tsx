@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useReducer, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, SuggestionService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {

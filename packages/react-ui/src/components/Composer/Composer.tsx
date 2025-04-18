@@ -25,7 +25,6 @@ import {
   useSCUser
 } from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
-import Icon from '@mui/material/Icon';
 import {
   Alert,
   AlertTitle,
@@ -39,9 +38,11 @@ import {
   IconButton,
   Slide,
   Theme,
-  useMediaQuery
+  useMediaQuery,
+  Icon,
+  styled,
+  useTheme
 } from '@mui/material';
-import {styled, useTheme} from '@mui/material/styles';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_POLL} from '../../constants/Composer';
 import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';

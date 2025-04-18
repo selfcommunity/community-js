@@ -1,7 +1,5 @@
 import React, {useContext, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Alert} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Alert, styled, Icon} from '@mui/material';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';

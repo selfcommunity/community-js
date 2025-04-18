@@ -1,5 +1,4 @@
-import {Box, BoxProps, FormControl, Icon, InputLabel, MenuItem, Select, Stack, Switch, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, BoxProps, FormControl, Icon, InputLabel, MenuItem, Select, Stack, Switch, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCCommunitySubscriptionTier, SCFeatureName, SCLiveStreamSettingsType, SCLiveStreamViewType} from '@selfcommunity/types';
 import classNames from 'classnames';

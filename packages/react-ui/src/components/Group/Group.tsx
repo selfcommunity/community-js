@@ -1,6 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Button, ButtonBaseProps, Icon, Stack, useMediaQuery, useTheme} from '@mui/material';
+import {Avatar, Button, ButtonBaseProps, Icon, Stack, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {
   Link,

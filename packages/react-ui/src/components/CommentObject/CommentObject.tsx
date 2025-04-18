@@ -1,8 +1,7 @@
 import React, {useContext, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, Box, Button, CardContent, CardProps, Chip, Icon, IconButton, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardContent, CardProps, Chip, Icon, IconButton, Typography, styled} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';

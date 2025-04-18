@@ -1,5 +1,4 @@
-import {Box, BoxProps, FormControl, FormControlLabel, Icon, Radio, RadioGroup, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, BoxProps, FormControl, FormControlLabel, Icon, Radio, RadioGroup, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCCourseLessonStatusType, SCCoursePrivacyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import classNames from 'classnames';

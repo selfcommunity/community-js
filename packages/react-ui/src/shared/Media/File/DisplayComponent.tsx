@@ -1,6 +1,4 @@
-import {Box, Grid, IconButton, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
-import {styled} from '@mui/material/styles';
+import {styled, Box, Grid, IconButton, Typography, Icon} from '@mui/material';
 import {Link} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {MEDIA_TYPE_DOCUMENT} from '../../../constants/Media';

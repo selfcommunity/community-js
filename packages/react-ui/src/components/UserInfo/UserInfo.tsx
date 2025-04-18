@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Typography} from '@mui/material';
+import {Box, Typography, styled} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import {camelCase, Logger} from '@selfcommunity/utils';
 import {SCUserType} from '@selfcommunity/types';

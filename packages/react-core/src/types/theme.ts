@@ -1,4 +1,4 @@
-import {Theme as MuiTheme} from '@mui/material/styles/createTheme';
+import {Theme as MuiTheme} from '@mui/material';
 
 /**
  * Interface SCThemeAvatarVariableType

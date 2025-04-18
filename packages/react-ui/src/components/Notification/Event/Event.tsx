@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Icon, Stack, Typography} from '@mui/material';
+import {Avatar, Box, Icon, Stack, Typography, styled} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventSubscriptionStatusType, SCNotificationEventActivityType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';

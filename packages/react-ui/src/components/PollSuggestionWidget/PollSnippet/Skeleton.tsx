@@ -1,7 +1,5 @@
 import React from 'react';
-import {Button, useTheme} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
+import {Skeleton, styled, useTheme} from '@mui/material';
 import BaseItem from '../../../shared/BaseItem';
 import {WidgetProps} from '../../Widget';
 import {SCThemeType} from '@selfcommunity/react-core';

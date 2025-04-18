@@ -1,6 +1,5 @@
 import React from 'react';
-import {Box} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, styled} from '@mui/material';
 import GroupFeedSkeleton from '../GroupFeed/Skeleton';
 import {GroupHeaderSkeleton} from '@selfcommunity/react-ui';
 import {PREFIX} from './constants';

@@ -1,17 +1,27 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import Icon from '@mui/material/Icon';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
-import {styled} from '@mui/material/styles';
-import {Box, Button, Divider, ListItemText, Menu, SwipeableDrawer, Tooltip, useMediaQuery, useTheme} from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
+import {
+  Box,
+  Button,
+  Divider,
+  ListItemText,
+  Menu,
+  SwipeableDrawer,
+  Tooltip,
+  useMediaQuery,
+  useTheme,
+  Icon,
+  MenuItem,
+  ListItemIcon,
+  styled,
+  Skeleton
+} from '@mui/material';
 import {MEDIA_EMBED_SC_SHARED_EVENT, MEDIA_TYPE_SHARE} from '../../../../constants/Media';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
-import Skeleton from '@mui/material/Skeleton';
 import {SCContributionType, SCFeedObjectType, SCGroupPrivacyType, SCMediaType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {copyTextToClipboard, Logger} from '@selfcommunity/utils';

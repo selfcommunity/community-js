@@ -1,8 +1,7 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {AppBar, Icon, IconButton, Toolbar, Typography, Box} from '@mui/material';
+import {AppBar, Icon, IconButton, Toolbar, Typography, Box, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCLessonActionsType} from '../../types';
 import {FormattedMessage} from 'react-intl';

@@ -1,7 +1,6 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
-import {Snackbar, Alert, SnackbarProps} from '@mui/material';
+import {styled, Snackbar, Alert, SnackbarProps} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 

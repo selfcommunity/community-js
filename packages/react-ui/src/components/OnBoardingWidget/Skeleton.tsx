@@ -1,7 +1,5 @@
 import React from 'react';
-import {Box, Chip, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Tab, Tabs, useMediaQuery, useTheme} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
+import {Box, Chip, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, Skeleton, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCThemeType} from '@selfcommunity/react-core';
 

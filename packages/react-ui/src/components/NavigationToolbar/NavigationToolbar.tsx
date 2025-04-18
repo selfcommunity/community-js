@@ -1,6 +1,5 @@
-import {Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, Tooltip} from '@mui/material';
+import {Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, Tooltip, Icon} from '@mui/material';
 import React, {useMemo} from 'react';
-import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import NavigationToolbarSkeleton from './Skeleton';

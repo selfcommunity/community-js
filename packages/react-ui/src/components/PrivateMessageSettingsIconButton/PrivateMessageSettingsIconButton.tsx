@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {SwipeableDrawer, MenuItem, ListItemIcon, IconButtonProps, IconButton, Menu, useTheme, useMediaQuery, List, ListItem} from '@mui/material';
+import {SwipeableDrawer, MenuItem, ListItemIcon, IconButtonProps, IconButton, Menu, useTheme, useMediaQuery, List, ListItem, styled, Icon} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';

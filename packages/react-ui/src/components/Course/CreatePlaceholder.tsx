@@ -1,5 +1,4 @@
-import {Box, CardActions, CardMedia, Icon} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, CardActions, CardMedia, Icon, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import Widget, {WidgetProps} from '../Widget';

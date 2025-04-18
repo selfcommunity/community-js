@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
 import {CONTROLLED_TEXT_INSERTION_COMMAND, LexicalEditor} from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {Fade, Icon, IconButton, Popover, useMediaQuery, useTheme} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Fade, Icon, IconButton, Popover, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {EmojiClickData} from 'emoji-picker-react';
 import EmojiPicker from '../../../shared/EmojiPicker';

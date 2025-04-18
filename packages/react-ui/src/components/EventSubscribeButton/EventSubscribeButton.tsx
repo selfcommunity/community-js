@@ -10,9 +10,9 @@ import {
   MenuItem,
   SwipeableDrawer,
   useMediaQuery,
-  useTheme
+  useTheme,
+  styled
 } from '@mui/material';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {
   SCContextType,

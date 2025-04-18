@@ -1,6 +1,6 @@
 import React from 'react';
 import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserContextType, useSCFetchGroup, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
