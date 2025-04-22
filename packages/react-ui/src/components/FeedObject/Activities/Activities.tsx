@@ -26,7 +26,7 @@ const Root = styled(Box, {
 export interface ActivitiesProps {
   /**
    * Id of the FeedObjectActivities
-   * @default `feed_object_activities_<feedObjectId | feedObject.id>`
+   * @default `feed_object_activities_feedObjectId`
    */
   id?: string;
 
