@@ -72,7 +72,7 @@ const Root = styled(Widget, {
 export interface NotificationProps extends CardProps, VirtualScrollerItemProps {
   /**
    * Id of the UserNotification
-   * @default `notification_<notificationObject.sid>`
+   * @default `notification_notificationObject.sid`
    */
   id?: string;
 

@@ -42,7 +42,7 @@ const Root = styled(Box, {
 export interface LessonCommentObjectsProps {
   /**
    * Id of the LessonCommentObjects
-   * @default `lesson_comments_object_<lessonObjectId | lessonObject.id>`
+   * @default `lesson_comments_object_lessonObjectId`
    */
   id?: string;
   /**

@@ -113,7 +113,7 @@ const Root = styled(Widget, {
 export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
   /**
    * Id of the feedObject
-   * @default `feed_object_<feedObjectType>_<feedObjectId | feedObject.id>`
+   * @default `feed_object_feedObjectType_feedObjectId`
    */
   id?: string;
 

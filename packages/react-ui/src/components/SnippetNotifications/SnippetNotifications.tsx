@@ -62,7 +62,7 @@ const Root = styled(Box, {
 export interface SnippetNotificationsProps extends CardProps {
   /**
    * Id of the UserNotification
-   * @default `notification_<notificationObject.sid>`
+   * @default `notification_notificationObject.sid`
    */
   id?: string;
 

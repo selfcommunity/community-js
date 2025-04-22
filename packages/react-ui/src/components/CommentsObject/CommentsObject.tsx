@@ -44,7 +44,7 @@ const Root = styled(Box, {
 export interface CommentsObjectProps {
   /**
    * Id of the CommentsObject
-   * @default `comments_object_<feedObjectType>_<feedObjectId | feedObject.id>`
+   * @default `comments_object_feedObjectType_feedObjectId`
    */
   id?: string;
 
