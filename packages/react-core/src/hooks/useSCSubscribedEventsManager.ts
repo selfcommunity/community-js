@@ -17,7 +17,9 @@ import {SCNotificationMapping} from '../constants/Notification';
 import {CONFIGURATIONS_EVENTS_ENABLED} from '../constants/Preferences';
 import {getEventStatus} from '../utils/event';
 import useSCCachingManager from './useSCCachingManager';
-import {SCRoutes, SCRoutingContext, SCRoutingContextType} from '@selfcommunity/react-core';
+import {SCRoutingContextType} from '../types/context';
+import {SCRoutingContext} from '../components/provider/SCRoutingProvider';
+import * as SCRoutes from '../constants/Routes';
 
 /**
  :::info
