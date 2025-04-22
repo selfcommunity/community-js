@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {TextField, Typography, Box, Avatar, Button, CardContent, Alert, FormGroup, AvatarGroup, List, ListItem} from '@mui/material';
+import {TextField, Typography, Box, Avatar, Button, CardContent, Alert, FormGroup, AvatarGroup, List, ListItem, styled, Icon} from '@mui/material';
 import {SCIncubatorType, SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -29,7 +28,6 @@ import CentralProgress from '../../shared/CentralProgress';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import User from '../User';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import Icon from '@mui/material/Icon';
 import {FACEBOOK_SHARE, X_SHARE, LINKEDIN_SHARE} from '../../constants/SocialShare';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 

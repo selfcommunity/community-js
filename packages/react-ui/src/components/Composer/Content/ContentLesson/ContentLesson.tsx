@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Box, BoxProps, Icon, IconButton, InputAdornment, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, BoxProps, Icon, IconButton, InputAdornment, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
 import Editor, {EditorProps} from '../../../Editor';
 import {FormattedMessage} from 'react-intl';

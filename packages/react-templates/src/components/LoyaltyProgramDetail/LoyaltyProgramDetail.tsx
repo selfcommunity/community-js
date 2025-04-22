@@ -1,11 +1,9 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {http, Endpoints, HttpResponse, UserService, LoyaltyService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCPrizeType} from '@selfcommunity/types';
-import {Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography, useMediaQuery, useTheme, styled, Chip} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import Chip from '@mui/material/Chip';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import Skeleton from './Skeleton';

@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {SCConnectionStatus, SCUserType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';

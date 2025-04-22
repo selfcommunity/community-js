@@ -1,6 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Tab, Tabs} from '@mui/material';
+import {Box, Tab, Tabs, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {DEFAULT_FIELDS, DEFAULT_SETTINGS} from '../../constants/UserProfile';
 import PublicInfo, {PublicInfoProps} from './Section/PublicInfo';

@@ -1,14 +1,11 @@
-import React, { ReactElement } from 'react';
-import { Box, IconButton, IconButtonProps } from '@mui/material';
-import Icon from '@mui/material/Icon';
-import { PREFIX } from './constants';
-import { styled } from '@mui/material/styles';
+import React, {ReactElement} from 'react';
+import {Icon, IconButton, IconButtonProps, styled} from '@mui/material';
+import {PREFIX} from './constants';
 import classNames from 'classnames';
 
 const classes = {
   triggerRoot: `${PREFIX}-trigger-root`
 };
-
 
 const Root = styled(IconButton, {
   name: PREFIX,

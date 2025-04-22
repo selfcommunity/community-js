@@ -19,10 +19,10 @@ import {
   ListItemText,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
+  styled
 } from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import Category from './Steps/Category';

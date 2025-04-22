@@ -29,9 +29,8 @@ import {$findMatchingParent, $getNearestBlockElementAncestorOrThrow, $getNearest
 import * as React from 'react';
 import {useCallback, useEffect, useState} from 'react';
 import {getSelectedNode} from '../../../utils/editor';
-import {Box, Icon, IconButton, Menu, MenuItem, ToggleButton, ToggleButtonGroup, Tooltip} from '@mui/material';
+import {Box, Icon, IconButton, Menu, MenuItem, ToggleButton, ToggleButtonGroup, Tooltip, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import ImagePlugin from './ImagePlugin';
 import EmojiPlugin from './EmojiPlugin';

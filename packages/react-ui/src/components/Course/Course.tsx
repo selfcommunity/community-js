@@ -11,9 +11,9 @@ import {
   Tooltip,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
+  styled
 } from '@mui/material';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCRouting} from '@selfcommunity/react-core';
 import {SCCourseJoinStatusType, SCCourseType} from '@selfcommunity/types';

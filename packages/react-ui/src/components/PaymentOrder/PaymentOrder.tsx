@@ -1,6 +1,5 @@
 import React from 'react';
-import {Box, Chip, Stack, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, Chip, Stack, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {useSCFetchPaymentOrder, useSCPaymentsEnabled} from '@selfcommunity/react-core';

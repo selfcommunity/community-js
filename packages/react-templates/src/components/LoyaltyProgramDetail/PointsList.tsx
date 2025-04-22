@@ -1,7 +1,6 @@
 import React, {useMemo} from 'react';
-import {styled} from '@mui/material/styles';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {Divider, Grid, Typography} from '@mui/material';
+import {Divider, Grid, Typography, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 

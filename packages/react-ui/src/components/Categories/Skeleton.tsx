@@ -1,6 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Grid} from '@mui/material';
+import {styled, Box, Grid} from '@mui/material';
 import CategorySkeleton from '../Category/Skeleton';
 import classNames from 'classnames';
 import {PREFIX} from './constants';

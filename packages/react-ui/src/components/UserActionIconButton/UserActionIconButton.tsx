@@ -1,5 +1,4 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {
   Divider,
   Icon,
@@ -14,7 +13,8 @@ import {
   Slide,
   SwipeableDrawer,
   useMediaQuery,
-  useTheme
+  useTheme,
+  styled
 } from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
 import {Link, SCContextType, SCThemeType, SCUserContextType, UserUtils, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';

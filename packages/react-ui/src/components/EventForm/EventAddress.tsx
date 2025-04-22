@@ -1,6 +1,4 @@
-import {Autocomplete, Box, InputAdornment, Tab, Tabs, TextField} from '@mui/material';
-import Icon from '@mui/material/Icon';
-import {styled} from '@mui/material/styles';
+import {Autocomplete, Box, InputAdornment, Tab, Tabs, TextField, styled, Icon} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {SCCommunitySubscriptionTier, SCEventLocationType, SCEventType, SCFeatureName, SCLiveStreamType} from '@selfcommunity/types';

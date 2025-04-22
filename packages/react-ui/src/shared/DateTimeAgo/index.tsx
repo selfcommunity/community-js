@@ -1,7 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Tooltip, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Box, Tooltip, Typography, styled, Icon} from '@mui/material';
 import {FormattedRelativeTime, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {getRelativeTime} from '../../utils/formatRelativeTime';

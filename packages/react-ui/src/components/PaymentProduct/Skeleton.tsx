@@ -1,7 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
-import {Accordion, AccordionDetails, AccordionProps, AccordionSummary, useMediaQuery, useTheme} from '@mui/material';
+import {Accordion, AccordionDetails, AccordionProps, AccordionSummary, useMediaQuery, useTheme, styled, Skeleton} from '@mui/material';
 import BaseItem from '../../shared/BaseItem';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';

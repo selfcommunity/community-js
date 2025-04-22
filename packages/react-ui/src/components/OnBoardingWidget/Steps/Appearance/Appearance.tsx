@@ -1,17 +1,14 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {Preferences} from '@selfcommunity/react-core';
 import {PREFIX} from '../../constants';
-import {Button, Drawer, IconButton, Tab, Tabs, TextField, Typography} from '@mui/material';
+import {Button, Drawer, IconButton, Tab, Tabs, TextField, Typography, Box, styled, Icon} from '@mui/material';
 import {MuiColorInput} from 'mui-color-input';
 import {PreferenceService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCPreferenceSection, SCPreferenceType} from '@selfcommunity/types';
 import {formatColorLabel, formatLogoLabel} from '../../../../utils/onBoarding';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import {LoadingButton} from '@mui/lab';

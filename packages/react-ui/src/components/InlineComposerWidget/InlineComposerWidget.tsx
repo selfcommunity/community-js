@@ -14,8 +14,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {Avatar, Box, Button, CardContent} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Avatar, Box, Button, CardContent, styled} from '@mui/material';
 import {SCMediaObjectType} from '../../types/media';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';

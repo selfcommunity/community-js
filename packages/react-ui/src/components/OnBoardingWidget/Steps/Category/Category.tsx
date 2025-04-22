@@ -1,6 +1,4 @@
-import {styled} from '@mui/material/styles';
-import {Alert, Button, CardMedia, Icon, Typography} from '@mui/material';
-import Box from '@mui/material/Box';
+import {Alert, Button, CardMedia, Icon, Typography, styled, Box} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import React, {useEffect, useMemo, useState} from 'react';

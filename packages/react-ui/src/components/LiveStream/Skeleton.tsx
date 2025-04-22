@@ -1,6 +1,4 @@
-import {AvatarGroup, Box, Button, CardActions, CardContent, Divider, Icon, Stack, useTheme} from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
-import {styled} from '@mui/material/styles';
+import {AvatarGroup, Box, Button, CardActions, CardContent, Divider, Icon, Stack, useTheme, Skeleton, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCThemeType} from '@selfcommunity/react-core';
 import classNames from 'classnames';

@@ -1,8 +1,6 @@
 import React, {useContext, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Alert} from '@mui/material';
+import {Alert, styled, Icon} from '@mui/material';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
-import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';

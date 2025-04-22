@@ -16,9 +16,9 @@ import {
   Radio,
   Stack,
   Typography,
-  Zoom
+  Zoom,
+	styled
 } from '@mui/material';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {Endpoints, http} from '@selfcommunity/api-services';

@@ -1,6 +1,5 @@
 import React, {ReactNode, useEffect, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Button, CardContent} from '@mui/material';
+import {Button, CardContent, styled} from '@mui/material';
 import PubSub from 'pubsub-js';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';

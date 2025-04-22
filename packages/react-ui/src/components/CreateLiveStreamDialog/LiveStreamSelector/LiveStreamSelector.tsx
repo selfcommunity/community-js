@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Typography, Button, Paper, Container, Radio, Theme, Alert} from '@mui/material';
+import {Box, Typography, Button, Paper, Container, Radio, Theme, Alert, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {LiveStreamType} from '../types';

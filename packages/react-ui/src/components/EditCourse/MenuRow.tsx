@@ -1,5 +1,4 @@
-import Menu from '@mui/material/Menu';
-import {Icon, IconButton, SwipeableDrawer, useMediaQuery, useTheme} from '@mui/material';
+import {Icon, IconButton, SwipeableDrawer, useMediaQuery, useTheme, Menu} from '@mui/material';
 import {Fragment, HTMLAttributes, memo, MouseEvent, PropsWithChildren, ReactNode, useCallback, useState} from 'react';
 import {SCThemeType} from '@selfcommunity/react-core';
 

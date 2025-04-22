@@ -1,8 +1,7 @@
 import React, {useContext} from 'react';
-import {styled} from '@mui/material/styles';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
-import {Box} from '@mui/material';
+import {Box, styled} from '@mui/material';
 import FollowUserButton, {FollowUserButtonProps} from '../FollowUserButton';
 import FriendshipUserButton, {FriendshipButtonProps} from '../FriendshipUserButton';
 import {useThemeProps} from '@mui/system';

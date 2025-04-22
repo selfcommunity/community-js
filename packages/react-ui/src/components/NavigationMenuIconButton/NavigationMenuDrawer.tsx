@@ -1,6 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Divider, Drawer, DrawerProps, Icon, IconButton, List} from '@mui/material';
+import {Box, Divider, Drawer, DrawerProps, Icon, IconButton, List, styled} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import ScrollContainer from '../../shared/ScrollContainer';

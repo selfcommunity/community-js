@@ -1,12 +1,10 @@
 import React from 'react';
-import {Box} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
+import {Box, styled, Skeleton} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
-	cover: `${PREFIX}-skeleton-cover`,
+  cover: `${PREFIX}-skeleton-cover`
 };
 
 const Root = styled(Box, {
@@ -36,7 +34,7 @@ const Root = styled(Box, {
 export default function CategoryHeaderSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
-      <Skeleton sx={{height: 230}} animation="wave" variant="rectangular" className={classes.cover}/>
+      <Skeleton sx={{height: 230}} animation="wave" variant="rectangular" className={classes.cover} />
       <Box>
         <Skeleton animation="wave" sx={{height: 20, maxWidth: 300, width: '100%', margin: '0 auto'}} />
       </Box>

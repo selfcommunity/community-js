@@ -1,7 +1,6 @@
 import React from 'react';
-import {Box, Grid} from '@mui/material';
+import {Box, Grid, Skeleton} from '@mui/material';
 import {UserBillingInfoMode} from '../../constants/Billing';
-import Skeleton from '@mui/material/Skeleton';
 
 /**
  * > API documentation for the Community-JS User Billing Info Skeleton component. Learn about the available props and the CSS API.

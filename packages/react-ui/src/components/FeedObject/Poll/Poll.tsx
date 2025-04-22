@@ -1,14 +1,10 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import Card from '@mui/material/Card';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCFeedObjectType, SCPollChoiceType, SCPollType} from '@selfcommunity/types';
-import {Button, CardContent, CardHeader, Collapse, ListItem, Typography} from '@mui/material';
+import {Button, CardContent, CardHeader, Collapse, ListItem, Typography, styled, Card, List, Icon} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import List from '@mui/material/List';
 import Choice from './Choice';
-import Icon from '@mui/material/Icon';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import classNames from 'classnames';
 import {PREFIX} from '../constants';

@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Button, Icon, Stack, Typography} from '@mui/material';
+import {Box, Button, Icon, Stack, Typography, styled} from '@mui/material';
 import {
   ConnectionUserButton,
   FeedObjectProps,

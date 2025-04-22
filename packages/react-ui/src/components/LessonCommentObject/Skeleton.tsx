@@ -1,8 +1,6 @@
 import React from 'react';
 import Widget from '../Widget';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
-import {CardContent, useTheme} from '@mui/material';
+import {CardContent, useTheme, Skeleton, styled} from '@mui/material';
 import BaseItem from '../../shared/BaseItem';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';

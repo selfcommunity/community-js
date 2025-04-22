@@ -1,6 +1,5 @@
 import React, {useCallback} from 'react';
-import {Avatar, Box, Button, Icon, Typography, useMediaQuery, useTheme, Zoom} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Avatar, Box, Button, Icon, Typography, useMediaQuery, useTheme, Zoom, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCContentType, SCPaymentOrder, SCPaymentPrice, SCPurchasableContent} from '@selfcommunity/types';
 import {PREFIX} from './constants';

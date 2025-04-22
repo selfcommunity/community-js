@@ -1,8 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import LessonCommentObject, {LessonCommentObjectProps, LessonCommentObjectSkeleton} from '../LessonCommentObject';
-import {Box, List, ListItem} from '@mui/material';
+import {Box, List, ListItem, styled} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCCommentsOrderBy, SCCourseCommentType, SCCourseLessonType} from '@selfcommunity/types';
@@ -43,7 +42,7 @@ const Root = styled(Box, {
 export interface LessonCommentObjectsProps {
   /**
    * Id of the LessonCommentObjects
-   * @default `lesson_comments_object_<lessonObjectId | lessonObject.id>`
+   * @default `lesson_comments_object_lessonObjectId`
    */
   id?: string;
   /**

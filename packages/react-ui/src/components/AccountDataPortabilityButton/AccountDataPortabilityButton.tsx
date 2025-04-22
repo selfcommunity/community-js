@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {Button, ButtonProps} from '@mui/material';
+import {Button, ButtonProps, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../shared/BaseDialog';

@@ -1,8 +1,6 @@
 import React from 'react';
-import List from '@mui/material/List';
-import {styled} from '@mui/material/styles';
 import PrivateMessageSnippetItemSkeleton from '../PrivateMessageSnippetItem/Skeleton';
-import {Button, Card, CardContent, Skeleton, Stack} from '@mui/material';
+import {Button, Card, CardContent, Skeleton, Stack, List, styled} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {

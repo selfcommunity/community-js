@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import {Button, Paper, Stack, StackProps, Table, TableBody, TableCell, TableContainer, TableHead, TableRow} from '@mui/material';
+import {Button, Paper, Stack, StackProps, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, styled} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import {SCUserProviderAssociationType, SCUserType} from '@selfcommunity/types';
 import {SCPreferences, SCPreferencesContextType, useSCFetchUser, useSCFetchUserProviders, useSCPreferences} from '@selfcommunity/react-core';

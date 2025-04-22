@@ -1,10 +1,8 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Grid, Hidden, Stack, useTheme} from '@mui/material';
+import {Box, Grid, Hidden, Stack, useTheme, Skeleton, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import classNames from 'classnames';
 import {SCThemeType} from '@selfcommunity/react-core';
-import Skeleton from '@mui/material/Skeleton';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,

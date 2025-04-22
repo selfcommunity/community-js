@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar} from '@mui/material';
+import {Avatar, styled} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../../../shared/DateTimeAgo';

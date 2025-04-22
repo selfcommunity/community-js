@@ -1,12 +1,9 @@
 import React, {useContext} from 'react';
 import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
 import ConsentSolution, {ConsentSolutionProps} from '../ConsentSolution';
-import {Button} from '@mui/material';
+import {Button, styled, Dialog, ButtonProps} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
-import {ButtonProps} from '@mui/material/Button/Button';
 
 const PREFIX = 'SCConsentSolutionButton';
 

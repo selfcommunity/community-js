@@ -1,6 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {useMediaQuery, useTheme} from '@mui/material';
+import {useMediaQuery, useTheme, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import classNames from 'classnames';
 import PaymentProductSkeleton, {PaymentProductSkeletonProps} from '../PaymentProduct/Skeleton';

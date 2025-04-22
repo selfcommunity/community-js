@@ -1,11 +1,8 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
 import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCPollChoiceType} from '@selfcommunity/types';
-import {Box, Card, Typography} from '@mui/material';
+import {Box, Card, Typography, styled, Icon, LinearProgress, LinearProgressProps} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import Icon from '@mui/material/Icon';
-import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';
 import {LoadingButton} from '@mui/lab';
 import classNames from 'classnames';
 import {PREFIX} from '../../constants';

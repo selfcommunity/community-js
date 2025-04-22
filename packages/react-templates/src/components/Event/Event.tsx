@@ -1,5 +1,4 @@
-import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
+import {Box, styled} from '@mui/material';
 import {FeedObjectProps, FeedSidebarProps, EventHeader, SCFeedWidgetType, EventHeaderProps} from '@selfcommunity/react-ui';
 import {SCUserContextType, useSCFetchEvent, useSCUser} from '@selfcommunity/react-core';
 import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';

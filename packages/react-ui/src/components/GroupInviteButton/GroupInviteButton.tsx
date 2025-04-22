@@ -1,15 +1,12 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Button, Chip, Icon, IconButton, InputAdornment, TextField, Typography} from '@mui/material';
+import {Avatar, Box, Button, Chip, Icon, IconButton, InputAdornment, TextField, Typography, Autocomplete, styled, ButtonProps} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserContext, SCUserContextType, useSCFetchGroup} from '@selfcommunity/react-core';
-import {ButtonProps} from '@mui/material/Button/Button';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import {LoadingButton} from '@mui/lab';
 import {GroupService} from '@selfcommunity/api-services';
-import Autocomplete from '@mui/material/Autocomplete';
 import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import User from '../User';
 import {SCOPE_SC_UI} from '../../constants/Errors';

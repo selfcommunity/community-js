@@ -1,7 +1,6 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
 import {CommentObjectSkeleton} from '../CommentObject';
-import {Box} from '@mui/material';
+import {Box, styled} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {

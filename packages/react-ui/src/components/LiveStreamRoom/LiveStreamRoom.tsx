@@ -1,5 +1,4 @@
-import {Alert, AlertTitle, Box, BoxProps, Button, CircularProgress, Stack, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Alert, AlertTitle, Box, BoxProps, Button, CircularProgress, Stack, Typography, styled, DialogContent} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {
   Link,
@@ -14,18 +13,12 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {
-  SCFeatureName,
-  SCLiveStreamConnectionDetailsErrorType,
-  SCLiveStreamConnectionDetailsType,
-  SCLiveStreamType,
-  SCNotificationTypologyType
-} from '@selfcommunity/types';
+import {SCFeatureName, SCLiveStreamConnectionDetailsErrorType, SCLiveStreamConnectionDetailsType, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {LocalUserChoices} from '@livekit/components-react';
-import React, {useCallback, useContext, useMemo, useState} from 'react';
+import React, {ReactNode, useCallback, useContext, useMemo, useState} from 'react';
 import {ConnectionDetails} from './types';
 import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './LiveStreamVideoConference';
 import '@livekit/components-styles';
@@ -35,7 +28,6 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {PreJoin} from './LiveStreamVideoConference/PreJoin';
 import {LiveStreamContext} from './LiveStreamVideoConference/LiveStreamProvider';
 import {useSnackbar} from 'notistack';
-import DialogContent from '@mui/material/DialogContent';
 import BaseDialog from '../../shared/BaseDialog';
 import CopyTextField from '../../shared/CopyTextArea';
 
@@ -238,7 +230,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 <FormattedMessage
                   id="ui.liveStreamRoom.connect.error.generic"
                   defaultMessage="'ui.liveStreamRoom.connect.error.generic"
-                  values={{link: (...chunks) => <Link to={'/'}>{chunks}</Link>}}
+                  values={{link: (...chunks: [parts: ReactNode[]]) => <Link to={'/'}>{chunks}</Link>}}
                 />
               );
               if (error.response.data.errors[0].code) {
@@ -248,7 +240,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                     id={_error}
                     defaultMessage={_error}
                     values={{
-                      link: (...chunks) => (
+                      link: (...chunks: [parts: ReactNode[]]) => (
                         <a
                           style={{color: '#FFF'}}
                           href={

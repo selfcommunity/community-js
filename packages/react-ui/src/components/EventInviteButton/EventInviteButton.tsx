@@ -1,8 +1,5 @@
 import {LoadingButton} from '@mui/lab';
-import {Avatar, Box, Button, Chip, Icon, IconButton, InputAdornment, TextField, Typography} from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
-import {ButtonProps} from '@mui/material/Button/Button';
-import {styled} from '@mui/material/styles';
+import {Avatar, Box, Button, Chip, Icon, IconButton, InputAdornment, TextField, Typography, styled, Autocomplete, ButtonProps} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {EventService} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, useSCFetchEvent} from '@selfcommunity/react-core';

@@ -1,6 +1,5 @@
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Grid, TextField, Typography} from '@mui/material';
+import {Box, Grid, TextField, Typography, styled} from '@mui/material';
 import {CategoryService, Endpoints} from '@selfcommunity/api-services';
 import {AxiosRequestConfig} from 'axios';
 import {

@@ -1,5 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {
   SCContextType,

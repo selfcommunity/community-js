@@ -1,7 +1,7 @@
 import React from 'react';
 import {CategoryTrendingPeopleWidgetSkeleton} from '../CategoryTrendingUsersWidget';
 import {WidgetProps} from '../Widget';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {

@@ -1,8 +1,7 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Box, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from '@mui/material';
+import {Box, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import {FormattedMessage} from 'react-intl';
 import {SCCourseLessonStatusType, SCCourseLessonType} from '@selfcommunity/types';

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {TextField, TextFieldProps} from '@mui/material';
+import {styled, TextField, TextFieldProps} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import {EMAIL_REGEX} from '../../constants/Account';
 

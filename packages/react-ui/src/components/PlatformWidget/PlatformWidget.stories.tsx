@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import PlatformWidget from './index';
-import { Button, Grid, Typography } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { Button, Typography } from '@mui/material';
 import React from 'react';
-import Icon from '@mui/material/Icon';
+
 
 export default {
   title: 'Design System/React UI/PlatformWidget ',
@@ -16,14 +15,14 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<PlatformWidget> = {
+export const Base: StoryObj<typeof PlatformWidget> = {
   args: {
     contained: true,
   },
   render: template
 };
 
-export const Custom: StoryObj<PlatformWidget> = {
+export const Custom: StoryObj<typeof PlatformWidget> = {
 	args: {
 		contained: true,
 		title: <Typography component="h3" align="center">

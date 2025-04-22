@@ -1,11 +1,9 @@
 import React, {useCallback} from 'react';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Box, Typography} from '@mui/material';
+import {Box, Typography, CardContent, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
-import CardContent from '@mui/material/CardContent';
 import {getContributionHtml} from '../../utils/contribution';
 import Widget from '../Widget';
 import ContentLesson from '../Composer/Content/ContentLesson';

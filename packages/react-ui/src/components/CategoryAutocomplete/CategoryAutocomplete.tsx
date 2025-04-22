@@ -1,15 +1,10 @@
 import {Fragment, SyntheticEvent, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField, {TextFieldProps} from '@mui/material/TextField';
-import CircularProgress from '@mui/material/CircularProgress';
-import Checkbox from '@mui/material/Checkbox';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {AutocompleteProps, Chip} from '@mui/material';
+import {Autocomplete, AutocompleteProps, Chip, TextField, TextFieldProps, Checkbox, CircularProgress, styled} from '@mui/material';
 import {useSCFetchCategories} from '@selfcommunity/react-core';
-import {styled} from '@mui/material/styles';
-import {SCCategoryType} from '@selfcommunity/types/src/index';
+import {SCCategoryType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCCategoryAutocomplete';

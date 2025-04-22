@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {List, ListItem} from '@mui/material';
+import {List, ListItem, Typography} from '@mui/material';
 import InfiniteScroll from '../../../../../shared/InfiniteScroll';
-import Typography from '@mui/material/Typography';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {useSCFetchFeedObject} from '@selfcommunity/react-core';

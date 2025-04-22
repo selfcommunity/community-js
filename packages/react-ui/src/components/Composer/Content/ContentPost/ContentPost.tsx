@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useRef} from 'react';
-import {Box, BoxProps, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, BoxProps, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
 import Editor, {EditorProps} from '../../../Editor';
 import {ComposerContentType} from '../../../../types/composer';

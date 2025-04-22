@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {
   Icon,
   IconButton,
@@ -12,7 +11,8 @@ import {
   MenuItem,
   SwipeableDrawer,
   useMediaQuery,
-  useTheme
+  useTheme,
+  styled
 } from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';

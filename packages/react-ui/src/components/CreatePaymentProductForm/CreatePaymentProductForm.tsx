@@ -1,7 +1,6 @@
 import React, {useCallback, useMemo, useState} from 'react';
-import {Box, BoxProps, Button, InputAdornment, Stack, TextField, Typography} from '@mui/material';
+import {Box, BoxProps, Button, InputAdornment, Stack, TextField, Typography, styled} from '@mui/material';
 import {NumericFormat, NumericFormatProps} from 'react-number-format';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {useSCPaymentsEnabled} from '@selfcommunity/react-core';

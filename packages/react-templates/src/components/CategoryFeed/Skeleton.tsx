@@ -1,5 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {FeedObjectSkeleton, SCFeedObjectTemplateType, FeedSkeleton, GenericSkeleton, InlineComposerWidgetSkeleton} from '@selfcommunity/react-ui';
 import {PREFIX} from './constants';
 

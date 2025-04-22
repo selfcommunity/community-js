@@ -1,7 +1,5 @@
 import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Button, List, Typography, Box, IconButton, ListItem, useTheme, useMediaQuery} from '@mui/material';
-import CardContent from '@mui/material/CardContent';
+import {Button, List, Typography, Box, IconButton, ListItem, useTheme, useMediaQuery, styled, CardContent, Popover, Icon} from '@mui/material';
 import {http, Endpoints, SCPaginatedResponse, IncubatorService} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCIncubatorType} from '@selfcommunity/types';
@@ -12,8 +10,6 @@ import classNames from 'classnames';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import InfiniteScroll from '../../shared/InfiniteScroll';
 import Incubator, {IncubatorProps, IncubatorSkeleton} from '../Incubator';
-import Popover from '@mui/material/Popover';
-import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
 import Widget from '../Widget';
 import CreateIncubatorDialog from './CreateIncubatorDialog';

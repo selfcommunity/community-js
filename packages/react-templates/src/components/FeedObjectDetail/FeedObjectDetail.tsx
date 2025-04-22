@@ -1,6 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Grid, Hidden} from '@mui/material';
+import {Box, Grid, Hidden, styled} from '@mui/material';
 import {
   CommentsFeedObject,
   CommentsFeedObjectProps,

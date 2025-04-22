@@ -1,6 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
+import {Box, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import LessonCommentObjectSkeleton from '../LessonCommentObject/Skeleton';
 

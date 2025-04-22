@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {Alert, Box, CircularProgress} from '@mui/material';
+import {Alert, Box, CircularProgress, styled} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {UserService} from '@selfcommunity/api-services';

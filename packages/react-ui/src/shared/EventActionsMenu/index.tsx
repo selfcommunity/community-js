@@ -1,6 +1,17 @@
-import {Divider, IconButton, IconButtonProps, List, ListItemIcon, Menu, MenuItem, SwipeableDrawer, useMediaQuery, useTheme} from '@mui/material';
-import Icon from '@mui/material/Icon';
-import {styled} from '@mui/material/styles';
+import {
+  Divider,
+  IconButton,
+  IconButtonProps,
+  List,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  SwipeableDrawer,
+  useMediaQuery,
+  useTheme,
+  styled,
+  Icon
+} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {EventService} from '@selfcommunity/api-services';
 import {SCRoutes, SCRoutingContextType, SCThemeType, SCUserContextType, useSCFetchEvent, useSCRouting, useSCUser} from '@selfcommunity/react-core';

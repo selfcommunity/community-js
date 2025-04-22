@@ -1,6 +1,5 @@
 import {LoadingButton} from '@mui/lab';
-import {Icon, SwipeableDrawer, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Icon, SwipeableDrawer, Tooltip, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCContextType, SCThemeType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {
@@ -288,7 +287,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
           onClick={handleOpen}
           disabled={disabled || (!paymentOrder && purchased)}
           {...rest}>
-					{!paymentOrder && purchased ? <FormattedMessage id="ui.buyButton.free" defaultMessage="ui.buyButton.free" /> : btnLabel}
+          {!paymentOrder && purchased ? <FormattedMessage id="ui.buyButton.free" defaultMessage="ui.buyButton.free" /> : btnLabel}
         </RequestRoot>
       </Tooltip>
       {paymentOrder && showTicket && <PaymentOrderPdfButton {...PaymentOrderPdfButtonComponentProps} paymentOrder={paymentOrder} />}

@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
+import {styled, Box} from '@mui/material';
 import {
   ContributionUtils,
   EventInfoWidget,
@@ -36,7 +36,6 @@ import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
 import EventFeedSkeleton from './Skeleton';
-import {Box} from '@mui/material';
 
 const classes = {
   root: `${PREFIX}-root`

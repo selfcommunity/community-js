@@ -1,4 +1,4 @@
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCCourseType} from '@selfcommunity/types';
 import classNames from 'classnames';

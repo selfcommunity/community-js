@@ -1,7 +1,6 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
 import {PREFIX} from './constants';
-import {Box, Grid, GridProps} from '@mui/material';
+import {Box, Grid, GridProps, styled} from '@mui/material';
 import classNames from 'classnames';
 import {CourseSkeleton} from '../Course';
 import CourseCreatePlaceholder from '../Course/CreatePlaceholder';

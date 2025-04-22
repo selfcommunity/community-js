@@ -1,7 +1,5 @@
 import React, {useEffect, useMemo, useReducer, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import List from '@mui/material/List';
-import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme, styled, List} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
 import {SCFeedUnitType} from '@selfcommunity/types';
 import {CategoryService, Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';

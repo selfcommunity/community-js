@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {Box, Button, ButtonProps, TextFieldProps, Alert} from '@mui/material';
+import {Box, Button, ButtonProps, TextFieldProps, Alert, styled} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import EmailTextField from '../../shared/EmailTextField';

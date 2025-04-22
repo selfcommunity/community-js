@@ -1,12 +1,10 @@
 import React, {useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import LoadingButton from '@mui/lab/LoadingButton';
-import {styled} from '@mui/material/styles';
-import {Box, Tooltip} from '@mui/material';
+import {Box, Tooltip, styled, Icon} from '@mui/material';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
-import Icon from '@mui/material/Icon';
 import {SCContributionType, SCFeedObjectType, SCTagType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';

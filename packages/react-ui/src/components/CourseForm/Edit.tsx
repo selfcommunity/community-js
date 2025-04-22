@@ -1,12 +1,11 @@
-import {Box, BoxProps, FormControl, FormControlLabel, Icon, Radio, RadioGroup, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, BoxProps, FormControl, FormControlLabel, Icon, Radio, RadioGroup, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCCourseLessonStatusType, SCCoursePrivacyType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
 import Widget from '../Widget';
-import {useState} from 'react';
+import {ReactNode, useState} from 'react';
 
 const classes = {
   root: `${PREFIX}-edit-root`,
@@ -94,14 +93,14 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
                   <FormattedMessage
                     id="ui.courseForm.edit.access.info.access"
                     defaultMessage="ui.courseForm.edit.access.info.access"
-                    values={{icon: (...chunks) => <Icon>{chunks}</Icon>}}
+                    values={{icon: (...chunks: [parts: ReactNode[]]) => <Icon>{chunks}</Icon>}}
                   />
                 </Typography>
                 <Typography variant="body1">
                   <FormattedMessage
                     id="ui.courseForm.edit.access.info.visibility"
                     defaultMessage="ui.courseForm.edit.access.info.visibility"
-                    values={{icon: (...chunks) => <Icon>{chunks}</Icon>}}
+                    values={{icon: (...chunks: [parts: ReactNode[]]) => <Icon>{chunks}</Icon>}}
                   />
                 </Typography>
               </Box>
@@ -146,14 +145,14 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
                     <FormattedMessage
                       id={`ui.courseForm.edit.publication.option.${option}.access`}
                       defaultMessage={`ui.courseForm.edit.publication.option.${option}.access`}
-                      values={{icon: (...chunks) => <Icon>{chunks}</Icon>}}
+                      values={{icon: (...chunks: [parts: ReactNode[]]) => <Icon>{chunks}</Icon>}}
                     />
                   </Typography>
                   <Typography variant="body1" className={classNames(classes.privacyItemInfo, {[classes.disabled]: notPublishable})}>
                     <FormattedMessage
                       id={`ui.courseForm.edit.publication.option.${option}.visibility`}
                       defaultMessage={`ui.courseForm.edit.publication.option.${option}.visibility`}
-                      values={{icon: (...chunks) => <Icon>{chunks}</Icon>}}
+                      values={{icon: (...chunks: [parts: ReactNode[]]) => <Icon>{chunks}</Icon>}}
                     />
                   </Typography>
                 </>

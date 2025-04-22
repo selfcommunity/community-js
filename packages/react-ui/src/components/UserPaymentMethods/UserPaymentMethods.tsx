@@ -1,5 +1,4 @@
 import React, {forwardRef, ForwardRefRenderFunction, useCallback, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {
   Box,
   Button,
@@ -15,7 +14,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography
+  Typography,
+	styled
 } from '@mui/material';
 import {PaymentIcon, PaymentTypeExtended} from 'react-svg-credit-card-payment-icons';
 import {SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';

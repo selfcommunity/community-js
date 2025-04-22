@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Button, Grid, Icon, IconButton, InputAdornment, TextField, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Box, Button, Grid, Icon, IconButton, InputAdornment, TextField, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCGroupType} from '@selfcommunity/types';
 import {Endpoints, GroupService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';

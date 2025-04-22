@@ -1,9 +1,9 @@
-import { styled } from '@mui/material/styles';
-import { SCMediaType } from '@selfcommunity/types/src/types';
-import { useCallback } from 'react';
-import { DataType } from '../../types/lightbox';
+import {styled} from '@mui/material';
+import {SCMediaType} from '@selfcommunity/types/src/types';
+import {useCallback} from 'react';
+import {DataType} from '../../types/lightbox';
 import BaseLightbox from './BaseLightbox';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-lightbox-root`
@@ -53,10 +53,10 @@ export interface LightboxProps {
 
 export default function Lightbox(props: LightboxProps) {
   // PROPS
-  const { medias = [], index = 0, toolbarButtons, onClose, onIndexChange, ...rest } = props;
+  const {medias = [], index = 0, toolbarButtons, onClose, onIndexChange, ...rest} = props;
 
   const mediaToDataTypeMap = useCallback((media: SCMediaType, index: number): DataType => {
-    return { src: media.image, width: media.image_width, height: media.image_height, key: index };
+    return {src: media.image, width: media.image_width, height: media.image_height, key: index};
   }, []);
 
   /**

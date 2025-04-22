@@ -1,11 +1,9 @@
 import React, {forwardRef, ForwardRefRenderFunction} from 'react';
-import {Box, TableCell, TableRow} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, TableCell, TableRow, Skeleton, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {UserPaymentMethodsProps} from './UserPaymentMethods';
-import Skeleton from '@mui/material/Skeleton';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,

@@ -1,6 +1,5 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from '@mui/material';
+import {Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCNotification, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCUserSettingsType} from '@selfcommunity/types';

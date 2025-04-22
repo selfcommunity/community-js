@@ -1,5 +1,4 @@
 import React, {useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {
   Divider,
   Icon,
@@ -13,7 +12,8 @@ import {
   MenuItem,
   SwipeableDrawer,
   useMediaQuery,
-  useTheme
+  useTheme,
+  styled
 } from '@mui/material';
 import {
   Link,

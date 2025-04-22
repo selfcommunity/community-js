@@ -1,6 +1,4 @@
-import {Box, Button, CardActions, CardContent, Icon} from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
-import {styled} from '@mui/material/styles';
+import {Box, Button, CardActions, CardContent, Icon, styled, Skeleton} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import React from 'react';

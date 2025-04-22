@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Box, CircularProgress, Skeleton} from '@mui/material';
+import {Box, CircularProgress, Skeleton, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {PdfMaxWidth} from './PdfPreview';
-import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 
 const PREFIX = 'PdfPreviewSkeleton';
