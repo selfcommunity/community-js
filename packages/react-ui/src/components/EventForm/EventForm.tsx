@@ -51,6 +51,7 @@ import {combineDateAndTime, getDateAndHours, getLaterDaysDate, getLaterHoursDate
 import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
 import CoverPlaceholder from '../../assets/deafultCover';
 import PaywallsConfigurator from '../PaywallsConfigurator';
+import {ContentAccessType} from '../PaywallsConfigurator/constants';
 
 const messages = defineMessages({
   name: {
@@ -237,7 +238,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     link: event?.link || '',
     liveStreamSettings: event?.live_stream ? event?.live_stream.settings : null,
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
-    product_ids: event?.paywalls?.map((p) => p.id) || [],
+    productIds: event?.paywalls?.map((p) => p.id) || [],
+    contentAccessType: event?.paywalls?.length ? ContentAccessType.PAID : ContentAccessType.FREE,
     isPublic: event?.privacy ? event.privacy === SCEventPrivacyType.PUBLIC : true,
     isSubmitting: false
   };
@@ -374,8 +376,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       formData.append('visible', 'true');
     }
 
-    if (field.product_ids && (isStaff || (event && event.paywalls?.length))) {
-      field.product_ids.forEach((p, i) => {
+    if (field.productIds && field.contentAccessType === ContentAccessType.PAID && (isStaff || (event && event.paywalls?.length))) {
+      field.productIds.forEach((p, i) => {
         formData.append(`product_ids[${i}]`, p.toString());
       });
     }
@@ -466,13 +468,24 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   );
 
 	/**
-	 * Handle change payment products
-	 * @param products
+	 * Handle change content access tyoe
+	 * @param type
 	 */
+  const handleChangeContentAccessType = (type: ContentAccessType) => {
+    setField((prev) => ({
+      ...prev,
+      contentAccessType: type
+    }));
+  };
+
+  /**
+   * Handle change payment products
+   * @param products
+   */
   const handleChangePaymentsProducts = (products) => {
     setField((prev) => ({
       ...prev,
-      product_ids: products.map((product) => product.id)
+      productIds: products.map((product) => product.id)
     }));
   };
 
@@ -815,7 +828,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         />
         {isPaymentsEnabled && isStaff && (
           <Box className={classes.paywallsConfiguratorWrap}>
-            <PaywallsConfigurator {...(event && {contentId: event.id})} contentType={SCContentType.EVENT} onChange={handleChangePaymentsProducts} />
+            <PaywallsConfigurator
+              {...(event && {contentId: event.id})}
+              contentType={SCContentType.EVENT}
+              onChangeContentAccessType={handleChangeContentAccessType}
+              onChangePaymentProducts={handleChangePaymentsProducts}
+            />
           </Box>
         )}
         {genericError && (

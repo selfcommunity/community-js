@@ -7,11 +7,10 @@ import {
   SCThemeType,
   SCUserContextType,
   useSCFetchEvent,
-  useSCPaymentsEnabled,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCContentType, SCEventLocationType, SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
+import {SCEventLocationType, SCEventPrivacyType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -25,7 +24,6 @@ import EventSubscribeButton, {EventSubscribeButtonProps} from '../EventSubscribe
 import User from '../User';
 import {PREFIX} from './constants';
 import EventHeaderSkeleton from './Skeleton';
-import BuyButton from '../BuyButton';
 import {CacheStrategies} from '@selfcommunity/utils';
 
 const classes = {
@@ -152,9 +150,6 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   );
 
   const isEventFinished = useMemo(() => checkEventFinished(scEvent), [scEvent]);
-
-  // PAYMENTS
-  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   /**
    * Handles callback subscribe/unsubscribe event
@@ -307,15 +302,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                 </Box>
               ) : (
                 <>
-                  {isPaymentsEnabled &&
-                  scEvent.paywalls?.length > 0 &&
-                  (scEvent.privacy === SCEventPrivacyType.PUBLIC ||
-                    (scEvent.privacy === SCEventPrivacyType.PRIVATE &&
-                      (!scEvent.subscription_status || scEvent.subscription_status !== SCEventSubscriptionStatusType.REQUESTED))) ? (
-                    <BuyButton contentType={SCContentType.EVENT} content={scEvent} />
-                  ) : (
-                    <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />
-                  )}
+                  <EventSubscribeButton event={scEvent} onSubscribe={handleSubscribe} {...EventSubscribeButtonProps} disabled={isEventFinished} />
                   <EventActionsMenu event={scEvent} onEditSuccess={setSCEvent} {...EventActionsProps} />
                 </>
               )}

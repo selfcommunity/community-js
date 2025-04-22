@@ -90,6 +90,20 @@ export interface PaymentApiClientInterface {
   getPaymentsOrder(params?: PaymentOrderParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>>;
 
   /**
+   * This endpoint retrieves the single payment order
+   * @param id
+   * @param config
+   */
+  getPaymentOrder(id: number | string, config?: AxiosRequestConfig): Promise<SCPaymentOrder>;
+
+  /**
+   * This endpoint retrieves the single payment order in pdf format
+   * @param id
+   * @param config
+   */
+  getPaymentOrderPdf(id: number | string, config?: AxiosRequestConfig): Promise<Blob>;
+
+  /**
    * This endpoint retrieve customer portal
    * @param data
    * @param config
@@ -225,6 +239,32 @@ export class PaymentApiClient {
   }
 
   /**
+   * This endpoint retrieves the single payment order
+   * @param id
+   * @param config
+   */
+  static getPaymentOrder(id: number | string, config?: AxiosRequestConfig): Promise<SCPaymentOrder> {
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.GetPaymentOrder.url({id})}`,
+      method: Endpoints.GetPaymentOrder.method
+    });
+  }
+
+  /**
+   * This endpoint retrieves the single payment order in pdf format
+   * @param id
+   * @param config
+   */
+  static getPaymentOrderPdf(id: number | string, config?: AxiosRequestConfig): Promise<Blob> {
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.GetPaymentOrderPdf.url({id})}`,
+      method: Endpoints.GetPaymentOrderPdf.method
+    });
+  }
+
+  /**
    * This endpoint retrive customer portal
    * @param data
    * @param config
@@ -304,6 +344,12 @@ export default class PaymentService {
   }
   static getPaymentsOrder(params?: PaymentOrderParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
     return PaymentApiClient.getPaymentsOrder(params, config);
+  }
+  static getPaymentOrder(id: number | string, config?: AxiosRequestConfig): Promise<SCPaymentOrder> {
+    return PaymentApiClient.getPaymentOrder(id, config);
+  }
+  static getPaymentOrderPdf(id: number | string, config?: AxiosRequestConfig): Promise<Blob> {
+    return PaymentApiClient.getPaymentOrderPdf(id, config);
   }
   static getPaymentsCustomerPortal(
     data: CustomerPortalCreateSessionParams | FormData,

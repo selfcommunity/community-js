@@ -21,10 +21,10 @@ import classNames from 'classnames';
 import React, {MouseEvent, ReactNode, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import PaywallsDialog from '../PaywallsDialog';
-import PaymentProducts from '../PaymentProducts';
 import {CategoryApiClient, GroupApiClient, EventApiClient, CourseApiClient} from '@selfcommunity/api-services';
 import {capitalize} from '@selfcommunity/utils';
 import Paywalls from '../Paywalls';
+import PaymentOrderPdfButton, {PaymentOrderPdfButtonProps} from '../PaymentOrderPdfButton';
 
 const PREFIX = 'SCBuyButton';
 
@@ -84,6 +84,17 @@ export interface BuyButtonProps {
   onPurchase?: (contentType: SCContentType, id: number) => any;
 
   /**
+   * show ticket button if content is already paid
+   */
+  showTicket?: boolean;
+
+  /**
+   * Props to spread to the PaymentOrderPdfButton component
+   * @default {}
+   */
+  PaymentOrderPdfButtonComponentProps?: PaymentOrderPdfButtonProps;
+
+  /**
    * Others properties
    */
   [p: string]: any;
@@ -118,7 +129,17 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
     name: PREFIX
   });
 
-  const {className, contentId, contentType, content, disabled, onPurchase, ...rest} = props;
+  const {
+    className,
+    contentId,
+    contentType,
+    content,
+    disabled,
+    onPurchase,
+    showTicket = false,
+    PaymentOrderPdfButtonComponentProps = {},
+    ...rest
+  } = props;
 
   // STATE
   const [open, setOpen] = useState<boolean>(false);
@@ -161,7 +182,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
    */
   const handleUpdatePaymentOrder = useCallback(
     (price: SCPaymentPrice) => {
-      // TODO: update order/subscription when will be recurring payment
+      // update order/subscription when will be recurring payment
     },
     [paymentOrder, purchased]
   );
@@ -265,11 +286,12 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
           startIcon={<Icon>card_giftcard</Icon>}
           loading={scUserContext.user === undefined || purchased === null}
           onClick={handleOpen}
-          disabled={disabled}
+          disabled={disabled || (!paymentOrder && purchased)}
           {...rest}>
-          {btnLabel}
+					{!paymentOrder && purchased ? <FormattedMessage id="ui.buyButton.free" defaultMessage="ui.buyButton.free" /> : btnLabel}
         </RequestRoot>
       </Tooltip>
+      {paymentOrder && showTicket && <PaymentOrderPdfButton {...PaymentOrderPdfButtonComponentProps} paymentOrder={paymentOrder} />}
       {open && (
         <>
           {isMobile ? (

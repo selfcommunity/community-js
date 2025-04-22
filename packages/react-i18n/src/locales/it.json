@@ -1337,6 +1337,7 @@
   "ui.buyButton.purchased": "Acquistato",
   "ui.buyButton.subscribed": "Iscritto",
   "ui.buyButton.disabled": "Al momento non è possbile acquistare questo contenuto. Potrai farlo successivamente.",
+  "ui.buyButton.free": "Accesso gratuito",
   "ui.paywalls.priceNotIncluded": "Il tuo acquisto si riferisce ad un prodotto non più disponibile.",
   "ui.paywalls.contentPurchasedAt": "Contenuto acquistato il {purchasedAt} al prezzo di {price}.",
   "ui.paywallsDialog.title": "Scegli tra i seguenti prezzi",
@@ -1362,6 +1363,7 @@
   "ui.paymentOrders.createdAt": "Effettuato il",
   "ui.paymentOrders.expired_at": "Scadenza",
   "ui.paymentOrders.status": "Stato",
+  "ui.paymentOrders.status.paid": "Pagata",
   "ui.paymentOrders.actions": "Azioni",
   "ui.paymentOrders.actions.pay": "Paga",
   "ui.paymentOrders.noOrders": "Nessun ordine trovato al momento",
@@ -1445,5 +1447,12 @@
   "ui.userAddPaymentMethodDialog.title": "Aggiungi un metodo di pagamento",
   "ui.userAddPaymentMethodForm.useDefaultMethod": "Usa metodo predefinito",
   "ui.userAddPaymentMethodForm.addButton": "Aggiungi",
-  "ui.userAddPaymentMethodForm.cancelButton": "Annulla"
+  "ui.userAddPaymentMethodForm.cancelButton": "Annulla",
+  "ui.paymentOrder.buy": "Hai acquistato:",
+  "ui.paymentOrder.date": "Data acquisto: {date}",
+  "ui.paymentOrder.price": "Prezzo: {price}",
+  "ui.paymentOrder.status": "Stato: ",
+  "ui.paymentOrder.status.paid": "Pagata",
+  "ui.paymentOrder.ticket.view": "Vedi ticket",
+  "ui.paymentOrderPdfButton.disabled": "Al momento non è possbile visualizzare questo contenuto."
 }

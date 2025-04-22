@@ -38,3 +38,12 @@ export function getHighestSafeWindowContext(self = global.window.self) {
 export function isClientSideRendering() {
   return typeof window !== 'undefined';
 }
+
+export const handleOpenWindow = (url: string, target = '_blank'): Window | null => {
+  if (url) {
+    const w: Window = window.open(url, target);
+    w && w.focus();
+    return w;
+  }
+  return null;
+};

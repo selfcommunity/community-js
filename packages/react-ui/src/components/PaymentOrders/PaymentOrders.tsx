@@ -280,7 +280,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                         : '-'}
                     </TableCell>
                     <TableCell scope="row">
-                      <Chip variant={'outlined'} label="Pagata" color="success" size="small" />
+                      <Chip variant={'outlined'} label={ <FormattedMessage id="ui.paymentOrders.status.paid" defaultMessage="ui.paymentOrders.status.paid" />} color="success" size="small" />
                     </TableCell>
                     <TableCell scope="row">
                       <Stack direction="row" justifyContent="left" alignItems="center" spacing={2}>

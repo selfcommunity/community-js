@@ -30,7 +30,8 @@ export enum SCCourseJoinStatusType {
   REQUESTED = 'requested',
   INVITED = 'invited',
   MANAGER = 'manager',
-  CREATOR = 'creator'
+  CREATOR = 'creator',
+	PAYMENT_WAITING = 'payment_waiting',
 }
 
 /**

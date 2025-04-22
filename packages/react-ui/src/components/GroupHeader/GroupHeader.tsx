@@ -1,14 +1,13 @@
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Icon, Paper, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {SCContentType, SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
+import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {
   SCPreferences,
   SCPreferencesContextType,
   SCThemeType,
   SCUserContextType,
   useSCFetchGroup,
-  useSCPaymentsEnabled,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -27,7 +26,6 @@ import GroupInviteButton from '../GroupInviteButton';
 import {SCGroupEventType, SCGroupMembersEventType, SCTopicType} from '../../constants/PubSub';
 import PubSub from 'pubsub-js';
 import GroupActionsMenu, {GroupActionsMenuProps} from '../GroupActionsMenu';
-import BuyButton from '../BuyButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -173,9 +171,6 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
-	// PAYMENTS
-  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   // REFS
   const updatesSubscription = useRef(null);
@@ -338,8 +333,6 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
             <GroupInviteButton group={scGroup} groupId={scGroup.id} />
             {isMobile && <GroupActionsMenu group={scGroup} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} {...GroupActionsProps} />}
           </Box>
-        ) : isPaymentsEnabled && scGroup.paywalls?.length > 0 && scGroup.subscription_status !== SCGroupSubscriptionStatusType.REQUESTED ? (
-          <BuyButton contentType={SCContentType.GROUP} content={scGroup} />
         ) : (
           <GroupSubscribeButton group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />
         )}

@@ -109,6 +109,7 @@ import useSCFetchCourses from './hooks/useSCFetchCourses';
 import useSCFetchLesson from './hooks/useSCFetchLesson';
 import useSCPaymentsEnabled from './hooks/useSCPaymentsEnabled';
 import useSCFetchPaymentProduct from './hooks/useSCFetchPaymentProduct';
+import useSCFetchPaymentOrder from './hooks/useSCFetchPaymentOrder';
 
 /**
  * Routing component
@@ -129,6 +130,7 @@ import {
   useEffectOnce,
   useNoInitialEffect,
   usePageVisibility,
+	useResizeObserver
 } from './utils/hooks';
 import {getEventStatus} from './utils/event';
 /**
@@ -228,6 +230,7 @@ export {
   useEffectOnce,
   useNoInitialEffect,
   usePageVisibility,
+	useResizeObserver,
   useSCFetchPrivateMessageSnippets,
   useSCFetchBroadcastMessages,
   useSCFetchUserBlockedBy,
@@ -243,4 +246,5 @@ export {
   useSCFetchLesson,
   useSCPaymentsEnabled,
   useSCFetchPaymentProduct,
+  useSCFetchPaymentOrder,
 };
