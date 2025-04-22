@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import {Box} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {PaymentService} from '@selfcommunity/api-services';

@@ -1,6 +1,5 @@
 import React from 'react';
-import {Box, CircularProgress} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, CircularProgress, styled} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {

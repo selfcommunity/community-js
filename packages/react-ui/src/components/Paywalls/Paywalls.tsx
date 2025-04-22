@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {Alert, Box, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Alert, Box, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {PaymentApiClient} from '@selfcommunity/api-services';

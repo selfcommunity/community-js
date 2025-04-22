@@ -12,9 +12,9 @@ import {
   TableRow,
   Typography,
   Stack,
-  CircularProgress
+  CircularProgress,
+	styled
 } from '@mui/material';
-import {styled} from '@mui/material/styles';
 import {FormattedMessage, useIntl} from 'react-intl';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {useInView} from 'react-intersection-observer';

@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, CircularProgress} from '@mui/material';
+import {Box, CircularProgress, styled} from '@mui/material';
 import {Logger} from '@selfcommunity/utils';
 import {SCPaymentsCustomerPortalSession} from '@selfcommunity/types';
 import {SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';

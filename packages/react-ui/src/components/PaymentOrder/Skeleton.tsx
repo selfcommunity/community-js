@@ -1,10 +1,7 @@
-import {AvatarGroup, Box, BoxProps, CardContent, Stack, useTheme} from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
-import {styled} from '@mui/material/styles';
+import {AvatarGroup, Box, BoxProps, CardContent, Stack, useTheme, Skeleton, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCThemeType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import React from 'react';
 import {PREFIX} from './constants';
 import Widget from '../Widget';
 

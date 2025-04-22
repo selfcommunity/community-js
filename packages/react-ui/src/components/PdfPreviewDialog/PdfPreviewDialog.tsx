@@ -1,6 +1,5 @@
 import React from 'react';
-import {AppBar, Grid, IconButton, Slide, Icon, Toolbar, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {AppBar, Grid, IconButton, Slide, Icon, Toolbar, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';

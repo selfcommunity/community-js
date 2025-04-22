@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {CommunityApiClient, SCPaginatedResponse} from '@selfcommunity/api-services';

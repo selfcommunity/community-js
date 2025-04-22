@@ -1,6 +1,5 @@
-import React, {useEffect, useMemo} from 'react';
-import {AccordionDetails, AccordionProps, AccordionSummary, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import React, {useMemo} from 'react';
+import {AccordionDetails, AccordionProps, AccordionSummary, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {useSCFetchPaymentProduct, useSCPaymentsEnabled} from '@selfcommunity/react-core';
