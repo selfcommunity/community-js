@@ -92,12 +92,12 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
         case SCNotificationTypologyType.USER_INVITED_TO_JOIN_GROUP:
           _status = SCGroupSubscriptionStatusType.INVITED;
           break;
-        case SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP:
+        /* case SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP:
           _status = SCGroupSubscriptionStatusType.REQUESTED;
           break;
         case SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP:
           _status = SCGroupSubscriptionStatusType.SUBSCRIBED;
-          break;
+          break; */
         case SCNotificationTypologyType.USER_ADDED_TO_GROUP:
           _status = SCGroupSubscriptionStatusType.SUBSCRIBED;
           break;
@@ -307,7 +307,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
         if (cache.includes(group.id)) {
           return getCurrentGroupCacheStatus(group);
         }
-        if (authUserId) {
+        if (authUserId && group) {
           if ('subscription_status' in group) {
             return getSubscriptionStatus(group);
           }
@@ -317,7 +317,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
         }
         return null;
       },
-    [loading, cache, authUserId]
+    [loading, cache, authUserId, getSubscriptionStatus, getCurrentGroupCacheStatus]
   );
 
   /**
@@ -332,5 +332,6 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
   if (!groupsEnabled || !user) {
     return {groups: data, loading, isLoading};
   }
+
   return {groups: data, loading, isLoading, subscribe, unsubscribe, subscriptionStatus, refresh, emptyCache};
 }

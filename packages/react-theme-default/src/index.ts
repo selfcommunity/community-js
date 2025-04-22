@@ -206,6 +206,8 @@ import SCWidget from './components/SCWidget';
 import SCBuyButton from './components/SCBuyButton';
 import SCPaymentProducts from './components/SCPaymentProducts';
 import SCPaymentProduct from './components/SCPaymentProduct';
+import SCPaymentOrder from './components/SCPaymentOrder';
+import SCPaymentOrderPdfButton from './components/SCPaymentOrderPdfButton';
 import SCPaymentProductPrice from './components/SCPaymentProductPrice';
 import SCCheckout from './components/SCCheckout';
 import SCCheckoutReturnDialog from './components/SCCheckoutReturnDialog';
@@ -499,6 +501,8 @@ const theme = {
     SCBuyButton,
     SCPaymentProducts,
     SCPaymentProduct,
+    SCPaymentOrder,
+    SCPaymentOrderPdfButton,
     SCPaymentProductPrice,
     SCCheckout,
     SCCheckoutReturnDialog,

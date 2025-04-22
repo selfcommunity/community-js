@@ -1,5 +1,5 @@
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCCourseType, SCPaymentProduct} from '@selfcommunity/types';
+import {SCPaymentProduct} from '@selfcommunity/types';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
@@ -57,7 +57,7 @@ export default function useSCFetchPaymentProduct({
           url: Endpoints.GetPaymentProduct.url({id}),
           method: Endpoints.GetPaymentProduct.method,
         })
-        .then((res: HttpResponse<SCCourseType>) => {
+        .then((res: HttpResponse<SCPaymentProduct>) => {
           if (res.status >= 300) {
             return Promise.reject(res);
           }

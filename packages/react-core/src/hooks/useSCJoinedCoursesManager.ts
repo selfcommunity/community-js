@@ -91,12 +91,12 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
         case SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE:
           _status = SCCourseJoinStatusType.INVITED;
           break;
-        case SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE:
+        /* case SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE:
           _status = SCCourseJoinStatusType.REQUESTED;
           break;
         case SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE:
           _status = SCCourseJoinStatusType.JOINED;
-          break;
+          break; */
         case SCNotificationTypologyType.USER_ADDED_TO_COURSE:
           _status = SCCourseJoinStatusType.JOINED;
           break;
@@ -306,7 +306,7 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
         if (cache.includes(course.id)) {
           return getCurrentCourseCacheStatus(course);
         }
-        if (authUserId) {
+        if (authUserId && course) {
           if ('join_status' in course) {
             return getJoinStatus(course);
           }
@@ -316,7 +316,7 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
         }
         return null;
       },
-    [loading, cache, authUserId]
+    [loading, cache, authUserId, getJoinStatus, getCurrentCourseCacheStatus]
   );
 
   /**

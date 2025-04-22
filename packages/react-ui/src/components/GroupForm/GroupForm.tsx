@@ -19,6 +19,7 @@ import {formatHttpErrorCode, GroupService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import PaywallsConfigurator from '../PaywallsConfigurator';
+import {ContentAccessType} from '../PaywallsConfigurator/constants';
 
 const messages = defineMessages({
   name: {
@@ -146,7 +147,8 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     isVisible: group ? group.visible : true,
     invitedUsers: null,
     isSubmitting: false,
-    product_ids: group?.paywalls?.map((p) => p.id) || []
+    productIds: group?.paywalls?.map((p) => p.id) || [],
+    contentAccessType: group?.paywalls?.length ? ContentAccessType.PAID : ContentAccessType.FREE
   };
 
   // CONTEXT
@@ -241,8 +243,8 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     if (field.emotionalImageOriginalFile) {
       formData.append('emotional_image_original', field.emotionalImageOriginalFile);
     }
-    if (field.product_ids && (isStaff || (group && group.paywalls?.length))) {
-      field.product_ids.forEach((p, i) => {
+    if (field.productIds && field.contentAccessType === ContentAccessType.PAID && (isStaff || (group && group.paywalls?.length))) {
+      field.productIds.forEach((p, i) => {
         formData.append(`product_ids[${i}]`, p.toString());
       });
     }
@@ -284,10 +286,17 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     }
   };
 
+  const handleChangeContentAccessType = (type: ContentAccessType) => {
+    setField((prev) => ({
+      ...prev,
+      contentAccessType: type
+    }));
+  };
+
   const handleChangePaymentsProducts = (products) => {
     setField((prev) => ({
       ...prev,
-      product_ids: products.map((product) => product.id)
+      productIds: products.map((product) => product.id)
     }));
   };
 
@@ -525,7 +534,12 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
         </FormGroup>
         {isPaymentsEnabled && isStaff && (
           <Box className={classes.paywallsConfiguratorWrap}>
-            <PaywallsConfigurator {...(group && {contentId: group.id})} contentType={SCContentType.GROUP} onChange={handleChangePaymentsProducts} />
+            <PaywallsConfigurator
+              {...(group && {contentId: group.id})}
+              contentType={SCContentType.GROUP}
+              onChangeContentAccessType={handleChangeContentAccessType}
+              onChangePaymentProducts={handleChangePaymentsProducts}
+            />
           </Box>
         )}
         {!group && (

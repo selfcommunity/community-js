@@ -19,6 +19,7 @@ import CategoryAutocomplete from '../CategoryAutocomplete';
 import CourseEdit from './Edit';
 import CoursePublicationDialog from './Dialog';
 import PaywallsConfigurator from '../PaywallsConfigurator';
+import {ContentAccessType} from '../PaywallsConfigurator/constants';
 
 const messages = defineMessages({
   name: {
@@ -105,11 +106,11 @@ export interface CourseFormProps extends BoxProps {
    */
   onError?: (error: any) => void;
 
-	/**
-	 * Hide paywalls configuration
-	 * @default false
-	 */
-	hidePaywalls?: boolean;
+  /**
+   * Hide paywalls configuration
+   * @default false
+   */
+  hidePaywalls?: boolean;
 
   /**
    * Any other properties
@@ -170,7 +171,8 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     description: course ? course.description : '',
     categories: course ? course.categories : [],
     privacy: course ? course.privacy : '',
-    product_ids: course?.paywalls?.map((p) => p.id) || [],
+    productIds: course?.paywalls?.map((p) => p.id) || [],
+    contentAccessType: course?.paywalls?.length ? ContentAccessType.PAID : ContentAccessType.FREE,
     isSubmitting: false
   };
 
@@ -285,8 +287,8 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         formData.append(key, field.categories[key]);
       }
     }
-    if (field.product_ids && (isStaff || (course && course.paywalls?.length))) {
-      field.product_ids.forEach((p, i) => {
+    if (field.productIds && field.contentAccessType === ContentAccessType.PAID && (isStaff || (course && course.paywalls?.length))) {
+      field.productIds.forEach((p, i) => {
         formData.append(`product_ids[${i}]`, p.toString());
       });
     }
@@ -340,13 +342,24 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   );
 
   /**
+   * Handle change content access tyoe
+   * @param type
+   */
+  const handleChangeContentAccessType = (type: ContentAccessType) => {
+    setField((prev) => ({
+      ...prev,
+      contentAccessType: type
+    }));
+  };
+
+  /**
    * Handle change payment products
    * @param products
    */
   const handleChangePaymentsProducts = (products) => {
     setField((prev) => ({
       ...prev,
-      product_ids: products.map((product) => product.id)
+      productIds: products.map((product) => product.id)
     }));
   };
 
@@ -468,7 +481,8 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                     <PaywallsConfigurator
                       {...(course && {contentId: course.id})}
                       contentType={SCContentType.COURSE}
-                      onChange={handleChangePaymentsProducts}
+                      onChangeContentAccessType={handleChangeContentAccessType}
+                      onChangePaymentProducts={handleChangePaymentsProducts}
                     />
                   </Box>
                 )}

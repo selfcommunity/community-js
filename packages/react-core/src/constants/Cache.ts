@@ -107,9 +107,13 @@ export const getPmSnippetsObjectCacheKey = () => `${PM_SNIPPETS_OBJECT_CACHE_PRE
 export const PM_SNIPPET_OBJECT_CACHE_PREFIX_KEY = '_pms_';
 export const getPmSnippetObjectCacheKey = (id) => `${PM_SNIPPET_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
-/** COURSE OBJECT **/
+/** PAYMENT PRODUCT OBJECT **/
 export const PAYMENT_PRODUCT_OBJECT_CACHE_PREFIX_KEY = '_ppo_';
 export const getPaymentProductObjectCacheKey = (id) => `${PAYMENT_PRODUCT_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
+/** PAYMENT PRODUCT OBJECT **/
+export const PAYMENT_ORDER_OBJECT_CACHE_PREFIX_KEY = '_pord_';
+export const getPaymentOrderObjectCacheKey = (id) => `${PAYMENT_ORDER_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
 /** TOOLS */
 export const CATEGORIES_LIST_TOOLS_STATE_CACHE_PREFIX_KEY = '_cListWidget_';

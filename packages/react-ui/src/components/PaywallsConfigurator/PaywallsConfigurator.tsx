@@ -96,7 +96,8 @@ export interface PaywallsConfiguratorProps {
   content?: SCPurchasableContent;
   prefetchedProducts?: SCPaymentProduct[];
   selectedProducts?: SCPaymentProduct[];
-  onChange?: (products: SCPaymentProduct[]) => void;
+  onChangePaymentProducts?: (products: SCPaymentProduct[]) => void;
+  onChangeContentAccessType?: (type: string) => void;
   disabled?: boolean;
 }
 
@@ -106,7 +107,18 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
     props: inProps,
     name: PREFIX
   });
-  const {className, contentId, contentType, content, prefetchedProducts, selectedProducts = [], onChange, disabled = false, ...rest} = props;
+  const {
+    className,
+    contentId,
+    contentType,
+    content,
+    prefetchedProducts,
+    selectedProducts = [],
+    onChangeContentAccessType,
+    onChangePaymentProducts,
+    disabled = false,
+    ...rest
+  } = props;
 
   // STATE
   const [products, setProducts] = useState<SCPaymentProduct[]>([]);
@@ -139,7 +151,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
 
   const handleClose = () => {
     setValue(pendingValue);
-    onChange?.(pendingValue);
+		onChangePaymentProducts?.(pendingValue);
     if (anchorEl) {
       anchorEl.focus();
     }
@@ -157,14 +169,14 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
   const handleCreatePaymentPrice = (product: SCPaymentProduct) => {
     const products = [product, ...value];
     setValue([product, ...value]);
-    onChange?.(products);
+		onChangePaymentProducts?.(products);
     handleToggleCreatePaymentPrice();
   };
 
   const handleDeleteProduct = (p, i) => {
     const products = [...value.slice(0, i), ...value.slice(i + 1)];
     setValue(products);
-    onChange?.(products);
+		onChangePaymentProducts?.(products);
   };
 
   /**

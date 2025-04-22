@@ -1,0 +1,20 @@
+import type { Meta, StoryObj } from '@storybook/react';
+import PdfPreview from './index';
+
+export default {
+	title: 'Design System/React UI/PdfPreview',
+	component: PdfPreview,
+} as Meta<typeof PdfPreview>;
+
+const template = (args) => (
+	<div style={{ maxWidth: 400 }}>
+		<PdfPreview {...args} />
+	</div>
+);
+
+export const Base: StoryObj<typeof PdfPreview> = {
+	args: {},
+	render: template
+};
+
+

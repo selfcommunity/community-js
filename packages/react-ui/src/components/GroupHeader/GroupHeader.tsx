@@ -1,14 +1,13 @@
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {styled} from '@mui/material/styles';
 import {Avatar, Box, Icon, Paper, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {SCContentType, SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
+import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {
   SCPreferences,
   SCPreferencesContextType,
   SCThemeType,
   SCUserContextType,
   useSCFetchGroup,
-  useSCPaymentsEnabled,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -27,7 +26,6 @@ import GroupInviteButton from '../GroupInviteButton';
 import {SCGroupEventType, SCGroupMembersEventType, SCTopicType} from '../../constants/PubSub';
 import PubSub from 'pubsub-js';
 import GroupActionsMenu, {GroupActionsMenuProps} from '../GroupActionsMenu';
-import BuyButton from '../BuyButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -174,9 +172,6 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  // PAYMENTS
-  const {isPaymentsEnabled} = useSCPaymentsEnabled();
-
   // REFS
   const updatesSubscription = useRef(null);
 
@@ -252,16 +247,6 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
       ? {background: `url('${scGroup.emotional_image}') center / cover`}
       : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
-
-  /**
-   * Define if the buyButton is visible
-   */
-  const showBuyButton =
-    isPaymentsEnabled &&
-    scGroup.paywalls?.length > 0 &&
-    (scGroup.privacy === SCGroupPrivacyType.PUBLIC ||
-      (scGroup.privacy === SCGroupPrivacyType.PRIVATE &&
-        (!scGroup.subscription_status || scGroup.subscription_status !== SCGroupSubscriptionStatusType.REQUESTED)));
 
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
@@ -348,8 +333,6 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
             <GroupInviteButton group={scGroup} groupId={scGroup.id} />
             {isMobile && <GroupActionsMenu group={scGroup} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} {...GroupActionsProps} />}
           </Box>
-        ) : showBuyButton ? (
-          <BuyButton contentType={SCContentType.GROUP} content={scGroup} />
         ) : (
           <GroupSubscribeButton group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />
         )}

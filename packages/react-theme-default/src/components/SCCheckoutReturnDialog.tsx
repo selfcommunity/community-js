@@ -12,16 +12,18 @@ const Component = {
         justifyContent: 'center',
         alignItems: 'center',
         '& .SCWidget-root': {
-          minWidth: 310,
+          minWidth: 310
+        },
+        '& .SCGroup-root': {
           paddingLeft: theme.spacing()
         }
       },
       '& .SCCheckoutSuccessDialog-content-object': {
         width: '100%'
       },
-			'& .SCCourse-preview-root': {
-				minHeight: 'auto'
-			},
+      '& .SCCourse-preview-root': {
+        minHeight: 'auto'
+      }
     })
   }
 };
