@@ -147,6 +147,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
    */
   const showBuyButton =
     !isGroupAdmin &&
+    !user &&
     isPaymentsEnabled &&
     scGroup.paywalls?.length > 0 &&
     (scGroup.privacy === SCGroupPrivacyType.PUBLIC ||
