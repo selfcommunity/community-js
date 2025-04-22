@@ -1,8 +1,6 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
-import {Box, Link, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Box, Link, Typography, Icon, styled} from '@mui/material';
 import {MEDIA_TYPE_DOCUMENT} from '../../constants/Media';
 
 const PREFIX = 'SCLessonFilePreview';

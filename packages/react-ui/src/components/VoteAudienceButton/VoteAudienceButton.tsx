@@ -1,11 +1,9 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {LoadingButton, LoadingButtonProps} from '@mui/lab';
 import classNames from 'classnames';
 import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
-import Icon from '@mui/material/Icon';
-import {Avatar, Box, List, ListItem, Tab, Tabs, Typography} from '@mui/material';
+import {Avatar, Box, List, ListItem, Tab, Tabs, Typography, Icon, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserContextType, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../shared/BaseDialog';

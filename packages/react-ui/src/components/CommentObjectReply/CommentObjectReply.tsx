@@ -1,8 +1,7 @@
 import React, {RefObject, useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, Icon, IconButton, Stack, useMediaQuery, useTheme} from '@mui/material';
+import {Avatar, Icon, IconButton, Stack, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import Editor, {EditorRef, EditorProps} from '../Editor';
 import classNames from 'classnames';

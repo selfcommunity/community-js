@@ -1,12 +1,10 @@
 import React, {ReactElement, useMemo} from 'react';
-import {styled} from '@mui/material/styles';
 import {MEDIA_TYPE_VIDEO} from '../../../constants/Media';
 import AutoPlayer from '../../AutoPlayer';
-import Box from '@mui/material/Box';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
-import {BoxProps, CircularProgress} from '@mui/material';
-import {SCMediaType} from '@selfcommunity/types/src/types';
+import {styled, BoxProps, CircularProgress, Box} from '@mui/material';
+import {SCMediaType} from '@selfcommunity/types';
 import filter from './filter';
 
 const classes = {

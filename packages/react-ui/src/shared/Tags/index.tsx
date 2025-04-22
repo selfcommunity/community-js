@@ -1,11 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import {Box, Divider, Stack, Typography} from '@mui/material';
-import Grow from '@mui/material/Grow';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
-import Icon from '@mui/material/Icon';
+import {Box, Divider, Stack, Typography, styled, ClickAwayListener, Grow, Paper, Popper, Icon} from '@mui/material';
 import TagChip, {TagChipProps} from '../TagChip';
 import {SCTagType} from '@selfcommunity/types';
 

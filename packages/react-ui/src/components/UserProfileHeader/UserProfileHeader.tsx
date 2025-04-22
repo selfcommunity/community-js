@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Paper, Typography} from '@mui/material';
+import {Box, Paper, Typography, styled} from '@mui/material';
 import ChangeCover, {ChangeCoverProps} from '../ChangeCover';
 import ChangePicture, {ChangePictureProps} from '../ChangePicture';
 import {SCUserType} from '@selfcommunity/types';

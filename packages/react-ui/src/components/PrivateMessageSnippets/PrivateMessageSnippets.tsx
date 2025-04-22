@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Button, Card, CardContent, CardProps, Icon, IconButton, List, TextField, useTheme} from '@mui/material';
+import {Button, Card, CardContent, CardProps, Icon, IconButton, List, TextField, useTheme, styled, useMediaQuery} from '@mui/material';
 import PubSub from 'pubsub-js';
 import {
   SCNotificationTopicType,
@@ -17,7 +16,6 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCThemeType, SCUserContext, SCUserContextType, useSCFetchPrivateMessageSnippets} from '@selfcommunity/react-core';
 import {CacheStrategies} from '@selfcommunity/utils';
 import PrivateMessageSettingsIconButton from '../PrivateMessageSettingsIconButton';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import {PREFIX} from './constants';
 
 const messages = defineMessages({

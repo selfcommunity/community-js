@@ -1,9 +1,7 @@
 import React, {useMemo} from 'react';
-import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
 import CommentObject, {CommentObjectProps, CommentObjectSkeleton} from '../CommentObject';
-import Typography from '@mui/material/Typography';
-import {Box, Button, Stack} from '@mui/material';
+import {Box, Button, Stack, styled, Typography} from '@mui/material';
 import classNames from 'classnames';
 import CustomAdv from '../CustomAdv';
 import {useThemeProps} from '@mui/system';
@@ -46,7 +44,7 @@ const Root = styled(Box, {
 export interface CommentsObjectProps {
   /**
    * Id of the CommentsObject
-   * @default `comments_object_<feedObjectType>_<feedObjectId | feedObject.id>`
+   * @default `comments_object_feedObjectType_feedObjectId`
    */
   id?: string;
 

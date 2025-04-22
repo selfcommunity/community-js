@@ -1,14 +1,11 @@
 import React, {useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {FormControl, FormHelperText, InputLabel, MenuItem, Select, Typography} from '@mui/material';
+import {FormControl, styled, MenuItem, Select, SelectProps, Typography, TypographyProps} from '@mui/material';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {UserService} from '@selfcommunity/api-services';
 import {SCUserType, SCLanguageType} from '@selfcommunity/types';
 import {SCLocaleContextType, SCUserContextType, useSCLocale, useSCUser} from '@selfcommunity/react-core';
-import {SelectProps} from '@mui/material/Select/Select';
-import {TypographyProps} from '@mui/material/Typography/Typography';
 
 const PREFIX = 'SCLanguageSwitcher';
 

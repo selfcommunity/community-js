@@ -1,10 +1,8 @@
 import React, {useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Icon, IconButton, InputAdornment, TextField, Tooltip} from '@mui/material';
+import {styled, Icon, IconButton, InputAdornment, TextField, BaseTextFieldProps, Tooltip} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
-import {BaseTextFieldProps} from '@mui/material/TextField/TextField';
 
 const PREFIX = 'SCCopyTextField';
 

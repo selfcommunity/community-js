@@ -25,15 +25,13 @@ import {useLivestreamCheck} from './useLiveStreamCheck';
 import {FocusLayout, FocusLayoutContainer, FocusLayoutContainerNoParticipants} from './FocusLayout';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import {styled} from '@mui/material/styles';
-import {Box, IconButton} from '@mui/material';
+import {Box, IconButton, styled, Icon} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import NoParticipants from './NoParticipants';
 import LiveStreamSettingsMenu from './LiveStreamSettingsMenu';
 import {BackgroundBlur} from '@livekit/track-processors';
 import {isClientSideRendering} from '@selfcommunity/utils';
 import {CHOICE_VIDEO_BLUR_EFFECT} from '../../../constants/LiveStream';
-import Icon from '@mui/material/Icon';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
 

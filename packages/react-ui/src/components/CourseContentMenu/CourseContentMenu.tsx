@@ -1,8 +1,7 @@
 import React, {useCallback, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Box, Collapse, Icon, List, ListItemButton, ListItemIcon, ListItemText} from '@mui/material';
+import {Box, Collapse, Icon, List, ListItemButton, ListItemIcon, ListItemText, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import {
   SCCourseJoinStatusType,

@@ -1,7 +1,6 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
-import {Box, Button, Typography} from '@mui/material';
+import {Box, Button, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
 import {CustomMenuService} from '@selfcommunity/api-services';
 import {SCCustomMenuItemType, SCCustomMenuType} from '@selfcommunity/types';

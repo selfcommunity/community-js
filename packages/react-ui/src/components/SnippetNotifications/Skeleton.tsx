@@ -1,7 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {List, ListItem, useTheme} from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
+import {List, ListItem, useTheme, styled, Skeleton} from '@mui/material';
 import NotificationItem from '../../shared/NotificationItem';
 import {SCNotificationObjectTemplateType} from '../../types/notification';
 import {SCThemeType} from '@selfcommunity/react-core';

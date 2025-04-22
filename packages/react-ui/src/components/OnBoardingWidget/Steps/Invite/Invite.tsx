@@ -1,10 +1,8 @@
 import React, {useContext, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {PREFIX} from '../../constants';
-import {Button, Icon, IconButton, Typography} from '@mui/material';
+import {Button, Icon, IconButton, Typography, Box, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCPreferences, SCPreferencesContext, SCPreferencesContextType} from '@selfcommunity/react-core';
 import {FACEBOOK_SHARE, LINKEDIN_SHARE, X_SHARE} from '../../../../constants/SocialShare';

@@ -1,7 +1,5 @@
 import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import CardContent from '@mui/material/CardContent';
-import {Button, CardActions, Chip, Typography} from '@mui/material';
+import {Button, CardActions, Chip, Typography, styled, CardContent} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';

@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Icon, Paper, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Avatar, Box, Icon, Paper, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {
   SCPreferences,

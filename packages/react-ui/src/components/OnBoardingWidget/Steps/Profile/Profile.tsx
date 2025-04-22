@@ -1,10 +1,8 @@
 import React, {useCallback, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {PREFIX} from '../../constants';
-import {Button, Drawer, IconButton, Paper, Typography} from '@mui/material';
+import {Button, Drawer, IconButton, Paper, Typography, Box, styled, Icon} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import PublicInfo from '../../../UserProfileEdit/Section/PublicInfo';
 import {
@@ -23,7 +21,6 @@ import ChangeCover from '../../../ChangeCover';
 import {SCUserType} from '@selfcommunity/types';
 import {DEFAULT_FIELDS} from '../../../../constants/UserProfile';
 import {SCUserProfileFields} from '../../../../types/user';
-import Icon from '@mui/material/Icon';
 
 const classes = {
   root: `${PREFIX}-profile-root`,

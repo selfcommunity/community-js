@@ -1,6 +1,5 @@
 import React, {useCallback, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Icon, IconButton, IconButtonProps} from '@mui/material';
+import {Icon, IconButton, IconButtonProps, styled} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCPreferences, useSCPreferences, useSCUser} from '@selfcommunity/react-core';

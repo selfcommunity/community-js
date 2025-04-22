@@ -1,5 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {Grid} from '@mui/material';
 import Vote, {VoteProps} from './Vote';
 import Comment, {CommentProps} from './Comment';

@@ -1,6 +1,6 @@
 import React from 'react';
 import CategoriesSuggestionWidgetSkeleton from '../CategoriesSuggestionWidget/Skeleton';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {

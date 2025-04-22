@@ -1,14 +1,11 @@
 import React, {useContext, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {ListItem, Typography, IconButton, Box, useTheme, Button} from '@mui/material';
+import {ListItem, Typography, IconButton, Box, useTheme, Button, styled, Icon, useMediaQuery} from '@mui/material';
 import PrivateMessageThreadItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageThreadType, SCMessageFileType, SCPrivateMessageStatusType} from '@selfcommunity/types';
-import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import PrivateMessageSettingsIconButton from '../PrivateMessageSettingsIconButton';
 import {bytesToSize} from '../../utils/sizeCoverter';
 import BaseDialog from '../../shared/BaseDialog';

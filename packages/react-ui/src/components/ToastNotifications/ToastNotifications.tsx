@@ -1,6 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, BoxProps} from '@mui/material';
+import {Box, BoxProps, styled} from '@mui/material';
 import {SCContextType, SCNotification, SCUserContextType, useSCAlertMessages, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
 import PubSub from 'pubsub-js';

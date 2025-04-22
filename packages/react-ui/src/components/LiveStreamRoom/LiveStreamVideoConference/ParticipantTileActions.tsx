@@ -1,8 +1,6 @@
 import React, {useContext, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {FormattedMessage, useIntl} from 'react-intl';
-import Popper from '@mui/material/Popper';
-import Icon from '@mui/material/Icon';
+import {styled, Icon, Popper} from '@mui/material';
+import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import classNames from 'classnames';
 import {

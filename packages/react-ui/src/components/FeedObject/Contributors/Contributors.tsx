@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {useSCFetchContributors} from '@selfcommunity/react-core';
 import {SCContributionType, SCFeedObjectType, SCUserType} from '@selfcommunity/types';
-import {Avatar, AvatarGroup, Box, Button, List, ListItem, Typography} from '@mui/material';
+import {Avatar, AvatarGroup, Box, Button, List, ListItem, Typography, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../../../shared/BaseDialog';
 import CentralProgress from '../../../shared/CentralProgress';

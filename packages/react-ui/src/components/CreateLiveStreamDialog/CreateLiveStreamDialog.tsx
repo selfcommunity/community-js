@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventType, SCLiveStreamType} from '@selfcommunity/types';
@@ -12,8 +11,7 @@ import LiveStreamSelector from './LiveStreamSelector/LiveStreamSelector';
 import {CreateLiveStreamStep, LiveStreamType} from './types';
 import LiveStreamForm, {LiveStreamFormProps} from '../LiveStreamForm';
 import {TransitionProps} from '@mui/material/transitions';
-import Slide from '@mui/material/Slide';
-import {Box, Button, Icon} from '@mui/material';
+import {Box, Button, Icon, styled, Slide} from '@mui/material';
 
 const classes = {
   root: `${PREFIX}-root`,

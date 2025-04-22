@@ -1,5 +1,4 @@
-import {Button, CardActions, Icon, IconButton, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Button, CardActions, Icon, IconButton, Typography, styled} from '@mui/material';
 import {Box, useThemeProps} from '@mui/system';
 import {Endpoints, EventService, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {

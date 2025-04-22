@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';

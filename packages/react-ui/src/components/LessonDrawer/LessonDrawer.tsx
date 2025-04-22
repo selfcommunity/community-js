@@ -1,8 +1,7 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Box, Divider, Drawer, Icon, IconButton, Typography} from '@mui/material';
+import {Box, Divider, Drawer, Icon, IconButton, Typography, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCLessonActionsType} from '../../types';
 import {FormattedMessage} from 'react-intl';

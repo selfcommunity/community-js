@@ -1,8 +1,6 @@
 import React from 'react';
 import Widget from '../Widget';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
-import {CardContent} from '@mui/material';
+import {styled, Skeleton, CardContent} from '@mui/material';
 
 const PREFIX = 'SCGenericSkeleton';
 

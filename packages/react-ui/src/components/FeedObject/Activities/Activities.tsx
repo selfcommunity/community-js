@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
+import {Box, styled} from '@mui/material';
 import {SCCommentsOrderBy} from '../../../types/comments';
 import classNames from 'classnames';
 import CommentsObject, {CommentsObjectProps} from '../../CommentsObject';
@@ -27,7 +26,7 @@ const Root = styled(Box, {
 export interface ActivitiesProps {
   /**
    * Id of the FeedObjectActivities
-   * @default `feed_object_activities_<feedObjectId | feedObject.id>`
+   * @default `feed_object_activities_feedObjectId`
    */
   id?: string;
 

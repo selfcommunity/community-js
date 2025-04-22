@@ -1,5 +1,5 @@
 import React, {useContext, useMemo, useRef} from 'react';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {
   CategoriesPopularWidget,
   Feed,

@@ -1,5 +1,5 @@
 import {LoadingButton} from '@mui/lab';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {EventService} from '@selfcommunity/api-services';
 import {useSCFetchEvent, useSCFetchUser} from '@selfcommunity/react-core';

@@ -1,6 +1,5 @@
 import React, {useContext, useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Button} from '@mui/material';
+import {Box, Button, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';

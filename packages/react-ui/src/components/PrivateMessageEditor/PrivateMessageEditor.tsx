@@ -1,7 +1,5 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Alert, Box, IconButton, TextField} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Alert, Box, IconButton, TextField, styled, Icon} from '@mui/material';
 import classNames from 'classnames';
 import MessageMediaUploader from './MessageMediaUploader';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';

@@ -1,7 +1,5 @@
 import React from 'react';
-import {Toolbar} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
+import {Toolbar, styled, Skeleton} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {

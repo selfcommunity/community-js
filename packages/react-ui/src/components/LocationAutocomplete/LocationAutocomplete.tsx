@@ -1,11 +1,8 @@
 import React, {SyntheticEvent, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import TextField, {TextFieldProps} from '@mui/material/TextField';
-import CircularProgress from '@mui/material/CircularProgress';
-import {Autocomplete, AutocompleteProps} from '@mui/material';
+import {Autocomplete, AutocompleteProps, TextField, TextFieldProps, CircularProgress, styled} from '@mui/material';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
-import {SCContributionLocation, SCLocalityType} from '@selfcommunity/types/src/index';
-import {styled} from '@mui/material/styles';
+import {SCContributionLocation, SCLocalityType} from '@selfcommunity/types';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import {useThemeProps} from '@mui/system';

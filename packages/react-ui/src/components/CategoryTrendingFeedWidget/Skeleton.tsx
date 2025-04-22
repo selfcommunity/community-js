@@ -1,9 +1,7 @@
 import React from 'react';
 import Widget from '../Widget';
-import List from '@mui/material/List';
-import {styled} from '@mui/material/styles';
 import FeedObjectSkeleton from '../FeedObject/Skeleton';
-import {CardContent} from '@mui/material';
+import {CardContent, List, styled} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {

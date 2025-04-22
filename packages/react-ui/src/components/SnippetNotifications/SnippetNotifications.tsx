@@ -1,5 +1,4 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import CommentNotification from '../Notification/Comment';
 import UserFollowNotification from '../Notification/UserFollow';
 import UndeletedForNotification from '../Notification/UndeletedFor';
@@ -15,7 +14,7 @@ import VoteUpNotification from '../Notification/VoteUp';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import PubSub from 'pubsub-js';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
-import {Avatar, Box, CardProps, MenuItem, MenuList, Typography} from '@mui/material';
+import {Avatar, Box, CardProps, MenuItem, MenuList, Typography, styled} from '@mui/material';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import classNames from 'classnames';
 import Skeleton from './Skeleton';
@@ -63,7 +62,7 @@ const Root = styled(Box, {
 export interface SnippetNotificationsProps extends CardProps {
   /**
    * Id of the UserNotification
-   * @default `notification_<notificationObject.sid>`
+   * @default `notification_notificationObject.sid`
    */
   id?: string;
 

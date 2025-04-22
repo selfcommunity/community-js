@@ -1,15 +1,13 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
+import {styled, Box, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import CommentObject, {CommentObjectProps} from '../CommentObject';
-import {Box} from '@mui/material';
 import {SCCommentsOrderBy} from '../../types/comments';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {WidgetProps} from '../Widget';
 import CommentsObject from '../CommentsObject';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import Typography from '@mui/material/Typography';
 import {getContribution} from '../../utils/contribution';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
@@ -32,7 +30,7 @@ const Root = styled(Box, {
 export interface CommentsFeedObjectProps {
   /**
    * Id of the CommentsObject
-   * @default `comments_object_<feedObjectType>_<feedObjectId | feedObject.id>`
+   * @default `comments_object_feedObjectType_feedObjectId`
    */
   id?: string;
 

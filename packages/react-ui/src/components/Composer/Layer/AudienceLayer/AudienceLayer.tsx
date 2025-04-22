@@ -1,16 +1,27 @@
 import React, {ReactElement, SyntheticEvent, useCallback, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import TextField, {TextFieldProps} from '@mui/material/TextField';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {Autocomplete, Box, BoxProps, Button, DialogTitle, IconButton, Tab, Tabs, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import {SCTagType} from '@selfcommunity/types/src/index';
+import {
+  Autocomplete,
+  Box,
+  BoxProps,
+  Button,
+  DialogTitle,
+  IconButton,
+  Tab,
+  Tabs,
+  Typography,
+  styled,
+  TextField,
+  TextFieldProps,
+  DialogContent,
+  Icon
+} from '@mui/material';
+import {SCTagType} from '@selfcommunity/types';
 import TagChip from '../../../../shared/TagChip';
 import {ComposerLayerProps} from '../../../../types/composer';
 import classNames from 'classnames';
-import Icon from '@mui/material/Icon';
-import DialogContent from '@mui/material/DialogContent';
 import {SCPreferences, SCPreferencesContextType, useSCFetchAddressingTagList, useSCPreferences} from '@selfcommunity/react-core';
 import {PREFIX} from '../../constants';
 import GroupAutocomplete from '../../../GroupAutocomplete';

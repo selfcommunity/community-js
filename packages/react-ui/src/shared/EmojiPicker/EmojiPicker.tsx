@@ -1,6 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
+import {Box, styled} from '@mui/material';
 import {EmojiStyle, PickerProps} from 'emoji-picker-react';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';

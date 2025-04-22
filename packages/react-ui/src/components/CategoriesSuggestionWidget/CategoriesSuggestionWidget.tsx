@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
 import {Endpoints, http, SCPaginatedResponse, SuggestionService} from '@selfcommunity/api-services';
 import {SCCache, SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';

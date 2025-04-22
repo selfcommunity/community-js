@@ -1,8 +1,6 @@
 import React from 'react';
 import Widget from '../Widget';
-import {styled} from '@mui/material/styles';
-import {CardContent, ListItem} from '@mui/material';
-import List from '@mui/material/List';
+import {CardContent, ListItem, List, styled} from '@mui/material';
 import CourseSkeleton from '../Course/Skeleton';
 import {SCCourseTemplateType} from '../../types/course';
 

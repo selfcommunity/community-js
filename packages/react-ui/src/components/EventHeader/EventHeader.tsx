@@ -1,5 +1,4 @@
-import {Box, Chip, Icon, Paper, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, Chip, Icon, Paper, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {
   SCPreferences,

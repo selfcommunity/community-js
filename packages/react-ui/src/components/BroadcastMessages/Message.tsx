@@ -13,10 +13,10 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
-  Typography
+  Typography,
+  styled,
+  Icon
 } from '@mui/material';
-import {styled} from '@mui/material/styles';
-import Icon from '@mui/material/Icon';
 import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import MarkRead from '../../shared/MarkRead';

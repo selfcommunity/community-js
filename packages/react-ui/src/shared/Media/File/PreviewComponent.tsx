@@ -1,8 +1,6 @@
 import React, {ReactElement, useCallback, useEffect, useMemo} from 'react';
-import {Box, BoxProps, IconButton, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, BoxProps, IconButton, Typography, useMediaQuery, useTheme, styled, Icon} from '@mui/material';
 import {SCMediaType} from '@selfcommunity/types';
-import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {ReactSortable} from 'react-sortablejs';
 import {PREFIX} from './constants';

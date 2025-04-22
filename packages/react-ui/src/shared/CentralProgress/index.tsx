@@ -1,8 +1,5 @@
 import React from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
-import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
-import {CircularProgressProps} from '@mui/material/CircularProgress/CircularProgress';
+import {styled, Box, CircularProgress, CircularProgressProps} from '@mui/material';
 
 const PREFIX = 'SCCentralProgress';
 

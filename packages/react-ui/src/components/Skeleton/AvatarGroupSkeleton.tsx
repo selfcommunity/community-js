@@ -1,5 +1,4 @@
-import {styled} from '@mui/material/styles';
-import {Avatar, AvatarGroup, AvatarGroupProps, Skeleton, useTheme} from '@mui/material';
+import {Avatar, AvatarGroup, AvatarGroupProps, Skeleton, useTheme, styled} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 

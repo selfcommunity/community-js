@@ -1,7 +1,5 @@
 import React from 'react';
-import {Box, Typography, useTheme} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
+import {Box, Typography, useTheme, styled, Skeleton} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 
