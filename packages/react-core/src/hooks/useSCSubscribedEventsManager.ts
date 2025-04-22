@@ -7,9 +7,9 @@ import {
   SCNotificationTypologyType,
   SCUserType,
 } from '@selfcommunity/types';
-import {isClientSideRendering, Logger} from '@selfcommunity/utils';
+import {Logger} from '@selfcommunity/utils';
 import PubSub from 'pubsub-js';
-import {useContext, useEffect, useMemo, useRef} from 'react';
+import {useEffect, useMemo, useRef} from 'react';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 import {SCOPE_SC_CORE} from '../constants/Errors';
@@ -17,9 +17,6 @@ import {SCNotificationMapping} from '../constants/Notification';
 import {CONFIGURATIONS_EVENTS_ENABLED} from '../constants/Preferences';
 import {getEventStatus} from '../utils/event';
 import useSCCachingManager from './useSCCachingManager';
-import {SCRoutingContextType} from '../types/context';
-import {SCRoutingContext} from '../components/provider/SCRoutingProvider';
-import * as SCRoutes from '../constants/Routes';
 
 /**
  :::info
@@ -38,7 +35,6 @@ import * as SCRoutes from '../constants/Routes';
 export default function useSCSubscribedEventsManager(user?: SCUserType) {
   const {cache, updateCache, emptyCache, data, setData, loading, setLoading, setUnLoading, isLoading} = useSCCachingManager();
   const {preferences, features} = useSCPreferences();
-  const scRoutingContext: SCRoutingContextType = useContext(SCRoutingContext);
   const authUserId = user ? user.id : null;
   const eventsEnabled = useMemo(
     () =>
@@ -94,12 +90,6 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
       switch (SCNotificationMapping[dataMsg.data.activity_type]) {
         case SCNotificationTypologyType.USER_INVITED_TO_JOIN_EVENT:
           _status = SCEventSubscriptionStatusType.INVITED;
-          if (
-            isClientSideRendering() &&
-            window.document.location.href.indexOf(scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, dataMsg.data.notification_obj.event)) > -1
-          ) {
-            checkEventSubscriptionStatus(dataMsg.data.notification_obj.event);
-          }
           break;
         /* case SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT:
           _status = SCEventSubscriptionStatusType.REQUESTED;
