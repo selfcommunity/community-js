@@ -22,6 +22,7 @@ const Component = {
       },
       '& .SCCourse-snippet-image': {
         position: 'relative',
+        marginLeft: theme.spacing(),
         '& .SCCourse-snippet-in-progress': {
           height: 18,
           backgroundColor: theme.palette.secondary.main,
