@@ -290,7 +290,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                     </TableCell>
                     <TableCell scope="row">
                       <Stack direction="row" justifyContent="left" alignItems="center" spacing={2}>
-                        <PaymentOrderPdfButton paymentOrder={order} />
+                        {order.content_type === SCContentType.EVENT && <PaymentOrderPdfButton paymentOrder={order} />}
                         {Boolean(!order.paid && order.billing_reason === 'subscription_create') && (
                           <LoadingButton size="small" variant="contained" disabled={true}>
                             <FormattedMessage id="ui.paymentOrders.pay" defaultMessage="ui.paymentOrders.pay" />
