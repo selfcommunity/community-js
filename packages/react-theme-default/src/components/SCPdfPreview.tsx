@@ -14,7 +14,10 @@ const Component = {
       },
       [`& .SCPdfPreview-document-pdf-page`]: {
         display: 'flex',
-        justifyContent: 'center'
+        flexDirection: 'column',
+        justifyContent: 'center',
+        marginBottom: theme.spacing(3),
+        pageBreakAfter: 'always'
       }
     })
   }

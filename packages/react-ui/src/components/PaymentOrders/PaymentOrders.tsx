@@ -13,7 +13,7 @@ import {
   Typography,
   Stack,
   CircularProgress,
-	styled
+  styled
 } from '@mui/material';
 import {FormattedMessage, useIntl} from 'react-intl';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -31,6 +31,7 @@ import Category from '../Category';
 import Course from '../Course';
 import Group from '../Group';
 import PaymentProduct from '../PaymentProduct';
+import PaymentOrderPdfButton from '../PaymentOrderPdfButton';
 
 const PREFIX = 'SCPaymentOrders';
 
@@ -280,17 +281,16 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                         : '-'}
                     </TableCell>
                     <TableCell scope="row">
-                      <Chip variant={'outlined'} label={ <FormattedMessage id="ui.paymentOrders.status.paid" defaultMessage="ui.paymentOrders.status.paid" />} color="success" size="small" />
+                      <Chip
+                        variant={'outlined'}
+                        label={<FormattedMessage id="ui.paymentOrders.status.paid" defaultMessage="ui.paymentOrders.status.paid" />}
+                        color="success"
+                        size="small"
+                      />
                     </TableCell>
                     <TableCell scope="row">
                       <Stack direction="row" justifyContent="left" alignItems="center" spacing={2}>
-                        {/* <InvoicePdfViewButton
-                                size="small"
-                                variant="contained"
-                                InvoicePdfViewDialogProps={{
-                                  InvoicePdfViewProps: {order, hideDownloadLink: true, maxWidth: 1280}
-                                }}
-                              />*/}
+                        <PaymentOrderPdfButton paymentOrder={order} />
                         {Boolean(!order.paid && order.billing_reason === 'subscription_create') && (
                           <LoadingButton size="small" variant="contained" disabled={true}>
                             <FormattedMessage id="ui.paymentOrders.pay" defaultMessage="ui.paymentOrders.pay" />

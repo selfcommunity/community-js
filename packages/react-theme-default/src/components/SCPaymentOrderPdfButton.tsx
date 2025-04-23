@@ -4,10 +4,10 @@ const Component = {
       paddingLeft: 4,
       paddingRight: 4,
       width: 'auto',
-			minWidth: 30,
-			marginLeft: theme.spacing(),
-			marginRight: theme.spacing(),
-			height: 31,
+      minWidth: 31,
+      marginLeft: theme.spacing(),
+      marginRight: theme.spacing(),
+      height: 30
     })
   }
 };

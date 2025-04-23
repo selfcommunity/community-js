@@ -6,6 +6,9 @@ import {TransitionProps} from '@mui/material/transitions';
 import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import PdfPreview, {PdfPreviewProps} from '../PdfPreview';
+import {http, HttpResponse} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const PREFIX = 'SCPdfPreviewDialog';
 
@@ -46,6 +49,25 @@ export default function PdfPreviewDialog(inProps: PdfPreviewDialogProps) {
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
+	/**
+	 * handle download pdf
+	 */
+  const handleDownload = async () => {
+    try {
+      const response: HttpResponse<Blob> = await http.request({url: pdfUrl, responseType: 'blob'});
+      const blob = new Blob([response.data], {type: 'application/pdf'});
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'order.pdf';
+      link.click();
+      // Cleanup
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      Logger.error(SCOPE_SC_UI, error);
+    }
+  };
+
   if (!isPaymentsEnabled) {
     return null;
   }
@@ -66,7 +88,7 @@ export default function PdfPreviewDialog(inProps: PdfPreviewDialogProps) {
             {title}
           </Typography>
           {pdfUrl && (
-            <IconButton edge="end" color="inherit" href={pdfUrl} aria-label="close">
+            <IconButton edge="end" color="inherit" onClick={handleDownload} aria-label="close">
               <Icon>download</Icon>
             </IconButton>
           )}
@@ -77,7 +99,7 @@ export default function PdfPreviewDialog(inProps: PdfPreviewDialogProps) {
       </AppBar>
       <Grid container className={classes.content}>
         <Grid item xs={12} justifyContent={'center'} alignContent={'center'}>
-          <PdfPreview hideDownloadLink {...PdfPreviewComponentProps} pdfUrl={pdfUrl} />
+          <PdfPreview {...PdfPreviewComponentProps} pdfUrl={pdfUrl} />
         </Grid>
       </Grid>
     </Root>
