@@ -17,7 +17,11 @@ const Component = {
         flexDirection: 'column',
         justifyContent: 'center',
         marginBottom: theme.spacing(3),
-        pageBreakAfter: 'always'
+        pageBreakAfter: 'always',
+        '& .react-pdf__Page__textContent': {
+          mixBlendMode: 'multiply',
+          opacity: 0.6
+        }
       }
     })
   }
