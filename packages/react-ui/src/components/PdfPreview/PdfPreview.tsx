@@ -2,11 +2,9 @@ import React, {ReactElement, useCallback, useEffect, useState} from 'react';
 import {Box, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {FormattedMessage} from 'react-intl';
 import type {PDFDocumentProxy} from 'pdfjs-dist';
 import {Document, Page, pdfjs} from 'react-pdf';
 import {Logger} from '@selfcommunity/utils';
-import Button from '@mui/material/Button';
 import Skeleton from './Skeleton';
 import {http, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContextType, useResizeObserver, useSCUser} from '@selfcommunity/react-core';
@@ -46,7 +44,6 @@ export interface PdfPreviewProps {
   className?: string;
   pdfUrl?: string;
   maxWidth?: number;
-  hideDownloadLink?: boolean;
 }
 
 export default function PdfPreview(inProps: PdfPreviewProps): ReactElement | null {
@@ -56,7 +53,7 @@ export default function PdfPreview(inProps: PdfPreviewProps): ReactElement | nul
     name: PREFIX
   });
 
-  const {className, pdfUrl, maxWidth = PdfMaxWidth, hideDownloadLink = false, ...rest} = props;
+  const {className, pdfUrl, maxWidth = PdfMaxWidth, ...rest} = props;
 
   // STATE
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -107,15 +104,18 @@ export default function PdfPreview(inProps: PdfPreviewProps): ReactElement | nul
 
   function renderDocument() {
     return (
-      <Document onLoadSuccess={onDocumentLoadSuccess} loading={<Skeleton />} file={pdfUrl} className={classes.documentPdf} options={options}>
-        {Array.from(new Array(numPages), (el, index) => (
-          <Page
-            className={classes.documentPdfPage}
-            key={`page_${index + 1}`}
-            pageNumber={index + 1}
-            width={containerWidth ? Math.min(containerWidth, maxWidth) : maxWidth}
-          />
-        ))}
+      <Document onLoadSuccess={onDocumentLoadSuccess} loading={<Skeleton />} file={url} className={classes.documentPdf} options={options}>
+        {Array.from({length: numPages}, (el, index) => {
+          return (
+            <Page
+              className={classes.documentPdfPage}
+              key={`page_${index + 1}`}
+              pageNumber={index + 1}
+              width={containerWidth ? Math.min(containerWidth, maxWidth) : maxWidth}
+              renderTextLayer={false}
+            />
+          );
+        })}
       </Document>
     );
   }
@@ -131,11 +131,6 @@ export default function PdfPreview(inProps: PdfPreviewProps): ReactElement | nul
           <>{renderDocument()}</>
         )}
       </Box>
-      {url && !isLoading && !hideDownloadLink && (
-        <Button size="small" variant="text" color={'inherit'} href={url} target={'_blank'}>
-          <FormattedMessage id="ui.pdfPreview.download" defaultMessage="ui.pdfPreview.download" />
-        </Button>
-      )}
     </Root>
   );
 }

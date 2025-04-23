@@ -132,7 +132,7 @@ export default function PaymentOrderPdfButton(inProps: PaymentOrderPdfButtonProp
           open
           onClose={handleClose}
           {...PdfPreviewDialogComponentProps}
-          pdfUrl={`https://${new URL(scContext.settings.portal).hostname}${Endpoints.GetPaymentOrderPdf.url({id: scPaymentOrder.id})}`}
+          pdfUrl={`${new URL(scContext.settings.portal)}${Endpoints.GetPaymentOrderPdf.url({id: scPaymentOrder.id})}`}
         />
       )}
     </>

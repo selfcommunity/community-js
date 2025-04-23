@@ -98,7 +98,11 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
           _status = SCCourseJoinStatusType.JOINED;
           break; */
         case SCNotificationTypologyType.USER_ADDED_TO_COURSE:
-          _status = SCCourseJoinStatusType.JOINED;
+          if (dataMsg.data.notification_obj.course && dataMsg.data.notification_obj.course.paywalls?.length) {
+            _status = SCCourseJoinStatusType.PAYMENT_WAITING;
+          } else {
+            _status = SCCourseJoinStatusType.JOINED;
+          }
           break;
       }
       updateCache([dataMsg.data.course]);

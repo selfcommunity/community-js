@@ -99,7 +99,11 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
           _status = SCGroupSubscriptionStatusType.SUBSCRIBED;
           break; */
         case SCNotificationTypologyType.USER_ADDED_TO_GROUP:
-          _status = SCGroupSubscriptionStatusType.SUBSCRIBED;
+          if (dataMsg.data.notification_obj.group && dataMsg.data.notification_obj.group.paywalls?.length) {
+            _status = SCGroupSubscriptionStatusType.PAYMENT_WAITING;
+          } else {
+            _status = SCGroupSubscriptionStatusType.SUBSCRIBED;
+          }
           break;
       }
       updateCache([dataMsg.data.group]);

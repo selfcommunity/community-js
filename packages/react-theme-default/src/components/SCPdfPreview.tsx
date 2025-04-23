@@ -14,7 +14,14 @@ const Component = {
       },
       [`& .SCPdfPreview-document-pdf-page`]: {
         display: 'flex',
-        justifyContent: 'center'
+        flexDirection: 'column',
+        justifyContent: 'center',
+        marginBottom: theme.spacing(3),
+        pageBreakAfter: 'always',
+        '& .react-pdf__Page__textContent': {
+          mixBlendMode: 'multiply',
+          opacity: 0.6
+        }
       }
     })
   }
