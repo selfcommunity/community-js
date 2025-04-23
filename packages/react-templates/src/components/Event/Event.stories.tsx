@@ -14,7 +14,7 @@ export default {
 
 export const Base: StoryObj<typeof EventTemplate> = {
   args: {
-		eventId: 1
+		eventId: 54
   },
   render: (args) => (
     <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>

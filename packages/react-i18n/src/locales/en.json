@@ -1394,6 +1394,7 @@
   "ui.paywallsConfigurator.popper.btnConfirm": "Confirm",
   "ui.paywallsConfigurator.noProducts": "No products",
   "ui.paywallsConfigurator.filterByName": "Filter by name",
+  "ui.paywallsConfigurator.openPriceslist": "Add selecting price from list",
   "ui.userBillingInfo.infoLabel": "Billing address",
   "ui.userBillingInfo.name": "Full Name",
   "ui.userBillingInfo.phone": "Phone",

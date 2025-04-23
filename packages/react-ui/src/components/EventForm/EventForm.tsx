@@ -244,7 +244,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     isSubmitting: false
   };
 
-  // STATE
+	// STATE
   const [field, setField] = useState<InitialFieldState>(initialFieldState);
   const [error, setError] = useState<any>({});
   const [genericError, setGenericError] = useState<string | null>(null);
@@ -467,10 +467,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     [error, setField, setGenericError]
   );
 
-	/**
-	 * Handle change content access tyoe
-	 * @param type
-	 */
+  /**
+   * Handle change content access tyoe
+   * @param type
+   */
   const handleChangeContentAccessType = (type: ContentAccessType) => {
     setField((prev) => ({
       ...prev,
