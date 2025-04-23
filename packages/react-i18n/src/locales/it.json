@@ -1396,6 +1396,7 @@
   "ui.paywallsConfigurator.popper.btnConfirm": "Conferma",
   "ui.paywallsConfigurator.noProducts": "Nessun prodotto selezionabile",
   "ui.paywallsConfigurator.filterByName": "Filtra per nome",
+  "ui.paywallsConfigurator.openPriceslist": "Seleziona prezzi",
   "ui.userBillingInfo.infoLabel": "Indirizzo di fatturazione",
   "ui.userBillingInfo.name": "Nome e Cognome",
   "ui.userBillingInfo.phone": "Telefono",

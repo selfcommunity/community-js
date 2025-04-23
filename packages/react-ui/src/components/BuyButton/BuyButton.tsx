@@ -242,9 +242,9 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
         break;
       case SCContentType.COURSE:
         // Get status course joined
-        CourseApiClient.getCourseStatus(contentId ? contentId : (content as SCCourseType).id).then((data) => {
-          if (scUserContext.user && data?.managed_by?.id !== scUserContext.user.id) {
-            if (data.subscription_status === SCCourseJoinStatusType.JOINED) {
+        CourseApiClient.getSpecificCourseInfo(contentId ? contentId : (content as SCCourseType).id).then((data) => {
+          if (scUserContext.user && data?.created_by?.id !== scUserContext.user.id) {
+            if (data.join_status === SCCourseJoinStatusType.JOINED) {
               setBtnLabel(<FormattedMessage defaultMessage="ui.buyButton.purchased" id="ui.buyButton.purchased" />);
             }
             if (data.paywalls) {
@@ -253,7 +253,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
             if (data.payment_order) {
               setPaymentOrder(data.payment_order);
             }
-            setPurchased(data.subscription_status === SCCourseJoinStatusType.JOINED);
+            setPurchased(data.join_status === SCCourseJoinStatusType.JOINED);
           }
         });
         break;

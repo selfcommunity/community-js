@@ -47,8 +47,8 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
   );
 
   const notificationInvitedToJoinCourse = useRef(null);
-  const notificationRequestedToJoinCourse = useRef(null);
-  const notificationAcceptedToJoinCourse = useRef(null);
+  // const notificationRequestedToJoinCourse = useRef(null);
+  // const notificationAcceptedToJoinCourse = useRef(null);
   const notificationAddedToCourse = useRef(null);
 
   /**
@@ -59,22 +59,22 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE}`,
       notificationSubscriber
     );
-    notificationRequestedToJoinCourse.current = PubSub.subscribe(
+    /* notificationRequestedToJoinCourse.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE}`,
       notificationSubscriber
     );
     notificationAcceptedToJoinCourse.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE}`,
       notificationSubscriber
-    );
+    ); */
     notificationAddedToCourse.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ADDED_TO_COURSE}`,
       notificationSubscriber
     );
     return () => {
       PubSub.unsubscribe(notificationInvitedToJoinCourse.current);
-      PubSub.unsubscribe(notificationRequestedToJoinCourse.current);
-      PubSub.unsubscribe(notificationAcceptedToJoinCourse.current);
+      // PubSub.unsubscribe(notificationRequestedToJoinCourse.current);
+      // PubSub.unsubscribe(notificationAcceptedToJoinCourse.current);
       PubSub.unsubscribe(notificationAddedToCourse.current);
     };
   }, [data]);

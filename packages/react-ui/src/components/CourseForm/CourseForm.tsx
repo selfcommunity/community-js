@@ -286,10 +286,12 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         formData.append(key, field.categories[key]);
       }
     }
-    if (field.productIds && field.contentAccessType === ContentAccessType.PAID && (isStaff || (course && course.paywalls?.length))) {
+    if (field.productIds.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (course && course.paywalls?.length))) {
       field.productIds.forEach((p, i) => {
         formData.append(`product_ids[${i}]`, p.toString());
       });
+    } else {
+      formData.append(`product_ids`, '[]');
     }
     let courseService: Promise<SCCourseType>;
     if (course) {

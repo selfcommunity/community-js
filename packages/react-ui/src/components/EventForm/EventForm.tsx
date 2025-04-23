@@ -376,11 +376,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       formData.append('visible', 'true');
     }
 
-    if (field.productIds && field.contentAccessType === ContentAccessType.PAID && (isStaff || (event && event.paywalls?.length))) {
+    console.log(field);
+    if (field.productIds.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (event && event.paywalls?.length))) {
       field.productIds.forEach((p, i) => {
         formData.append(`product_ids[${i}]`, p.toString());
       });
-    }
+    } else {
+			formData.append(`product_ids`, '[]');
+		}
 
     formData.append('description', field.description);
 
@@ -467,10 +470,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     [error, setField, setGenericError]
   );
 
-	/**
-	 * Handle change content access tyoe
-	 * @param type
-	 */
+  /**
+   * Handle change content access tyoe
+   * @param type
+   */
   const handleChangeContentAccessType = (type: ContentAccessType) => {
     setField((prev) => ({
       ...prev,

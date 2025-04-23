@@ -17,7 +17,7 @@ import {
   Stack,
   Typography,
   Zoom,
-	styled
+  styled
 } from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -141,17 +141,18 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
    * @param panel
    */
   const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-    setExpanded(isExpanded ? panel : false);
+    setExpanded(panel);
+    onChangeContentAccessType(panel);
   };
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const handleOpenPricesList = (event: React.MouseEvent<HTMLElement>) => {
     setPendingValue(value);
     setAnchorEl(event.currentTarget);
   };
 
   const handleClose = () => {
     setValue(pendingValue);
-		onChangePaymentProducts?.(pendingValue);
+    onChangePaymentProducts?.(pendingValue);
     if (anchorEl) {
       anchorEl.focus();
     }
@@ -169,14 +170,14 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
   const handleCreatePaymentPrice = (product: SCPaymentProduct) => {
     const products = [product, ...value];
     setValue([product, ...value]);
-		onChangePaymentProducts?.(products);
+    onChangePaymentProducts?.(products);
     handleToggleCreatePaymentPrice();
   };
 
   const handleDeleteProduct = (p, i) => {
     const products = [...value.slice(0, i), ...value.slice(i + 1)];
     setValue(products);
-		onChangePaymentProducts?.(products);
+    onChangePaymentProducts?.(products);
   };
 
   /**
@@ -444,8 +445,8 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                       );
                     })}
                   </List>
-                  <Button variant="outlined" size="small" fullWidth disableRipple onClick={handleClick} startIcon={<Icon>list</Icon>}>
-                    Add selecting price from list
+                  <Button variant="outlined" size="small" fullWidth disableRipple onClick={handleOpenPricesList} startIcon={<Icon>list</Icon>}>
+                    <FormattedMessage id="ui.paywallsConfigurator.openPriceslist" defaultMessage="ui.paywallsConfigurator.openPriceslist" />
                   </Button>
                 </Box>
               )}
