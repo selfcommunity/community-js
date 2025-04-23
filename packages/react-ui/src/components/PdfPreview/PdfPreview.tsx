@@ -5,15 +5,18 @@ import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import type {PDFDocumentProxy} from 'pdfjs-dist';
 import {Document, Page, pdfjs} from 'react-pdf';
+import {Logger} from '@selfcommunity/utils';
 import Button from '@mui/material/Button';
 import Skeleton from './Skeleton';
+import {http, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserContextType, useResizeObserver, useSCUser} from '@selfcommunity/react-core';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 pdfjs.GlobalWorkerOptions.workerSrc = new URL('pdfjs-dist/build/pdf.worker.min.js', import.meta.url).toString();
 
-const PREFIX = 'PWAInvoicePdfView';
+const PREFIX = 'SCPdfPreview';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -27,23 +30,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  [`& .${classes.documentPdfWrapper}`]: {
-    filter: 'drop-shadow(0 0 5px #00000040)'
-  },
-  [`& .${classes.documentPdfLink}`]: {
-    padding: 10,
-    '&:hover': {
-      opacity: 0.5
-    }
-  },
-  [`& .${classes.documentPdfPage}`]: {
-    display: 'flex',
-    justifyContent: 'center'
-  }
-}));
+})(({theme}) => ({}));
 
 // Default options conf PDFViewer
 const options = {
@@ -83,7 +70,6 @@ export default function PdfPreview(inProps: PdfPreviewProps): ReactElement | nul
 
   const onResize = useCallback<ResizeObserverCallback>((entries) => {
     const [entry] = entries;
-
     if (entry) {
       setContainerWidth(entry.contentRect.width);
     }
@@ -98,12 +84,8 @@ export default function PdfPreview(inProps: PdfPreviewProps): ReactElement | nul
 
   const fetchBlob = useCallback(
     async (url: string) => {
-      const request = await fetch(url, {
-        headers: {
-          ...(scUserContext.user && {Authorization: `Bearer ${scUserContext.session.authToken.accessToken}`})
-        }
-      });
-      return await request.blob();
+      const response: HttpResponse<Blob> = await http.request({url, responseType: 'blob'});
+      return response.data;
     },
     [scUserContext.user, scUserContext.session]
   );
@@ -117,7 +99,9 @@ export default function PdfPreview(inProps: PdfPreviewProps): ReactElement | nul
           setUrl(_url);
           setIsLoading(false);
         })
-        .catch(console.error);
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
     }
   }, [scUserContext.user, scUserContext.session]);
 

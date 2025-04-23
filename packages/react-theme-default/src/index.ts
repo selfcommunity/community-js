@@ -214,7 +214,7 @@ import SCCheckoutReturnDialog from './components/SCCheckoutReturnDialog';
 import SCHiddenPurchasableContent from './components/SCHiddenPurchasableContent';
 import SCPaywalls from './components/SCPaywalls';
 import SCPaywallsConfigurator from './components/SCPaywallsConfigurator';
-
+import SCPdfPreview from './components/SCPdfPreview';
 /**
  * Style fragments - Imports - End
  */
@@ -508,7 +508,8 @@ const theme = {
     SCCheckoutReturnDialog,
     SCHiddenPurchasableContent,
     SCPaywalls,
-    SCPaywallsConfigurator
+    SCPaywallsConfigurator,
+    SCPdfPreview
   },
   selfcommunity: {
     user: {
