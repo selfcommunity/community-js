@@ -244,7 +244,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     isSubmitting: false
   };
 
-	// STATE
+  // STATE
   const [field, setField] = useState<InitialFieldState>(initialFieldState);
   const [error, setError] = useState<any>({});
   const [genericError, setGenericError] = useState<string | null>(null);
@@ -376,11 +376,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       formData.append('visible', 'true');
     }
 
-    if (field.productIds && field.contentAccessType === ContentAccessType.PAID && (isStaff || (event && event.paywalls?.length))) {
+    console.log(field);
+    if (field.productIds.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (event && event.paywalls?.length))) {
       field.productIds.forEach((p, i) => {
         formData.append(`product_ids[${i}]`, p.toString());
       });
-    }
+    } else {
+			formData.append(`product_ids`, '[]');
+		}
 
     formData.append('description', field.description);
 

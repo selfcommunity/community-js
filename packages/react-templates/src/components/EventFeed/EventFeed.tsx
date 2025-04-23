@@ -245,7 +245,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
       </Box>
     );
   }
-
+	console.log(status);
   return (
     <Root
       className={classNames(classes.root, className)}

@@ -1,4 +1,4 @@
-import React, {useMemo, useRef} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material';
 import {
   ContributionUtils,
@@ -16,7 +16,16 @@ import {
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchGroup, useSCRouting} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCRoutes,
+  SCRoutingContextType,
+  SCSubscribedGroupsManagerType,
+  SCUserContextType,
+  useSCFetchGroup,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {SCCustomAdvPosition, SCFeedTypologyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -137,15 +146,31 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
   });
   const {id = 'group_feed', className, group, groupId, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
+  // STATUS
+  const [status, setStatus] = useState<string | null | undefined>(undefined);
+
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scUserContext: SCUserContextType = useSCUser();
+  const scGroupsManager: SCSubscribedGroupsManagerType = scUserContext.managers.groups;
   const {enqueueSnackbar} = useSnackbar();
+  const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
 
   // REF
   const feedRef = useRef<FeedRef>();
 
-  // Hooks
-  const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+
+  useEffect(() => {
+    /**
+     * Call scGroupsManager.subscriptionStatus inside an effect
+     * to avoid warning rendering child during update parent state
+     */
+    if (authUserId) {
+      setStatus(scGroupsManager.subscriptionStatus(scGroup));
+    }
+  }, [authUserId, scGroupsManager.subscriptionStatus, scGroup]);
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
@@ -184,7 +209,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
 
   if (!scGroup) {
     return <GroupFeedSkeleton />;
-  } else if (scGroup && scGroup.subscription_status !== SCGroupSubscriptionStatusType.SUBSCRIBED) {
+  } else if (scGroup && status !== SCGroupSubscriptionStatusType.SUBSCRIBED) {
     return <GroupInfoWidget className={classes.root} groupId={scGroup?.id} />;
   }
 

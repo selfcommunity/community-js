@@ -242,10 +242,12 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     if (field.emotionalImageOriginalFile) {
       formData.append('emotional_image_original', field.emotionalImageOriginalFile);
     }
-    if (field.productIds && field.contentAccessType === ContentAccessType.PAID && (isStaff || (group && group.paywalls?.length))) {
+    if (field.productIds.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (group && group.paywalls?.length))) {
       field.productIds.forEach((p, i) => {
         formData.append(`product_ids[${i}]`, p.toString());
       });
+    } else {
+			formData.append(`product_ids`, '[]');
     }
     if (!group) {
       for (const key in field.invitedUsers) {

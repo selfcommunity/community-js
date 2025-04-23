@@ -47,8 +47,8 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
   );
 
   const notificationInvitedToJoinEvent = useRef(null);
-  const notificationRequestedToJoinEvent = useRef(null);
-  const notificationAcceptedToJoinEvent = useRef(null);
+  // const notificationRequestedToJoinEvent = useRef(null);
+  // const notificationAcceptedToJoinEvent = useRef(null);
   const notificationAddedToEvent = useRef(null);
 
   /**
@@ -59,7 +59,7 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_INVITED_TO_JOIN_EVENT}`,
       notificationSubscriber
     );
-    notificationRequestedToJoinEvent.current = PubSub.subscribe(
+    /* notificationRequestedToJoinEvent.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT}`,
       notificationSubscriber
     );
@@ -67,14 +67,15 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_EVENT}`,
       notificationSubscriber
     );
+    */
     notificationAddedToEvent.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ADDED_TO_EVENT}`,
       notificationSubscriber
     );
     return () => {
       PubSub.unsubscribe(notificationInvitedToJoinEvent.current);
-      PubSub.unsubscribe(notificationRequestedToJoinEvent.current);
-      PubSub.unsubscribe(notificationAcceptedToJoinEvent.current);
+      // PubSub.unsubscribe(notificationRequestedToJoinEvent.current);
+      // PubSub.unsubscribe(notificationAcceptedToJoinEvent.current);
       PubSub.unsubscribe(notificationAddedToEvent.current);
     };
   }, [data]);

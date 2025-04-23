@@ -48,8 +48,8 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
   );
 
   const notificationInvitedToJoinGroup = useRef(null);
-  const notificationRequestedToJoinGroup = useRef(null);
-  const notificationAcceptedToJoinGroup = useRef(null);
+  // const notificationRequestedToJoinGroup = useRef(null);
+  // const notificationAcceptedToJoinGroup = useRef(null);
   const notificationAddedToGroup = useRef(null);
 
   /**
@@ -60,6 +60,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_INVITED_TO_JOIN_GROUP}`,
       notificationSubscriber
     );
+    /*
     notificationRequestedToJoinGroup.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP}`,
       notificationSubscriber
@@ -68,14 +69,15 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP}`,
       notificationSubscriber
     );
+    */
     notificationAddedToGroup.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ADDED_TO_GROUP}`,
       notificationSubscriber
     );
     return () => {
       PubSub.unsubscribe(notificationInvitedToJoinGroup.current);
-      PubSub.unsubscribe(notificationRequestedToJoinGroup.current);
-      PubSub.unsubscribe(notificationAcceptedToJoinGroup.current);
+      // PubSub.unsubscribe(notificationRequestedToJoinGroup.current);
+      // PubSub.unsubscribe(notificationAcceptedToJoinGroup.current);
       PubSub.unsubscribe(notificationAddedToGroup.current);
     };
   }, [data]);
