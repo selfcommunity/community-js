@@ -215,6 +215,7 @@ import SCHiddenPurchasableContent from './components/SCHiddenPurchasableContent'
 import SCPaywalls from './components/SCPaywalls';
 import SCPaywallsConfigurator from './components/SCPaywallsConfigurator';
 import SCPdfPreview from './components/SCPdfPreview';
+import SCPaymentOrders from './components/SCPaymentOrders';
 /**
  * Style fragments - Imports - End
  */
@@ -509,7 +510,8 @@ const theme = {
     SCHiddenPurchasableContent,
     SCPaywalls,
     SCPaywallsConfigurator,
-    SCPdfPreview
+    SCPdfPreview,
+		SCPaymentOrders
   },
   selfcommunity: {
     user: {

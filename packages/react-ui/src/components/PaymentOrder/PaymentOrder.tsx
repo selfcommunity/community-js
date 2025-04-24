@@ -13,7 +13,7 @@ import Course from '../Course';
 import Group from '../Group';
 import PaymentProduct from '../PaymentProduct';
 import PaymentOrderSkeleton from './Skeleton';
-import PaymentOrderPdfButton from '../PaymentOrderPdfButton';
+import PaymentOrderPdfButton, {PaymentOrderPdfButtonProps} from '../PaymentOrderPdfButton';
 import {getConvertedAmount} from '../../utils/payment';
 import {SCCourseTemplateType} from '../../types/course';
 import {SCEventTemplateType} from '../../types/event';
@@ -36,6 +36,8 @@ export interface PaymentOrderProps {
   className?: string;
   paymentOrderId?: number;
   paymentOrder?: SCPaymentOrder;
+  hidePaymentOrderPdfButton?: boolean;
+  PaymentOrderPdfButtonComponentProps?: PaymentOrderPdfButtonProps;
 }
 
 export default function PaymentOrder(inProps: PaymentOrderProps) {
@@ -44,7 +46,7 @@ export default function PaymentOrder(inProps: PaymentOrderProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, paymentOrderId, paymentOrder, ...rest} = props;
+  const {className, paymentOrderId, paymentOrder, hidePaymentOrderPdfButton = false, PaymentOrderPdfButtonComponentProps = {}, ...rest} = props;
 
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
@@ -157,10 +159,11 @@ export default function PaymentOrder(inProps: PaymentOrderProps) {
           size="small"
         />
         <br />
-        {scPaymentOrder && (
+        {scPaymentOrder && !hidePaymentOrderPdfButton && (
           <PaymentOrderPdfButton
             paymentOrder={scPaymentOrder}
             label={<FormattedMessage id="ui.paymentOrder.ticket.view" defaultMessage="ui.paymentOrder.ticket.view" />}
+            {...PaymentOrderPdfButtonComponentProps}
           />
         )}
       </Box>
