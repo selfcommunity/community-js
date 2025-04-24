@@ -291,7 +291,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         formData.append(`product_ids[${i}]`, p.toString());
       });
     } else {
-      formData.append(`product_ids`, []);
+      formData.append(`product_ids`, '[]');
     }
     let courseService: Promise<SCCourseType>;
     if (course) {
