@@ -59,7 +59,7 @@ export interface GroupProps extends WidgetProps {
    * Props to spread to group subscribe/unsubscribe button
    * @default {}
    */
-  groupSubscribeButtonProps?: GroupSubscribeButtonProps;
+  GroupSubscribeButtonComponentProps?: GroupSubscribeButtonProps;
   /**
    * Badge content to show as group avatar badge if show reaction is true.
    */
@@ -133,7 +133,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
     elevation,
     hideActions = false,
     actionRedirect = false,
-    groupSubscribeButtonProps = {},
+    GroupSubscribeButtonComponentProps = {},
     cacheStrategy,
     ...rest
   } = props;
@@ -175,7 +175,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
             )}
           </Button>
         ) : (
-          <GroupSubscribeButton group={group} groupId={groupId} {...groupSubscribeButtonProps} />
+          <GroupSubscribeButton group={group} groupId={groupId} {...GroupSubscribeButtonComponentProps} />
         )}
       </Stack>
     );

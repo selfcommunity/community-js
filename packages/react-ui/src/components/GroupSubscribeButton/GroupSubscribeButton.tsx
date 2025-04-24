@@ -58,15 +58,9 @@ export interface GroupSubscribeButtonProps {
   groupId?: number;
 
   /**
-   * The user to be accepted into the group
-   * @default null
-   */
-  user?: SCUserType;
-
-  /**
    * onSubscribe callback
-   * @param user
-   * @param joined
+   * @param group
+   * @param status
    */
   onSubscribe?: (group: SCGroupType, status: string | null) => any;
 
@@ -105,7 +99,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     name: PREFIX
   });
 
-  const {className, groupId, group, user, onSubscribe, ...rest} = props;
+  const {className, groupId, group, onSubscribe, ...rest} = props;
 
   // STATE
   const [status, setStatus] = useState<string>(null);
@@ -147,7 +141,6 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
    */
   const showBuyButton =
     !isGroupAdmin &&
-    !user &&
     isPaymentsEnabled &&
     scGroup.paywalls?.length > 0 &&
     (scGroup.privacy === SCGroupPrivacyType.PUBLIC ||
@@ -164,15 +157,17 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     }
   }
 
-  const subscribe = (user?: SCUserType) => {
+  const subscribe = () => {
     scGroupsManager
-      .subscribe(scGroup, user?.id)
+      .subscribe(scGroup)
       .then(() => {
         const _status =
           scGroup.privacy === SCGroupPrivacyType.PRIVATE && scGroup.subscription_status !== SCGroupSubscriptionStatusType.INVITED
             ? SCGroupSubscriptionStatusType.REQUESTED
             : SCGroupSubscriptionStatusType.SUBSCRIBED;
-        notifyChanges(scGroup, user);
+        if (_status === SCGroupSubscriptionStatusType.SUBSCRIBED) {
+          notifyChanges(scGroup, scUserContext.user);
+        }
         onSubscribe && onSubscribe(scGroup, _status);
       })
       .catch((e) => {
@@ -195,7 +190,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {
-      status === SCGroupSubscriptionStatusType.SUBSCRIBED && !user?.id ? unsubscribe() : user?.id ? subscribe(user) : subscribe();
+      status === SCGroupSubscriptionStatusType.SUBSCRIBED ? unsubscribe() : subscribe();
     }
   };
 
@@ -223,7 +218,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     return _status;
   }, [status, scGroup]);
 
-  if (!scGroup || (isGroupAdmin && user?.id === scUserContext.user.id) || (isGroupAdmin && !user?.id)) {
+  if (!scGroup || isGroupAdmin) {
     return null;
   }
 
@@ -240,7 +235,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
       disabled={status === SCGroupSubscriptionStatusType.REQUESTED}
       className={classNames(classes.root, className)}
       {...rest}>
-      {isGroupAdmin ? <FormattedMessage defaultMessage="ui.groupSubscribeButton.accept" id="ui.groupSubscribeButton.accept" /> : getStatus}
+      {getStatus}
     </Root>
   );
 }

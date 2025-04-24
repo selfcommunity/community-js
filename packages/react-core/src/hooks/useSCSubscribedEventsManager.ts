@@ -59,23 +59,12 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_INVITED_TO_JOIN_EVENT}`,
       notificationSubscriber
     );
-    /* notificationRequestedToJoinEvent.current = PubSub.subscribe(
-      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT}`,
-      notificationSubscriber
-    );
-    notificationAcceptedToJoinEvent.current = PubSub.subscribe(
-      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_EVENT}`,
-      notificationSubscriber
-    );
-    */
     notificationAddedToEvent.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ADDED_TO_EVENT}`,
       notificationSubscriber
     );
     return () => {
       PubSub.unsubscribe(notificationInvitedToJoinEvent.current);
-      // PubSub.unsubscribe(notificationRequestedToJoinEvent.current);
-      // PubSub.unsubscribe(notificationAcceptedToJoinEvent.current);
       PubSub.unsubscribe(notificationAddedToEvent.current);
     };
   }, [data]);
@@ -92,12 +81,6 @@ export default function useSCSubscribedEventsManager(user?: SCUserType) {
         case SCNotificationTypologyType.USER_INVITED_TO_JOIN_EVENT:
           _status = SCEventSubscriptionStatusType.INVITED;
           break;
-        /* case SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT:
-          _status = SCEventSubscriptionStatusType.REQUESTED;
-          break;
-        case SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_EVENT:
-          _status = SCEventSubscriptionStatusType.SUBSCRIBED;
-          break; */
         case SCNotificationTypologyType.USER_ADDED_TO_EVENT:
           _status = SCEventSubscriptionStatusType.SUBSCRIBED;
           break;

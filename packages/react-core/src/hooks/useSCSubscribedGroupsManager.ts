@@ -48,8 +48,6 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
   );
 
   const notificationInvitedToJoinGroup = useRef(null);
-  // const notificationRequestedToJoinGroup = useRef(null);
-  // const notificationAcceptedToJoinGroup = useRef(null);
   const notificationAddedToGroup = useRef(null);
 
   /**
@@ -60,24 +58,12 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_INVITED_TO_JOIN_GROUP}`,
       notificationSubscriber
     );
-    /*
-    notificationRequestedToJoinGroup.current = PubSub.subscribe(
-      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP}`,
-      notificationSubscriber
-    );
-    notificationAcceptedToJoinGroup.current = PubSub.subscribe(
-      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP}`,
-      notificationSubscriber
-    );
-    */
     notificationAddedToGroup.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ADDED_TO_GROUP}`,
       notificationSubscriber
     );
     return () => {
       PubSub.unsubscribe(notificationInvitedToJoinGroup.current);
-      // PubSub.unsubscribe(notificationRequestedToJoinGroup.current);
-      // PubSub.unsubscribe(notificationAcceptedToJoinGroup.current);
       PubSub.unsubscribe(notificationAddedToGroup.current);
     };
   }, [data]);
@@ -94,12 +80,6 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
         case SCNotificationTypologyType.USER_INVITED_TO_JOIN_GROUP:
           _status = SCGroupSubscriptionStatusType.INVITED;
           break;
-        /* case SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP:
-          _status = SCGroupSubscriptionStatusType.REQUESTED;
-          break;
-        case SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP:
-          _status = SCGroupSubscriptionStatusType.SUBSCRIBED;
-          break; */
         case SCNotificationTypologyType.USER_ADDED_TO_GROUP:
           if (dataMsg.data.notification_obj.group && dataMsg.data.notification_obj.group.paywalls?.length) {
             _status = SCGroupSubscriptionStatusType.PAYMENT_WAITING;
@@ -152,48 +132,30 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
    */
   const subscribe = useMemo(
     () =>
-      (group: SCGroupType, userId?: number): Promise<any> => {
+      (group: SCGroupType): Promise<any> => {
         setLoading(group.id);
-        if (userId) {
-          return http
-            .request({
-              url: Endpoints.InviteOrAcceptGroupRequest.url({id: group.id}),
-              method: Endpoints.InviteOrAcceptGroupRequest.method,
-              data: {users: [userId]},
-            })
-            .then((res: HttpResponse<any>) => {
-              if (res.status >= 300) {
-                return Promise.reject(res);
-              }
-              updateCache([group.id]);
-              setData((prev) => getDataUpdated(prev, group.id, SCGroupSubscriptionStatusType.SUBSCRIBED));
-              setUnLoading(group.id);
-              return Promise.resolve(res.data);
-            });
-        } else {
-          return http
-            .request({
-              url: Endpoints.SubscribeToGroup.url({id: group.id}),
-              method: Endpoints.SubscribeToGroup.method,
-            })
-            .then((res: HttpResponse<any>) => {
-              if (res.status >= 300) {
-                return Promise.reject(res);
-              }
-              updateCache([group.id]);
-              setData((prev) =>
-                getDataUpdated(
-                  prev,
-                  group.id,
-                  group.privacy === SCGroupPrivacyType.PRIVATE && group.subscription_status !== SCGroupSubscriptionStatusType.INVITED
-                    ? SCGroupSubscriptionStatusType.REQUESTED
-                    : SCGroupSubscriptionStatusType.SUBSCRIBED
-                )
-              );
-              setUnLoading(group.id);
-              return Promise.resolve(res.data);
-            });
-        }
+        return http
+          .request({
+            url: Endpoints.SubscribeToGroup.url({id: group.id}),
+            method: Endpoints.SubscribeToGroup.method,
+          })
+          .then((res: HttpResponse<any>) => {
+            if (res.status >= 300) {
+              return Promise.reject(res);
+            }
+            updateCache([group.id]);
+            setData((prev) =>
+              getDataUpdated(
+                prev,
+                group.id,
+                group.privacy === SCGroupPrivacyType.PRIVATE && group.subscription_status !== SCGroupSubscriptionStatusType.INVITED
+                  ? SCGroupSubscriptionStatusType.REQUESTED
+                  : SCGroupSubscriptionStatusType.SUBSCRIBED
+              )
+            );
+            setUnLoading(group.id);
+            return Promise.resolve(res.data);
+          });
       },
     [data, loading, cache]
   );
@@ -205,7 +167,7 @@ export default function useSCSubscribedGroupsManager(user?: SCUserType) {
   const unsubscribe = useMemo(
     () =>
       (group: SCGroupType): Promise<any> => {
-        if (group.subscription_status !== SCGroupSubscriptionStatusType.REQUESTED) {
+        if (data[group.id] !== SCGroupSubscriptionStatusType.REQUESTED) {
           setLoading(group.id);
           return http
             .request({

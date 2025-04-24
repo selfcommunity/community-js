@@ -47,8 +47,6 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
   );
 
   const notificationInvitedToJoinCourse = useRef(null);
-  // const notificationRequestedToJoinCourse = useRef(null);
-  // const notificationAcceptedToJoinCourse = useRef(null);
   const notificationAddedToCourse = useRef(null);
 
   /**
@@ -59,22 +57,12 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE}`,
       notificationSubscriber
     );
-    /* notificationRequestedToJoinCourse.current = PubSub.subscribe(
-      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE}`,
-      notificationSubscriber
-    );
-    notificationAcceptedToJoinCourse.current = PubSub.subscribe(
-      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE}`,
-      notificationSubscriber
-    ); */
     notificationAddedToCourse.current = PubSub.subscribe(
       `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_ADDED_TO_COURSE}`,
       notificationSubscriber
     );
     return () => {
       PubSub.unsubscribe(notificationInvitedToJoinCourse.current);
-      // PubSub.unsubscribe(notificationRequestedToJoinCourse.current);
-      // PubSub.unsubscribe(notificationAcceptedToJoinCourse.current);
       PubSub.unsubscribe(notificationAddedToCourse.current);
     };
   }, [data]);
@@ -91,12 +79,6 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
         case SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE:
           _status = SCCourseJoinStatusType.INVITED;
           break;
-        /* case SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE:
-          _status = SCCourseJoinStatusType.REQUESTED;
-          break;
-        case SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE:
-          _status = SCCourseJoinStatusType.JOINED;
-          break; */
         case SCNotificationTypologyType.USER_ADDED_TO_COURSE:
           if (dataMsg.data.notification_obj.course && dataMsg.data.notification_obj.course.paywalls?.length) {
             _status = SCCourseJoinStatusType.PAYMENT_WAITING;
@@ -149,48 +131,27 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
    */
   const join = useMemo(
     () =>
-      (course: SCCourseType, userId?: number): Promise<any> => {
+      async (course: SCCourseType): Promise<any> => {
         setLoading(course.id);
-        if (userId) {
-          return http
-            .request({
-              url: Endpoints.InviteOrAcceptUsersToCourse.url({id: course.id}),
-              method: Endpoints.InviteOrAcceptUsersToCourse.method,
-              data: {users: [userId]},
-            })
-            .then((res: HttpResponse<any>) => {
-              if (res.status >= 300) {
-                return Promise.reject(res);
-              }
-              updateCache([course.id]);
-              setData((prev) => getDataUpdated(prev, course.id, SCCourseJoinStatusType.JOINED));
-              setUnLoading(course.id);
-              return Promise.resolve(res.data);
-            });
-        } else {
-          return http
-            .request({
-              url: Endpoints.JoinOrAcceptInviteToCourse.url({id: course.id}),
-              method: Endpoints.JoinOrAcceptInviteToCourse.method,
-            })
-            .then((res: HttpResponse<any>) => {
-              if (res.status >= 300) {
-                return Promise.reject(res);
-              }
-              updateCache([course.id]);
-              setData((prev) =>
-                getDataUpdated(
-                  prev,
-                  course.id,
-                  course.privacy === SCCoursePrivacyType.PRIVATE && course.join_status !== SCCourseJoinStatusType.INVITED
-                    ? SCCourseJoinStatusType.REQUESTED
-                    : SCCourseJoinStatusType.JOINED
-                )
-              );
-              setUnLoading(course.id);
-              return Promise.resolve(res.data);
-            });
+        const res = await http.request({
+          url: Endpoints.JoinOrAcceptInviteToCourse.url({id: course.id}),
+          method: Endpoints.JoinOrAcceptInviteToCourse.method,
+        });
+        if (res.status >= 300) {
+          return Promise.reject(res);
         }
+        updateCache([course.id]);
+        setData((prev) =>
+          getDataUpdated(
+            prev,
+            course.id,
+            course.privacy === SCCoursePrivacyType.PRIVATE && course.join_status !== SCCourseJoinStatusType.INVITED
+              ? SCCourseJoinStatusType.REQUESTED
+              : SCCourseJoinStatusType.JOINED
+          )
+        );
+        setUnLoading(course.id);
+        return await Promise.resolve(res.data);
       },
     [data, loading, cache]
   );
@@ -201,23 +162,20 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
    */
   const leave = useMemo(
     () =>
-      (course: SCCourseType): Promise<any> => {
-        if (course.join_status !== SCCourseJoinStatusType.REQUESTED) {
+      async (course: SCCourseType): Promise<any> => {
+        if (data[course.id] !== SCCourseJoinStatusType.REQUESTED) {
           setLoading(course.id);
-          return http
-            .request({
-              url: Endpoints.LeaveOrRemoveCourseRequest.url({id: course.id}),
-              method: Endpoints.LeaveOrRemoveCourseRequest.method,
-            })
-            .then((res: HttpResponse<any>) => {
-              if (res.status >= 300) {
-                return Promise.reject(res);
-              }
-              updateCache([course.id]);
-              setData((prev) => getDataUpdated(prev, course.id, null));
-              setUnLoading(course.id);
-              return Promise.resolve(res.data);
-            });
+          const res = await http.request({
+            url: Endpoints.LeaveOrRemoveCourseRequest.url({id: course.id}),
+            method: Endpoints.LeaveOrRemoveCourseRequest.method,
+          });
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          updateCache([course.id]);
+          setData((prev) => getDataUpdated(prev, course.id, null));
+          setUnLoading(course.id);
+          return await Promise.resolve(res.data);
         }
       },
     [data, loading, cache]

@@ -27,7 +27,7 @@ import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {AxiosResponse} from 'axios';
 import {PREFIX} from './constants';
 import User, {UserProps, UserSkeleton} from '../User';
-import GroupSubscribeButton, {GroupSubscribeButtonProps} from '../GroupSubscribeButton';
+import AcceptRequestUserGroupButton, {AcceptRequestUserGroupButtonProps} from '../AcceptRequestUserGroupButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -60,6 +60,11 @@ export interface GroupRequestsWidgetProps extends VirtualScrollerItemProps, Widg
    * @default null
    */
   groupId?: number | string;
+	/**
+	 * Hides this component
+	 * @default true
+	 */
+	autoHide?: boolean;
   /**
    * Limit the number of users to show
    * @default false
@@ -86,7 +91,7 @@ export interface GroupRequestsWidgetProps extends VirtualScrollerItemProps, Widg
    * Props to spread to group subscribe button component
    * @default {}
    */
-  GroupSubscribeButtonProps?: GroupSubscribeButtonProps;
+  AcceptRequestUserGroupButtonComponentProps?: AcceptRequestUserGroupButtonProps;
 
   /**
    * onSubscribeAction callback
@@ -138,6 +143,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
   const {
     groupId,
     group,
+		autoHide = true,
     limit = 5,
     className,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
@@ -145,7 +151,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
     onStateChange,
     UserProps = {},
     DialogProps = {},
-    GroupSubscribeButtonProps = {},
+    AcceptRequestUserGroupButtonComponentProps = {},
     onSubscribeActon,
     ...rest
   } = props;
@@ -192,6 +198,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
    */
   const _initComponent = useMemo(
     () => (): void => {
+			console.log('initComponent');
       if (!state.initialized && !state.isLoadingNext) {
         dispatch({type: actionWidgetTypes.LOADING_NEXT});
         GroupService.getGroupWaitingApprovalSubscribers(scGroup.id, {limit})
@@ -210,6 +217,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
   // EFFECTS
   useEffect(() => {
     let _t;
+		console.log(scGroup, scUserContext.user);
     if ((contentAvailability || (!contentAvailability && scUserContext.user?.id)) && scGroup && scUserContext.user !== undefined) {
       _t = setTimeout(_initComponent);
       return (): void => {
@@ -288,7 +296,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
   );
 
   // RENDER
-  if ((!state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !scGroup || !isGroupAdmin) {
+  if ((autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !scGroup || !isGroupAdmin) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {
@@ -300,6 +308,11 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
       <Typography className={classes.title} variant="h5">
         <FormattedMessage id="ui.groupRequestsWidget.title" defaultMessage="ui.groupRequestsWidget.title" />
       </Typography>
+      {state.results.length === 0 && (
+        <Typography variant="body1" mt={2}>
+          <FormattedMessage id="ui.groupRequestsWidget.noRequests" defaultMessage="ui.groupRequestsWidget.noRequests" />
+        </Typography>
+      )}
       <React.Fragment>
         <List>
           {state.results.slice(0, state.visibleItems).map((user: SCUserType) => (
@@ -307,12 +320,12 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
               <User
                 elevation={0}
                 actions={
-                  <GroupSubscribeButton
+                  <AcceptRequestUserGroupButton
                     group={scGroup}
                     groupId={scGroup?.id}
                     user={user}
-                    onSubscribe={() => handleSubscribeAction(user)}
-                    {...GroupSubscribeButtonProps}
+                    handleConfirm={() => handleSubscribeAction(user)}
+                    {...AcceptRequestUserGroupButtonComponentProps}
                   />
                 }
                 user={user}
@@ -357,12 +370,12 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
                   <User
                     elevation={0}
                     actions={
-                      <GroupSubscribeButton
+                      <AcceptRequestUserGroupButton
                         group={scGroup}
                         groupId={scGroup?.id}
                         user={user}
-                        onSubscribe={() => handleSubscribeAction(user)}
-                        {...GroupSubscribeButtonProps}
+                        handleConfirm={() => handleSubscribeAction(user)}
+                        {...AcceptRequestUserGroupButtonComponentProps}
                       />
                     }
                     user={user}
