@@ -382,7 +382,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         formData.append(`product_ids[${i}]`, p.toString());
       });
     } else {
-			formData.append(`product_ids`, []);
+			formData.append(`product_ids`, '[]');
 		}
 
     formData.append('description', field.description);

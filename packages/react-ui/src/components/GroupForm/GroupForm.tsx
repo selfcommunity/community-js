@@ -247,7 +247,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
         formData.append(`product_ids[${i}]`, p.toString());
       });
     } else {
-			formData.append(`product_ids`, []);
+			formData.append(`product_ids`, '[]');
     }
     if (!group) {
       for (const key in field.invitedUsers) {
