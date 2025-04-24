@@ -23,6 +23,16 @@ const Component = {
       '& .SCCourse-snippet-image': {
         position: 'relative',
         marginLeft: theme.spacing(),
+        '& .SCCourse-chip': {
+          maxWidth: 70,
+          borderRadius: 3,
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
+          height: 18,
+          '& span': {
+            padding: 3,
+            fontSize: '0.6rem'
+          }
+        },
         '& .SCCourse-snippet-in-progress': {
           height: 18,
           backgroundColor: theme.palette.secondary.main,
