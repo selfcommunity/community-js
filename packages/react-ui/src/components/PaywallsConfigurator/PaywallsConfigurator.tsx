@@ -250,7 +250,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
    * Fetch paywalls
    */
   const fetchPaywalls = async (
-    next = `${Endpoints.GetPaywalls.url({})}?content_id=${contentId}&content_type=${contentType}&active=1`
+    next = `${Endpoints.GetPaywalls.url({})}?content_id=${contentId}&content_type=${contentType}&active=1&payment_product__active=1`
   ): Promise<SCPaywall[]> => {
     const response = await http.request({
       url: next,

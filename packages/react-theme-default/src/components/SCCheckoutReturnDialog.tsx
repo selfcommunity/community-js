@@ -23,6 +23,12 @@ const Component = {
       },
       '& .SCCourse-preview-root': {
         minHeight: 'auto'
+      },
+      '& .SCCategory-category-image': {
+        paddingLeft: theme.spacing(1)
+      },
+      '& .SCGroup-avatar': {
+        marginLeft: theme.spacing(1)
       }
     })
   }

@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {Box, Typography, styled} from '@mui/material';
+import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
+import {Box, Button, Icon, styled, Typography} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {EmbeddedCheckout, EmbeddedCheckoutProvider} from '@stripe/react-stripe-js';
@@ -7,16 +7,17 @@ import {loadStripe, Stripe} from '@stripe/stripe-js';
 import {PaymentApiClient} from '@selfcommunity/api-services';
 import CheckoutSkeleton from './Skeleton';
 import {PREFIX} from './constants';
-import {SCCheckoutSessionUIMode, SCContentType, SCPurchasableContent} from '@selfcommunity/types';
+import {SCCheckoutSessionUIMode, SCContentType, SCPaymentOrder, SCPurchasableContent} from '@selfcommunity/types';
 import {FormattedMessage, IntlShape, useIntl} from 'react-intl';
 import {getDefaultLocale} from '../../utils/payment';
-import {useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContext, SCPreferencesContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
 import Event from '../Event';
 import Category from '../Category';
 import Course from '../Course';
 import Group from '../Group';
 import {SCEventTemplateType} from '../../types/event';
 import {SCCourseTemplateType} from '../../types/course';
+import PaymentOrder from '../PaymentOrder';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -25,7 +26,8 @@ const classes = {
   contentDesc: `${PREFIX}-content-desc`,
   contentCoverage: `${PREFIX}-content-coverage`,
   checkout: `${PREFIX}-checkout`,
-  object: `${PREFIX}-object`
+  object: `${PREFIX}-object`,
+  paymentOrder: `${PREFIX}-payment-order`
 };
 
 const Root = styled(Box, {
@@ -54,11 +56,18 @@ export default function Checkout(inProps: CheckoutProps) {
   });
   const {className, clientSecret, contentType, contentId, content, priceId, returnUrl, successUrl, uiMode, onComplete, ...rest} = props;
 
+  // STATE
   const [loading, setLoading] = useState<boolean>(false);
   const [initialized, setInitialized] = useState<boolean>(false);
+  const [paymentOrder, setPaymentOrder] = useState<SCPaymentOrder>(null);
 
   // CONTEXT
   const scUserContext = useSCUser();
+  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const appUrl = useMemo(
+    () => scPreferencesContext.preferences && scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_APP_URL].value,
+    [scPreferencesContext.preferences]
+  );
   const intl: IntlShape = useIntl();
 
   // HOOKS
@@ -71,6 +80,7 @@ export default function Checkout(inProps: CheckoutProps) {
   // STATE
   const [clientSecretKey, setClientSecretKey] = useState<string | null>(clientSecret);
 
+  // CONST
   const isContentObject = useMemo(() => contentType && contentId !== undefined, [contentType, contentId]);
 
   const fetchClientSecret = useCallback(() => {
@@ -78,17 +88,24 @@ export default function Checkout(inProps: CheckoutProps) {
     if (!loading) {
       setInitialized(true);
       setLoading(true);
-      PaymentApiClient.checkoutCreateSession({
-        content_type: contentType,
-        content_id: content ? content.id : contentId,
-        payment_price_id: priceId,
-        ...(returnUrl && {return_url: returnUrl}),
-        ...(successUrl && {success_url: successUrl}),
-        ...(uiMode && {ui_mode: uiMode})
-      })
-        .then((r) => {
-          setClientSecretKey(r.client_secret);
-          setLoading(false);
+      PaymentApiClient.getPaymentContentStatus({content_id: contentId, content_type: contentType})
+        .then((data) => {
+          if (!data.payment_order) {
+            PaymentApiClient.checkoutCreateSession({
+              content_type: contentType,
+              content_id: content ? content.id : contentId,
+              payment_price_id: priceId,
+              ...(returnUrl && {return_url: returnUrl}),
+              ...(successUrl && {success_url: successUrl}),
+              ...(uiMode && {ui_mode: uiMode})
+            }).then((r) => {
+              setClientSecretKey(r.client_secret);
+              setLoading(false);
+            });
+          } else {
+            setPaymentOrder(data.payment_order);
+            setLoading(false);
+          }
         })
         .catch((error) => {
           console.error('Error fetching session client secret:', error);
@@ -122,7 +139,7 @@ export default function Checkout(inProps: CheckoutProps) {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
-  if (!stripePromise || !clientSecretKey || !scUserContext.user) {
+  if (!stripePromise || (!clientSecretKey && !paymentOrder) || !scUserContext.user) {
     return <CheckoutSkeleton />;
   }
 
@@ -169,7 +186,7 @@ export default function Checkout(inProps: CheckoutProps) {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {isContentObject && contentType !== SCContentType.COMMUNITY && (
+      {isContentObject && contentType !== SCContentType.COMMUNITY && clientSecret && (
         <Box className={classes.content}>
           <Box className={classes.contentObject}>
             <Box className={classes.contentCoverage} />
@@ -187,11 +204,27 @@ export default function Checkout(inProps: CheckoutProps) {
           </Box>
         </Box>
       )}
-      <Box id="checkout" className={classes.checkout}>
-        <EmbeddedCheckoutProvider stripe={stripePromise} options={providerOptions}>
-          <EmbeddedCheckout />
-        </EmbeddedCheckoutProvider>
-      </Box>
+      {clientSecret && (
+        <Box id="checkout" className={classes.checkout}>
+          <EmbeddedCheckoutProvider stripe={stripePromise} options={providerOptions}>
+            <EmbeddedCheckout />
+          </EmbeddedCheckoutProvider>
+        </Box>
+      )}
+      {!clientSecret && paymentOrder && (
+        <Box className={classes.paymentOrder}>
+          <Button variant="text" color="primary" href={`${appUrl}`} startIcon={<Icon>arrow_back</Icon>}>
+            {' '}
+            Back to home
+          </Button>
+          <Typography variant="h2" color="textSecondary" mb={2}>
+            <b>
+              <FormattedMessage id="ui.checkout.paymentOrder" defaultMessage="ui.checkout.paymentOrder" />
+            </b>
+          </Typography>
+          <PaymentOrder paymentOrderId={paymentOrder.id} hidePaymentOrderPdfButton={contentType !== SCContentType.EVENT} />
+        </Box>
+      )}
     </Root>
   );
 }

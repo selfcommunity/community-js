@@ -63,6 +63,33 @@ const Component = {
           width: 'auto'
         }
       },
+      ['& .SCCheckout-payment-order']: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: theme.spacing(5),
+        '& .SCPaymentOrder-root': {
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          '& .SCPaymentOrder-content-object': {
+            minWidth: 300
+          },
+          '& .SCPaymentOrder-details': {
+            minWidth: 300
+          },
+          '& .SCPaymentOrderPdfButton-root': {
+            paddingLeft: theme.spacing(),
+            paddingRight: theme.spacing()
+          }
+        },
+        '& .SCPaymentOrder-skeleton-root': {
+          minWidth: 300
+        }
+      },
       ['& .SCCategory-root']: {
         borderRadius: theme.shape.borderRadius,
         '& a': {

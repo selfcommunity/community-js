@@ -306,9 +306,9 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
                 <Typography variant="h5" component="div" marginBottom={2}>
                   <b>
                     {paymentOrder ? (
-                      <FormattedMessage id="ui.paywallssDialog.title.purchased" defaultMessage="ui.paymentProductsDialog.title.purchased" />
+                      <FormattedMessage id="ui.paywallsDialog.title.purchased" defaultMessage="ui.paywallsDialog.title.purchased" />
                     ) : (
-                      <FormattedMessage id="ui.paywallssDialog.title" defaultMessage="ui.paymentProductsDialog.title" />
+                      <FormattedMessage id="ui.paywallsDialog.title" defaultMessage="ui.paywallsDialog.title" />
                     )}
                   </b>
                 </Typography>
