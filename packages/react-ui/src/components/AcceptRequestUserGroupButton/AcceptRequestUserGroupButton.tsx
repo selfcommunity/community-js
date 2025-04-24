@@ -1,9 +1,9 @@
 import {LoadingButton} from '@mui/lab';
 import {styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
-import {EventService} from '@selfcommunity/api-services';
-import {useSCFetchEvent, useSCFetchUser} from '@selfcommunity/react-core';
-import {SCEventType, SCUserType} from '@selfcommunity/types';
+import {GroupService} from '@selfcommunity/api-services';
+import {useSCFetchGroup, useSCFetchUser} from '@selfcommunity/react-core';
+import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import {HTMLAttributes, useCallback, useState} from 'react';
@@ -11,6 +11,8 @@ import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import {useSnackbar} from 'notistack';
+import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import PubSub from 'pubsub-js';
 
 const PREFIX = 'SCAcceptRequestUserEventButton';
 
@@ -24,7 +26,7 @@ const AcceptButton = styled(LoadingButton, {
   overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
-export interface AcceptRequestUserEventButtonProps {
+export interface AcceptRequestUserGroupButtonProps {
   /**
    * Overrides or extends the styles applied to the component.
    * @default null
@@ -32,16 +34,16 @@ export interface AcceptRequestUserEventButtonProps {
   className?: HTMLAttributes<HTMLButtonElement>['className'];
 
   /**
-   * Id of the event
+   * Id of the group
    * @default null
    */
-  eventId?: number;
+  groupId?: number;
 
   /**
-   * Event
+   * Group
    * @default null
    */
-  event?: SCEventType;
+  group?: SCGroupType;
 
   /**
    * Id of the user
@@ -50,11 +52,15 @@ export interface AcceptRequestUserEventButtonProps {
   userId?: number;
 
   /**
-   * Event
+   * Group
    * @default null
    */
   user?: SCUserType;
 
+  /**
+   * Callback when user accept request
+   * @default null
+   */
   handleConfirm?: ((id: number | null) => void) | null;
 
   /**
@@ -64,12 +70,12 @@ export interface AcceptRequestUserEventButtonProps {
 }
 
 /**
- * > API documentation for the Community-JS Accept Request User Event Button component. Learn about the available props and the CSS API.
+ * > API documentation for the Community-JS Accept Request User Group Button component. Learn about the available props and the CSS API.
 
  #### Import
 
  ```jsx
- import {AcceptRequestUserEventButton} from '@selfcommunity/react-ui';
+ import {AcceptRequestUserGroupButton} from '@selfcommunity/react-ui';
  ```
 
  #### Component Name
@@ -81,39 +87,49 @@ export interface AcceptRequestUserEventButtonProps {
 
  |Rule Name|Global class|Description|
  |---|---|---|
- |root|.SCAcceptRequestUserEventButton-root|Styles applied to the root element.|
+ |root|.SCAcceptRequestUserGroupButton-root|Styles applied to the root element.|
 
  * @param inProps
  */
-export default function AcceptRequestUserEventButton(inProps: AcceptRequestUserEventButtonProps): JSX.Element {
+export default function AcceptRequestUserGroupButton(inProps: AcceptRequestUserGroupButtonProps): JSX.Element {
   // PROPS
-  const props: AcceptRequestUserEventButtonProps = useThemeProps({
+  const props: AcceptRequestUserGroupButtonProps = useThemeProps({
     props: inProps,
     name: PREFIX
   });
-  const {className, eventId, event, userId, user, handleConfirm = null, ...rest} = props;
+  const {className, groupId, group, userId, user, handleConfirm = null, ...rest} = props;
 
   // STATE
   const [loading, setLoading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
 
   // HOOKS
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  const {scGroup} = useSCFetchGroup({id: groupId, group});
   const {scUser} = useSCFetchUser({id: userId, user});
   const {enqueueSnackbar} = useSnackbar();
 
+  /**
+   * Notify UI when a member is added to a group
+   * @param group
+   * @param user
+   */
+  function notifyChanges(group: SCGroupType, user: SCUserType) {
+    if (group && user) {
+      PubSub.publish(`${SCTopicType.GROUP}.${SCGroupEventType.ADD_MEMBER}`, {group, user});
+    }
+  }
+
   const handleConfirmAction = useCallback(() => {
     setLoading(true);
-
-    EventService.inviteOrAcceptEventRequest(scEvent.id, {users: [scUser.id]})
+    GroupService.inviteOrAcceptGroupRequest(scGroup.id, {users: [scUser.id]})
       .then(() => {
         if (handleConfirm) {
           handleConfirm(scUser.id);
         } else {
           enqueueSnackbar(
             <FormattedMessage
-              id="ui.acceptRequestUserEventButton.snackbar.success"
-              defaultMessage="ui.acceptRequestUserEventButton.snackbar.success"
+              id="ui.acceptRequestUserGroupButton.snackbar.success"
+              defaultMessage="ui.acceptRequestUserGroupButton.snackbar.success"
             />,
             {
               variant: 'error',
@@ -121,6 +137,7 @@ export default function AcceptRequestUserEventButton(inProps: AcceptRequestUserE
             }
           );
         }
+        notifyChanges(scGroup, scUser);
         setLoading(false);
         setOpenDialog(false);
       })
@@ -135,7 +152,7 @@ export default function AcceptRequestUserEventButton(inProps: AcceptRequestUserE
         }
         Logger.error(SCOPE_SC_UI, error);
       });
-  }, [scEvent, scUser]);
+  }, [scGroup, scUser]);
 
   return (
     <>
@@ -146,16 +163,16 @@ export default function AcceptRequestUserEventButton(inProps: AcceptRequestUserE
         loading={loading}
         className={classNames(classes.root, className)}
         {...rest}>
-        <FormattedMessage defaultMessage="ui.acceptRequestUserEventButton.accept" id="ui.acceptRequestUserEventButton.accept" />
+        <FormattedMessage defaultMessage="ui.acceptRequestUserGroupButton.accept" id="ui.acceptRequestUserGroupButton.accept" />
       </AcceptButton>
 
       {openDialog && (
         <ConfirmDialog
           open={openDialog}
-          title={<FormattedMessage id="ui.acceptRequestUserEventButton.dialog.title" defaultMessage="ui.acceptRequestUserEventButton.dialog.title" />}
-          content={<FormattedMessage id="ui.acceptRequestUserEventButton.dialog.msg" defaultMessage="ui.acceptRequestUserEventButton.dialog.msg" />}
+          title={<FormattedMessage id="ui.acceptRequestUserGroupButton.dialog.title" defaultMessage="ui.acceptRequestUserGroupButton.dialog.title" />}
+          content={<FormattedMessage id="ui.acceptRequestUserGroupButton.dialog.msg" defaultMessage="ui.acceptRequestUserGroupButton.dialog.msg" />}
           btnConfirm={
-            <FormattedMessage id="ui.acceptRequestUserEventButton.dialog.confirm" defaultMessage="ui.acceptRequestUserEventButton.dialog.confirm" />
+            <FormattedMessage id="ui.acceptRequestUserGroupButton.dialog.confirm" defaultMessage="ui.acceptRequestUserGroupButton.dialog.confirm" />
           }
           isUpdating={loading}
           onConfirm={handleConfirmAction}

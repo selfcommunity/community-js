@@ -26,7 +26,7 @@ const Component = {
         '& .SCCourse-chip': {
           maxWidth: 70,
           borderRadius: 3,
-          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px,rgba(0, 0, 0, 0.23) 0px 3px 6px',
           height: 18,
           '& span': {
             padding: 3,

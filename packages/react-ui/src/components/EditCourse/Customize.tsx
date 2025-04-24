@@ -21,7 +21,6 @@ function Customize(props: CustomizeProps) {
   const handleSuccess = useCallback(
     (data: SCCourseType) => {
       setCourse({...course, ...data});
-
       enqueueSnackbar(
         <FormattedMessage id="ui.editCourse.tab.customize.snackbar.save" defaultMessage="ui.editCourse.tab.customize.snackbar.save" />,
         {
