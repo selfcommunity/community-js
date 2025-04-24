@@ -131,48 +131,27 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
    */
   const join = useMemo(
     () =>
-      (course: SCCourseType, userId?: number): Promise<any> => {
+      async (course: SCCourseType): Promise<any> => {
         setLoading(course.id);
-        if (userId) {
-          return http
-            .request({
-              url: Endpoints.InviteOrAcceptUsersToCourse.url({id: course.id}),
-              method: Endpoints.InviteOrAcceptUsersToCourse.method,
-              data: {users: [userId]},
-            })
-            .then((res: HttpResponse<any>) => {
-              if (res.status >= 300) {
-                return Promise.reject(res);
-              }
-              updateCache([course.id]);
-              setData((prev) => getDataUpdated(prev, course.id, SCCourseJoinStatusType.JOINED));
-              setUnLoading(course.id);
-              return Promise.resolve(res.data);
-            });
-        } else {
-          return http
-            .request({
-              url: Endpoints.JoinOrAcceptInviteToCourse.url({id: course.id}),
-              method: Endpoints.JoinOrAcceptInviteToCourse.method,
-            })
-            .then((res: HttpResponse<any>) => {
-              if (res.status >= 300) {
-                return Promise.reject(res);
-              }
-              updateCache([course.id]);
-              setData((prev) =>
-                getDataUpdated(
-                  prev,
-                  course.id,
-                  course.privacy === SCCoursePrivacyType.PRIVATE && course.join_status !== SCCourseJoinStatusType.INVITED
-                    ? SCCourseJoinStatusType.REQUESTED
-                    : SCCourseJoinStatusType.JOINED
-                )
-              );
-              setUnLoading(course.id);
-              return Promise.resolve(res.data);
-            });
+        const res = await http.request({
+          url: Endpoints.JoinOrAcceptInviteToCourse.url({id: course.id}),
+          method: Endpoints.JoinOrAcceptInviteToCourse.method,
+        });
+        if (res.status >= 300) {
+          return Promise.reject(res);
         }
+        updateCache([course.id]);
+        setData((prev) =>
+          getDataUpdated(
+            prev,
+            course.id,
+            course.privacy === SCCoursePrivacyType.PRIVATE && course.join_status !== SCCourseJoinStatusType.INVITED
+              ? SCCourseJoinStatusType.REQUESTED
+              : SCCourseJoinStatusType.JOINED
+          )
+        );
+        setUnLoading(course.id);
+        return await Promise.resolve(res.data);
       },
     [data, loading, cache]
   );
@@ -183,23 +162,20 @@ export default function useSCJoinedCoursesManager(user?: SCUserType) {
    */
   const leave = useMemo(
     () =>
-      (course: SCCourseType): Promise<any> => {
-        if (course.join_status !== SCCourseJoinStatusType.REQUESTED) {
+      async (course: SCCourseType): Promise<any> => {
+        if (data[course.id] !== SCCourseJoinStatusType.REQUESTED) {
           setLoading(course.id);
-          return http
-            .request({
-              url: Endpoints.LeaveOrRemoveCourseRequest.url({id: course.id}),
-              method: Endpoints.LeaveOrRemoveCourseRequest.method,
-            })
-            .then((res: HttpResponse<any>) => {
-              if (res.status >= 300) {
-                return Promise.reject(res);
-              }
-              updateCache([course.id]);
-              setData((prev) => getDataUpdated(prev, course.id, null));
-              setUnLoading(course.id);
-              return Promise.resolve(res.data);
-            });
+          const res = await http.request({
+            url: Endpoints.LeaveOrRemoveCourseRequest.url({id: course.id}),
+            method: Endpoints.LeaveOrRemoveCourseRequest.method,
+          });
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          updateCache([course.id]);
+          setData((prev) => getDataUpdated(prev, course.id, null));
+          setUnLoading(course.id);
+          return await Promise.resolve(res.data);
         }
       },
     [data, loading, cache]
