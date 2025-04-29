@@ -43,7 +43,7 @@ export const Outlined: StoryObj<typeof Category> = {
 	args: {
 		categoryId: 1,
 		elevation: 0,
-		// variant: 'outlined'
+		variant: 'outlined'
 	},
 	render: template
 };

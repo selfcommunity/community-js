@@ -117,6 +117,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
     category = null,
     className = null,
     elevation,
+    variant,
     autoHide = false,
     categoryFollowButtonProps = {},
     showFollowers = true,
@@ -143,7 +144,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   const intl = useIntl();
 
   if (!scCategory) {
-    return <CategorySkeleton elevation={elevation} />;
+    return <CategorySkeleton elevation={elevation} {...(variant && {variant})} />;
   }
 
   // RENDER
@@ -152,6 +153,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
       <Root
         disableTypography={showTooltip}
         elevation={elevation}
+        {...(variant && {variant})}
         className={classNames(
           classes.root,
           className,

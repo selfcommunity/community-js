@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: () => ({
+    root: ({theme}: any) => ({
       width: '100%'
     }),
     snippetRoot: ({theme}: any) => ({
@@ -80,6 +80,9 @@ const Component = {
           fontWeight: 700,
           padding: theme.spacing(0.5)
         }
+      },
+      '& .SCBaseItemButton-actions': {
+        marginRight: theme.spacing()
       }
     }),
     previewRoot: ({theme}: any) => ({
@@ -273,6 +276,10 @@ const Component = {
             transform: 'translate(-50%, -50%)'
           }
         }
+      },
+      '&.MuiPaper-outlined': {
+        paddingLeft: theme.spacing(),
+        paddingRight: theme.spacing()
       }
     })
   }
