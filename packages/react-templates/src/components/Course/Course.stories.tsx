@@ -23,14 +23,14 @@ export default {
 
 export const StudentFree: StoryObj<typeof Course> = {
   args: {
-		courseId: 6,
+		courseId: 9,
     viewDashboard: false
   }
 };
 
 export const StudentNotFree: StoryObj<typeof Course> = {
 	args: {
-		courseId: 5,
+		courseId: 9,
 		viewDashboard: false
 	}
 };

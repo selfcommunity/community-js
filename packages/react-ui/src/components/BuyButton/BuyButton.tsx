@@ -1,26 +1,26 @@
 import {LoadingButton} from '@mui/lab';
-import {Icon, SwipeableDrawer, Tooltip, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
+import {Icon, styled, SwipeableDrawer, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCContextType, SCThemeType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {
-  SCPaymentProduct,
-  SCContentType,
-  SCEventSubscriptionStatusType,
-  SCGroupSubscriptionStatusType,
-  SCPurchasableContent,
-  SCGroupType,
-  SCCategoryType,
-  SCEventType,
-  SCCourseType,
-  SCCourseJoinStatusType,
-  SCPaymentOrder,
-  SCPaymentPrice
+	SCCategoryType,
+	SCContentType,
+	SCCourseJoinStatusType,
+	SCCourseType,
+	SCEventSubscriptionStatusType,
+	SCEventType,
+	SCGroupSubscriptionStatusType,
+	SCGroupType,
+	SCPaymentOrder,
+	SCPaymentPrice,
+	SCPaymentProduct,
+	SCPurchasableContent
 } from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {MouseEvent, ReactNode, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import PaywallsDialog from '../PaywallsDialog';
-import {CategoryApiClient, GroupApiClient, EventApiClient, CourseApiClient} from '@selfcommunity/api-services';
+import {CategoryApiClient, CourseApiClient, EventApiClient, GroupApiClient} from '@selfcommunity/api-services';
 import {capitalize} from '@selfcommunity/utils';
 import Paywalls from '../Paywalls';
 import PaymentOrderPdfButton, {PaymentOrderPdfButtonProps} from '../PaymentOrderPdfButton';
@@ -253,7 +253,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
             if (data.payment_order) {
               setPaymentOrder(data.payment_order);
             }
-            setPurchased(data.join_status === SCCourseJoinStatusType.JOINED);
+            setPurchased(data.join_status === SCCourseJoinStatusType.JOINED || data.join_status === SCCourseJoinStatusType.MANAGER);
           }
         });
         break;

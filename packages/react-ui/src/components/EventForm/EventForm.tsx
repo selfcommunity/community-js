@@ -376,14 +376,11 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       formData.append('visible', 'true');
     }
 
-    console.log(field);
     if (field.productIds.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (event && event.paywalls?.length))) {
-      field.productIds.forEach((p, i) => {
-        formData.append(`product_ids[${i}]`, p.toString());
-      });
+      formData.append(`product_ids`, field.productIds.toString());
     } else {
-			formData.append(`product_ids`, '[]');
-		}
+      formData.append(`product_ids`, '[]');
+    }
 
     formData.append('description', field.description);
 

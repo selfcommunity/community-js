@@ -289,7 +289,7 @@ function Student(inProps: StudentCourseDashboardProps) {
         ) : (
           isPaymentsEnabled &&
           scCourse.paywalls?.length > 0 &&
-          !(scCourse.join_status === SCCourseJoinStatusType.CREATOR || scCourse.join_status === SCCourseJoinStatusType.MANAGER) && (
+          !(scCourse.join_status === SCCourseJoinStatusType.CREATOR) && (
             <BuyButton contentType={SCContentType.COURSE} content={scCourse} />
           )
         )}
