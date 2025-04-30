@@ -53,7 +53,7 @@ export interface InviteUserEventButtonProps {
    */
   user?: SCUserType;
 
-  handleInvitations?: ((invited: boolean, id?: number) => void) | null;
+  handleInvitations?: ((invited: boolean) => void) | null;
 
   /**
    * Others properties
@@ -105,7 +105,7 @@ export default function InviteUserEventButton(inProps: InviteUserEventButtonProp
       EventService.removeInviteEvent(scEvent.id, {users: [scUser.id]})
         .then(() => {
           setInvited(false);
-          handleInvitations?.(true, scUser.id);
+          handleInvitations?.(true);
         })
         .catch((_error) => {
           Logger.error(SCOPE_SC_UI, _error);

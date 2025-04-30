@@ -80,8 +80,8 @@ export default function TabContentComponent(props: TabComponentProps) {
 
   // CONSTS
   const users: SCUserType[] = useMemo(
-    () => actionProps?.users || state.results,
-    [actionProps?.users, state.results]
+    () => (tabValue === TabContentType.REQUESTS ? actionProps?.users : state.results),
+    [tabValue, actionProps?.users, state.results]
   );
 
   // EFFECTS
@@ -146,10 +146,9 @@ export default function TabContentComponent(props: TabComponentProps) {
   const getActionsComponent = useCallback(
     (userId: number) => {
       if (tabValue === TabContentType.INVITED && actionProps) {
-        const _handleInvitations = (invited: boolean, id?: number) => {
+        const _handleInvitations = (invited: boolean) => {
           if (invited) {
             actionProps.setCount?.((prev) => prev - 1);
-            actionProps.setUsers?.((prev) => prev.filter((user) => user.id !== id));
           } else {
             actionProps.setCount?.((prev) => prev + 1);
           }
@@ -194,7 +193,7 @@ export default function TabContentComponent(props: TabComponentProps) {
         <FormattedMessage id="ui.eventMembersWidget.noParticipants" defaultMessage="ui.eventMembersWidget.noParticipants" />
       </Typography>
     );
-  } else if (tabValue === TabContentType.INVITED && users.length === 0 && actionProps) {
+  } else if (tabValue === TabContentType.INVITED && state.count === 0 && actionProps) {
     const date = actionProps.scEvent.end_date || actionProps.scEvent.start_date;
     const disabled = new Date(date).getTime() < new Date().getTime();
 
@@ -225,7 +224,7 @@ export default function TabContentComponent(props: TabComponentProps) {
         ))}
       </List>
 
-      {users.length > state.visibleItems && (
+      {state.count > state.visibleItems && (
         <Button onClick={handleToggleDialogOpen} className={classes.actionButton}>
           <Typography variant="caption">
             <FormattedMessage id="ui.eventMembersWidget.showAll" defaultMessage="ui.eventMembersWidget.showAll" />
