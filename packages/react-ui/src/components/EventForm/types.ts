@@ -27,7 +27,7 @@ export type InitialFieldState = Geolocation & {
   description: string;
   isPublic: boolean;
   isSubmitting: boolean;
-  productIds: number[];
+  products: number[];
   contentAccessType: ContentAccessType;
 };
 
