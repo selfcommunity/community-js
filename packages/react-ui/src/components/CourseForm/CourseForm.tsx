@@ -170,7 +170,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     description: course ? course.description : '',
     categories: course ? course.categories : [],
     privacy: course ? course.privacy : '',
-    productIds: course?.paywalls?.map((p) => p.id) || [],
+    products: course?.paywalls?.map((p) => p.id) || [],
     contentAccessType: course?.paywalls?.length ? ContentAccessType.PAID : ContentAccessType.FREE,
     isSubmitting: false
   };
@@ -286,10 +286,10 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         formData.append(key, field.categories[key]);
       }
     }
-    if (field.productIds.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (course && course.paywalls?.length))) {
-      formData.append(`product_ids`, field.productIds.toString());
+    if (field.products.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (course && course.paywalls?.length))) {
+      formData.append(`products`, field.products.toString());
     } else {
-      formData.append(`product_ids`, '[]');
+      formData.append(`products`, '[]');
     }
     let courseService: Promise<SCCourseType>;
     if (course) {
@@ -358,7 +358,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   const handleChangePaymentsProducts = (products) => {
     setField((prev) => ({
       ...prev,
-      productIds: products.map((product) => product.id)
+      products: products.map((product) => product.id)
     }));
   };
 

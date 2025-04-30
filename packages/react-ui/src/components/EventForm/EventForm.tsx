@@ -238,7 +238,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     link: event?.link || '',
     liveStreamSettings: event?.live_stream ? event?.live_stream.settings : null,
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
-    productIds: event?.paywalls?.map((p) => p.id) || [],
+    products: event?.paywalls?.map((p) => p.id) || [],
     contentAccessType: event?.paywalls?.length ? ContentAccessType.PAID : ContentAccessType.FREE,
     isPublic: event?.privacy ? event.privacy === SCEventPrivacyType.PUBLIC : true,
     isSubmitting: false
@@ -376,10 +376,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       formData.append('visible', 'true');
     }
 
-    if (field.productIds.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (event && event.paywalls?.length))) {
-      formData.append(`product_ids`, field.productIds.toString());
+    if (field.products.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (event && event.paywalls?.length))) {
+      formData.append(`products`, field.products.toString());
     } else {
-      formData.append(`product_ids`, '[]');
+      formData.append(`products`, '[]');
     }
 
     formData.append('description', field.description);
@@ -485,7 +485,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const handleChangePaymentsProducts = (products) => {
     setField((prev) => ({
       ...prev,
-      productIds: products.map((product) => product.id)
+      products: products.map((product) => product.id)
     }));
   };
 

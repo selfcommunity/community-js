@@ -146,7 +146,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     isVisible: group ? group.visible : true,
     invitedUsers: null,
     isSubmitting: false,
-    productIds: group?.paywalls?.map((p) => p.id) || [],
+    products: group?.paywalls?.map((p) => p.id) || [],
     contentAccessType: group?.paywalls?.length ? ContentAccessType.PAID : ContentAccessType.FREE
   };
 
@@ -242,10 +242,10 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     if (field.emotionalImageOriginalFile) {
       formData.append('emotional_image_original', field.emotionalImageOriginalFile);
     }
-    if (field.productIds.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (group && group.paywalls?.length))) {
-      formData.append(`product_ids`, field.productIds.toString());
+    if (field.products.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (group && group.paywalls?.length))) {
+      formData.append(`products`, field.products.toString());
     } else {
-      formData.append(`product_ids`, '[]');
+      formData.append(`products`, '[]');
     }
     if (!group) {
       for (const key in field.invitedUsers) {
@@ -295,7 +295,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
   const handleChangePaymentsProducts = (products) => {
     setField((prev) => ({
       ...prev,
-      productIds: products.map((product) => product.id)
+      products: products.map((product) => product.id)
     }));
   };
 
