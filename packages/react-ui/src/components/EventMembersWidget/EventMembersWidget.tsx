@@ -223,6 +223,9 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
         } else if (refresh === TabContentType.INVITED) {
           _initInvited();
           setRefresh(null);
+        } else if (refresh === TabContentType.REQUESTS) {
+          _initRequests();
+          setRefresh(null);
         } else {
           _initParticipants();
           _initInvited();
@@ -257,11 +260,13 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
         dispatchParticipants({type: actionWidgetTypes.RESET});
       } else if (_tabValue === TabContentType.INVITED) {
         dispatchInvited({type: actionWidgetTypes.RESET});
+      } else if (_tabValue === TabContentType.REQUESTS) {
+        dispatchRequests({type: actionWidgetTypes.RESET});
       }
 
       setRefresh(_tabValue);
     },
-    [dispatchParticipants, dispatchInvited, setRefresh]
+    [dispatchParticipants, dispatchInvited, dispatchRequests, setRefresh]
   );
 
   if (!scUserContext.user) {
@@ -331,6 +336,9 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
               dispatch={dispatchParticipants}
               userProps={userProps}
               dialogProps={dialogProps}
+              actionProps={{
+                scEvent
+              }}
               handleRefresh={handleRefresh}
             />
           </TabPanel>
