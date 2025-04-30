@@ -152,7 +152,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   const {className, eventId, event, user, onSubscribe, ...rest} = props;
 
   // STATE
-  const [status, setStatus] = useState<SCEventSubscriptionStatusType | null | undefined>(undefined);
+  const [status, setStatus] = useState<string | null | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
@@ -206,7 +206,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     (eventStatus: string) => {
       setLoading(true);
 
-      const _event = {...scEvent, subscription_status: status};
+      const _event: SCEventType = {...scEvent, subscription_status: status as SCEventSubscriptionStatusType};
       const isGoing =
         eventStatus === SCEventSubscriptionStatusType.GOING ||
         !_event?.subscription_status ||
