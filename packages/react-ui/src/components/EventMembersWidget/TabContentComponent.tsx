@@ -1,6 +1,6 @@
 import {Button, List, ListItem, styled, Typography} from '@mui/material';
 import {Endpoints, http, SCPaginatedResponse} from '@selfcommunity/api-services';
-import {SCEventType, SCUserType} from '@selfcommunity/types';
+import {SCEventType, SCNotificationTopicType, SCNotificationTypologyType, SCUserType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import {AxiosResponse} from 'axios';
 import {useSnackbar} from 'notistack';
@@ -71,8 +71,9 @@ export default function TabContentComponent(props: TabComponentProps) {
   const [openDialog, setOpenDialog] = useState(false);
 
   // REFS
-  const updatesInvited = useRef(null);
   const updatesParticipants = useRef(null);
+  const updatesInvited = useRef(null);
+  const updatesRequested = useRef(null);
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
@@ -85,12 +86,14 @@ export default function TabContentComponent(props: TabComponentProps) {
 
   // EFFECTS
   useEffect(() => {
-    updatesInvited.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.INVITE_MEMBER}`, handleInviteMember);
     updatesParticipants.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.MEMBERS}`, handleToggleMember);
+    updatesInvited.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.INVITE_MEMBER}`, handleInviteMember);
+    updatesRequested.current = PubSub.subscribe(`${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT}`, handleRequestMember);
 
     return () => {
-      updatesInvited.current && PubSub.unsubscribe(updatesInvited.current);
       updatesParticipants.current && PubSub.unsubscribe(updatesParticipants.current);
+      updatesInvited.current && PubSub.unsubscribe(updatesInvited.current);
+      updatesRequested.current && PubSub.unsubscribe(updatesRequested.current);
     };
   }, []);
 
@@ -132,6 +135,14 @@ export default function TabContentComponent(props: TabComponentProps) {
     handleRefresh?.(TabContentType.INVITED);
   }, [handleRefresh]);
 
+  const handleRequestMember = useCallback(
+    (_msg: string, response: any) => {
+      if (response.data.event === actionProps?.scEvent?.id) {
+        handleRefresh?.(TabContentType.REQUESTS);
+      }
+    },
+    [handleRefresh, actionProps?.scEvent]
+  );
   const getActionsComponent = useCallback(
     (userId: number) => {
       if (tabValue === TabContentType.INVITED && actionProps) {
@@ -188,7 +199,7 @@ export default function TabContentComponent(props: TabComponentProps) {
 
     const handleInvitations = (invited: boolean) => {
       if (invited) {
-        handleRefresh?.(tabValue);
+        handleRefresh?.(TabContentType.INVITED);
       }
     };
 
