@@ -377,7 +377,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     }
 
     if (field.products.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (event && event.paywalls?.length))) {
-      formData.append(`products`, field.products.toString());
+      formData.append(`products`, JSON.stringify(field.products));
     } else {
       formData.append(`products`, '[]');
     }

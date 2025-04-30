@@ -243,7 +243,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
       formData.append('emotional_image_original', field.emotionalImageOriginalFile);
     }
     if (field.products.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (group && group.paywalls?.length))) {
-      formData.append(`products`, field.products.toString());
+      formData.append(`products`, JSON.stringify(field.products));
     } else {
       formData.append(`products`, '[]');
     }
