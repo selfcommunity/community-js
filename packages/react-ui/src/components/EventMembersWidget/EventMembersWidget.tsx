@@ -136,6 +136,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     stateWidgetInitializer
   );
   const [participantsCount, setParticipantsCount] = useState(participants.count);
+  const [invitedUsers, setInvitedUsers] = useState<SCUserType[]>(invited.results);
   const [invitedCount, setInvitedCount] = useState(invited.count);
   const [requestsCount, setRequestsCount] = useState(requests.count);
   const [requestsUsers, setRequestsUsers] = useState<SCUserType[]>(requests.results);
@@ -187,13 +188,14 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
         .then((payload: SCPaginatedResponse<SCUserType>) => {
           dispatchInvited({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload: {...payload, initialized: true}});
           setInvitedCount(payload.count);
+          setInvitedUsers(payload.results);
         })
         .catch((error) => {
           dispatchInvited({type: actionWidgetTypes.LOAD_NEXT_FAILURE, payload: {errorLoadNext: error}});
           Logger.error(SCOPE_SC_UI, error);
         });
     }
-  }, [invited.isLoadingNext, invited.initialized, scEvent, hasAllow, endpointQueryParams, dispatchInvited, setInvitedCount]);
+  }, [invited.isLoadingNext, invited.initialized, scEvent, hasAllow, endpointQueryParams, dispatchInvited, setInvitedCount, setInvitedUsers]);
 
   const _initRequests = useCallback(() => {
     if (!requests.initialized && !requests.isLoadingNext && hasAllow) {
@@ -352,7 +354,9 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
                 dialogProps={dialogProps}
                 actionProps={{
                   scEvent,
-                  setCount: setInvitedCount
+                  setCount: setInvitedCount,
+                  users: invitedUsers,
+                  setUsers: setInvitedUsers
                 }}
                 handleRefresh={handleRefresh}
               />
