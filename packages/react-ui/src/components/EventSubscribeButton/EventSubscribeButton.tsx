@@ -207,10 +207,12 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
       setLoading(true);
 
       const _event: SCEventType = {...scEvent, subscription_status: status as SCEventSubscriptionStatusType};
+      console.log('*** _event ***', _event);
       const isGoing =
         eventStatus === SCEventSubscriptionStatusType.GOING ||
         !_event?.subscription_status ||
         _event?.subscription_status === SCEventSubscriptionStatusType.INVITED;
+      console.log('*** isGoing ***', isGoing);
       const toggleAction = isGoing ? scEventsManager.toggleEventAttendance(_event) : scEventsManager.toggleEventNonattendance(_event);
 
       toggleAction
