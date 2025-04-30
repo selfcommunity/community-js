@@ -152,7 +152,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   const {className, eventId, event, user, onSubscribe, ...rest} = props;
 
   // STATE
-  const [status, setStatus] = useState<string | null | undefined>(undefined);
+  const [status, setStatus] = useState<SCEventSubscriptionStatusType | null | undefined>(undefined);
   const [loading, setLoading] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);
@@ -206,11 +206,12 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     (eventStatus: string) => {
       setLoading(true);
 
+      const _event = {...scEvent, subscription_status: status};
       const isGoing =
         eventStatus === SCEventSubscriptionStatusType.GOING ||
-        !scEvent?.subscription_status ||
-        scEvent?.subscription_status === SCEventSubscriptionStatusType.INVITED;
-      const toggleAction = isGoing ? scEventsManager.toggleEventAttendance(scEvent) : scEventsManager.toggleEventNonattendance(scEvent);
+        !_event?.subscription_status ||
+        _event?.subscription_status === SCEventSubscriptionStatusType.INVITED;
+      const toggleAction = isGoing ? scEventsManager.toggleEventAttendance(_event) : scEventsManager.toggleEventNonattendance(_event);
 
       toggleAction
         .then((data: SCEventType) => {
@@ -308,9 +309,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
       {isPaymentsEnabled &&
       scEvent.paywalls?.length > 0 &&
       (scEvent.privacy === SCEventPrivacyType.PUBLIC ||
-        (scEvent.privacy === SCEventPrivacyType.PRIVATE &&
-					status &&
-					status !== SCEventSubscriptionStatusType.REQUESTED)) ? (
+        (scEvent.privacy === SCEventPrivacyType.PRIVATE && status && status !== SCEventSubscriptionStatusType.REQUESTED)) ? (
         <BuyButtonRoot contentType={SCContentType.EVENT} content={scEvent} showTicket />
       ) : (
         <>
