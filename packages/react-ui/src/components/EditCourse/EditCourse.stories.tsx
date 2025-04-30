@@ -12,7 +12,7 @@ export default {
     }
   },
   args: {
-    courseId: 3,
+    courseId: 9,
     course: undefined,
     tab: SCCourseEditTabType.LESSONS,
     onTabChange() {},

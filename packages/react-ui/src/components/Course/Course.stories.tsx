@@ -49,4 +49,15 @@ export const Snippet: StoryObj<typeof Course> = {
 	render: template
 };
 
+export const SnippetOutlined: StoryObj<typeof Course> = {
+	args: {
+		template: SCCourseTemplateType.SNIPPET,
+		courseId: 6,
+		elevation: 0,
+		variant: 'outlined',
+		square: false
+	},
+	render: template
+};
+
 

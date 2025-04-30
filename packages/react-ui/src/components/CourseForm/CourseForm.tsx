@@ -287,9 +287,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
       }
     }
     if (field.productIds.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (course && course.paywalls?.length))) {
-      field.productIds.forEach((p, i) => {
-        formData.append(`product_ids[${i}]`, p.toString());
-      });
+      formData.append(`product_ids`, field.productIds.toString());
     } else {
       formData.append(`product_ids`, '[]');
     }

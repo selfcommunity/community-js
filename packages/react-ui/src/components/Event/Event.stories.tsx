@@ -48,6 +48,16 @@ export const Snippet: StoryObj<typeof Event> = {
 	render: template
 };
 
+export const SnippetOutlined: StoryObj<typeof Event> = {
+	args: {
+		eventId: 73,
+		elevation: 0,
+		variant: 'outlined',
+		square: false
+	},
+	render: template
+};
+
 export const Detail: StoryObj<typeof Event> = {
 	args: {
 		eventId: 101,

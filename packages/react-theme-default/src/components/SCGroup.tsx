@@ -3,12 +3,13 @@ const Component = {
     root: ({theme}: any) => ({
       borderRadius: 0,
       paddingBottom: 0,
+			paddingLeft: theme.spacing(),
+			paddingRight: theme.spacing(),
       overflow: 'visible',
       [theme.breakpoints.up('sm')]: {
         borderRadius: theme.shape.borderRadiusSm
       },
       '& .SCBaseItemButton-image': {
-        marginRight: theme.spacing(1.25),
         '& .MuiAvatar-root': {
           width: theme.selfcommunity.group.avatar.sizeSmall,
           height: theme.selfcommunity.group.avatar.sizeSmall,
@@ -38,7 +39,10 @@ const Component = {
         }
       }
     }),
-    skeletonRoot: ({theme}: any) => ({})
+    skeletonRoot: ({theme}: any) => ({
+			paddingLeft: theme.spacing(),
+			paddingRight: theme.spacing(),
+		})
   }
 };
 
