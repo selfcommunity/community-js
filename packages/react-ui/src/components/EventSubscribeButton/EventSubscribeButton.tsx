@@ -226,7 +226,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
           Logger.error(SCOPE_SC_UI, e);
         });
     },
-    [scEvent, scEventsManager, onSubscribe, setLoading]
+    [scEvent, scEventsManager, status, onSubscribe, setLoading]
   );
 
   const handleToggleAction = useCallback(
