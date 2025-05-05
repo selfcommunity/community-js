@@ -583,7 +583,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               }}
               slotProps={{
                 toolbar: {
-                  // @ts-expect-error This is needed
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+                  // @ts-ignore
                   toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
                 }
               }}
@@ -618,7 +619,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               }}
               slotProps={{
                 toolbar: {
-                  // @ts-expect-error This is needed
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+                  // @ts-ignore
                   toolbarTitle: <FormattedMessage id="ui.eventForm.time.title" defaultMessage="ui.eventForm.time.title" />
                 }
               }}
@@ -696,7 +698,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               }}
               slotProps={{
                 toolbar: {
-                  // @ts-expect-error This is needed
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+                  // @ts-ignore
                   toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
                 }
               }}
@@ -731,7 +734,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               }}
               slotProps={{
                 toolbar: {
-                  // @ts-expect-error This is needed
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+                  // @ts-ignore
                   toolbarTitle: <FormattedMessage id="ui.eventForm.time.title" defaultMessage="ui.eventForm.time.title" />
                 }
               }}
@@ -788,7 +792,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   id="ui.eventForm.privacy.public.info"
                   defaultMessage="ui.eventForm.privacy.public.info"
                   values={{
-                    // @ts-expect-error This is needed
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+                    // @ts-ignores
                     b: (chunks) => <strong>{chunks}</strong>
                   }}
                 />
@@ -797,7 +802,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   id="ui.eventForm.privacy.private.info"
                   defaultMessage="ui.eventForm.private.public.info"
                   values={{
-                    // @ts-expect-error This is needed
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+                    // @ts-ignore
                     b: (chunks) => <strong>{chunks}</strong>
                   }}
                 />
