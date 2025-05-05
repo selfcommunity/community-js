@@ -88,7 +88,10 @@ export default function TabContentComponent(props: TabComponentProps) {
   useEffect(() => {
     updatesParticipants.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.MEMBERS}`, handleToggleMember);
     updatesInvited.current = PubSub.subscribe(`${SCTopicType.EVENT}.${SCGroupEventType.INVITE_MEMBER}`, handleInviteMember);
-    updatesRequested.current = PubSub.subscribe(`${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT}`, handleRequestMember);
+    updatesRequested.current = PubSub.subscribe(
+      `${SCNotificationTopicType.INTERACTION}.${SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT}`,
+      handleRequestMember
+    );
 
     return () => {
       updatesParticipants.current && PubSub.unsubscribe(updatesParticipants.current);
