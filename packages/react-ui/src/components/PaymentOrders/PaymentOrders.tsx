@@ -171,7 +171,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
   /**
    * Initial Invoices fetch
    */
-  const fetchInvoices = async () => {
+  const fetchInvoices = async (searchValue: string = query) => {
     setIsLoading(true);
     setHasMore(true);
     setInvoices([]);
@@ -179,7 +179,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
       const res = await PaymentService.getPaymentsOrder({
         offset: 0,
         ordering: '-created_at',
-        ...(query && {search: query}),
+        ...(searchValue && {search: searchValue}),
         ...(contentTypeFilter && contentTypeFilter !== SCContentType.ALL && {content_type: contentTypeFilter}),
         ...(startDate && {created_at__gte: formatDate(startDate)}),
         ...(endDate && {created_at__lt: formatDate(endDate)})
@@ -333,20 +333,20 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                     <IconButton
                       onClick={() => {
                         setQuery('');
-                        fetchInvoices();
+                        fetchInvoices('');
                       }}
                       disabled={isLoading}>
                       <Icon>close</Icon>
                     </IconButton>
                   )}
                   {isMobile ? (
-                    <IconButton onClick={fetchInvoices} disabled={isLoading}></IconButton>
+                    <IconButton onClick={() => fetchInvoices()} disabled={isLoading}></IconButton>
                   ) : (
                     <Button
                       size="small"
                       variant="contained"
                       color="secondary"
-                      onClick={fetchInvoices}
+                      onClick={() => fetchInvoices()}
                       endIcon={<Icon>search</Icon>}
                       disabled={isLoading}
                     />
