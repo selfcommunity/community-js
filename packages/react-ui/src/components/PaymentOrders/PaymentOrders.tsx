@@ -243,7 +243,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
           course={content as SCCourseType}
           cacheStrategy={CacheStrategies.NETWORK_ONLY}
           template={SCCourseTemplateType.SNIPPET}
-					variant="outlined"
+          variant="outlined"
           actions={<></>}
         />
       );
@@ -314,7 +314,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
   return (
     <Root variant="outlined" className={classNames(classes.root, className)} {...rest}>
       <Grid container className={classes.filters} gap={3}>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} sm={12} md={3} lg={3}>
           <TextField
             className={classes.search}
             size={'small'}
@@ -360,7 +360,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
             }}
           />
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} sm={12} md={3} lg={3}>
           <TextField
             select
             fullWidth
@@ -376,7 +376,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
             ))}
           </TextField>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} sm={8} md={4}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
             adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
