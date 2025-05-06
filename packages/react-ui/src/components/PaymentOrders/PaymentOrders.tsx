@@ -13,63 +13,111 @@ import {
   Typography,
   Stack,
   CircularProgress,
-  styled
+  styled,
+  Grid,
+  TextField,
+  InputAdornment,
+  IconButton,
+  Icon,
+  Button,
+  useTheme,
+  useMediaQuery,
+  MenuItem
 } from '@mui/material';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import LoadingButton from '@mui/lab/LoadingButton';
 import {useInView} from 'react-intersection-observer';
 import {PaymentService} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import {SCContextType, SCThemeType, useSCContext, useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {getConvertedAmount} from '../../utils/payment';
 import Event from '../Event';
 import {SCCategoryType, SCCommunityType, SCContentType, SCCourseType, SCEventType, SCGroupType, SCPaymentOrder} from '@selfcommunity/types';
-import {CacheStrategies} from '@selfcommunity/utils';
+import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCCourseTemplateType, SCEventTemplateType} from '../../types';
-import Category from '../Category';
 import Course from '../Course';
 import Group from '../Group';
 import PaymentProduct from '../PaymentProduct';
 import PaymentOrderPdfButton from '../PaymentOrderPdfButton';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
+import {LocalizationProvider, MobileDatePicker} from '@mui/x-date-pickers';
+import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
+import itLocale from 'date-fns/locale/it';
+import enLocale from 'date-fns/locale/en-US';
 
 const PREFIX = 'SCPaymentOrders';
+
+const messages = defineMessages({
+  dateFrom: {
+    id: 'ui.paymentOrders.dateFrom',
+    defaultMessage: 'ui.paymentOrders.dateFrom'
+  },
+  dateTo: {
+    id: 'ui.paymentOrders.dateTo',
+    defaultMessage: 'ui.paymentOrders.dateTo'
+  },
+  pickerCancelAction: {
+    id: 'ui.paymentOrders.picker.cancel',
+    defaultMessage: 'ui.paymentOrders.picker.cancel'
+  },
+  pickerClearAction: {
+    id: 'ui.paymentOrders.picker.clear',
+    defaultMessage: 'ui.paymentOrders.picker.clear'
+  }
+});
 
 const classes = {
   root: `${PREFIX}-root`,
   content: `${PREFIX}-content`,
-  headline: `${PREFIX}-headline`,
-  btnSave: `${PREFIX}-btn-save`
+  filters: `${PREFIX}-filters`,
+  search: `${PREFIX}-search`,
+  picker: `${PREFIX}-picker`
 };
+
+const options = [
+  {
+    value: SCContentType.ALL,
+    label: <FormattedMessage id="ui.paymentOrders.contentType.all" defaultMessage="ui.paymentOrders.contentType.all" />
+  },
+  {
+    value: SCContentType.COMMUNITY,
+    label: <FormattedMessage id="ui.paymentOrders.contentType.community" defaultMessage="ui.paymentOrders.contentType.community" />
+  },
+  {
+    value: SCContentType.COURSE,
+    label: <FormattedMessage id="ui.paymentOrders.contentType.course" defaultMessage="ui.paymentOrders.contentType.course" />
+  },
+  {
+    value: SCContentType.EVENT,
+    label: <FormattedMessage id="ui.paymentOrders.contentType.event" defaultMessage="ui.paymentOrders.contentType.event" />
+  },
+  {
+    value: SCContentType.GROUP,
+    label: <FormattedMessage id="ui.paymentOrders.contentType.group" defaultMessage="ui.paymentOrders.contentType.group" />
+  }
+];
 
 const Root = styled(Box, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({
-  [`& .${classes.content}`]: {
-    position: 'relative',
-    padding: '30px 10px',
-    '& table': {
-      '& tr': {
-        '& th': {
-          zIndex: 1
-        }
-      }
-    }
-  },
-  [`& .${classes.headline}`]: {
-    margin: '40px 0',
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between'
-  },
-  [`& .${classes.btnSave}`]: {
-    margin: '30px 0'
-  }
-}));
+})(() => ({}));
 
 export interface PaymentOrdersProps {
+  /**
+   * Overrides or extends the styles applied to the component.
+   * @default null
+   */
   className?: string;
+  /**
+   * The content name used to prefilter the results shown
+   */
+  contentName?: string;
+  /**
+   * The content type used to prefilter the results shown
+   */
+  contentType?: SCContentType;
 }
 
 export default function PaymentOrders(inProps: PaymentOrdersProps) {
@@ -78,43 +126,100 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, ...rest} = props;
+  const {className, contentName = '', contentType = SCContentType.ALL, ...rest} = props;
 
   // STATE
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [orders, setInvoices] = useState<any[]>([]);
   const [hasMore, setHasMore] = useState(true);
-  const [next, setNext] = useState(null);
   const [isLoadingPage, setIsLoadingPage] = useState<boolean>(false);
+  const [query, setQuery] = useState<string>(contentName);
+  const [contentTypeFilter, setContentTypeFilter] = useState(contentType);
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
 
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
   const {ref, inView} = useInView({triggerOnce: false});
   const intl = useIntl();
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  // CONTEXT
+  const scContext: SCContextType = useSCContext();
+
+  //HANDLERS
+  const formatDate = (date: Date): string => {
+    return date.toISOString().split('T')[0];
+  };
+  /**
+   * Handle change filter name
+   * @param event
+   */
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+  };
+
+  /**
+   * Handle content type change
+   * @param event
+   */
+  const handleContentTypeChange = (event) => {
+    setContentTypeFilter(event.target.value);
+  };
+
+  /**
+   * Initial Invoices fetch
+   */
+  const fetchInvoices = async () => {
+    setIsLoading(true);
+    setHasMore(true);
+    setInvoices([]);
+    try {
+      const res = await PaymentService.getPaymentsOrder({
+        offset: 0,
+        ordering: '-created_at',
+        ...(query && {search: query}),
+        ...(contentTypeFilter && contentTypeFilter !== SCContentType.ALL && {content_type: contentTypeFilter}),
+        ...(startDate && {created_at__gte: formatDate(startDate)}),
+        ...(endDate && {created_at__lt: formatDate(endDate)})
+      });
+      if (res) {
+        setInvoices(res.results);
+        setHasMore(res.next !== null);
+      }
+    } catch (error) {
+      Logger.error(SCOPE_SC_UI, error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   /**
    * Infinite load more orders
    */
   const loadMore = useCallback(async () => {
-    const loadItems = async () => {
-      try {
-        const res = await PaymentService.getPaymentsOrder({offset: orders.length, ordering: '-created_at'});
-        if (res) {
-          setHasMore(res.next !== null);
-          setNext(res.next);
-          setInvoices(orders.concat(res.results));
-          setIsLoadingPage(false);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.error(error);
+    if (!hasMore || isLoadingPage || isLoading) return;
+    setIsLoadingPage(true);
+    try {
+      const res = await PaymentService.getPaymentsOrder({
+        offset: orders.length,
+        ordering: '-created_at',
+        ...(query && {search: query}),
+        ...(contentTypeFilter && contentTypeFilter !== SCContentType.ALL && {content_type: contentTypeFilter}),
+        ...(startDate && {created_at__gte: formatDate(startDate)}),
+        ...(endDate && {created_at__lt: formatDate(endDate)})
+      });
+      if (res) {
+        setInvoices((prev) => prev.concat(res.results));
+        setHasMore(res.next !== null);
       }
-    };
-    if (hasMore && !isLoadingPage) {
-      setIsLoadingPage(true);
-      await loadItems();
+    } catch (error) {
+      Logger.error(SCOPE_SC_UI, error);
+    } finally {
+      setIsLoadingPage(false);
     }
-  }, [orders, isLoadingPage, isLoading, hasMore, next]);
+  }, [orders.length, query, hasMore, isLoadingPage, isLoading, contentTypeFilter, startDate, endDate]);
 
   const renderContent = (order: SCPaymentOrder) => {
     const contentType: SCContentType = order.content_type;
@@ -129,8 +234,6 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
           variant="outlined"
         />
       );
-    } else if (contentType === SCContentType.CATEGORY) {
-      return <Category category={content as SCCategoryType} cacheStrategy={CacheStrategies.NETWORK_ONLY} actions={<></>} variant="outlined" />;
     } else if (contentType === SCContentType.COURSE) {
       return (
         <Course
@@ -138,22 +241,10 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
           cacheStrategy={CacheStrategies.NETWORK_ONLY}
           template={SCCourseTemplateType.SNIPPET}
           actions={<></>}
-          hideEventParticipants
-          hideEventPlanner
-          variant="outlined"
         />
       );
     } else if (contentType === SCContentType.GROUP) {
-      return (
-        <Group
-          group={content as SCGroupType}
-          cacheStrategy={CacheStrategies.NETWORK_ONLY}
-          hideActions
-          variant="outlined"
-          hideEventParticipants
-          hideEventPlanner
-        />
-      );
+      return <Group group={content as SCGroupType} cacheStrategy={CacheStrategies.NETWORK_ONLY} hideActions variant="outlined" />;
     } else if (contentType === SCContentType.COMMUNITY) {
       if (order?.payment_price?.payment_product) {
         return <PaymentProduct hidePaymentProductPrices paymentProduct={order.payment_price.payment_product} />;
@@ -169,17 +260,17 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
     if (inView) {
       loadMore();
     }
-  }, [inView]);
+  }, [inView, loadMore]);
 
   /**
    * Initial load
    */
   useEffect(() => {
-    loadMore();
-  }, []);
+    fetchInvoices();
+  }, [contentTypeFilter, endDate]);
 
   if (!isPaymentsEnabled) {
-    return null;
+    return <HiddenPlaceholder />;
   }
 
   /**
@@ -218,6 +309,146 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
+      <Grid container className={classes.filters} gap={3}>
+        <Grid item xs={12} md={3}>
+          <TextField
+            className={classes.search}
+            size={'small'}
+            fullWidth
+            value={query}
+            label={<FormattedMessage id="ui.paymentOrders.search" defaultMessage="ui.paymentOrders.search" />}
+            variant="outlined"
+            onChange={handleChange}
+            disabled={isLoading}
+            onKeyUp={(e) => {
+              e.preventDefault();
+              if (e.key === 'Enter') {
+                fetchInvoices();
+              }
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  {query.length > 0 && (
+                    <IconButton
+                      onClick={() => {
+                        setQuery('');
+                        fetchInvoices();
+                      }}
+                      disabled={isLoading}>
+                      <Icon>close</Icon>
+                    </IconButton>
+                  )}
+                  {isMobile ? (
+                    <IconButton onClick={fetchInvoices} disabled={isLoading}></IconButton>
+                  ) : (
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="secondary"
+                      onClick={fetchInvoices}
+                      endIcon={<Icon>search</Icon>}
+                      disabled={isLoading}
+                    />
+                  )}
+                </InputAdornment>
+              )
+            }}
+          />
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <TextField
+            select
+            fullWidth
+            disabled={isLoading}
+            size="small"
+            label={<FormattedMessage id="ui.paymentOrders.contentTypeFilter" defaultMessage="ui.paymentOrders.contentTypeFilter" />}
+            value={contentTypeFilter}
+            onChange={handleContentTypeChange}>
+            {options.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <LocalizationProvider
+            dateAdapter={AdapterDateFns}
+            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+            localeText={{
+              cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`,
+              clearButtonLabel: `${intl.formatMessage(messages.pickerClearAction)}`
+            }}>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <MobileDatePicker
+                  className={classes.picker}
+                  label={<FormattedMessage id="ui.paymentOrders.dateFrom" defaultMessage="ui.paymentOrders.dateFrom" />}
+                  value={startDate}
+                  slots={{
+                    textField: (params) => (
+                      <TextField
+                        {...params}
+                        size="small"
+                        InputProps={{
+                          ...params.InputProps,
+                          placeholder: `${intl.formatMessage(messages.dateFrom)}`,
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton>
+                                <Icon>CalendarIcon</Icon>
+                              </IconButton>
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                    )
+                  }}
+                  slotProps={{
+                    actionBar: {
+                      actions: ['cancel', 'clear', 'accept']
+                    }
+                  }}
+                  onChange={(newValue) => setStartDate(newValue)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <MobileDatePicker
+                  className={classes.picker}
+                  label={<FormattedMessage id="ui.paymentOrders.dateTo" defaultMessage="ui.paymentOrders.dateTo" />}
+                  value={endDate}
+                  slots={{
+                    textField: (params) => (
+                      <TextField
+                        {...params}
+                        size="small"
+                        InputProps={{
+                          ...params.InputProps,
+                          placeholder: `${intl.formatMessage(messages.dateTo)}`,
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <IconButton>
+                                <Icon>CalendarIcon</Icon>
+                              </IconButton>
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                    )
+                  }}
+                  slotProps={{
+                    actionBar: {
+                      actions: ['cancel', 'clear', 'accept']
+                    }
+                  }}
+                  onChange={(newValue) => setEndDate(newValue)}
+                />
+              </Grid>
+            </Grid>
+          </LocalizationProvider>
+        </Grid>
+      </Grid>
       <Box className={classes.content}>
         {!isLoading ? (
           <TableContainer style={{margin: 'auto', borderRadius: 0}} component={Paper}>
@@ -304,9 +535,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   <TableRow>
                     <TableCell align="left" colSpan={6}>
                       <Typography variant="body2">
-                        <TableCell>
-                          <FormattedMessage id="ui.paymentOrders.noOrders" defaultMessage="ui.paymentOrders.noOrders" />
-                        </TableCell>
+                        <FormattedMessage id="ui.paymentOrders.noOrders" defaultMessage="ui.paymentOrders.noOrders" />
                       </Typography>
                     </TableCell>
                   </TableRow>

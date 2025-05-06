@@ -333,7 +333,6 @@ export default function Course(inProps: CourseProps): JSX.Element {
   } else {
     contentObj = (
       <SnippetRoot
-        ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}}
         elevation={0}
         className={classes.snippetRoot}
         image={
