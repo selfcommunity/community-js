@@ -34,6 +34,10 @@ const Component = {
       '& .SCPaymentOrders-filters': {
         alignItems: 'center',
         margin: theme.spacing(2),
+        width: '94%',
+        [theme.breakpoints.down('sm')]: {
+          width: '90%'
+        },
         '& .SCPaymentOrders-search': {
           '& .MuiInputBase-root': {
             paddingRight: 0,
