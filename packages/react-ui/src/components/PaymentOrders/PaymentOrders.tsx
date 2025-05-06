@@ -46,6 +46,7 @@ import {LocalizationProvider, MobileDatePicker} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
+import Category from '../Category';
 
 const PREFIX = 'SCPaymentOrders';
 
@@ -99,7 +100,7 @@ const options = [
   }
 ];
 
-const Root = styled(Box, {
+const Root = styled(Paper, {
   slot: 'Root',
   name: PREFIX
 })(() => ({}));
@@ -234,12 +235,15 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
           variant="outlined"
         />
       );
+    } else if (contentType === SCContentType.CATEGORY) {
+      return <Category category={content as SCCategoryType} cacheStrategy={CacheStrategies.NETWORK_ONLY} actions={<></>} variant="outlined" />;
     } else if (contentType === SCContentType.COURSE) {
       return (
         <Course
           course={content as SCCourseType}
           cacheStrategy={CacheStrategies.NETWORK_ONLY}
           template={SCCourseTemplateType.SNIPPET}
+					variant="outlined"
           actions={<></>}
         />
       );
@@ -308,7 +312,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
   };
 
   return (
-    <Root className={classNames(classes.root, className)} {...rest}>
+    <Root variant="outlined" className={classNames(classes.root, className)} {...rest}>
       <Grid container className={classes.filters} gap={3}>
         <Grid item xs={12} md={3}>
           <TextField
@@ -451,7 +455,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
       </Grid>
       <Box className={classes.content}>
         {!isLoading ? (
-          <TableContainer style={{margin: 'auto', borderRadius: 0}} component={Paper}>
+          <TableContainer style={{margin: 'auto', borderRadius: 0}}>
             <Table sx={{minWidth: 650}} aria-label="simple table" stickyHeader>
               <TableHead>
                 <TableRow>
