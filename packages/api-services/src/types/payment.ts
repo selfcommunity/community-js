@@ -82,6 +82,22 @@ export interface PaymentOrderParams extends BaseSearchParams {
    * Ordering
    */
   ordering?: string;
+  /**
+   * The content type
+   */
+  content_type?: SCContentType;
+  /**
+   * The creation date
+   */
+  created_at?: string;
+  /**
+   * The creation date
+   */
+  created_at__gte?: string;
+  /**
+   * The creation date
+   */
+  created_at__lte?: string;
 }
 
 /**

@@ -144,6 +144,7 @@ export enum SCPaymentPriceCurrencyType {
  * Paywalls Content types
  */
 export enum SCContentType {
+  ALL = 'all',
   EVENT = 'event',
   COURSE = 'course',
   CATEGORY = 'category',
