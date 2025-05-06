@@ -71,7 +71,7 @@ export default function EditEventButton(inProps: EditEventButtonProps): JSX.Elem
   const scUserContext: SCUserContextType = useSCUser();
 
   const handleSuccess = (data: SCEventType) => {
-		console.log(data);
+    console.log(data);
     setSCEvent(data);
     onEditSuccess && onEditSuccess(data);
   };

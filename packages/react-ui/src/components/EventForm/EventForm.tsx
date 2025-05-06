@@ -269,8 +269,13 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_VISIBILITY_ENABLED].value,
     [scPreferences.preferences]
   );
-  const disablePastStartTime = useMemo(() => field.startDate.getDate() === getNewDate().getDate(), [field]);
-  const disablePastEndTime = useMemo(() => field.endDate.getDate() === getNewDate().getDate(), [field]);
+  const disablePastStartTime = useMemo(() => (event ? false : field.startTime.getDate() === initialFieldState.startTime.getDate()), [event, field]);
+  const disablePastEndTime = useMemo(() => field.endTime.getDate() === getNewDate().getDate(), [field]);
+  const minStartTime = useMemo(
+    () => (event ? (field.startTime.getDate() === initialFieldState.startTime.getDate() ? initialFieldState.startTime : undefined) : undefined),
+    [event, field, initialFieldState]
+  );
+  const minStartDate = useMemo(() => (event ? initialFieldState.startDate : undefined), [event, initialFieldState]);
 
   // PAYMENTS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
@@ -490,22 +495,22 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   };
 
   const shouldDisableDate = useCallback(
-    (date: Date) => {
+    (day: Date) => {
       let disabled = false;
 
       switch (field.recurring) {
         case SCEventRecurrenceType.DAILY:
-          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(DAILY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
+          disabled = day.getTime() > getDateAndHours(getLaterDaysDate(DAILY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
           break;
         case SCEventRecurrenceType.WEEKLY:
-          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(WEEKLY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
+          disabled = day.getTime() > getDateAndHours(getLaterDaysDate(WEEKLY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
           break;
         case SCEventRecurrenceType.MONTHLY:
-          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(MONTHLY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
+          disabled = day.getTime() > getDateAndHours(getLaterDaysDate(MONTHLY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
           break;
         case SCEventRecurrenceType.NEVER:
         default:
-          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(NEVER_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
+          disabled = day.getTime() > getDateAndHours(getLaterDaysDate(NEVER_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
       }
 
       return disabled;
@@ -513,7 +518,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     [field]
   );
 
-  const shouldDisableTime = useCallback((date: Date) => field.startTime.getTime() > date.getTime(), [field]);
+  const shouldDisableTime = useCallback((value: Date) => value.getTime() < field.startTime.getTime(), [field]);
 
   /**
    * Renders root object
@@ -554,7 +559,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             }}>
             <MobileDatePicker
               className={classes.picker}
-              disablePast
+              disablePast={!event}
+              minDate={minStartDate}
               label={field.startDate && <FormattedMessage id="ui.eventForm.date.placeholder" defaultMessage="ui.eventForm.date.placeholder" />}
               value={field.startDate}
               slots={{
@@ -590,6 +596,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             <MobileTimePicker
               className={classes.picker}
               disablePast={disablePastStartTime}
+              minTime={minStartTime}
               label={field.startTime && <FormattedMessage id="ui.eventForm.time.placeholder" defaultMessage="ui.eventForm.time.placeholder" />}
               value={field.startTime}
               slots={{
