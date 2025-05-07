@@ -54,7 +54,7 @@ const getDefaultPaymentMethodConfiguration = (): {
 
 const getConvertedAmount = (paymentPrice: SCPaymentPrice): string | null => {
   if (!paymentPrice) return;
-  return `${(paymentPrice.unit_amount / 100).toFixed(2)}${paymentPrice.currency === SCPaymentPriceCurrencyType.EUR && '€'}`;
+  return `${(paymentPrice.unit_amount / 100).toFixed(2)}${paymentPrice.currency === SCPaymentPriceCurrencyType.EUR ? '€' : '$'}`;
 };
 
 export {getDefaultAppearanceStyle, getDefaultLocale, getDefaultPaymentMethodConfiguration, getConvertedAmount};
