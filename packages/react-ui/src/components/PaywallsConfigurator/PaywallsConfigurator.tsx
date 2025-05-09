@@ -17,7 +17,8 @@ import {
   Stack,
   Typography,
   Zoom,
-  styled
+  styled,
+  CircularProgress
 } from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -45,6 +46,7 @@ const classes = {
   noProducts: `${PREFIX}-no-products`,
   error: `${PREFIX}-error`,
   selectedPaymentProductsList: `${PREFIX}-selected-payment-products-list`,
+  autoCompleteProductsLoading: `${PREFIX}-autocomplete-products-loading`,
   autoCompleteFooter: `${PREFIX}-autocomplete-footer`,
   btnAddPaymentProduct: `${PREFIX}-add-payment-product`,
   paymentProductsPopperTitle: `${PREFIX}-payment-products-popper-title`,
@@ -122,7 +124,8 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
 
   // STATE
   const [products, setProducts] = useState<SCPaymentProduct[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [loadingProducts, setLoadingProducts] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [value, setValue] = React.useState<SCPaymentProduct[]>(selectedProducts);
   const [pendingValue, setPendingValue] = React.useState<SCPaymentProduct[]>([]);
@@ -146,6 +149,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
   };
 
   const handleOpenPricesList = (event: React.MouseEvent<HTMLElement>) => {
+    performFetchPaymentProducts();
     setPendingValue(value);
     setAnchorEl(event.currentTarget);
   };
@@ -233,7 +237,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
    * Fetch events
    */
   const fetchPaymentProducts = async (
-    next = `${Endpoints.GetPaymentProducts.url({})}?content_id=${contentId}&content_type=${contentType}`
+    next = `${Endpoints.GetPaymentProducts.url({})}?content_id=${content ? content.id : contentId}&content_type=${contentType}`
   ): Promise<[]> => {
     const response = await http.request({
       url: next,
@@ -250,7 +254,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
    * Fetch paywalls
    */
   const fetchPaywalls = async (
-    next = `${Endpoints.GetPaywalls.url({})}?content_id=${contentId}&content_type=${contentType}&active=1&payment_product__active=1`
+    next = `${Endpoints.GetPaywalls.url({})}?content_id=${content ? content.id : contentId}&content_type=${contentType}&active=1&payment_product__active=1`
   ): Promise<SCPaywall[]> => {
     const response = await http.request({
       url: next,
@@ -284,24 +288,27 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
     }
   };
 
+  const performFetchPaymentProducts = () => {
+    setLoadingProducts(true);
+    fetchPaymentProducts()
+      .then((data) => {
+        setProducts(data);
+        setLoadingProducts(false);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  };
+
   /**
    * On mount, fetch payment content status
    */
   useEffect(() => {
     if (prefetchedProducts) {
       setProducts(prefetchedProducts);
-      initSelectProducts();
-    } else {
-      fetchPaymentProducts()
-        .then((data) => {
-          setProducts(data);
-          initSelectProducts();
-        })
-        .catch((error) => {
-          Logger.error(SCOPE_SC_UI, error);
-        });
     }
-  }, [prefetchedProducts, contentId, contentType]);
+    initSelectProducts();
+  }, [prefetchedProducts, contentId, content, contentType]);
 
   if (!isPaymentsEnabled) {
     return null;
@@ -461,6 +468,14 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                         />
                       </Box>
                       <Autocomplete
+                        loading={loadingProducts}
+                        loadingText={
+                          <Box className={classes.autoCompleteProductsLoading}>
+                            <CircularProgress />
+                          </Box>
+                        }
+                        id="payment-products-autocomplete"
+                        className={classes.paymentProductsAutocompletePopperRoot}
                         open
                         multiple
                         onClose={(event, reason: AutocompleteCloseReason) => {
@@ -491,6 +506,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                         getOptionLabel={(option) => option.name.toString()}
                         renderInput={(params) => (
                           <FilterInputRoot
+                            disabled={loadingProducts || loading}
                             ref={params.InputProps.ref}
                             inputProps={params.inputProps}
                             autoFocus

@@ -97,6 +97,13 @@ const Component = {
       },
       [`& .SCPaywallsConfigurator-autocomplete-footer`]: {
         backgroundColor: grey[400]
+      },
+      [`& .SCPaywallsConfigurator-autocomplete-products-loading`]: {
+        width: '100%',
+        minHeight: 300,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }
     }),
     paymentProductsPopperRoot: ({theme}: any) => ({
