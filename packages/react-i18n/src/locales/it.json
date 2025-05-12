@@ -1385,6 +1385,7 @@
   "ui.paymentOrders.dateTo": "Data fine",
   "ui.paymentOrders.picker.cancel": "Indietro",
   "ui.paymentOrders.picker.clear": "Pulisci",
+  "ui.paymentOrders.picker.date": "Seleziona Data",
   "ui.createPaymentProductForm.title": "Aggiungi un prodotto di pagamento",
   "ui.createPaymentProductForm.name": "Nome",
   "ui.createPaymentProductForm.error.name.required": "Il nome è obbligatorio",
