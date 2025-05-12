@@ -1383,6 +1383,7 @@
   "ui.paymentOrders.dateTo": "Date to",
   "ui.paymentOrders.picker.cancel": "Back",
   "ui.paymentOrders.picker.clear": "Clear",
+  "ui.paymentOrders.picker.date": "Select Date",
   "ui.createPaymentProductForm.title": "Add a payment product",
   "ui.createPaymentProductForm.name": "Name",
   "ui.createPaymentProductForm.error.name.required": "Name is a eequired field",

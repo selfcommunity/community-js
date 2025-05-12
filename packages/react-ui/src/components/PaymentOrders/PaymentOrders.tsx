@@ -412,6 +412,11 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   slotProps={{
                     actionBar: {
                       actions: ['cancel', 'clear', 'accept']
+                    },
+                    toolbar: {
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      toolbarTitle: <FormattedMessage id="ui.paymentOrders.picker.date" defaultMessage="ui.paymentOrders.picker.date" />
                     }
                   }}
                   onChange={(newValue) => setStartDate(newValue)}
@@ -444,6 +449,11 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   slotProps={{
                     actionBar: {
                       actions: ['cancel', 'clear', 'accept']
+                    },
+                    toolbar: {
+                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
+                      // @ts-ignore
+                      toolbarTitle: <FormattedMessage id="ui.paymentOrders.picker.date" defaultMessage="ui.paymentOrders.picker.date" />
                     }
                   }}
                   onChange={(newValue) => setEndDate(newValue)}
@@ -491,7 +501,12 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                     <TableCell scope="row">
                       <b>{order.id}</b>
                     </TableCell>
-                    <TableCell scope="row">{order.content_type}</TableCell>
+                    <TableCell scope="row">
+                      <FormattedMessage
+                        id={`ui.paymentOrders.contentType.${order.content_type}`}
+                        defaultMessage={`ui.paymentOrders.contentType.${order.content_type}`}
+                      />
+                    </TableCell>
                     <TableCell scope="row">{renderContent(order)}</TableCell>
                     <TableCell scope="row">{getConvertedAmount(order.payment_price)}</TableCell>
                     <TableCell scope="row">
