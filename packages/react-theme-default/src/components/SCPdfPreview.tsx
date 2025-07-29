@@ -3,6 +3,7 @@ const Component = {
     root: ({theme}: any) => ({
       display: 'flex',
       flexDirection: 'column',
+      marginTop: '12px',
       [`& .SCPdfPreview-document-pdf-wrapper`]: {
         filter: 'drop-shadow(0 0 5px #00000040)'
       },
@@ -21,6 +22,9 @@ const Component = {
         '& .react-pdf__Page__textContent': {
           mixBlendMode: 'multiply',
           opacity: 0.6
+        },
+        '& .react-pdf__Page__canvas': {
+          margin: 'auto'
         }
       }
     })
