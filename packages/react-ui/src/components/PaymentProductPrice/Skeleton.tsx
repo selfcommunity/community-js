@@ -7,7 +7,6 @@ import classNames from 'classnames';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
-  image: `${PREFIX}-image`,
   primary: `${PREFIX}-primary`,
   secondary: `${PREFIX}-secondary`,
   button: `${PREFIX}-button`,
@@ -47,17 +46,7 @@ export default function PaymentProductPriceSkeleton(props): JSX.Element {
   return (
     <Root
       className={classNames(classes.root)}
-      image={
-        <Skeleton
-          animation="wave"
-          variant="rectangular"
-          width={theme.selfcommunity.contentProduct.icon.sizeMedium}
-          height={theme.selfcommunity.contentProduct.icon.sizeMedium}
-          className={classes.image}
-        />
-      }
       primary={<Skeleton animation="wave" height={10} width={isMobile ? 70 : 85} className={classes.primary} />}
-      secondary={<Skeleton animation="wave" height={10} width={isMobile ? 40 : 55} className={classes.secondary} />}
       actions={
         props.actions !== undefined ? (
           props.actions

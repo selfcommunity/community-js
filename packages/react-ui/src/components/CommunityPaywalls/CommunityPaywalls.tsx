@@ -80,7 +80,6 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
       {scCommunity.paywalls.map((p, i) => (
         <Grid xs={12} sm={12} md={4} key={i}>
           <PaymentProduct
-            expanded
             paymentProduct={p}
             contentType={SCContentType.COMMUNITY}
             contentId={scCommunity.id}
