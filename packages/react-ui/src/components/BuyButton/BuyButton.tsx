@@ -3,18 +3,18 @@ import {Icon, styled, SwipeableDrawer, Tooltip, Typography, useMediaQuery, useTh
 import {useThemeProps} from '@mui/system';
 import {SCContextType, SCThemeType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {
-	SCCategoryType,
-	SCContentType,
-	SCCourseJoinStatusType,
-	SCCourseType,
-	SCEventSubscriptionStatusType,
-	SCEventType,
-	SCGroupSubscriptionStatusType,
-	SCGroupType,
-	SCPaymentOrder,
-	SCPaymentPrice,
-	SCPaymentProduct,
-	SCPurchasableContent
+  SCCategoryType,
+  SCContentType,
+  SCCourseJoinStatusType,
+  SCCourseType,
+  SCEventSubscriptionStatusType,
+  SCEventType,
+  SCGroupSubscriptionStatusType,
+  SCGroupType,
+  SCPaymentOrder,
+  SCPaymentPrice,
+  SCPaymentProduct,
+  SCPurchasableContent
 } from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {MouseEvent, ReactNode, useCallback, useEffect, useState} from 'react';
@@ -94,6 +94,12 @@ export interface BuyButtonProps {
   PaymentOrderPdfButtonComponentProps?: PaymentOrderPdfButtonProps;
 
   /**
+   * Overrides the button label.
+   * @default null
+   */
+  label?: React.ReactNode;
+
+  /**
    * Others properties
    */
   [p: string]: any;
@@ -137,6 +143,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
     onPurchase,
     showTicket = false,
     PaymentOrderPdfButtonComponentProps = {},
+    label,
     ...rest
   } = props;
 
@@ -154,7 +161,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
   const [products, setProducts] = useState<SCPaymentProduct[] | []>([]);
   const [paymentOrder, setPaymentOrder] = useState<SCPaymentOrder | null>(null);
   const [btnLabel, setBtnLabel] = useState<ReactNode>(
-    <FormattedMessage defaultMessage={`ui.buyButton.buy${contentType}`} id={`ui.buyButton.buy${capitalize(contentType)}`} />
+    label ?? <FormattedMessage defaultMessage={`ui.buyButton.buy${contentType}`} id={`ui.buyButton.buy${capitalize(contentType)}`} />
   );
 
   // HANDLERS
