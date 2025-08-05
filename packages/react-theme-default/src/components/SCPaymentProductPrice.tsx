@@ -9,7 +9,15 @@ const Component = {
         color: `${theme.palette.primary.main} !important`
       },
       '& .SCPaymentProductPrice-button': {
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        '&:hover, &:active': {
+          backgroundColor: theme.palette.common.white,
+          color: theme.palette.primary.main,
+          border: `1px solid ${theme.palette.primary.main}`,
+          '& .MuiIcon-root': {
+            color: theme.palette.primary.main
+          }
+        }
       },
       '& .SCPaymentProductPrice-button-purchased': {
         backgroundColor: `${theme.palette.secondary.main} !important`,

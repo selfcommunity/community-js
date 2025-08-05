@@ -1,12 +1,5 @@
 import {Box, Button, Icon, Stack, Typography} from '@mui/material';
-import {
-  SCContentType,
-  SCCourseJoinStatusType,
-  SCCoursePrivacyType,
-  SCCourseType,
-  SCGroupPrivacyType,
-  SCGroupSubscriptionStatusType
-} from '@selfcommunity/types';
+import {SCContentType, SCCourseJoinStatusType, SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import React, {memo} from 'react';

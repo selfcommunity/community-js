@@ -221,6 +221,16 @@ const Component = {
             [theme.breakpoints.up('sm')]: {
               flexDirection: 'row',
               margin: 0
+            },
+            '& .SCBuyButton-request-root': {
+              '&:hover, &:active': {
+                backgroundColor: theme.palette.common.white,
+                color: theme.palette.primary.main,
+                border: `1px solid ${theme.palette.primary.main}`,
+                '& .MuiIcon-root': {
+                  color: theme.palette.primary.main
+                }
+              }
             }
           }
         },
