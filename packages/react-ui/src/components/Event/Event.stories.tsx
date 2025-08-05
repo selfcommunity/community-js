@@ -33,14 +33,14 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof Event> = {
 	args: {
-		eventId: 101,
+		eventId: 37,
 	},
 	render: template
 };
 
 export const Snippet: StoryObj<typeof Event> = {
 	args: {
-		eventId: 101,
+		eventId: 37,
 		elevation: 0,
 		variant: 'elevation',
 		square: false
@@ -50,7 +50,7 @@ export const Snippet: StoryObj<typeof Event> = {
 
 export const SnippetOutlined: StoryObj<typeof Event> = {
 	args: {
-		eventId: 73,
+		eventId: 37,
 		elevation: 0,
 		variant: 'outlined',
 		square: false
@@ -60,7 +60,7 @@ export const SnippetOutlined: StoryObj<typeof Event> = {
 
 export const Detail: StoryObj<typeof Event> = {
 	args: {
-		eventId: 101,
+		eventId: 37,
 		elevation: 0,
 		variant: 'elevation',
 		square: false,
@@ -72,7 +72,7 @@ export const Detail: StoryObj<typeof Event> = {
 
 export const DetailCard: StoryObj<typeof Event> = {
 	args: {
-		eventId: 101,
+		eventId: 37,
 		template: SCEventTemplateType.DETAIL,
 		actions: <></>
 	},
@@ -81,7 +81,7 @@ export const DetailCard: StoryObj<typeof Event> = {
 
 export const Preview: StoryObj<typeof Event> = {
 	args: {
-		eventId: 101,
+		eventId: 37,
 		elevation: 0,
 		variant: 'elevation',
 		square: false,
@@ -93,7 +93,7 @@ export const Preview: StoryObj<typeof Event> = {
 
 export const PreviewCard: StoryObj<typeof Event> = {
 	args: {
-		eventId: 101,
+		eventId: 37,
 		template: SCEventTemplateType.PREVIEW,
 		actions: <></>
 	},
