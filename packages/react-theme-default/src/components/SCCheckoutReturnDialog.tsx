@@ -14,21 +14,9 @@ const Component = {
         '& .SCWidget-root': {
           minWidth: 310
         },
-        '& .SCGroup-root': {
-          paddingLeft: theme.spacing()
+        '& .MuiTypography-body2': {
+          marginTop: theme.spacing(1)
         }
-      },
-      '& .SCCheckoutSuccessDialog-content-object': {
-        width: '100%'
-      },
-      '& .SCCourse-preview-root': {
-        minHeight: 'auto'
-      },
-      '& .SCCategory-category-image': {
-        paddingLeft: theme.spacing(1)
-      },
-      '& .SCGroup-avatar': {
-        marginLeft: theme.spacing(1)
       }
     })
   }

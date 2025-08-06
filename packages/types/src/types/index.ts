@@ -173,7 +173,8 @@ import {
   type SCPaymentsCustomerPortalSession,
   SCPaymentProductTemplateType,
   SCCheckoutSessionUIMode,
-  type SCPaywall
+  type SCPaywall,
+  SCPaymentRecurringInterval
 } from './payment';
 import {type SCCustomerBillingInfo, type SCCountryType} from './billing';
 import {type SCCommunityType} from './community';
@@ -378,6 +379,7 @@ export {
   type SCPaymentsCustomerPortalSession,
   SCPaymentProductTemplateType,
   SCCheckoutSessionUIMode,
+  SCPaymentRecurringInterval,
   type SCCommunityType,
   type SCCustomerBillingInfo,
   type SCCountryType

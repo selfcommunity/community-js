@@ -1,41 +1,36 @@
 import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
-import {Box, Button, CircularProgress, Dialog, DialogContent, DialogProps, DialogTitle, Slide, Stack, Typography, styled} from '@mui/material';
+import {Button, CircularProgress, Dialog, DialogContent, DialogProps, DialogTitle, Slide, Stack, styled, Typography} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {SCCategoryType, SCCheckoutSessionStatus, SCContentType, SCCourseType, SCEventType, SCGroupType, SCPaymentProduct} from '@selfcommunity/types';
-import {CLAPPING} from '../../assets/courses/clapping';
+import SuccessPlaceholder from '../../assets/checkout/success';
 import {
   Link,
+  SCContextType,
   SCPreferences,
   SCPreferencesContext,
   SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
+  useSCContext,
   useSCPaymentsEnabled,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import Event from '../Event';
-import {SCEventTemplateType} from '../../types/event';
-import {SCCourseTemplateType} from '../../types/course';
 import {PaymentApiClient} from '@selfcommunity/api-services';
-import {CacheStrategies, Logger} from '@selfcommunity/utils';
+import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import Category from '../Category';
-import Course from '../Course';
-import Group from '../Group';
 import Grow from '@mui/material/Grow';
-import PaymentProduct from '../PaymentProduct';
+import {getPaymentRecurringLabel} from '../../utils/checkout';
 
 const PREFIX = 'SCCheckoutReturnDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
   img: `${PREFIX}-img`,
-  contentObject: `${PREFIX}-content-object`,
   object: `${PREFIX}-object`,
   btn: `${PREFIX}-btn`
 };
@@ -43,7 +38,7 @@ const classes = {
 const Root = styled(Dialog, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({}));
+})(() => ({}));
 
 const Transition = React.forwardRef(function Transition(props: TransitionProps & {children: React.ReactElement}, ref: React.Ref<unknown>) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -83,6 +78,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
+  const scContext: SCContextType = useSCContext();
   const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
   const appUrl = useMemo(
     () => scPreferencesContext.preferences && scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_APP_URL].value,
@@ -175,19 +171,22 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     if (contentType === SCContentType.EVENT) {
       footer = (
         <>
-          <Typography variant="body2" color="textSecondary">
-            <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
+          <Typography color="primary">
+            <FormattedMessage id="ui.checkoutReturnDialog.payment.success" defaultMessage="ui.checkoutReturnDialog.payment.success" />
           </Typography>
-          <Box className={classes.contentObject}>
-            <Event
-              event={content as SCEventType}
-              cacheStrategy={CacheStrategies.NETWORK_ONLY}
-              template={SCEventTemplateType.PREVIEW}
-              actions={<></>}
-              variant="outlined"
-              className={classes.object}
-            />
-          </Box>
+          <Typography variant="body2" color="textSecondary">
+            {paymentProduct && paymentProduct?.payment_prices[0]?.recurring_interval ? (
+              <FormattedMessage
+                id="ui.checkoutReturnDialog.buy.recurrent.event"
+                defaultMessage="ui.checkoutReturnDialog.buy.recurrent.event"
+                values={{
+                  frequency: getPaymentRecurringLabel(paymentProduct?.payment_prices?.[0]?.recurring_interval, scContext.settings.locale.default)
+                }}
+              />
+            ) : (
+              <FormattedMessage id="ui.checkoutReturnDialog.buy.event" defaultMessage="ui.checkoutReturnDialog.buy.event" />
+            )}
+          </Typography>
           <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.event.button" defaultMessage="ui.checkoutReturnDialog.event.button" />
           </Button>
@@ -196,18 +195,12 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     } else if (contentType === SCContentType.CATEGORY) {
       footer = (
         <>
+          <Typography color="primary">
+            <FormattedMessage id="ui.checkoutReturnDialog.payment.success" defaultMessage="ui.checkoutReturnDialog.payment.success" />
+          </Typography>
           <Typography variant="body2" color="textSecondary">
             <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
           </Typography>
-          <Box className={classes.contentObject}>
-            <Category
-              category={content as SCCategoryType}
-              cacheStrategy={CacheStrategies.NETWORK_ONLY}
-              actions={<></>}
-              variant="outlined"
-              className={classes.object}
-            />
-          </Box>
           <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />
           </Button>
@@ -216,21 +209,22 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     } else if (contentType === SCContentType.COURSE) {
       footer = (
         <>
-          <Typography variant="body2" color="textSecondary">
-            <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
+          <Typography color="primary">
+            <FormattedMessage id="ui.checkoutReturnDialog.payment.success" defaultMessage="ui.checkoutReturnDialog.payment.success" />
           </Typography>
-          <Box className={classes.contentObject}>
-            <Course
-              course={content as SCCourseType}
-              cacheStrategy={CacheStrategies.NETWORK_ONLY}
-              template={SCCourseTemplateType.PREVIEW}
-              actions={<></>}
-              hideEventParticipants
-              hideEventPlanner
-              variant="outlined"
-              className={classes.object}
-            />
-          </Box>
+          <Typography variant="body2" color="textSecondary">
+            {paymentProduct && paymentProduct?.payment_prices[0]?.recurring_interval ? (
+              <FormattedMessage
+                id="ui.checkoutReturnDialog.buy.recurrent.course"
+                defaultMessage="ui.checkoutReturnDialog.buy.recurrent.course"
+                values={{
+                  frequency: getPaymentRecurringLabel(paymentProduct?.payment_prices?.[0]?.recurring_interval, scContext.settings.locale.default)
+                }}
+              />
+            ) : (
+              <FormattedMessage id="ui.checkoutReturnDialog.buy.course" defaultMessage="ui.checkoutReturnDialog.buy.course" />
+            )}
+          </Typography>
           <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.course.button" defaultMessage="ui.checkoutReturnDialog.course.button" />
           </Button>
@@ -239,20 +233,22 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     } else if (contentType === SCContentType.GROUP) {
       footer = (
         <>
-          <Typography variant="body2" color="textSecondary">
-            <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
+          <Typography color="primary">
+            <FormattedMessage id="ui.checkoutReturnDialog.payment.success" defaultMessage="ui.checkoutReturnDialog.payment.success" />
           </Typography>
-          <Box className={classes.contentObject}>
-            <Group
-              group={content as SCGroupType}
-              cacheStrategy={CacheStrategies.NETWORK_ONLY}
-              hideActions
-              variant="outlined"
-              hideEventParticipants
-              hideEventPlanner
-              className={classes.object}
-            />
-          </Box>
+          <Typography variant="body2" color="textSecondary">
+            {paymentProduct && paymentProduct?.payment_prices[0]?.recurring_interval ? (
+              <FormattedMessage
+                id="ui.checkoutReturnDialog.buy.recurrent.group"
+                defaultMessage="ui.checkoutReturnDialog.buy.recurrent.group"
+                values={{
+                  frequency: getPaymentRecurringLabel(paymentProduct?.payment_prices?.[0]?.recurring_interval, scContext.settings.locale.default)
+                }}
+              />
+            ) : (
+              <FormattedMessage id="ui.checkoutReturnDialog.buy.group" defaultMessage="ui.checkoutReturnDialog.buy.group" />
+            )}
+          </Typography>
           <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.group.button" defaultMessage="ui.checkoutReturnDialog.group.button" />
           </Button>
@@ -263,12 +259,22 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
         <>
           {paymentProduct && (
             <>
-              <Typography variant="body2" color="textSecondary">
-                <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
+              <Typography color="primary">
+                <FormattedMessage id="ui.checkoutReturnDialog.payment.success" defaultMessage="ui.checkoutReturnDialog.payment.success" />
               </Typography>
-              <Box className={classes.contentObject}>
-                <PaymentProduct hidePaymentProductPrices paymentProduct={paymentProduct} />
-              </Box>
+              <Typography variant="body2" color="textSecondary">
+                {paymentProduct?.payment_prices[0]?.recurring_interval ? (
+                  <FormattedMessage
+                    id="ui.checkoutReturnDialog.buy.recurrent.community"
+                    defaultMessage="ui.checkoutReturnDialog.buy.recurrent.community"
+                    values={{
+                      frequency: getPaymentRecurringLabel(paymentProduct?.payment_prices?.[0]?.recurring_interval, scContext.settings.locale.default)
+                    }}
+                  />
+                ) : (
+                  <FormattedMessage id="ui.checkoutReturnDialog.buy.community" defaultMessage="ui.checkoutReturnDialog.buy.community" />
+                )}
+              </Typography>
             </>
           )}
           <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
@@ -281,7 +287,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
       <Stack spacing={2} justifyContent="center" alignItems="center">
         <Grow in style={{transitionDelay: '300ms'}}>
           <img
-            src={CLAPPING}
+            src={SuccessPlaceholder}
             className={classes.img}
             alt={intl.formatMessage({
               id: 'ui.checkoutReturnDialog.buy',

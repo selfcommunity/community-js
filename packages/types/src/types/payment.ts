@@ -86,6 +86,12 @@ export enum SCPaymentProductTemplateType {
   DETAIL = 'detail'
 }
 
+export enum SCPaymentRecurringInterval {
+  WEEK = 'week',
+  MONTH = 'month',
+  YEAR = 'year'
+}
+
 export interface SCPaymentPrice {
   /**
    * Id product
@@ -120,7 +126,7 @@ export interface SCPaymentPrice {
   /**
    * Recurring interval
    */
-  recurring_interval?: string;
+  recurring_interval?: SCPaymentRecurringInterval;
 
   /**
    * Payment product id associated
