@@ -13,6 +13,7 @@ const Component = {
         maxWidth: 860,
         display: 'grid',
         gridTemplateColumns: '1fr 1fr',
+        padding: theme.spacing(2),
         gap: 0,
         [theme.breakpoints.down(1034)]: {
           display: 'flex',
@@ -30,7 +31,10 @@ const Component = {
             width: '90%'
           },
           '& .SCWidget-root': {
-            width: '93%'
+            width: '93%',
+            '& .SCEvent-preview-content': {
+              padding: `${theme.spacing(2)} !important`
+            }
           }
         },
         ['& .SCCheckout-content-coverage']: {
@@ -47,8 +51,7 @@ const Component = {
           [theme.breakpoints.down(1034)]: {
             display: 'none'
           },
-          maxWidth: 600,
-          padding: theme.spacing(4)
+          maxWidth: 600
         }
       },
       ['& .SCCheckout-checkout']: {
@@ -56,7 +59,7 @@ const Component = {
         bottom: theme.spacing(2)
       },
       ['& .SCCheckout-object']: {
-        margin: theme.spacing(2, 2, 0.5, 0),
+        // margin: theme.spacing(2, 2, 0.5, 0),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
           minWidth: 395,

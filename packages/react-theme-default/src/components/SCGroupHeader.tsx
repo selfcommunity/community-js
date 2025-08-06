@@ -38,6 +38,18 @@ const Component = {
             justifyContent: 'center',
             alignItems: 'center',
             gap: theme.spacing(0.5)
+          },
+          '& .SCBuyButton-request-root': {
+            fontWeight: theme.typography.fontWeightBold,
+            '& .MuiButton-startIcon': {
+              marginRight: theme.spacing(0.5),
+              '& .MuiIcon-root': {
+                fontSize: '1.5rem'
+              }
+            },
+            '&.Mui-selected, &:hover': {
+              backgroundColor: 'transparent'
+            }
           }
         },
         '& .SCGroupHeader-multi-actions': {

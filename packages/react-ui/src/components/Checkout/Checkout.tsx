@@ -18,6 +18,7 @@ import Group from '../Group';
 import {SCEventTemplateType} from '../../types/event';
 import {SCCourseTemplateType} from '../../types/course';
 import PaymentOrder from '../PaymentOrder';
+import CheckoutHeaderInfoWidget from './CheckoutHeaderInfoWidget';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -33,7 +34,7 @@ const classes = {
 const Root = styled(Box, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface CheckoutProps {
   className?: string;
@@ -193,14 +194,7 @@ export default function Checkout(inProps: CheckoutProps) {
             {renderContentObject()}
           </Box>
           <Box className={classes.contentDesc}>
-            <Typography variant="h5" mb={1}>
-              <b>
-                <FormattedMessage id="ui.checkout.contentDesc.title" defaultMessage="ui.checkout.contentDesc.title" />
-              </b>
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              <FormattedMessage id="ui.checkout.contentDesc.subTitle" defaultMessage="ui.checkout.contentDesc.subTitle" />
-            </Typography>
+            <CheckoutHeaderInfoWidget content={content} contentType={contentType} />
           </Box>
         </Box>
       )}

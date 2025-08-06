@@ -60,7 +60,7 @@ export default function CommunityPaywallsSkeleton(inProps): JSX.Element {
     <Root className={classNames(classes.root, className)} container spacing={4} {...rest}>
       {[...Array(isMobile ? 2 : 3)].map((product, index) => (
         <Grid xs={4} key={index}>
-          <PaymentProductSkeleton expanded elevation={0} variant={'outlined'} {...PaymentProductSkeletonComponentProps} />
+          <PaymentProductSkeleton variant={'outlined'} {...PaymentProductSkeletonComponentProps} />
         </Grid>
       ))}
     </Root>

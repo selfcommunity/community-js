@@ -59,6 +59,18 @@ const Component = {
               flexDirection: 'row',
               alignItems: 'center',
               gap: theme.spacing(1)
+            },
+            '& .SCBuyButton-request-root': {
+              fontWeight: theme.typography.fontWeightBold,
+              '& .MuiButton-startIcon': {
+                marginRight: theme.spacing(0.5),
+                '& .MuiIcon-root': {
+                  fontSize: '1.5rem'
+                }
+              },
+              '&.Mui-selected, &:hover': {
+                backgroundColor: 'transparent'
+              }
             }
           }
         }
@@ -209,6 +221,16 @@ const Component = {
             [theme.breakpoints.up('sm')]: {
               flexDirection: 'row',
               margin: 0
+            },
+            '& .SCBuyButton-request-root': {
+              '&:hover, &:active': {
+                backgroundColor: theme.palette.common.white,
+                color: theme.palette.primary.main,
+                border: `1px solid ${theme.palette.primary.main}`,
+                '& .MuiIcon-root': {
+                  color: theme.palette.primary.main
+                }
+              }
             }
           }
         },

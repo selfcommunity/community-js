@@ -289,7 +289,7 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
           variant="contained"
           color={purchased ? 'inherit' : 'secondary'}
           size="small"
-          startIcon={<Icon>card_giftcard</Icon>}
+          startIcon={<Icon>dredit-card</Icon>}
           loading={scUserContext.user === undefined || purchased === null}
           onClick={handleOpen}
           disabled={disabled || (!paymentOrder && purchased)}

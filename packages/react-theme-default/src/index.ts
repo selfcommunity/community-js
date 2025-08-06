@@ -114,6 +114,7 @@ import SCGroupMembersWidget from './components/SCGroupMembersWidget';
 import SCGroupRequestsWidget from './components/SCGroupRequestsWidget';
 import SCGroups from './components/SCGroups';
 import SCGroupSettingsIconButton from './components/SCGroupSettingsIconButton';
+import SCGroupSubscribeButton from './components/SCGroupSubscribeButton';
 import SCGroupTemplate from './components/SCGroupTemplate';
 import SCIncubator from './components/SCIncubator';
 import SCIncubatorDetail from './components/SCIncubatorDetail';
@@ -216,6 +217,7 @@ import SCPaywalls from './components/SCPaywalls';
 import SCPaywallsConfigurator from './components/SCPaywallsConfigurator';
 import SCPdfPreview from './components/SCPdfPreview';
 import SCPaymentOrders from './components/SCPaymentOrders';
+import SCCheckoutHeaderInfoWidget from './components/SCCheckoutHeaderInfoWidget';
 /**
  * Style fragments - Imports - End
  */
@@ -390,6 +392,7 @@ const theme = {
     SCGroupMembersWidget,
     SCGroupRequestsWidget,
     SCGroupSettingsIconButton,
+    SCGroupSubscribeButton,
     SCGroupTemplate,
     SCGroups,
     SCIncubator,
@@ -511,7 +514,8 @@ const theme = {
     SCPaywalls,
     SCPaywallsConfigurator,
     SCPdfPreview,
-		SCPaymentOrders
+    SCPaymentOrders,
+    SCCheckoutHeaderInfoWidget
   },
   selfcommunity: {
     user: {

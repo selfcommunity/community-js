@@ -66,6 +66,7 @@ export default function PaywallsDialog(inProps: PaywallsDialogProps) {
       {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
       className={classNames(classes.root, className)}
       TransitionComponent={Transition}
+      DialogContentProps={{dividers: false}}
       {...rest}>
       <Paywalls {...PaywallsComponentProps} />
     </Root>

@@ -30,7 +30,7 @@ export const StudentFree: StoryObj<typeof Course> = {
 
 export const StudentNotFree: StoryObj<typeof Course> = {
 	args: {
-		courseId: 9,
+		courseId: 21,
 		viewDashboard: false
 	}
 };

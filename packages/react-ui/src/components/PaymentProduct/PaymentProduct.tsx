@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import {AccordionDetails, AccordionProps, AccordionSummary, Typography, styled} from '@mui/material';
+import {Typography, styled, CardContent} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {useSCFetchPaymentProduct, useSCPaymentsEnabled} from '@selfcommunity/react-core';
@@ -13,19 +13,19 @@ import {
 } from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import PaymentProductSkeleton from './Skeleton';
-import Accordion from '@mui/material/Accordion';
 import PaymentProductPrice, {PaymentProductPriceProps} from '../PaymentProductPrice';
+import Widget, {WidgetProps} from '../Widget';
 
 const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(Accordion, {
+const Root = styled(Widget, {
   slot: 'Root',
   name: PREFIX
 })(({theme}) => ({}));
 
-export interface PaymentProductProps extends Pick<AccordionProps, Exclude<keyof AccordionProps, 'children' | 'expanded'>> {
+export interface PaymentProductProps extends WidgetProps {
   className?: string;
   paymentProductId?: number;
   paymentProduct?: SCPaymentProduct;
@@ -35,7 +35,6 @@ export interface PaymentProductProps extends Pick<AccordionProps, Exclude<keyof 
   paymentOrder?: SCPaymentOrder;
   onUpdatePaymentOrder?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
   template?: SCPaymentProductTemplateType;
-  expanded?: boolean;
   hideDescription?: boolean;
   hidePaymentProductPrices?: boolean;
   PaymentProductPriceComponentProps?: PaymentProductPriceProps;
@@ -56,8 +55,6 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
     content,
     paymentOrder,
     onUpdatePaymentOrder,
-    template = SCPaymentProductTemplateType.DETAIL,
-    expanded,
     hideDescription = false,
     hidePaymentProductPrices = false,
     PaymentProductPriceComponentProps = {},
@@ -76,11 +73,6 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
     return [];
   }, [scPaymentProduct]);
 
-  const isProductExpanded = useMemo(
-    () => !paymentOrder || (paymentOrder && paymentOrder.payment_price && productPaymentPriceIds.indexOf(paymentOrder.payment_price.id) > -1),
-    [paymentOrder, productPaymentPriceIds]
-  );
-
   if (!isPaymentsEnabled) {
     return null;
   }
@@ -90,14 +82,8 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
   }
 
   return (
-    <Root
-      disabled={!productPaymentPriceIds.length}
-      defaultExpanded={isProductExpanded && productPaymentPriceIds.length > 0}
-      square
-      className={classNames(classes.root, className)}
-      {...(expanded && {expanded})}
-      {...rest}>
-      <AccordionSummary aria-controls="panel1-content" id="panel1-header">
+    <Root disabled={!productPaymentPriceIds.length} className={classNames(classes.root, className)} {...rest}>
+      <CardContent>
         <Typography variant="h5" component="div">
           <b>{scPaymentProduct.name && scPaymentProduct.name}</b>
         </Typography>
@@ -106,8 +92,6 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
             {scPaymentProduct.description}
           </Typography>
         )}
-      </AccordionSummary>
-      <AccordionDetails>
         {!hidePaymentProductPrices &&
           scPaymentProduct.payment_prices &&
           scPaymentProduct.payment_prices.map((price, index) => (
@@ -120,7 +104,7 @@ export default function PaymentProduct(inProps: PaymentProductProps) {
               {...(paymentOrder && {paymentOrder, onHandleActionBuy: onUpdatePaymentOrder})}
             />
           ))}
-      </AccordionDetails>
+      </CardContent>
     </Root>
   );
 }

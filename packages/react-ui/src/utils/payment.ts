@@ -1,6 +1,6 @@
 import {SCThemeType} from '@selfcommunity/react-core';
 import {Appearance} from '@stripe/stripe-js';
-import {IntlShape} from 'react-intl';
+import {IntlShape, useIntl} from 'react-intl';
 import {SCLanguageType, SCPaymentPrice, SCPaymentPriceCurrencyType} from '@selfcommunity/types';
 
 const getDefaultAppearanceStyle = (theme: SCThemeType): {appearance: Appearance} => ({
@@ -57,4 +57,17 @@ const getConvertedAmount = (paymentPrice: SCPaymentPrice): string | null => {
   return `${(paymentPrice.unit_amount / 100).toFixed(2)}${paymentPrice.currency === SCPaymentPriceCurrencyType.EUR ? '€' : '$'}`;
 };
 
-export {getDefaultAppearanceStyle, getDefaultLocale, getDefaultPaymentMethodConfiguration, getConvertedAmount};
+const getRecurringConvertedAmount = (paymentPrice: SCPaymentPrice, intl: IntlShape): string | null => {
+  if (!paymentPrice) return;
+  const amount = (paymentPrice.unit_amount / 100).toFixed(2);
+  const currencySymbol = paymentPrice.currency === SCPaymentPriceCurrencyType.EUR ? '€' : '$';
+  const interval = paymentPrice.recurring_interval
+    ? ` / ${intl.formatMessage({
+        id: `ui.paymentProduct.price.${paymentPrice.recurring_interval}`
+      })}`
+    : '';
+
+  return `${amount}${currencySymbol}${interval}`;
+};
+
+export {getDefaultAppearanceStyle, getDefaultLocale, getDefaultPaymentMethodConfiguration, getConvertedAmount, getRecurringConvertedAmount};

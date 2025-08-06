@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {Avatar, Box, Button, Icon, Typography, useMediaQuery, useTheme, Zoom, styled} from '@mui/material';
+import {Box, Button, Icon, Typography, useMediaQuery, useTheme, Zoom, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCContentType, SCPaymentOrder, SCPaymentPrice, SCPurchasableContent} from '@selfcommunity/types';
 import {PREFIX} from './constants';
@@ -8,11 +8,10 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCPaymentsEnabled, useSCRouting} from '@selfcommunity/react-core';
 import BaseItem from '../../shared/BaseItem';
 import classNames from 'classnames';
-import {getConvertedAmount} from '../../utils/payment';
+import {getRecurringConvertedAmount} from '../../utils/payment';
 
 const classes = {
   root: `${PREFIX}-root`,
-  image: `${PREFIX}-image`,
   primary: `${PREFIX}-primary`,
   secondary: `${PREFIX}-secondary`,
   purchasedAt: `${PREFIX}-purchased-at`,
@@ -77,16 +76,9 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
     <Root
       disableTypography
       className={classes.root}
-      image={
-        <Box className={classes.image}>
-          <Avatar variant="square" alt={'price.name'} className={classes.image}>
-            <Icon>card_giftcard</Icon>
-          </Avatar>
-        </Box>
-      }
       primary={
-        <Typography variant="body1">
-          <b>{getConvertedAmount(price)}</b>
+        <Typography variant="body1" className={classes.primary}>
+          <b>{getRecurringConvertedAmount(price, intl)}</b>
         </Typography>
       }
       secondary={
@@ -117,12 +109,12 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
             <Zoom in style={{transitionDelay: '200ms'}}>
               <Button
                 size="small"
-                color={paymentOrder && paymentOrder.payment_price.id === price.id ? 'secondary' : 'error'}
+                color={paymentOrder && paymentOrder.payment_price.id === price.id ? 'primary' : 'error'}
                 className={classNames(classes.button, {[classes.buttonPurchased]: paymentOrder && paymentOrder.payment_price.id === price.id})}
                 {...(paymentOrder && {disabled: true})}
                 variant="contained"
                 component={Link}
-                startIcon={<Icon>card_giftcard</Icon>}
+                startIcon={<Icon>dredit-card</Icon>}
                 {...(onHandleActionBuy && {onClick: handleActionBuy})}
                 to={`${scRoutingContext.url(SCRoutes.CHECKOUT_PAYMENT, {
                   content_type: contentType?.toLowerCase(),
@@ -130,9 +122,21 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
                   price_id: price.id
                 })}?${returnUrlParams ? new URLSearchParams(returnUrlParams) : ''}`}>
                 {paymentOrder && paymentOrder.payment_price.id === price.id ? (
-                  <FormattedMessage defaultMessage="ui.paymentProduct.action.purchased" id="ui.paymentProduct.action.purchased" />
+                  <>
+                    {paymentOrder.payment_price.recurring_interval ? (
+                      <FormattedMessage defaultMessage="ui.paymentProduct.action.subscribed" id="ui.paymentProduct.action.subscribed" />
+                    ) : (
+                      <FormattedMessage defaultMessage="ui.paymentProduct.action.purchased" id="ui.paymentProduct.action.purchased" />
+                    )}
+                  </>
                 ) : (
-                  <FormattedMessage defaultMessage="ui.paymentProduct.action.buy" id="ui.paymentProduct.action.buy" />
+                  <>
+                    {paymentOrder?.payment_price.recurring_interval ? (
+                      <FormattedMessage defaultMessage="ui.paymentProduct.action.subscribe" id="ui.paymentProduct.action.subscribe" />
+                    ) : (
+                      <FormattedMessage defaultMessage="ui.paymentProduct.action.buy" id="ui.paymentProduct.action.buy" />
+                    )}
+                  </>
                 )}
               </Button>
             </Zoom>

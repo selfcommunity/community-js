@@ -1,45 +1,43 @@
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
-      borderRadius: '3px !important',
-      '& .MuiAccordionSummary-root': {
-        backgroundColor: theme.palette.grey[50],
-        '& .MuiAccordionSummary-content': {
-          display: 'block',
-          flexDirection: 'row',
-          '& .SCBaseItem-root': {
-            backgroundColor: 'transparent'
-          },
-          '& .MuiTypography-body1': {
-            fontWeight: 200,
-            color: theme.palette.grey[600],
-            [theme.breakpoints.down('sm')]: {
-              fontSize: theme.typography.pxToRem(12)
-            }
-          }
+      marginBottom: theme.spacing(2),
+      borderRadius: '10px',
+      boxShadow: 'none',
+      backgroundColor: theme.palette.grey['A200'],
+      '& .MuiCardContent-root': {
+        '& .SCBaseItem-root': {
+          backgroundColor: 'transparent'
         },
-        '& .MuiAccordionDetails-root': {
-          marginTop: theme.spacing()
+        '& .MuiTypography-body1': {
+          fontWeight: 200,
+          color: theme.palette.grey[600],
+          [theme.breakpoints.down('sm')]: {
+            fontSize: theme.typography.pxToRem(12)
+          }
         }
       },
       '& .SCPaymentProductPrice-root': {
-        marginBottom: theme.spacing(),
         width: 'auto',
-        borderRadius: '3px'
+        paddingLeft: `${theme.spacing(0)} !important`
       }
     }),
     skeletonRoot: ({theme}) => ({
-      borderRadius: '3px !important',
-      '& .MuiAccordionSummary-root': {
-        backgroundColor: theme.palette.grey[50],
+      marginBottom: theme.spacing(2),
+      borderRadius: '10px',
+      boxShadow: 'none',
+      backgroundColor: theme.palette.grey['A200'],
+      '& .MuiCardContent-root': {
         marginBottom: theme.spacing(1),
         '& .SCBaseItem-root': {
-          backgroundColor: 'transparent'
+          backgroundColor: 'transparent',
+          boxShadow: 'none'
         }
       },
       '& .SCPaymentProductPrice-skeleton-root': {
-        marginBottom: theme.spacing(),
-        width: 'auto'
+        marginTop: theme.spacing(1),
+        width: 'auto',
+        paddingLeft: `${theme.spacing(0)} !important`
       }
     })
   }
