@@ -131,7 +131,7 @@ import {
   type SCLiveStreamMonthlyDurationType,
   type SCLiveStreamSettingsType,
   type SCLiveStreamConnectionDetailsResponseErrorType,
-	type SCPaywall,
+  type SCPaywall,
   type SCPaymentProduct,
   type SCPaymentPrice,
   type SCCheckoutSession,
@@ -200,6 +200,7 @@ import {
   SCContentType,
   SCCheckoutSessionStatus,
   SCPaymentProductTemplateType,
+  SCPaymentRecurringInterval,
   SCCheckoutSessionUIMode,
   SCCourseOrderingUsersType
 } from './types';
@@ -261,6 +262,7 @@ export {
   SCContentType,
   SCCheckoutSessionStatus,
   SCPaymentProductTemplateType,
+  SCPaymentRecurringInterval,
   SCCheckoutSessionUIMode,
   SCCourseOrderingUsersType
 };
@@ -394,7 +396,7 @@ export {
   type SCLiveStreamMonthlyDurationType,
   type SCLiveStreamSettingsType,
   type SCLiveStreamConnectionDetailsResponseErrorType,
-	type SCPaywall,
+  type SCPaywall,
   type SCPaymentProduct,
   type SCPaymentPrice,
   type SCCheckoutSession,
