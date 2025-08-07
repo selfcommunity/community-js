@@ -4,7 +4,7 @@ import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {SCCategoryType, SCCheckoutSessionStatus, SCContentType, SCCourseType, SCEventType, SCGroupType, SCPaymentProduct} from '@selfcommunity/types';
+import {SCCategoryType, SCCheckoutSessionStatus, SCContentType, SCCourseType, SCEventType, SCGroupType, SCPaymentPrice} from '@selfcommunity/types';
 import SuccessPlaceholder from '../../assets/checkout/success';
 import {
   Link,
@@ -69,7 +69,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
   const [contentType, setContentType] = useState<SCContentType | null>(null);
   const [contentId, setContentId] = useState<number | null>(null);
   const [content, setContent] = useState<SCEventType | SCGroupType | SCCourseType | SCCategoryType | null>(null);
-  const [paymentProduct, setPaymentProduct] = useState<SCPaymentProduct | null>(null);
+  const [paymentPrice, setPaymentPrice] = useState<SCPaymentPrice | null>(null);
 
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
@@ -146,8 +146,8 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
             setContentType(r.content_type);
             setContentId(r.content_id);
             setContent(r[r.content_type]);
-            if (r.payment_price.payment_product) {
-              setPaymentProduct(r.payment_price.payment_product);
+            if (r.payment_price) {
+              setPaymentPrice(r.payment_price);
             }
             // Refresh subscription status
             refreshContentStatus();
@@ -175,12 +175,12 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
             <FormattedMessage id="ui.checkoutReturnDialog.payment.success" defaultMessage="ui.checkoutReturnDialog.payment.success" />
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            {paymentProduct && paymentProduct?.payment_prices[0]?.recurring_interval ? (
+            {paymentPrice && paymentPrice.recurring_interval ? (
               <FormattedMessage
                 id="ui.checkoutReturnDialog.buy.recurrent.event"
                 defaultMessage="ui.checkoutReturnDialog.buy.recurrent.event"
                 values={{
-                  frequency: getPaymentRecurringLabel(paymentProduct?.payment_prices?.[0]?.recurring_interval, scContext.settings.locale.default)
+                  frequency: getPaymentRecurringLabel(paymentPrice.recurring_interval, scContext.settings.locale.default)
                 }}
               />
             ) : (
@@ -213,12 +213,12 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
             <FormattedMessage id="ui.checkoutReturnDialog.payment.success" defaultMessage="ui.checkoutReturnDialog.payment.success" />
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            {paymentProduct && paymentProduct?.payment_prices[0]?.recurring_interval ? (
+            {paymentPrice && paymentPrice.recurring_interval ? (
               <FormattedMessage
                 id="ui.checkoutReturnDialog.buy.recurrent.course"
                 defaultMessage="ui.checkoutReturnDialog.buy.recurrent.course"
                 values={{
-                  frequency: getPaymentRecurringLabel(paymentProduct?.payment_prices?.[0]?.recurring_interval, scContext.settings.locale.default)
+                  frequency: getPaymentRecurringLabel(paymentPrice.recurring_interval, scContext.settings.locale.default)
                 }}
               />
             ) : (
@@ -237,12 +237,12 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
             <FormattedMessage id="ui.checkoutReturnDialog.payment.success" defaultMessage="ui.checkoutReturnDialog.payment.success" />
           </Typography>
           <Typography variant="body2" color="textSecondary">
-            {paymentProduct && paymentProduct?.payment_prices[0]?.recurring_interval ? (
+            {paymentPrice && paymentPrice.recurring_interval ? (
               <FormattedMessage
                 id="ui.checkoutReturnDialog.buy.recurrent.group"
                 defaultMessage="ui.checkoutReturnDialog.buy.recurrent.group"
                 values={{
-                  frequency: getPaymentRecurringLabel(paymentProduct?.payment_prices?.[0]?.recurring_interval, scContext.settings.locale.default)
+                  frequency: getPaymentRecurringLabel(paymentPrice.recurring_interval, scContext.settings.locale.default)
                 }}
               />
             ) : (
@@ -257,18 +257,18 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
     } else if (contentType === SCContentType.COMMUNITY) {
       footer = (
         <>
-          {paymentProduct && (
+          {paymentPrice && (
             <>
               <Typography color="primary">
                 <FormattedMessage id="ui.checkoutReturnDialog.payment.success" defaultMessage="ui.checkoutReturnDialog.payment.success" />
               </Typography>
               <Typography variant="body2" color="textSecondary">
-                {paymentProduct?.payment_prices[0]?.recurring_interval ? (
+                {paymentPrice.recurring_interval ? (
                   <FormattedMessage
                     id="ui.checkoutReturnDialog.buy.recurrent.community"
                     defaultMessage="ui.checkoutReturnDialog.buy.recurrent.community"
                     values={{
-                      frequency: getPaymentRecurringLabel(paymentProduct?.payment_prices?.[0]?.recurring_interval, scContext.settings.locale.default)
+                      frequency: getPaymentRecurringLabel(paymentPrice.recurring_interval, scContext.settings.locale.default)
                     }}
                   />
                 ) : (
