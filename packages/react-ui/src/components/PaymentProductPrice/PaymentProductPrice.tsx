@@ -109,7 +109,7 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
             <Zoom in style={{transitionDelay: '200ms'}}>
               <Button
                 size="small"
-                color={paymentOrder && paymentOrder.payment_price.id === price.id ? 'primary' : 'error'}
+                color={paymentOrder && paymentOrder.payment_price.id === price.id ? 'secondary' : 'primary'}
                 className={classNames(classes.button, {[classes.buttonPurchased]: paymentOrder && paymentOrder.payment_price.id === price.id})}
                 {...(paymentOrder && {disabled: true})}
                 variant="contained"
@@ -131,7 +131,7 @@ export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
                   </>
                 ) : (
                   <>
-                    {paymentOrder?.payment_price.recurring_interval ? (
+                    {price.recurring_interval ? (
                       <FormattedMessage defaultMessage="ui.paymentProduct.action.subscribe" id="ui.paymentProduct.action.subscribe" />
                     ) : (
                       <FormattedMessage defaultMessage="ui.paymentProduct.action.buy" id="ui.paymentProduct.action.buy" />
