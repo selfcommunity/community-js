@@ -154,7 +154,8 @@ export enum SCPreferenceName {
   STRIPE_CONNECTED_ACCOUNT_ID = 'stripe_connected_account_id',
   ENVIRONMENT = 'env',
   STACK_ID = 'stackid',
-  STRIPE_PUBLIC_KEY = 'stripe_public_key'
+  STRIPE_PUBLIC_KEY = 'stripe_public_key',
+  PRIVATE_MESSAGES_ENABLED = 'private_messages_enabled'
 }
 
 /**
