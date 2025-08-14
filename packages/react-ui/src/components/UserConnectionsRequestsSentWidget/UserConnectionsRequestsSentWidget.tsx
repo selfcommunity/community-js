@@ -158,10 +158,10 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
       scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
     [scPreferencesContext.preferences]
   );
-  const followEnabled = useMemo(
+  const connectionEnabled = useMemo(
     () =>
-      SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
-      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
+      SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value,
     [scPreferencesContext.preferences]
   );
 
@@ -193,13 +193,13 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (!followEnabled && scUserContext.user) {
+    if (connectionEnabled && scUserContext.user) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, contentAvailability, userId]);
+  }, [scUserContext.user, connectionEnabled, userId]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length === limit && state.initialized) {
@@ -223,7 +223,7 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
   }, [state.results]);
 
   useEffect(() => {
-    if (!isInteger(userId) || followEnabled || (!contentAvailability && !scUserContext.user)) {
+    if (!isInteger(userId) || !connectionEnabled || (!contentAvailability && !scUserContext.user)) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
@@ -261,7 +261,7 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
   };
 
   // RENDER
-  if (followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !userId) {
+  if (!connectionEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !userId) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {

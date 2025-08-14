@@ -77,6 +77,7 @@ export enum SCPreferenceName {
   CUSTOM_NAVBAR_ITEM_TEXT = 'custom_navbar_item_text',
   CUSTOM_NAVBAR_ITEM_URL = 'custom_navbar_item_url',
   CUSTOM_NAVBAR_ITEM_IMAGE = 'custom_navbar_item_image',
+  CONNECTION_ENABLED = 'connection_enabled',
   FOLLOW_ENABLED = 'follow_enabled',
   EXPLORE_STREAM_ENABLED = 'explore_stream_enabled',
   EXPLORE_STREAM_ORDER_BY = 'explore_stream_order_by',

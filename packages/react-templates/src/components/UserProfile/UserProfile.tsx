@@ -337,6 +337,9 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
       scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
     [scPreferencesContext.preferences]
   );
+  const connectionEnabled =
+    SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value;
   const privateMessagingEnabled = useMemo(
     () =>
       SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in scPreferencesContext.preferences &&
@@ -348,7 +351,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     if (widgets !== null) {
       return widgets;
     }
-    if (!scUser) {
+    if (!scUser || (!followEnabled && !connectionEnabled)) {
       return [];
     }
     let _widgets = [];
