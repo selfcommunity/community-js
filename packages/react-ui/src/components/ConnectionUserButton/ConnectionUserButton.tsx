@@ -5,7 +5,7 @@ import {Box, styled} from '@mui/material';
 import FollowUserButton, {FollowUserButtonProps} from '../FollowUserButton';
 import FriendshipUserButton, {FriendshipButtonProps} from '../FriendshipUserButton';
 import {useThemeProps} from '@mui/system';
-import {HiddenPlaceholder} from '@selfcommunity/react-ui';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCConnectionUserButton';
 

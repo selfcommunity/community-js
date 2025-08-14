@@ -201,7 +201,12 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
   // EFFECTS
   useEffect(() => {
     let _t;
-    if ((contentAvailability || (!contentAvailability && scUserContext.user?.id)) && connectionEnabled && scUser && scUserContext.user !== undefined) {
+    if (
+      (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
+      connectionEnabled &&
+      scUser &&
+      scUserContext.user !== undefined
+    ) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
