@@ -115,9 +115,9 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   // MEMO
   const privateMessagingEnabled = useMemo(
     () =>
-      SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in scPreferences.features &&
-      scPreferences.features[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
-    [scPreferences.features]
+      SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in scPreferences.preferences &&
+      scPreferences.preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
+    [scPreferences.preferences]
   );
   const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
 
