@@ -226,7 +226,7 @@ export default function Activities(props: ActivitiesProps): JSX.Element {
         (feedObject && feedObject.comment_count > 0)) ? (
         <Box
           className={classes.activities}
-          {...(existFeedObjectActivities ? {} : {style: {minHeight: `${Math.min(skeletonsCount, feedObject.comment_count) * 80}px`}})}>
+          {...(existFeedObjectActivities ? {} : {style: {minHeight: `${Math.min(skeletonsCount, feedObject?.comment_count) * 80}px`}})}>
           <ActivitiesMenu
             selectedActivities={selectedActivities}
             hideRelevantActivitiesItem={!existFeedObjectActivities}

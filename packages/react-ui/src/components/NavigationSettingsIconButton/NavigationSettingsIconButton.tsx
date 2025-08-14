@@ -80,7 +80,8 @@ const PREFERENCES = [
   SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED,
   SCPreferences.ADDONS_LOYALTY_POINTS_COLLECTION,
   SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED,
-  SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN
+  SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN,
+  SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED
 ];
 
 /**
@@ -237,11 +238,16 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             </ListItemButton>
           </ListItem>
         ),
-        <ListItem className={classes.item} key="privateMessages">
-          <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}>
-            <FormattedMessage id="ui.navigationSettingsIconButton.privateMessages" defaultMessage="ui.navigationSettingsIconButton.privateMessages" />
-          </ListItemButton>
-        </ListItem>,
+        preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED] && (
+          <ListItem className={classes.item} key="privateMessages">
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}>
+              <FormattedMessage
+                id="ui.navigationSettingsIconButton.privateMessages"
+                defaultMessage="ui.navigationSettingsIconButton.privateMessages"
+              />
+            </ListItemButton>
+          </ListItem>
+        ),
         ...items.map((item: NavigationSettingsItem, index) => (
           <ListItem className={classes.item} key={`custom_item_${index}`}>
             <ListItemButton component={Link} to={item.href}>
@@ -376,13 +382,15 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             />
           </MenuItem>
         ),
-        <MenuItem
-          className={classes.item}
-          key="privateMessages"
-          component={Link}
-          to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}>
-          <FormattedMessage id="ui.navigationSettingsIconButton.privateMessages" defaultMessage="ui.navigationSettingsIconButton.privateMessages" />
-        </MenuItem>,
+        preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED] && (
+          <MenuItem
+            className={classes.item}
+            key="privateMessages"
+            component={Link}
+            to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}>
+            <FormattedMessage id="ui.navigationSettingsIconButton.privateMessages" defaultMessage="ui.navigationSettingsIconButton.privateMessages" />
+          </MenuItem>
+        ),
         ...items.map((item: NavigationSettingsItem, index) => (
           <MenuItem className={classes.item} key={`custom_item_${index}`} component={Link} to={item.href}>
             {item.label}

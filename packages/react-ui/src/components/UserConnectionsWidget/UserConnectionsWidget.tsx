@@ -166,10 +166,10 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
       scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
     [scPreferencesContext.preferences]
   );
-  const followEnabled = useMemo(
+  const connectionEnabled = useMemo(
     () =>
-      SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
-      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
+      SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value,
     [scPreferencesContext.preferences]
   );
 
@@ -201,7 +201,12 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
   // EFFECTS
   useEffect(() => {
     let _t;
-    if ((contentAvailability || (!contentAvailability && scUserContext.user?.id)) && !followEnabled && scUser && scUserContext.user !== undefined) {
+    if (
+      (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
+      connectionEnabled &&
+      scUser &&
+      scUserContext.user !== undefined
+    ) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
@@ -231,7 +236,7 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
   }, [state.results]);
 
   useEffect(() => {
-    if (!scUser || followEnabled || (!contentAvailability && !scUserContext.user)) {
+    if (!scUser || !connectionEnabled || (!contentAvailability && !scUserContext.user)) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
@@ -269,7 +274,7 @@ export default function UserConnectionsWidget(inProps: UserConnectionsWidgetProp
   };
 
   // RENDER
-  if (followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !scUser) {
+  if (!connectionEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !scUser) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {

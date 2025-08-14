@@ -77,6 +77,7 @@ export enum SCPreferenceName {
   CUSTOM_NAVBAR_ITEM_TEXT = 'custom_navbar_item_text',
   CUSTOM_NAVBAR_ITEM_URL = 'custom_navbar_item_url',
   CUSTOM_NAVBAR_ITEM_IMAGE = 'custom_navbar_item_image',
+  CONNECTION_ENABLED = 'connection_enabled',
   FOLLOW_ENABLED = 'follow_enabled',
   EXPLORE_STREAM_ENABLED = 'explore_stream_enabled',
   EXPLORE_STREAM_ORDER_BY = 'explore_stream_order_by',
@@ -154,7 +155,8 @@ export enum SCPreferenceName {
   STRIPE_CONNECTED_ACCOUNT_ID = 'stripe_connected_account_id',
   ENVIRONMENT = 'env',
   STACK_ID = 'stackid',
-  STRIPE_PUBLIC_KEY = 'stripe_public_key'
+  STRIPE_PUBLIC_KEY = 'stripe_public_key',
+  PRIVATE_MESSAGES_ENABLED = 'private_messages_enabled'
 }
 
 /**

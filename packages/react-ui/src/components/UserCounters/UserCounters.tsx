@@ -30,7 +30,7 @@ const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface UserCountersProps {
   /**
@@ -94,6 +94,9 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
+  const connectionEnabled =
+    SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value;
   const scUserContext: SCUserContextType = useSCUser();
 
   // HOOKS
@@ -136,60 +139,63 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {followEnabled ? (
-        <>
-          <Button
-            className={classes.button}
-            variant="text"
-            component={Link}
-            to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWINGS_ROUTE_NAME, scUser)}>
-            <FormattedMessage
-              id="ui.userCounters.followings"
-              defaultMessage="ui.userCounters.followings"
-              values={{
-                count: scUser?.followings_counter,
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                b: (chunks) => <strong>{chunks}</strong>
-              }}
-            />
-          </Button>
-          <Bullet />
-          <Button
-            className={classes.button}
-            variant="text"
-            component={Link}
-            to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWERS_ROUTE_NAME, scUser)}>
-            <FormattedMessage
-              id="ui.userCounters.followers"
-              defaultMessage="ui.userCounters.followers"
-              values={{
-                count: scUser?.followers_counter,
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                b: (chunks) => <strong>{chunks}</strong>
-              }}
-            />
-          </Button>
-        </>
-      ) : (
-        <Button
-          className={classes.button}
-          variant="text"
-          component={Link}
-          to={scRoutingContext.url(SCRoutes.USER_PROFILE_CONNECTIONS_ROUTE_NAME, scUser)}>
-          <FormattedMessage
-            id="ui.userCounters.connections"
-            defaultMessage="ui.userCounters.connections"
-            values={{
-              count: scUser?.connections_counter,
-              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // @ts-ignore
-              b: (chunks) => <strong>{chunks}</strong>
-            }}
-          />
-        </Button>
-      )}
+      <>
+        {(followEnabled || connectionEnabled) &&
+          (followEnabled ? (
+            <>
+              <Button
+                className={classes.button}
+                variant="text"
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWINGS_ROUTE_NAME, scUser)}>
+                <FormattedMessage
+                  id="ui.userCounters.followings"
+                  defaultMessage="ui.userCounters.followings"
+                  values={{
+                    count: scUser?.followings_counter,
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    b: (chunks) => <strong>{chunks}</strong>
+                  }}
+                />
+              </Button>
+              <Bullet />
+              <Button
+                className={classes.button}
+                variant="text"
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWERS_ROUTE_NAME, scUser)}>
+                <FormattedMessage
+                  id="ui.userCounters.followers"
+                  defaultMessage="ui.userCounters.followers"
+                  values={{
+                    count: scUser?.followers_counter,
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    b: (chunks) => <strong>{chunks}</strong>
+                  }}
+                />
+              </Button>
+            </>
+          ) : (
+            <Button
+              className={classes.button}
+              variant="text"
+              component={Link}
+              to={scRoutingContext.url(SCRoutes.USER_PROFILE_CONNECTIONS_ROUTE_NAME, scUser)}>
+              <FormattedMessage
+                id="ui.userCounters.connections"
+                defaultMessage="ui.userCounters.connections"
+                values={{
+                  count: scUser?.connections_counter,
+                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                  // @ts-ignore
+                  b: (chunks) => <strong>{chunks}</strong>
+                }}
+              />
+            </Button>
+          ))}
+      </>
       <Bullet />
       <Button
         className={classes.button}

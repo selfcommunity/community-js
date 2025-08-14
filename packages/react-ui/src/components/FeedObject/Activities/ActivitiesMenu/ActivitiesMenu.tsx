@@ -79,6 +79,7 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const followEnabled = scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
+  const connectionEnabled = scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value;
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -148,22 +149,24 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
           <ListItemButton
             selected={selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS}
             onClick={handleChangeActivitiesType(SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS)}>
-            <ListItemText
-              primary={<b>{followEnabled ? intl.formatMessage(messages.followedComments) : intl.formatMessage(messages.connectionsComments)}</b>}
-              secondary={
-                followEnabled ? (
-                  <FormattedMessage
-                    id={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
-                    defaultMessage={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
-                  />
-                ) : (
-                  <FormattedMessage
-                    id={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
-                    defaultMessage={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
-                  />
-                )
-              }
-            />
+            {(followEnabled || connectionEnabled) && (
+              <ListItemText
+                primary={<b>{followEnabled ? intl.formatMessage(messages.followedComments) : intl.formatMessage(messages.connectionsComments)}</b>}
+                secondary={
+                  followEnabled ? (
+                    <FormattedMessage
+                      id={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
+                      defaultMessage={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
+                    />
+                  ) : (
+                    <FormattedMessage
+                      id={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
+                      defaultMessage={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
+                    />
+                  )
+                }
+              />
+            )}
           </ListItemButton>
         )}
       </Box>

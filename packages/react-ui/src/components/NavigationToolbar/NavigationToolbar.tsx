@@ -116,7 +116,8 @@ const PREFERENCES = [
   SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_ENABLED,
   SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL,
   SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_IMAGE,
-  SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_TEXT
+  SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_TEXT,
+  SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED
 ];
 
 /**
@@ -198,7 +199,13 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
-  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
+  const privateMessagingEnabled = useMemo(
+    () =>
+      scPreferences.preferences &&
+      SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in scPreferences.preferences &&
+      scPreferences.preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
+    [scPreferences.preferences]
+  );
   const groupsEnabled = useMemo(
     () =>
       scPreferences.preferences &&
