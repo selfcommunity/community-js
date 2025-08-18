@@ -156,7 +156,8 @@ export enum SCPreferenceName {
   ENVIRONMENT = 'env',
   STACK_ID = 'stackid',
   STRIPE_PUBLIC_KEY = 'stripe_public_key',
-  PRIVATE_MESSAGES_ENABLED = 'private_messages_enabled'
+  PRIVATE_MESSAGES_ENABLED = 'private_messages_enabled',
+  CONTEXT_MENU_ENABLED = 'context_menu_enabled'
 }
 
 /**

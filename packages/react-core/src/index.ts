@@ -75,6 +75,11 @@ import * as SCNotification from './constants/Notification';
 import * as SCCache from './constants/Cache';
 
 /**
+ * ContextMenu component
+ */
+import SCContextMenu from './components/context';
+
+/**
  * Custom Hooks
  */
 import useSCFetchUser from './hooks/useSCFetchUser';
@@ -130,7 +135,7 @@ import {
   useEffectOnce,
   useNoInitialEffect,
   usePageVisibility,
-	useResizeObserver
+  useResizeObserver,
 } from './utils/hooks';
 import {getEventStatus} from './utils/event';
 /**
@@ -203,6 +208,7 @@ export {
   Link,
   SCRoutes,
   SCCache,
+  SCContextMenu,
   UserUtils,
   getEventStatus,
   Locale,
@@ -230,7 +236,7 @@ export {
   useEffectOnce,
   useNoInitialEffect,
   usePageVisibility,
-	useResizeObserver,
+  useResizeObserver,
   useSCFetchPrivateMessageSnippets,
   useSCFetchBroadcastMessages,
   useSCFetchUserBlockedBy,
