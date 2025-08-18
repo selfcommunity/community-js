@@ -75,11 +75,6 @@ import * as SCNotification from './constants/Notification';
 import * as SCCache from './constants/Cache';
 
 /**
- * ContextMenu component
- */
-import SCContextMenu from './components/context';
-
-/**
  * Custom Hooks
  */
 import useSCFetchUser from './hooks/useSCFetchUser';
@@ -208,7 +203,6 @@ export {
   Link,
   SCRoutes,
   SCCache,
-  SCContextMenu,
   UserUtils,
   getEventStatus,
   Locale,
