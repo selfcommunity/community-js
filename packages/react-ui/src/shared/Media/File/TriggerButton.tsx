@@ -104,8 +104,23 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
   const handleClose = useCallback(() => {
     setAnchorEl(null);
   }, []);
-  const handleFilterByMime = useCallback((file) => {
-    return file.type.startsWith('image/') || file.type === 'application/pdf';
+  const handleFilterByMime = useCallback((file: File) => {
+    if (file.type.startsWith('image/') || file.type === 'application/pdf') {
+      return true;
+    }
+
+    const _snackBar = enqueueSnackbar(<FormattedMessage id="ui.composer.media.file.error" defaultMessage="ui.composer.media.file.error" />, {
+      variant: 'error',
+      anchorOrigin: {horizontal: 'center', vertical: 'top'},
+      autoHideDuration: 5000,
+      SnackbarProps: {
+        onClick: () => {
+          closeSnackbar(_snackBar);
+        }
+      }
+    });
+
+    return false;
   }, []);
   const handleSuccess = useCallback(
     (media: SCMediaType) => {

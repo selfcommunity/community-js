@@ -227,6 +227,7 @@
   "ui.composer.media.file.photo": "Scatta una foto",
   "ui.composer.media.file.gallery": "Apri la galleria immagini",
   "ui.composer.media.file.document": "Inserisci documenti",
+  "ui.composer.media.file.error": "Caricare un file immagine o PDF",
   "ui.composer.media.link.add.error.urlError.invalid": "Inserisci un URL valido.",
   "ui.composer.media.link.add.error.validationError": "Inserisci un URL valido.",
   "ui.composer.media.link.add.help": "Inserisci un URL valido (youtube oppure di una pagina web).",
