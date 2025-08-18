@@ -1,8 +1,8 @@
 import DisplayComponent from './DisplayComponent';
 import TriggerButton from './TriggerButton';
-import { SCMediaObjectType } from '../../../types/media';
+import {SCMediaObjectType} from '../../../types/media';
 import PreviewComponent from './PreviewComponent';
-import filter from './filter';
+import {filteredImages} from './filter';
 
 const File: SCMediaObjectType = {
   name: 'file',
@@ -10,7 +10,7 @@ const File: SCMediaObjectType = {
   triggerButton: TriggerButton,
   layerComponent: null,
   previewComponent: PreviewComponent,
-  filter
+  filter: filteredImages
 };
 
 export default File;
