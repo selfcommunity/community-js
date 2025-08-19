@@ -4,10 +4,13 @@ import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
   SCFollowedCategoriesManagerType,
+  SCPreferences,
+  SCPreferencesContextType,
   SCUserContextType,
   useSCContext,
   useSCFetchCategory,
   useSCPaymentsEnabled,
+  useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
 import {SCCategoryAutoFollowType, SCCategoryType, SCContentType} from '@selfcommunity/types';
@@ -104,6 +107,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
 
   // PAYMENTS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
@@ -123,6 +127,12 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
   const isActionFollowDisabled = useMemo(
     () => disabled || (scCategory && scUserContext.user && isPaymentsEnabled && scCategory.paywalls?.length > 0 && !scCategory.payment_order),
     [disabled, scCategory, scUserContext.user, isPaymentsEnabled]
+  );
+
+  const categoryFollowEnabled = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED in preferences && preferences[SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED].value,
+    [preferences]
   );
 
   useEffect(() => {
@@ -154,7 +164,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     }
   };
 
-  if (!scCategory || (scCategory && followed && scCategory.auto_follow === SCCategoryAutoFollowType.FORCED)) {
+  if (!scCategory || !categoryFollowEnabled || (scCategory && followed && scCategory.auto_follow === SCCategoryAutoFollowType.FORCED)) {
     return null;
   }
 
@@ -174,7 +184,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     scUserContext.user &&
     isPaymentsEnabled &&
     scCategory.paywalls?.length > 0 &&
-		!scCategory.payment_order &&
+    !scCategory.payment_order &&
     (!followed || scCategoriesManager.isLoading(scCategory))
   ) {
     return <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} disabled={disableBuyContentIfPaidContent} />;

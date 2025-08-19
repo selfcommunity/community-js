@@ -157,7 +157,11 @@ export enum SCPreferenceName {
   STACK_ID = 'stackid',
   STRIPE_PUBLIC_KEY = 'stripe_public_key',
   PRIVATE_MESSAGES_ENABLED = 'private_messages_enabled',
-  CONTEXT_MENU_ENABLED = 'context_menu_enabled'
+  CONTEXT_MENU_ENABLED = 'context_menu_enabled',
+  CATEGORY_FOLLOW_ENABLED = 'category_follow_enabled',
+  SHARE_POST_ENABLED = 'share_post_enabled',
+  COMMENTS_ENABLED = 'comments_enabled',
+  SIDEBAR_SHOW_ALL_CATEGORIES_ENABLED = 'sidebar_show_all_categories_enabled'
 }
 
 /**

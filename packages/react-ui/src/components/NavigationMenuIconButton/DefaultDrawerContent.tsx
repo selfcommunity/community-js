@@ -11,7 +11,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import React, {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import Category, {CategoryProps} from '../Category';
 import {FormattedMessage} from 'react-intl';
 import {sortByAttr} from '@selfcommunity/utils';
@@ -93,6 +93,13 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
   const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
   const contentAvailable = preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
 
+  const showAllCategories = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_SIDEBAR_SHOW_ALL_CATEGORIES_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SIDEBAR_SHOW_ALL_CATEGORIES_ENABLED].value,
+    [preferences]
+  );
+
   // HANDLERS
   const handleMouseEnter = (index: number) => {
     setIsHovered((prevState) => {
@@ -108,8 +115,17 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
 
   // Order categories
   useEffect(() => {
-    setCategoriesOrdered(sortByAttr(categories, 'order'));
-  }, [categories]);
+    if (scUserContext.user && showAllCategories) {
+      setCategoriesOrdered(sortByAttr(categories, 'order'));
+    } else {
+      setCategoriesOrdered(
+        sortByAttr(
+          categories.filter((cat) => cat.followed),
+          'order'
+        )
+      );
+    }
+  }, [scUserContext.user, showAllCategories, categories]);
 
   const getMouseEvents = (mouseEnter: () => void, mouseLeave: () => void) => ({
     onMouseEnter: mouseEnter,
