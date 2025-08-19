@@ -1,7 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-nocheck
-
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Waypoint} from 'react-waypoint';
 import ReactPlayer from 'react-player';
 import {styled} from '@mui/material';
@@ -11,7 +8,7 @@ const PREFIX = 'SCAutoPlayer';
 const Root = styled(Waypoint, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 export interface AutoPlayerProps {
@@ -63,7 +60,7 @@ export interface AutoPlayerProps {
 export default function AutoPlayer(props: AutoPlayerProps) {
   // PROPS
   const {
-    enableAutoplay = true,
+    enableAutoplay = false,
     loop = false,
     muted = true,
     playsinline = true,
