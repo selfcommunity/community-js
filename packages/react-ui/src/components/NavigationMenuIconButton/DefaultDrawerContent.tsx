@@ -115,7 +115,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
 
   // Order categories
   useEffect(() => {
-    if (scUserContext.user && showAllCategories) {
+    if (!scUserContext.user || (scUserContext.user && showAllCategories)) {
       setCategoriesOrdered(sortByAttr(categories, 'order'));
     } else {
       setCategoriesOrdered(
