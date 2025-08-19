@@ -46,12 +46,14 @@ import {
   Link,
   SCCache,
   SCContextType,
+  SCPreferences,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
   UserUtils,
   useSCContext,
   useSCFetchFeedObject,
+  useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -62,6 +64,7 @@ import Composer from '../Composer';
 import FeedObjectMediaPreview, {FeedObjectMediaPreviewProps} from '../FeedObjectMediaPreview';
 import {PREFIX} from './constants';
 import {MEDIA_EMBED_SC_SHARED_EVENT} from '../../constants/Media';
+import Vote from './Actions/Vote';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -102,7 +105,8 @@ const classes = {
   replyContent: `${PREFIX}-reply-content`,
   activitiesSection: `${PREFIX}-activities-section`,
   activitiesContent: `${PREFIX}-activities-content`,
-  followButton: `${PREFIX}-follow-button`
+  followButton: `${PREFIX}-follow-button`,
+  vote: `${PREFIX}-vote`
 };
 
 const Root = styled(Widget, {
@@ -384,6 +388,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
+  const {preferences} = useSCPreferences();
+  const allShareEnabled = SCPreferences.ADDONS_SHARE_POST_ENABLED in preferences && preferences[SCPreferences.ADDONS_SHARE_POST_ENABLED].value;
+  const commentsEnabled =
+    SCPreferences.CONFIGURATIONS_COMMENTS_ENABLED in preferences && preferences[SCPreferences.CONFIGURATIONS_COMMENTS_ENABLED].value;
 
   // OBJECTS
   const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
@@ -512,7 +520,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   /**
    * Handle flag obj
    */
-  const handleFlag = useCallback((obj: SCCommentType | SCFeedObjectType, type: string, flagged: boolean) => {
+  const handleFlag = useCallback((_obj: SCCommentType | SCFeedObjectType, _type: string, flagged: boolean) => {
     enqueueSnackbar(
       flagged ? (
         <FormattedMessage id="ui.feedObject.flagSent" defaultMessage="ui.feedObject.flagSent" />
@@ -954,13 +962,24 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               </Box>
               <Box className={classes.infoSection}>
                 <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                  {!hideParticipantsPreview && (
-                    <ContributorsFeedObject
+                  {!commentsEnabled && !allShareEnabled ? (
+                    <Vote
+                      feedObjectId={feedObjectId || feedObject?.id}
+                      feedObjectType={feedObjectType}
                       feedObject={obj}
-                      feedObjectType={obj.type}
-                      {...ContributorsFeedObjectProps}
-                      cacheStrategy={cacheStrategy}
+                      inlineAction={true}
+                      onVoteAction={handleVoteSuccess}
+                      className={classes.vote}
                     />
+                  ) : (
+                    !hideParticipantsPreview && (
+                      <ContributorsFeedObject
+                        feedObject={obj}
+                        feedObjectType={obj.type}
+                        {...ContributorsFeedObjectProps}
+                        cacheStrategy={cacheStrategy}
+                      />
+                    )
                   )}
                   {!_hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
                 </Stack>
@@ -971,7 +990,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 feedObjectId={feedObjectId}
                 feedObjectType={feedObjectType}
                 feedObject={obj}
-                hideCommentAction={template === SCFeedObjectTemplateType.DETAIL || (hasEvent && !obj?.medias[0].embed?.metadata?.active)}
+                hideVoteAction={!allShareEnabled && !commentsEnabled}
+                hideCommentAction={
+                  !commentsEnabled || template === SCFeedObjectTemplateType.DETAIL || (hasEvent && !obj?.medias[0].embed?.metadata?.active)
+                }
+                hideShareAction={!allShareEnabled}
                 handleExpandActivities={template === SCFeedObjectTemplateType.PREVIEW ? handleExpandActivities : null}
                 VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
