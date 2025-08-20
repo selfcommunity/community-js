@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {Waypoint} from 'react-waypoint';
 import ReactPlayer from 'react-player';
 import {styled} from '@mui/material';
+import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCAutoPlayer';
 
@@ -12,11 +13,6 @@ const Root = styled(Waypoint, {
 })(() => ({}));
 
 export interface AutoPlayerProps {
-  /**
-   * Handles player autoplay
-   * @default true
-   */
-  enableAutoplay?: boolean;
   /**
    * Handles player loop
    * @default false
@@ -59,21 +55,16 @@ export interface AutoPlayerProps {
 
 export default function AutoPlayer(props: AutoPlayerProps) {
   // PROPS
-  const {
-    enableAutoplay = false,
-    loop = false,
-    muted = true,
-    playsinline = true,
-    controls = true,
-    stopOnUnmount = true,
-    pip = true,
-    onVideoWatch,
-    ...rest
-  } = props;
+  const {loop = false, muted = true, playsinline = true, controls = true, stopOnUnmount = true, pip = true, onVideoWatch, ...rest} = props;
 
   // STATE
   const [shouldPlay, setShouldPlay] = useState<boolean>(false);
   const [played, setPlayed] = useState(0);
+
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
+
+  const enableAutoplay =
+    SCPreferences.CONFIGURATIONS_VIDEO_AUTOPLAY_ENABLED in preferences && preferences[SCPreferences.CONFIGURATIONS_VIDEO_AUTOPLAY_ENABLED].value;
 
   useEffect(() => {
     if (played >= 10 && played <= 11) {
