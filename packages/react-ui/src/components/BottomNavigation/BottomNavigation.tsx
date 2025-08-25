@@ -147,7 +147,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
             //     icon={<Icon>explore</Icon>}
             //   />
             // ) : null,
-            (!postOnlyStaffEnabled || (UserUtils.isStaff(scUserContext.user) && postOnlyStaffEnabled)) &&
+            (!postOnlyStaffEnabled || UserUtils.isStaff(scUserContext.user) || UserUtils.isPublisher(scUserContext.user)) &&
             ((groupsEnabled && !eventsEnabled) || (!groupsEnabled && eventsEnabled)) &&
             !exploreStreamEnabled ? (
               <BottomNavigationAction

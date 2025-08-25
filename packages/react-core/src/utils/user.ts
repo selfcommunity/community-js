@@ -82,7 +82,7 @@ export function isPublisher(user: SCUserType) {
  * @returns boolean
  */
 export function isStaff(user: SCUserType) {
-  return isAdmin(user) || isModerator(user) || isEditor(user) || isPublisher(user);
+  return isAdmin(user) || isModerator(user) || isEditor(user);
 }
 
 /**

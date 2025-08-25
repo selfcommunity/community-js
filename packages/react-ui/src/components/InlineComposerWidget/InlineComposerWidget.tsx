@@ -158,7 +158,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
     setOpen(false);
   };
 
-  if (!UserUtils.isStaff(scUserContext.user) && onlyStaffEnabled) {
+  if (!UserUtils.isStaff(scUserContext.user) && !UserUtils.isPublisher(scUserContext.user) && onlyStaffEnabled) {
     return <HiddenPlaceholder />;
   }
 
