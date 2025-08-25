@@ -684,7 +684,17 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const handleChangeAttributes = useCallback((content: Omit<ComposerContentType, 'title' | 'html'>): void => {
     dispatch({
       type: 'multiple',
-      value: {...content}
+      value: {
+        ...content,
+        addressingError:
+          addressingRequiredEnabled && !content.addressing ? (
+            <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
+          ) : null,
+        categoriesError:
+          categoryRequiredEnabled && content.categories.length === 0 ? (
+            <FormattedMessage id="ui.composer.categories.error.missing" defaultMessage="ui.composer.categories.error.missing" />
+          ) : null
+      }
     });
   }, []);
 
@@ -892,7 +902,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <ContentPoll
             key={key}
             onChange={handleChangePoll}
-            value={{html, event, group, addressing, medias, poll, location}}
+            value={{html, event, group, addressing, medias, poll, location, scheduled_at}}
             error={{pollError, categoriesError, addressingError}}
             disabled={isSubmitting}
           />
@@ -982,7 +992,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Attributes
-            value={{categories, event, group, addressing, location, scheduled_at}}
+            value={{categories, event, group, addressing, location}}
             className={classes.attributes}
             onChange={handleChangeAttributes}
             onClick={handleClickAttributes}
@@ -1037,7 +1047,10 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             </IconButton>
           )}
           {preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED].value && (
-            <IconButton disabled={isSubmitting} onClick={handleAddScheduledLayer} color={scheduled_at !== null ? 'primary' : 'default'}>
+            <IconButton
+              disabled={isSubmitting || Boolean(feedObject?.scheduled_at)}
+              onClick={handleAddScheduledLayer}
+              color={scheduled_at !== null ? 'primary' : 'default'}>
               <Icon>access_time</Icon>
             </IconButton>
           )}
