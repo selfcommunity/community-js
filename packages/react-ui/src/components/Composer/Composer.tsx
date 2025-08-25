@@ -492,7 +492,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             ? {titleError: <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />}
             : null,
         addressingError:
-          addressingRequiredEnabled && !content.addressing ? (
+          addressingRequiredEnabled && (!content.addressing || content.addressing.length === 0) ? (
             <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
           ) : null
       }
@@ -509,7 +509,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />
           ) : null,
         addressingError:
-          addressingRequiredEnabled && !content.addressing ? (
+          addressingRequiredEnabled && (!content.addressing || content.addressing.length === 0) ? (
             <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
           ) : null,
         categoriesError:
@@ -526,7 +526,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       value: {
         ...content,
         addressingError:
-          addressingRequiredEnabled && !content.addressing ? (
+          addressingRequiredEnabled && (!content.addressing || content.addressing.length === 0) ? (
             <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
           ) : null,
         categoriesError:
@@ -687,7 +687,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       value: {
         ...content,
         addressingError:
-          addressingRequiredEnabled && !content.addressing ? (
+          addressingRequiredEnabled && (!content.addressing || content.addressing.length === 0) ? (
             <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
           ) : null,
         categoriesError:
