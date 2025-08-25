@@ -178,25 +178,27 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
               </Button>
             </>
           ) : (
-            <Button
-              className={classes.button}
-              variant="text"
-              component={Link}
-              to={scRoutingContext.url(SCRoutes.USER_PROFILE_CONNECTIONS_ROUTE_NAME, scUser)}>
-              <FormattedMessage
-                id="ui.userCounters.connections"
-                defaultMessage="ui.userCounters.connections"
-                values={{
-                  count: scUser?.connections_counter,
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  b: (chunks) => <strong>{chunks}</strong>
-                }}
-              />
-            </Button>
+            <>
+              <Button
+                className={classes.button}
+                variant="text"
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.USER_PROFILE_CONNECTIONS_ROUTE_NAME, scUser)}>
+                <FormattedMessage
+                  id="ui.userCounters.connections"
+                  defaultMessage="ui.userCounters.connections"
+                  values={{
+                    count: scUser?.connections_counter,
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+                    // @ts-ignore
+                    b: (chunks) => <strong>{chunks}</strong>
+                  }}
+                />
+              </Button>
+              <Bullet />
+            </>
           ))}
       </>
-      <Bullet />
       <Button
         className={classes.button}
         variant="text"
