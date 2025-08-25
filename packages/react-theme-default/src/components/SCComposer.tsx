@@ -249,6 +249,22 @@ const Component = {
       }
     }),
     layerLocationRoot: () => ({}),
+    layerScheduledRoot: ({theme}: any) => ({
+      '& .SCComposer-layer-scheduled-picker': {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        '& .MuiTypography-h4': {
+          color: theme.palette.primary.main
+        }
+      },
+      '& .SCComposer-layer-scheduled-message': {
+        textAlign: 'center',
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(1)
+      }
+    }),
     skeletonRoot: () => ({}),
     typeSwitchButtonGroupRoot: ({theme}: any) => ({
       '& .MuiToggleButton-root': {

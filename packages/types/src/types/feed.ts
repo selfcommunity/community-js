@@ -150,6 +150,11 @@ export interface SCFeedObjectType {
   added_at: Date;
 
   /**
+   * Scheduled at
+   */
+  scheduled_at?: Date;
+
+  /**
    * Slug
    */
   slug: string;
@@ -243,6 +248,10 @@ export interface SCFeedObjectType {
    * Suspended notification
    */
   suspended?: boolean;
+  /**
+   * True if scheduled_posts ddp is enabled and if the feed object is not published yet
+   */
+  draft?: boolean;
 }
 
 /**
