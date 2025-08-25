@@ -65,7 +65,7 @@ export interface ContentPostProps extends Omit<BoxProps, 'value' | 'onChange'> {
 export default (props: ContentPostProps): JSX.Element => {
   // PROPS
   const {className = null, value = {...DEFAULT_POST}, error = {}, disabled = false, onChange, EditorProps = {}} = props;
-  const {error: generalError = null} = {...error};
+  const {categoriesError = null, addressingError = null, error: generalError = null} = {...error};
 
   // REF
   const editorRef = useRef<any>();
@@ -87,9 +87,12 @@ export default (props: ContentPostProps): JSX.Element => {
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {generalError && (
+      {(generalError || categoriesError || addressingError) && (
         <Typography className={classes.generalError}>
-          <FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} />
+          {generalError && <FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} />}
+          {categoriesError && categoriesError}
+          <br />
+          {addressingError && addressingError}
         </Typography>
       )}
       <Editor

@@ -138,6 +138,9 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
     return _preferences;
   }, [scPreferences.preferences]);
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
+  const connectionEnabled =
+    SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferences.preferences &&
+    scPreferences.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value;
 
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -207,7 +210,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             </ListItemButton>
           </ListItem>
         ),
-        !preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED] && (
+        connectionEnabled && (
           <ListItem className={classes.item} key="connections">
             <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_CONNECTIONS_ROUTE_NAME, scUserContext.user)}>
               <FormattedMessage id="ui.navigationSettingsIconButton.connections" defaultMessage="ui.navigationSettingsIconButton.connections" />
@@ -347,7 +350,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             <FormattedMessage id="ui.navigationSettingsIconButton.followers" defaultMessage="ui.navigationSettingsIconButton.followers" />
           </MenuItem>
         ),
-        !preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED] && (
+        connectionEnabled && (
           <MenuItem
             className={classes.item}
             key="connections"
