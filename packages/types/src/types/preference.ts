@@ -161,7 +161,8 @@ export enum SCPreferenceName {
   CATEGORY_FOLLOW_ENABLED = 'category_follow_enabled',
   SHARE_POST_ENABLED = 'share_post_enabled',
   COMMENTS_ENABLED = 'comments_enabled',
-  SIDEBAR_SHOW_ALL_CATEGORIES_ENABLED = 'sidebar_show_all_categories_enabled'
+  SIDEBAR_SHOW_ALL_CATEGORIES_ENABLED = 'sidebar_show_all_categories_enabled',
+  VIDEO_AUTOPLAY_ENABLED = 'video_autoplay_enabled'
 }
 
 /**
