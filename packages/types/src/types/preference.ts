@@ -163,7 +163,9 @@ export enum SCPreferenceName {
   COMMENTS_ENABLED = 'comments_enabled',
   SIDEBAR_SHOW_ALL_CATEGORIES_ENABLED = 'sidebar_show_all_categories_enabled',
   VIDEO_AUTOPLAY_ENABLED = 'video_autoplay_enabled',
-  SCHEDULED_POSTS_ENABLED = 'scheduled_posts_enabled'
+  SCHEDULED_POSTS_ENABLED = 'scheduled_posts_enabled',
+  POST_CATEGORY_REQUIRED_ENABLED = 'post_category_required_enabled',
+  POST_ADDRESSING_REQUIRED_ENABLED = 'post_addressing_required_enabled'
 }
 
 /**

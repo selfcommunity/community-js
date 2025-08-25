@@ -170,9 +170,9 @@ const COMPOSER_INITIAL_STATE = {
   html: '',
   htmlError: null,
   categories: [],
+  categoriesError: null,
   group: null,
   event: null,
-  categoriesError: null,
   groupsError: null,
   addressing: null,
   addressingError: null,
@@ -277,9 +277,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     titleError,
     html,
     categories,
+    categoriesError,
     event,
     group,
     addressing,
+    addressingError,
     audience,
     medias,
     poll,
@@ -295,6 +297,20 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       preferences &&
       SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED].value,
+    [preferences]
+  );
+  const addressingRequiredEnabled = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_POST_ADDRESSING_REQUIRED_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_POST_ADDRESSING_REQUIRED_ENABLED].value,
+    [preferences]
+  );
+  const categoryRequiredEnabled = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_POST_CATEGORY_REQUIRED_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_POST_CATEGORY_REQUIRED_ENABLED].value,
     [preferences]
   );
 
@@ -474,7 +490,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         pollError:
           content.poll.title.length > COMPOSER_TITLE_MAX_LENGTH
             ? {titleError: <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />}
-            : null
+            : null,
+        addressingError:
+          addressingRequiredEnabled && !content.addressing ? (
+            <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
+          ) : null
       }
     });
   }, []);
@@ -487,6 +507,14 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         titleError:
           content.title.length > COMPOSER_TITLE_MAX_LENGTH ? (
             <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />
+          ) : null,
+        addressingError:
+          addressingRequiredEnabled && !content.addressing ? (
+            <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
+          ) : null,
+        categoriesError:
+          categoryRequiredEnabled && content.categories.length === 0 ? (
+            <FormattedMessage id="ui.composer.categories.error.missing" defaultMessage="ui.composer.categories.error.missing" />
           ) : null
       }
     });
@@ -496,13 +524,30 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     dispatch({
       type: 'multiple',
       value: {
-        ...content
+        ...content,
+        addressingError:
+          addressingRequiredEnabled && !content.addressing ? (
+            <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
+          ) : null,
+        categoriesError:
+          categoryRequiredEnabled && content.categories.length === 0 ? (
+            <FormattedMessage id="ui.composer.categories.error.missing" defaultMessage="ui.composer.categories.error.missing" />
+          ) : null
       }
     });
   }, []);
 
   const handleChangeCategories = useCallback((value: SCCategoryType[]) => {
-    dispatch({type: 'categories', value});
+    dispatch({
+      type: 'multiple',
+      value: {
+        categories: value,
+        categoriesError:
+          categoryRequiredEnabled && (!value || value.length === 0) ? (
+            <FormattedMessage id="ui.composer.categories.error.missing" defaultMessage="ui.composer.categories.error.missing" />
+          ) : null
+      }
+    });
     setLayer(null);
   }, []);
 
@@ -527,7 +572,16 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       } else if (event || (value && Object.prototype.hasOwnProperty.call(value, 'recurring'))) {
         dispatch({type: 'event', value});
       } else {
-        dispatch({type: 'addressing', value});
+        dispatch({
+          type: 'multiple',
+          value: {
+            addressing: value,
+            addressingError:
+              addressingRequiredEnabled && !value ? (
+                <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
+              ) : null
+          }
+        });
       }
       setLayer(null);
     },
@@ -839,7 +893,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             key={key}
             onChange={handleChangePoll}
             value={{html, event, group, addressing, medias, poll, location}}
-            error={pollError}
+            error={{pollError, categoriesError, addressingError}}
             disabled={isSubmitting}
           />
         );
@@ -848,7 +902,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <ContentDiscussion
             key={key}
             value={{title, html, categories, event, group, addressing, medias, poll, location, scheduled_at}}
-            error={{titleError, error}}
+            error={{titleError, categoriesError, addressingError, error}}
             onChange={handleChangeDiscussion}
             disabled={isSubmitting}
             isContentSwitchButtonVisible={!canSubmit && !editMode}
@@ -864,7 +918,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <ContentPost
             key={key}
             value={{html, categories, event, group, addressing, medias, poll, location, scheduled_at}}
-            error={{error}}
+            error={{error, categoriesError, addressingError}}
             onChange={handleChangePost}
             disabled={isSubmitting}
             EditorProps={{

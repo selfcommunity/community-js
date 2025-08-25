@@ -107,7 +107,7 @@ export default (props: ContentDiscussionProps): JSX.Element => {
     onChange,
     EditorProps = {}
   } = props;
-  const {titleError = null, error: generalError = null} = {...error};
+  const {titleError = null, categoriesError = null, addressingError = null, error: generalError = null} = {...error};
 
   const titleRef = useRef(null);
   const [editorMaxHeight, setEditorMaxHeight] = useState<number | string>(
@@ -194,8 +194,8 @@ export default (props: ContentDiscussionProps): JSX.Element => {
         InputProps={{
           endAdornment: <Typography variant="body2">{COMPOSER_TITLE_MAX_LENGTH - value.title.length}</Typography>
         }}
-        error={Boolean(titleError)}
-        helperText={titleError}
+        error={Boolean(titleError) || Boolean(categoriesError) || Boolean(addressingError)}
+        helperText={titleError || categoriesError || addressingError}
         disabled={disabled}
       />
       <Box sx={{[`& .${SCEDITOR_PREFIX}-content`]: {maxHeight: `${editorMaxHeight} !important`}}}>
