@@ -159,6 +159,18 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/$(type)/$(id)/flag/'),
     method: 'POST'
   },
+  GetScheduledFeedObjects: {
+    url: urlReplacer('/api/v2/$(type)/scheduled/'),
+    method: 'GET'
+  },
+  PublishFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/publish/'),
+    method: 'POST'
+  },
+  GetDraftedFeedObjects: {
+    url: urlReplacer('/api/v2/$(type)/drafted/'),
+    method: 'GET'
+  },
   /**
    * Comments
    */

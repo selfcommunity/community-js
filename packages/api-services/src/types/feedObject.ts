@@ -44,6 +44,10 @@ export interface FeedObjCreateParams {
    * The list of tag ids.
    */
   addressing?: number[];
+  /**
+   * If the feed obj is not published yet
+   */
+  draft?: boolean;
 }
 
 /**
@@ -54,4 +58,18 @@ export interface FeedObjectPollVotesSearch extends BaseGetParams {
    * The choice id of the poll. If is specified the endpoint retrieves the votes of only that choice
    */
   choice?: number;
+}
+
+/**
+ * ScheduledFeedObjParams interface
+ */
+export interface ScheduledFeedObjParams {
+  /**
+   * Includes posts that were scheduled and already published
+   */
+  include_published?: boolean;
+  /**
+   * Show only posts that were scheduled and already published
+   */
+  only_published?: boolean;
 }

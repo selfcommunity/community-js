@@ -16,7 +16,8 @@ import {
   InlineComposerWidget,
   RelatedEventsWidget,
   SCFeedObjectTemplateType,
-  SCFeedWidgetType
+  SCFeedWidgetType,
+  shouldAddFeedData
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {
@@ -209,7 +210,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
         seen_by_id: [],
         has_boost: false
       };
-      !feedObject.scheduled_at && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+      shouldAddFeedData(feedObject) && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
     }
   };
 
@@ -246,7 +247,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
       </Box>
     );
   }
-	console.log(status);
+
   return (
     <Root
       className={classNames(classes.root, className)}

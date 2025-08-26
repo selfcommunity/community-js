@@ -14,7 +14,8 @@ import {
   HiddenPurchasableContent,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
-  SCFeedWidgetType
+  SCFeedWidgetType,
+  shouldAddFeedData
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {
@@ -205,7 +206,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
       seen_by_id: [],
       has_boost: false
     };
-    !feedObject.scheduled_at && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+    shouldAddFeedData(feedObject) && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   // WIDGETS

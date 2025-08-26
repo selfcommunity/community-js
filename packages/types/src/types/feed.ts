@@ -145,6 +145,11 @@ export interface SCFeedObjectType {
   last_activity_at: Date;
 
   /**
+   * Last edited at
+   */
+  last_edited_at: Date;
+
+  /**
    * Added at
    */
   added_at: Date;

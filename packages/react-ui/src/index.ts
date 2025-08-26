@@ -291,7 +291,7 @@ import InfiniteScroll from './shared/InfiniteScroll';
 import ScrollContainer from './shared/ScrollContainer';
 import MetadataField, {MetadataFieldProps} from './shared/MetadataField';
 import * as ContributionUtils from './utils/contribution';
-import {getUnseenNotification, getUnseenNotificationCounter} from './utils/feed';
+import {getUnseenNotification, getUnseenNotificationCounter, shouldAddFeedData} from './utils/feed';
 import {getRelativeTime} from './utils/formatRelativeTime';
 import {bytesToSize} from './utils/sizeCoverter';
 import {generateRoomId, randomString, decodePassphrase, encodePassphrase} from './utils/liveStream';
@@ -521,6 +521,7 @@ export {
   getRelativeTime,
   getUnseenNotification,
   getUnseenNotificationCounter,
+  shouldAddFeedData,
   getUrlLesson,
   Group,
   GroupActionsMenu,

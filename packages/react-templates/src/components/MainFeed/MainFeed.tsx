@@ -15,7 +15,8 @@ import {
   PlatformWidget,
   SCFeedWidgetType,
   FeedRef,
-  OnBoardingWidget
+  OnBoardingWidget,
+  shouldAddFeedData
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
@@ -167,7 +168,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
       seen_by_id: [],
       has_boost: false
     };
-    !feedObject.scheduled_at && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+    shouldAddFeedData(feedObject) && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   const handleAddGenerationContent = (feedObjects) => {
