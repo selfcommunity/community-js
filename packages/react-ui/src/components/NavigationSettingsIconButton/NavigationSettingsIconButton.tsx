@@ -382,6 +382,13 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
           </MenuItem>
         ),
         preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED] && (
+          <ListItem className={classes.item} key="scheduledPosts">
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_SCHEDULED_POSTS_ROUTE_NAME, scUserContext.user)}>
+              <FormattedMessage id="ui.navigationSettingsIconButton.postsScheduled" defaultMessage="ui.navigationSettingsIconButton.postsScheduled" />
+            </ListItemButton>
+          </ListItem>
+        ),
+        preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED] && (
           <MenuItem
             className={classes.item}
             key="followedPosts"
@@ -389,6 +396,16 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME, scUserContext.user)}>
             <FormattedMessage id="ui.navigationSettingsIconButton.postsFollowed" defaultMessage="ui.navigationSettingsIconButton.postsFollowed" />
           </MenuItem>
+        ),
+        preferences[SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED] && (
+          <ListItem className={classes.item} key="scheduledDiscussions">
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_SCHEDULED_DISCUSSIONS_ROUTE_NAME, scUserContext.user)}>
+              <FormattedMessage
+                id="ui.navigationSettingsIconButton.discussionsScheduled"
+                defaultMessage="ui.navigationSettingsIconButton.discussionsScheduled"
+              />
+            </ListItemButton>
+          </ListItem>
         ),
         preferences[SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED] && (
           <MenuItem
