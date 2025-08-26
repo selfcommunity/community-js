@@ -312,7 +312,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         _extra.push(FLAG_CONTRIBUTION_SECTION);
       }
       // Enable when backend is ready
-      if (UserUtils.isStaff(scUserContext.user)) {
+      if (UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)) {
         // admin or moderator
         _extra.push(HIDE_CONTRIBUTION_SECTION);
         _extra.push(DELETE_CONTRIBUTION_SECTION);
