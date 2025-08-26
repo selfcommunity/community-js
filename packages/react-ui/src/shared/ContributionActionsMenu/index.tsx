@@ -1083,14 +1083,30 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    * Can authenticated user modify the contribution
    */
   function canModifyContribution(): boolean {
-    return scUserContext.user && scUserContext.user.id === contributionObj.author.id && !contributionObj.deleted;
+    const user = scUserContext.user;
+    if (!user || contributionObj.deleted) return false;
+
+    return user.id === contributionObj.author.id || (scheduledPostsEnabled && (UserUtils.isAdmin(user) || UserUtils.isModerator(user)));
   }
 
   /**
    * Can authenticated user delete the contribution
    */
   function canDeleteContribution(): boolean {
-    return scUserContext.user && scUserContext.user.id === contributionObj.author.id && !deleteType;
+    const user = scUserContext.user;
+    if (!user || deleteType) return false;
+
+    return user.id === contributionObj.author.id || (scheduledPostsEnabled && (UserUtils.isAdmin(user) || UserUtils.isModerator(user)));
+  }
+
+  /**
+   * Can authenticated user publish the contribution
+   */
+  function canPublishContribution(): boolean {
+    const user = scUserContext.user;
+    if (!user || contributionObj.deleted || !scheduledPostsEnabled || !isNotPublishedYet(feedObj)) return false;
+
+    return user.id === contributionObj.author.id || (scheduledPostsEnabled && (UserUtils.isAdmin(user) || UserUtils.isModerator(user)));
   }
 
   /**
@@ -1116,15 +1132,6 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       contributionObj.type !== SCContributionType.COMMENT &&
       Boolean((contributionObj as SCFeedObjectType).event) &&
       Boolean((contributionObj as SCFeedObjectType).event.active)
-    );
-  }
-
-  /**
-   * Can authenticated user publish the contribution
-   */
-  function canPublishContribution(): boolean {
-    return (
-      scUserContext.user && scUserContext.user.id === contributionObj.author.id && !deleteType && scheduledPostsEnabled && isNotPublishedYet(feedObj)
     );
   }
 
