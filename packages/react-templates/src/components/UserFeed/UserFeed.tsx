@@ -177,7 +177,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
       seen_by_id: [],
       has_boost: false
     };
-    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+    !feedObject.scheduled_at && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   // WIDGETS
