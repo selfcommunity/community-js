@@ -4,7 +4,7 @@ import CentralProgress from '../CentralProgress';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {copyTextToClipboard, Logger} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
-import {getContributionRouteName, getRouteData, isNotPublishedYet} from '../../utils/contribution';
+import {getContributionRouteName, getRouteData} from '../../utils/contribution';
 import classNames from 'classnames';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {
@@ -1098,7 +1098,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    */
   function canPublishContribution(): boolean {
     const user = scUserContext.user;
-    if (!user || contributionObj.deleted || !scheduledPostsEnabled || !isNotPublishedYet(feedObj)) return false;
+    if (!user || contributionObj.deleted || !scheduledPostsEnabled || !feedObj.draft) return false;
 
     return user.id === contributionObj.author.id || (scheduledPostsEnabled && (UserUtils.isAdmin(user) || UserUtils.isModerator(user)));
   }
