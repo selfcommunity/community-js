@@ -1083,20 +1083,14 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    * Can authenticated user modify the contribution
    */
   function canModifyContribution(): boolean {
-    const user = scUserContext.user;
-    if (!user || contributionObj.deleted) return false;
-
-    return user.id === contributionObj.author.id || (scheduledPostsEnabled && (UserUtils.isAdmin(user) || UserUtils.isModerator(user)));
+    return scUserContext.user && scUserContext.user.id === contributionObj.author.id && !contributionObj.deleted;
   }
 
   /**
    * Can authenticated user delete the contribution
    */
   function canDeleteContribution(): boolean {
-    const user = scUserContext.user;
-    if (!user || deleteType) return false;
-
-    return user.id === contributionObj.author.id || (scheduledPostsEnabled && (UserUtils.isAdmin(user) || UserUtils.isModerator(user)));
+    return scUserContext.user && scUserContext.user.id === contributionObj.author.id;
   }
 
   /**

@@ -120,7 +120,7 @@ export function getRouteData(obj) {
  * @param feedObj
  */
 export function isNotPublishedYet(feedObj: SCFeedObjectType): boolean {
-  if (!feedObj?.scheduled_at || feedObj.last_edited_at) return false;
+  if (!feedObj?.scheduled_at || feedObj.last_activity_at) return false;
 
   const scheduledDate = new Date(feedObj.scheduled_at);
   const now = new Date();
