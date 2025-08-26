@@ -1,6 +1,6 @@
 import React from 'react';
 import {SCRoutes} from '@selfcommunity/react-core';
-import {SCContributionType} from '@selfcommunity/types';
+import {SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 
 /**
@@ -113,4 +113,16 @@ export function getRouteData(obj) {
     }
   }
   return data;
+}
+
+/**
+ * Checks if a contribution has already been published
+ * @param feedObj
+ */
+export function isNotPublishedYet(feedObj: SCFeedObjectType): boolean {
+  if (!feedObj?.scheduled_at || feedObj.last_edited_at) return false;
+
+  const scheduledDate = new Date(feedObj.scheduled_at);
+  const now = new Date();
+  return scheduledDate > now;
 }

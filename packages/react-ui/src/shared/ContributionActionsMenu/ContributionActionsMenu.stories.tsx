@@ -18,7 +18,7 @@ export default {
     }
   },
   args: {
-    feedObjectId: 379, // 9,
+    feedObjectId: 19,
     feedObjectType: SCContributionType.POST
   }
 } as Meta<typeof ContributionActionsMenu>;

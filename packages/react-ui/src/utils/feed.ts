@@ -1,4 +1,4 @@
-import {SCNotificationAggregatedType, SCNotificationType} from '@selfcommunity/types';
+import {SCFeedObjectType, SCNotificationAggregatedType, SCNotificationType} from '@selfcommunity/types';
 
 /**
  * Compare widget priority
@@ -34,3 +34,18 @@ export const getUnseenNotification = (data: SCNotificationAggregatedType[]): SCN
 export const getUnseenNotificationCounter = (data: SCNotificationAggregatedType[]): number => {
   return getUnseenNotification(data).length;
 };
+
+/**
+ * Determines whether a feed object should be added immediately.
+ *
+ * A feed obj can be added if:
+ * - it has no scheduled publication date (`scheduled_at` is null/undefined)
+ * - it has never been edited/published before (`last_edited_at` is null/undefined)
+ *
+ * @param obj The feed object to check
+ * @returns true if the feed should be added immediately, false otherwise
+ */
+export function shouldAddFeedData(obj: SCFeedObjectType | null): boolean {
+  if (!obj) return false;
+  return !obj.scheduled_at && !obj.last_edited_at;
+}

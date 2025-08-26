@@ -13,11 +13,11 @@ import {
   FeedSidebarProps,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
-  SCFeedWidgetType,
+  SCFeedWidgetType, shouldAddFeedData,
   UserFollowedCategoriesWidget,
   UserFollowedUsersWidget,
   UserFollowersWidget,
-  UserLiveStreamWidget
+  UserLiveStreamWidget,
 } from '@selfcommunity/react-ui';
 import {UserFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
@@ -177,7 +177,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
       seen_by_id: [],
       has_boost: false
     };
-    !feedObject.scheduled_at && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+    shouldAddFeedData(feedObject) && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   // WIDGETS
