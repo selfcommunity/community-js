@@ -369,9 +369,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       !isLoading &&
       ((type === SCContributionType.DISCUSSION && title.length > 0 && title.length < COMPOSER_TITLE_MAX_LENGTH) ||
         (type === SCContributionType.POST && (stripHtml(html).length > 0 || medias.length > 0 || hasPoll)) ||
-        (type === COMPOSER_TYPE_POLL && hasPoll))
+        (type === COMPOSER_TYPE_POLL && hasPoll)) &&
+      (!addressingRequiredEnabled || (addressing && addressing.length > 0)) &&
+      (!categoryRequiredEnabled || (categories && categories.length > 0))
     );
-  }, [isLoading, type, title, html, medias, hasPoll]);
+  }, [isLoading, type, title, html, medias, hasPoll, addressing, addressingRequiredEnabled, categories, categoryRequiredEnabled]);
   const isIOS = useMemo(() => iOS(), []);
 
   // Load feed object
