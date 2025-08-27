@@ -1367,6 +1367,7 @@
   "ui.paymentProduct.action.subscribed": "Subscribed",
   "ui.paymentProduct.action.purchased": "Purchased",
   "ui.paymentProduct.action.purchasedAt": "Content purchased on {purchasedAt}.",
+  "ui.paymentProduct.price.day": "day",
   "ui.paymentProduct.price.week": "week",
   "ui.paymentProduct.price.month": "month",
   "ui.paymentProduct.price.year": "year",
