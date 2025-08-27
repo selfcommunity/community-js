@@ -7,7 +7,7 @@ import itLocale from 'date-fns/locale/it';
 import enLocale from 'date-fns/locale/en-US';
 import {useSCContext} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import {format} from 'date-fns';
+import {format, parseISO} from 'date-fns';
 import {PREFIX} from '../../constants';
 import {capitalize} from '@selfcommunity/utils';
 
@@ -40,7 +40,9 @@ const ScheduledLayer = React.forwardRef((props: ScheduledLayerProps, ref: React.
   const locale = scContext.settings.locale.default === 'it' ? itLocale : enLocale;
 
   // STATE
-  const [scheduledAt, setScheduledAt] = useState<Date | null>(defaultValue);
+  const [scheduledAt, setScheduledAt] = useState<Date | null>(
+    defaultValue ? (typeof defaultValue === 'string' ? parseISO(defaultValue) : defaultValue) : null
+  );
 
   const handleUpdate = useCallback(
     (value: Date | null) => {

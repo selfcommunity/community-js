@@ -16,8 +16,7 @@ import {
   InlineComposerWidget,
   RelatedEventsWidget,
   SCFeedObjectTemplateType,
-  SCFeedWidgetType,
-  shouldAddFeedData
+  SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {
@@ -210,7 +209,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
         seen_by_id: [],
         has_boost: false
       };
-      shouldAddFeedData(feedObject) && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+      !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
     }
   };
 
