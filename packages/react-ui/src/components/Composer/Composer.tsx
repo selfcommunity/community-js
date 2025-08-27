@@ -1048,7 +1048,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           )}
           {preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED].value && (
             <IconButton
-              disabled={isSubmitting || Boolean(feedObject?.scheduled_at)}
+              disabled={isSubmitting || (Boolean(feedObject?.scheduled_at) && Boolean(!feedObject?.draft))}
               onClick={handleAddScheduledLayer}
               color={scheduled_at !== null ? 'primary' : 'default'}>
               <Icon>access_time</Icon>
