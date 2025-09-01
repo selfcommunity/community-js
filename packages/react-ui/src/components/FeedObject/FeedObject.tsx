@@ -999,7 +999,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
               />
-              {((template === SCFeedObjectTemplateType.DETAIL && (!hasEvent || obj?.medias?.[0]?.embed?.metadata?.active)) || expandedActivities) && (
+              {((commentsEnabled && expandedActivities) ||
+                (template === SCFeedObjectTemplateType.DETAIL && (!hasEvent || obj?.medias?.[0]?.embed?.metadata?.active))) && (
                 <Box className={classes.replyContent}>
                   <CommentObjectReplyComponent
                     id={`reply-feedObject-${obj.id}`}
@@ -1207,14 +1208,16 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
                   <DateTimeAgo component="span" date={obj.added_at} />
                 </Link>
-                <Button
-                  component={Link}
-                  to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
-                  variant="text"
-                  color="secondary"
-                  size="small">
-                  <FormattedMessage id="ui.feedObject.comment" defaultMessage="ui.feedObject.comment" />
-                </Button>
+                {commentsEnabled && (
+                  <Button
+                    component={Link}
+                    to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
+                    variant="text"
+                    color="secondary"
+                    size="small">
+                    <FormattedMessage id="ui.feedObject.comment" defaultMessage="ui.feedObject.comment" />
+                  </Button>
+                )}
               </Stack>
             }
           />
