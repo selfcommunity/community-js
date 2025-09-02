@@ -1013,29 +1013,31 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   </Box>
                 )}
             </CardActions>
-            {template === SCFeedObjectTemplateType.PREVIEW && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0)) && (
-              <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>
-                <CardContent className={classes.activitiesContent}>
-                  <Activities
-                    feedObject={obj}
-                    key={selectedActivities}
-                    feedObjectActivities={feedObjectActivities}
-                    activitiesType={selectedActivities}
-                    onSetSelectedActivities={handleSelectedActivities}
-                    comments={comments}
-                    CommentsObjectProps={{
-                      CommentComponentProps: {
-                        ...{onDelete: handleDeleteComment, truncateContent: true, CommentsObjectComponentProps: {inPlaceLoadMoreContents: false}},
-                        ...CommentComponentProps
-                      },
-                      CommentObjectSkeletonProps: CommentObjectSkeletonProps
-                    }}
-                    cacheStrategy={cacheStrategy}
-                    {...ActivitiesProps}
-                  />
-                </CardContent>
-              </Collapse>
-            )}
+            {commentsEnabled &&
+              template === SCFeedObjectTemplateType.PREVIEW &&
+              (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0)) && (
+                <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>
+                  <CardContent className={classes.activitiesContent}>
+                    <Activities
+                      feedObject={obj}
+                      key={selectedActivities}
+                      feedObjectActivities={feedObjectActivities}
+                      activitiesType={selectedActivities}
+                      onSetSelectedActivities={handleSelectedActivities}
+                      comments={comments}
+                      CommentsObjectProps={{
+                        CommentComponentProps: {
+                          ...{onDelete: handleDeleteComment, truncateContent: true, CommentsObjectComponentProps: {inPlaceLoadMoreContents: false}},
+                          ...CommentComponentProps
+                        },
+                        CommentObjectSkeletonProps: CommentObjectSkeletonProps
+                      }}
+                      cacheStrategy={cacheStrategy}
+                      {...ActivitiesProps}
+                    />
+                  </CardContent>
+                </Collapse>
+              )}
             {composerOpen && (
               <Composer open={composerOpen} feedObject={obj} onClose={handleToggleEdit} onSuccess={handleEditSuccess} maxWidth="sm" fullWidth />
             )}
