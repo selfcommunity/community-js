@@ -1033,8 +1033,12 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <IconButton
             disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING) || Boolean(feedObject?.group) || Boolean(feedObject?.event)}
             onClick={handleAddAudienceLayer}>
-            {(!group && addressing === null) || (!event && addressing === null) || addressing?.length === 0 ? (
-              <Icon>public</Icon>
+            {addressing === null || addressing?.length === 0 ? (
+              addressingRequiredEnabled ? (
+                <Icon>label</Icon>
+              ) : (
+                <Icon>public</Icon>
+              )
             ) : group ? (
               <Icon>groups</Icon>
             ) : event ? (

@@ -183,7 +183,7 @@ export default function Tags(props: TagsProps): JSX.Element {
    */
   return (
     <>
-      {tags.length && (
+      {tags.length && tags.filter((tag) => tag.visible).length > 0 && (
         <React.Fragment>
           {type === TagsComponentType.POPPER ? (
             <TagsPopperRoot {...rest}>

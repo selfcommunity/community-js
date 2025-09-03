@@ -417,6 +417,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     () => hideFollowAction || (hasEvent && obj?.medias?.[0]?.embed?.metadata?.active === false),
     [hideFollowAction, hasEvent, obj]
   );
+  const visibleTags = (obj.addressing ?? []).filter((tag) => tag.visible);
 
   // INTL
   const intl = useIntl();
@@ -900,7 +901,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                       </Box>
                     </>
                   )}
-                  <Bullet />
+                  {visibleTags.length > 0 || (obj.group && <Bullet />)}
                   <Box className={classes.tag}>
                     {obj.addressing.length > 0 ? (
                       <Tags tags={obj.addressing} TagChipProps={{disposable: false, clickable: false}} />
@@ -911,11 +912,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                         </Icon>
                       </Tooltip>
                     ) : (
-                      <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
-                        <Icon color="disabled" fontSize="small">
-                          public
-                        </Icon>
-                      </Tooltip>
+                      <>
+                        <Bullet />
+                        <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
+                          <Icon color="disabled" fontSize="small">
+                            public
+                          </Icon>
+                        </Tooltip>
+                      </>
                     )}
                   </Box>
                 </>
