@@ -62,7 +62,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
     name: PREFIX
   });
 
-  const {className, CategoryItemProps = {showTooltip: true}, tagImage = '', ...rest} = props;
+  const {className, CategoryItemProps = {showTooltip: true}, tagImage = '/', ...rest} = props;
 
   // HOOKS
   const {categories} = useSCFetchCategories();
@@ -296,10 +296,6 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
                   image={<Avatar alt={tagName} src={tagImage} variant="square" />}
                   primary={tagName}
                   disableTypography={false}
-                  ButtonBaseProps={{
-                    onClick: (e: React.MouseEvent) => e.stopPropagation(),
-                    onFocus: (e: React.FocusEvent) => e.stopPropagation()
-                  }}
                 />
               </AccordionSummary>
 
