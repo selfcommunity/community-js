@@ -251,16 +251,20 @@ export default function PollObject(props: PollObjectProps): JSX.Element {
                 </ListItem>
               ))}
             </List>
-            {multipleChoices ? (
-              <div className={classes.votes}>
-                <Icon>list</Icon>
-                <Typography>{`${intl.formatMessage(messages.votes, {total: votes})}`}</Typography>
-              </div>
-            ) : (
-              <div className={classes.voters}>
-                <Icon>people_alt</Icon>
-                <Typography>{`${intl.formatMessage(messages.voters, {total: votes})}`}</Typography>
-              </div>
+            {!feedObject.draft && (
+              <>
+                {multipleChoices ? (
+                  <div className={classes.votes}>
+                    <Icon>list</Icon>
+                    <Typography>{`${intl.formatMessage(messages.votes, {total: votes})}`}</Typography>
+                  </div>
+                ) : (
+                  <div className={classes.voters}>
+                    <Icon>people_alt</Icon>
+                    <Typography>{`${intl.formatMessage(messages.voters, {total: votes})}`}</Typography>
+                  </div>
+                )}
+              </>
             )}
           </CardContent>
         </Collapse>
