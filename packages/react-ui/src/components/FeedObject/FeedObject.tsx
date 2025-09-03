@@ -960,30 +960,32 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   />
                 )}
               </Box>
-              <Box className={classes.infoSection}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                  {!commentsEnabled && !allShareEnabled ? (
-                    <Vote
-                      feedObjectId={feedObjectId || feedObject?.id}
-                      feedObjectType={feedObjectType}
-                      feedObject={obj}
-                      inlineAction={true}
-                      onVoteAction={handleVoteSuccess}
-                      className={classes.vote}
-                    />
-                  ) : (
-                    !hideParticipantsPreview && (
-                      <ContributorsFeedObject
+              {!obj.draft && (
+                <Box className={classes.infoSection}>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+                    {!commentsEnabled && !allShareEnabled ? (
+                      <Vote
+                        feedObjectId={feedObjectId || feedObject?.id}
+                        feedObjectType={feedObjectType}
                         feedObject={obj}
-                        feedObjectType={obj.type}
-                        {...ContributorsFeedObjectProps}
-                        cacheStrategy={cacheStrategy}
+                        inlineAction={true}
+                        onVoteAction={handleVoteSuccess}
+                        className={classes.vote}
                       />
-                    )
-                  )}
-                  {!_hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
-                </Stack>
-              </Box>
+                    ) : (
+                      !hideParticipantsPreview && (
+                        <ContributorsFeedObject
+                          feedObject={obj}
+                          feedObjectType={obj.type}
+                          {...ContributorsFeedObjectProps}
+                          cacheStrategy={cacheStrategy}
+                        />
+                      )
+                    )}
+                    {!_hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
+                  </Stack>
+                </Box>
+              )}
             </CardContent>
             <CardActions className={classes.actionsSection}>
               <Actions
