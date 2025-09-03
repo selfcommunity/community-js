@@ -99,7 +99,7 @@ export default function Choice(props: ChoiceProps): JSX.Element {
         loading={isVoting === choiceObj.id}
         variant={choiceObj.voted ? 'contained' : 'outlined'}
         size="small"
-        disabled={disabled || isVoting !== null || votable}
+        disabled={disabled || isVoting !== null || votable || feedObject.draft}
         className={classes.vote}
         onClick={handleVoteAction}>
         {choiceObj.voted ? (
