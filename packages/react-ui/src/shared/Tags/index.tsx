@@ -209,11 +209,13 @@ export default function Tags(props: TagsProps): JSX.Element {
                         <>
                           {renderTitle()}
                           <StackList spacing={2} {...rest}>
-                            {tags.map((tag) => (
-                              <ItemList key={tag.id}>
-                                <TagChip tag={tag} onClick={onClickTag} {...TagChipProps} />
-                              </ItemList>
-                            ))}
+                            {tags
+                              .filter((tag) => tag.visible)
+                              .map((tag) => (
+                                <ItemList key={tag.id}>
+                                  <TagChip tag={tag} onClick={onClickTag} {...TagChipProps} />
+                                </ItemList>
+                              ))}
                           </StackList>
                         </>
                       </ClickAwayListener>
@@ -226,11 +228,13 @@ export default function Tags(props: TagsProps): JSX.Element {
             <ListRoot>
               {renderTitle()}
               <StackList spacing={1} direction={rest.direction ? rest.direction : 'column'}>
-                {tags.map((tag) => (
-                  <ItemList key={tag.id}>
-                    <TagChip tag={tag} onClick={onClickTag} {...TagChipProps} />
-                  </ItemList>
-                ))}
+                {tags
+                  .filter((tag) => tag.visible)
+                  .map((tag) => (
+                    <ItemList key={tag.id}>
+                      <TagChip tag={tag} onClick={onClickTag} {...TagChipProps} />
+                    </ItemList>
+                  ))}
               </StackList>
             </ListRoot>
           )}
