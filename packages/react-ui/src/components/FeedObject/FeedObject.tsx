@@ -783,7 +783,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Manage variants:
    * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
    */
-  let objElement;
+  let objElement: JSX.Element;
   if (
     (!obj && error) ||
     (obj?.deleted && !scUserContext.user && !(UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))
@@ -999,42 +999,45 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
               />
-              {((commentsEnabled && expandedActivities) ||
-                (template === SCFeedObjectTemplateType.DETAIL && (!hasEvent || obj?.medias?.[0]?.embed?.metadata?.active))) && (
-                <Box className={classes.replyContent}>
-                  <CommentObjectReplyComponent
-                    id={`reply-feedObject-${obj.id}`}
-                    onReply={handleReply}
-                    editable={!isReplying || Boolean(obj)}
-                    key={Number(isReplying)}
-                    {...CommentObjectReplyComponentProps}
-                  />
-                </Box>
-              )}
+              {commentsEnabled &&
+                ((template === SCFeedObjectTemplateType.DETAIL && (!hasEvent || obj?.medias?.[0]?.embed?.metadata?.active)) ||
+                  expandedActivities) && (
+                  <Box className={classes.replyContent}>
+                    <CommentObjectReplyComponent
+                      id={`reply-feedObject-${obj.id}`}
+                      onReply={handleReply}
+                      editable={!isReplying || Boolean(obj)}
+                      key={Number(isReplying)}
+                      {...CommentObjectReplyComponentProps}
+                    />
+                  </Box>
+                )}
             </CardActions>
-            {template === SCFeedObjectTemplateType.PREVIEW && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0)) && (
-              <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>
-                <CardContent className={classes.activitiesContent}>
-                  <Activities
-                    feedObject={obj}
-                    key={selectedActivities}
-                    feedObjectActivities={feedObjectActivities}
-                    activitiesType={selectedActivities}
-                    onSetSelectedActivities={handleSelectedActivities}
-                    comments={comments}
-                    CommentsObjectProps={{
-                      CommentComponentProps: {
-                        ...{onDelete: handleDeleteComment, truncateContent: true, CommentsObjectComponentProps: {inPlaceLoadMoreContents: false}},
-                        ...CommentComponentProps
-                      },
-                      CommentObjectSkeletonProps: CommentObjectSkeletonProps
-                    }}
-                    cacheStrategy={cacheStrategy}
-                    {...ActivitiesProps}
-                  />
-                </CardContent>
-              </Collapse>
-            )}
+            {commentsEnabled &&
+              template === SCFeedObjectTemplateType.PREVIEW &&
+              (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0)) && (
+                <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>
+                  <CardContent className={classes.activitiesContent}>
+                    <Activities
+                      feedObject={obj}
+                      key={selectedActivities}
+                      feedObjectActivities={feedObjectActivities}
+                      activitiesType={selectedActivities}
+                      onSetSelectedActivities={handleSelectedActivities}
+                      comments={comments}
+                      CommentsObjectProps={{
+                        CommentComponentProps: {
+                          ...{onDelete: handleDeleteComment, truncateContent: true, CommentsObjectComponentProps: {inPlaceLoadMoreContents: false}},
+                          ...CommentComponentProps
+                        },
+                        CommentObjectSkeletonProps: CommentObjectSkeletonProps
+                      }}
+                      cacheStrategy={cacheStrategy}
+                      {...ActivitiesProps}
+                    />
+                  </CardContent>
+                </Collapse>
+              )}
             {composerOpen && (
               <Composer open={composerOpen} feedObject={obj} onClose={handleToggleEdit} onSuccess={handleEditSuccess} maxWidth="sm" fullWidth />
             )}
