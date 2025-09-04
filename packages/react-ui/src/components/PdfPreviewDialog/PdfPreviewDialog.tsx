@@ -20,13 +20,13 @@ const classes = {
 const Root = styled(BaseDialog, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({}));
+})(() => ({}));
 
 const Transition = React.forwardRef(function Transition(props: TransitionProps & {children: React.ReactElement}, ref: React.Ref<unknown>) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const NoTransition = React.forwardRef(function NoTransition(props: {children: React.ReactElement}, ref) {
+const NoTransition = React.forwardRef(function NoTransition(props: {children: React.ReactElement}) {
   return <React.Fragment> {props.children} </React.Fragment>;
 });
 
@@ -49,9 +49,9 @@ export default function PdfPreviewDialog(inProps: PdfPreviewDialogProps) {
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
-	/**
-	 * handle download pdf
-	 */
+  /**
+   * handle download pdf
+   */
   const handleDownload = async () => {
     try {
       const response: HttpResponse<Blob> = await http.request({url: pdfUrl, responseType: 'blob'});
@@ -75,12 +75,13 @@ export default function PdfPreviewDialog(inProps: PdfPreviewDialogProps) {
   return (
     <Root
       fullScreen
-      scroll={'paper'}
+      scroll="paper"
       open
-      maxWidth={'md'}
+      maxWidth="md"
       {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
       className={classNames(classes.root, className)}
       TransitionComponent={Transition}
+      DialogContentProps={{sx: {overflow: 'hidden'}}}
       {...rest}>
       <AppBar sx={{position: 'fixed', top: 0}}>
         <Toolbar>
@@ -98,7 +99,7 @@ export default function PdfPreviewDialog(inProps: PdfPreviewDialogProps) {
         </Toolbar>
       </AppBar>
       <Grid container className={classes.content}>
-        <Grid item xs={12} justifyContent={'center'} alignContent={'center'}>
+        <Grid item xs={12} justifyContent="center" alignContent="center">
           <PdfPreview {...PdfPreviewComponentProps} pdfUrl={pdfUrl} />
         </Grid>
       </Grid>

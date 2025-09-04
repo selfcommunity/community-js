@@ -1,5 +1,5 @@
-import React, {ReactElement, useCallback, useEffect, useState} from 'react';
-import {Box, styled} from '@mui/material';
+import {ReactElement, useCallback, useEffect, useState} from 'react';
+import {Box, styled, useMediaQuery, useTheme} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import type {PDFDocumentProxy} from 'pdfjs-dist';
@@ -7,7 +7,7 @@ import {Document, Page, pdfjs} from 'react-pdf';
 import {Logger} from '@selfcommunity/utils';
 import Skeleton from './Skeleton';
 import {http, HttpResponse} from '@selfcommunity/api-services';
-import {SCUserContextType, useResizeObserver, useSCUser} from '@selfcommunity/react-core';
+import {SCThemeType, SCUserContextType, useResizeObserver, useSCUser} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -27,8 +27,8 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 // Default options conf PDFViewer
 const options = {
@@ -61,6 +61,8 @@ export default function PdfPreview(inProps: PdfPreviewProps): ReactElement | nul
   const [numPages, setNumPages] = useState<number>();
   const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
   const [containerWidth, setContainerWidth] = useState<number>(maxWidth);
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -105,7 +107,7 @@ export default function PdfPreview(inProps: PdfPreviewProps): ReactElement | nul
   function renderDocument() {
     return (
       <Document onLoadSuccess={onDocumentLoadSuccess} loading={<Skeleton />} file={url} className={classes.documentPdf} options={options}>
-        {Array.from({length: numPages}, (el, index) => {
+        {Array.from({length: numPages}, (_el, index) => {
           return (
             <Page
               className={classes.documentPdfPage}
@@ -113,6 +115,7 @@ export default function PdfPreview(inProps: PdfPreviewProps): ReactElement | nul
               pageNumber={index + 1}
               width={containerWidth ? Math.min(containerWidth, maxWidth) : maxWidth}
               renderTextLayer={false}
+              scale={!isMobile ? 0.7 : undefined}
             />
           );
         })}
