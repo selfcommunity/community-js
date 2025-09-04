@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.0...@selfcommunity/types@0.8.0-alpha.1) (2025-09-04)
+
+
+### Bug Fixes
+
+* added new ddp connection_enabled and adapted follow/connection logic. Linear issue: https://linear.app/quentral/issue/QUE-1837/frontend-considerare-nuova-ddp-connection-enabled ([ec1cde5](https://github.com/selfcommunity/community-js/commit/ec1cde5d142724373523be830ba531827a6122aa))
+* fixed private messages ddp. Linear issue: https://linear.app/quentral/issue/QUE-1830/frontend-gestire-ddp-per-attivazione-e-disattivazione-messaggi-privati ([b4bdd1b](https://github.com/selfcommunity/community-js/commit/b4bdd1b0cd7a1814eddc5eaf6e95bfe5276d0ba2))
+* payment_waiting group/course ([997106e](https://github.com/selfcommunity/community-js/commit/997106ef7cba0d335c0081c5ce12ad3faab980cd))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([16425dc](https://github.com/selfcommunity/community-js/commit/16425dc65cce1a0ae38053ee7f9f541102698288))
+* payments ([c379e8f](https://github.com/selfcommunity/community-js/commit/c379e8f245a5a753eb9cbbaafe90550f23d54f41))
+* payments ([b85a180](https://github.com/selfcommunity/community-js/commit/b85a180cacbe50b580e9a729ef4b8681a0a9ed64))
+* payments ([370983c](https://github.com/selfcommunity/community-js/commit/370983c46e142fca9c0e83a92072afe8f6c1ec0b))
+* payments ([a15eeb8](https://github.com/selfcommunity/community-js/commit/a15eeb8549d8064acfcd1ff2cdcf2ec4864b4f5e))
+* payments ([ec6d32e](https://github.com/selfcommunity/community-js/commit/ec6d32e82b4c778c265804c05d3002ac48faa4bb))
+* payments ([21e9a56](https://github.com/selfcommunity/community-js/commit/21e9a561872b29e616cdc6b0e820ac11eb396712))
+* payments ([233f5eb](https://github.com/selfcommunity/community-js/commit/233f5eb248e41f67ce2139955fde0261e54f071d))
+* payments ([720e295](https://github.com/selfcommunity/community-js/commit/720e2951048faa5fdedcf4874f6bf7211cf64804))
+* payments ([8ebe701](https://github.com/selfcommunity/community-js/commit/8ebe701424cf269df90cb524919cab946b8f1dbe))
+* payments ([ea3f7c2](https://github.com/selfcommunity/community-js/commit/ea3f7c267cf169442834fa50d6335a0cd15c30f0))
+* payments ([979fe35](https://github.com/selfcommunity/community-js/commit/979fe354140b5b1a88fbe36a5c532e33a1d5c22e))
+* payments and other features ([a0bd0eb](https://github.com/selfcommunity/community-js/commit/a0bd0eb3aea472a65033fd1e4160ddf55a3c05a0))
+* payments category, group, event ([d0e2b24](https://github.com/selfcommunity/community-js/commit/d0e2b248fe14b667031529fe772f745129811f84))
+* paywall ([a6372be](https://github.com/selfcommunity/community-js/commit/a6372befda9a0b749c2d994c9be9ac90ec95b968))
+* paywall ([62d9ee1](https://github.com/selfcommunity/community-js/commit/62d9ee1fe4c60b5d801f708eac65c3462e0aafc3))
+* paywall ([46e72c4](https://github.com/selfcommunity/community-js/commit/46e72c40e0fc88db92da5b74f70c66fbf5f209a2))
+* paywall ([7913a21](https://github.com/selfcommunity/community-js/commit/7913a21732d4b2baf965ed016751c688e9a22ec3))
+* paywall ([e24ad25](https://github.com/selfcommunity/community-js/commit/e24ad25edc5fef5c27a8b3dbefe5ce95da3d7295))
+* peerDependencies ([97c38fe](https://github.com/selfcommunity/community-js/commit/97c38fe2c7294c95c489f503117f09f6053d929d))
+
+
+### Features
+
+* added composer controls for new ddp post_category_required_enabled and post_addressing_required_enabled. Linear issue: https://linear.app/quentral/issue/QUE-1914/frontend-nella-form-post-se-abilitata-post-category-required-enabled-e ([d69994e](https://github.com/selfcommunity/community-js/commit/d69994ef5455d9dd4037e7087e986f46eb5c9566))
+* added ddp for category_follow_enabled and managed CategoriesSuggestionWidget, UserFollowedCategoriesWidget, CategoryFollowButton visibility. ([0a33908](https://github.com/selfcommunity/community-js/commit/0a3390861bdffebb33112d9773ce774bd9bc9495))
+* added ddp to manage autoplay on videos. Linaer: https://linear.app/quentral/issue/QUE-1796/frontend-togliere-dappertutto-autoplay-youtube-deve-essere-tutto-con ([e5c9c30](https://github.com/selfcommunity/community-js/commit/e5c9c306661dd4bf53f5ad67b98919b76a472f37))
+* added endpoints/services actions to manage scheduled posts. Linear issue: https://linear.app/quentral/issue/QUE-1793/frontend-creazione-e-gestione-dei-post-programmati ([eb8cfd2](https://github.com/selfcommunity/community-js/commit/eb8cfd23fe6d01f44e74c19edc095d8abd385c99))
+* added scheduled post in the composer. Linear issue: https://linear.app/quentral/issue/QUE-1863/frontend-gestire-ddp-se-post-programmati ([78b31ce](https://github.com/selfcommunity/community-js/commit/78b31ce29badbc05a141631e6037365761ee5f47))
+* gestione del tasto destro sul frontend. Linear: https://linear.app/quentral/issue/QUE-1827/frontend-gestire-la-ddp-che-se-attiva-disabilita-il-tatso-destro-nel ([de63fe7](https://github.com/selfcommunity/community-js/commit/de63fe7ffcb286d8991e66beb0a2cf5c6b99f2c7))
+* managed categories preferencies. Linear: https://linear.app/quentral/issue/QUE-1840/frontend-gestione-ddp-per-definire-se-il-menu-visualizza-tutte-le ([b526431](https://github.com/selfcommunity/community-js/commit/b5264312e818e42fea5060d425dfd2c994c57994))
+* managed ddp to hide comments and share; updated reaction layout. Linear: https://linear.app/quentral/issue/QUE-1856/frontend-in-base-alle-due-ddp-togliere-la-parte-di-post-per-fare-i ([fc94144](https://github.com/selfcommunity/community-js/commit/fc941444d6653cc040bd589963ce611a5e084f70))
+* restyled pdf preview and display. Linear: https://linear.app/quentral/issue/QUE-1797/frontend-sistemare-grafica-del-post-anche-in-stream-con-youtube-video ([1debc9f](https://github.com/selfcommunity/community-js/commit/1debc9fb07f4061a80d88676e012561a04c0d95f))
+
+
+### Performance Improvements
+
+* added filters to payment orders table. Linear issue: https://linear.app/quentral/issue/QUE-1295/inserire-nel-componente-paymentorders-i-filtri-in-testa-alla-tabella ([5ed71b0](https://github.com/selfcommunity/community-js/commit/5ed71b0186c39e69a3e27b8cda49c3c8d5338b9d))
+* refactored checkout return dialog ([a84bf0b](https://github.com/selfcommunity/community-js/commit/a84bf0bb91e32fc9ad15182edb137aeffb3767a8))
+
+
+
+
+
 ## [0.7.7-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.7.7-alpha.2...@selfcommunity/types@0.7.7-alpha.3) (2025-02-26)
 
 

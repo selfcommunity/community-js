@@ -3,6 +3,57 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.6...@selfcommunity/react-templates@0.5.0-alpha.7) (2025-09-04)
+
+
+### Bug Fixes
+
+* added new ddp connection_enabled and adapted follow/connection logic. Linear issue: https://linear.app/quentral/issue/QUE-1837/frontend-considerare-nuova-ddp-connection-enabled ([ec1cde5](https://github.com/selfcommunity/community-js/commit/ec1cde5d142724373523be830ba531827a6122aa))
+* added paid button to course/group header ([a41bd0c](https://github.com/selfcommunity/community-js/commit/a41bd0c42a52c7acb1842f1bd7148fb37e7ed4f7))
+* blocked feed update if content is scheduled ([845bbe5](https://github.com/selfcommunity/community-js/commit/845bbe5c7e6355c2e438e933a372c0d4cdeeb780))
+* CommunityPaywalls ([de3b05d](https://github.com/selfcommunity/community-js/commit/de3b05d1051f7cabdc8d49ecabf2e695e66e5af6))
+* CommunityPaywalls ([fc68906](https://github.com/selfcommunity/community-js/commit/fc68906badf912a8b90730ff7934edf791546b9d))
+* CommunityPaywalls ([68c6e14](https://github.com/selfcommunity/community-js/commit/68c6e142a09cdae50303c7672bb66640bc5881e1))
+* course ([e28c00a](https://github.com/selfcommunity/community-js/commit/e28c00aea5d7e099c61f98ed078dd6262cd85ec4))
+* course manager ([8307619](https://github.com/selfcommunity/community-js/commit/83076194b0928d0084c08db3aa3de73ca3288b9b))
+* event and group managers ([e768f5a](https://github.com/selfcommunity/community-js/commit/e768f5a0d8efd9cd7e3a57730e01e70740a70f2d))
+* event stories ([98e89c6](https://github.com/selfcommunity/community-js/commit/98e89c60fed33611fe70bedb857f8b0a5c99d071))
+* events subscription ([56716de](https://github.com/selfcommunity/community-js/commit/56716de98ebefd2b16e86c5820ae8ae5a3f6c40c))
+* fixed how to show comments. Linear: https://linear.app/quentral/issue/QUE-1905/frontend-pur-avendo-disabilitato-i-commenti-appare-sulla-destra-un ([87ab5fc](https://github.com/selfcommunity/community-js/commit/87ab5fc31d8cb2c2b56f3a8609aa810d88fbd913))
+* fixed private messages ddp. Linear issue: https://linear.app/quentral/issue/QUE-1830/frontend-gestire-ddp-per-attivazione-e-disattivazione-messaggi-privati ([b4bdd1b](https://github.com/selfcommunity/community-js/commit/b4bdd1b0cd7a1814eddc5eaf6e95bfe5276d0ba2))
+* payment_waiting ([b756d66](https://github.com/selfcommunity/community-js/commit/b756d66c16ba8487bb69b7974eeee231161fa93d))
+* payment_waiting ([9ee5db4](https://github.com/selfcommunity/community-js/commit/9ee5db4d56c842572caf603b75d5c15efe192ae4))
+* payment_waiting ([07a2235](https://github.com/selfcommunity/community-js/commit/07a2235b2b7532aef3613d7d5e942b205f6598d6))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([16425dc](https://github.com/selfcommunity/community-js/commit/16425dc65cce1a0ae38053ee7f9f541102698288))
+* payments ([d4f8849](https://github.com/selfcommunity/community-js/commit/d4f8849f605ddfa0a45cab734d85fb4c8a762ecf))
+* payments ([c379e8f](https://github.com/selfcommunity/community-js/commit/c379e8f245a5a753eb9cbbaafe90550f23d54f41))
+* payments ([3c82e7a](https://github.com/selfcommunity/community-js/commit/3c82e7a0bcd4d61e58479007f03b74c8e4ea0e6f))
+* payments ([370983c](https://github.com/selfcommunity/community-js/commit/370983c46e142fca9c0e83a92072afe8f6c1ec0b))
+* payments ([08b1b20](https://github.com/selfcommunity/community-js/commit/08b1b2021c998f1ab231790fd1ab6f3856dabcdb))
+* payments ([aed15e7](https://github.com/selfcommunity/community-js/commit/aed15e7f36b51ca0c022ed3564b087cc672a5822))
+* payments ([cc09416](https://github.com/selfcommunity/community-js/commit/cc09416018fe4f25407e188d0f4d259ed74f2cc7))
+* payments ([5afc030](https://github.com/selfcommunity/community-js/commit/5afc030308911daffd4672ef44fcb47e4b064873))
+* payments and other features ([a0bd0eb](https://github.com/selfcommunity/community-js/commit/a0bd0eb3aea472a65033fd1e4160ddf55a3c05a0))
+* payments category, group, event ([d0e2b24](https://github.com/selfcommunity/community-js/commit/d0e2b248fe14b667031529fe772f745129811f84))
+* paywall ([62d9ee1](https://github.com/selfcommunity/community-js/commit/62d9ee1fe4c60b5d801f708eac65c3462e0aafc3))
+* removed unnecessary function ([eb92e6a](https://github.com/selfcommunity/community-js/commit/eb92e6acd5e2a38514ea0eed06c2ecef8ddf4338))
+
+
+### Features
+
+* added composer controls for new ddp post_category_required_enabled and post_addressing_required_enabled. Linear issue: https://linear.app/quentral/issue/QUE-1914/frontend-nella-form-post-se-abilitata-post-category-required-enabled-e ([d69994e](https://github.com/selfcommunity/community-js/commit/d69994ef5455d9dd4037e7087e986f46eb5c9566))
+* added endpoints/services actions to manage scheduled posts. Linear issue: https://linear.app/quentral/issue/QUE-1793/frontend-creazione-e-gestione-dei-post-programmati ([eb8cfd2](https://github.com/selfcommunity/community-js/commit/eb8cfd23fe6d01f44e74c19edc095d8abd385c99))
+
+
+### Performance Improvements
+
+* updated payment product/products layout. Linear issue: https://linear.app/quentral/issue/QUE-1789/pwa-pagamenti ([df75e57](https://github.com/selfcommunity/community-js/commit/df75e57eec8691177c8c32f52255ffc40083a1f2))
+
+
+
+
+
 # [0.5.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.5...@selfcommunity/react-templates@0.5.0-alpha.6) (2025-04-22)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
