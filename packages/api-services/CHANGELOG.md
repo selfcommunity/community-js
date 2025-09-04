@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.0...@selfcommunity/api-services@0.7.0-alpha.1) (2025-09-04)
+
+
+### Bug Fixes
+
+* CommunityPaywalls ([68c6e14](https://github.com/selfcommunity/community-js/commit/68c6e142a09cdae50303c7672bb66640bc5881e1))
+* payment_waiting ([85af9fc](https://github.com/selfcommunity/community-js/commit/85af9fc96217e9f824a807b2d391bb34af154f65))
+* payment_waiting ([07a2235](https://github.com/selfcommunity/community-js/commit/07a2235b2b7532aef3613d7d5e942b205f6598d6))
+* payment_waiting group/course ([997106e](https://github.com/selfcommunity/community-js/commit/997106ef7cba0d335c0081c5ce12ad3faab980cd))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([0a0f739](https://github.com/selfcommunity/community-js/commit/0a0f739055bb5fcc1b95b2ca2b0d6386a4939047))
+* payments ([b85a180](https://github.com/selfcommunity/community-js/commit/b85a180cacbe50b580e9a729ef4b8681a0a9ed64))
+* payments ([dcc8552](https://github.com/selfcommunity/community-js/commit/dcc8552a61b3249c8f29810b39eff412dd8dbec3))
+* payments ([370983c](https://github.com/selfcommunity/community-js/commit/370983c46e142fca9c0e83a92072afe8f6c1ec0b))
+* payments ([a15eeb8](https://github.com/selfcommunity/community-js/commit/a15eeb8549d8064acfcd1ff2cdcf2ec4864b4f5e))
+* payments ([ec6d32e](https://github.com/selfcommunity/community-js/commit/ec6d32e82b4c778c265804c05d3002ac48faa4bb))
+* payments ([21e9a56](https://github.com/selfcommunity/community-js/commit/21e9a561872b29e616cdc6b0e820ac11eb396712))
+* payments ([233f5eb](https://github.com/selfcommunity/community-js/commit/233f5eb248e41f67ce2139955fde0261e54f071d))
+* payments ([720e295](https://github.com/selfcommunity/community-js/commit/720e2951048faa5fdedcf4874f6bf7211cf64804))
+* payments ([8ebe701](https://github.com/selfcommunity/community-js/commit/8ebe701424cf269df90cb524919cab946b8f1dbe))
+* payments ([ea3f7c2](https://github.com/selfcommunity/community-js/commit/ea3f7c267cf169442834fa50d6335a0cd15c30f0))
+* payments ([ffc87ee](https://github.com/selfcommunity/community-js/commit/ffc87eea62a9b6788843883d4bd34bbddcc1f8e5))
+* payments and other features ([a0bd0eb](https://github.com/selfcommunity/community-js/commit/a0bd0eb3aea472a65033fd1e4160ddf55a3c05a0))
+* payments category, group, event ([d0e2b24](https://github.com/selfcommunity/community-js/commit/d0e2b248fe14b667031529fe772f745129811f84))
+* paywall ([a6372be](https://github.com/selfcommunity/community-js/commit/a6372befda9a0b749c2d994c9be9ac90ec95b968))
+* paywall ([62d9ee1](https://github.com/selfcommunity/community-js/commit/62d9ee1fe4c60b5d801f708eac65c3462e0aafc3))
+* paywall ([46e72c4](https://github.com/selfcommunity/community-js/commit/46e72c40e0fc88db92da5b74f70c66fbf5f209a2))
+* paywall ([7913a21](https://github.com/selfcommunity/community-js/commit/7913a21732d4b2baf965ed016751c688e9a22ec3))
+* peerDependencies ([97c38fe](https://github.com/selfcommunity/community-js/commit/97c38fe2c7294c95c489f503117f09f6053d929d))
+
+
+### Features
+
+* added endpoints/services actions to manage scheduled posts. Linear issue: https://linear.app/quentral/issue/QUE-1793/frontend-creazione-e-gestione-dei-post-programmati ([eb8cfd2](https://github.com/selfcommunity/community-js/commit/eb8cfd23fe6d01f44e74c19edc095d8abd385c99))
+
+
+### Performance Improvements
+
+* added filters to payment orders table. Linear issue: https://linear.app/quentral/issue/QUE-1295/inserire-nel-componente-paymentorders-i-filtri-in-testa-alla-tabella ([5ed71b0](https://github.com/selfcommunity/community-js/commit/5ed71b0186c39e69a3e27b8cda49c3c8d5338b9d))
+
+
+
+
+
 ## [0.6.7-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.7-alpha.2...@selfcommunity/api-services@0.6.7-alpha.3) (2025-02-26)
 
 

@@ -3,6 +3,72 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.1...@selfcommunity/react-theme-default@0.5.0-alpha.2) (2025-09-04)
+
+
+### Bug Fixes
+
+* added paid button to course/group header ([a41bd0c](https://github.com/selfcommunity/community-js/commit/a41bd0c42a52c7acb1842f1bd7148fb37e7ed4f7))
+* added style for buy button hover state ([7bfabeb](https://github.com/selfcommunity/community-js/commit/7bfabebb75d537e8edf654d5b7f0f0f341d56f03))
+* checkout ([eabfc62](https://github.com/selfcommunity/community-js/commit/eabfc62c38eefb6838ba830c885ce2d59fd95557))
+* CheckoutReturnDialog ([ebd420e](https://github.com/selfcommunity/community-js/commit/ebd420e5a22b6e1a63d56af0c6e33e793b50471c))
+* CommunityPaywalls ([68c6e14](https://github.com/selfcommunity/community-js/commit/68c6e142a09cdae50303c7672bb66640bc5881e1))
+* contentProducts ([66d3047](https://github.com/selfcommunity/community-js/commit/66d304700e5624fdae9ceb74fb381575838ce89f))
+* course ([0014377](https://github.com/selfcommunity/community-js/commit/0014377f8263e931fe87b3462c4f8facb2f9166f))
+* course snippet, orders ([c1d3ee5](https://github.com/selfcommunity/community-js/commit/c1d3ee5ccb72fe084497fa8acf1b66978185e68b))
+* event and group managers ([e768f5a](https://github.com/selfcommunity/community-js/commit/e768f5a0d8efd9cd7e3a57730e01e70740a70f2d))
+* fixed hidden box-shadow in courses ([3e55b80](https://github.com/selfcommunity/community-js/commit/3e55b80d416bbdeb2d139b6ab4ddc9c1256c7130))
+* payment_waiting ([b84eadd](https://github.com/selfcommunity/community-js/commit/b84eadd5f52327b3f91e5f7e3012c51394d45b3a))
+* payment_waiting ([9ee5db4](https://github.com/selfcommunity/community-js/commit/9ee5db4d56c842572caf603b75d5c15efe192ae4))
+* payment_waiting ([85af9fc](https://github.com/selfcommunity/community-js/commit/85af9fc96217e9f824a807b2d391bb34af154f65))
+* payment_waiting ([07a2235](https://github.com/selfcommunity/community-js/commit/07a2235b2b7532aef3613d7d5e942b205f6598d6))
+* paymentOrders ([dab464a](https://github.com/selfcommunity/community-js/commit/dab464af0fb3bb067ff5d1b7dfc15e904044bc6b))
+* paymentOrders ([12c2476](https://github.com/selfcommunity/community-js/commit/12c24769a44a3ab373e07abf0f81f3a7585fcc73))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([16425dc](https://github.com/selfcommunity/community-js/commit/16425dc65cce1a0ae38053ee7f9f541102698288))
+* payments ([c379e8f](https://github.com/selfcommunity/community-js/commit/c379e8f245a5a753eb9cbbaafe90550f23d54f41))
+* payments ([3c82e7a](https://github.com/selfcommunity/community-js/commit/3c82e7a0bcd4d61e58479007f03b74c8e4ea0e6f))
+* payments ([b0f3602](https://github.com/selfcommunity/community-js/commit/b0f3602061d4027883d01f0f3d59ecf6b1673fd1))
+* payments ([f5817dd](https://github.com/selfcommunity/community-js/commit/f5817dd7c43efc6bb4f8a3daefc012ba04262997))
+* payments ([2989dd1](https://github.com/selfcommunity/community-js/commit/2989dd1ec555ecd3f1d6c8686ba9b416d243280c))
+* payments ([0d58a51](https://github.com/selfcommunity/community-js/commit/0d58a51a9645d4820df6a8f6db2f8a9193a99bc8))
+* payments ([21e9a56](https://github.com/selfcommunity/community-js/commit/21e9a561872b29e616cdc6b0e820ac11eb396712))
+* payments ([a41005d](https://github.com/selfcommunity/community-js/commit/a41005dc04b3410d9a20a2468aa76e1c5b938bbb))
+* payments ([720e295](https://github.com/selfcommunity/community-js/commit/720e2951048faa5fdedcf4874f6bf7211cf64804))
+* payments ([cc09416](https://github.com/selfcommunity/community-js/commit/cc09416018fe4f25407e188d0f4d259ed74f2cc7))
+* payments ([8ebe701](https://github.com/selfcommunity/community-js/commit/8ebe701424cf269df90cb524919cab946b8f1dbe))
+* payments ([ea3f7c2](https://github.com/selfcommunity/community-js/commit/ea3f7c267cf169442834fa50d6335a0cd15c30f0))
+* payments ([34467bd](https://github.com/selfcommunity/community-js/commit/34467bd9ef03dc0988d0a4ccd3747adbecedc85e))
+* payments and other features ([a0bd0eb](https://github.com/selfcommunity/community-js/commit/a0bd0eb3aea472a65033fd1e4160ddf55a3c05a0))
+* payments category, group, event ([d0e2b24](https://github.com/selfcommunity/community-js/commit/d0e2b248fe14b667031529fe772f745129811f84))
+* paywall ([62d9ee1](https://github.com/selfcommunity/community-js/commit/62d9ee1fe4c60b5d801f708eac65c3462e0aafc3))
+* paywall ([46e72c4](https://github.com/selfcommunity/community-js/commit/46e72c40e0fc88db92da5b74f70c66fbf5f209a2))
+* paywall ([7913a21](https://github.com/selfcommunity/community-js/commit/7913a21732d4b2baf965ed016751c688e9a22ec3))
+* paywalls configurator ([5ee1af0](https://github.com/selfcommunity/community-js/commit/5ee1af02465fa97a71136a9d6f80c943b5440610))
+* style ([0511ef7](https://github.com/selfcommunity/community-js/commit/0511ef795178a44c149d4a099d5a87439de21b5d))
+
+
+### Features
+
+* added margin between embeded video and medias. Linear: https://linear.app/quentral/issue/QUE-1917/frontend-nel-post-aggiungere-un-po-di-spazio-tra-gli-allegati-e-il ([65f3676](https://github.com/selfcommunity/community-js/commit/65f36762599ff938bc335e201327f9315fe0c09b))
+* added scheduled post in the composer. Linear issue: https://linear.app/quentral/issue/QUE-1863/frontend-gestire-ddp-se-post-programmati ([78b31ce](https://github.com/selfcommunity/community-js/commit/78b31ce29badbc05a141631e6037365761ee5f47))
+* managed ddp to hide comments and share; updated reaction layout. Linear: https://linear.app/quentral/issue/QUE-1856/frontend-in-base-alle-due-ddp-togliere-la-parte-di-post-per-fare-i ([fc94144](https://github.com/selfcommunity/community-js/commit/fc941444d6653cc040bd589963ce611a5e084f70))
+* restyled pdf preview and display. Linear: https://linear.app/quentral/issue/QUE-1797/frontend-sistemare-grafica-del-post-anche-in-stream-con-youtube-video ([1debc9f](https://github.com/selfcommunity/community-js/commit/1debc9fb07f4061a80d88676e012561a04c0d95f))
+
+
+### Performance Improvements
+
+* added filters to payment orders table. Linear issue: https://linear.app/quentral/issue/QUE-1295/inserire-nel-componente-paymentorders-i-filtri-in-testa-alla-tabella ([5ed71b0](https://github.com/selfcommunity/community-js/commit/5ed71b0186c39e69a3e27b8cda49c3c8d5338b9d))
+* added paid event link button event header ([18c8e72](https://github.com/selfcommunity/community-js/commit/18c8e7228ae019b2ccdcf90fbeba865b515678eb))
+* refactored checkout header, added info card ([9b2515b](https://github.com/selfcommunity/community-js/commit/9b2515ba0a06ae4f92b5337e2f241e04746ad641))
+* refactored checkout return dialog ([a84bf0b](https://github.com/selfcommunity/community-js/commit/a84bf0bb91e32fc9ad15182edb137aeffb3767a8))
+* updated payment product/products layout. Linear issue: https://linear.app/quentral/issue/QUE-1789/pwa-pagamenti ([df75e57](https://github.com/selfcommunity/community-js/commit/df75e57eec8691177c8c32f52255ffc40083a1f2))
+* updated theme fonts ([5bea34e](https://github.com/selfcommunity/community-js/commit/5bea34ec836e38d82c4287627bc86de64236c82c))
+
+
+
+
+
 ## [0.4.5-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.17...@selfcommunity/react-theme-default@0.4.5-alpha.18) (2025-02-27)
 
 

@@ -3,6 +3,59 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.2...@selfcommunity/react-core@0.7.0-alpha.3) (2025-09-04)
+
+
+### Bug Fixes
+
+* added new ddp connection_enabled and adapted follow/connection logic. Linear issue: https://linear.app/quentral/issue/QUE-1837/frontend-considerare-nuova-ddp-connection-enabled ([ec1cde5](https://github.com/selfcommunity/community-js/commit/ec1cde5d142724373523be830ba531827a6122aa))
+* CommunityPaywalls ([68c6e14](https://github.com/selfcommunity/community-js/commit/68c6e142a09cdae50303c7672bb66640bc5881e1))
+* contentProducts ([66d3047](https://github.com/selfcommunity/community-js/commit/66d304700e5624fdae9ceb74fb381575838ce89f))
+* course manager ([5e5f645](https://github.com/selfcommunity/community-js/commit/5e5f64599f064782d4c729030583aacebddb0c62))
+* event and group managers ([e768f5a](https://github.com/selfcommunity/community-js/commit/e768f5a0d8efd9cd7e3a57730e01e70740a70f2d))
+* fixed private messages ddp. Linear issue: https://linear.app/quentral/issue/QUE-1830/frontend-gestire-ddp-per-attivazione-e-disattivazione-messaggi-privati ([b4bdd1b](https://github.com/selfcommunity/community-js/commit/b4bdd1b0cd7a1814eddc5eaf6e95bfe5276d0ba2))
+* fixed publisher role. Part of Linear issue: https://linear.app/quentral/issue/QUE-1904/frontend-cliccando-i-3-puntini-la-chiamata-status-da-403 ([d967f6f](https://github.com/selfcommunity/community-js/commit/d967f6f8a4581090a0f9cc837aaa88eb6469b2d2))
+* moved ContextMenu component from js to pwa. Linear: https://linear.app/quentral/issue/QUE-1827/frontend-gestire-la-ddp-che-se-attiva-disabilita-il-tatso-destro-nel ([68bc81c](https://github.com/selfcommunity/community-js/commit/68bc81c2af4049b9b51c45b42cd10c9224f70788))
+* payment_waiting ([b756d66](https://github.com/selfcommunity/community-js/commit/b756d66c16ba8487bb69b7974eeee231161fa93d))
+* payment_waiting ([9ee5db4](https://github.com/selfcommunity/community-js/commit/9ee5db4d56c842572caf603b75d5c15efe192ae4))
+* payment_waiting ([d7477aa](https://github.com/selfcommunity/community-js/commit/d7477aa88db4561c82a227d794a68a2aac786b95))
+* payment_waiting ([2474202](https://github.com/selfcommunity/community-js/commit/24742023b5fc810ab3eff28f830fbfb06c515870))
+* payment_waiting ([07a2235](https://github.com/selfcommunity/community-js/commit/07a2235b2b7532aef3613d7d5e942b205f6598d6))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([370983c](https://github.com/selfcommunity/community-js/commit/370983c46e142fca9c0e83a92072afe8f6c1ec0b))
+* payments ([08b1b20](https://github.com/selfcommunity/community-js/commit/08b1b2021c998f1ab231790fd1ab6f3856dabcdb))
+* payments ([21e9a56](https://github.com/selfcommunity/community-js/commit/21e9a561872b29e616cdc6b0e820ac11eb396712))
+* payments ([233f5eb](https://github.com/selfcommunity/community-js/commit/233f5eb248e41f67ce2139955fde0261e54f071d))
+* payments ([720e295](https://github.com/selfcommunity/community-js/commit/720e2951048faa5fdedcf4874f6bf7211cf64804))
+* payments ([657860c](https://github.com/selfcommunity/community-js/commit/657860c7016b3926f990dbff2050b01097a11e66))
+* payments ([a1325cb](https://github.com/selfcommunity/community-js/commit/a1325cb55e02dcffe66a78e1fbf50c1819930fdc))
+* payments ([5afc030](https://github.com/selfcommunity/community-js/commit/5afc030308911daffd4672ef44fcb47e4b064873))
+* payments and other features ([a0bd0eb](https://github.com/selfcommunity/community-js/commit/a0bd0eb3aea472a65033fd1e4160ddf55a3c05a0))
+* payments category, group, event ([d0e2b24](https://github.com/selfcommunity/community-js/commit/d0e2b248fe14b667031529fe772f745129811f84))
+* paywall ([a6372be](https://github.com/selfcommunity/community-js/commit/a6372befda9a0b749c2d994c9be9ac90ec95b968))
+* paywall ([7913a21](https://github.com/selfcommunity/community-js/commit/7913a21732d4b2baf965ed016751c688e9a22ec3))
+
+
+### Features
+
+* added composer controls for new ddp post_category_required_enabled and post_addressing_required_enabled. Linear issue: https://linear.app/quentral/issue/QUE-1914/frontend-nella-form-post-se-abilitata-post-category-required-enabled-e ([d69994e](https://github.com/selfcommunity/community-js/commit/d69994ef5455d9dd4037e7087e986f46eb5c9566))
+* added ddp for category_follow_enabled and managed CategoriesSuggestionWidget, UserFollowedCategoriesWidget, CategoryFollowButton visibility. ([0a33908](https://github.com/selfcommunity/community-js/commit/0a3390861bdffebb33112d9773ce774bd9bc9495))
+* added ddp to manage autoplay on videos. Linaer: https://linear.app/quentral/issue/QUE-1796/frontend-togliere-dappertutto-autoplay-youtube-deve-essere-tutto-con ([e5c9c30](https://github.com/selfcommunity/community-js/commit/e5c9c306661dd4bf53f5ad67b98919b76a472f37))
+* added endpoints/services actions to manage scheduled posts. Linear issue: https://linear.app/quentral/issue/QUE-1793/frontend-creazione-e-gestione-dei-post-programmati ([eb8cfd2](https://github.com/selfcommunity/community-js/commit/eb8cfd23fe6d01f44e74c19edc095d8abd385c99))
+* added scheduled post in the composer. Linear issue: https://linear.app/quentral/issue/QUE-1863/frontend-gestire-ddp-se-post-programmati ([78b31ce](https://github.com/selfcommunity/community-js/commit/78b31ce29badbc05a141631e6037365761ee5f47))
+* gestione del tasto destro sul frontend. Linear: https://linear.app/quentral/issue/QUE-1827/frontend-gestire-la-ddp-che-se-attiva-disabilita-il-tatso-destro-nel ([de63fe7](https://github.com/selfcommunity/community-js/commit/de63fe7ffcb286d8991e66beb0a2cf5c6b99f2c7))
+* managed categories preferencies. Linear: https://linear.app/quentral/issue/QUE-1840/frontend-gestione-ddp-per-definire-se-il-menu-visualizza-tutte-le ([b526431](https://github.com/selfcommunity/community-js/commit/b5264312e818e42fea5060d425dfd2c994c57994))
+* managed ddp to hide comments and share; updated reaction layout. Linear: https://linear.app/quentral/issue/QUE-1856/frontend-in-base-alle-due-ddp-togliere-la-parte-di-post-per-fare-i ([fc94144](https://github.com/selfcommunity/community-js/commit/fc941444d6653cc040bd589963ce611a5e084f70))
+
+
+### Performance Improvements
+
+* added user role publisher. Linear issue: https://linear.app/quentral/issue/QUE-1824/frontend-considerare-nuovo-ruolo-publisher-puo-pubblicare-come-gli ([1c6a008](https://github.com/selfcommunity/community-js/commit/1c6a0088894045029aebc8f6d53ecf68523f8dfb))
+
+
+
+
+
 ## [0.6.7-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.6.7-alpha.19...@selfcommunity/react-core@0.6.7-alpha.20) (2025-03-14)
 
 **Note:** Version bump only for package @selfcommunity/react-core
