@@ -66,6 +66,25 @@ export default function useSCFetchGroup({
   );
 
   /**
+   * Refresh group
+   */
+  const refreshGroup = useMemo(
+    () => () => {
+      fetchGroup()
+        .then((obj: SCGroupType) => {
+          setSCGroup(obj);
+        })
+        .catch((err) => {
+          LRUCache.delete(__groupCacheKey);
+          setError(`Error on refresh group with id ${id}`);
+          Logger.error(SCOPE_SC_CORE, `Error on refresh group with id ${id}`);
+          Logger.error(SCOPE_SC_CORE, err.message);
+        });
+    },
+    [__groupCacheKey, setSCGroup]
+  );
+
+  /**
    * If id attempt to get the group by id
    */
   useEffect(() => {
@@ -89,5 +108,5 @@ export default function useSCFetchGroup({
     }
   }, [group, authUserId]);
 
-  return {scGroup, setSCGroup, error};
+  return {scGroup, setSCGroup, error, refreshGroup};
 }

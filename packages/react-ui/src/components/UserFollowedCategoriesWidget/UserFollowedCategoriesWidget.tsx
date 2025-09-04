@@ -2,7 +2,14 @@ import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react
 import {Button, CardContent, ListItem, Typography, styled, List} from '@mui/material';
 import {UserService} from '@selfcommunity/api-services';
 import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
-import {SCCache, SCPreferences, SCPreferencesContext, SCPreferencesContextType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {
+  SCCache,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import Category, {CategoryProps, CategorySkeleton} from '../Category';
 import {SCCategoryType} from '@selfcommunity/types';
@@ -124,12 +131,15 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const isMe = useMemo(() => scUserContext.user && userId === scUserContext.user.id, [scUserContext.user, userId]);
-  const scPreferencesContext: SCPreferencesContextType = useContext(SCPreferencesContext);
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
   const contentAvailability = useMemo(
+    () => SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in preferences && preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
+    [preferences]
+  );
+  const categoryFollowEnabled = useMemo(
     () =>
-      SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in scPreferencesContext.preferences &&
-      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
-    [scPreferencesContext]
+      SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED in preferences && preferences[SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED].value,
+    [preferences]
   );
 
   // STATE
@@ -175,13 +185,18 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
   // EFFECTS
   useEffect(() => {
     let _t;
-    if ((contentAvailability || (!contentAvailability && scUserContext.user?.id)) && isInteger(userId) && scUserContext.user !== undefined) {
+    if (
+      (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
+      isInteger(userId) &&
+      scUserContext.user !== undefined &&
+      categoryFollowEnabled
+    ) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
       };
     }
-  }, [scUserContext.user, contentAvailability, userId]);
+  }, [scUserContext.user, contentAvailability, userId, categoryFollowEnabled]);
 
   /**
    * Virtual feed update
@@ -221,7 +236,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
   };
 
   // RENDER
-  if ((autoHide && !state.count && state.initialized) || !userId) {
+  if ((autoHide && !state.count && state.initialized) || !userId || !categoryFollowEnabled) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {

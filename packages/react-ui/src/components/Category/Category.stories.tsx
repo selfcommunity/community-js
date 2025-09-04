@@ -30,11 +30,20 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<Category> = {
+export const Base: StoryObj<typeof Category> = {
   args: {
     categoryId: 1,
     elevation: 1,
     variant: 'elevation'
   },
   render: template
+};
+
+export const Outlined: StoryObj<typeof Category> = {
+	args: {
+		categoryId: 1,
+		elevation: 0,
+		variant: 'outlined'
+	},
+	render: template
 };

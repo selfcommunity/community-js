@@ -207,6 +207,26 @@ import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from './components/
 import LiveStreamForm, {LiveStreamFormProps} from './components/LiveStreamForm';
 import LiveStreamRoom, {LiveStreamRoomProps} from './components/LiveStreamRoom';
 import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './components/LiveStreamRoom/LiveStreamVideoConference';
+import PaywallsConfigurator, {PaywallsConfiguratorProps, PaywallsConfiguratorSkeleton} from './components/PaywallsConfigurator';
+import PaywallsDialog, {PaywallsDialogProps} from './components/PaywallsDialog';
+import PaymentProducts, {PaymentProductsProps} from './components/PaymentProducts';
+import PaymentProduct, {PaymentProductProps} from './components/PaymentProduct';
+import PaymentOrder, {PaymentOrderProps} from './components/PaymentOrder';
+import PaymentOrderPdfButton, {PaymentOrderPdfButtonProps} from './components/PaymentOrderPdfButton';
+import PaymentDetailDialog, {PaymentDetailDialogProps} from './components/PaymentDetailDialog';
+import PaymentOrders, {PaymentOrdersProps} from './components/PaymentOrders';
+import PaymentProductPrice, {PaymentProductPriceProps} from './components/PaymentProductPrice';
+import UserPaymentMethodsPortal, {UserPaymentMethodsPortalProps, UserPaymentMethodsPortalSkeleton} from './components/UserPaymentMethodsPortal';
+import UserPaymentMethods, {UserPaymentMethodsProps, UserPaymentMethodsSkeleton} from './components/UserPaymentMethods';
+import UserAddPaymentMethodForm, {UserAddPaymentMethodFormProps} from './components/UserAddPaymentMethodForm';
+import UserAddPaymentMethodDialog, {UserAddPaymentMethodDialogProps} from './components/UserAddPaymentMethodDialog';
+import UserChangeAddressDialog, {UserChangeAddressDialogProps} from './components/UserChangeAddressDialog';
+import UserBillingInfo, {UserBillingInfoProps, UserBillingInfoSkeleton} from './components/UserBillingInfo';
+import Checkout, {CheckoutProps} from './components/Checkout';
+import CheckoutReturnDialog, {CheckoutReturnDialogProps} from './components/CheckoutReturnDialog';
+import CommunityPaywalls, {CommunityPaywallsProps, CommunityPaywallsSkeleton} from './components/CommunityPaywalls';
+import PdfPreviewDialog, {PdfPreviewDialogProps} from './components/PdfPreviewDialog';
+import PdfPreview, {PdfPreviewProps} from './components/PdfPreview';
 import BaseDialog, {BaseDialogProps} from './shared/BaseDialog';
 import BaseItem, {BaseItemProps} from './shared/BaseItem';
 import Calendar, {CalendarProps} from './shared/Calendar';
@@ -230,6 +250,7 @@ import UrlTextField from './shared/UrlTextField';
 import UserAvatar, {UserAvatarProps} from './shared/UserAvatar';
 import UserDeletedSnackBar, {UserDeletedSnackBarProps} from './shared/UserDeletedSnackBar';
 import UsernameTextField from './shared/UsernameTextField';
+import HiddenPurchasableContent from './shared/HiddenPurchasableContent';
 import {
   PlatformWidgetActionType,
   SCBroadcastMessageTemplateType,
@@ -275,8 +296,8 @@ import {getRelativeTime} from './utils/formatRelativeTime';
 import {bytesToSize} from './utils/sizeCoverter';
 import {generateRoomId, randomString, decodePassphrase, encodePassphrase} from './utils/liveStream';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
+import {getDefaultLocale, getDefaultPaymentMethodConfiguration, getDefaultAppearanceStyle, getConvertedAmount} from './utils/payment';
 import {getUrlLesson} from './utils/course';
-
 /**
  * Import Assets
  */
@@ -766,6 +787,9 @@ export {
   UserLiveStreamWidget,
   UserLiveStreamWidgetProps,
   UserLiveStreamWidgetSkeleton,
+  UserPaymentMethodsPortal,
+  UserPaymentMethodsPortalProps,
+  UserPaymentMethodsPortalSkeleton,
   useStickyBox,
   UseStickyBoxProps,
   LiveStream,
@@ -794,5 +818,52 @@ export {
   WidgetProps,
   X_SHARE,
   PROVIDER_ICONS_CONTAINED,
-  PROVIDER_ICONS_OUTLINED
+  PROVIDER_ICONS_OUTLINED,
+  getDefaultLocale,
+  getDefaultPaymentMethodConfiguration,
+  getDefaultAppearanceStyle,
+  getConvertedAmount,
+  PaywallsDialog,
+  PaywallsDialogProps,
+  PaywallsConfigurator,
+  PaywallsConfiguratorProps,
+  PaywallsConfiguratorSkeleton,
+  PaymentProducts,
+  PaymentProductsProps,
+  PaymentProduct,
+  PaymentProductProps,
+  PaymentOrder,
+  PaymentOrderProps,
+  PaymentOrderPdfButton,
+  PaymentOrderPdfButtonProps,
+  PaymentDetailDialog,
+  PaymentDetailDialogProps,
+  PaymentOrders,
+  PaymentOrdersProps,
+  PaymentProductPrice,
+  PaymentProductPriceProps,
+  PdfPreviewDialog,
+  PdfPreviewDialogProps,
+  PdfPreview,
+  PdfPreviewProps,
+  UserPaymentMethods,
+  UserPaymentMethodsProps,
+  UserPaymentMethodsSkeleton,
+  UserAddPaymentMethodForm,
+  UserAddPaymentMethodFormProps,
+  UserAddPaymentMethodDialog,
+  UserAddPaymentMethodDialogProps,
+  UserChangeAddressDialog,
+  UserChangeAddressDialogProps,
+  UserBillingInfo,
+  UserBillingInfoProps,
+  UserBillingInfoSkeleton,
+  Checkout,
+  CheckoutProps,
+  CheckoutReturnDialog,
+  CheckoutReturnDialogProps,
+  HiddenPurchasableContent,
+  CommunityPaywalls,
+  CommunityPaywallsProps,
+  CommunityPaywallsSkeleton
 };

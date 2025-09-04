@@ -1,8 +1,17 @@
 import {Avatar, Button, Icon, IconButton, Skeleton, Stack, styled, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {Fragment, memo, useCallback, useEffect, useState} from 'react';
+import {Fragment, memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog from '../BaseDialog';
-import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCThemeType,
+  useSCPreferences,
+  useSCRouting
+} from '@selfcommunity/react-core';
 import {PREFIX} from './constants';
 import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import AccordionLessons from '../AccordionLessons';
@@ -41,10 +50,15 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
 
   // CONTEXTS
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const privateMessagingEnabled = useMemo(
+    () => SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in preferences && preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
+    [preferences]
+  );
 
   // EFFECTS
   useEffect(() => {
@@ -101,16 +115,18 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
                   <Typography variant="body1">{user.username}</Typography>
                 </Stack>
 
-                <Button
-                  component={Link}
-                  to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}
-                  variant="outlined"
-                  size="small"
-                  color="inherit">
-                  <Typography variant="body2">
-                    <FormattedMessage id="ui.courseUsersTable.dialog.btn.label" defaultMessage="ui.courseUsersTable.dialog.btn.label" />
-                  </Typography>
-                </Button>
+                {privateMessagingEnabled && (
+                  <Button
+                    component={Link}
+                    to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}
+                    variant="outlined"
+                    size="small"
+                    color="inherit">
+                    <Typography variant="body2">
+                      <FormattedMessage id="ui.courseUsersTable.dialog.btn.label" defaultMessage="ui.courseUsersTable.dialog.btn.label" />
+                    </Typography>
+                  </Button>
+                )}
               </Stack>
 
               {student ? (

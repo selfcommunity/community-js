@@ -186,7 +186,8 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
         preventDuplicate: true,
         key: messageKey,
         variant: 'notification' as BaseVariant,
-        persist: data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER ? true : false,
+        persist: data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER,
+        ...(data.data.activity_type !== SCNotificationTypologyType.NOTIFICATION_BANNER && {autoHideDuration: 10000}),
         anchorOrigin: {horizontal: 'left', vertical: 'bottom'},
         action: null,
         SnackbarProps: {

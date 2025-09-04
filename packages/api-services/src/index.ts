@@ -54,6 +54,8 @@ import EventService, {EventApiClient, EventApiClientInterface} from './services/
 import LiveStreamService, {LiveStreamApiClient, LiveStreamApiClientInterface} from './services/live_stream';
 import OnBoardingService, {OnBoardingApiClient, OnBoardingApiClientInterface} from './services/onboarding';
 import CourseService, {CourseApiClient, CourseApiClientInterface} from './services/course';
+import PaymentService, {PaymentApiClient, PaymentApiClientInterface} from './services/payment';
+import CommunityService, {CommunityApiClient, CommunityApiClientInterface} from './services/community';
 
 /**
  * Types
@@ -104,6 +106,7 @@ import {
   FeedObjGetParams,
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
+  ScheduledFeedObjParams,
   FeedParams,
   LegalPageFilterParams,
   FeatureParams,
@@ -130,7 +133,14 @@ import {
   CourseLessonCommentsParams,
   CourseUserRoleParams,
   CourseUsersParams,
-  CourseDashboardUsersParams
+  CourseDashboardUsersParams,
+  PaymentContentStatusParams,
+  PaymentContentStatus,
+  PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams,
+  PaymentOrderParams
 } from './types';
 
 /**
@@ -281,6 +291,7 @@ export {
   FeedObjGetParams,
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
+  ScheduledFeedObjParams,
   FeedParams,
   LegalPageFilterParams,
   FeatureParams,
@@ -325,5 +336,18 @@ export {
   CourseLessonCommentsParams,
   CourseUserRoleParams,
   CourseUsersParams,
-  CourseDashboardUsersParams
+  CourseDashboardUsersParams,
+  PaymentService,
+  PaymentApiClientInterface,
+  PaymentApiClient,
+  CommunityService,
+  CommunityApiClient,
+  CommunityApiClientInterface,
+  PaymentContentStatusParams,
+  PaymentContentStatus,
+  PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams,
+  PaymentOrderParams
 };

@@ -153,10 +153,10 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
       scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
     [scPreferencesContext.preferences]
   );
-  const followEnabled = useMemo(
+  const connectionEnabled = useMemo(
     () =>
-      SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
-      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
+      SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value,
     [scPreferencesContext.preferences]
   );
 
@@ -188,7 +188,7 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (scUserContext.user && !followEnabled) {
+    if (scUserContext.user && connectionEnabled) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
@@ -218,7 +218,7 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
   }, [state.results]);
 
   useEffect(() => {
-    if (followEnabled || (!contentAvailability && !scUserContext.user)) {
+    if (!connectionEnabled || (!contentAvailability && !scUserContext.user)) {
       return;
     } else if (cacheStrategy === CacheStrategies.NETWORK_ONLY) {
       onStateChange && onStateChange({cacheStrategy: CacheStrategies.CACHE_FIRST});
@@ -256,7 +256,7 @@ export default function UserConnectionsRequestsWidget(inProps: UserConnectionsRe
   };
 
   // RENDER
-  if (followEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user)) {
+  if (!connectionEnabled || (autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user)) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {

@@ -159,6 +159,18 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/$(type)/$(id)/flag/'),
     method: 'POST'
   },
+  GetScheduledFeedObjects: {
+    url: urlReplacer('/api/v2/$(type)/scheduled/'),
+    method: 'GET'
+  },
+  PublishFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/publish/'),
+    method: 'POST'
+  },
+  GetDraftedFeedObjects: {
+    url: urlReplacer('/api/v2/$(type)/drafted/'),
+    method: 'GET'
+  },
   /**
    * Comments
    */
@@ -524,6 +536,14 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   GetLiveStream: {
     url: urlReplacer('/api/v2/user/$(id)/live_stream/'),
+    method: 'GET'
+  },
+  GetOrderHistory: {
+    url: urlReplacer('/api/v2/user/$(id)/order/'),
+    method: 'GET'
+  },
+  GetOrderDetail: {
+    url: urlReplacer('/api/v2/user/$(id)/order/$(order)/'),
     method: 'GET'
   },
   /**
@@ -1589,7 +1609,74 @@ const Endpoints: {[key: string]: EndpointType} = {
   GetUserJoinedCourses: {
     url: urlReplacer('/api/v2/user/$(id)/courses/'),
     method: 'GET'
-  }
+  },
+  /**
+   * Community
+   */
+  GetCommunities: {
+    url: urlReplacer('/api/v2/community/'),
+    method: 'GET'
+  },
+  GetCommunity: {
+    url: urlReplacer('/api/v2/community/$(id)/'),
+    method: 'GET'
+  },
+  /**
+   * Payments/Paywalls
+   */
+  GetPaymentContentStatus: {
+    url: urlReplacer('/api/v2/payments/content_status/'),
+    method: 'GET'
+  },
+  GetPaywalls: {
+    url: urlReplacer('/api/v2/payments/paywall/'),
+    method: 'GET'
+  },
+  GetPaywall: {
+    url: urlReplacer('/api/v2/payments/paywall/$(id)/'),
+    method: 'GET'
+  },
+  GetPaymentProducts: {
+    url: urlReplacer('/api/v2/payments/payment_product/'),
+    method: 'GET'
+  },
+  GetPaymentProduct: {
+    url: urlReplacer('/api/v2/payments/payment_product/$(id)/'),
+    method: 'GET'
+  },
+  GetPaymentProductPrices: {
+    url: urlReplacer('/api/v2/payments/payment_product/$(id)/'),
+    method: 'GET'
+  },
+  GetCheckoutSession: {
+    url: urlReplacer('/api/v2/payments/checkout_session/'),
+    method: 'GET'
+  },
+  CheckoutCreateSession: {
+    url: urlReplacer('/api/v2/payments/checkout_session/'),
+    method: 'POST'
+  },
+  CheckoutSessionComplete: {
+    url: urlReplacer('/api/v2/payments/checkout_session/complete/'),
+    method: 'POST'
+  },
+  GetPaymentOrders: {
+    url: urlReplacer('/api/v2/payments/payment_order/'),
+    method: 'GET'
+  },
+  GetPaymentOrder: {
+    url: urlReplacer('/api/v2/payments/payment_order/$(id)/'),
+    method: 'GET'
+  },
+  GetPaymentOrderPdf: {
+    url: urlReplacer('/api/v2/payments/payment_order/$(id)/pdf/'),
+    method: 'GET'
+  },
+  CreateCustomerPortalSession: {
+    url: urlReplacer('/api/v2/payments/customer_portal_session/'),
+    method: 'POST'
+  },
+  CreatePaymentProduct: {url: urlReplacer('/api/v2/payments/payment_product/price/'), method: 'POST'}
 };
 
 export default Endpoints;

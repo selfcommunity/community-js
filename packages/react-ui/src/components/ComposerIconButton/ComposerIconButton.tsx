@@ -344,7 +344,8 @@ export default React.forwardRef(function ComposerIconButton(inProps: ComposerIco
   const handleSuccess = useCallback(
     (feedObject: FeedObjectProps) => {
       setOpenComposer(false);
-      enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
+      const messageId = feedObject.scheduled_at ? 'ui.composer.scheduled.success' : 'ui.composerIconButton.composer.success';
+      enqueueSnackbar(<FormattedMessage id={messageId} defaultMessage={messageId} />, {
         action: () => (
           <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], getRouteData(feedObject))}>
             <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />

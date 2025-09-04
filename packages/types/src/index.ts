@@ -130,7 +130,17 @@ import {
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamMonthlyDurationType,
   type SCLiveStreamSettingsType,
-  type SCLiveStreamConnectionDetailsResponseErrorType
+  type SCLiveStreamConnectionDetailsResponseErrorType,
+  type SCPaywall,
+  type SCPaymentProduct,
+  type SCPaymentPrice,
+  type SCCheckoutSession,
+  type SCPurchasableContent,
+  type SCCheckoutSessionDetail,
+  type SCCheckoutSessionComplete,
+  type SCPaymentOrder,
+  type SCPaymentsCustomerPortalSession,
+  type SCCommunityType
 } from './types';
 
 /**
@@ -186,6 +196,12 @@ import {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
+  SCPaymentPriceCurrencyType,
+  SCContentType,
+  SCCheckoutSessionStatus,
+  SCPaymentProductTemplateType,
+  SCPaymentRecurringInterval,
+  SCCheckoutSessionUIMode,
   SCCourseOrderingUsersType
 } from './types';
 
@@ -242,6 +258,12 @@ export {
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
   SCCommunityEnvironment,
+  SCPaymentPriceCurrencyType,
+  SCContentType,
+  SCCheckoutSessionStatus,
+  SCPaymentProductTemplateType,
+  SCPaymentRecurringInterval,
+  SCCheckoutSessionUIMode,
   SCCourseOrderingUsersType
 };
 export {
@@ -373,5 +395,15 @@ export {
   type SCLiveStreamConnectionDetailsType,
   type SCLiveStreamMonthlyDurationType,
   type SCLiveStreamSettingsType,
-  type SCLiveStreamConnectionDetailsResponseErrorType
+  type SCLiveStreamConnectionDetailsResponseErrorType,
+  type SCPaywall,
+  type SCPaymentProduct,
+  type SCPaymentPrice,
+  type SCCheckoutSession,
+  type SCPurchasableContent,
+  type SCCheckoutSessionDetail,
+  type SCCheckoutSessionComplete,
+  type SCPaymentOrder,
+  type SCPaymentsCustomerPortalSession,
+  type SCCommunityType
 };

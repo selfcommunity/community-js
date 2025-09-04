@@ -45,6 +45,8 @@ import {Endpoints, EndpointType, http, HttpResponse} from '@selfcommunity/api-se
 import {
   SCContext,
   SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
   SCRoutingContextType,
   SCThemeType,
   SCUserContext,
@@ -52,6 +54,7 @@ import {
   UserUtils,
   useSCFetchCommentObject,
   useSCFetchFeedObject,
+  useSCPreferences,
   useSCRouting
 } from '@selfcommunity/react-core';
 import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
@@ -65,6 +68,7 @@ import {
   HIDE_CONTRIBUTION_SECTION,
   MODERATE_CONTRIBUTION_DELETED,
   MODERATE_CONTRIBUTION_HIDDEN,
+  PUBLISH_CONTRIBUTION,
   RESTORE_CONTRIBUTION,
   SUSPEND_NOTIFICATION_CONTRIBUTION,
   SUSPEND_NOTIFICATION_EVENT
@@ -189,6 +193,11 @@ export interface ContributionActionsMenuProps {
   onRestoreContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
 
   /**
+   * Handle publish obj
+   */
+  onPublishContribution?: (obj: SCFeedObjectType) => void;
+
+  /**
    * Handle flag notification obj
    */
   onFlagContribution?: (obj: SCCommentType | SCFeedObjectType, type: string, flagged: boolean) => void;
@@ -229,6 +238,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     onHideContribution,
     onDeleteContribution,
     onRestoreContribution,
+    onPublishContribution,
     onSuspendNotificationContribution,
     onSuspendNotificationEvent,
     PopperProps = {},
@@ -246,6 +256,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   const scUserId = scUserContext.user ? scUserContext.user.id : null;
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
 
   // CONTRIBUTION STATE
   const {obj: feedObj, setObj: setFeedObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
@@ -276,6 +287,13 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   // CONST
   const contributionObj: SCFeedObjectType | SCCommentType = commentObj ? commentObj : feedObj;
   let popperRef = useRef(null);
+  const scheduledPostsEnabled = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED].value,
+    [preferences]
+  );
 
   /**
    * Intial extra sections to render, in addition to the GENERAL_SECTION
@@ -294,7 +312,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         _extra.push(FLAG_CONTRIBUTION_SECTION);
       }
       // Enable when backend is ready
-      if (UserUtils.isStaff(scUserContext.user)) {
+      if (UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)) {
         // admin or moderator
         _extra.push(HIDE_CONTRIBUTION_SECTION);
         _extra.push(DELETE_CONTRIBUTION_SECTION);
@@ -544,6 +562,26 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   );
 
   /**
+   * Perform publish contribution
+   */
+  const performPublishContribution = useMemo(
+    () => () => {
+      return http
+        .request({
+          url: Endpoints.PublishFeedObject.url({type: contributionObj.type, id: contributionObj.id}),
+          method: Endpoints.PublishFeedObject.method
+        })
+        .then((res: HttpResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [contributionObj]
+  );
+
+  /**
    * Fetch initial flag status
    */
   function fetchFlagStatus() {
@@ -687,6 +725,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       setCurrentAction(DELETE_CONTRIBUTION);
       setOpenConfirmDialog(true);
       handleClose();
+    } else if (action === PUBLISH_CONTRIBUTION) {
+      setCurrentAction(PUBLISH_CONTRIBUTION);
+      setOpenConfirmDialog(true);
+      handleClose();
     } else if (action === RESTORE_CONTRIBUTION) {
       setCurrentAction(RESTORE_CONTRIBUTION);
       setOpenConfirmDialog(true);
@@ -763,6 +805,18 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           .then(() => {
             const _contributionObj = Object.assign({}, contributionObj, {deleted: false});
             onRestoreContribution && onRestoreContribution(_contributionObj);
+            performPostConfirmAction(true);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+            performPostConfirmAction(false);
+          });
+      } else if (currentAction === PUBLISH_CONTRIBUTION) {
+        setCurrentActionLoading(PUBLISH_CONTRIBUTION);
+        performPublishContribution()
+          .then(() => {
+            const _contributionObj = Object.assign({}, contributionObj, {deleted: false});
+            onPublishContribution && onPublishContribution(_contributionObj as SCFeedObjectType);
             performPostConfirmAction(true);
           })
           .catch((error) => {
@@ -1036,7 +1090,17 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    * Can authenticated user delete the contribution
    */
   function canDeleteContribution(): boolean {
-    return scUserContext.user && scUserContext.user.id === contributionObj.author.id && !deleteType;
+    return scUserContext.user && scUserContext.user.id === contributionObj.author.id;
+  }
+
+  /**
+   * Can authenticated user publish the contribution
+   */
+  function canPublishContribution(): boolean {
+    const user = scUserContext.user;
+    if (!user || contributionObj.deleted || !scheduledPostsEnabled || !feedObj.draft) return false;
+
+    return user.id === contributionObj.author.id || (scheduledPostsEnabled && (UserUtils.isAdmin(user) || UserUtils.isModerator(user)));
   }
 
   /**
@@ -1124,6 +1188,20 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                 classes={{root: classes.itemText}}
               />
             )}
+          </MenuItem>
+        )}
+        {canPublishContribution() && (
+          <MenuItem className={classes.subItem} disabled={isFlagging}>
+            <ListItemIcon>
+              <Icon>upload</Icon>
+            </ListItemIcon>
+            <ListItemText
+              primary={
+                <FormattedMessage id="ui.contributionActionMenu.publishContribution" defaultMessage="ui.contributionActionMenu.publishContribution" />
+              }
+              onClick={() => handleAction(PUBLISH_CONTRIBUTION)}
+              classes={{root: classes.itemText}}
+            />
           </MenuItem>
         )}
         {canSuspendNotificationContribution() && (
@@ -1270,6 +1348,15 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   <FormattedMessage
                     id="ui.contributionActionMenu.deleteContributionInfo"
                     defaultMessage="ui.contributionActionMenu.deleteContributionInfo"
+                  />
+                )
+              }
+            : currentAction === PUBLISH_CONTRIBUTION
+            ? {
+                content: (
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.publishContributionInfo"
+                    defaultMessage="ui.contributionActionMenu.publishContributionInfo"
                   />
                 )
               }

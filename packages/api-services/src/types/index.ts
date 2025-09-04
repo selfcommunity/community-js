@@ -24,7 +24,7 @@ import {CustomAdvParams} from './customAdv';
 import {CustomPageParams, CustomPageSearchParams} from './customPage';
 import {EmbedUpdateParams, EmbedSearchParams} from './embed';
 import {BaseGetParams, BaseSearchParams} from './baseParams';
-import {FeedObjGetParams, FeedObjCreateParams, FeedObjectPollVotesSearch} from './feedObject';
+import {FeedObjGetParams, FeedObjCreateParams, FeedObjectPollVotesSearch, ScheduledFeedObjParams} from './feedObject';
 import {FeedParams} from './feed';
 import {LegalPageFilterParams} from './legalPage';
 import {FeatureParams} from './feature';
@@ -45,6 +45,15 @@ import {
   CourseUsersParams,
   CourseDashboardUsersParams
 } from './course';
+import {
+  PaymentContentStatusParams,
+  PaymentContentStatus,
+  PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams,
+  PaymentOrderParams
+} from './payment';
 
 export {
   AccountCreateParams,
@@ -94,6 +103,7 @@ export {
   FeedObjGetParams,
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
+  ScheduledFeedObjParams,
   FeedParams,
   LegalPageFilterParams,
   FeatureParams,
@@ -121,5 +131,12 @@ export {
   CourseLessonCommentsParams,
   CourseUserRoleParams,
   CourseUsersParams,
-  CourseDashboardUsersParams
+  CourseDashboardUsersParams,
+  PaymentContentStatusParams,
+  PaymentContentStatus,
+  PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams,
+  PaymentOrderParams
 };

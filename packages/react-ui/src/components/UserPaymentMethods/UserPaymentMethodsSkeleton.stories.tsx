@@ -1,0 +1,17 @@
+import type { Meta, StoryObj } from '@storybook/react';
+import UserPaymentMethodsSkeleton from './Skeleton';
+
+export default {
+  title: 'Design System/React UI/Skeleton/UserPaymentMethods',
+  component: UserPaymentMethodsSkeleton
+} as Meta<typeof UserPaymentMethodsSkeleton>;
+
+const template = (args) => (
+  <div style={{width: '100%'}}>
+    <UserPaymentMethodsSkeleton {...args} />
+  </div>
+);
+
+export const Base: StoryObj<typeof UserPaymentMethodsSkeleton> = {
+  render: template
+};

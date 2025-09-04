@@ -33,7 +33,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof Course> = {
 	args: {
-		courseId: 1
+		courseId: 6
 	},
 	render: template
 };
@@ -41,9 +41,20 @@ export const Base: StoryObj<typeof Course> = {
 export const Snippet: StoryObj<typeof Course> = {
 	args: {
 		template: SCCourseTemplateType.SNIPPET,
-		courseId: 1,
+		courseId: 6,
 		elevation: 0,
 		variant: 'elevation',
+		square: false
+	},
+	render: template
+};
+
+export const SnippetOutlined: StoryObj<typeof Course> = {
+	args: {
+		template: SCCourseTemplateType.SNIPPET,
+		courseId: 6,
+		elevation: 0,
+		variant: 'outlined',
 		square: false
 	},
 	render: template

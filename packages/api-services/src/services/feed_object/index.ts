@@ -1,5 +1,13 @@
 import {apiRequest} from '../../utils/apiRequest';
-import {BaseGetParams, BaseSearchParams, FeedObjCreateParams, FeedObjectPollVotesSearch, FeedObjGetParams, SCPaginatedResponse} from '../../types';
+import {
+  BaseGetParams,
+  BaseSearchParams,
+  FeedObjCreateParams,
+  FeedObjectPollVotesSearch,
+  FeedObjGetParams,
+  SCPaginatedResponse,
+  ScheduledFeedObjParams
+} from '../../types';
 import Endpoints from '../../constants/Endpoints';
 import {
   SCContributionType,
@@ -142,6 +150,21 @@ export interface FeedObjectApiClientInterface {
     id: number | string,
     config?: AxiosRequestConfig
   ): Promise<SCFeedObjectHideStatusType>;
+  feedObjectScheduledList(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    params?: ScheduledFeedObjParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
+  feedObjectDraftedList(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFeedObjectType>>;
+  publishFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCFeedObjectType>;
 }
 /**
  * Contains all the endpoints needed to manage feed objs (discussions-posts-statuses).
@@ -593,6 +616,58 @@ export class FeedObjectApiClient {
   ): Promise<SCFeedObjectHideStatusType> {
     return apiRequest({...config, url: Endpoints.FeedObjectHideStatus.url({type, id}), method: Endpoints.FeedObjectHideStatus.method});
   }
+
+  /**
+   * This endpoint retrieves the list of scheduled feed objects
+   * @param type
+   * @param params
+   * @param config
+   */
+  static feedObjectScheduledList(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    params?: ScheduledFeedObjParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    const p = urlParams(params);
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.GetScheduledFeedObjects.url({type})}?${p.toString()}`,
+      method: Endpoints.GetScheduledFeedObjects.method
+    });
+  }
+
+  /**
+   * This endpoint retrieves the list of drafted feed objects
+   * @param type
+   * @param params
+   * @param config
+   */
+  static feedObjectDraftedList(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    const p = urlParams(params);
+    return apiRequest({
+      ...config,
+      url: `${Endpoints.GetDraftedFeedObjects.url({type})}?${p.toString()}`,
+      method: Endpoints.GetDraftedFeedObjects.method
+    });
+  }
+
+  /**
+   * This endpoint publishes a drafted or scheduled the feed obj.
+   * @param type
+   * @param id
+   * @param config
+   */
+  static publishFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCFeedObjectType> {
+    return apiRequest({...config, url: Endpoints.PublishFeedObject.url({type, id}), method: Endpoints.PublishFeedObject.method});
+  }
 }
 
 /**
@@ -843,5 +918,26 @@ export default class FeedObjectService {
     config?: AxiosRequestConfig
   ): Promise<SCFeedObjectHideStatusType> {
     return FeedObjectApiClient.feedObjectHideStatus(type, id, config);
+  }
+  static async feedObjectScheduledList(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    params?: ScheduledFeedObjParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    return FeedObjectApiClient.feedObjectScheduledList(type, params, config);
+  }
+  static async feedObjectDraftedList(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCFeedObjectType>> {
+    return FeedObjectApiClient.feedObjectDraftedList(type, params, config);
+  }
+  static async publishFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<SCFeedObjectType> {
+    return FeedObjectApiClient.publishFeedObject(type, id, config);
   }
 }

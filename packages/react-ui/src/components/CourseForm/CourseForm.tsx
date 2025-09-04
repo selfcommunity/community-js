@@ -2,12 +2,12 @@ import {LoadingButton} from '@mui/lab';
 import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, TextField, Typography, Chip, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {CourseService, formatHttpErrorCode} from '@selfcommunity/api-services';
-import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {SCCategoryType, SCCoursePrivacyType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
+import {SCPreferences, SCPreferencesContextType, UserUtils, useSCPaymentsEnabled, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {SCCategoryType, SCContentType, SCCoursePrivacyType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import {ChangeEvent, Fragment, useCallback, useMemo, useState} from 'react';
+import React, {ChangeEvent, Fragment, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
@@ -17,6 +17,8 @@ import {COURSE_DESCRIPTION_MAX_LENGTH, COURSE_TITLE_MAX_LENGTH, SCCourseFormStep
 import CategoryAutocomplete from '../CategoryAutocomplete';
 import CourseEdit from './Edit';
 import CoursePublicationDialog from './Dialog';
+import PaywallsConfigurator from '../PaywallsConfigurator';
+import {ContentAccessType} from '../PaywallsConfigurator/constants';
 
 const messages = defineMessages({
   name: {
@@ -57,7 +59,8 @@ const classes = {
   stepCustomization: `${PREFIX}-step-customization`,
   cardTitle: `${PREFIX}-card-title`,
   title: `${PREFIX}-title`,
-  contrastColor: `${PREFIX}-contrast-color`
+  contrastColor: `${PREFIX}-contrast-color`,
+  paywallsConfiguratorWrap: `${PREFIX}-paywalls-configurator-wrap`
 };
 
 const Root = styled(Box, {
@@ -101,6 +104,12 @@ export interface CourseFormProps extends BoxProps {
    * @default null
    */
   onError?: (error: any) => void;
+
+  /**
+   * Hide paywalls configuration
+   * @default false
+   */
+  hidePaywalls?: boolean;
 
   /**
    * Any other properties
@@ -148,7 +157,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     props: inProps,
     name: PREFIX
   });
-  const {className, onSuccess, onError, course = null, step = SCCourseFormStepType.GENERAL, onStepChange, ...rest} = props;
+  const {className, onSuccess, onError, course = null, step = SCCourseFormStepType.GENERAL, hidePaywalls = false, onStepChange, ...rest} = props;
 
   // INTL
   const intl = useIntl();
@@ -161,6 +170,8 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     description: course ? course.description : '',
     categories: course ? course.categories : [],
     privacy: course ? course.privacy : '',
+    products: course?.paywalls?.map((p) => p.id) || [],
+    contentAccessType: course?.paywalls?.length ? ContentAccessType.PAID : ContentAccessType.FREE,
     isSubmitting: false
   };
 
@@ -170,9 +181,16 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
   const [error, setError] = useState<any>({});
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
+  // CONTEXT
+  const scUserContext = useSCUser();
+
   // PREFERENCES
   const {preferences}: SCPreferencesContextType = useSCPreferences();
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
+  const isStaff = useMemo(() => scUserContext.user && UserUtils.isStaff(scUserContext.user), [scUserContext.user]);
   const courseAdvancedEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_COURSES_ADVANCED_ENABLED].value, [preferences]);
 
   const _backgroundCover = {
@@ -268,6 +286,11 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
         formData.append(key, field.categories[key]);
       }
     }
+    if (field.products.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (course && course.paywalls?.length))) {
+      formData.append(`products`, JSON.stringify(field.products));
+    } else {
+      formData.append(`products`, '[]');
+    }
     let courseService: Promise<SCCourseType>;
     if (course) {
       courseService = CourseService.patchCourse(course.id, formData, {
@@ -316,6 +339,28 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     },
     [setField, error]
   );
+
+  /**
+   * Handle change content access tyoe
+   * @param type
+   */
+  const handleChangeContentAccessType = (type: ContentAccessType) => {
+    setField((prev) => ({
+      ...prev,
+      contentAccessType: type
+    }));
+  };
+
+  /**
+   * Handle change payment products
+   * @param products
+   */
+  const handleChangePaymentsProducts = (products) => {
+    setField((prev) => ({
+      ...prev,
+      products: products.map((product) => product.id)
+    }));
+  };
 
   /**
    * Handles for closing confirm dialog
@@ -430,6 +475,16 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   onChange={handleOnChangeCategory}
                 />
                 {course && <CourseEdit course={course} onPrivacyChange={(privacy) => setField((prev) => ({...prev, ['privacy']: privacy}))} />}
+                {isPaymentsEnabled && isStaff && !hidePaywalls && (
+                  <Box className={classes.paywallsConfiguratorWrap}>
+                    <PaywallsConfigurator
+                      {...(course && {contentId: course.id})}
+                      contentType={SCContentType.COURSE}
+                      onChangeContentAccessType={handleChangeContentAccessType}
+                      onChangePaymentProducts={handleChangePaymentsProducts}
+                    />
+                  </Box>
+                )}
               </FormGroup>
             </Fragment>
           )}
@@ -468,7 +523,6 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
           </Box>
         </Box>
       </Root>
-
       {openDialog && <CoursePublicationDialog onSubmit={handleSubmit} onClose={handleClose} />}
     </Fragment>
   );

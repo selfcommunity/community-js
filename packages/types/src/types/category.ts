@@ -1,10 +1,11 @@
 import {SCTagType} from './tag';
+import {SCPurchasableContent} from './payment';
 
 /**
  * Interface SCCategoryType.
  * Category Schema.
  */
-export interface SCCategoryType {
+export interface SCCategoryType extends SCPurchasableContent {
   /**
    * The ID of the category.
    */

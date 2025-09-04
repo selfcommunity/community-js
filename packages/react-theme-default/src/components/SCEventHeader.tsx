@@ -1,8 +1,8 @@
-import { alpha } from '@mui/material';
+import {alpha} from '@mui/material';
 
 const Component = {
   styleOverrides: {
-    root: ({ theme, isEventAdmin, isEventFinished }: any) => ({
+    root: ({theme, isEventAdmin, isEventFinished}: any) => ({
       '& .SCEventHeader-cover': {
         position: 'relative',
         minHeight: 150,
@@ -81,6 +81,18 @@ const Component = {
             justifyContent: 'center',
             alignItems: 'center',
             gap: theme.spacing(0.5)
+          },
+          '& .SCBuyButton-request-root': {
+            fontWeight: theme.typography.fontWeightBold,
+            '& .MuiButton-startIcon': {
+              marginRight: theme.spacing(0.5),
+              '& .MuiIcon-root': {
+                fontSize: '1.5rem'
+              }
+            },
+            '&.Mui-selected, &:hover': {
+              backgroundColor: 'transparent'
+            }
           }
         },
         '& .SCEditEvenButton-root': {
@@ -124,7 +136,7 @@ const Component = {
         }
       }
     }),
-    skeletonRoot: ({ theme }: any) => ({
+    skeletonRoot: ({theme}: any) => ({
       position: 'relative',
       '& .SCEventHeader-cover': {
         height: 190

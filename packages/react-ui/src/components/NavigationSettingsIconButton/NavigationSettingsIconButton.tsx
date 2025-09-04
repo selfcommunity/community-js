@@ -24,6 +24,7 @@ import {
   SCThemeType,
   SCUserContextType,
   UserUtils,
+  useSCPaymentsEnabled,
   useSCPreferences,
   useSCRouting,
   useSCUser
@@ -79,7 +80,9 @@ const PREFERENCES = [
   SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED,
   SCPreferences.ADDONS_LOYALTY_POINTS_COLLECTION,
   SCPreferences.CONFIGURATIONS_ONBOARDING_ENABLED,
-  SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN
+  SCPreferences.CONFIGURATIONS_ONBOARDING_HIDDEN,
+  SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED,
+  SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED
 ];
 
 /**
@@ -135,6 +138,10 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+  const connectionEnabled =
+    SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferences.preferences &&
+    scPreferences.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value;
 
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -204,7 +211,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             </ListItemButton>
           </ListItem>
         ),
-        !preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED] && (
+        connectionEnabled && (
           <ListItem className={classes.item} key="connections">
             <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_CONNECTIONS_ROUTE_NAME, scUserContext.user)}>
               <FormattedMessage id="ui.navigationSettingsIconButton.connections" defaultMessage="ui.navigationSettingsIconButton.connections" />
@@ -218,10 +225,27 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             </ListItemButton>
           </ListItem>
         ),
+        preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED] && preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED] && (
+          <ListItem className={classes.item} key="scheduledPosts">
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_SCHEDULED_POSTS_ROUTE_NAME, scUserContext.user)}>
+              <FormattedMessage id="ui.navigationSettingsIconButton.postsScheduled" defaultMessage="ui.navigationSettingsIconButton.postsScheduled" />
+            </ListItemButton>
+          </ListItem>
+        ),
         preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED] && (
           <ListItem className={classes.item} key="followedPosts">
             <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME, scUserContext.user)}>
               <FormattedMessage id="ui.navigationSettingsIconButton.postsFollowed" defaultMessage="ui.navigationSettingsIconButton.postsFollowed" />
+            </ListItemButton>
+          </ListItem>
+        ),
+        preferences[SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED] && preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED] && (
+          <ListItem className={classes.item} key="scheduledDiscussions">
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_SCHEDULED_DISCUSSIONS_ROUTE_NAME, scUserContext.user)}>
+              <FormattedMessage
+                id="ui.navigationSettingsIconButton.discussionsScheduled"
+                defaultMessage="ui.navigationSettingsIconButton.discussionsScheduled"
+              />
             </ListItemButton>
           </ListItem>
         ),
@@ -235,11 +259,16 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             </ListItemButton>
           </ListItem>
         ),
-        <ListItem className={classes.item} key="privateMessages">
-          <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}>
-            <FormattedMessage id="ui.navigationSettingsIconButton.privateMessages" defaultMessage="ui.navigationSettingsIconButton.privateMessages" />
-          </ListItemButton>
-        </ListItem>,
+        preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED] && (
+          <ListItem className={classes.item} key="privateMessages">
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}>
+              <FormattedMessage
+                id="ui.navigationSettingsIconButton.privateMessages"
+                defaultMessage="ui.navigationSettingsIconButton.privateMessages"
+              />
+            </ListItemButton>
+          </ListItem>
+        ),
         ...items.map((item: NavigationSettingsItem, index) => (
           <ListItem className={classes.item} key={`custom_item_${index}`}>
             <ListItemButton component={Link} to={item.href}>
@@ -284,6 +313,27 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             <FormattedMessage id="ui.navigationSettingsIconButton.settings" defaultMessage="ui.navigationSettingsIconButton.settings" />
           </ListItemButton>
         </ListItem>,
+        ...(isPaymentsEnabled
+          ? [
+              <Divider key="payments_divider" />,
+              <ListItem className={classes.item} key="paymentsHistoryOrder">
+                <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME, scUserContext.user)}>
+                  <FormattedMessage
+                    id="ui.navigationSettingsIconButton.historyOrders"
+                    defaultMessage="ui.navigationSettingsIconButton.historyOrders"
+                  />
+                </ListItemButton>
+              </ListItem>,
+              <ListItem className={classes.item} key="myPaymentMethods">
+                <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.USER_PAYMENT_METHODS_ROUTE_NAME, scUserContext.user)}>
+                  <FormattedMessage
+                    id="ui.navigationSettingsIconButton.myPaymentMethods"
+                    defaultMessage="ui.navigationSettingsIconButton.myPaymentMethods"
+                  />
+                </ListItemButton>
+              </ListItem>
+            ]
+          : []),
         <Divider key="divider" />,
         <ListItem className={classes.item} key="logout">
           <ListItemButton onClick={handleLogout}>
@@ -318,7 +368,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             <FormattedMessage id="ui.navigationSettingsIconButton.followers" defaultMessage="ui.navigationSettingsIconButton.followers" />
           </MenuItem>
         ),
-        !preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED] && (
+        connectionEnabled && (
           <MenuItem
             className={classes.item}
             key="connections"
@@ -332,6 +382,15 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             <FormattedMessage id="ui.navigationSettingsIconButton.loyalty" defaultMessage="ui.navigationSettingsIconButton.loyalty" />
           </MenuItem>
         ),
+        preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED] && preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED] && (
+          <MenuItem
+            className={classes.item}
+            key="scheduledPosts"
+            component={Link}
+            to={scRoutingContext.url(SCRoutes.USER_PROFILE_SCHEDULED_POSTS_ROUTE_NAME, scUserContext.user)}>
+            <FormattedMessage id="ui.navigationSettingsIconButton.postsScheduled" defaultMessage="ui.navigationSettingsIconButton.postsScheduled" />
+          </MenuItem>
+        ),
         preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED] && (
           <MenuItem
             className={classes.item}
@@ -339,6 +398,18 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             component={Link}
             to={scRoutingContext.url(SCRoutes.USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME, scUserContext.user)}>
             <FormattedMessage id="ui.navigationSettingsIconButton.postsFollowed" defaultMessage="ui.navigationSettingsIconButton.postsFollowed" />
+          </MenuItem>
+        ),
+        preferences[SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED] && preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED] && (
+          <MenuItem
+            className={classes.item}
+            key="scheduledDiscussions"
+            component={Link}
+            to={scRoutingContext.url(SCRoutes.USER_PROFILE_SCHEDULED_DISCUSSIONS_ROUTE_NAME, scUserContext.user)}>
+            <FormattedMessage
+              id="ui.navigationSettingsIconButton.discussionsScheduled"
+              defaultMessage="ui.navigationSettingsIconButton.discussionsScheduled"
+            />
           </MenuItem>
         ),
         preferences[SCPreferences.CONFIGURATIONS_DISCUSSION_TYPE_ENABLED] && (
@@ -353,13 +424,15 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
             />
           </MenuItem>
         ),
-        <MenuItem
-          className={classes.item}
-          key="privateMessages"
-          component={Link}
-          to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}>
-          <FormattedMessage id="ui.navigationSettingsIconButton.privateMessages" defaultMessage="ui.navigationSettingsIconButton.privateMessages" />
-        </MenuItem>,
+        preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED] && (
+          <MenuItem
+            className={classes.item}
+            key="privateMessages"
+            component={Link}
+            to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, {})}>
+            <FormattedMessage id="ui.navigationSettingsIconButton.privateMessages" defaultMessage="ui.navigationSettingsIconButton.privateMessages" />
+          </MenuItem>
+        ),
         ...items.map((item: NavigationSettingsItem, index) => (
           <MenuItem className={classes.item} key={`custom_item_${index}`} component={Link} to={item.href}>
             {item.label}
@@ -398,6 +471,28 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
           to={scRoutingContext.url(SCRoutes.USER_PROFILE_SETTINGS_ROUTE_NAME, scUserContext.user)}>
           <FormattedMessage id="ui.navigationSettingsIconButton.settings" defaultMessage="ui.navigationSettingsIconButton.settings" />
         </MenuItem>,
+        ...(isPaymentsEnabled
+          ? [
+              <Divider key="payments_divider" />,
+              <MenuItem
+                className={classes.item}
+                key="historyOrders"
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME, scUserContext.user)}>
+                <FormattedMessage id="ui.navigationSettingsIconButton.historyOrders" defaultMessage="ui.navigationSettingsIconButton.historyOrders" />
+              </MenuItem>,
+              <MenuItem
+                className={classes.item}
+                key="myPaymentMethods"
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.USER_PAYMENT_METHODS_ROUTE_NAME, scUserContext.user)}>
+                <FormattedMessage
+                  id="ui.navigationSettingsIconButton.myPaymentMethods"
+                  defaultMessage="ui.navigationSettingsIconButton.myPaymentMethods"
+                />
+              </MenuItem>
+            ]
+          : []),
         <Divider key="divider" />,
         <MenuItem className={classes.item} key="logout" onClick={handleLogout}>
           <FormattedMessage id="ui.navigationSettingsIconButton.logout" defaultMessage="ui.navigationSettingsIconButton.logout" />

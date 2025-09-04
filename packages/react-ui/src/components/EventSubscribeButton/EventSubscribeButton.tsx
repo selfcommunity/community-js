@@ -21,9 +21,10 @@ import {
   SCUserContextType,
   useSCContext,
   useSCFetchEvent,
+  useSCPaymentsEnabled,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCUserType} from '@selfcommunity/types';
+import {SCContentType, SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCUserType} from '@selfcommunity/types';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
@@ -31,6 +32,7 @@ import {MouseEvent, ReactNode, useCallback, useEffect, useMemo, useState} from '
 import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import BuyButton from '../BuyButton';
 
 const PREFIX = 'SCEventSubscribeButton';
 
@@ -69,6 +71,11 @@ const SelectRoot = styled(Button, {
 const SwipeableDrawerRoot = styled(SwipeableDrawer, {
   name: PREFIX,
   slot: 'DrawerRoot'
+})(() => ({}));
+
+const BuyButtonRoot = styled(BuyButton, {
+  name: PREFIX,
+  slot: 'BuyButtonRoot'
 })(() => ({}));
 
 const MenuRoot = styled(Menu, {
@@ -157,9 +164,11 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-
   const {scEvent, setSCEvent} = useSCFetchEvent({
     id: eventId,
     event,
@@ -197,11 +206,14 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
     (eventStatus: string) => {
       setLoading(true);
 
+      const _event: SCEventType = {...scEvent, subscription_status: status as SCEventSubscriptionStatusType};
+
       const isGoing =
         eventStatus === SCEventSubscriptionStatusType.GOING ||
-        !scEvent?.subscription_status ||
-        scEvent?.subscription_status === SCEventSubscriptionStatusType.INVITED;
-      const toggleAction = isGoing ? scEventsManager.toggleEventAttendance(scEvent) : scEventsManager.toggleEventNonattendance(scEvent);
+        !_event?.subscription_status ||
+        _event?.subscription_status === SCEventSubscriptionStatusType.INVITED;
+
+      const toggleAction = isGoing ? scEventsManager.toggleEventAttendance(_event) : scEventsManager.toggleEventNonattendance(_event);
 
       toggleAction
         .then((data: SCEventType) => {
@@ -214,7 +226,7 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
           Logger.error(SCOPE_SC_UI, e);
         });
     },
-    [scEvent, scEventsManager, onSubscribe, setLoading]
+    [scEvent, scEventsManager, status, onSubscribe, setLoading]
   );
 
   const handleToggleAction = useCallback(
@@ -296,53 +308,62 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
 
   return (
     <>
-      {scEvent?.privacy === SCEventPrivacyType.PRIVATE && (!status || status === SCEventSubscriptionStatusType.REQUESTED) ? (
-        <RequestRoot
-          className={classNames(classes.requestRoot, className)}
-          variant="outlined"
-          size="small"
-          loading={scUserContext.user ? scEventsManager.isLoading(scEvent) : null}
-          onClick={handleToggleAction}
-          {...rest}>
-          {getStatus}
-        </RequestRoot>
+      {isPaymentsEnabled &&
+      scEvent.paywalls?.length > 0 &&
+      (scEvent.privacy === SCEventPrivacyType.PUBLIC ||
+        (scEvent.privacy === SCEventPrivacyType.PRIVATE && status && status !== SCEventSubscriptionStatusType.REQUESTED)) ? (
+        <BuyButtonRoot contentType={SCContentType.EVENT} content={scEvent} showTicket />
       ) : (
         <>
-          <SelectRoot
-            className={classNames(
-              classes.selectRoot,
-              className,
-              {[classes.going]: status && status === SCEventSubscriptionStatusType.GOING},
-              {[classes.notGoing]: status && status === SCEventSubscriptionStatusType.NOT_GOING}
-            )}
-            onClick={handleOpen}
-            endIcon={<Icon>{open ? 'expand_less' : 'expand_more'}</Icon>}
-            startIcon={
-              status &&
-              status !== SCEventSubscriptionStatusType.SUBSCRIBED && (
-                <Icon>{status === SCEventSubscriptionStatusType.GOING ? 'circle_checked' : 'circle_closed'}</Icon>
-              )
-            }
-            {...rest}>
-            {getStatus}
-          </SelectRoot>
-          {open && (
+          {scEvent?.privacy === SCEventPrivacyType.PRIVATE && (!status || status === SCEventSubscriptionStatusType.REQUESTED) ? (
+            <RequestRoot
+              className={classNames(classes.requestRoot, className)}
+              variant="outlined"
+              size="small"
+              loading={scUserContext.user ? scEventsManager.isLoading(scEvent) : null}
+              onClick={handleToggleAction}
+              {...rest}>
+              {getStatus}
+            </RequestRoot>
+          ) : (
             <>
-              {isMobile ? (
-                <SwipeableDrawerRoot
-                  className={classes.drawerRoot}
-                  PaperProps={{className: classes.paper}}
-                  open
-                  onClose={handleClose}
-                  onOpen={handleOpen}
-                  anchor="bottom"
-                  disableSwipeToOpen>
-                  {renderMenuItems()}
-                </SwipeableDrawerRoot>
-              ) : (
-                <MenuRoot className={classes.menuRoot} anchorEl={anchorEl} open onClose={handleClose}>
-                  {renderMenuItems()}
-                </MenuRoot>
+              <SelectRoot
+                className={classNames(
+                  classes.selectRoot,
+                  className,
+                  {[classes.going]: status && status === SCEventSubscriptionStatusType.GOING},
+                  {[classes.notGoing]: status && status === SCEventSubscriptionStatusType.NOT_GOING}
+                )}
+                onClick={handleOpen}
+                endIcon={<Icon>{open ? 'expand_less' : 'expand_more'}</Icon>}
+                startIcon={
+                  status &&
+                  status !== SCEventSubscriptionStatusType.SUBSCRIBED && (
+                    <Icon>{status === SCEventSubscriptionStatusType.GOING ? 'circle_checked' : 'circle_closed'}</Icon>
+                  )
+                }
+                {...rest}>
+                {getStatus}
+              </SelectRoot>
+              {open && (
+                <>
+                  {isMobile ? (
+                    <SwipeableDrawerRoot
+                      className={classes.drawerRoot}
+                      PaperProps={{className: classes.paper}}
+                      open
+                      onClose={handleClose}
+                      onOpen={handleOpen}
+                      anchor="bottom"
+                      disableSwipeToOpen>
+                      {renderMenuItems()}
+                    </SwipeableDrawerRoot>
+                  ) : (
+                    <MenuRoot className={classes.menuRoot} anchorEl={anchorEl} open onClose={handleClose}>
+                      {renderMenuItems()}
+                    </MenuRoot>
+                  )}
+                </>
               )}
             </>
           )}

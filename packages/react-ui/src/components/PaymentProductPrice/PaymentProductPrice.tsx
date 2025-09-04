@@ -1,0 +1,149 @@
+import React, {useCallback} from 'react';
+import {Box, Button, Icon, Typography, useMediaQuery, useTheme, Zoom, styled} from '@mui/material';
+import {useThemeProps} from '@mui/system';
+import {SCContentType, SCPaymentOrder, SCPaymentPrice, SCPurchasableContent} from '@selfcommunity/types';
+import {PREFIX} from './constants';
+import PaymentProductPriceSkeleton from './Skeleton';
+import {FormattedMessage, useIntl} from 'react-intl';
+import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCPaymentsEnabled, useSCRouting} from '@selfcommunity/react-core';
+import BaseItem from '../../shared/BaseItem';
+import classNames from 'classnames';
+import {getRecurringConvertedAmount} from '../../utils/payment';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  primary: `${PREFIX}-primary`,
+  secondary: `${PREFIX}-secondary`,
+  purchasedAt: `${PREFIX}-purchased-at`,
+  button: `${PREFIX}-button`,
+  buttonPurchased: `${PREFIX}-button-purchased`,
+  action: `${PREFIX}-action`
+};
+
+const Root = styled(BaseItem, {
+  slot: 'Root',
+  name: PREFIX
+})(({theme}) => ({}));
+
+export interface PaymentProductPriceProps {
+  className?: string;
+  id?: number | string;
+  price?: SCPaymentPrice;
+  contentType?: SCContentType;
+  contentId?: number | string;
+  content?: SCPurchasableContent;
+  actions?: React.ReactNode;
+  paymentOrder?: SCPaymentOrder;
+  onHandleActionBuy?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
+  returnUrlParams?: Record<string, string>;
+}
+
+export default function PaymentProductPrice(inProps: PaymentProductPriceProps) {
+  // PROPS
+  const props: PaymentProductPriceProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+  const {className, id, price, contentType, contentId, content, actions, onHandleActionBuy, paymentOrder, returnUrlParams, ...rest} = props;
+
+  // ROUTING
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // HOOKS
+  const theme = useTheme<SCThemeType>();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const intl = useIntl();
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
+  const handleActionBuy = useCallback(
+    (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      onHandleActionBuy && onHandleActionBuy(price, contentType, contentId);
+    },
+    [onHandleActionBuy, price, contentType, contentId]
+  );
+
+  if (!isPaymentsEnabled) {
+    return null;
+  }
+
+  if (!price) {
+    return <PaymentProductPriceSkeleton />;
+  }
+
+  return (
+    <Root
+      disableTypography
+      className={classes.root}
+      primary={
+        <Typography variant="body1" className={classes.primary}>
+          <b>{getRecurringConvertedAmount(price, intl)}</b>
+        </Typography>
+      }
+      secondary={
+        <>
+          {!isMobile && (
+            <Typography component="p" variant="body2" className={classes.secondary}>
+              {price.description}
+            </Typography>
+          )}
+          <>
+            {!isMobile && paymentOrder && paymentOrder.payment_price.id === price.id && (
+              <Typography component="p" variant="body2" className={classNames(classes.secondary, classes.purchasedAt)}>
+                <FormattedMessage
+                  defaultMessage="ui.paymentProduct.action.purchasedAt"
+                  id="ui.paymentProduct.action.purchasedAt"
+                  values={{
+                    purchasedAt: intl.formatDate(new Date(paymentOrder.created_at), {day: 'numeric', year: 'numeric', month: 'long'})
+                  }}
+                />
+              </Typography>
+            )}
+          </>
+        </>
+      }
+      actions={
+        actions ?? (
+          <Box className={classes.action}>
+            <Zoom in style={{transitionDelay: '200ms'}}>
+              <Button
+                size="small"
+                color={paymentOrder && paymentOrder.payment_price.id === price.id ? 'secondary' : 'primary'}
+                className={classNames(classes.button, {[classes.buttonPurchased]: paymentOrder && paymentOrder.payment_price.id === price.id})}
+                {...(paymentOrder && {disabled: true})}
+                variant="contained"
+                component={Link}
+                startIcon={<Icon>dredit-card</Icon>}
+                {...(onHandleActionBuy && {onClick: handleActionBuy})}
+                to={`${scRoutingContext.url(SCRoutes.CHECKOUT_PAYMENT, {
+                  content_type: contentType?.toLowerCase(),
+                  content_id: content ? content.id : contentId,
+                  price_id: price.id
+                })}?${returnUrlParams ? new URLSearchParams(returnUrlParams) : ''}`}>
+                {paymentOrder && paymentOrder.payment_price.id === price.id ? (
+                  <>
+                    {paymentOrder.payment_price.recurring_interval ? (
+                      <FormattedMessage defaultMessage="ui.paymentProduct.action.subscribed" id="ui.paymentProduct.action.subscribed" />
+                    ) : (
+                      <FormattedMessage defaultMessage="ui.paymentProduct.action.purchased" id="ui.paymentProduct.action.purchased" />
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {price.recurring_interval ? (
+                      <FormattedMessage defaultMessage="ui.paymentProduct.action.subscribe" id="ui.paymentProduct.action.subscribe" />
+                    ) : (
+                      <FormattedMessage defaultMessage="ui.paymentProduct.action.buy" id="ui.paymentProduct.action.buy" />
+                    )}
+                  </>
+                )}
+              </Button>
+            </Zoom>
+          </Box>
+        )
+      }
+      {...rest}
+    />
+  );
+}

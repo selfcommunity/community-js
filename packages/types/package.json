@@ -1,6 +1,6 @@
 {
 	"name": "@selfcommunity/types",
-	"version": "0.8.0-alpha.0",
+	"version": "0.7.7-payments.169",
 	"license": "MIT",
 	"private": false,
 	"main": "./lib/cjs/index.js",
@@ -96,6 +96,7 @@
 		"webpack-bundle-analyzer": "^4.9.0",
 		"webpack-cli": "^4.5.0"
 	},
+	"peerDependencies": {},
 	"prettier": {
 		"printWidth": 150,
 		"bracketSpacing": false,

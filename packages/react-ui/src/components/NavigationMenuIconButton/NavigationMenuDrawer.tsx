@@ -3,7 +3,7 @@ import {Box, Divider, Drawer, DrawerProps, Icon, IconButton, List, styled} from 
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import ScrollContainer from '../../shared/ScrollContainer';
-import DefaultDrawerContent from './DefaultDrawerContent';
+import DefaultDrawerContent, {DefaultDrawerContentProps} from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
 import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from '../CreateLiveStreamButton';
 
@@ -44,6 +44,11 @@ export interface NavigationMenuDrawerProps extends DrawerProps {
    */
   drawerContent?: React.ReactNode;
   /**
+   * Default Drawer Content props content
+   * @default null
+   */
+  defaultDrawerContentProps?: DefaultDrawerContentProps;
+  /**
    * Hide drawer footer
    * @default true
    */
@@ -82,8 +87,9 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
   const {
     className = null,
     showDrawerHeader = true,
+    defaultDrawerContentProps = null,
     drawerHeaderContent = <DefaultHeaderContent />,
-    drawerContent = <DefaultDrawerContent />,
+    drawerContent = <DefaultDrawerContent {...defaultDrawerContentProps} />,
     showDrawerFooterContent = true,
     drawerFooterContent = null,
     ScrollContainerProps = {hideTracksWhenNotNeeded: true},

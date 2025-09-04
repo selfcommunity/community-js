@@ -12,7 +12,7 @@ export default {
     }
   },
   args: {
-    courseId: 2,
+    courseId: 9,
     course: undefined,
     tab: SCCourseEditTabType.LESSONS,
     onTabChange() {},
@@ -23,7 +23,7 @@ export default {
     <div style={{maxWidth: 1280, margin: 'auto'}}>
       <EditCourse {...args} />
     </div>
-  ) 
+  )
 } as Meta<typeof EditCourse>;
 
 export const Base: StoryObj<typeof EditCourse> = {};

@@ -22,8 +22,17 @@ import {useThemeProps} from '@mui/system';
 import {LocalizationProvider, MobileDatePicker, MobileTimePicker} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {EventService, formatHttpErrorCode} from '@selfcommunity/api-services';
-import {SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
+import {
+  SCContextType,
+  SCPreferences,
+  SCPreferencesContextType,
+  UserUtils,
+  useSCContext,
+  useSCPaymentsEnabled,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
+import {SCContentType, SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import enLocale from 'date-fns/locale/en-US';
@@ -41,6 +50,8 @@ import UploadEventCover from './UploadEventCover';
 import {combineDateAndTime, getDateAndHours, getLaterDaysDate, getLaterHoursDate, getNewDate} from './utils';
 import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
 import CoverPlaceholder from '../../assets/deafultCover';
+import PaywallsConfigurator from '../PaywallsConfigurator';
+import {ContentAccessType} from '../PaywallsConfigurator/constants';
 
 const messages = defineMessages({
   name: {
@@ -99,7 +110,8 @@ const classes = {
   privacySection: `${PREFIX}-privacy-section`,
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
   error: `${PREFIX}-error`,
-  genericError: `${PREFIX}-generic-error`
+  genericError: `${PREFIX}-generic-error`,
+  paywallsConfiguratorWrap: `${PREFIX}-paywalls-configurator-wrap`
 };
 
 const Root = styled(Box, {
@@ -196,6 +208,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   // INTL
   const intl = useIntl();
 
+  const isStaff = useMemo(() => scUserContext.user && UserUtils.isStaff(scUserContext.user), [scUserContext.user]);
   const startDateTime = useMemo(() => getNewDate(event?.start_date), [event]);
   const endDateTime = useMemo(() => getNewDate(event?.end_date), [event]);
 
@@ -225,6 +238,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     link: event?.link || '',
     liveStreamSettings: event?.live_stream ? event?.live_stream.settings : null,
     recurring: event?.recurring || SCEventRecurrenceType.NEVER,
+    products: event?.paywalls?.map((p) => p.id) || [],
+    contentAccessType: event?.paywalls?.length ? ContentAccessType.PAID : ContentAccessType.FREE,
     isPublic: event?.privacy ? event.privacy === SCEventPrivacyType.PUBLIC : true,
     isSubmitting: false
   };
@@ -254,8 +269,16 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_VISIBILITY_ENABLED].value,
     [scPreferences.preferences]
   );
-  const disablePastStartTime = useMemo(() => field.startDate.getDate() === getNewDate().getDate(), [field]);
-  const disablePastEndTime = useMemo(() => field.endDate.getDate() === getNewDate().getDate(), [field]);
+  const disablePastStartTime = useMemo(() => (event ? false : field.startTime.getDate() === initialFieldState.startTime.getDate()), [event, field]);
+  const disablePastEndTime = useMemo(() => field.endTime.getDate() === getNewDate().getDate(), [field]);
+  const minStartTime = useMemo(
+    () => (event ? (field.startTime.getDate() === initialFieldState.startTime.getDate() ? initialFieldState.startTime : undefined) : undefined),
+    [event, field, initialFieldState]
+  );
+  const minStartDate = useMemo(() => (event ? initialFieldState.startDate : undefined), [event, initialFieldState]);
+
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   const _backgroundCover = {
     ...(field.imageOriginal
@@ -358,6 +381,12 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
       formData.append('visible', 'true');
     }
 
+    if (field.products.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (event && event.paywalls?.length))) {
+      formData.append(`products`, JSON.stringify(field.products));
+    } else {
+      formData.append(`products`, '[]');
+    }
+
     formData.append('description', field.description);
 
     let eventService: Promise<SCEventType>;
@@ -443,23 +472,45 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     [error, setField, setGenericError]
   );
 
+  /**
+   * Handle change content access tyoe
+   * @param type
+   */
+  const handleChangeContentAccessType = (type: ContentAccessType) => {
+    setField((prev) => ({
+      ...prev,
+      contentAccessType: type
+    }));
+  };
+
+  /**
+   * Handle change payment products
+   * @param products
+   */
+  const handleChangePaymentsProducts = (products) => {
+    setField((prev) => ({
+      ...prev,
+      products: products.map((product) => product.id)
+    }));
+  };
+
   const shouldDisableDate = useCallback(
-    (date: Date) => {
+    (day: Date) => {
       let disabled = false;
 
       switch (field.recurring) {
         case SCEventRecurrenceType.DAILY:
-          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(DAILY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
+          disabled = day.getTime() > getDateAndHours(getLaterDaysDate(DAILY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
           break;
         case SCEventRecurrenceType.WEEKLY:
-          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(WEEKLY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
+          disabled = day.getTime() > getDateAndHours(getLaterDaysDate(WEEKLY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
           break;
         case SCEventRecurrenceType.MONTHLY:
-          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(MONTHLY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
+          disabled = day.getTime() > getDateAndHours(getLaterDaysDate(MONTHLY_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
           break;
         case SCEventRecurrenceType.NEVER:
         default:
-          disabled = date.getTime() > getDateAndHours(getLaterDaysDate(NEVER_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
+          disabled = day.getTime() > getDateAndHours(getLaterDaysDate(NEVER_LATER_DAYS, field.startDate), 23, 59, 59, 59).getTime();
       }
 
       return disabled;
@@ -467,7 +518,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
     [field]
   );
 
-  const shouldDisableTime = useCallback((date: Date) => field.startTime.getTime() > date.getTime(), [field]);
+  const shouldDisableTime = useCallback((value: Date) => value.getTime() < field.startTime.getTime(), [field]);
 
   /**
    * Renders root object
@@ -508,7 +559,8 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             }}>
             <MobileDatePicker
               className={classes.picker}
-              disablePast
+              disablePast={!event}
+              minDate={minStartDate}
               label={field.startDate && <FormattedMessage id="ui.eventForm.date.placeholder" defaultMessage="ui.eventForm.date.placeholder" />}
               value={field.startDate}
               slots={{
@@ -544,6 +596,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             <MobileTimePicker
               className={classes.picker}
               disablePast={disablePastStartTime}
+              minTime={minStartTime}
               label={field.startTime && <FormattedMessage id="ui.eventForm.time.placeholder" defaultMessage="ui.eventForm.time.placeholder" />}
               value={field.startTime}
               slots={{
@@ -780,6 +833,16 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ) : null
           }
         />
+        {isPaymentsEnabled && isStaff && (
+          <Box className={classes.paywallsConfiguratorWrap}>
+            <PaywallsConfigurator
+              {...(event && {contentId: event.id})}
+              contentType={SCContentType.EVENT}
+              onChangeContentAccessType={handleChangeContentAccessType}
+              onChangePaymentProducts={handleChangePaymentsProducts}
+            />
+          </Box>
+        )}
         {genericError && (
           <Box className={classes.genericError}>
             <Alert variant="filled" severity="error">

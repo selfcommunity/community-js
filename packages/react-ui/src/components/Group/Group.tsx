@@ -1,6 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import {Avatar, Button, ButtonBaseProps, Icon, Stack, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
+import {CacheStrategies} from '@selfcommunity/utils/src/utils/cache';
 import {
   Link,
   SCRoutes,
@@ -58,7 +59,7 @@ export interface GroupProps extends WidgetProps {
    * Props to spread to group subscribe/unsubscribe button
    * @default {}
    */
-  groupSubscribeButtonProps?: GroupSubscribeButtonProps;
+  GroupSubscribeButtonComponentProps?: GroupSubscribeButtonProps;
   /**
    * Badge content to show as group avatar badge if show reaction is true.
    */
@@ -78,6 +79,10 @@ export interface GroupProps extends WidgetProps {
    * @default {}
    */
   buttonProps?: ButtonBaseProps;
+  /**
+   * Override default cache strategy on fetch element
+   */
+  cacheStrategy?: CacheStrategies;
   /**
    * Any other properties
    */
@@ -128,12 +133,13 @@ export default function Group(inProps: GroupProps): JSX.Element {
     elevation,
     hideActions = false,
     actionRedirect = false,
-    groupSubscribeButtonProps = {},
+    GroupSubscribeButtonComponentProps = {},
+    cacheStrategy,
     ...rest
   } = props;
 
   // STATE
-  const {scGroup} = useSCFetchGroup({id: groupId, group});
+  const {scGroup} = useSCFetchGroup({id: groupId, group, ...(cacheStrategy && {cacheStrategy})});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -169,7 +175,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
             )}
           </Button>
         ) : (
-          <GroupSubscribeButton group={group} groupId={groupId} {...groupSubscribeButtonProps} />
+          <GroupSubscribeButton group={group} groupId={groupId} {...GroupSubscribeButtonComponentProps} />
         )}
       </Stack>
     );

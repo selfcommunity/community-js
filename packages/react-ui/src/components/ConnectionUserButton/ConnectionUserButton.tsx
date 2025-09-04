@@ -5,6 +5,7 @@ import {Box, styled} from '@mui/material';
 import FollowUserButton, {FollowUserButtonProps} from '../FollowUserButton';
 import FriendshipUserButton, {FriendshipButtonProps} from '../FriendshipUserButton';
 import {useThemeProps} from '@mui/system';
+import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const PREFIX = 'SCConnectionUserButton';
 
@@ -69,6 +70,13 @@ export default function ConnectionUserButton(inProps: ConnectionUserButtonProps)
   const followEnabled =
     SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value;
+  const connectionEnabled =
+    SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value;
+
+  if (!followEnabled && !connectionEnabled) {
+    return <HiddenPlaceholder />;
+  }
 
   return (
     <React.Fragment>
