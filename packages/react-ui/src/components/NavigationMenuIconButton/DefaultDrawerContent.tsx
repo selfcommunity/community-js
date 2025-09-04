@@ -36,6 +36,8 @@ import {SCCategoryType, SCFeatureName} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
+import FormazionePlaceholder from '../../assets/custom/formazione';
+import {DefaultCategoryTagName} from '../../constants/DefaultDrawerContent';
 
 const PREFIX = 'SCDefaultDrawerContent';
 
@@ -293,7 +295,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
               <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
                 <BaseItem
                   elevation={0}
-                  image={<Avatar alt={tagName} src={tagImage} variant="square" />}
+                  image={<Avatar alt={tagName} src={tagName === DefaultCategoryTagName ? FormazionePlaceholder : tagImage} variant="square" />}
                   primary={tagName}
                   disableTypography={false}
                 />
