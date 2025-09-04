@@ -5656,10 +5656,15 @@
     "@rpldy/shared-ui" "1.7.1"
     "@rpldy/uploader" "1.7.1"
 
-"@selfcommunity/react-i18n@0.7.7-payments.158":
-  version "0.7.7-payments.158"
-  resolved "https://registry.yarnpkg.com/@selfcommunity/react-i18n/-/react-i18n-0.7.7-payments.158.tgz#6ec4ec7609b903a94f681af1c7d10847a38123a4"
-  integrity sha512-7F+ucWi4MBeb4ifzzrgxf6V99XqMrEdSRh0wJvg4WDyfUBHUDgB9BqWwdhvzmnv6Nvze+Mj7DZVF+SKu/k2qeQ==
+"@selfcommunity/types@^0.7.7-payments.158":
+  version "0.7.7-payments.247"
+  resolved "https://registry.yarnpkg.com/@selfcommunity/types/-/types-0.7.7-payments.247.tgz#bfae90fae6fab1eb1fcf409deaaa97507969cc09"
+  integrity sha512-lJ7Fwl3+hqBPGMVZcQKojgGiheey7jrazUra28QREm9dtEONyTtTPVLJsyysCPk64UQQP7CiQVOjkCEp1skkHw==
+
+"@selfcommunity/utils@^0.2.64-payments.158":
+  version "0.2.64-payments.247"
+  resolved "https://registry.yarnpkg.com/@selfcommunity/utils/-/utils-0.2.64-payments.247.tgz#9d8353cef7c2f7225cc201d4a4212de72ef8b5a8"
+  integrity sha512-kRyOD8ncNZtwLbHzMv0mGOuKpJ1xPHJ0V18Fr7OBgzjuOL3iYcvgPDp+ZkZE/OJV5rcCWIohk5wW6bVllH/7eA==
 
 "@sinclair/typebox@^0.25.16":
   version "0.25.24"
@@ -6567,13 +6572,6 @@
   integrity sha512-Kt7Cdjjdi2XWSfrZ53v4Of0wG3ZcmaegFXjMmz9tfNrZSkzzo36G0AL1YqSdcIA78Etjt6E609pt5h1xnQkPUw==
   dependencies:
     "@types/node" "*"
-
-"@types/classnames@^2.3.1":
-  version "2.3.1"
-  resolved "https://registry.npmjs.org/@types/classnames/-/classnames-2.3.1.tgz"
-  integrity sha512-zeOWb0JGBoVmlQoznvqXbE0tEC/HONsnoUNH19Hc96NFsTAwTXbTqb8FMYkru1F/iqp7a18Ws3nWJvtA1sHD1A==
-  dependencies:
-    classnames "*"
 
 "@types/classnames@^2.3.4":
   version "2.3.4"

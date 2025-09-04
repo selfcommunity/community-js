@@ -185,7 +185,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
      * to avoid warning rendering child during update parent state
      */
     if (authUserId) {
-      setStatus(scEventsManager?.subscriptionStatus(scEvent));
+      setStatus(scEventsManager?.subscriptionStatus?.(scEvent));
     }
   }, [authUserId, scEventsManager?.subscriptionStatus, scEvent]);
 
