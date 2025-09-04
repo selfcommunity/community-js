@@ -284,7 +284,7 @@ export function VideoConference(inProps: VideoConferenceProps) {
                 ) : (*/}
                 <FocusLayoutContainer>
                   {carouselTracks.length ? (
-                    <CarouselLayout tracks={carouselTracks}>
+                    <CarouselLayout tracks={hideParticipantsList ? tracksNoParticipants : carouselTracks}>
                       {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                       {/* @ts-ignore */}
                       <ParticipantTile />
