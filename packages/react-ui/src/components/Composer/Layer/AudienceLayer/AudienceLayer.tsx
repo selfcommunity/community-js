@@ -69,17 +69,6 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
 
   // STATE
   const [autocompleteOpen, setAutocompleteOpen] = useState(false);
-  const [audience, setAudience] = useState<AudienceTypes>(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    defaultValue === null || defaultValue.length === 0
-      ? AudienceTypes.AUDIENCE_ALL
-      : defaultValue && Object.prototype.hasOwnProperty.call(defaultValue, 'recurring')
-      ? AudienceTypes.AUDIENCE_EVENT
-      : defaultValue && Object.prototype.hasOwnProperty.call(defaultValue, 'managed_by')
-      ? AudienceTypes.AUDIENCE_GROUP
-      : AudienceTypes.AUDIENCE_TAG
-  );
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
@@ -107,6 +96,29 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
       SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
     [preferences, features]
+  );
+  const taggingRequiredEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_POST_ADDRESSING_REQUIRED_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_POST_ADDRESSING_REQUIRED_ENABLED].value,
+    [preferences, features]
+  );
+
+  const [audience, setAudience] = useState<AudienceTypes>(
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    defaultValue === null || defaultValue.length === 0
+      ? taggingRequiredEnabled
+        ? AudienceTypes.AUDIENCE_TAG
+        : AudienceTypes.AUDIENCE_ALL
+      : Object.prototype.hasOwnProperty.call(defaultValue, 'recurring')
+      ? AudienceTypes.AUDIENCE_EVENT
+      : Object.prototype.hasOwnProperty.call(defaultValue, 'managed_by')
+      ? AudienceTypes.AUDIENCE_GROUP
+      : AudienceTypes.AUDIENCE_TAG
   );
 
   // HANDLERS
@@ -139,11 +151,13 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
       </DialogTitle>
       <DialogContent className={classes.content}>
         <Tabs value={audience} onChange={handleChangeAudience} aria-label="audience type">
-          <Tab
-            value={AudienceTypes.AUDIENCE_ALL}
-            icon={<Icon>public</Icon>}
-            label={<FormattedMessage id="ui.composer.layer.audience.all" defaultMessage="ui.composer.layer.audience.all" />}
-          />
+          {!taggingRequiredEnabled && (
+            <Tab
+              value={AudienceTypes.AUDIENCE_ALL}
+              icon={<Icon>public</Icon>}
+              label={<FormattedMessage id="ui.composer.layer.audience.all" defaultMessage="ui.composer.layer.audience.all" />}
+            />
+          )}
           {eventsEnabled && (
             <Tab
               disabled={
@@ -176,7 +190,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
           />
         </Tabs>
         <Typography className={classes.message}>
-          {audience === AudienceTypes.AUDIENCE_ALL && (
+          {audience === AudienceTypes.AUDIENCE_ALL && !taggingRequiredEnabled && (
             <FormattedMessage id="ui.composer.layer.audience.all.message" defaultMessage="ui.composer.audience.layer.all.message" />
           )}
           {audience === AudienceTypes.AUDIENCE_EVENT && (
@@ -215,6 +229,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
               return (
                 <li {...props}>
                   <TagChip
+                    disposable={false}
                     key={option.id}
                     tag={option}
                     label={

@@ -145,9 +145,19 @@ export interface SCFeedObjectType {
   last_activity_at: Date;
 
   /**
+   * Last edited at
+   */
+  last_edited_at: Date;
+
+  /**
    * Added at
    */
   added_at: Date;
+
+  /**
+   * Scheduled at
+   */
+  scheduled_at?: Date;
 
   /**
    * Slug
@@ -243,6 +253,10 @@ export interface SCFeedObjectType {
    * Suspended notification
    */
   suspended?: boolean;
+  /**
+   * True if scheduled_posts ddp is enabled and if the feed object is not published yet
+   */
+  draft?: boolean;
 }
 
 /**

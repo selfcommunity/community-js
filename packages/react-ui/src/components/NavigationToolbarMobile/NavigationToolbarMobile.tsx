@@ -218,7 +218,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
         </>
       )}
       {endActions}
-      {(!postOnlyStaffEnabled || (UserUtils.isStaff(scUserContext.user) && postOnlyStaffEnabled)) &&
+      {(!postOnlyStaffEnabled || UserUtils.isStaff(scUserContext.user) || UserUtils.isPublisher(scUserContext.user)) &&
         (scUserContext.user || contentAvailable) &&
         exploreStreamEnabled && <ComposerIconButton {...ComposerIconButtonProps} />}
       {scUserContext.user && (groupsEnabled || eventsEnabled) && (

@@ -27,6 +27,7 @@ import {PREFIX} from './constants';
 import CourseSkeleton, {CourseSkeletonProps} from './Skeleton';
 import {isCourseCompleted, isCourseNew} from '../../utils/course';
 import UserAvatar from '../../shared/UserAvatar';
+import {CacheStrategies} from '@selfcommunity/utils';
 import BaseItemButton from '../../shared/BaseItemButton';
 
 const classes = {
@@ -106,6 +107,10 @@ export interface CourseProps extends WidgetProps {
    */
   CourseSkeletonComponentProps?: CourseSkeletonProps;
   /**
+   * Override default cache strategy on fetch element
+   */
+  cacheStrategy?: CacheStrategies;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -171,12 +176,13 @@ export default function Course(inProps: CourseProps): JSX.Element {
     actions,
     CourseParticipantsButtonComponentProps = {},
     CourseSkeletonComponentProps = {},
+    cacheStrategy,
     userProfileSnippet,
     ...rest
   } = props;
 
   // STATE
-  const {scCourse} = useSCFetchCourse({id: courseId, course});
+  const {scCourse} = useSCFetchCourse({id: courseId, course, ...(cacheStrategy && {cacheStrategy})});
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.between('xs', 'md'));
   const MAX_VISIBLE_CATEGORIES = isMobile ? 3 : 1;
@@ -327,7 +333,6 @@ export default function Course(inProps: CourseProps): JSX.Element {
   } else {
     contentObj = (
       <SnippetRoot
-        ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}}
         elevation={0}
         className={classes.snippetRoot}
         image={

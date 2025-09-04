@@ -1,4 +1,4 @@
-import {Box, Chip, Icon, Paper, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
+import {Box, Chip, Icon, Paper, Typography, useMediaQuery, useTheme, styled, Button} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {
   SCPreferences,
@@ -6,10 +6,11 @@ import {
   SCThemeType,
   SCUserContextType,
   useSCFetchEvent,
+  useSCPaymentsEnabled,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCEventLocationType, SCEventPrivacyType, SCEventType} from '@selfcommunity/types';
+import {SCContentType, SCEventLocationType, SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -24,6 +25,7 @@ import User from '../User';
 import {PREFIX} from './constants';
 import EventHeaderSkeleton from './Skeleton';
 import {CacheStrategies} from '@selfcommunity/utils';
+import BuyButton from '../BuyButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -129,7 +131,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   const {id = null, className = null, event, eventId = null, EventSubscribeButtonProps = {}, EventActionsProps = {}, ...rest} = props;
 
   // PREFERENCES
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -138,6 +140,9 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event, cacheStrategy: CacheStrategies.NETWORK_ONLY});
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   // INTL
   const intl = useIntl();
@@ -165,7 +170,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
   const _backgroundCover = {
     ...(scEvent.image_bigger
       ? {background: `url('${scEvent.image_bigger}') center / cover`}
-      : {background: `url('${scPreferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
+      : {background: `url('${preferences.preferences[SCPreferences.IMAGES_USER_DEFAULT_COVER].value}') center / cover`})
   };
 
   return (
@@ -281,6 +286,21 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
               <FormattedMessage id="ui.eventHeader.location.online" defaultMessage="ui.eventHeader.location.online" />
             )}
           </Typography>
+          {isPaymentsEnabled &&
+            scEvent.paywalls?.length > 0 &&
+            (scEvent.privacy === SCEventPrivacyType.PUBLIC ||
+              (scEvent.privacy === SCEventPrivacyType.PRIVATE &&
+                scEvent.subscription_status &&
+                scEvent.subscription_status !== SCEventSubscriptionStatusType.REQUESTED)) && (
+              <BuyButton
+                size="md"
+                variant="text"
+                startIcon={<Icon>ticket</Icon>}
+                contentType={SCContentType.EVENT}
+                content={scEvent}
+                label={<FormattedMessage id="ui.eventHeader.paid" defaultMessage="ui.eventHeader.paid" />}
+              />
+            )}
         </Box>
         <User
           className={classes.planner}

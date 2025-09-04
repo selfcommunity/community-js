@@ -59,6 +59,18 @@ const getTheme = (options, preferences): SCThemeType => {
         sizeXLarge: 120,
       },
     },
+    contentProduct: {
+      icon: {
+        sizeSmall: 24,
+        sizeMedium: 40,
+      },
+    },
+    contentProductPrice: {
+      icon: {
+        sizeSmall: 24,
+        sizeMedium: 40,
+      },
+    },
   };
   const defaultOptions = preferences
     ? {

@@ -9,7 +9,7 @@ import {
   getQueryStringParameter,
   updateQueryStringParameter
 } from './utils/url';
-import {getHighestSafeWindowContext, getWindowWidth, getWindowHeight, isClientSideRendering} from './utils/window';
+import {getHighestSafeWindowContext, getWindowWidth, getWindowHeight, isClientSideRendering, handleOpenWindow} from './utils/window';
 import {mergeDeep, isObject, objectWithoutProperties, isFunc} from './utils/object';
 import {isInteger} from './utils/number';
 import {arraysEqual, groupBy, sortByAttr} from './utils/array';
@@ -44,6 +44,7 @@ export {
   getWindowWidth,
   getWindowHeight,
   isClientSideRendering,
+  handleOpenWindow,
   Logger,
   mergeDeep,
   isObject,

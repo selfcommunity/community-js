@@ -62,7 +62,7 @@ export default function CreateCourseButton(inProps: CreateCourseButtonProps): JS
     props: inProps,
     name: PREFIX
   });
-  const {className, CourseFormDialogComponentProps = {}, children, ...rest} = props;
+  const {className, CourseFormDialogComponentProps = {CourseFormComponentProps: {hidePaywalls: true}}, children, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);

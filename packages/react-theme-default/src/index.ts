@@ -38,6 +38,7 @@ import SCCategory from './components/SCCategory';
 import SCCategoryAutocomplete from './components/SCCategoryAutocomplete';
 import SCCategoryFeedTemplate from './components/SCCategoryFeedTemplate';
 import SCCategoryFollowersButton from './components/SCCategoryFollowersButton';
+import SCCategoryFollowButton from './components/SCCategoryFollowButton';
 import SCCategoryHeader from './components/SCCategoryHeader';
 import SCCategoryTemplate from './components/SCCategoryTemplate';
 import SCCategoryTrendingFeedWidget from './components/SCCategoryTrendingFeedWidget';
@@ -113,6 +114,7 @@ import SCGroupMembersWidget from './components/SCGroupMembersWidget';
 import SCGroupRequestsWidget from './components/SCGroupRequestsWidget';
 import SCGroups from './components/SCGroups';
 import SCGroupSettingsIconButton from './components/SCGroupSettingsIconButton';
+import SCGroupSubscribeButton from './components/SCGroupSubscribeButton';
 import SCGroupTemplate from './components/SCGroupTemplate';
 import SCIncubator from './components/SCIncubator';
 import SCIncubatorDetail from './components/SCIncubatorDetail';
@@ -202,6 +204,20 @@ import SCTagAutocomplete from './components/SCTagAutocomplete';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 import SCVoteButton from './components/SCVoteButton';
 import SCWidget from './components/SCWidget';
+import SCBuyButton from './components/SCBuyButton';
+import SCPaymentProducts from './components/SCPaymentProducts';
+import SCPaymentProduct from './components/SCPaymentProduct';
+import SCPaymentOrder from './components/SCPaymentOrder';
+import SCPaymentOrderPdfButton from './components/SCPaymentOrderPdfButton';
+import SCPaymentProductPrice from './components/SCPaymentProductPrice';
+import SCCheckout from './components/SCCheckout';
+import SCCheckoutReturnDialog from './components/SCCheckoutReturnDialog';
+import SCHiddenPurchasableContent from './components/SCHiddenPurchasableContent';
+import SCPaywalls from './components/SCPaywalls';
+import SCPaywallsConfigurator from './components/SCPaywallsConfigurator';
+import SCPdfPreview from './components/SCPdfPreview';
+import SCPaymentOrders from './components/SCPaymentOrders';
+import SCCheckoutHeaderInfoWidget from './components/SCCheckoutHeaderInfoWidget';
 /**
  * Style fragments - Imports - End
  */
@@ -319,6 +335,7 @@ const theme = {
     SCCategoryAutocomplete,
     SCCategoryFeedTemplate,
     SCCategoryFollowersButton,
+    SCCategoryFollowButton,
     SCCategoryHeader,
     SCCategoryTemplate,
     SCCategoryTrendingFeedWidget,
@@ -375,6 +392,7 @@ const theme = {
     SCGroupMembersWidget,
     SCGroupRequestsWidget,
     SCGroupSettingsIconButton,
+    SCGroupSubscribeButton,
     SCGroupTemplate,
     SCGroups,
     SCIncubator,
@@ -483,7 +501,21 @@ const theme = {
     SCLiveStreamForm,
     SCLiveStreamFormSettings,
     SCLiveStreamRoom,
-    SCLiveStreamVideoConference
+    SCLiveStreamVideoConference,
+    SCBuyButton,
+    SCPaymentProducts,
+    SCPaymentProduct,
+    SCPaymentOrder,
+    SCPaymentOrderPdfButton,
+    SCPaymentProductPrice,
+    SCCheckout,
+    SCCheckoutReturnDialog,
+    SCHiddenPurchasableContent,
+    SCPaywalls,
+    SCPaywallsConfigurator,
+    SCPdfPreview,
+    SCPaymentOrders,
+    SCCheckoutHeaderInfoWidget
   },
   selfcommunity: {
     user: {
@@ -507,6 +539,20 @@ const theme = {
         sizeMedium: 60,
         sizeLarge: 90,
         sizeXLarge: 205
+      }
+    },
+    contentProduct: {
+      icon: {
+        sizeSmall: 24,
+        sizeMedium: 40,
+        sizeLarge: 50
+      }
+    },
+    contentProductPrice: {
+      icon: {
+        sizeSmall: 24,
+        sizeMedium: 40,
+        sizeLarge: 50
       }
     }
   }

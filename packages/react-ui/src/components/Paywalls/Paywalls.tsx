@@ -1,0 +1,141 @@
+import React, {useEffect, useMemo, useState} from 'react';
+import {Alert, Box, Typography, styled} from '@mui/material';
+import {useThemeProps} from '@mui/system';
+import classNames from 'classnames';
+import {PaymentApiClient} from '@selfcommunity/api-services';
+import {SCPaymentProduct, SCContentType, SCPurchasableContent, SCPaymentOrder, SCPaymentPrice} from '@selfcommunity/types';
+import {useIsComponentMountedRef, useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import {PREFIX} from './constants';
+import PaymentProductsSkeleton from './Skeleton';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import PaymentProducts from '../PaymentProducts';
+import {FormattedMessage, useIntl} from 'react-intl';
+import PaymentProduct from '../PaymentProduct';
+import {getConvertedAmount} from '../../utils/payment';
+
+const classes = {
+  root: `${PREFIX}-root`,
+  error: `${PREFIX}-error`
+};
+
+const Root = styled(Box, {
+  slot: 'Root',
+  name: PREFIX
+})(({theme}) => ({}));
+
+export interface PaywallsProps {
+  className?: string;
+  contentType?: SCContentType;
+  contentId?: number | string;
+  content?: SCPurchasableContent;
+  prefetchedPaymentContentStatus?: SCPurchasableContent;
+  onUpdatePaymentOrder?: (price: SCPaymentPrice, contentType?: SCContentType, contentId?: string | number) => void;
+}
+
+export default function Paywalls(inProps: PaywallsProps) {
+  // PROPS
+  const props: PaywallsProps = useThemeProps({
+    props: inProps,
+    name: PREFIX
+  });
+  const {className, contentId, contentType, content, prefetchedPaymentContentStatus, onUpdatePaymentOrder, ...rest} = props;
+
+  // STATE
+  const [products, setProducts] = useState<SCPaymentProduct[]>([]);
+  const [paymentOrder, setPaymentOrder] = useState<SCPaymentOrder>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // HOOKS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+  const isMountedRef = useIsComponentMountedRef();
+  const intl = useIntl();
+
+  // Check if the payment price of the purchase is in the current list
+  const isPricePurchasedIncluded = useMemo(() => {
+    let _included = false;
+    if (!products.length || !paymentOrder) {
+      return true;
+    }
+    products.map((p) => {
+      if (p.payment_prices) {
+        const _ids = p.payment_prices.map((price) => price.id);
+        if (_ids.indexOf(paymentOrder.payment_price.id) > -1) {
+          _included = _included || true;
+        }
+      }
+    });
+    return _included;
+  }, [products, paymentOrder]);
+
+  /**
+   * On mount, fetch payment content status
+   */
+  useEffect(() => {
+    if (prefetchedPaymentContentStatus) {
+      setProducts(prefetchedPaymentContentStatus.paywalls);
+      setPaymentOrder(prefetchedPaymentContentStatus.payment_order);
+      setLoading(false);
+    } else if (content && contentType) {
+      setProducts(content.paywalls || []);
+      setPaymentOrder(content.payment_order || null);
+      setLoading(false);
+    } else if (contentId !== undefined && contentType) {
+      PaymentApiClient.getPaymentContentStatus({content_id: contentId, content_type: contentType})
+        .then((data) => {
+          if (isMountedRef.current) {
+            setProducts(data.paywalls.map((p) => p.payment_product));
+            setPaymentOrder(data.payment_order);
+            setLoading(false);
+          }
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+        });
+    }
+  }, [prefetchedPaymentContentStatus, contentId, contentType]);
+
+  if (!isPaymentsEnabled) {
+    return null;
+  }
+
+  return (
+    <Root className={classNames(classes.root, className)} {...rest}>
+      {loading ? (
+        <PaymentProductsSkeleton />
+      ) : (
+        <>
+          <PaymentProducts
+            contentType={contentType}
+            {...(content ? {content} : {contentId})}
+            prefetchedProducts={products}
+            paymentOrder={paymentOrder}
+            {...(paymentOrder && {paymentOrder, onUpdatePaymentOrder})}
+          />
+          {paymentOrder && !isPricePurchasedIncluded && (
+            <Alert severity="error" className={classes.error}>
+              <Typography component="p" variant="body2">
+                <FormattedMessage id="ui.paywalls.priceNotIncluded" defaultMessage="ui.paywalls.priceNotIncluded" />
+              </Typography>
+              <Typography component="p" variant="body2">
+                <FormattedMessage
+                  defaultMessage="ui.paywalls.contentPurchasedAt"
+                  id="ui.paywalls.contentPurchasedAt"
+                  values={{
+                    purchasedAt: intl.formatDate(new Date(paymentOrder.created_at), {day: 'numeric', year: 'numeric', month: 'long'}),
+                    price: getConvertedAmount(paymentOrder.payment_price)
+                  }}
+                />
+              </Typography>
+              <PaymentProduct
+                paymentProduct={paymentOrder.payment_price.payment_product}
+                contentType={contentType}
+                {...(content ? {content} : {contentId})}
+              />
+            </Alert>
+          )}
+        </>
+      )}
+    </Root>
+  );
+}

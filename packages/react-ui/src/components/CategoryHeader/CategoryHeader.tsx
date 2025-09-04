@@ -2,12 +2,13 @@ import React, {useMemo} from 'react';
 import {Box, Paper, Typography, styled} from '@mui/material';
 import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
 import {FormattedMessage} from 'react-intl';
-import {useSCFetchCategory} from '@selfcommunity/react-core';
-import {SCCategoryType} from '@selfcommunity/types';
+import {useSCFetchCategory, useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import {SCCategoryType, SCContentType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import CategoryFollowersButton, {CategoryFollowersButtonProps} from '../CategoryFollowersButton';
 import {PREFIX} from './constants';
+import BuyButton from '../BuyButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -101,6 +102,8 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
   // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
   /**
    * Handles callback follow/unfollow category
    */
@@ -143,6 +146,9 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
           <CategoryFollowersButton category={scCategory} categoryId={scCategory?.id} {...CategoryFollowersButtonProps} />
         </Box>
         <Box className={classes.action}>
+          {isPaymentsEnabled && scCategory.paywalls?.length > 0 && scCategory.payment_order && (
+            <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} />
+          )}
           <CategoryFollowButton category={scCategory} onFollow={handleFollow} {...CategoryFollowButtonProps} />
         </Box>
       </Box>

@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: () => ({
+    root: ({theme}: any) => ({
       width: '100%'
     }),
     snippetRoot: ({theme}: any) => ({
@@ -22,6 +22,17 @@ const Component = {
       },
       '& .SCCourse-snippet-image': {
         position: 'relative',
+        marginLeft: theme.spacing(),
+        '& .SCCourse-chip': {
+          maxWidth: 70,
+          borderRadius: 3,
+          boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px,rgba(0, 0, 0, 0.23) 0px 3px 6px',
+          height: 18,
+          '& span': {
+            padding: 3,
+            fontSize: '0.6rem'
+          }
+        },
         '& .SCCourse-snippet-in-progress': {
           height: 18,
           backgroundColor: theme.palette.secondary.main,
@@ -69,6 +80,9 @@ const Component = {
           fontWeight: 700,
           padding: theme.spacing(0.5)
         }
+      },
+      '& .SCBaseItemButton-actions': {
+        marginRight: theme.spacing()
       }
     }),
     previewRoot: ({theme}: any) => ({
@@ -262,6 +276,10 @@ const Component = {
             transform: 'translate(-50%, -50%)'
           }
         }
+      },
+      '&.MuiPaper-outlined': {
+        paddingLeft: theme.spacing(),
+        paddingRight: theme.spacing()
       }
     })
   }

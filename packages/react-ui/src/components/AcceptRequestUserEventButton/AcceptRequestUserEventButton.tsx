@@ -10,6 +10,7 @@ import {HTMLAttributes, useCallback, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
+import {useSnackbar} from 'notistack';
 
 const PREFIX = 'SCAcceptRequestUserEventButton';
 
@@ -99,19 +100,39 @@ export default function AcceptRequestUserEventButton(inProps: AcceptRequestUserE
   // HOOKS
   const {scEvent} = useSCFetchEvent({id: eventId, event});
   const {scUser} = useSCFetchUser({id: userId, user});
+  const {enqueueSnackbar} = useSnackbar();
 
   const handleConfirmAction = useCallback(() => {
     setLoading(true);
 
     EventService.inviteOrAcceptEventRequest(scEvent.id, {users: [scUser.id]})
       .then(() => {
-        handleConfirm?.(scUser.id);
+        if (handleConfirm) {
+          handleConfirm(scUser.id);
+        } else {
+          enqueueSnackbar(
+            <FormattedMessage
+              id="ui.acceptRequestUserEventButton.snackbar.success"
+              defaultMessage="ui.acceptRequestUserEventButton.snackbar.success"
+            />,
+            {
+              variant: 'error',
+              autoHideDuration: 3000
+            }
+          );
+        }
         setLoading(false);
         setOpenDialog(false);
       })
       .catch((error) => {
-        handleConfirm?.(null);
-
+        if (handleConfirm) {
+          handleConfirm(null);
+        } else {
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error',
+            autoHideDuration: 3000
+          });
+        }
         Logger.error(SCOPE_SC_UI, error);
       });
   }, [scEvent, scUser]);

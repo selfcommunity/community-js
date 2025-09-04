@@ -58,8 +58,8 @@
 		"access": "public"
 	},
 	"dependencies": {
-		"@selfcommunity/types": "^0.8.0-alpha.0",
-		"@selfcommunity/utils": "^0.2.64-alpha.1",
+		"@selfcommunity/types": "^0.7.7-payments.158",
+		"@selfcommunity/utils": "^0.2.64-payments.158",
 		"axios": "^1.4.0",
 		"jose": "^4.14.4"
 	},
@@ -105,6 +105,7 @@
 		"webpack-bundle-analyzer": "^4.9.0",
 		"webpack-cli": "^4.5.0"
 	},
+	"peerDependencies": {},
 	"prettier": {
 		"printWidth": 150,
 		"bracketSpacing": false,

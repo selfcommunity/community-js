@@ -2,7 +2,7 @@ import React, {useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
 import {Avatar, Box, Divider, FormGroup, Icon, Paper, Stack, Switch, TextField, Typography, styled} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, UserUtils, useSCPaymentsEnabled, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
@@ -12,11 +12,13 @@ import ChangeGroupCover from '../ChangeGroupCover';
 import {GROUP_DESCRIPTION_MAX_LENGTH, GROUP_TITLE_MAX_LENGTH} from '../../constants/Group';
 import GroupInviteButton from '../GroupInviteButton';
 import PubSub from 'pubsub-js';
-import {SCGroupPrivacyType, SCGroupType} from '@selfcommunity/types';
+import {SCContentType, SCGroupPrivacyType, SCGroupType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {formatHttpErrorCode, GroupService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
+import PaywallsConfigurator from '../PaywallsConfigurator';
+import {ContentAccessType} from '../PaywallsConfigurator/constants';
 
 const messages = defineMessages({
   name: {
@@ -46,6 +48,7 @@ const classes = {
   privacySectionInfo: `${PREFIX}-privacy-section-info`,
   visibilitySection: `${PREFIX}-visibility-section`,
   visibilitySectionInfo: `${PREFIX}-visibility-section-info`,
+  paywallsConfiguratorWrap: `${PREFIX}-paywalls-configurator-wrap`,
   inviteSection: `${PREFIX}-invite-section`,
   error: `${PREFIX}-error`
 };
@@ -142,8 +145,13 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     isPublic: group && group.privacy === SCGroupPrivacyType.PUBLIC,
     isVisible: group ? group.visible : true,
     invitedUsers: null,
-    isSubmitting: false
+    isSubmitting: false,
+    products: group?.paywalls?.map((p) => p.id) || [],
+    contentAccessType: group?.paywalls?.length ? ContentAccessType.PAID : ContentAccessType.FREE
   };
+
+  // CONTEXT
+  const scUserContext = useSCUser();
 
   // STATE
   const [field, setField] = useState<any>(initialFieldState);
@@ -151,6 +159,9 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
 
   // INTL
   const intl = useIntl();
+
+  // CONST
+  const isStaff = useMemo(() => scUserContext.user && UserUtils.isStaff(scUserContext.user), [scUserContext.user]);
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -162,6 +173,9 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     () => scPreferences.preferences[SCPreferences.CONFIGURATIONS_GROUPS_PRIVATE_ENABLED].value,
     [scPreferences.preferences]
   );
+
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   const _backgroundCover = {
     ...(field.emotionalImageOriginal
@@ -228,6 +242,11 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     if (field.emotionalImageOriginalFile) {
       formData.append('emotional_image_original', field.emotionalImageOriginalFile);
     }
+    if (field.products.length && field.contentAccessType === ContentAccessType.PAID && (isStaff || (group && group.paywalls?.length))) {
+      formData.append(`products`, JSON.stringify(field.products));
+    } else {
+      formData.append(`products`, '[]');
+    }
     if (!group) {
       for (const key in field.invitedUsers) {
         formData.append(key, field.invitedUsers[key]);
@@ -266,6 +285,27 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
     }
   };
 
+  const handleChangeContentAccessType = (type: ContentAccessType) => {
+    setField((prev) => ({
+      ...prev,
+      contentAccessType: type
+    }));
+  };
+
+  const handleChangePaymentsProducts = (products) => {
+    setField((prev) => ({
+      ...prev,
+      products: products.map((product) => product.id)
+    }));
+  };
+
+  const handleClose = (_event: any, reason: string) => {
+    if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+      return;
+    }
+    onClose?.();
+  };
+
   /**
    * Renders root object
    */
@@ -280,7 +320,8 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
         )
       }
       open={open}
-      onClose={onClose}
+      disableEscapeKeyDown={true}
+      onClose={handleClose}
       className={classNames(classes.root, className)}
       actions={
         <LoadingButton
@@ -490,6 +531,16 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
             </Box>
           )}
         </FormGroup>
+        {isPaymentsEnabled && isStaff && (
+          <Box className={classes.paywallsConfiguratorWrap}>
+            <PaywallsConfigurator
+              {...(group && {contentId: group.id})}
+              contentType={SCContentType.GROUP}
+              onChangeContentAccessType={handleChangeContentAccessType}
+              onChangePaymentProducts={handleChangePaymentsProducts}
+            />
+          </Box>
+        )}
         {!group && (
           <>
             <Divider />

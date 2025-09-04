@@ -24,7 +24,12 @@ export const USER_PROFILE_CONNECTIONS_REQUESTS_ROUTE_NAME = 'user_connections_re
 export const USER_PROFILE_CONNECTIONS_REQUESTS_SENT_ROUTE_NAME = 'user_connections_requests_sent';
 export const USER_PROFILE_CATEGORIES_ROUTE_NAME = 'user_categories';
 export const USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME = 'user_followed_posts';
+export const USER_PROFILE_SCHEDULED_POSTS_ROUTE_NAME = 'user_scheduled_posts';
+export const USER_PROFILE_SCHEDULED_DISCUSSIONS_ROUTE_NAME = 'user_scheduled_discussions';
 export const USER_PROFILE_FOLLOWED_DISCUSSIONS_ROUTE_NAME = 'user_followed_discussions';
+export const USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME = 'user_payments_history_orders';
+export const USER_PAYMENTS_ORDER_PDF_ROUTE_NAME = 'user_payments_order_pdf';
+export const USER_PAYMENT_METHODS_ROUTE_NAME = 'user_payment_methods';
 export const LOYALTY_ROUTE_NAME = 'loyalty';
 export const INCUBATOR_ROUTE_NAME = 'incubator';
 export const SIGNIN_ROUTE_NAME = 'signin';
@@ -51,6 +56,7 @@ export const EVENTS_SUGGESTED_ROUTE_NAME = 'events_suggested';
 export const EVENTS_SUBSCRIBED_ROUTE_NAME = 'events_subscribed';
 export const EVENTS_HIGHLIGHT_ROUTE_NAME = 'events_highlight';
 export const LIVESTREAM_ROUTE_NAME = 'live';
+export const CHECKOUT_PAYMENT = 'checkout_payment';
 
 /**
  * Default Routes
@@ -77,7 +83,12 @@ export const defaultRoutes: {[k: string]: string} = {
   [USER_PROFILE_CONNECTIONS_REQUESTS_SENT_ROUTE_NAME]: '/user/:id/connections/requests/sent/',
   [USER_PROFILE_CATEGORIES_ROUTE_NAME]: '/user/:id/categories/',
   [USER_PROFILE_FOLLOWED_POSTS_ROUTE_NAME]: '/user/:id/posts/followed/',
+  [USER_PROFILE_SCHEDULED_POSTS_ROUTE_NAME]: '/user/:id/posts/scheduled/',
   [USER_PROFILE_FOLLOWED_DISCUSSIONS_ROUTE_NAME]: '/user/:id/discussions/followed/',
+  [USER_PROFILE_SCHEDULED_DISCUSSIONS_ROUTE_NAME]: '/user/:id/discussions/scheduled/',
+  [USER_PAYMENTS_HISTORY_ORDERS_ROUTE_NAME]: '/user/:id/:username/history_orders/',
+  [USER_PAYMENTS_ORDER_PDF_ROUTE_NAME]: '/user/:id/:username/order/:pid/pdf/',
+  [USER_PAYMENT_METHODS_ROUTE_NAME]: '/user/:id/:username/payment_methods/',
   [LOYALTY_ROUTE_NAME]: '/loyalty/',
   [INCUBATOR_ROUTE_NAME]: '/incubator/:id/',
   [SIGNIN_ROUTE_NAME]: '/signin/',
@@ -104,4 +115,5 @@ export const defaultRoutes: {[k: string]: string} = {
   [COURSE_LESSON_COMMENTS_ROUTE_NAME]: '/course/:id/:slug/section/:section_id/lesson/:lesson_id/comments',
   [COURSE_LESSON_EDIT_ROUTE_NAME]: '/course/:id/:slug/section/:section_id/lesson/:lesson_id/edit',
   [LIVESTREAM_ROUTE_NAME]: '/live/:slug/',
+  [CHECKOUT_PAYMENT]: '/checkout/:content_type/:content_id/price/:price_id',
 };

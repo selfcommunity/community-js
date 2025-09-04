@@ -61,7 +61,7 @@ export class ApiClient implements ApiClientInterface {
   protected createClient(config?: any): AxiosInstance {
     return axios.create({
       ...(config && config.baseURL && {baseURL: config.baseURL}),
-      responseType: 'json' as const,
+      ...(config && config.responseType ? {responseType: config.responseType} : {responseType: 'json' as const}),
       headers: {
         ...(config && config.accessToken && {Authorization: `Token ${config.accessToken}`})
       },

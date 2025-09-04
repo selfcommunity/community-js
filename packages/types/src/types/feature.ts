@@ -40,10 +40,10 @@ export enum SCFeatureName {
   CUSTOMIZE_HEADLESS = 'customize_headless',
   SYSTEM_PAGES = 'system_pages',
   REACTION = 'reaction',
-  PRIVATE_MESSAGING = 'private_messaging',
   GROUPING = 'grouping',
   EVENT = 'event',
   LIVE_STREAM = 'live_stream',
+	PAYMENTS = 'payments',
   COURSE = 'course'
 }
 

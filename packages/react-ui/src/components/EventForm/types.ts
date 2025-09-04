@@ -1,4 +1,5 @@
-import {SCEventLocationType, SCEventRecurrenceType, SCLiveStreamType, SCLiveStreamSettingsType} from '@selfcommunity/types';
+import {SCEventLocationType, SCEventRecurrenceType, SCLiveStreamSettingsType} from '@selfcommunity/types';
+import {ContentAccessType} from '../PaywallsConfigurator/constants';
 
 export type Place = {
   description: string;
@@ -26,6 +27,8 @@ export type InitialFieldState = Geolocation & {
   description: string;
   isPublic: boolean;
   isSubmitting: boolean;
+  products: number[];
+  contentAccessType: ContentAccessType;
 };
 
 export type FieldStateKeys = keyof InitialFieldState;

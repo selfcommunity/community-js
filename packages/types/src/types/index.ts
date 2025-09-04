@@ -159,6 +159,25 @@ import {
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType, SCOnBoardingStepIdType} from './onboarding';
 import {SCCommunitySubscriptionTier} from './tier';
 import {SCCommunityEnvironment} from './environment';
+import {
+  type SCPaymentProduct,
+  type SCPaymentPrice,
+  SCPaymentPriceCurrencyType,
+  SCContentType,
+  type SCCheckoutSession,
+  type SCPurchasableContent,
+  SCCheckoutSessionStatus,
+  type SCCheckoutSessionDetail,
+  type SCCheckoutSessionComplete,
+  type SCPaymentOrder,
+  type SCPaymentsCustomerPortalSession,
+  SCPaymentProductTemplateType,
+  SCCheckoutSessionUIMode,
+  type SCPaywall,
+  SCPaymentRecurringInterval
+} from './payment';
+import {type SCCustomerBillingInfo, type SCCountryType} from './billing';
+import {type SCCommunityType} from './community';
 
 /**
  * Exports all types
@@ -345,5 +364,23 @@ export {
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
-  SCCommunityEnvironment
+  SCCommunityEnvironment,
+  type SCPaywall,
+  type SCPaymentProduct,
+  type SCPaymentPrice,
+  SCPaymentPriceCurrencyType,
+  SCContentType,
+  type SCCheckoutSession,
+  type SCPurchasableContent,
+  SCCheckoutSessionStatus,
+  type SCCheckoutSessionDetail,
+  type SCCheckoutSessionComplete,
+  type SCPaymentOrder,
+  type SCPaymentsCustomerPortalSession,
+  SCPaymentProductTemplateType,
+  SCCheckoutSessionUIMode,
+  SCPaymentRecurringInterval,
+  type SCCommunityType,
+  type SCCustomerBillingInfo,
+  type SCCountryType
 };

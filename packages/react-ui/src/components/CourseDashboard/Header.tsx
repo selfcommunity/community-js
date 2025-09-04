@@ -1,12 +1,13 @@
 import {Box, Button, Icon, Stack, Typography} from '@mui/material';
-import {SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
+import {SCContentType, SCCourseJoinStatusType, SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import {memo} from 'react';
-import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import React, {memo} from 'react';
+import {Link, SCRoutes, SCRoutingContextType, useSCPaymentsEnabled, useSCRouting} from '@selfcommunity/react-core';
 import {SCCourseEditTabType} from '../../types';
 import classNames from 'classnames';
 import CourseTypePopover from '../../shared/CourseTypePopover';
+import BuyButton from '../BuyButton';
 
 const classes = {
   header: `${PREFIX}-header`,
@@ -47,6 +48,9 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
   // INTL
   const intl = useIntl();
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
   return (
     <Box className={classes.header}>
       <img src={course.image_bigger} alt={course.image_bigger} className={classes.img} />
@@ -75,6 +79,19 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
           </Stack>
 
           <CourseTypePopover course={course} />
+          {isPaymentsEnabled &&
+            course.paywalls?.length > 0 &&
+            (course.privacy === SCCoursePrivacyType.OPEN ||
+              (course.privacy === SCCoursePrivacyType.PRIVATE && course.join_status && course.join_status !== SCCourseJoinStatusType.REQUESTED)) && (
+              <BuyButton
+                size="md"
+                variant="text"
+                startIcon={<Icon>dredit-card</Icon>}
+                contentType={SCContentType.COURSE}
+                content={course}
+                label={<FormattedMessage id="ui.course.paid" defaultMessage="ui.course.paid" />}
+              />
+            )}
         </Stack>
 
         {hasAction && (

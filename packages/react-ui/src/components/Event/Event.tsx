@@ -2,6 +2,7 @@ import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Divider,
 import {useThemeProps} from '@mui/system';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
+import {CacheStrategies} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -118,6 +119,10 @@ export interface EventProps extends WidgetProps {
    */
   EventSkeletonComponentProps?: EventSkeletonProps;
   /**
+   * Override default cache strategy on fetch element
+   */
+  cacheStrategy?: CacheStrategies;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -173,11 +178,12 @@ export default function Event(inProps: EventProps): JSX.Element {
     actions,
     EventParticipantsButtonComponentProps = {},
     EventSkeletonComponentProps = {},
+    cacheStrategy,
     ...rest
   } = props;
 
   // STATE
-  const {scEvent} = useSCFetchEvent({id: eventId, event, autoSubscribe: false});
+  const {scEvent} = useSCFetchEvent({id: eventId, event, autoSubscribe: false, ...(cacheStrategy && {cacheStrategy})});
   const inProgress = useMemo(() => scEvent && scEvent.active && scEvent.running, [scEvent]);
   const isEventFinished = useMemo(() => checkEventFinished(scEvent), [scEvent]);
 

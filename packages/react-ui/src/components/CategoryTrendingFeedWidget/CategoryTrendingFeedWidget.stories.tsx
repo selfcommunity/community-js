@@ -33,7 +33,7 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<CategoryTrendingFeedWidget> = {
+export const Base: StoryObj<typeof CategoryTrendingFeedWidget> = {
   render: template
 };
 

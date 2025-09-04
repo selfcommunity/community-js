@@ -1,9 +1,9 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {Grid, useMediaQuery, useTheme, styled} from '@mui/material';
-import {SCPreferencesContextType, SCThemeType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {SCPreferences, SCPreferencesContextType, SCThemeType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {SCFeatureName, SCPrivateMessageStatusType, SCPrivateMessageType} from '@selfcommunity/types';
+import {SCPrivateMessageStatusType, SCPrivateMessageType} from '@selfcommunity/types';
 import PrivateMessageThread from '../PrivateMessageThread';
 import PrivateMessageSnippets from '../PrivateMessageSnippets';
 import {PREFIX} from './constants';
@@ -113,7 +113,12 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
   };
 
   // MEMO
-  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
+  const privateMessagingEnabled = useMemo(
+    () =>
+      SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in scPreferences.preferences &&
+      scPreferences.preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
+    [scPreferences.preferences]
+  );
   const authUserId = useMemo(() => (scUserContext.user ? scUserContext.user.id : null), [scUserContext.user]);
 
   useEffect(() => {

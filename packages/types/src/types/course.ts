@@ -1,6 +1,7 @@
 import {SCUserType} from './user';
 import {SCCategoryType} from './category';
 import {SCMediaType} from './media';
+import {SCPaymentProduct, SCPurchasableContent} from './payment';
 
 /**
  * SCCoursePrivacyType enum
@@ -29,7 +30,8 @@ export enum SCCourseJoinStatusType {
   REQUESTED = 'requested',
   INVITED = 'invited',
   MANAGER = 'manager',
-  CREATOR = 'creator'
+  CREATOR = 'creator',
+	PAYMENT_WAITING = 'payment_waiting',
 }
 
 /**
@@ -44,7 +46,7 @@ export enum SCCourseOrderingUsersType {
  * Interface SCCourseType.
  * Course Schema.
  */
-export interface SCCourseType {
+export interface SCCourseType extends SCPurchasableContent {
   /**
    * The ID of the course.
    */
@@ -251,6 +253,10 @@ export interface SCCourseCommentType {
       name: string;
     };
   };
+  /**
+   * Paywalls
+   */
+  paywalls?: SCPaymentProduct[];
 }
 
 /**

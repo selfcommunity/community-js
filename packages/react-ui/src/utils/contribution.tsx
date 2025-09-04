@@ -1,6 +1,6 @@
 import React from 'react';
 import {SCRoutes} from '@selfcommunity/react-core';
-import {SCContributionType} from '@selfcommunity/types';
+import {SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 
 /**

@@ -125,5 +125,8 @@
 	},
 	"bugs": {
 		"url": "https://github.com/selfcommunity/community-js/issues"
+	},
+	"engines": {
+		"node": ">=20.x"
 	}
 }

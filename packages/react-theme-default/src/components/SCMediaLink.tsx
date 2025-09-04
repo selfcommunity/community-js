@@ -3,6 +3,7 @@ import {alpha} from '@mui/system';
 const Component = {
   styleOverrides: {
     displayRoot: ({theme}: any) => ({
+      marginTop: theme.spacing(2),
       '& .SCMediaLink-link': {
         position: 'relative',
         backgroundColor: '#F5F5F5',
@@ -118,7 +119,7 @@ const Component = {
         }
       }
     }),
-    triggerRoot: ({theme}: any) => ({})
+    triggerRoot: () => ({})
   }
 };
 

@@ -1,14 +1,16 @@
-import {Fragment, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {Fragment, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {PREFIX} from './constants';
-import {Avatar, Box, Divider, LinearProgress, Stack, styled, Typography, useThemeProps} from '@mui/material';
+import {Avatar, Box, Divider, LinearProgress, Skeleton, Stack, styled, Typography, useThemeProps} from '@mui/material';
 import classNames from 'classnames';
 import HeaderCourseDashboard from './Header';
 import {
+  SCContentType,
   SCCourseJoinStatusType,
   SCCourseLessonCompletionStatusType,
   SCCoursePrivacyType,
   SCCourseSectionType,
-  SCCourseType
+  SCCourseType,
+  SCEventSubscriptionStatusType
 } from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import ActionButton from './Student/ActionButton';
@@ -22,7 +24,8 @@ import {
   SCUserContextType,
   useSCUser,
   SCContextType,
-  useSCContext
+  useSCContext,
+  useSCPaymentsEnabled
 } from '@selfcommunity/react-core';
 import AccordionLessons from '../../shared/AccordionLessons';
 import {CourseService} from '@selfcommunity/api-services';
@@ -31,6 +34,7 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import StudentSkeleton from './Student/Skeleton';
 import UserAvatar from '../../shared/UserAvatar';
+import BuyButton from '../BuyButton';
 
 const BUTTON_MESSAGES = {
   dashboard: 'ui.course.dashboard.student.button.dashboard',
@@ -154,6 +158,9 @@ function Student(inProps: StudentCourseDashboardProps) {
   const intl = useIntl();
   const {enqueueSnackbar} = useSnackbar();
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
   // EFFETCS
   useEffect(() => {
     if (scCourse) {
@@ -230,7 +237,7 @@ function Student(inProps: StudentCourseDashboardProps) {
   // MEMOS
   const actionButton = useMemo(() => {
     if (!scCourse) {
-      return <></>;
+      return <Skeleton animation="wave" variant="rectangular" width="130px" height="20px" />;
     }
 
     return (
@@ -243,37 +250,49 @@ function Student(inProps: StudentCourseDashboardProps) {
             variant="outlined"
           />
         )}
+
         {(((scCourse.privacy === SCCoursePrivacyType.PRIVATE || scCourse.privacy === SCCoursePrivacyType.SECRET) &&
           (scCourse.join_status === SCCourseJoinStatusType.MANAGER || scCourse.join_status === SCCourseJoinStatusType.JOINED)) ||
-          (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) && (
-          <ActionButton
-            labelId={
-              scCourse.join_status === null
-                ? BUTTON_MESSAGES.signUp
-                : scCourse.user_completion_rate === 0
-                ? BUTTON_MESSAGES.start
-                : scCourse.user_completion_rate === 100
-                ? BUTTON_MESSAGES.review
-                : BUTTON_MESSAGES.continue
-            }
-            to={scCourse.join_status !== null ? scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse)) : undefined}
-            disabled={getIsNextLessonLocked(scCourse)}
-            color={scCourse.user_completion_rate === 100 ? 'inherit' : undefined}
-            variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
-            loading={scCourse.join_status === null ? loadingRequest : undefined}
-            onClick={!scUserContext.user ? handleAnonymousAction : scCourse.join_status === null ? handleRequest : undefined}
-          />
-        )}
-        {scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
-          (scCourse.join_status === null || scCourse.join_status === SCCourseJoinStatusType.REQUESTED) && (
+          (scCourse.privacy === SCCoursePrivacyType.OPEN && scCourse.join_status !== SCCourseJoinStatusType.CREATOR)) &&
+          (!isPaymentsEnabled ||
+            !scCourse.paywalls?.length ||
+            (isPaymentsEnabled &&
+              scCourse.paywalls?.length > 0 &&
+              (scCourse.join_status === SCCourseJoinStatusType.JOINED || scCourse.join_status === SCCourseJoinStatusType.MANAGER))) && (
             <ActionButton
-              labelId={sentRequest ? BUTTON_MESSAGES.cancel : BUTTON_MESSAGES.request}
-              color="inherit"
-              variant="outlined"
-              loading={loadingRequest}
-              onClick={handleRequest}
+              labelId={
+                scCourse.join_status === null
+                  ? BUTTON_MESSAGES.signUp
+                  : scCourse.user_completion_rate === 0
+                  ? BUTTON_MESSAGES.start
+                  : scCourse.user_completion_rate === 100
+                  ? BUTTON_MESSAGES.review
+                  : BUTTON_MESSAGES.continue
+              }
+              to={scCourse.join_status !== null ? scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse)) : undefined}
+              disabled={scCourse.join_status !== null ? getIsNextLessonLocked(scCourse) : undefined}
+              color={scCourse.user_completion_rate === 100 ? 'inherit' : undefined}
+              variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
+              loading={scCourse.join_status === null ? loadingRequest : undefined}
+              onClick={!scUserContext.user ? handleAnonymousAction : scCourse.join_status === null ? handleRequest : undefined}
             />
           )}
+        {scCourse.privacy === SCCoursePrivacyType.PRIVATE &&
+        (scCourse.join_status === null || scCourse.join_status === SCCourseJoinStatusType.REQUESTED) ? (
+          <ActionButton
+            labelId={sentRequest ? BUTTON_MESSAGES.cancel : BUTTON_MESSAGES.request}
+            color="inherit"
+            variant="outlined"
+            loading={loadingRequest}
+            onClick={handleRequest}
+          />
+        ) : (
+          isPaymentsEnabled &&
+          scCourse.paywalls?.length > 0 &&
+          !(scCourse.join_status === SCCourseJoinStatusType.CREATOR) && (
+            <BuyButton contentType={SCContentType.COURSE} content={scCourse} />
+          )
+        )}
       </Stack>
     );
   }, [scCourse, sentRequest, loadingRequest, handleRequest]);
@@ -376,7 +395,6 @@ function Student(inProps: StudentCourseDashboardProps) {
               <Typography variant="h3" className={classes.contrastColor}>
                 <FormattedMessage id="ui.course.dashboard.student.completed" defaultMessage="ui.course.dashboard.student.completed" />
               </Typography>
-
               <img
                 src={CLAPPING}
                 alt={intl.formatMessage({id: 'ui.course.dashboard.student.completed', defaultMessage: 'ui.course.dashboard.student.completed'})}

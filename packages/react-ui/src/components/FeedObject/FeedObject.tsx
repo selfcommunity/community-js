@@ -46,12 +46,14 @@ import {
   Link,
   SCCache,
   SCContextType,
+  SCPreferences,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
   UserUtils,
   useSCContext,
   useSCFetchFeedObject,
+  useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -62,6 +64,7 @@ import Composer from '../Composer';
 import FeedObjectMediaPreview, {FeedObjectMediaPreviewProps} from '../FeedObjectMediaPreview';
 import {PREFIX} from './constants';
 import {MEDIA_EMBED_SC_SHARED_EVENT} from '../../constants/Media';
+import Vote from './Actions/Vote';
 
 const messages = defineMessages({
   visibleToAll: {
@@ -102,7 +105,8 @@ const classes = {
   replyContent: `${PREFIX}-reply-content`,
   activitiesSection: `${PREFIX}-activities-section`,
   activitiesContent: `${PREFIX}-activities-content`,
-  followButton: `${PREFIX}-follow-button`
+  followButton: `${PREFIX}-follow-button`,
+  vote: `${PREFIX}-vote`
 };
 
 const Root = styled(Widget, {
@@ -384,6 +388,10 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
+  const {preferences} = useSCPreferences();
+  const allShareEnabled = SCPreferences.ADDONS_SHARE_POST_ENABLED in preferences && preferences[SCPreferences.ADDONS_SHARE_POST_ENABLED].value;
+  const commentsEnabled =
+    SCPreferences.CONFIGURATIONS_COMMENTS_ENABLED in preferences && preferences[SCPreferences.CONFIGURATIONS_COMMENTS_ENABLED].value;
 
   // OBJECTS
   const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
@@ -409,6 +417,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     () => hideFollowAction || (hasEvent && obj?.medias?.[0]?.embed?.metadata?.active === false),
     [hideFollowAction, hasEvent, obj]
   );
+  const visibleTags = (obj.addressing ?? []).filter((tag) => tag.visible);
 
   // INTL
   const intl = useIntl();
@@ -512,7 +521,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   /**
    * Handle flag obj
    */
-  const handleFlag = useCallback((obj: SCCommentType | SCFeedObjectType, type: string, flagged: boolean) => {
+  const handleFlag = useCallback((_obj: SCCommentType | SCFeedObjectType, _type: string, flagged: boolean) => {
     enqueueSnackbar(
       flagged ? (
         <FormattedMessage id="ui.feedObject.flagSent" defaultMessage="ui.feedObject.flagSent" />
@@ -775,7 +784,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * Manage variants:
    * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
    */
-  let objElement;
+  let objElement: JSX.Element;
   if (
     (!obj && error) ||
     (obj?.deleted && !scUserContext.user && !(UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))
@@ -892,7 +901,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                       </Box>
                     </>
                   )}
-                  <Bullet />
+                  {visibleTags.length > 0 || (obj.group && <Bullet />)}
                   <Box className={classes.tag}>
                     {obj.addressing.length > 0 ? (
                       <Tags tags={obj.addressing} TagChipProps={{disposable: false, clickable: false}} />
@@ -903,11 +912,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                         </Icon>
                       </Tooltip>
                     ) : (
-                      <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
-                        <Icon color="disabled" fontSize="small">
-                          public
-                        </Icon>
-                      </Tooltip>
+                      <>
+                        <Bullet />
+                        <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
+                          <Icon color="disabled" fontSize="small">
+                            public
+                          </Icon>
+                        </Tooltip>
+                      </>
                     )}
                   </Box>
                 </>
@@ -952,65 +964,86 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   />
                 )}
               </Box>
-              <Box className={classes.infoSection}>
-                <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
-                  {!hideParticipantsPreview && (
-                    <ContributorsFeedObject
-                      feedObject={obj}
-                      feedObjectType={obj.type}
-                      {...ContributorsFeedObjectProps}
-                      cacheStrategy={cacheStrategy}
-                    />
-                  )}
-                  {!_hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
-                </Stack>
-              </Box>
+              {!obj.draft && (
+                <Box className={classes.infoSection}>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
+                    {!commentsEnabled && !allShareEnabled ? (
+                      <Vote
+                        feedObjectId={feedObjectId || feedObject?.id}
+                        feedObjectType={feedObjectType}
+                        feedObject={obj}
+                        inlineAction={true}
+                        onVoteAction={handleVoteSuccess}
+                        className={classes.vote}
+                      />
+                    ) : (
+                      !hideParticipantsPreview && (
+                        <ContributorsFeedObject
+                          feedObject={obj}
+                          feedObjectType={obj.type}
+                          {...ContributorsFeedObjectProps}
+                          cacheStrategy={cacheStrategy}
+                        />
+                      )
+                    )}
+                    {!_hideFollowAction && <Follow feedObject={obj} feedObjectType={obj.type} handleFollow={handleFollow} {...FollowButtonProps} />}
+                  </Stack>
+                </Box>
+              )}
             </CardContent>
             <CardActions className={classes.actionsSection}>
               <Actions
                 feedObjectId={feedObjectId}
                 feedObjectType={feedObjectType}
                 feedObject={obj}
-                hideCommentAction={template === SCFeedObjectTemplateType.DETAIL || (hasEvent && !obj?.medias[0].embed?.metadata?.active)}
+                hideVoteAction={!allShareEnabled && !commentsEnabled}
+                hideCommentAction={
+                  !commentsEnabled || template === SCFeedObjectTemplateType.DETAIL || (hasEvent && !obj?.medias[0].embed?.metadata?.active)
+                }
+                hideShareAction={!allShareEnabled}
                 handleExpandActivities={template === SCFeedObjectTemplateType.PREVIEW ? handleExpandActivities : null}
                 VoteActionProps={{onVoteAction: handleVoteSuccess}}
                 {...ActionsProps}
               />
-              {((template === SCFeedObjectTemplateType.DETAIL && (!hasEvent || obj?.medias?.[0]?.embed?.metadata?.active)) || expandedActivities) && (
-                <Box className={classes.replyContent}>
-                  <CommentObjectReplyComponent
-                    id={`reply-feedObject-${obj.id}`}
-                    onReply={handleReply}
-                    editable={!isReplying || Boolean(obj)}
-                    key={Number(isReplying)}
-                    {...CommentObjectReplyComponentProps}
-                  />
-                </Box>
-              )}
+              {commentsEnabled &&
+                ((template === SCFeedObjectTemplateType.DETAIL && (!hasEvent || obj?.medias?.[0]?.embed?.metadata?.active)) ||
+                  expandedActivities) && (
+                  <Box className={classes.replyContent}>
+                    <CommentObjectReplyComponent
+                      id={`reply-feedObject-${obj.id}`}
+                      onReply={handleReply}
+                      editable={!isReplying || Boolean(obj)}
+                      key={Number(isReplying)}
+                      {...CommentObjectReplyComponentProps}
+                    />
+                  </Box>
+                )}
             </CardActions>
-            {template === SCFeedObjectTemplateType.PREVIEW && (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0)) && (
-              <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>
-                <CardContent className={classes.activitiesContent}>
-                  <Activities
-                    feedObject={obj}
-                    key={selectedActivities}
-                    feedObjectActivities={feedObjectActivities}
-                    activitiesType={selectedActivities}
-                    onSetSelectedActivities={handleSelectedActivities}
-                    comments={comments}
-                    CommentsObjectProps={{
-                      CommentComponentProps: {
-                        ...{onDelete: handleDeleteComment, truncateContent: true, CommentsObjectComponentProps: {inPlaceLoadMoreContents: false}},
-                        ...CommentComponentProps
-                      },
-                      CommentObjectSkeletonProps: CommentObjectSkeletonProps
-                    }}
-                    cacheStrategy={cacheStrategy}
-                    {...ActivitiesProps}
-                  />
-                </CardContent>
-              </Collapse>
-            )}
+            {commentsEnabled &&
+              template === SCFeedObjectTemplateType.PREVIEW &&
+              (obj.comment_count > 0 || (feedObjectActivities && feedObjectActivities.length > 0)) && (
+                <Collapse in={expandedActivities} timeout="auto" classes={{root: classes.activitiesSection}}>
+                  <CardContent className={classes.activitiesContent}>
+                    <Activities
+                      feedObject={obj}
+                      key={selectedActivities}
+                      feedObjectActivities={feedObjectActivities}
+                      activitiesType={selectedActivities}
+                      onSetSelectedActivities={handleSelectedActivities}
+                      comments={comments}
+                      CommentsObjectProps={{
+                        CommentComponentProps: {
+                          ...{onDelete: handleDeleteComment, truncateContent: true, CommentsObjectComponentProps: {inPlaceLoadMoreContents: false}},
+                          ...CommentComponentProps
+                        },
+                        CommentObjectSkeletonProps: CommentObjectSkeletonProps
+                      }}
+                      cacheStrategy={cacheStrategy}
+                      {...ActivitiesProps}
+                    />
+                  </CardContent>
+                </Collapse>
+              )}
             {composerOpen && (
               <Composer open={composerOpen} feedObject={obj} onClose={handleToggleEdit} onSuccess={handleEditSuccess} maxWidth="sm" fullWidth />
             )}
@@ -1184,14 +1217,16 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
                   <DateTimeAgo component="span" date={obj.added_at} />
                 </Link>
-                <Button
-                  component={Link}
-                  to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
-                  variant="text"
-                  color="secondary"
-                  size="small">
-                  <FormattedMessage id="ui.feedObject.comment" defaultMessage="ui.feedObject.comment" />
-                </Button>
+                {commentsEnabled && (
+                  <Button
+                    component={Link}
+                    to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
+                    variant="text"
+                    color="secondary"
+                    size="small">
+                    <FormattedMessage id="ui.feedObject.comment" defaultMessage="ui.feedObject.comment" />
+                  </Button>
+                )}
               </Stack>
             }
           />

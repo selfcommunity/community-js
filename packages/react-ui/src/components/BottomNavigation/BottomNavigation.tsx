@@ -85,7 +85,10 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
   const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // MEMO
-  const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
+  const privateMessagingEnabled = useMemo(
+    () => SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in preferences && preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
+    [preferences]
+  );
   const groupsEnabled = useMemo(
     () =>
       preferences &&
@@ -144,7 +147,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
             //     icon={<Icon>explore</Icon>}
             //   />
             // ) : null,
-            (!postOnlyStaffEnabled || (UserUtils.isStaff(scUserContext.user) && postOnlyStaffEnabled)) &&
+            (!postOnlyStaffEnabled || UserUtils.isStaff(scUserContext.user) || UserUtils.isPublisher(scUserContext.user)) &&
             ((groupsEnabled && !eventsEnabled) || (!groupsEnabled && eventsEnabled)) &&
             !exploreStreamEnabled ? (
               <BottomNavigationAction

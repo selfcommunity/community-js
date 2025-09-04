@@ -1,9 +1,20 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {SwipeableDrawer, MenuItem, IconButtonProps, IconButton, Menu, useTheme, useMediaQuery, List, ListItem, styled, Icon} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {Link, SCRoutes, SCRoutingContextType, SCThemeType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCRoutes,
+  SCRoutingContextType,
+  SCThemeType,
+  SCUserContextType,
+  useSCPreferences,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import {GroupService} from '@selfcommunity/api-services';
@@ -100,6 +111,12 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
+
+  const privateMessagingEnabled = useMemo(
+    () => SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in preferences && preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
+    [preferences]
+  );
 
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -154,18 +171,30 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
   const renderList = () => {
     if (isMobile) {
       return [
-        <ListItem className={classes.item} key="message" component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}>
-          <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
-        </ListItem>,
+        privateMessagingEnabled && (
+          <ListItem
+            className={classes.item}
+            key="message"
+            component={Link}
+            to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}>
+            <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
+          </ListItem>
+        ),
         <ListItem className={classes.item} key="delete" onClick={handleOpenDialog}>
           <FormattedMessage id="ui.groupSettingsIconButton.item.remove" defaultMessage="ui.groupSettingsIconButton.item.remove" />
         </ListItem>
       ];
     } else {
       return [
-        <MenuItem className={classes.item} component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)} key="message">
-          <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
-        </MenuItem>,
+        privateMessagingEnabled && (
+          <MenuItem
+            className={classes.item}
+            component={Link}
+            to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}
+            key="message">
+            <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
+          </MenuItem>
+        ),
         <MenuItem className={classes.item} onClick={handleOpenDialog} key="delete">
           <FormattedMessage id="ui.groupSettingsIconButton.item.remove" defaultMessage="ui.groupSettingsIconButton.item.remove" />
         </MenuItem>

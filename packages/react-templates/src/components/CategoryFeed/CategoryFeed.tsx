@@ -11,6 +11,7 @@ import {
   FeedProps,
   FeedRef,
   FeedSidebarProps,
+  HiddenPurchasableContent,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
   SCFeedWidgetType
@@ -18,15 +19,18 @@ import {
 import {Endpoints} from '@selfcommunity/api-services';
 import {
   Link,
+  SCPreferences,
+  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
   UserUtils,
   useSCFetchCategory,
+  useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCCategoryType, SCCustomAdvPosition, SCFeedTypologyType} from '@selfcommunity/types';
+import {SCCategoryType, SCCustomAdvPosition, SCFeatureName, SCFeedTypologyType} from '@selfcommunity/types';
 import {CategoryFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -159,6 +163,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
+  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
   const {enqueueSnackbar} = useSnackbar();
 
   // REF
@@ -166,12 +171,22 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
 
   // Hooks
   const {scCategory} = useSCFetchCategory({id: categoryId, category});
+  const isPaymentsEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.PAYMENTS) &&
+      SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED].value,
+    [preferences]
+  );
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
     // Not insert if the category does not match
     if (feedObject.categories.findIndex((c) => c.id === scCategory.id) === -1) {
-      enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
+      const messageId = feedObject.scheduled_at ? 'ui.composer.scheduled.success' : 'ui.composerIconButton.composer.success';
+      enqueueSnackbar(<FormattedMessage id={messageId} defaultMessage={messageId} />, {
         action: (snackbarId: SnackbarKey) => (
           <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], ContributionUtils.getRouteData(feedObject))}>
             <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
@@ -190,7 +205,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
       seen_by_id: [],
       has_boost: false
     };
-    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+    !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   // WIDGETS
@@ -207,6 +222,8 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
 
   if (!scCategory) {
     return <CategoryFeedSkeleton />;
+  } else if (scCategory && isPaymentsEnabled && !scCategory.followed && !scCategory.payment_order && scCategory.paywalls?.length > 0) {
+    return <HiddenPurchasableContent />;
   }
 
   return (

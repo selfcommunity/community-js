@@ -125,7 +125,14 @@ const Component = {
         padding: theme.spacing(0.2, 2)
       },
       '& .SCFeedObject-info-section': {
-        padding: theme.spacing(0, 2)
+        padding: theme.spacing(0, 2),
+        '& .SCFeedObject-vote': {
+          width: '100%',
+          justifyContent: 'space-between',
+          '& > button:first-of-type': {
+            margin: 'auto'
+          }
+        }
       },
       '& .SCFeedObject-activity-at': {
         textDecoration: 'none',
@@ -506,14 +513,14 @@ const Component = {
         paddingRight: 0
       }
     }),
-    actionsRoot: ({theme}: any) => ({
+    actionsRoot: () => ({
       margin: '0px 0px',
       color: '#3A3A3A',
       '& .SCFeedObject-actions-action': {
         textAlign: 'center'
       }
     }),
-    actionCommentRoot: ({theme}: any) => ({
+    actionCommentRoot: () => ({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -540,7 +547,7 @@ const Component = {
         }
       }
     }),
-    actionShareRoot: ({theme}: any) => ({
+    actionShareRoot: () => ({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -556,7 +563,7 @@ const Component = {
         whiteSpace: 'nowrap'
       }
     }),
-    actionVoteRoot: ({theme}: any) => ({
+    actionVoteRoot: () => ({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -569,7 +576,7 @@ const Component = {
         borderBottom: 0
       }
     }),
-    activitiesRoot: ({theme}: any) => ({
+    activitiesRoot: () => ({
       width: '100%'
     }),
     activitiesMenuRoot: ({theme}: any) => ({
@@ -609,7 +616,7 @@ const Component = {
         lineHeight: '24px'
       }
     }),
-    contributorsSkeletonRoot: ({theme}: any) => ({
+    contributorsSkeletonRoot: () => ({
       // [`& .${classes.btnParticipants}`]: {
       //   marginLeft: -10
       // }
@@ -754,10 +761,10 @@ const Component = {
           }
       }
     }),
-    activityCommentRoot: ({theme}: any) => ({}),
-    activityFollowRoot: ({theme}: any) => ({}),
-    activityPollVoteRoot: ({theme}: any) => ({}),
-    activityVoteUpRoot: ({theme}: any) => ({})
+    activityCommentRoot: () => ({}),
+    activityFollowRoot: () => ({}),
+    activityPollVoteRoot: () => ({}),
+    activityVoteUpRoot: () => ({})
   }
 };
 

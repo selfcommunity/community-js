@@ -5,6 +5,7 @@ import {
   SCCategoryType,
   SCFeedUnitType,
   SCLiveStreamType,
+  SCPaymentOrder,
   SCPlatformType,
   SCTagType,
   SCUserAutocompleteType,
@@ -98,6 +99,8 @@ export interface UserApiClientInterface {
   createProviderAssociation(data: SCUserProviderAssociationType, config?: AxiosRequestConfig): Promise<SCUserProviderAssociationType>;
   deleteProviderAssociation(data: DeleteProviderAssociation, config?: AxiosRequestConfig): Promise<any>;
   getUserLiveStream(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>>;
+  getOrderHistory(id: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder[]>;
+  getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder>;
 }
 
 /**
@@ -655,6 +658,33 @@ export class UserApiClient {
   static getUserLiveStream(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>> {
     return apiRequest({...config, url: Endpoints.GetLiveStream.url({id}), method: Endpoints.UserFeed.method, params});
   }
+
+  /**
+   * This endpoint retrieve all order history of authenticated user
+   *
+   * @param id
+   * @param params
+   * @param config
+   */
+  static getOrderHistory(id: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.GetOrderHistory.url({id}),
+      method: Endpoints.GetOrderHistory.method,
+      params
+    });
+  }
+
+  /**
+   * This endpoint retrieve detail of an order
+   * @param id
+   * @param order
+   * @param params
+   * @param config
+   */
+  static getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder> {
+    return apiRequest({...config, url: Endpoints.GetOrderDetail.url({id, order}), method: Endpoints.GetOrderDetail.method, params});
+  }
 }
 
 /**
@@ -870,5 +900,11 @@ export default class UserService {
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCLiveStreamType>> {
     return UserApiClient.getUserLiveStream(id, params, config);
+  }
+  static async getOrderHistory(id: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
+    return UserApiClient.getOrderHistory(id, params, config);
+  }
+  static async getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder> {
+    return UserApiClient.getOrderDetail(id, order, params, config);
   }
 }

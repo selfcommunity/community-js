@@ -150,7 +150,8 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
-    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+    const messageId = feedObject.scheduled_at ? 'ui.composer.scheduled.success' : 'ui.inlineComposerWidget.success';
+    enqueueSnackbar(<FormattedMessage id={messageId} defaultMessage={messageId} />, {
       variant: 'success',
       autoHideDuration: 3000
     });
@@ -161,7 +162,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
       seen_by_id: [],
       has_boost: false
     };
-    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+    !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   const handleAddGenerationContent = (feedObjects) => {

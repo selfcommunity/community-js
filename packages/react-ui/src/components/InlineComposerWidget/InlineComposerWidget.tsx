@@ -149,7 +149,8 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
     if (onSuccess) {
       onSuccess(feedObject);
     } else {
-      enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+      const messageId = feedObject.scheduled_at ? 'ui.composer.scheduled.success' : 'ui.inlineComposerWidget.success';
+      enqueueSnackbar(<FormattedMessage id={messageId} defaultMessage={messageId} />, {
         variant: 'success',
         autoHideDuration: 3000
       });
@@ -157,7 +158,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
     setOpen(false);
   };
 
-  if (!UserUtils.isStaff(scUserContext.user) && onlyStaffEnabled) {
+  if (!UserUtils.isStaff(scUserContext.user) && !UserUtils.isPublisher(scUserContext.user) && onlyStaffEnabled) {
     return <HiddenPlaceholder />;
   }
 

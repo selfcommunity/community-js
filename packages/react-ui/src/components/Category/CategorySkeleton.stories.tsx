@@ -12,9 +12,16 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<CategorySkeleton> = {
+export const Base: StoryObj<typeof CategorySkeleton> = {
   args: {
     contained: true,
   },
   render: template
+};
+
+export const Outlined: StoryObj<typeof CategorySkeleton> = {
+	args: {
+		contained: false,
+	},
+	render: template
 };

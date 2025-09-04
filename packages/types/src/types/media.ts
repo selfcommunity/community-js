@@ -1,4 +1,4 @@
-import { SCEmbedType } from './embed';
+import {SCEmbedType} from './embed';
 
 /**
  * Interface SCMediaType.
@@ -69,6 +69,11 @@ export interface SCMediaType {
    * Embed associated
    */
   embed?: SCEmbedType;
+
+  /**
+   * File size
+   */
+  size?: number | null;
 }
 
 /**

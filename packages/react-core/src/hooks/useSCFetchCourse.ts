@@ -74,6 +74,25 @@ export default function useSCFetchCourse({
   );
 
   /**
+   * Refresh course
+   */
+  const refreshCourse = useMemo(
+    () => () => {
+      fetchCourse(id)
+        .then((e: SCCourseType) => {
+          setSCCourse(e);
+        })
+        .catch((err) => {
+          LRUCache.delete(__courseCacheKey);
+          setError(`Error on refresh course with id ${id}`);
+          Logger.error(SCOPE_SC_CORE, `Error on refresh course with id ${id}`);
+          Logger.error(SCOPE_SC_CORE, err.message);
+        });
+    },
+    [id, __courseCacheKey, setSCCourse]
+  );
+
+  /**
    * If id attempt to get the course by id
    */
   useEffect(() => {
@@ -101,22 +120,6 @@ export default function useSCFetchCourse({
       setSCCourse(course);
     }
   }, [course, authUserId]);
-
-  /**
-   * Refreshes course data from the network
-   */
-  const refreshCourse = useCallback(() => {
-    if (id) {
-      fetchCourse(id)
-        .then((e: SCCourseType) => {
-          setSCCourse(e);
-        })
-        .catch((err) => {
-          setError(`Failed to refresh course data: ${err.message}`);
-          Logger.error(SCOPE_SC_CORE, err.message);
-        });
-    }
-  }, [id, fetchCourse]);
 
   return {scCourse, setSCCourse, error, refreshCourse};
 }

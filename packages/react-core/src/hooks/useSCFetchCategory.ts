@@ -62,6 +62,27 @@ export default function useSCFetchCategory({
   );
 
   /**
+   * Refresh category
+   */
+  const refreshCategory = useMemo(
+    () => () => {
+      fetchCategory()
+        .then((obj: SCCategoryType) => {
+          const _c: SCCategoryType = authUserId ? obj : objectWithoutProperties<SCCategoryType>(obj, ['followed']);
+          setSCCategory(_c);
+          LRUCache.set(__categoryCacheKey, _c);
+        })
+        .catch((err) => {
+          LRUCache.delete(__categoryCacheKey);
+          setError(`Error on refresh category with id ${id}`);
+          Logger.error(SCOPE_SC_CORE, `Error on refresh category with id ${id}`);
+          Logger.error(SCOPE_SC_CORE, err.message);
+        });
+    },
+    [__categoryId, setSCCategory, __categoryCacheKey]
+  );
+
+  /**
    * If id attempt to get the category by id
    */
   useEffect(() => {
@@ -89,5 +110,5 @@ export default function useSCFetchCategory({
     }
   }, [category]);
 
-  return {scCategory, setSCCategory, error};
+  return {scCategory, setSCCategory, error, refreshCategory};
 }

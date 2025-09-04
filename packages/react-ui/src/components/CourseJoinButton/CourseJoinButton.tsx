@@ -42,12 +42,6 @@ export interface CourseJoinButtonProps {
   courseId?: number;
 
   /**
-   * The user to be accepted into the course
-   * @default null
-   */
-  user?: SCUserType;
-
-  /**
    * onJoin callback
    * @param user
    * @param joined
@@ -89,7 +83,7 @@ export default function CourseJoinButton(inProps: CourseJoinButtonProps): JSX.El
     name: PREFIX
   });
 
-  const {className, courseId, course, user, onJoin, ...rest} = props;
+  const {className, courseId, course, onJoin, ...rest} = props;
 
   // STATE
   const [status, setStatus] = useState<string>(null);
@@ -131,15 +125,17 @@ export default function CourseJoinButton(inProps: CourseJoinButtonProps): JSX.El
     }
   }
 
-  const join = (user?: SCUserType) => {
+  const join = () => {
     scCoursesManager
-      .join(scCourse, user?.id)
+      .join(scCourse)
       .then(() => {
         const _status =
           scCourse.privacy === SCCoursePrivacyType.PRIVATE && scCourse.join_status !== SCCourseJoinStatusType.INVITED
             ? SCCourseJoinStatusType.REQUESTED
             : SCCourseJoinStatusType.JOINED;
-        notifyChanges(scCourse, user);
+        if (_status === SCCourseJoinStatusType.JOINED) {
+          notifyChanges(scCourse, scUserContext.user);
+        }
         onJoin && onJoin(scCourse, _status);
       })
       .catch((e) => {
@@ -162,7 +158,7 @@ export default function CourseJoinButton(inProps: CourseJoinButtonProps): JSX.El
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {
-      status === SCCourseJoinStatusType.JOINED && !user?.id ? leave() : user?.id ? join(user) : join();
+      status === SCCourseJoinStatusType.JOINED ? leave() : join();
     }
   };
 
@@ -190,7 +186,7 @@ export default function CourseJoinButton(inProps: CourseJoinButtonProps): JSX.El
     return _status;
   }, [status, scCourse]);
 
-  if (!scCourse || (isCourseAdmin && user?.id === scUserContext.user.id) || (isCourseAdmin && !user?.id)) {
+  if (!scCourse || isCourseAdmin) {
     return null;
   }
 
@@ -203,7 +199,7 @@ export default function CourseJoinButton(inProps: CourseJoinButtonProps): JSX.El
       disabled={status === SCCourseJoinStatusType.REQUESTED}
       className={classNames(classes.root, className)}
       {...rest}>
-      {isCourseAdmin ? <FormattedMessage defaultMessage="ui.courseJoinButton.accept" id="ui.courseJoinButton.accept" /> : getStatus}
+      {getStatus}
     </Root>
   );
 }

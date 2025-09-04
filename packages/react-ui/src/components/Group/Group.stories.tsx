@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Group from './index';
+import Course from '../Course';
+import {SCCourseTemplateType} from '../../types';
 
 export default {
   title: 'Design System/React UI/Group',
@@ -30,12 +32,23 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<Group> = {
+export const Base: StoryObj<typeof Group> = {
   args: {
-    groupId: 3,
+    groupId: 4,
     elevation: 1,
     variant: 'elevation'
   },
   render: template
+};
+
+
+export const SnippetOutlined: StoryObj<typeof Group> = {
+	args: {
+		groupId: 4,
+		elevation: 0,
+		variant: 'outlined',
+		square: false
+	},
+	render: template
 };
 

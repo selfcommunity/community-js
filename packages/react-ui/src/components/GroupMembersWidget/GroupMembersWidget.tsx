@@ -184,6 +184,12 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
       scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
     [scPreferencesContext.preferences]
   );
+  const privateMessagingEnabled = useMemo(
+    () =>
+      SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
+    [scPreferencesContext.preferences]
+  );
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
@@ -317,7 +323,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                     actions={
                       isGroupAdmin ? (
                         <GroupSettingsIconButton group={scGroup} user={user} onRemoveSuccess={() => handleRefresh(user.id)} />
-                      ) : scUserContext?.user?.id !== user.id ? (
+                      ) : scUserContext?.user?.id !== user.id && privateMessagingEnabled ? (
                         <Button
                           size="small"
                           variant="outlined"

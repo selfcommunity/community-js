@@ -1,6 +1,9 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      '& .infinite-scroll-component__outerdiv .infinite-scroll-component': {
+        overflow: 'visible !important'
+      },
       '& .SCCourses-filters': {
         alignItems: 'center',
         marginTop: theme.spacing(),

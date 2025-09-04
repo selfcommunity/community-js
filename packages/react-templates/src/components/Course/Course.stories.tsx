@@ -11,7 +11,6 @@ export default {
   },
   args: {
     id: undefined,
-    courseId: 2,
     course: undefined,
     className: '',
   },
@@ -19,17 +18,26 @@ export default {
     <div style={{maxWidth: 1280, margin: 'auto'}}>
       <Course {...args} />
     </div>
-  ) 
+  )
 } as Meta<typeof Course>;
 
-export const Student: StoryObj<typeof Course> = {
+export const StudentFree: StoryObj<typeof Course> = {
   args: {
+		courseId: 9,
     viewDashboard: false
   }
 };
 
+export const StudentNotFree: StoryObj<typeof Course> = {
+	args: {
+		courseId: 21,
+		viewDashboard: false
+	}
+};
+
 export const Teacher: StoryObj<typeof Course> = {
   args: {
+		courseId: 6,
     viewDashboard: true
   }
 };
