@@ -34,6 +34,7 @@ import {isClientSideRendering} from '@selfcommunity/utils';
 import {CHOICE_VIDEO_BLUR_EFFECT} from '../../../constants/LiveStream';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
+import {useLiveStream} from './LiveStreamProvider';
 
 const PREFIX = 'SCVideoConference';
 
@@ -106,6 +107,7 @@ export function VideoConference(inProps: VideoConferenceProps) {
 
   // HOOKS
   const scUserContext: SCUserContextType = useSCUser();
+  const {liveStream} = useLiveStream();
 
   const [blurEnabled, setBlurEnabled] = React.useState(
     isClientSideRendering() ? window?.localStorage?.getItem(CHOICE_VIDEO_BLUR_EFFECT) === 'true' : false
@@ -124,10 +126,11 @@ export function VideoConference(inProps: VideoConferenceProps) {
       tracks.filter(
         (t) =>
           t.participant.name === scUserContext.user.username ||
+          t.participant.name === liveStream.host.username ||
           (speakerFocused && t.participant.name === speakerFocused.username) ||
           t.source === 'screen_share'
       ),
-    [tracks, scUserContext.user]
+    [tracks, scUserContext.user, liveStream]
   );
 
   const handleBlur = React.useCallback(
@@ -276,22 +279,22 @@ export function VideoConference(inProps: VideoConferenceProps) {
               </div>
             ) : (
               <div className="lk-focus-layout-wrapper">
-                {hideParticipantsList ? (
+                {/* hideParticipantsList ? (
                   <FocusLayoutContainerNoParticipants>{focusTrack && <FocusLayout trackRef={focusTrack} />}</FocusLayoutContainerNoParticipants>
-                ) : (
-                  <FocusLayoutContainer>
-                    {carouselTracks.length ? (
-                      <CarouselLayout tracks={carouselTracks}>
-                        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-                        {/* @ts-ignore */}
-                        <ParticipantTile />
-                      </CarouselLayout>
-                    ) : (
-                      <NoParticipants />
-                    )}
-                    {focusTrack && <FocusLayout trackRef={focusTrack} />}
-                  </FocusLayoutContainer>
-                )}
+                ) : (*/}
+                <FocusLayoutContainer>
+                  {carouselTracks.length ? (
+                    <CarouselLayout tracks={carouselTracks}>
+                      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                      {/* @ts-ignore */}
+                      <ParticipantTile />
+                    </CarouselLayout>
+                  ) : (
+                    <NoParticipants />
+                  )}
+                  {focusTrack && <FocusLayout trackRef={focusTrack} />}
+                </FocusLayoutContainer>
+                {/*)}*/}
               </div>
             )}
             <ControlBar
