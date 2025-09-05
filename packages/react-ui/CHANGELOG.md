@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.69...@selfcommunity/react-ui@0.11.0-alpha.70) (2025-09-05)
+
+
+### Bug Fixes
+
+* fixed visibleTags condition. Linear issue: https://linear.app/quentral/issue/QUE-1951/feedfeedobjectdetail-che-si-rompe-se-ce-uno-share-allinterno ([14b7c7c](https://github.com/selfcommunity/community-js/commit/14b7c7c8846d016297c85c68ab0d84150ffc8101))
+* livestream with hideParticipantsList ([a09209c](https://github.com/selfcommunity/community-js/commit/a09209c4cd4f73edf73c4d125539e8e3959f35ef))
+* livestream with hideParticipantsList ([97a8877](https://github.com/selfcommunity/community-js/commit/97a8877e78f51e5d6f12059117c8a6290a14d641))
+* missing category error on poll obj. Linear issue: https://linear.app/quentral/issue/QUE-1950/creando-un-sondaggio-usando-publisher-scompare-la-scelta-postsondaggio ([4c83852](https://github.com/selfcommunity/community-js/commit/4c8385256d46dbdc63bf1de7dbc345e43f79d500))
+
+
+
+
+
 # [0.11.0-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.68...@selfcommunity/react-ui@0.11.0-alpha.69) (2025-09-04)
 
 
