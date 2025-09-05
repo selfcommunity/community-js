@@ -89,6 +89,8 @@ const classes = {
   attributes: `${PREFIX}-attributes`,
   medias: `${PREFIX}-medias`,
   actions: `${PREFIX}-actions`,
+  selectedAction: `${PREFIX}-selected-action`,
+  actionSelectedIcon: `${PREFIX}-action-selected-icon`,
   layerTransitionRoot: `${PREFIX}-layer-transition-root`
 };
 
@@ -1027,22 +1029,23 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 />
               );
             })}
-          <IconButton disabled={isSubmitting} onClick={handleAddCategoryLayer}>
+          <IconButton disabled={isSubmitting} onClick={handleAddCategoryLayer} color={categories?.length !== 0 ? 'primary' : 'default'}>
             <Icon>category</Icon>
           </IconButton>
           <IconButton
+            color={group || event || (addressing !== null && addressing?.length > 0) ? 'primary' : 'default'}
             disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING) || Boolean(feedObject?.group) || Boolean(feedObject?.event)}
             onClick={handleAddAudienceLayer}>
-            {addressing === null || addressing?.length === 0 ? (
+            {group ? (
+              <Icon>groups</Icon>
+            ) : event ? (
+              <Icon>CalendarIcon</Icon>
+            ) : addressing === null || addressing?.length === 0 ? (
               addressingRequiredEnabled ? (
                 <Icon>label</Icon>
               ) : (
                 <Icon>public</Icon>
               )
-            ) : group ? (
-              <Icon>groups</Icon>
-            ) : event ? (
-              <Icon>CalendarIcon</Icon>
             ) : (
               <Icon>label</Icon>
             )}
@@ -1057,7 +1060,14 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
               disabled={isSubmitting || (Boolean(feedObject?.scheduled_at) && Boolean(!feedObject?.draft))}
               onClick={handleAddScheduledLayer}
               color={scheduled_at !== null ? 'primary' : 'default'}>
-              <Icon>access_time</Icon>
+              <Box className={classes.selectedAction}>
+                <Icon>access_time</Icon>
+                {scheduled_at !== null && (
+                  <Icon color="primary" className={classes.actionSelectedIcon}>
+                    fiber_manual_record
+                  </Icon>
+                )}
+              </Box>
             </IconButton>
           )}
         </DialogActions>
