@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.68...@selfcommunity/react-ui@0.11.0-alpha.69) (2025-09-04)
+
+
+### Bug Fixes
+
+* fixed pdf preview. Linear: https://linear.app/quentral/issue/QUE-1784/controllo-visualizzazione-pdf-biglietto-evento ([18900d4](https://github.com/selfcommunity/community-js/commit/18900d4e7bc642e3be03fc40ab3fb3bfc29496a6))
+
+
+
+
+
 # [0.11.0-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.67...@selfcommunity/react-ui@0.11.0-alpha.68) (2025-09-04)
 
 
