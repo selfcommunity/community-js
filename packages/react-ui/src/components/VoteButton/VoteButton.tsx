@@ -1,4 +1,4 @@
-import React, {useMemo, useRef, useState} from 'react';
+import {useMemo, useRef, useState} from 'react';
 import {LoadingButton, LoadingButtonProps} from '@mui/lab';
 import classNames from 'classnames';
 import {SCCommentType, SCContributionType, SCFeedObjectType, SCReactionType} from '@selfcommunity/types';
@@ -22,13 +22,13 @@ const classes = {
 const Root = styled(LoadingButton, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root, styles.voted]
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => [styles.root, styles.voted]
+})(() => ({}));
 
 const PopperRoot = styled(Popper, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.popperRoot
+  overridesResolver: (_props, styles) => styles.popperRoot
 })(() => ({}));
 
 export interface VoteButtonProps extends Pick<LoadingButtonProps, Exclude<keyof LoadingButtonProps, 'onClick' | 'disabled' | 'loading'>> {
@@ -107,7 +107,7 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
     handleClearTimeout();
     timeoutRef.current = setTimeout(() => setAnchorEl(event.target), 1000);
   };
-  const handleMouseLeave = (event) => {
+  const handleMouseLeave = (_event) => {
     handleClearTimeout();
     timeoutRef.current = setTimeout(() => setAnchorEl(null), 500);
   };
@@ -190,9 +190,11 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
       {...rootProps}>
       {scUserContext.user && contributionVoted ? (
         contributionReaction ? (
-          <Icon>
-            <img alt={contributionReaction.label} src={contributionReaction.image} width="100%" height="100%" />
-          </Icon>
+          <Tooltip title={contributionReaction.label}>
+            <Icon>
+              <img alt={contributionReaction.label} src={contributionReaction.image} width="100%" height="100%" />
+            </Icon>
+          </Tooltip>
         ) : (
           <Icon>thumb_up</Icon>
         )
@@ -232,11 +234,13 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
                 !contributionVoted || (contributionVoted && contributionReaction.id !== reaction.id) ? reaction.active : reaction
               )
               .map((reaction: SCReactionType) => (
-                <IconButton key={reaction.id} className={classes.reaction} onClick={() => handleVoteAction(reaction)}>
-                  <Icon>
-                    <img alt={reaction.label} src={reaction.image} width="100%" height="100%" />
-                  </Icon>
-                </IconButton>
+                <Tooltip key={reaction.id} title={reaction.label}>
+                  <IconButton className={classes.reaction} onClick={() => handleVoteAction(reaction)}>
+                    <Icon>
+                      <img alt={reaction.label} src={reaction.image} width="100%" height="100%" />
+                    </Icon>
+                  </IconButton>
+                </Tooltip>
               ))}
           </Paper>
         </PopperRoot>
