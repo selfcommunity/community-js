@@ -80,7 +80,15 @@ const Component = {
           justifyContent: 'space-between',
           zIndex: 1,
           backgroundColor: theme.palette.background.paper,
-          borderTop: `1px solid ${theme.palette.grey[400]}`
+          borderTop: `1px solid ${theme.palette.grey[400]}`,
+          '& .SCComposer-selected-action': {
+            display: 'flex',
+            alignItems: 'center',
+            '& .SCComposer-action-selected-icon': {
+              marginLeft: theme.spacing(0.5),
+              fontSize: theme.spacing(1)
+            }
+          }
         },
         '& .SCComposer-general-error': {
           marginBottom: theme.spacing(2),
