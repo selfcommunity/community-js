@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.3...@selfcommunity/react-theme-default@0.5.0-alpha.4) (2025-09-05)
+
+
+### Bug Fixes
+
+* fixed composer icon when tag is selected, added icon for selected action. Linear issue: https://linear.app/quentral/issue/QUE-1952/nella-creazione-di-un-post-andrebbero-evidenziate-le-parti-gia ([1388004](https://github.com/selfcommunity/community-js/commit/1388004143501991f9bfc858d5ca97f9e686ad25))
+
+
+
+
+
 # [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.2...@selfcommunity/react-theme-default@0.5.0-alpha.3) (2025-09-04)
 
 
