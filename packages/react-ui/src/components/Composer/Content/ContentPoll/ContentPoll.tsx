@@ -107,7 +107,7 @@ export default (inProps: ContentPollProps): JSX.Element => {
     name: PREFIX
   });
   const {className = null, value = {poll: {...DEFAULT_POLL}} as ComposerContentType, error = {}, disabled, onChange} = props;
-  const {titleError = null, addressingError = null, error: generalError = null} = {...error};
+  const {titleError = null, categoriesError = null, addressingError = null, error: generalError = null} = {...error};
 
   // MEMO
   const poll = useMemo(() => (value.poll ? value.poll : {...DEFAULT_POLL}), [value, DEFAULT_POLL]);
@@ -179,7 +179,7 @@ export default (inProps: ContentPollProps): JSX.Element => {
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {(generalError || addressingError) && (
+      {(generalError || categoriesError || addressingError) && (
         <Typography className={classes.generalError}>
           {generalError && (
             <FormattedMessage
@@ -187,6 +187,8 @@ export default (inProps: ContentPollProps): JSX.Element => {
               defaultMessage={`ui.composer.content.poll.error.${generalError}`}
             />
           )}
+          {categoriesError && categoriesError}
+          <br />
           {addressingError && addressingError}
         </Typography>
       )}
