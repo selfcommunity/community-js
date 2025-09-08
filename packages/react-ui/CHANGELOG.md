@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.71...@selfcommunity/react-ui@0.11.0-alpha.72) (2025-09-08)
+
+
+### Bug Fixes
+
+* fixed CategoryFollowButton anonymous rendering ([2d1fca7](https://github.com/selfcommunity/community-js/commit/2d1fca78b1387fe9702c453e0d08a625d7c78921))
+
+
+### Features
+
+* updated reactions size; added tooltip on reactions. Linear: https://linear.app/quentral/issue/QUE-1947/dimensioni-da-correggere-per-iconografia-reactions-valida-per-tutte-le ([238ab2d](https://github.com/selfcommunity/community-js/commit/238ab2de7e45736aa55d8fd0eb0d4bfdb21db61b))
+* updated some icons and sizes into PaywallsConfigurator. Linear: https://linear.app/quentral/issue/QUE-1932/modifica-icone-modale-creazione-contenuto-a-pagamento ([0c8324b](https://github.com/selfcommunity/community-js/commit/0c8324bf11fedb59518f1d039a31cbfec3a63057))
+
+
+
+
+
 # [0.11.0-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.70...@selfcommunity/react-ui@0.11.0-alpha.71) (2025-09-05)
 
 
