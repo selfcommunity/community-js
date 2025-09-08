@@ -143,7 +143,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
    * Handle change content type access
    * @param panel
    */
-  const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
+  const handleChange = (panel: string) => (_event: React.SyntheticEvent, _isExpanded: boolean) => {
     setExpanded(panel);
     onChangeContentAccessType(panel);
   };
@@ -178,7 +178,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
     handleToggleCreatePaymentPrice();
   };
 
-  const handleDeleteProduct = (p, i) => {
+  const handleDeleteProduct = (_p, i) => {
     const products = [...value.slice(0, i), ...value.slice(i + 1)];
     setValue(products);
     onChangePaymentProducts?.(products);
@@ -214,7 +214,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
           <Icon>check</Icon>
         </Box>
         <Box component="span" className={classes.productItemCardIcon}>
-          <Icon>card_giftcard</Icon>
+          <Icon>pagamenti</Icon>
         </Box>
         <Box className={classes.productItemContent}>
           {option.name}
@@ -254,7 +254,9 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
    * Fetch paywalls
    */
   const fetchPaywalls = async (
-    next = `${Endpoints.GetPaywalls.url({})}?content_id=${content ? content.id : contentId}&content_type=${contentType}&active=1&payment_product__active=1`
+    next = `${Endpoints.GetPaywalls.url({})}?content_id=${
+      content ? content.id : contentId
+    }&content_type=${contentType}&active=1&payment_product__active=1`
   ): Promise<SCPaywall[]> => {
     const response = await http.request({
       url: next,
@@ -424,7 +426,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                           divider>
                           <ListItemAvatar>
                             <Avatar>
-                              <Icon>card_giftcard</Icon>
+                              <Icon>dredit-card</Icon>
                             </Avatar>
                           </ListItemAvatar>
                           <ListItemText
@@ -478,7 +480,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                         className={classes.paymentProductsAutocompletePopperRoot}
                         open
                         multiple
-                        onClose={(event, reason: AutocompleteCloseReason) => {
+                        onClose={(_event, reason: AutocompleteCloseReason) => {
                           if (reason === 'escape') {
                             handleClose();
                           }

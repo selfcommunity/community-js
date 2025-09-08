@@ -74,15 +74,18 @@ const Component = {
         margin: '3px 5px 0px -1px'
       },
       [`& .SCPaywallsConfigurator-product-card-icon`]: {
-        width: 14,
-        height: 14,
+        width: 20,
+        height: 20,
         flexShrink: 0,
         borderRadius: '3px',
         marginRight: theme.spacing(),
         marginTop: '2px',
         padding: '3px',
         backgroundColor: 'red',
-        color: 'white'
+        color: 'white',
+        [`& > .community-icons`]: {
+          fontSize: '20px'
+        }
       },
       [`& .SCPaywallsConfigurator-product-content`]: {
         flexGrow: 1,
