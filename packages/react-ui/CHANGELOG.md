@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.73...@selfcommunity/react-ui@0.11.0-alpha.74) (2025-09-08)
+
+
+### Bug Fixes
+
+* hidden pm setting from user profile notification settings if not enabled. ([d21b545](https://github.com/selfcommunity/community-js/commit/d21b5450de37bde51ca6b0d924a7c341c54b57be))
+
+
+
+
+
 # [0.11.0-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.72...@selfcommunity/react-ui@0.11.0-alpha.73) (2025-09-08)
 
 

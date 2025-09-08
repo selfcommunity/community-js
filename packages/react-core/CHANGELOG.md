@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.4...@selfcommunity/react-core@0.7.0-alpha.5) (2025-09-08)
+
+
+### Performance Improvements
+
+* added utility for preference active status check ([6b6d24d](https://github.com/selfcommunity/community-js/commit/6b6d24da99dc5ddbadb9c2a3d088f3a3ba8b29a9))
+
+
+
+
+
 # [0.7.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.3...@selfcommunity/react-core@0.7.0-alpha.4) (2025-09-08)
 
 **Note:** Version bump only for package @selfcommunity/react-core
