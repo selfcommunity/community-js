@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import {Avatar, Button, ButtonBaseProps, Icon, Stack, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils/src/utils/cache';
@@ -9,6 +9,7 @@ import {
   SCThemeType,
   SCUserContextType,
   useSCFetchGroup,
+  useSCPaymentsEnabled,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -41,8 +42,8 @@ const classes = {
 const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}: any) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 export interface GroupProps extends WidgetProps {
   /**
@@ -158,6 +159,9 @@ export default function Group(inProps: GroupProps): JSX.Element {
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
   /**
    * Render authenticated actions
    * @return {JSX.Element}
@@ -205,6 +209,12 @@ export default function Group(inProps: GroupProps): JSX.Element {
               ? formatCroppedName(scGroup.name, GROUP_NAME_MAX_LENGTH_MOBILE)
               : formatCroppedName(scGroup.name, GROUP_NAME_MAX_LENGTH_DESKTOP)}{' '}
             <Icon className={classes.icon}>{group?.privacy === SCGroupPrivacyType.PRIVATE ? 'private' : 'public'}</Icon>
+            {isPaymentsEnabled && scGroup.paywalls?.length && (
+              <>
+                &nbsp;
+                <Icon>pagamenti</Icon>
+              </>
+            )}
           </>
         }
         secondary={`${intl.formatMessage(messages.groupMembers, {total: scGroup.subscribers_counter})}`}

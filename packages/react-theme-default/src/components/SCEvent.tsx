@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: ({theme}: any) => ({}),
+    root: () => ({}),
     detailRoot: ({theme}: any) => ({
       '& .SCEvent-detail-image-wrapper': {
         position: 'relative',
@@ -153,7 +153,9 @@ const Component = {
           }
         },
         '& .SCEvent-snippet-secondary': {
-          color: theme.palette.text.secondary
+          color: theme.palette.text.secondary,
+          display: 'flex',
+          alignItems: 'center'
         }
       }
     }),

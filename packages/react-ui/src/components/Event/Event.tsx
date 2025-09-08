@@ -1,6 +1,6 @@
-import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Divider, Typography, styled} from '@mui/material';
+import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Divider, Icon, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCPaymentsEnabled, useSCRouting} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -190,6 +190,9 @@ export default function Event(inProps: EventProps): JSX.Element {
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
   // HOOKS
   const intl = useIntl();
   /**
@@ -354,6 +357,12 @@ export default function Event(inProps: EventProps): JSX.Element {
               <FormattedMessage id={`ui.eventForm.address.live.label`} defaultMessage={`ui.eventForm.address.live.label`} />
             ) : (
               <FormattedMessage id={`ui.eventForm.address.online.label`} defaultMessage={`ui.eventForm.address.online.label`} />
+            )}
+            {isPaymentsEnabled && scEvent.paywalls?.length && (
+              <>
+                &nbsp;
+                <Icon>pagamenti</Icon>
+              </>
             )}
           </Typography>
         }
