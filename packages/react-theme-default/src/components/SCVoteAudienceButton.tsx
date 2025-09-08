@@ -26,8 +26,8 @@ const Component = {
         }
       },
       '& .SCVoteAudienceButton-dialog-vote-badge': {
-        width: theme.selfcommunity.user.avatar.sizeSmall,
-        height: theme.selfcommunity.user.avatar.sizeSmall,
+        width: theme.spacing(2),
+        height: theme.spacing(2),
         backgroundColor: theme.palette.background.paper,
         border: `1px solid ${theme.palette.background.paper}`
       }

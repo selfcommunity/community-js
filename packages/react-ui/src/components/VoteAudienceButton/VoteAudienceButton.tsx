@@ -24,14 +24,14 @@ const classes = {
 const Root = styled(LoadingButton, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root, styles.voted]
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => [styles.root, styles.voted]
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.dialogRoot
+})(() => ({}));
 
 export interface VoteAudienceButtonProps extends Pick<LoadingButtonProps, Exclude<keyof LoadingButtonProps, 'onClick' | 'disabled' | 'loading'>> {
   /**
@@ -97,13 +97,13 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
   const scUserContext: SCUserContextType = useSCUser();
 
   // HANDLERS
-  const handleOpen = (event) => {
+  const handleOpen = (_event) => {
     setOpen(true);
   };
-  const handleClose = (event) => {
+  const handleClose = (_event) => {
     setOpen(false);
   };
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
 
@@ -150,7 +150,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
       return (
         <Box className={classes.reactionList}>
           {contributionReactionsCount &&
-            contributionReactionsCount.slice(0, 3).map((count: any, i) => (
+            contributionReactionsCount.slice(0, 3).map((count: any, _i) => (
               <Icon key={count.reaction.id}>
                 <img alt={count.reaction.label} src={count.reaction.image} width="100%" height="100%" />
               </Icon>
@@ -172,7 +172,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
                 key={count.reaction.id}
                 label={
                   <>
-                    <Icon>
+                    <Icon fontSize="medium">
                       <img alt={count.reaction.label} src={count.reaction.image} width="100%" height="100%" />
                     </Icon>
                     {count.count}
