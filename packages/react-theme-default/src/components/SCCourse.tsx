@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: ({theme}: any) => ({
+    root: () => ({
       width: '100%'
     }),
     snippetRoot: ({theme}: any) => ({
@@ -83,6 +83,10 @@ const Component = {
       },
       '& .SCBaseItemButton-actions': {
         marginRight: theme.spacing()
+      },
+      '& .SCCourse-snippet-privacy': {
+        flexDirection: 'row',
+        alignItems: 'center'
       }
     }),
     previewRoot: ({theme}: any) => ({
