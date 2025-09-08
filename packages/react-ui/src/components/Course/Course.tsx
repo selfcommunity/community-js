@@ -12,10 +12,11 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-  styled
+  styled,
+  Stack
 } from '@mui/material';
 import {useThemeProps} from '@mui/system';
-import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCPaymentsEnabled, useSCRouting} from '@selfcommunity/react-core';
 import {SCCourseJoinStatusType, SCCourseType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
@@ -50,7 +51,8 @@ const classes = {
   snippetRoot: `${PREFIX}-snippet-root`,
   snippetAvatar: `${PREFIX}-snippet-avatar`,
   snippetAvatarUserProfile: `${PREFIX}-snippet-avatar-user-profile-view`,
-  snippetImage: `${PREFIX}-snippet-image`
+  snippetImage: `${PREFIX}-snippet-image`,
+  snippetPrivacy: `${PREFIX}-snippet-privacy`
 };
 
 const Root = styled(Widget, {
@@ -194,6 +196,9 @@ export default function Course(inProps: CourseProps): JSX.Element {
     [scCourse]
   );
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
   /**
    * Renders course object
    */
@@ -293,14 +298,22 @@ export default function Course(inProps: CourseProps): JSX.Element {
               {scCourse.name}
             </Typography>
           </Link>
-          <Typography className={classes.previewInfo}>
-            <FormattedMessage
-              id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
-              defaultMessage={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
-            />
-            {' - '}
-            <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
-          </Typography>
+          <Stack>
+            <Typography className={classes.previewInfo}>
+              <FormattedMessage
+                id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
+                defaultMessage={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
+              />
+              {' - '}
+              <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
+              {isPaymentsEnabled && scCourse.paywalls?.length && (
+                <>
+                  &nbsp;
+                  <Icon>pagamenti</Icon>
+                </>
+              )}
+            </Typography>
+          </Stack>
           <Box className={classes.previewCategory}>
             {scCourse.categories.slice(0, MAX_VISIBLE_CATEGORIES).map((category) => (
               <Chip key={category.id} size="small" label={category.name} />
@@ -391,14 +404,20 @@ export default function Course(inProps: CourseProps): JSX.Element {
                 )}
               </>
             ) : (
-              <>
+              <Stack className={classes.snippetPrivacy}>
                 <FormattedMessage
                   id={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
                   defaultMessage={scCourse.privacy ? `ui.course.privacy.${scCourse.privacy}` : 'ui.course.privacy.draft'}
                 />
                 {' - '}
                 <FormattedMessage id={`ui.course.type.${scCourse.type}`} defaultMessage={`ui.course.type.${scCourse.type}`} />
-              </>
+                {isPaymentsEnabled && scCourse.paywalls?.length && (
+                  <>
+                    &nbsp;
+                    <Icon fontSize="inherit">pagamenti</Icon>
+                  </>
+                )}
+              </Stack>
             )}
           </>
         }
