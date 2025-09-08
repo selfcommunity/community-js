@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: () => ({}),
+    root: ({theme}: any) => ({}),
     detailRoot: ({theme}: any) => ({
       '& .SCEvent-detail-image-wrapper': {
         position: 'relative',
