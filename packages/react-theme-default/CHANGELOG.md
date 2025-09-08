@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.5...@selfcommunity/react-theme-default@0.5.0-alpha.6) (2025-09-08)
+
+
+### Features
+
+* added currency icon into fee courses, events and groups. Linear: https://linear.app/quentral/issue/QUE-1955/icona-per-distinguere-dalle-liste-i-corsi-gruppi-ed-eventi-a-pagamento ([53708cb](https://github.com/selfcommunity/community-js/commit/53708cb6aaaba1e42eb2930722f66c5661ed136a))
+
+
+
+
+
 # [0.5.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.4...@selfcommunity/react-theme-default@0.5.0-alpha.5) (2025-09-08)
 
 

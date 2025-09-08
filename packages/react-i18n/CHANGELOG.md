@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.15...@selfcommunity/react-i18n@0.8.0-alpha.16) (2025-09-08)
+
+
+### Features
+
+* updated some labels. Linear: https://linear.app/quentral/issue/QUE-1954/modifica-del-termine-segui-con-salva-nei-vari-punti-da-front-end ([927a6b1](https://github.com/selfcommunity/community-js/commit/927a6b1a7ecaff50161120ac6302189983336c0b))
+
+
+
+
+
 # [0.8.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.14...@selfcommunity/react-i18n@0.8.0-alpha.15) (2025-09-04)
 
 
