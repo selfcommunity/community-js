@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: () => ({
+    root: ({theme}: any) => ({
       width: '100%'
     }),
     snippetRoot: ({theme}: any) => ({
