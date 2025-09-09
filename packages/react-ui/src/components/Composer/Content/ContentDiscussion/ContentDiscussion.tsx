@@ -172,9 +172,12 @@ export default (props: ContentDiscussionProps): JSX.Element => {
   // RENDER
   return (
     <Root className={classNames(classes.root, className)}>
-      {generalError && (
+      {(generalError || categoriesError || addressingError) && (
         <Typography className={classes.generalError}>
-          <FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} />
+          {generalError && <FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} />}
+          {categoriesError && categoriesError}
+          <br />
+          {addressingError && addressingError}
         </Typography>
       )}
       <TextField
@@ -194,8 +197,8 @@ export default (props: ContentDiscussionProps): JSX.Element => {
         InputProps={{
           endAdornment: <Typography variant="body2">{COMPOSER_TITLE_MAX_LENGTH - value.title.length}</Typography>
         }}
-        error={Boolean(titleError) || Boolean(categoriesError) || Boolean(addressingError)}
-        helperText={titleError || categoriesError || addressingError}
+        error={Boolean(titleError)}
+        helperText={titleError}
         disabled={disabled}
       />
       <Box sx={{[`& .${SCEDITOR_PREFIX}-content`]: {maxHeight: `${editorMaxHeight} !important`}}}>

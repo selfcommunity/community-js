@@ -207,7 +207,7 @@ export default function CustomAdv(inProps: CustomAdvProps): JSX.Element {
       ref={ref}
       style={{...(prefixedHeight ? {paddingBottom: prefixedHeight} : {width: '100%'})}}>
       {scCustomAdv.link ? (
-        <a href={scCustomAdv.link} title={scCustomAdv.title}>
+        <a href={scCustomAdv.link} title={scCustomAdv.title} target="_blank">
           {adv}
         </a>
       ) : (

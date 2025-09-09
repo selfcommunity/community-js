@@ -742,7 +742,12 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         medias: medias.map((m) => m.id),
         categories: _categories.filter((item, index) => _categories.indexOf(item) === index)
       };
-      if ((preferences[SCPreferences.ADDONS_POLLS_ENABLED].value || UserUtils.isStaff(scUserContext.user)) && hasPoll) {
+      if (
+        (preferences[SCPreferences.ADDONS_POLLS_ENABLED].value ||
+          UserUtils.isStaff(scUserContext.user) ||
+          UserUtils.isPublisher(scUserContext.user)) &&
+        hasPoll
+      ) {
         data.poll = poll;
       }
       if (preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && location) {
