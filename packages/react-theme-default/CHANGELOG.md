@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.7...@selfcommunity/react-theme-default@0.5.0-alpha.8) (2025-09-09)
+
+
+### Bug Fixes
+
+* reduced padding under grouped category cluster. ([426e885](https://github.com/selfcommunity/community-js/commit/426e8851033348480fcabac4dbdcd414ec32829d))
+
+
+
+
+
 # [0.5.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.6...@selfcommunity/react-theme-default@0.5.0-alpha.7) (2025-09-08)
 
 
