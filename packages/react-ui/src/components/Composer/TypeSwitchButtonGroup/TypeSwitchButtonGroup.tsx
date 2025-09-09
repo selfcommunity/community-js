@@ -26,7 +26,7 @@ export default function ComposerTypeButtonGroup(props: ComposerTypeButtonGroupPr
 
   // MEMO
   const hasPollType = useMemo(
-    () => preferences[SCPreferences.ADDONS_POLLS_ENABLED].value || UserUtils.isStaff(scUserContext.user),
+    () => preferences[SCPreferences.ADDONS_POLLS_ENABLED].value || UserUtils.isStaff(scUserContext.user) || UserUtils.isPublisher(scUserContext.user),
     [preferences, scUserContext.user]
   );
   const hasPostType = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED].value, [preferences]);
