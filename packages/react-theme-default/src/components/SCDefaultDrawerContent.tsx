@@ -24,6 +24,14 @@ const Component = {
         '& .MuiIcon-root': {
           fontSize: 18
         }
+      },
+      '& .MuiAccordion-root': {
+        '& .MuiAccordionSummary-content': {
+          marginBottom: theme.spacing(1.5)
+        },
+        '& .MuiAccordionDetails-root, .MuiList-root': {
+          paddingTop: 0
+        }
       }
     })
   }
