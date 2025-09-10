@@ -6,9 +6,6 @@ const Component = {
       width: '100%',
       position: 'relative',
       gap: theme.spacing(2),
-      [theme.breakpoints.down('md')]: {
-        minHeight: 170
-      },
       '& .SCMediaFile-background': {
         backgroundSize: 'cover !important',
         backgroundPosition: 'center !important',
