@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.75...@selfcommunity/react-ui@0.11.0-alpha.76) (2025-09-09)
+
+
+### Bug Fixes
+
+* allow users with publisher role to access limited poll feature. ([688a460](https://github.com/selfcommunity/community-js/commit/688a46012a425f5f3d045846dd1a8761422c8151))
+* fixed discussion title error. Linear issue: https://linear.app/quentral/issue/QUE-1970/il-titolo-di-un-articolo-diventa-rosso-se-ce-un-errore-manca-categoria ([95bc169](https://github.com/selfcommunity/community-js/commit/95bc169c8c5718a6944b8fed379c4d6316aeadac))
+
+
+### Performance Improvements
+
+* added target blank for custom adv link. Linear issue: https://linear.app/quentral/issue/QUE-1971/impostare-come-default-lapertura-in-una-nuova-tab-dei-link-da-banners ([c103cad](https://github.com/selfcommunity/community-js/commit/c103cadef62d9b8bd7f65dde9a016b79f699d9c4))
+
+
+
+
+
 # [0.11.0-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.74...@selfcommunity/react-ui@0.11.0-alpha.75) (2025-09-09)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
