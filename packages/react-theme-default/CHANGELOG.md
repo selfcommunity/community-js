@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.8...@selfcommunity/react-theme-default@0.5.0-alpha.9) (2025-09-10)
+
+
+### Bug Fixes
+
+* fixed feed obj media gap in mobile view. Linear issue: https://linear.app/quentral/issue/QUE-1975/facendo-il-resize-a-formato-mobile-o-tablet-tra-il-testo-e-il-video-si ([0754469](https://github.com/selfcommunity/community-js/commit/0754469de2a83b1105048d86073088bffde4d974))
+
+
+
+
+
 # [0.5.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.7...@selfcommunity/react-theme-default@0.5.0-alpha.8) (2025-09-09)
 
 
