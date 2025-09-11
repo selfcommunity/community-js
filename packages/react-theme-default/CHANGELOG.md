@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.9...@selfcommunity/react-theme-default@0.5.0-alpha.10) (2025-09-11)
+
+
+### Features
+
+* restyled preview pdf on DocCompoent. Linear: https://linear.app/quentral/issue/QUE-1973/label-pdf-in-overlay-thumbnail-immagine-preview-pdf-caricato-nel-post; https://linear.app/quentral/issue/QUE-1972/re-styling-miniatura-preview-pdf-aggiunta-bordo-e-icona ([92a0d2f](https://github.com/selfcommunity/community-js/commit/92a0d2fd5e233190cbaf1f1eb28251cb4a674039))
+
+
+
+
+
 # [0.5.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.8...@selfcommunity/react-theme-default@0.5.0-alpha.9) (2025-09-10)
 
 

@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.5...@selfcommunity/react-core@0.7.0-alpha.6) (2025-09-11)
+
+
+### Bug Fixes
+
+* add pref video_play_tracking_delay_seconds ([d6eecb7](https://github.com/selfcommunity/community-js/commit/d6eecb759ab6718aa5a843dab912f5e2a90624d3))
+
+
+### Features
+
+* added some ddp configurations type ([54eaf76](https://github.com/selfcommunity/community-js/commit/54eaf76088b9032d22ecb9069dbbce7cbf540d7e))
+
+
+
+
+
 # [0.7.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.4...@selfcommunity/react-core@0.7.0-alpha.5) (2025-09-08)
 
 

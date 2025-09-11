@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.77...@selfcommunity/react-ui@0.11.0-alpha.78) (2025-09-11)
+
+
+### Bug Fixes
+
+* add pref video_play_tracking_delay_seconds ([d6eecb7](https://github.com/selfcommunity/community-js/commit/d6eecb759ab6718aa5a843dab912f5e2a90624d3))
+* fixed bug on click on shared feed object; updated click on DocComponent. Linear: https://linear.app/quentral/issue/QUE-1896/ricontrollare-la-chiamata-media-click-per-tutte-le-tipologie-di ([52736a2](https://github.com/selfcommunity/community-js/commit/52736a2cd42b603f3b842d2d23673f55f3ed4b87))
+
+
+### Features
+
+* added ddp for tracking video into AutoPLayer. Linear: https://linear.app/quentral/issue/QUE-1829/frontend-gestire-segnale-allevento-play-del-video-dopo-x-sec-dynamic ([480be9f](https://github.com/selfcommunity/community-js/commit/480be9fc73ef2183d41c196a30dee785518b5665))
+* restyled preview pdf on DocCompoent. Linear: https://linear.app/quentral/issue/QUE-1973/label-pdf-in-overlay-thumbnail-immagine-preview-pdf-caricato-nel-post; https://linear.app/quentral/issue/QUE-1972/re-styling-miniatura-preview-pdf-aggiunta-bordo-e-icona ([92a0d2f](https://github.com/selfcommunity/community-js/commit/92a0d2fd5e233190cbaf1f1eb28251cb4a674039))
+
+
+
+
+
 # [0.11.0-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.76...@selfcommunity/react-ui@0.11.0-alpha.77) (2025-09-10)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
