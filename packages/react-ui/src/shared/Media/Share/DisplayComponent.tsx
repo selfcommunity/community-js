@@ -1,4 +1,4 @@
-import React, {ReactElement, useMemo} from 'react';
+import {ReactElement, useMemo} from 'react';
 import FeedObject from '../../../components/FeedObject';
 import {SCFeedObjectTemplateType} from '../../../types/feedObject';
 import {CacheStrategies} from '@selfcommunity/utils';
@@ -20,7 +20,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'DisplayRoot'
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface DisplayComponentProps extends BoxProps {
   /**
@@ -43,7 +43,12 @@ export default ({className, medias = [], onMediaClick = null, ...rest}: DisplayC
   return (
     <Root className={classNames(className, classes.displayRoot)} {...rest}>
       {_medias.map((media, i) => (
-        <Box className={classes.sharePreview} key={i} onClick={onMediaClick}>
+        <Box
+          className={classes.sharePreview}
+          key={i}
+          onClick={() => {
+            onMediaClick?.(media);
+          }}>
           {media.type === MEDIA_TYPE_EVENT || (media.embed && media.embed.embed_type === MEDIA_EMBED_SC_SHARED_EVENT) ? (
             <Event
               event={media.embed.metadata as SCEventType}
@@ -58,7 +63,7 @@ export default ({className, medias = [], onMediaClick = null, ...rest}: DisplayC
             <FeedObject
               feedObjectId={media.embed.metadata.id}
               feedObjectType={media.embed.metadata.type}
-              variant={'outlined'}
+              variant="outlined"
               template={SCFeedObjectTemplateType.SHARE}
               cacheStrategy={CacheStrategies.CACHE_FIRST}
             />
