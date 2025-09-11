@@ -100,9 +100,11 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       setPreview(index);
       setMediaType(type);
 
-      onMediaClick(type === MEDIA_TYPE_IMAGE ? images[index] : docs[index]);
+      if (type === MEDIA_TYPE_IMAGE) {
+        onMediaClick(images[index]);
+      }
     },
-    [images, docs]
+    [gallery, setPreview, setMediaType, images, onMediaClick]
   );
 
   // RENDERING
@@ -262,21 +264,26 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     ];
   };
 
-  const handleDownload = useCallback(async (index: number) => {
-    try {
-      const response: HttpResponse<Blob> = await http.request({url: docs[index].url, responseType: 'blob'});
-      const blob = new Blob([response.data], {type: 'application/pdf'});
-      const url = window.URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = docs[index].title;
-      link.click();
-      // Cleanup
-      window.URL.revokeObjectURL(url);
-    } catch (error) {
-      Logger.error(SCOPE_SC_UI, error);
-    }
-  }, []);
+  const handleDownload = useCallback(
+    async (index: number) => {
+      try {
+        const response: HttpResponse<Blob> = await http.request({url: docs[index].url, responseType: 'blob'});
+        const blob = new Blob([response.data], {type: 'application/pdf'});
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = docs[index].title;
+        link.click();
+        // Cleanup
+        window.URL.revokeObjectURL(url);
+
+        onMediaClick?.(docs[index]);
+      } catch (error) {
+        Logger.error(SCOPE_SC_UI, error);
+      }
+    },
+    [onMediaClick]
+  );
 
   const handleIndexChange = useCallback(
     (index: number) => {
@@ -322,7 +329,14 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
 
       <Stack className={classes.docsWrapper}>
         {docs.map((doc, i) => (
-          <DocComponent key={doc.id} doc={doc} index={i} openPreviewImage={openPreviewImage} handleDownload={handleDownload} />
+          <DocComponent
+            key={doc.id}
+            doc={doc}
+            index={i}
+            openPreviewImage={openPreviewImage}
+            handleDownload={handleDownload}
+            onMediaClick={onMediaClick}
+          />
         ))}
       </Stack>
     </Root>

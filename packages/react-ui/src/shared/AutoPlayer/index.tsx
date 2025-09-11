@@ -3,6 +3,7 @@ import {Waypoint} from 'react-waypoint';
 import ReactPlayer from 'react-player';
 import {styled} from '@mui/material';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {DEFAULT_VIDEO_PLAY_TRACKING_DELAY_SECONDS} from '../../constants/Media';
 
 const PREFIX = 'SCAutoPlayer';
 
@@ -66,8 +67,13 @@ export default function AutoPlayer(props: AutoPlayerProps) {
   const enableAutoplay =
     SCPreferences.CONFIGURATIONS_VIDEO_AUTOPLAY_ENABLED in preferences && preferences[SCPreferences.CONFIGURATIONS_VIDEO_AUTOPLAY_ENABLED].value;
 
+  const videoPlayTrackingDelaySeconds =
+    SCPreferences.CONFIGURATIONS_VIDEO_PLAY_TRACKING_DELAY_SECONDS in preferences
+      ? preferences[SCPreferences.CONFIGURATIONS_VIDEO_PLAY_TRACKING_DELAY_SECONDS].value
+      : DEFAULT_VIDEO_PLAY_TRACKING_DELAY_SECONDS;
+
   useEffect(() => {
-    if (played >= 10 && played <= 11) {
+    if (played >= videoPlayTrackingDelaySeconds && played <= videoPlayTrackingDelaySeconds + 1) {
       onVideoWatch?.();
     }
   }, [played]);
