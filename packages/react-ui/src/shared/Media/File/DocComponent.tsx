@@ -3,10 +3,12 @@ import {PREFIX} from './constants';
 import {Link} from '@selfcommunity/react-core';
 import {SCMediaType} from '@selfcommunity/types';
 import {MEDIA_TYPE_DOCUMENT} from '../../../constants/Media';
+import {BADGE_PDF} from './badgePdf';
 
 const classes = {
   docRoot: `${PREFIX}-doc-root`,
-  image: `${PREFIX}-image`,
+  imageWrapper: `${PREFIX}-image-wrapper`,
+  badgePdf: `${PREFIX}-badge-pdf`,
   textWrapper: `${PREFIX}-text-wrapper`,
   title: `${PREFIX}-title`,
   subtitle: `${PREFIX}-subtitle`,
@@ -37,21 +39,21 @@ interface DocComponentProps {
   onDelete?: (id: number) => void;
   openPreviewImage?: (index: number, type: string) => void;
   handleDownload?: (id: number) => void;
+  onMediaClick?: (media: SCMediaType) => void;
 }
 
 export default function DocComponent(props: DocComponentProps) {
-  const {doc, index, onDelete, openPreviewImage, handleDownload} = props;
+  const {doc, index, onDelete, openPreviewImage, handleDownload, onMediaClick} = props;
 
   return (
     <Root className={classes.docRoot}>
       <Box
-        component="img"
-        className={classes.image}
-        alt="pdf preview"
-        src={doc.image_thumbnail ? doc.image_thumbnail.url : doc.image}
         onClick={() => openPreviewImage?.(index, MEDIA_TYPE_DOCUMENT)}
         sx={{cursor: openPreviewImage ? 'pointer' : undefined}}
-      />
+        className={classes.imageWrapper}>
+        <img alt="pdf preview" src={doc.image_thumbnail ? doc.image_thumbnail.url : doc.image} width="100%" height="100%" />
+        <img alt="pdf badge" src={BADGE_PDF} className={classes.badgePdf} />
+      </Box>
       <Stack className={classes.textWrapper}>
         <Typography className={classes.title}>{doc.title}</Typography>
         {doc.size && <Typography className={classes.subtitle}>{formatBytes(doc.size)}</Typography>}
@@ -66,7 +68,7 @@ export default function DocComponent(props: DocComponentProps) {
           )}
           {handleDownload && (
             <>
-              <IconButton className={classes.action} component={Link} to={doc.url} target="_blank">
+              <IconButton className={classes.action} component={Link} to={doc.url} target="_blank" onClick={() => onMediaClick?.(doc)}>
                 <Icon>visibility</Icon>
               </IconButton>
               <IconButton className={classes.action} onClick={() => handleDownload(index)}>

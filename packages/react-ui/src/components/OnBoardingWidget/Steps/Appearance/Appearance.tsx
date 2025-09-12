@@ -172,11 +172,22 @@ export default function Appearance(inProps: AppearanceProps) {
     const formData = new FormData();
     formData.append(name, file);
     await PreferenceService.updatePreferences(formData)
-      .then((preference: SCPreferenceType) => {
+      .then((preference: SCPreferenceType | SCPreferenceType[]) => {
         setLoadingLogo('');
         setData({});
         setPreferences((prev) => {
-          return prev.map((p) => Object.assign({}, p, {value: p.name === name ? preference[name].value : p.value}));
+          // Handle both single preference and array of preferences
+          if (Array.isArray(preference)) {
+            // If it's an array, find the preference with the matching name
+            const matchingPref = preference.find((p) => p.name === name);
+            if (matchingPref) {
+              return prev.map((p) => Object.assign({}, p, {value: p.name === name ? matchingPref.value : p.value}));
+            }
+            return prev;
+          } else {
+            // Original behavior for single preference
+            return prev.map((p) => Object.assign({}, p, {value: p.name === name ? preference[name].value : p.value}));
+          }
         });
         onCompleteAction();
       })

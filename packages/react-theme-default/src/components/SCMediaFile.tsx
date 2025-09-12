@@ -160,15 +160,23 @@ const Component = {
     }),
     triggerMenuRoot: () => ({}),
     docRoot: ({theme}) => ({
-      borderRadius: '10px',
       border: '1px solid #DDD',
+      borderRadius: '10px',
       padding: theme.spacing(1),
       flexDirection: 'row',
       gap: '8px',
-      '& .SCMediaFile-image': {
+      '& .SCMediaFile-image-wrapper': {
+        border: '1px solid #DDD',
+        borderRadius: '2px',
+        flexShrink: 0,
+        position: 'relative',
         width: '50px',
         height: '50px',
-        flexShrink: 0
+        '& .SCMediaFile-badge-pdf': {
+          position: 'absolute',
+          bottom: '8px',
+          left: 0
+        }
       },
       '& .SCMediaFile-text-wrapper': {
         gap: '4px',
