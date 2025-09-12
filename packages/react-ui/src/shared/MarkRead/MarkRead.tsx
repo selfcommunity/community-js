@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {http, EndpointType, HttpResponse} from '@selfcommunity/api-services';
 import LazyLoad from 'react-lazyload';
 import {MIN_PRELOAD_OFFSET_VIEWPORT} from '../../constants/LazyLoad';
+import {useInView} from 'react-intersection-observer';
 
 export interface MarkReadProps {
   /**
@@ -28,6 +29,8 @@ export interface MarkReadProps {
 const MarkRead = (props: MarkReadProps): JSX.Element => {
   // PROPS
   const {endpoint, params = {}, callback, data = null} = props;
+  const {ref, inView} = useInView({threshold: 0.1});
+  const hasEntered = useRef(false);
 
   /**
    * Perform request
@@ -46,16 +49,14 @@ const MarkRead = (props: MarkReadProps): JSX.Element => {
   };
 
   useEffect(() => {
-    let _t;
-    if (endpoint) {
-      _t = setTimeout(performRequest);
-      return () => {
-        _t && clearTimeout(_t);
-      };
+    if (inView) {
+      hasEntered.current = true;
+    } else if (hasEntered.current && endpoint && !inView) {
+      performRequest();
     }
-  }, []);
+  }, [inView]);
 
-  return null;
+  return <div ref={ref}></div>;
 };
 
 export default (props: MarkReadProps): JSX.Element => {
