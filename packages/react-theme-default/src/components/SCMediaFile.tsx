@@ -174,8 +174,20 @@ const Component = {
         height: '50px',
         '& .SCMediaFile-badge-pdf': {
           position: 'absolute',
-          bottom: '8px',
-          left: 0
+          bottom: theme.spacing(1),
+          left: 0,
+          width: theme.spacing(4),
+          height: theme.spacing(2),
+          border: '1px solid #DDD',
+          borderLeft: 0,
+          borderTopRightRadius: '3px',
+          borderBottomRightRadius: '3px',
+          '& .SCMediaFile-pdf': {
+            height: '100%',
+            fontWeight: 600,
+            lineHeight: 1,
+            padding: '1px'
+          }
         }
       },
       '& .SCMediaFile-text-wrapper': {
