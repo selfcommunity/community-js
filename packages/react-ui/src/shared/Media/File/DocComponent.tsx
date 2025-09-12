@@ -3,12 +3,12 @@ import {PREFIX} from './constants';
 import {Link} from '@selfcommunity/react-core';
 import {SCMediaType} from '@selfcommunity/types';
 import {MEDIA_TYPE_DOCUMENT} from '../../../constants/Media';
-import {BADGE_PDF} from './badgePdf';
 
 const classes = {
   docRoot: `${PREFIX}-doc-root`,
   imageWrapper: `${PREFIX}-image-wrapper`,
   badgePdf: `${PREFIX}-badge-pdf`,
+  pdf: `${PREFIX}-pdf`,
   textWrapper: `${PREFIX}-text-wrapper`,
   title: `${PREFIX}-title`,
   subtitle: `${PREFIX}-subtitle`,
@@ -52,7 +52,11 @@ export default function DocComponent(props: DocComponentProps) {
         sx={{cursor: openPreviewImage ? 'pointer' : undefined}}
         className={classes.imageWrapper}>
         <img alt="pdf preview" src={doc.image_thumbnail ? doc.image_thumbnail.url : doc.image} width="100%" height="100%" />
-        <img alt="pdf badge" src={BADGE_PDF} className={classes.badgePdf} />
+        <Box className={classes.badgePdf}>
+          <Typography variant="body1" className={classes.pdf}>
+            PDF
+          </Typography>
+        </Box>
       </Box>
       <Stack className={classes.textWrapper}>
         <Typography className={classes.title}>{doc.title}</Typography>

@@ -106,7 +106,9 @@ const classes = {
   activitiesSection: `${PREFIX}-activities-section`,
   activitiesContent: `${PREFIX}-activities-content`,
   followButton: `${PREFIX}-follow-button`,
-  vote: `${PREFIX}-vote`
+  vote: `${PREFIX}-vote`,
+  objElement: `${PREFIX}-obj-element`,
+  new: `${PREFIX}-new`
 };
 
 const Root = styled(Widget, {
@@ -497,6 +499,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   }, [expanded, notifyFeedChanges]);
 
   /**
+   * Handle mark read complete
+   */
+  const handleMarkReadComplete = useCallback(() => {
+    notifyFeedChanges({markRead: false});
+  }, [expanded, notifyFeedChanges]);
+
+  /**
    * Render header action
    * if author = authenticated user -> render edit action
    * else render ContributionActionsMenu
@@ -801,7 +810,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     objElement = (
       <React.Fragment>
         {obj ? (
-          <Box className={classNames({[classes.deleted]: obj && obj.deleted})}>
+          <Box className={classNames({[classes.deleted]: obj && obj.deleted}, classes.objElement)}>
+            {markRead && <span className={classes.new} />}
             {obj.categories.length > 0 && (
               <div className={classes.category}>
                 <>
@@ -1242,7 +1252,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   return (
     <>
       <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-        {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} />}
+        {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} callback={handleMarkReadComplete} />}
         {objElement}
       </Root>
       {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}

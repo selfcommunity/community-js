@@ -125,17 +125,7 @@ export default function Appearance(inProps: AppearanceProps) {
   };
 
   const handleDataUpdate = (key: string, value: any) => {
-    const elementInDict = preferences.filter((p: SCPreferenceType) => p.name === key && p.value === value);
-    if (elementInDict.length) {
-      const newData = {...data};
-      delete newData[key];
-      setData(newData);
-    } else {
-      setData((prevData: any) => ({
-        ...prevData,
-        [key]: value
-      }));
-    }
+    setData((prevData: any) => Object.assign({}, prevData, {[key]: value}));
   };
 
   const fetchPreferences = () => {

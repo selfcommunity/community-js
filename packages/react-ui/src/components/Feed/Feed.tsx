@@ -802,7 +802,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           </VirtualScrollChild>
         );
       },
-    []
+    [authUserId]
   );
 
   if (feedDataObject.isLoadingNext && !feedDataLeft.length) {
