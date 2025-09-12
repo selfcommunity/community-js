@@ -145,6 +145,20 @@ const Component = {
           opacity: 1
         }
       },
+      '& .SCFeedObject-obj-element': {
+        position: 'relative',
+        '& .SCFeedObject-new': {
+          position: 'absolute',
+          top: '10px',
+          left: '10px',
+          width: '9px',
+          height: '9px',
+          backgroundColor: theme.palette.secondary.main,
+          border: `1px solid ${theme.palette.common.white}`,
+          borderRadius: '9999px',
+          filter: 'drop-shadow(0 0 2px rgba(0, 0, 0, 0.50))'
+        }
+      },
       '&.SCFeedObject-preview, &.SCFeedObject-detail, &.SCFeedObject-search, &.SCFeedObject-share': {
         border: `0 none`,
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
