@@ -497,6 +497,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   }, [expanded, notifyFeedChanges]);
 
   /**
+   * Handle mark read complete
+   */
+  const handleMarkReadComplete = useCallback(() => {
+    notifyFeedChanges({markRead: false});
+  }, [expanded, notifyFeedChanges]);
+
+  /**
    * Render header action
    * if author = authenticated user -> render edit action
    * else render ContributionActionsMenu
@@ -802,6 +809,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
       <React.Fragment>
         {obj ? (
           <Box className={classNames({[classes.deleted]: obj && obj.deleted})}>
+            {markRead && <span style={{color: 'red', border: '1px solid grey', borderRadius: 2}}>NEW</span>}
             {obj.categories.length > 0 && (
               <div className={classes.category}>
                 <>
@@ -1242,7 +1250,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   return (
     <>
       <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-        {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} />}
+        {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} callback={handleMarkReadComplete} />}
         {objElement}
       </Root>
       {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
