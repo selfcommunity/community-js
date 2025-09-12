@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.1...@selfcommunity/types@0.8.0-alpha.2) (2025-09-11)
+
+
+### Bug Fixes
+
+* add pref video_play_tracking_delay_seconds ([d6eecb7](https://github.com/selfcommunity/community-js/commit/d6eecb759ab6718aa5a843dab912f5e2a90624d3))
+
+
+
+
+
 # [0.8.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.0...@selfcommunity/types@0.8.0-alpha.1) (2025-09-04)
 
 
