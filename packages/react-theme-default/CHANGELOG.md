@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.11...@selfcommunity/react-theme-default@0.5.0-alpha.12) (2025-09-15)
+
+
+### Features
+
+* added user tagging in composer. Linear issue: https://linear.app/quentral/issue/QUE-1842/frontend-aggiungere-tab-utenti-con-textarea-chip-interni-per-ogni ([b7a7b17](https://github.com/selfcommunity/community-js/commit/b7a7b1738bb852890ed47cb964d9341bcc53214b))
+
+
+
+
+
 # [0.5.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.10...@selfcommunity/react-theme-default@0.5.0-alpha.11) (2025-09-12)
 
 
