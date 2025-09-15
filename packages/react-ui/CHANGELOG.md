@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.80](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.79...@selfcommunity/react-ui@0.11.0-alpha.80) (2025-09-15)
+
+
+### Bug Fixes
+
+* fixed spaces between new symbol and categories. ([600cd10](https://github.com/selfcommunity/community-js/commit/600cd101f981c1c96e74a5d42de9899c2d26a95e))
+
+
+### Features
+
+* removed extra sections if postOnlyStaffEnabled is true. Linear: https://linear.app/quentral/issue/QUE-1984/togliere-la-parte-di-menu-di-segnalazione-moderazione-nel-post-nel ([ad51263](https://github.com/selfcommunity/community-js/commit/ad51263fd17acfd3b8c41d70bfcb2318aa4f8faa))
+
+
+
+
+
 # [0.11.0-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.78...@selfcommunity/react-ui@0.11.0-alpha.79) (2025-09-12)
 
 
