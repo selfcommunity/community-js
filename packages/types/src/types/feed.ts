@@ -48,7 +48,7 @@ export interface SCFeedUnitType {
   /**
    * Id of User that have seen this object
    */
-  seen_by_id?: number[];
+  seen?: boolean;
 
   /**
    * True if this object has the visibility boost
@@ -96,7 +96,7 @@ export interface SCFeedUnitActivityType {
   /**
    * Id of Users that have seen this activity
    */
-  seen_by_id?: number[];
+  seen?: boolean;
 }
 
 /**

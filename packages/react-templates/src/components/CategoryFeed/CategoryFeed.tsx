@@ -1,4 +1,4 @@
-import React, {useMemo, useRef} from 'react';
+import {useMemo, useRef} from 'react';
 import {styled} from '@mui/material';
 import {
   CategoryTrendingFeedWidget,
@@ -35,7 +35,7 @@ import {CategoryFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
-import {SnackbarKey, useSnackbar} from 'notistack';
+import {useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
 
 const classes = {
@@ -187,7 +187,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
     if (feedObject.categories.findIndex((c) => c.id === scCategory.id) === -1) {
       const messageId = feedObject.scheduled_at ? 'ui.composer.scheduled.success' : 'ui.composerIconButton.composer.success';
       enqueueSnackbar(<FormattedMessage id={messageId} defaultMessage={messageId} />, {
-        action: (snackbarId: SnackbarKey) => (
+        action: () => (
           <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], ContributionUtils.getRouteData(feedObject))}>
             <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
           </Link>
@@ -202,7 +202,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
     const feedUnit = {
       type: feedObject.type,
       [feedObject.type]: feedObject,
-      seen_by_id: [],
+      seen: false,
       has_boost: false
     };
     !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
@@ -241,7 +241,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null,
-        markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
+        markRead: scUser ? !item.seen : null
       })}
       itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {styled} from '@mui/material';
 import {
   ContributionUtils,
@@ -154,7 +154,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
   const scUserContext: SCUserContextType = useSCUser();
   const scGroupsManager: SCSubscribedGroupsManagerType = scUserContext.managers.groups;
   const {enqueueSnackbar} = useSnackbar();
-  const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
+  const {scGroup} = useSCFetchGroup({id: groupId, group});
 
   // REF
   const feedRef = useRef<FeedRef>();
@@ -176,7 +176,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
   const handleComposerSuccess = (feedObject) => {
     const messageId = feedObject.scheduled_at ? 'ui.composer.scheduled.success' : 'ui.composerIconButton.composer.success';
     enqueueSnackbar(<FormattedMessage id={messageId} defaultMessage={messageId} />, {
-      action: (snackbarId: SnackbarKey) => (
+      action: () => (
         <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], ContributionUtils.getRouteData(feedObject))}>
           <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
         </Link>
@@ -189,7 +189,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
       const feedUnit = {
         type: feedObject.type,
         [feedObject.type]: feedObject,
-        seen_by_id: [],
+        seen: false,
         has_boost: false
       };
       !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
@@ -229,7 +229,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null,
-        markRead: scUser ? !item?.seen_by_id?.includes(scUser.id) : null
+        markRead: scUser ? !item?.seen : null
       })}
       itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}

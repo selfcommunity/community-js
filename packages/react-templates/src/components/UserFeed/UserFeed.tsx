@@ -1,4 +1,4 @@
-import React, {useMemo, useRef} from 'react';
+import {useMemo, useRef} from 'react';
 import {styled} from '@mui/material';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContextType, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
@@ -174,7 +174,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
     const feedUnit = {
       type: feedObject.type,
       [feedObject.type]: feedObject,
-      seen_by_id: [],
+      seen: false,
       has_boost: false
     };
     !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
