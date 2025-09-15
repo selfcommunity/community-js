@@ -38,7 +38,8 @@ const DEFAULT_DISCUSSION: ComposerContentType = {
   event: null,
   medias: [],
   html: '',
-  addressing: []
+  addressing: [],
+  recipients: []
 };
 
 export interface ContentDiscussionProps extends Omit<BoxProps, 'value' | 'onChange'> {

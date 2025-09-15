@@ -26,6 +26,7 @@ const DEFAULT_POST: ComposerContentType = {
   medias: [],
   html: '',
   addressing: [],
+  recipients: [],
   event: null,
   group: null
 };
