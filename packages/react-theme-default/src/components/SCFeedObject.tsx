@@ -145,19 +145,14 @@ const Component = {
           opacity: 1
         }
       },
-      '& .SCFeedObject-obj-element': {
-        position: 'relative',
-        '& .SCFeedObject-new': {
-          position: 'absolute',
-          top: '10px',
-          left: '10px',
-          width: '9px',
-          height: '9px',
-          backgroundColor: theme.palette.secondary.main,
-          border: `1px solid ${theme.palette.common.white}`,
-          borderRadius: '9999px',
-          filter: 'drop-shadow(0 0 2px rgba(0, 0, 0, 0.50))'
-        }
+      '& .SCFeedObject-new': {
+        color: theme.palette.common.white,
+        backgroundColor: '#fa0501',
+        padding: '0 3px',
+        borderRadius: '3px',
+        marginRight: '3px',
+        fontSize: '10px',
+        fontWeight: 600
       },
       '&.SCFeedObject-preview, &.SCFeedObject-detail, &.SCFeedObject-search, &.SCFeedObject-share': {
         border: `0 none`,

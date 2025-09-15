@@ -13,8 +13,7 @@ import {
   Typography,
   styled,
   CardContent,
-  Icon,
-  useTheme
+  Icon
 } from '@mui/material';
 import FeedObjectSkeleton, {FeedObjectSkeletonProps} from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
@@ -50,7 +49,6 @@ import {
   SCPreferences,
   SCRoutes,
   SCRoutingContextType,
-  SCThemeType,
   SCUserContextType,
   UserUtils,
   useSCContext,
@@ -113,7 +111,6 @@ const classes = {
   activitiesContent: `${PREFIX}-activities-content`,
   followButton: `${PREFIX}-follow-button`,
   vote: `${PREFIX}-vote`,
-  objElement: `${PREFIX}-obj-element`,
   new: `${PREFIX}-new`
 };
 
@@ -400,9 +397,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const allShareEnabled = SCPreferences.ADDONS_SHARE_POST_ENABLED in preferences && preferences[SCPreferences.ADDONS_SHARE_POST_ENABLED].value;
   const commentsEnabled =
     SCPreferences.CONFIGURATIONS_COMMENTS_ENABLED in preferences && preferences[SCPreferences.CONFIGURATIONS_COMMENTS_ENABLED].value;
-
-  // HOOKS
-  const theme = useTheme<SCThemeType>();
 
   // OBJECTS
   const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
@@ -820,10 +814,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     objElement = (
       <React.Fragment>
         {obj ? (
-          <Box className={classNames({[classes.deleted]: obj && obj.deleted}, classes.objElement)}>
-            {markRead && <span className={classes.new} />}
+          <Box className={classNames({[classes.deleted]: obj && obj.deleted})}>
             {obj.categories.length > 0 && (
-              <Box className={classes.category} sx={{paddingLeft: markRead ? theme.spacing(1) : undefined}}>
+              <div className={classes.category}>
                 <>
                   {obj.group && (
                     <Chip
@@ -856,7 +849,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                     <Typography variant="overline">{c.name}</Typography>
                   </Link>
                 ))}
-              </Box>
+              </div>
             )}
             {obj.group && !obj.categories.length && (
               <div className={classes.group}>
@@ -908,8 +901,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
               }
               subheader={
                 <>
+                  {scUserContext.user && markRead && <span className={classes.new}>NEW</span>}
                   <Link to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))} className={classes.activityAt}>
-                    <DateTimeAgo component={'span'} date={obj.added_at} />
+                    <DateTimeAgo component="span" date={obj.added_at} />
                   </Link>
                   {obj.location && (
                     <>
@@ -1270,7 +1264,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   return (
     <>
       <Root id={id} className={classNames(classes.root, className, `${PREFIX}-${template}`)} {...rest}>
-        {obj && markRead && <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} callback={handleMarkReadComplete} />}
+        {scUserContext.user && obj && markRead && (
+          <MarkRead endpoint={Endpoints.FeedObjectMarkRead} data={{object: [obj.id]}} callback={handleMarkReadComplete} />
+        )}
         {objElement}
       </Root>
       {openAlert && <UserDeletedSnackBar open={openAlert} handleClose={() => setOpenAlert(false)} />}
