@@ -106,7 +106,9 @@ const classes = {
   activitiesSection: `${PREFIX}-activities-section`,
   activitiesContent: `${PREFIX}-activities-content`,
   followButton: `${PREFIX}-follow-button`,
-  vote: `${PREFIX}-vote`
+  vote: `${PREFIX}-vote`,
+  objElement: `${PREFIX}-obj-element`,
+  new: `${PREFIX}-new`
 };
 
 const Root = styled(Widget, {
@@ -808,8 +810,8 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     objElement = (
       <React.Fragment>
         {obj ? (
-          <Box className={classNames({[classes.deleted]: obj && obj.deleted})}>
-            {markRead && <span style={{color: 'red', border: '1px solid grey', borderRadius: 2}}>NEW</span>}
+          <Box className={classNames({[classes.deleted]: obj && obj.deleted}, classes.objElement)}>
+            {markRead && <span className={classes.new} />}
             {obj.categories.length > 0 && (
               <div className={classes.category}>
                 <>

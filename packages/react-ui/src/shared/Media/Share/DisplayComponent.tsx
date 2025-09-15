@@ -27,13 +27,9 @@ export interface DisplayComponentProps extends BoxProps {
    * Medias
    */
   medias: SCMediaType[];
-  /**
-   * Handles on media click
-   */
-  onMediaClick?: (any) => void;
 }
 
-export default ({className, medias = [], onMediaClick = null, ...rest}: DisplayComponentProps): ReactElement => {
+export default ({className, medias = [], ...rest}: DisplayComponentProps): ReactElement => {
   // MEMO
   const _medias = useMemo(() => medias.filter(filter), [medias]);
   if (_medias.length === 0) {
@@ -43,12 +39,7 @@ export default ({className, medias = [], onMediaClick = null, ...rest}: DisplayC
   return (
     <Root className={classNames(className, classes.displayRoot)} {...rest}>
       {_medias.map((media, i) => (
-        <Box
-          className={classes.sharePreview}
-          key={i}
-          onClick={() => {
-            onMediaClick?.(media);
-          }}>
+        <Box className={classes.sharePreview} key={i}>
           {media.type === MEDIA_TYPE_EVENT || (media.embed && media.embed.embed_type === MEDIA_EMBED_SC_SHARED_EVENT) ? (
             <Event
               event={media.embed.metadata as SCEventType}

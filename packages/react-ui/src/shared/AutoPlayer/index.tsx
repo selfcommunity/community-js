@@ -61,6 +61,7 @@ export default function AutoPlayer(props: AutoPlayerProps) {
   // STATE
   const [shouldPlay, setShouldPlay] = useState<boolean>(false);
   const [played, setPlayed] = useState(0);
+  const [startPlay, setStartPlay] = useState(0);
 
   const {preferences}: SCPreferencesContextType = useSCPreferences();
 
@@ -73,10 +74,10 @@ export default function AutoPlayer(props: AutoPlayerProps) {
       : DEFAULT_VIDEO_PLAY_TRACKING_DELAY_SECONDS;
 
   useEffect(() => {
-    if (played >= videoPlayTrackingDelaySeconds && played <= videoPlayTrackingDelaySeconds + 1) {
+    if (played >= startPlay + videoPlayTrackingDelaySeconds && played <= startPlay + videoPlayTrackingDelaySeconds + 1) {
       onVideoWatch?.();
     }
-  }, [played]);
+  }, [played, startPlay]);
 
   /**
    * Handle viewport enter
@@ -108,7 +109,11 @@ export default function AutoPlayer(props: AutoPlayerProps) {
           playing={shouldPlay}
           muted={muted}
           onProgress={(progress) => {
-            setPlayed(progress.playedSeconds);
+            const playedSeconds = progress.playedSeconds;
+            if (played === 0) {
+              setStartPlay(playedSeconds);
+            }
+            setPlayed(playedSeconds);
           }}
           playsinline={playsinline}
           config={{
