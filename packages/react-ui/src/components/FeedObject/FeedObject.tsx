@@ -13,7 +13,8 @@ import {
   Typography,
   styled,
   CardContent,
-  Icon
+  Icon,
+  useTheme
 } from '@mui/material';
 import FeedObjectSkeleton, {FeedObjectSkeletonProps} from './Skeleton';
 import DateTimeAgo from '../../shared/DateTimeAgo';
@@ -49,6 +50,7 @@ import {
   SCPreferences,
   SCRoutes,
   SCRoutingContextType,
+  SCThemeType,
   SCUserContextType,
   UserUtils,
   useSCContext,
@@ -394,6 +396,9 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const allShareEnabled = SCPreferences.ADDONS_SHARE_POST_ENABLED in preferences && preferences[SCPreferences.ADDONS_SHARE_POST_ENABLED].value;
   const commentsEnabled =
     SCPreferences.CONFIGURATIONS_COMMENTS_ENABLED in preferences && preferences[SCPreferences.CONFIGURATIONS_COMMENTS_ENABLED].value;
+
+  // HOOKS
+  const theme = useTheme<SCThemeType>();
 
   // OBJECTS
   const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
@@ -813,7 +818,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
           <Box className={classNames({[classes.deleted]: obj && obj.deleted}, classes.objElement)}>
             {markRead && <span className={classes.new} />}
             {obj.categories.length > 0 && (
-              <div className={classes.category}>
+              <Box className={classes.category} sx={{paddingLeft: markRead ? theme.spacing(1) : undefined}}>
                 <>
                   {obj.group && (
                     <Chip
@@ -846,7 +851,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                     <Typography variant="overline">{c.name}</Typography>
                   </Link>
                 ))}
-              </div>
+              </Box>
             )}
             {obj.group && !obj.categories.length && (
               <div className={classes.group}>

@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useRef, useState} from 'react';
+import {useContext, useMemo, useRef, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import CentralProgress from '../CentralProgress';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -95,13 +95,13 @@ const classes = {
 const PopperRoot = styled(Popper, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.popperRoot
+  overridesResolver: (_props, styles) => styles.popperRoot
 })(() => ({}));
 
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 const messages = defineMessages({
@@ -294,6 +294,13 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED].value,
     [preferences]
   );
+  const postOnlyStaffEnabled = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value,
+    [preferences]
+  );
 
   /**
    * Intial extra sections to render, in addition to the GENERAL_SECTION
@@ -303,6 +310,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     () => () => {
       let _extra = [];
       if (
+        !postOnlyStaffEnabled &&
         scUserContext.user &&
         Boolean(contributionObj) &&
         scUserId !== contributionObj.author.id &&
@@ -312,14 +320,14 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         _extra.push(FLAG_CONTRIBUTION_SECTION);
       }
       // Enable when backend is ready
-      if (UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)) {
+      if ((!postOnlyStaffEnabled && UserUtils.isAdmin(scUserContext.user)) || UserUtils.isModerator(scUserContext.user)) {
         // admin or moderator
         _extra.push(HIDE_CONTRIBUTION_SECTION);
         _extra.push(DELETE_CONTRIBUTION_SECTION);
       }
       return _extra;
     },
-    [contributionObj, scUserId]
+    [postOnlyStaffEnabled, contributionObj, scUserId]
   );
 
   /**
