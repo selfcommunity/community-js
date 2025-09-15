@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.21...@selfcommunity/react-templates@0.5.0-alpha.22) (2025-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.20...@selfcommunity/react-templates@0.5.0-alpha.21) (2025-09-15)
+
+
+### Bug Fixes
+
+* replaced seen_by_id with seen. ([1743121](https://github.com/selfcommunity/community-js/commit/1743121f9c14123ffee6c62d2bf28c81d3d1de0f))
+
+
+
+
+
+# [0.5.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.19...@selfcommunity/react-templates@0.5.0-alpha.20) (2025-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 # [0.5.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.18...@selfcommunity/react-templates@0.5.0-alpha.19) (2025-09-15)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
