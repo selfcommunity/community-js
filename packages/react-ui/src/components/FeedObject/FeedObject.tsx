@@ -796,7 +796,6 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
    */
   let objElement: JSX.Element;
-  console.log(obj);
   if (
     (!obj && error) ||
     (obj?.deleted && !scUserContext.user && !(UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))
