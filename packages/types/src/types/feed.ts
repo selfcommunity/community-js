@@ -17,7 +17,7 @@ export enum SCFeedTypologyType {
   EXPLORE = 'explore',
   CATEGORY = 'category',
   GROUP = 'group',
-	EVENT = 'event',
+  EVENT = 'event'
 }
 
 /**
@@ -240,7 +240,7 @@ export interface SCFeedObjectType {
   flag_count: number;
 
   /**
-   * Tags adderssing
+   * Tags addressing
    */
   addressing: SCTagType[];
 
@@ -257,6 +257,10 @@ export interface SCFeedObjectType {
    * True if scheduled_posts ddp is enabled and if the feed object is not published yet
    */
   draft?: boolean;
+  /**
+   * Users addressing
+   */
+  recipients?: any;
 }
 
 /**

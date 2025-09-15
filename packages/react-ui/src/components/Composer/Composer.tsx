@@ -12,7 +12,8 @@ import {
   SCGroupType,
   SCMediaType,
   SCPollType,
-  SCTagType
+  SCTagType,
+  SCUserAutocompleteType
 } from '@selfcommunity/types';
 import {Endpoints, formatHttpErrorCode, http, HttpResponse} from '@selfcommunity/api-services';
 import {
@@ -132,6 +133,7 @@ export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scrol
     group?: SCGroupType;
     audience?: string;
     addressing?: SCTagType[];
+    recipients?: any;
     medias?: SCMediaType[];
     poll?: SCPollType;
     location?: string;
@@ -178,6 +180,7 @@ const COMPOSER_INITIAL_STATE = {
   groupsError: null,
   addressing: null,
   addressingError: null,
+  recipients: [],
   medias: [],
   poll: null,
   location: null,
@@ -284,6 +287,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     group,
     addressing,
     addressingError,
+    recipients,
     audience,
     medias,
     poll,
@@ -336,6 +340,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           event: _feedObject.event,
           group: _feedObject.group,
           addressing: _feedObject.addressing,
+          recipients: _feedObject.recipients,
           medias: _feedObject.medias,
           poll: _feedObject.poll,
           location: _feedObject.location,
@@ -372,10 +377,10 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       ((type === SCContributionType.DISCUSSION && title.length > 0 && title.length < COMPOSER_TITLE_MAX_LENGTH) ||
         (type === SCContributionType.POST && (stripHtml(html).length > 0 || medias.length > 0 || hasPoll)) ||
         (type === COMPOSER_TYPE_POLL && hasPoll)) &&
-      (!addressingRequiredEnabled || (addressing && addressing.length > 0)) &&
+      (!addressingRequiredEnabled || (addressing && addressing.length > 0) || (recipients && recipients.length > 0)) &&
       (!categoryRequiredEnabled || (categories && categories.length > 0))
     );
-  }, [isLoading, type, title, html, medias, hasPoll, addressing, addressingRequiredEnabled, categories, categoryRequiredEnabled]);
+  }, [isLoading, type, title, html, medias, hasPoll, addressing, recipients, addressingRequiredEnabled, categories, categoryRequiredEnabled]);
   const isIOS = useMemo(() => iOS(), []);
 
   // Load feed object
@@ -496,7 +501,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             ? {titleError: <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />}
             : null,
         addressingError:
-          addressingRequiredEnabled && (!content.addressing || content.addressing.length === 0) ? (
+          addressingRequiredEnabled &&
+          (!content.addressing || content.addressing.length === 0 || !content.recipients || content.recipients.length === 0) ? (
             <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
           ) : null
       }
@@ -513,7 +519,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />
           ) : null,
         addressingError:
-          addressingRequiredEnabled && (!content.addressing || content.addressing.length === 0) ? (
+          addressingRequiredEnabled &&
+          (!content.addressing || content.addressing.length === 0 || !content.recipients || content.recipients.length === 0) ? (
             <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
           ) : null,
         categoriesError:
@@ -530,7 +537,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       value: {
         ...content,
         addressingError:
-          addressingRequiredEnabled && (!content.addressing || content.addressing.length === 0) ? (
+          addressingRequiredEnabled &&
+          (!content.addressing || content.addressing.length === 0 || !content.recipients || content.recipients.length === 0) ? (
             <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
           ) : null,
         categoriesError:
@@ -570,11 +578,22 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   );
 
   const handleChangeAudience = useCallback(
-    (value: SCTagType[] | SCGroupType | SCEventType | null) => {
+    (value: SCTagType[] | SCGroupType | SCEventType | SCUserAutocompleteType[] | string | null) => {
       if (group || (value && Object.prototype.hasOwnProperty.call(value, 'emotional_image_position'))) {
         dispatch({type: 'group', value});
       } else if (event || (value && Object.prototype.hasOwnProperty.call(value, 'recurring'))) {
         dispatch({type: 'event', value});
+      } else if (recipients?.length !== 0 || (value && Array.isArray(value) && value.some((obj) => !('color' in obj)))) {
+        dispatch({
+          type: 'multiple',
+          value: {
+            recipients: value,
+            addressingError:
+              addressingRequiredEnabled && !value ? (
+                <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
+              ) : null
+          }
+        });
       } else {
         dispatch({
           type: 'multiple',
@@ -589,27 +608,27 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       }
       setLayer(null);
     },
-    [group]
+    [group, event, recipients]
   );
 
-  const handleAddAudienceLayer = useCallback(
-    () =>
-      handleAddLayer({
-        name: 'audience',
-        Component: AudienceLayer,
-        ComponentProps: {
-          onClose: handleRemoveLayer,
-          onSave: handleChangeAudience,
-          defaultValue:
-            group || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'emotional_image_position'))
-              ? group
-              : event || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'recurring'))
-              ? event
-              : addressing
-        }
-      }),
-    [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing, event, group]
-  );
+  const handleAddAudienceLayer = useCallback(() => {
+    handleAddLayer({
+      name: 'audience',
+      Component: AudienceLayer,
+      ComponentProps: {
+        onClose: handleRemoveLayer,
+        onSave: handleChangeAudience,
+        defaultValue:
+          group || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'emotional_image_position'))
+            ? group
+            : event || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'recurring'))
+            ? event
+            : recipients?.length && !recipients.some((r) => 'color' in r)
+            ? recipients
+            : addressing
+      }
+    });
+  }, [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing, event, group, recipients]);
 
   const handleChangeLocation = useCallback((value: SCContributionLocation | null) => {
     dispatch({type: 'location', value});
@@ -691,7 +710,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       value: {
         ...content,
         addressingError:
-          addressingRequiredEnabled && (!content.addressing || content.addressing.length === 0) ? (
+          addressingRequiredEnabled &&
+          (!content.addressing || content.addressing.length === 0 || !content.recipients || content.recipients.length === 0) ? (
             <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
           ) : null,
         categoriesError:
@@ -759,6 +779,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       if (features.includes(SCFeatureName.TAGGING) && addressing !== null) {
         data.addressing = addressing.map((t) => t.id);
       }
+      if (features.includes(SCFeatureName.TAGGING) && recipients !== null) {
+        data.recipients = recipients.map((r) => r.username);
+      }
       if (
         features.includes(SCFeatureName.TAGGING) &&
         features.includes(SCFeatureName.GROUPING) &&
@@ -822,6 +845,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       event,
       group,
       addressing,
+      recipients,
       audience,
       medias,
       poll,
@@ -911,7 +935,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <ContentPoll
             key={key}
             onChange={handleChangePoll}
-            value={{html, event, group, addressing, medias, poll, location, scheduled_at}}
+            value={{html, event, group, addressing, recipients, medias, poll, location, scheduled_at}}
             error={{pollError, categoriesError, addressingError}}
             disabled={isSubmitting}
           />
@@ -920,7 +944,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         return (
           <ContentDiscussion
             key={key}
-            value={{title, html, categories, event, group, addressing, medias, poll, location, scheduled_at}}
+            value={{title, html, categories, event, group, addressing, recipients, medias, poll, location, scheduled_at}}
             error={{titleError, categoriesError, addressingError, error}}
             onChange={handleChangeDiscussion}
             disabled={isSubmitting}
@@ -936,7 +960,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         return (
           <ContentPost
             key={key}
-            value={{html, categories, event, group, addressing, medias, poll, location, scheduled_at}}
+            value={{html, categories, event, group, addressing, recipients, medias, poll, location, scheduled_at}}
             error={{error, categoriesError, addressingError}}
             onChange={handleChangePost}
             disabled={isSubmitting}
@@ -957,6 +981,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     event,
     group,
     addressing,
+    recipients,
     medias,
     poll,
     pollError,
@@ -1001,7 +1026,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Attributes
-            value={{categories, event, group, addressing, location}}
+            value={{categories, event, group, addressing, recipients, location}}
             className={classes.attributes}
             onChange={handleChangeAttributes}
             onClick={handleClickAttributes}

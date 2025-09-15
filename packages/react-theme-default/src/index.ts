@@ -184,6 +184,7 @@ import SCToastNotifications from './components/SCToastNotifications';
 import SCUser from './components/SCUser';
 import SCUserActionIconButton from './components/SCUserActionIconButton';
 import SCUserAvatar from './components/SCUserAvatar';
+import SCUserAutocomplete from './components/SCUserAutocomplete';
 import SCUserCategoriesFollowedWidget from './components/SCUserCategoriesFollowedWidget';
 import SCUserConnectionsRequestsSentWidget from './components/SCUserConnectionsRequestsSentWidget';
 import SCUserConnectionsRequestsWidget from './components/SCUserConnectionsRequestsWidget';
@@ -449,6 +450,7 @@ const theme = {
     SCUser,
     SCUserActionIconButton,
     SCUserAvatar,
+    SCUserAutocomplete,
     SCUserCategoriesFollowedWidget,
     SCUserConnectionsRequestsSentWidget,
     SCUserConnectionsRequestsWidget,

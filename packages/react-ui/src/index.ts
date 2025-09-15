@@ -142,6 +142,7 @@ import SuggestedEventsWidget, {SuggestedEventsWidgetProps, SuggestedEventsWidget
 import TagAutocomplete, {TagAutocompleteProps} from './components/TagAutocomplete';
 import ToastNotifications, {ToastNotificationsProps, ToastNotificationsSkeleton} from './components/ToastNotifications';
 import User, {UserProps, UserSkeleton} from './components/User';
+import UserAutocomplete, {UserAutocompleteProps} from './components/UserAutocomplete';
 import UserActionIconButton, {UserActionIconButtonProps} from './components/UserActionIconButton';
 import UserConnectionsRequestsSentWidget, {
   UserConnectionsRequestsSentWidgetProps,
@@ -774,6 +775,8 @@ export {
   UserProfileHeader,
   UserProfileHeaderProps,
   UserProfileHeaderSkeleton,
+  UserAutocomplete,
+  UserAutocompleteProps,
   UserProps,
   UserSkeleton,
   UserSocialAssociation,
