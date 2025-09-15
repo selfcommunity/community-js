@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.10...@selfcommunity/react-theme-default@0.5.0-alpha.11) (2025-09-12)
+
+
+### Bug Fixes
+
+* fixed badge pdf into DocComponent ([c2a1ea7](https://github.com/selfcommunity/community-js/commit/c2a1ea7e1f7ed0d84ff5bc49298627cd93bba7e8))
+
+
+### Features
+
+* added symbol to mark new post. Linear: https://linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new#comment-8227fe81 ([95067f7](https://github.com/selfcommunity/community-js/commit/95067f7b7d9f8f781af93f64a6f7ac93b9b025ea)), closes [/linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new#comment-8227fe81](https://github.com//linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new/issues/comment-8227fe81)
+
+
+
+
+
 # [0.5.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.9...@selfcommunity/react-theme-default@0.5.0-alpha.10) (2025-09-11)
 
 

@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.78...@selfcommunity/react-ui@0.11.0-alpha.79) (2025-09-12)
+
+
+### Bug Fixes
+
+* Appearance OnBoardingWidget ([0bbffd2](https://github.com/selfcommunity/community-js/commit/0bbffd2e95f7fa00e60f00d356417a57296f0c75))
+* fixed badge pdf into DocComponent ([c2a1ea7](https://github.com/selfcommunity/community-js/commit/c2a1ea7e1f7ed0d84ff5bc49298627cd93bba7e8))
+* fixed click tracking on video and shared feed. ([82b3cbb](https://github.com/selfcommunity/community-js/commit/82b3cbb4ec9d2146c5557acee57177f6b16b48c7))
+* markRead feedObject ([41bd16c](https://github.com/selfcommunity/community-js/commit/41bd16c04ab44c54bb0f7746c10442fada3b7034))
+
+
+### Features
+
+* added symbol to mark new post. Linear: https://linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new#comment-8227fe81 ([95067f7](https://github.com/selfcommunity/community-js/commit/95067f7b7d9f8f781af93f64a6f7ac93b9b025ea)), closes [/linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new#comment-8227fe81](https://github.com//linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new/issues/comment-8227fe81)
+
+
+
+
+
 # [0.11.0-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.77...@selfcommunity/react-ui@0.11.0-alpha.78) (2025-09-11)
 
 
