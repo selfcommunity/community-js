@@ -76,6 +76,10 @@ const messages = defineMessages({
   visibleToGroup: {
     id: 'ui.feedObject.visibleToGroup',
     defaultMessage: 'ui.feedObject.visibleToGroup'
+  },
+  visibleToRecipients: {
+    id: 'ui.feedObject.visibleToRecipients',
+    defaultMessage: 'ui.feedObject.visibleToRecipients'
   }
 });
 
@@ -798,6 +802,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
    * SNIPPET, PREVIEW, DETAIL, SEARCH, SHARE
    */
   let objElement: JSX.Element;
+  console.log(obj);
   if (
     (!obj && error) ||
     (obj?.deleted && !scUserContext.user && !(UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user)))
@@ -928,11 +933,19 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                     ) : (
                       <>
                         <Bullet />
-                        <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
-                          <Icon color="disabled" fontSize="small">
-                            public
-                          </Icon>
-                        </Tooltip>
+                        {obj.recipients?.length > 0 ? (
+                          <Tooltip title={`${intl.formatMessage(messages.visibleToRecipients)}`}>
+                            <Icon color="disabled" fontSize="small">
+                              private
+                            </Icon>
+                          </Tooltip>
+                        ) : (
+                          <Tooltip title={`${intl.formatMessage(messages.visibleToAll)}`}>
+                            <Icon color="disabled" fontSize="small">
+                              public
+                            </Icon>
+                          </Tooltip>
+                        )}
                       </>
                     )}
                   </Box>

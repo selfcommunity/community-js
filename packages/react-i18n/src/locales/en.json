@@ -684,6 +684,7 @@
   "ui.feedObject.unfollow": "Don't save anymore",
   "ui.feedObject.visibleToAll": "Visible to all",
   "ui.feedObject.visibleToGroup": "Visible to {group} group",
+  "ui.feedObject.visibleToRecipients": "Visible only to recipients",
   "ui.feedObject.notificationsEnabled": "Notifications for this contribution have been enabled",
   "ui.feedObject.notificationsDisabled": "Notifications for this contribution have been disabled",
   "ui.feedObject.flagSent": "Report sent",
