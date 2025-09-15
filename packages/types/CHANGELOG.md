@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.3...@selfcommunity/types@0.8.0-alpha.4) (2025-09-15)
+
+
+### Bug Fixes
+
+* replaced seen_by_id with seen. ([1743121](https://github.com/selfcommunity/community-js/commit/1743121f9c14123ffee6c62d2bf28c81d3d1de0f))
+
+
+
+
+
 # [0.8.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.2...@selfcommunity/types@0.8.0-alpha.3) (2025-09-15)
 
 

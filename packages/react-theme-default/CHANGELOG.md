@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.12...@selfcommunity/react-theme-default@0.5.0-alpha.13) (2025-09-15)
+
+
+### Bug Fixes
+
+* moved and refactored signed label ([c92d9fe](https://github.com/selfcommunity/community-js/commit/c92d9fef0b05de6620fdd114de91c289c2a7a54a))
+
+
+
+
+
 # [0.5.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.11...@selfcommunity/react-theme-default@0.5.0-alpha.12) (2025-09-15)
 
 

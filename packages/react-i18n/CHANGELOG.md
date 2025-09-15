@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.17...@selfcommunity/react-i18n@0.8.0-alpha.18) (2025-09-15)
+
+
+### Performance Improvements
+
+* fixed feedObj visibility icon when recipients are tagged ([fafcbf2](https://github.com/selfcommunity/community-js/commit/fafcbf2915eb0610bb4d5e847c77c658de89d796))
+
+
+
+
+
 # [0.8.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.16...@selfcommunity/react-i18n@0.8.0-alpha.17) (2025-09-15)
 
 

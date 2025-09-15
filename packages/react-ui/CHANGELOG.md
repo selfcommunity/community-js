@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.82](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.81...@selfcommunity/react-ui@0.11.0-alpha.82) (2025-09-15)
+
+
+### Bug Fixes
+
+* moved and refactored signed label ([c92d9fe](https://github.com/selfcommunity/community-js/commit/c92d9fef0b05de6620fdd114de91c289c2a7a54a))
+* replaced seen_by_id with seen. ([1743121](https://github.com/selfcommunity/community-js/commit/1743121f9c14123ffee6c62d2bf28c81d3d1de0f))
+
+
+### Performance Improvements
+
+* fixed feedObj visibility icon when recipients are tagged ([fafcbf2](https://github.com/selfcommunity/community-js/commit/fafcbf2915eb0610bb4d5e847c77c658de89d796))
+
+
+
+
+
 # [0.11.0-alpha.81](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.80...@selfcommunity/react-ui@0.11.0-alpha.81) (2025-09-15)
 
 
