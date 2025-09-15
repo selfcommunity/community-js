@@ -109,7 +109,7 @@ export const Main: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -131,7 +131,7 @@ export const ScheduledFeed: StoryObj<FeedProps> = {
     },
     widgets: [],
     ItemComponent: FeedObject,
-    itemPropsGenerator: (scUser, item) => ({
+    itemPropsGenerator: (_scUser, item) => ({
       feedObject: item,
       feedObjectType: item.type
     }),
@@ -154,7 +154,7 @@ export const MainCache: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -178,7 +178,7 @@ export const Explore: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -202,7 +202,7 @@ export const ExploreContainerFixed: StoryObj<typeof Feed> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -226,7 +226,7 @@ export const ExploreCache: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -250,7 +250,7 @@ export const ExploreOffset2: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -274,7 +274,7 @@ export const ExploreOffset2Cached: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -299,7 +299,7 @@ export const ExploreOffset5: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -323,7 +323,7 @@ export const ExploreOffset5Cached: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -348,7 +348,7 @@ export const ExploreOffset20: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -372,7 +372,7 @@ export const ExploreOffset20Cached: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -397,7 +397,7 @@ export const ExplorePrefetchedData: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -422,7 +422,7 @@ export const ExplorePrefetchedDataCached: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -447,7 +447,7 @@ export const ExploreWithoutVirtualization: StoryObj<FeedProps> = {
       feedObject: item[item.type],
       feedObjectType: item.type,
       feedObjectActivities: item.activities ? item.activities : null,
-      markRead: scUser ? !item.seen_by_id.includes(scUser.id) : false
+      markRead: scUser ? !item.seen : false
     }),
     itemIdGenerator: (item) => item[item.type].id,
     ItemSkeleton: FeedObjectSkeleton,
@@ -487,7 +487,7 @@ export const Notification: StoryObj<FeedProps> = {
       }
     ],
     ItemComponent: SCNotification,
-    itemPropsGenerator: (scUser, item) => ({
+    itemPropsGenerator: (_scUser, item) => ({
       notificationObject: item
     }),
     itemIdGenerator: (item) => item.sid,
@@ -523,7 +523,7 @@ export const NotificationCached: StoryObj<FeedProps> = {
       }
     ],
     ItemComponent: SCNotification,
-    itemPropsGenerator: (scUser, item) => ({
+    itemPropsGenerator: (_scUser, item) => ({
       notificationObject: item
     }),
     itemIdGenerator: (item) => item.sid,

@@ -1,6 +1,5 @@
-import { SCPaginatedResponse } from '@selfcommunity/api-services';
-import { SCContributionType } from '@selfcommunity/types';
-
+import {SCPaginatedResponse} from '@selfcommunity/api-services';
+import {SCContributionType} from '@selfcommunity/types';
 
 // @ts-ignore
 const exampleExploreData: SCPaginatedResponse<any> = {
@@ -85,7 +84,7 @@ const exampleExploreData: SCPaginatedResponse<any> = {
         addressing: [],
         poll: null
       },
-      seen_by_id: [40, 7, 1],
+      seen: true,
       has_boost: false
     },
     {
@@ -198,7 +197,7 @@ const exampleExploreData: SCPaginatedResponse<any> = {
         title:
           "Socioterapeuti dicono che l'Italia ha inglobato secondo un'analisi storica con tanto di bibliografia. Senno' ha a che fare con le pellicce, ovviamente. Ritengo che vedere cio' che si semina.."
       },
-      seen_by_id: [345, 299, 7, 54, 1],
+      seen: true,
       has_boost: false
     },
     {
@@ -336,7 +335,7 @@ const exampleExploreData: SCPaginatedResponse<any> = {
         title:
           "Prima, mentre che io facevo le derapate, popo a sfonna' 'a bariera der sono, co'a machina de mi'fratello su 'a prenestina... aho'... a'n certo punto... nun te vado a sbatte co er Siringa???!! Ve dico... 'na grezza da paura!  E allora je strillo \"Vie'"
       },
-      seen_by_id: [370, 371, 111, 54, 7, 9],
+      seen: true,
       has_boost: false
     },
     {
@@ -423,7 +422,7 @@ const exampleExploreData: SCPaginatedResponse<any> = {
         title:
           "Un mattino P'an-shan fece visita a Seng-ts'an e lo preg\u00f2 di mostrargli la strada pi\u00f9 facile per conseguire l'illuminazione. Il maestro indic\u00f2 una consunta statua di platino e disse: \"Se davvero desideri diventare saggio devi riuscire a comprendere la"
       },
-      seen_by_id: [80, 381, 7],
+      seen: true,
       has_boost: false
     },
     {
@@ -518,7 +517,7 @@ const exampleExploreData: SCPaginatedResponse<any> = {
         addressing: [],
         poll: null
       },
-      seen_by_id: [248, 7],
+      seen: true,
       has_boost: false
     }
   ]

@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useRef} from 'react';
+import {useContext, useMemo, useRef} from 'react';
 import {styled} from '@mui/material';
 import {
   CategoriesPopularWidget,
@@ -159,7 +159,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
     const feedUnit = {
       type: feedObject.type,
       [feedObject.type]: feedObject,
-      seen_by_id: [],
+      seen: false,
       has_boost: false
     };
     !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
@@ -173,7 +173,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
           const feedUnit = {
             type: feedObject.type,
             [feedObject.type]: feedObject,
-            seen_by_id: [],
+            seen: false,
             has_boost: false
           };
           feedRef.current.addFeedData(feedUnit, true);
@@ -203,7 +203,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null,
-        markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
+        markRead: scUser ? !item.seen : null
       })}
       itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}
