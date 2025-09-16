@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.1...@selfcommunity/api-services@0.7.0-alpha.2) (2025-09-16)
+
+
+### Features
+
+* added new api to dowload csv. Linear: https://linear.app/quentral/issue/QUE-1985/frontend-nel-caso-in-cui-lutente-loggato-sia-lautore-di-un-contenuto-e ([28529af](https://github.com/selfcommunity/community-js/commit/28529af9e8a159990a052b2e5f58b2519fefaf0c))
+
+
+
+
+
 # [0.7.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.0...@selfcommunity/api-services@0.7.0-alpha.1) (2025-09-04)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.19...@selfcommunity/react-i18n@0.8.0-alpha.20) (2025-09-16)
+
+
+### Features
+
+* added new api to dowload csv. Linear: https://linear.app/quentral/issue/QUE-1985/frontend-nel-caso-in-cui-lutente-loggato-sia-lautore-di-un-contenuto-e ([28529af](https://github.com/selfcommunity/community-js/commit/28529af9e8a159990a052b2e5f58b2519fefaf0c))
+
+
+
+
+
 # [0.8.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.18...@selfcommunity/react-i18n@0.8.0-alpha.19) (2025-09-16)
 
 

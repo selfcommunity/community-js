@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.86](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.85...@selfcommunity/react-ui@0.11.0-alpha.86) (2025-09-16)
+
+
+### Bug Fixes
+
+* fixed user tagging. Added search to fetch users hook ([9ead1e5](https://github.com/selfcommunity/community-js/commit/9ead1e5122af7c7a4f0b9e8373fa7bebbba1a015))
+
+
+### Features
+
+* added new api to dowload csv. Linear: https://linear.app/quentral/issue/QUE-1985/frontend-nel-caso-in-cui-lutente-loggato-sia-lautore-di-un-contenuto-e ([28529af](https://github.com/selfcommunity/community-js/commit/28529af9e8a159990a052b2e5f58b2519fefaf0c))
+
+
+
+
+
 # [0.11.0-alpha.85](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.84...@selfcommunity/react-ui@0.11.0-alpha.85) (2025-09-16)
 
 

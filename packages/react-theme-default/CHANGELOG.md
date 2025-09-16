@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.13...@selfcommunity/react-theme-default@0.5.0-alpha.14) (2025-09-16)
+
+
+### Bug Fixes
+
+* fixed user tagging. Added search to fetch users hook ([9ead1e5](https://github.com/selfcommunity/community-js/commit/9ead1e5122af7c7a4f0b9e8373fa7bebbba1a015))
+
+
+
+
+
 # [0.5.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.12...@selfcommunity/react-theme-default@0.5.0-alpha.13) (2025-09-15)
 
 

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.9...@selfcommunity/react-core@0.7.0-alpha.10) (2025-09-16)
+
+
+### Bug Fixes
+
+* fixed user tagging. Added search to fetch users hook ([9ead1e5](https://github.com/selfcommunity/community-js/commit/9ead1e5122af7c7a4f0b9e8373fa7bebbba1a015))
+
+
+
+
+
 # [0.7.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.8...@selfcommunity/react-core@0.7.0-alpha.9) (2025-09-16)
 
 
