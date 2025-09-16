@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.87](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.86...@selfcommunity/react-ui@0.11.0-alpha.87) (2025-09-16)
+
+
+### Bug Fixes
+
+* show followers on category obj if feature is enabled. ([3e8422e](https://github.com/selfcommunity/community-js/commit/3e8422e9d1d4352957663e4312f39259af739cd4))
+
+
+
+
+
 # [0.11.0-alpha.86](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.85...@selfcommunity/react-ui@0.11.0-alpha.86) (2025-09-16)
 
 
