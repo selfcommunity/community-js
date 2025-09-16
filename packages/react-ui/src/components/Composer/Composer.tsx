@@ -319,6 +319,15 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       preferences[SCPreferences.CONFIGURATIONS_POST_CATEGORY_REQUIRED_ENABLED].value,
     [preferences]
   );
+  const usersTaggingEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_POST_USER_ADDRESSING_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_POST_USER_ADDRESSING_ENABLED].value,
+    [preferences, features]
+  );
 
   const destructureFeedObject = (_feedObject) => {
     if (_feedObject.type === SCContributionType.POST) {
@@ -491,6 +500,18 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     dispatch({type: 'type', value});
   }, []);
 
+  const getAddressingError = (content) => {
+    const isMissing = addressingRequiredEnabled && !content.addressing?.length && !content.recipients?.length;
+
+    if (!isMissing) return null;
+
+    return usersTaggingEnabled ? (
+      <FormattedMessage id="ui.composer.addressingRecipients.error.missing" defaultMessage="ui.composer.addressingRecipients.error.missing" />
+    ) : (
+      <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
+    );
+  };
+
   const handleChangePoll = useCallback((content: ComposerContentType): void => {
     dispatch({
       type: 'multiple',
@@ -500,11 +521,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           content.poll.title.length > COMPOSER_TITLE_MAX_LENGTH
             ? {titleError: <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />}
             : null,
-        addressingError:
-          addressingRequiredEnabled &&
-          (!content.addressing || content.addressing.length === 0 || !content.recipients || content.recipients.length === 0) ? (
-            <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
-          ) : null
+        addressingError: getAddressingError(content)
       }
     });
   }, []);
@@ -518,11 +535,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           content.title.length > COMPOSER_TITLE_MAX_LENGTH ? (
             <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />
           ) : null,
-        addressingError:
-          addressingRequiredEnabled &&
-          (!content.addressing || content.addressing.length === 0 || !content.recipients || content.recipients.length === 0) ? (
-            <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
-          ) : null,
+        addressingError: getAddressingError(content),
         categoriesError:
           categoryRequiredEnabled && content.categories.length === 0 ? (
             <FormattedMessage id="ui.composer.categories.error.missing" defaultMessage="ui.composer.categories.error.missing" />
@@ -536,11 +549,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       type: 'multiple',
       value: {
         ...content,
-        addressingError:
-          addressingRequiredEnabled &&
-          (!content.addressing || content.addressing.length === 0 || !content.recipients || content.recipients.length === 0) ? (
-            <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
-          ) : null,
+        addressingError: getAddressingError(content),
         categoriesError:
           categoryRequiredEnabled && content.categories.length === 0 ? (
             <FormattedMessage id="ui.composer.categories.error.missing" defaultMessage="ui.composer.categories.error.missing" />
@@ -583,7 +592,10 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         dispatch({type: 'group', value});
       } else if (event || (value && Object.prototype.hasOwnProperty.call(value, 'recurring'))) {
         dispatch({type: 'event', value});
-      } else if (recipients?.length !== 0 || (value && Array.isArray(value) && value.some((obj) => !('color' in obj)))) {
+      } else if (
+        recipients?.length > 0 ||
+        (Array.isArray(value) && value.some((item) => typeof item === 'object' && item !== null && !('color' in item)))
+      ) {
         dispatch({
           type: 'multiple',
           value: {
@@ -623,7 +635,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             ? group
             : event || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'recurring'))
             ? event
-            : recipients?.length && !recipients.some((r) => 'color' in r)
+            : recipients?.length !== 0 || (recipients?.length !== 0 && !recipients.some((r) => 'color' in r))
             ? recipients
             : addressing
       }
@@ -709,11 +721,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       type: 'multiple',
       value: {
         ...content,
-        addressingError:
-          addressingRequiredEnabled &&
-          (!content.addressing || content.addressing.length === 0 || !content.recipients || content.recipients.length === 0) ? (
-            <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
-          ) : null,
+        addressingError: getAddressingError(content),
         categoriesError:
           categoryRequiredEnabled && content.categories.length === 0 ? (
             <FormattedMessage id="ui.composer.categories.error.missing" defaultMessage="ui.composer.categories.error.missing" />
@@ -729,6 +737,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           handleAddCategoryLayer();
           break;
         case 'addressing':
+          handleAddAudienceLayer();
+          break;
+        case 'recipients':
           handleAddAudienceLayer();
           break;
         case 'location':

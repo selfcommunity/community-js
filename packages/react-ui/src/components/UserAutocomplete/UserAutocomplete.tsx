@@ -101,32 +101,49 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
   } = props;
 
   // State
-  const [open, setOpen] = useState<boolean>(false);
-  // const [value, setValue] = useState<string | SCUserAutocompleteType | (string | SCUserAutocompleteType)[]>(
-  //   typeof defaultValue === 'string' ? null : defaultValue
-  // );
-  const [value, setValue] = useState<any>(Array.isArray(defaultValue) ? defaultValue : defaultValue ? [defaultValue] : []);
-  const [textAreaValue, setTextAreaValue] = useState<string>('');
+  const [open, setOpen] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [usersMap, setUsersMap] = useState<Record<string, SCUserAutocompleteType>>({});
+  const [value, setValue] = useState<SCUserAutocompleteType[]>([]);
+  const [textAreaValue, setTextAreaValue] = useState('');
 
   // Fetch users
   const {users, isLoading} = useSCFetchUsers();
 
+  // Build map for quick lookup by username
   useEffect(() => {
-    if (value === null) {
-      return;
-    }
+    const map: Record<string, SCUserAutocompleteType> = {};
+    users?.forEach((u) => {
+      map[u.username] = u;
+    });
+    setUsersMap(map);
+  }, [users]);
+
+  // Initialize value from defaultValue (string or object)
+  useEffect(() => {
+    if (!defaultValue) return;
+
+    const initial: any = (Array.isArray(defaultValue) ? defaultValue : [defaultValue]).map((v) => {
+      if (typeof v === 'string') {
+        // Use fetched user if available, otherwise fallback object
+        return usersMap[v] || {id: `fallback-${v}`, username: v, avatar: ''};
+      }
+      return v;
+    });
+
+    setValue(initial);
+    setTextAreaValue(initial.map((u) => u.username).join('\n'));
+  }, [defaultValue, usersMap]);
+
+  // Trigger onChange and sync textarea
+  useEffect(() => {
     onChange?.(value);
     setTextAreaValue(value.map((u) => u.username).join('\n'));
   }, [value]);
 
   // Handlers
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const handleChange = (_event: SyntheticEvent, newValue: SCUserAutocompleteType[]) => {
     setValue(newValue);
@@ -138,7 +155,7 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
       .map((s) => s.trim())
       .filter(Boolean);
 
-    const matched = users.filter((u) => names.includes(u.username));
+    const matched: any = names.map((n) => usersMap[n] || {id: `fallback-${n}`, username: n, avatar: ''});
     setValue(matched);
     setTextAreaValue(e.target.value);
   };
@@ -152,8 +169,10 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
         onOpen={handleOpen}
         onClose={handleClose}
         options={users || []}
-        getOptionLabel={(option: SCUserAutocompleteType) => option.username || ''}
+        getOptionLabel={(option: any) => option.username || ''}
         value={value}
+        inputValue={inputValue}
+        onInputChange={(_e, newInput) => setInputValue(newInput)}
         selectOnFocus
         clearOnBlur
         blurOnSelect
@@ -162,25 +181,22 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
         disabled={disabled || isLoading}
         noOptionsText={<FormattedMessage id="ui.userAutocomplete.empty" defaultMessage="ui.userAutocomplete.empty" />}
         onChange={handleChange}
-        isOptionEqualToValue={(option: SCUserAutocompleteType, val: SCUserAutocompleteType) => val.id === option.id}
-        renderTags={(value, getTagProps) =>
+        isOptionEqualToValue={(option: any, val: any) => option.id === val.id}
+        renderTags={(value: any, getTagProps) =>
           value.map((option: any, index) => (
             <Chip key={option.id} avatar={<Avatar src={option.avatar} />} label={option.username} {...getTagProps({index})} />
           ))
         }
-        renderOption={(props, option: SCUserAutocompleteType, {inputValue}) => {
-          const matches = match(option.username, inputValue);
-          const parts = parse(option.username, matches);
+        renderOption={(props, option: any, {inputValue}) => {
+          const parts = parse(option.username, match(option.username, inputValue));
           return (
             <Box component="li" {...props}>
-              <Avatar alt={option.username} src={option.avatar} sx={{marginRight: 1}} />
-              <React.Fragment>
-                {parts.map((part, index) => (
-                  <Typography key={index} sx={{fontWeight: part.highlight ? 700 : 400}}>
-                    {part.text}
-                  </Typography>
-                ))}
-              </React.Fragment>
+              <Avatar alt={option.username} src={option.avatar} sx={{mr: 1}} />
+              {parts.map((part, index) => (
+                <Typography key={index} sx={{fontWeight: part.highlight ? 700 : 400}}>
+                  {part.text}
+                </Typography>
+              ))}
             </Box>
           );
         }}

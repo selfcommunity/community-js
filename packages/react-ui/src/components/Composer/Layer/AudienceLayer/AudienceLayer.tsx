@@ -129,7 +129,12 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
       ? AudienceTypes.AUDIENCE_EVENT
       : Object.prototype.hasOwnProperty.call(defaultValue, 'managed_by')
       ? AudienceTypes.AUDIENCE_GROUP
-      : Array.isArray(defaultValue) && defaultValue.length && defaultValue[0]?.username
+      : Array.isArray(defaultValue) &&
+        defaultValue.length > 0 &&
+        // case: array of user objects
+        (defaultValue[0]?.username !== undefined ||
+          // case: array of strings
+          typeof defaultValue[0] === 'string')
       ? AudienceTypes.AUDIENCE_USERS
       : AudienceTypes.AUDIENCE_TAG
   );
@@ -201,8 +206,10 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
           <Tab
             disabled={
               value &&
-              ((Array.isArray(value) && value.some((v) => v?.username)) ||
-                (!Array.isArray(value) && Object.prototype.hasOwnProperty.call(value, 'managed_by')))
+              ((Array.isArray(value) &&
+                (value.some((v) => v?.username) || // user tagging
+                  value.some((v) => typeof v === 'string'))) ||
+                (!Array.isArray(value) && Object.prototype.hasOwnProperty.call(value, 'managed_by'))) // group object
             }
             value={AudienceTypes.AUDIENCE_TAG}
             icon={<Icon>label</Icon>}
@@ -212,9 +219,14 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
             <Tab
               disabled={
                 value &&
-                ((Array.isArray(value) && value.length && !value.some((v) => v?.username)) ||
-                  (!Array.isArray(value) && Object.keys(value).length && Object.prototype.hasOwnProperty.call(value, 'managed_by')) ||
-                  (!Array.isArray(value) && Object.keys(value).length && Object.prototype.hasOwnProperty.call(value, 'recurring')))
+                ((Array.isArray(value) &&
+                  value.length > 0 &&
+                  // disable only if NOT user objects and NOT strings
+                  !value.some((v) => v?.username) &&
+                  !value.every((v) => typeof v === 'string')) ||
+                  (!Array.isArray(value) &&
+                    Object.keys(value).length > 0 &&
+                    (Object.prototype.hasOwnProperty.call(value, 'managed_by') || Object.prototype.hasOwnProperty.call(value, 'recurring'))))
               }
               value={AudienceTypes.AUDIENCE_USERS}
               icon={<Icon>people_alt</Icon>}

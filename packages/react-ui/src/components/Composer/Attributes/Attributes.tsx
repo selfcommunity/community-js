@@ -83,15 +83,21 @@ export default (props: AttributesProps): JSX.Element => {
     onClick && onClick('location');
   }, [onClick]);
   const handleDeleteRecipient = useCallback(
-    (id: number) => () => {
-      onChange && onChange({...value, recipients: value.recipients.filter((r: SCUserAutocompleteType) => r.id !== id)});
+    (identifier: number | string) => () => {
+      if (!value?.recipients) return;
+      onChange &&
+        onChange({
+          ...value,
+          recipients: value.recipients.filter((r: SCUserAutocompleteType | string) =>
+            typeof r === 'object' ? r.id !== identifier : r !== identifier
+          )
+        });
     },
     [value, onChange]
   );
   const handleClickRecipient = useCallback(() => {
     onClick && onClick('recipients');
   }, [onClick]);
-
 
   return (
     <Root className={classNames(classes.root, className)}>
@@ -124,15 +130,15 @@ export default (props: AttributesProps): JSX.Element => {
           <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<Icon>label</Icon>} onClick={handleClickTag} />
         ))}
       <>
-        {value?.recipients.length > 0 && (
+        {value?.recipients?.length > 0 && (
           <>
             {value.recipients.slice(0, 3).map((r: SCUserAutocompleteType) => (
               <Chip
-                key={r.id}
-                label={r.username}
+                key={typeof r === 'object' ? r.id : r}
+                label={typeof r === 'object' ? r.username : r}
                 icon={<Icon>people_alt</Icon>}
                 onClick={handleClickRecipient}
-                onDelete={handleDeleteRecipient(r.id)}
+                onDelete={handleDeleteRecipient(typeof r === 'object' ? r.id : r)}
               />
             ))}
             {value.recipients.length > 3 && <Chip label={`+${value.recipients.length - 3}`} />}
