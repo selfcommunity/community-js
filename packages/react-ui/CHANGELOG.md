@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.85](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.84...@selfcommunity/react-ui@0.11.0-alpha.85) (2025-09-16)
+
+
+### Bug Fixes
+
+* removed unused ref to fix console error ([a63e570](https://github.com/selfcommunity/community-js/commit/a63e570fade750a1ff0cebddef97fd5bef5fa5bc))
+
+
+
+
+
 # [0.11.0-alpha.84](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.83...@selfcommunity/react-ui@0.11.0-alpha.84) (2025-09-16)
 
 
