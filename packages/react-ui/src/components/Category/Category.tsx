@@ -151,7 +151,6 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   // HOOKS
   const intl = useIntl();
   const categoryFollowEnabled = useSCPreferenceEnabled(SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED);
-  console.log(showFollowers, categoryFollowEnabled);
 
   if (!scCategory) {
     return <CategorySkeleton elevation={elevation} {...(variant && {variant})} />;
