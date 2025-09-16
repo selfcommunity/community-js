@@ -592,7 +592,10 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         dispatch({type: 'group', value});
       } else if (event || (value && Object.prototype.hasOwnProperty.call(value, 'recurring'))) {
         dispatch({type: 'event', value});
-      } else if (recipients?.length !== 0 || (value && Array.isArray(value) && value.some((obj) => !('color' in obj)))) {
+      } else if (
+        recipients?.length > 0 ||
+        (Array.isArray(value) && value.some((item) => typeof item === 'object' && item !== null && !('color' in item)))
+      ) {
         dispatch({
           type: 'multiple',
           value: {
@@ -632,7 +635,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             ? group
             : event || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'recurring'))
             ? event
-            : recipients?.length && !recipients.some((r) => 'color' in r)
+            : recipients?.length !== 0 || (recipients?.length !== 0 && !recipients.some((r) => 'color' in r))
             ? recipients
             : addressing
       }
@@ -734,6 +737,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           handleAddCategoryLayer();
           break;
         case 'addressing':
+          handleAddAudienceLayer();
+          break;
+        case 'recipients':
           handleAddAudienceLayer();
           break;
         case 'location':
