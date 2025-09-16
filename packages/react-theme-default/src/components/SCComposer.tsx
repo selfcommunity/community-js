@@ -36,9 +36,9 @@ const Component = {
           margin: '45px 0',
           padding: theme.spacing(1, 2),
           height: `calc(100% - 45px - 45px - ${theme.spacing(2)})`,
-          [theme.breakpoints.up('md')]: {
-            overflowY: 'hidden'
-          },
+          // [theme.breakpoints.up('md')]: {
+          //   overflowY: 'hidden'
+          // },
           '& .SCEditor-root': {
             padding: theme.spacing(1, 0),
             marginBottom: theme.spacing(3),

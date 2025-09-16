@@ -141,7 +141,7 @@ export default (props: AttributesProps): JSX.Element => {
                 onDelete={handleDeleteRecipient(typeof r === 'object' ? r.id : r)}
               />
             ))}
-            {value.recipients.length > 3 && <Chip label={`+${value.recipients.length - 3}`} />}
+            {value.recipients.length > 3 && <Chip label={`+${value.recipients.length - 3}`} onClick={handleClickRecipient} />}
           </>
         )}
       </>
