@@ -151,6 +151,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   // HOOKS
   const intl = useIntl();
   const categoryFollowEnabled = useSCPreferenceEnabled(SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED);
+  console.log(showFollowers, categoryFollowEnabled);
 
   if (!scCategory) {
     return <CategorySkeleton elevation={elevation} {...(variant && {variant})} />;
@@ -188,7 +189,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
           <>
             {showTooltip ? (
               <Typography className={classes.secondary} component="p" variant="body2">
-                {showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
+                {showFollowers && categoryFollowEnabled ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
               </Typography>
             ) : (
               <>
