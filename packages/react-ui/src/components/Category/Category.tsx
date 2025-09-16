@@ -1,6 +1,14 @@
 import React, {useMemo} from 'react';
 import {Avatar, Tooltip, Typography, styled} from '@mui/material';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCPreferences,
+  SCRoutes,
+  SCRoutingContextType,
+  useSCFetchCategory,
+  useSCPreferenceEnabled,
+  useSCRouting
+} from '@selfcommunity/react-core';
 import {SCCategoryAutoFollowType, SCCategoryType} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils';
 import CategorySkeleton from './Skeleton';
@@ -131,7 +139,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // STATE
-  const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category, ...(cacheStrategy && {cacheStrategy})});
+  const {scCategory} = useSCFetchCategory({id: categoryId, category, ...(cacheStrategy && {cacheStrategy})});
 
   // MEMO
   const _ButtonBaseProps = useMemo(
@@ -142,6 +150,7 @@ export default function Category(inProps: CategoryProps): JSX.Element {
 
   // HOOKS
   const intl = useIntl();
+  const categoryFollowEnabled = useSCPreferenceEnabled(SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED);
 
   if (!scCategory) {
     return <CategorySkeleton elevation={elevation} {...(variant && {variant})} />;
@@ -182,7 +191,11 @@ export default function Category(inProps: CategoryProps): JSX.Element {
                 {showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
               </Typography>
             ) : (
-              <>{showFollowers ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}</>
+              <>
+                {showFollowers && categoryFollowEnabled
+                  ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}`
+                  : scCategory.slogan}
+              </>
             )}
           </>
         }
