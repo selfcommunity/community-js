@@ -103,7 +103,7 @@ const Root = styled(Dialog, {
 const LayerTransitionRoot = styled(Slide, {
   name: PREFIX,
   slot: 'LayerTransitionRoot'
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scroll'> {
   /**
@@ -593,8 +593,9 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       } else if (event || (value && Object.prototype.hasOwnProperty.call(value, 'recurring'))) {
         dispatch({type: 'event', value});
       } else if (
-        recipients?.length > 0 ||
-        (Array.isArray(value) && value.some((item) => typeof item === 'object' && item !== null && !('color' in item)))
+        (Array.isArray(value) &&
+          value.some((item) => (typeof item === 'object' && item !== null && !('color' in item)) || typeof item === 'string')) ||
+        (Array.isArray(recipients) && recipients.length > 0)
       ) {
         dispatch({
           type: 'multiple',
@@ -791,7 +792,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         data.addressing = addressing.map((t) => t.id);
       }
       if (features.includes(SCFeatureName.TAGGING) && recipients !== null) {
-        data.recipients = recipients.map((r) => r.username);
+        data.recipients = recipients.map((r) => (typeof r === 'string' ? r : r.username));
       }
       if (
         features.includes(SCFeatureName.TAGGING) &&
