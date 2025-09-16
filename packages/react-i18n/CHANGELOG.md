@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.18...@selfcommunity/react-i18n@0.8.0-alpha.19) (2025-09-16)
+
+
+### Performance Improvements
+
+* distinguished addressing error when user tagging is not enabled. ([e1d13d7](https://github.com/selfcommunity/community-js/commit/e1d13d7f7988c87599d7951c2b8203a1de4288eb))
+
+
+
+
+
 # [0.8.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.17...@selfcommunity/react-i18n@0.8.0-alpha.18) (2025-09-15)
 
 

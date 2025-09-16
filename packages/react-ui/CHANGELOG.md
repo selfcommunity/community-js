@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.84](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.83...@selfcommunity/react-ui@0.11.0-alpha.84) (2025-09-16)
+
+
+### Bug Fixes
+
+* fixed attributes ([82e3ffe](https://github.com/selfcommunity/community-js/commit/82e3ffe0d74342d90ecabf7d78219e2647a5dba8))
+* fixed composer ([ab9ff7b](https://github.com/selfcommunity/community-js/commit/ab9ff7ba55031805c712dd1475eb1b522f681b03))
+* fixed user autocomplete ([5f57bc9](https://github.com/selfcommunity/community-js/commit/5f57bc94596748a41e0f493f651017b6ccb01466))
+
+
+### Performance Improvements
+
+* distinguished addressing error when user tagging is not enabled. ([e1d13d7](https://github.com/selfcommunity/community-js/commit/e1d13d7f7988c87599d7951c2b8203a1de4288eb))
+
+
+
+
+
 # [0.11.0-alpha.83](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.82...@selfcommunity/react-ui@0.11.0-alpha.83) (2025-09-15)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

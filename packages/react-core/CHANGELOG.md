@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.8...@selfcommunity/react-core@0.7.0-alpha.9) (2025-09-16)
+
+
+### Bug Fixes
+
+* fixed autocomplete api call ([6095e65](https://github.com/selfcommunity/community-js/commit/6095e65b9c753177419161162825bb2fa7e555da))
+
+
+
+
+
 # [0.7.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.7...@selfcommunity/react-core@0.7.0-alpha.8) (2025-09-15)
 
 **Note:** Version bump only for package @selfcommunity/react-core
