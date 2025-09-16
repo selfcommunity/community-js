@@ -3,12 +3,7 @@ import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCUserAutocompleteType} from '@selfcommunity/types';
 import {Endpoints, http} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
-
-const init = {users: [], isLoading: true};
-
-// --- Cache keys
-const getUsersObjectCacheKey = () => '__sc_usersAct_object__';
-const getUserObjectCacheKey = (id: number) => `__sc_userAct_object__${id}`;
+import {getUserObjectCacheKey, getUsersObjectCacheKey} from '../constants/Cache';
 
 // Hydrate cache
 const hydrate = (ids: number[]) => {
@@ -36,36 +31,32 @@ const hydrate = (ids: number[]) => {
  :::
  * @param props
  */
-const useSCFetchUsers = (props?: {cacheStrategy?: CacheStrategies}) => {
-  const {cacheStrategy = CacheStrategies.CACHE_FIRST} = props || {};
+const useSCFetchUsers = (props?: {cacheStrategy?: CacheStrategies; search?: string}) => {
+  const {cacheStrategy = CacheStrategies.CACHE_FIRST, search = ''} = props || {};
+  const __usersCacheKey = getUsersObjectCacheKey(search);
 
-  // Cache
-  const __usersCacheKey = getUsersObjectCacheKey();
+  const cachedUsers = cacheStrategy !== CacheStrategies.NETWORK_ONLY ? hydrate(LRUCache.get(__usersCacheKey, null)) : null;
+  const [data, setData] = useState<{users: SCUserAutocompleteType[]; isLoading: boolean}>(
+    cachedUsers !== null ? {users: cachedUsers, isLoading: false} : {users: [], isLoading: false}
+  );
 
-  // State
-  const users = cacheStrategy !== CacheStrategies.NETWORK_ONLY ? hydrate(LRUCache.get(__usersCacheKey, null)) : null;
-  const [data, setData] = useState<{users: SCUserAutocompleteType[]; isLoading: boolean}>(users !== null ? {users, isLoading: false} : init);
-
-  /**
-   * Fetch all users
-   */
-  const fetchUsers = async (next: string = Endpoints.UserAutocomplete.url()): Promise<[]> => {
+  const fetchUsers = async (next: string = Endpoints.UserAutocomplete.url(), searchParam?: string): Promise<SCUserAutocompleteType[]> => {
     const response = await http.request({
       url: next,
       method: Endpoints.UserAutocomplete.method,
+      params: searchParam ? {search: searchParam} : undefined,
     });
     const data: any = response.data;
     if (data.next) {
-      return data.results.concat(await fetchUsers(data.next));
+      return data.results.concat(await fetchUsers(data.next, searchParam));
     }
     return data.results;
   };
 
   useEffect(() => {
-    if (cacheStrategy === CacheStrategies.CACHE_FIRST && users) {
-      return;
-    }
-    fetchUsers()
+    if (!search) return;
+    if (cacheStrategy === CacheStrategies.CACHE_FIRST && cachedUsers) return;
+    fetchUsers(undefined, search)
       .then((data) => {
         setData({users: data, isLoading: false});
         LRUCache.set(
@@ -80,8 +71,9 @@ const useSCFetchUsers = (props?: {cacheStrategy?: CacheStrategies}) => {
       .catch((error) => {
         console.error(error);
         Logger.error(SCOPE_SC_CORE, 'Unable to retrieve users');
+        setData((prev) => ({...prev, isLoading: false}));
       });
-  }, []);
+  }, [search]);
 
   return data;
 };

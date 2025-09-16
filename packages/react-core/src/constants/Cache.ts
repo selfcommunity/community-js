@@ -115,6 +115,15 @@ export const getPaymentProductObjectCacheKey = (id) => `${PAYMENT_PRODUCT_OBJECT
 export const PAYMENT_ORDER_OBJECT_CACHE_PREFIX_KEY = '_pord_';
 export const getPaymentOrderObjectCacheKey = (id) => `${PAYMENT_ORDER_OBJECT_CACHE_PREFIX_KEY}${id}`;
 
+/** USER OBJECT **/
+export const USER_OBJECT_CACHE_PREFIX_KEY = '_usr_';
+export const getUserObjectCacheKey = (id: number) => `${USER_OBJECT_CACHE_PREFIX_KEY}${id}`;
+
+/** USERS OBJECT **/
+export const USERS_OBJECT_CACHE_PREFIX_KEY = '_usrs_';
+export const getUsersObjectCacheKey = (search?: string) =>
+  search ? `${USERS_OBJECT_CACHE_PREFIX_KEY}${encodeURIComponent(search)}` : `${USERS_OBJECT_CACHE_PREFIX_KEY}`;
+
 /** TOOLS */
 export const CATEGORIES_LIST_TOOLS_STATE_CACHE_PREFIX_KEY = '_cListWidget_';
 export const CATEGORIES_FOLLOWED_TOOLS_STATE_CACHE_PREFIX_KEY = '_cFolWidget_';
