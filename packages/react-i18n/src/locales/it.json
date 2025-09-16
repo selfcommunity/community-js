@@ -288,6 +288,7 @@
   "ui.contributionActionMenu.moderatedMotivation": "Motivazione:",
   "ui.contributionActionMenu.offtopic": "Fuori tema",
   "ui.contributionActionMenu.permanentLink": "Link permanente",
+  "ui.contributionActionMenu.downloadCSV": "Scarica csv visualizzazioni e click",
   "ui.contributionActionMenu.poorContent": "Scadente",
   "ui.contributionActionMenu.restoreContribution": "Ripristina",
   "ui.contributionActionMenu.restoreFromDeleted": "Ripristina da cancellato",
