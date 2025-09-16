@@ -61,6 +61,7 @@ import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunit
 import {
   DELETE_CONTRIBUTION,
   DELETE_CONTRIBUTION_SECTION,
+  DOWNLOAD_CSV,
   EDIT_CONTRIBUTION,
   FLAG_CONTRIBUTION_SECTION,
   GENERAL_SECTION,
@@ -755,6 +756,35 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       setCurrentAction(MODERATE_CONTRIBUTION_DELETED);
       setOpenConfirmDialog(true);
       handleClose();
+    } else if (action === DOWNLOAD_CSV) {
+      http
+        .request({
+          url: `${Endpoints.GetDownloadCSV.url({type: contributionObj.type, id: contributionObj.id})}`,
+          method: Endpoints.GetDownloadCSV.method
+        })
+        .then((response: HttpResponse<string>) => {
+          const blob = new Blob([response.data], {type: 'text/csv'});
+          const url = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          const disposition = response.headers['content-disposition'];
+          let filename = 'report.csv';
+          if (disposition && disposition.includes('filename=')) {
+            filename = disposition.split('filename=')[1].replace(/"/g, '');
+          }
+          link.download = filename;
+          link.click();
+          // Cleanup
+          window.URL.revokeObjectURL(url);
+        })
+        .catch((error) => {
+          Logger.error(SCOPE_SC_UI, error);
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error',
+            autoHideDuration: 3000
+          });
+        });
+      handleClose();
     }
   }
 
@@ -1117,8 +1147,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   function canSuspendNotificationContribution(): boolean {
     return (
       scUserContext.user &&
-      scUserContext.user.id !== contributionObj.author.id &&
       contributionObj &&
+      scUserContext.user.id !== contributionObj.author.id &&
       contributionObj.type !== SCContributionType.COMMENT
     );
   }
@@ -1129,11 +1159,22 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   function canSuspendNotificationEvent(): boolean {
     return (
       scUserContext.user &&
-      scUserContext.user.id !== contributionObj.author.id &&
       contributionObj &&
+      scUserContext.user.id !== contributionObj.author.id &&
       contributionObj.type !== SCContributionType.COMMENT &&
       Boolean((contributionObj as SCFeedObjectType).event) &&
       Boolean((contributionObj as SCFeedObjectType).event.active)
+    );
+  }
+
+  /**
+   * Can publisher user or admin user download views and clicks csv
+   */
+  function canDownloadCSV(): boolean {
+    return (
+      scUserContext.user &&
+      contributionObj &&
+      ((scUserContext.user.id === contributionObj.author.id && UserUtils.isPublisher(scUserContext.user)) || UserUtils.isAdmin(scUserContext.user))
     );
   }
 
@@ -1268,6 +1309,18 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                 )
               }
               onClick={() => handleAction(SUSPEND_NOTIFICATION_EVENT)}
+              classes={{root: classes.itemText}}
+            />
+          </MenuItem>
+        )}
+        {canDownloadCSV() && (
+          <MenuItem className={classes.subItem}>
+            <ListItemIcon>
+              <Icon>download</Icon>
+            </ListItemIcon>
+            <ListItemText
+              primary={<FormattedMessage id="ui.contributionActionMenu.downloadCSV" defaultMessage="ui.contributionActionMenu.downloadCSV" />}
+              onClick={() => handleAction(DOWNLOAD_CSV)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>

@@ -171,6 +171,10 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/$(type)/drafted/'),
     method: 'GET'
   },
+  GetDownloadCSV: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/export/'),
+    method: 'GET'
+  },
   /**
    * Comments
    */
