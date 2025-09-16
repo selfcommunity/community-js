@@ -102,19 +102,14 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
 
   // State
   const [open, setOpen] = useState<boolean>(false);
-  // const [value, setValue] = useState<string | SCUserAutocompleteType | (string | SCUserAutocompleteType)[]>(
-  //   typeof defaultValue === 'string' ? null : defaultValue
-  // );
+  const [inputValue, setInputValue] = useState('');
   const [value, setValue] = useState<any>(Array.isArray(defaultValue) ? defaultValue : defaultValue ? [defaultValue] : []);
   const [textAreaValue, setTextAreaValue] = useState<string>('');
 
   // Fetch users
-  const {users, isLoading} = useSCFetchUsers();
+  const {users, isLoading} = useSCFetchUsers({search: inputValue});
 
   useEffect(() => {
-    if (value === null) {
-      return;
-    }
     onChange?.(value);
     setTextAreaValue(value.map((u) => u.username).join('\n'));
   }, [value]);
@@ -123,7 +118,6 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
   const handleOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -154,6 +148,10 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
         options={users || []}
         getOptionLabel={(option: SCUserAutocompleteType) => option.username || ''}
         value={value}
+        inputValue={inputValue}
+        onInputChange={(_event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
         selectOnFocus
         clearOnBlur
         blurOnSelect
