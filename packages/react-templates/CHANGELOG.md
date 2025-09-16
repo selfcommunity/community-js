@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.23...@selfcommunity/react-templates@0.5.0-alpha.24) (2025-09-16)
+
+
+### Bug Fixes
+
+* added missing prop. Linear: https://linear.app/quentral/issue/QUE-1987/cliccando-da-dentro-un-contenuto-per-vedere-la-lista-di-reaction ([2ce1b34](https://github.com/selfcommunity/community-js/commit/2ce1b3476cca27114f870dd6e777efd544da7508))
+
+
+
+
+
 # [0.5.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.22...@selfcommunity/react-templates@0.5.0-alpha.23) (2025-09-16)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
