@@ -501,7 +501,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   }, []);
 
   const getAddressingError = (content) => {
-    const isMissing = addressingRequiredEnabled && (!content.addressing?.length || !content.recipients?.length);
+    const isMissing = addressingRequiredEnabled && !content.addressing?.length && !content.recipients?.length;
 
     if (!isMissing) return null;
 
