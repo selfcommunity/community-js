@@ -1681,16 +1681,16 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'POST'
   },
   CreatePaymentProduct: {
-		url: urlReplacer('/api/v2/payments/payment_product/price/'),
-		method: 'POST'
-	},
-	/**
-	 * Contact-us Endpoints
-	 */
-	ContactRequest: {
-		url: urlReplacer('/api/v2/contact/request/'),
-		method: 'POST'
-	},
+    url: urlReplacer('/api/v2/payments/payment_product/price/'),
+    method: 'POST'
+  },
+  /**
+   * Contact-us Endpoints
+   */
+  ContactRequest: {
+    url: urlReplacer('/api/v2/contact/request/'),
+    method: 'POST'
+  }
 };
 
 export default Endpoints;
