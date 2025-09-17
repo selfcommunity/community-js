@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.29...@selfcommunity/react-templates@0.5.0-alpha.30) (2025-09-17)
+
+
+### Bug Fixes
+
+* hidden categories followers if ddp is disabled. Linear issue: https://linear.app/quentral/issue/QUE-1997/se-category-follow-enabled-=-false-rimuovere-seguito-da-e-gli-avatar ([54871e4](https://github.com/selfcommunity/community-js/commit/54871e4fe097bbf31714758c6b575a2713161cf3))
+
+
+
+
+
 # [0.5.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.28...@selfcommunity/react-templates@0.5.0-alpha.29) (2025-09-17)
 
 
