@@ -15,8 +15,7 @@ import {
   UserSuggestionWidget,
   PlatformWidget,
   SCFeedWidgetType,
-  getUnseenNotificationCounter,
-  FooterWidget
+  getUnseenNotificationCounter
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
@@ -94,38 +93,31 @@ const WIDGETS: SCFeedWidgetType[] = [
   },
   {
     type: 'widget',
-    component: FooterWidget,
+    component: PlatformWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: PlatformWidget,
+    component: LoyaltyProgramWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: LoyaltyProgramWidget,
+    component: CategoriesSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: CategoriesSuggestionWidget,
-    componentProps: {},
-    column: 'right',
-    position: 3
-  },
-  {
-    type: 'widget',
     component: UserSuggestionWidget,
     componentProps: {},
     column: 'right',
-    position: 4
+    position: 3
   }
 ];
 

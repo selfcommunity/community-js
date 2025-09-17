@@ -9,7 +9,6 @@ import {
   FeedProps,
   FeedRef,
   FeedSidebarProps,
-  FooterWidget,
   GroupInfoWidget,
   GroupMembersWidget,
   InlineComposerWidget,
@@ -101,24 +100,17 @@ export interface GroupFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: FooterWidget,
+    component: GroupInfoWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: GroupInfoWidget,
-    componentProps: {},
-    column: 'right',
-    position: 1
-  },
-  {
-    type: 'widget',
     component: GroupMembersWidget,
     componentProps: {},
     column: 'right',
-    position: 2
+    position: 1
   }
 ];
 

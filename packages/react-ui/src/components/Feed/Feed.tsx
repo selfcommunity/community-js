@@ -35,6 +35,7 @@ import FeedSkeleton from './Skeleton';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import StickyBoxComp, {StickyBoxProps} from '../../shared/StickyBox';
 import {PREFIX} from './constants';
+import FooterWidget from '../FooterWidget';
 
 const messages = defineMessages({
   refresh: {
@@ -438,7 +439,14 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                 position: 0
               }
             ]
-          : [])
+          : []),
+        {
+          type: 'widget',
+          component: FooterWidget,
+          componentProps: {},
+          column: 'right',
+          position: 1
+        }
       ]
         .map((w, i) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1), id: `${w.column}_${i}`}))
         .sort(widgetSort),
