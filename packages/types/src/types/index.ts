@@ -178,7 +178,7 @@ import {
 } from './payment';
 import {type SCCustomerBillingInfo, type SCCountryType} from './billing';
 import {type SCCommunityType} from './community';
-import {SCContactUsRequestType} from './contactUs';
+import {type SCContactUsRequestType} from './contactUs';
 
 /**
  * Exports all types
