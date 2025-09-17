@@ -11,6 +11,7 @@ import {
   FeedProps,
   FeedRef,
   FeedSidebarProps,
+  FooterWidget,
   HiddenPurchasableContent,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
@@ -104,17 +105,24 @@ export interface CategoryFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: CategoryTrendingUsersWidget,
+    component: FooterWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: CategoryTrendingFeedWidget,
+    component: CategoryTrendingUsersWidget,
     componentProps: {},
     column: 'right',
     position: 1
+  },
+  {
+    type: 'widget',
+    component: CategoryTrendingFeedWidget,
+    componentProps: {},
+    column: 'right',
+    position: 2
   }
 ];
 

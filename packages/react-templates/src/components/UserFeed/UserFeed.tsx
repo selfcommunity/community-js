@@ -11,6 +11,7 @@ import {
   FeedProps,
   FeedRef,
   FeedSidebarProps,
+  FooterWidget,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
   SCFeedWidgetType,
@@ -92,31 +93,38 @@ export interface UserFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: UserLiveStreamWidget,
+    component: FooterWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: UserFollowedCategoriesWidget,
+    component: UserLiveStreamWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: UserFollowedUsersWidget,
+    component: UserFollowedCategoriesWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: UserFollowersWidget,
+    component: UserFollowedUsersWidget,
     componentProps: {},
     column: 'right',
     position: 3
+  },
+  {
+    type: 'widget',
+    component: UserFollowersWidget,
+    componentProps: {},
+    column: 'right',
+    position: 4
   }
 ];
 
@@ -204,7 +212,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
       }}
       widgets={_widgets}
       ItemComponent={FeedObject}
-      itemPropsGenerator={(scUser, item) => ({
+      itemPropsGenerator={(_scUser, item) => ({
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null
