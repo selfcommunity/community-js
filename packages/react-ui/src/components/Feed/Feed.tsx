@@ -440,13 +440,17 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               }
             ]
           : []),
-        {
-          type: 'widget',
-          component: FooterWidget,
-          componentProps: {},
-          column: 'right',
-          position: 1
-        }
+        ...(oneColLayout
+          ? []
+          : [
+              {
+                type: 'widget',
+                component: FooterWidget,
+                componentProps: {},
+                column: 'right',
+                position: 1
+              }
+            ])
       ]
         .map((w, i) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1), id: `${w.column}_${i}`}))
         .sort(widgetSort),
