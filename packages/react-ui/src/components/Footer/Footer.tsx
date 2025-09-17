@@ -1,12 +1,10 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
 import {Box, Button, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
-import {CustomMenuService} from '@selfcommunity/api-services';
 import {SCCustomMenuItemType, SCCustomMenuType} from '@selfcommunity/types';
-import {Logger, sortByAttr} from '@selfcommunity/utils';
-import {Link, SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {SCOPE_SC_UI} from '../../constants/Errors';
+import {sortByAttr} from '@selfcommunity/utils';
+import {Link, SCPreferences, SCPreferencesContextType, useFetchMenuFooter, useSCPreferences} from '@selfcommunity/react-core';
 import FooterSkeleton from './Skeleton';
 import {PREFIX, EXPLORE_MENU_ITEM} from './constants';
 
@@ -87,6 +85,9 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   });
   const {className, menu = null, startActions = null, endActions = null, ...rest} = props;
 
+  // HOOKS
+  const {_menu, loading} = useFetchMenuFooter(menu);
+
   // PREFERENCES
   const {preferences}: SCPreferencesContextType = useSCPreferences();
   const copyright = useMemo(() => {
@@ -95,35 +96,6 @@ export default function Footer(inProps: FooterProps): JSX.Element {
       : null;
   }, [preferences]);
   const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
-
-  // STATE
-  const [_menu, setMenu] = useState<SCCustomMenuType>(menu);
-  const [loading, setLoading] = useState<boolean>(!menu);
-
-  /**
-   * Fetches custom pages
-   */
-  function fetchMenu() {
-    setLoading(true);
-    CustomMenuService.getBaseCustomMenu()
-      .then((menu: SCCustomMenuType) => {
-        setMenu(menu);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setLoading(false));
-  }
-
-  /**
-   * On mount, fetches legal and custom pages
-   */
-  useEffect(() => {
-    if (_menu) {
-      return;
-    }
-    fetchMenu();
-  }, []);
 
   /**
    * Renders root object
@@ -136,8 +108,8 @@ export default function Footer(inProps: FooterProps): JSX.Element {
       {startActions}
       <Box className={classes.itemList}>
         {sortByAttr(_menu.items, 'order')
-          .filter((item) => exploreStreamEnabled || item.url !== EXPLORE_MENU_ITEM)
-          .map((item: SCCustomMenuItemType, index) => (
+          .filter((item: SCCustomMenuItemType) => exploreStreamEnabled || item.url !== EXPLORE_MENU_ITEM)
+          .map((item: SCCustomMenuItemType) => (
             <Button component={Link} key={item.id} className={classes.item} to={item.url} variant="text">
               {item.label}
             </Button>

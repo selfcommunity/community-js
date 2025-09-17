@@ -112,7 +112,8 @@ const Component = {
     }),
     attributesRoot: ({theme}: any) => ({
       '& .MuiChip-root': {
-        marginRight: theme.spacing(0.5)
+        marginRight: theme.spacing(0.5),
+        marginTop: theme.spacing(0.5)
       }
     }),
     contentDiscussionRoot: ({theme}: any) => ({

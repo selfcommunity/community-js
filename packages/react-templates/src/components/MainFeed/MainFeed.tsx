@@ -15,7 +15,8 @@ import {
   PlatformWidget,
   SCFeedWidgetType,
   FeedRef,
-  OnBoardingWidget
+  OnBoardingWidget,
+  FooterWidget
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
@@ -80,31 +81,38 @@ export interface MainFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: PlatformWidget,
+    component: FooterWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: LoyaltyProgramWidget,
+    component: PlatformWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: CategoriesSuggestionWidget,
+    component: LoyaltyProgramWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: UserSuggestionWidget,
+    component: CategoriesSuggestionWidget,
     componentProps: {},
     column: 'right',
     position: 3
+  },
+  {
+    type: 'widget',
+    component: UserSuggestionWidget,
+    componentProps: {},
+    column: 'right',
+    position: 4
   }
 ];
 
