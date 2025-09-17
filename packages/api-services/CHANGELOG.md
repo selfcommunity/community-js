@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.3...@selfcommunity/api-services@0.7.0-alpha.4) (2025-09-17)
+
+
+### Bug Fixes
+
+* contact-us api service, callback home navigation toolbar ([1315a38](https://github.com/selfcommunity/community-js/commit/1315a38aaa8d14ad75080f512d108c9950a55473))
+
+
+
+
+
 # [0.7.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.2...@selfcommunity/api-services@0.7.0-alpha.3) (2025-09-17)
 
 
