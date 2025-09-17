@@ -36,7 +36,7 @@ import {FormattedMessage} from 'react-intl';
 import {PreferenceService, UserService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger, sortByAttr} from '@selfcommunity/utils';
-import {SCCustomMenuItemType, SCPreferenceName} from '@selfcommunity/types';
+import {SCCustomMenu, SCCustomMenuItemType, SCPreferenceName} from '@selfcommunity/types';
 import {EXPLORE_MENU_ITEM} from '../Footer/constants';
 
 const PREFIX = 'SCNavigationSettingsIconButton';
@@ -132,7 +132,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scRoutingContext: SCRoutingContextType = useSCRouting();
-  const {_menu} = useFetchMenuFooter(null);
+  const {_menu} = useFetchMenuFooter(SCCustomMenu.USER);
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();

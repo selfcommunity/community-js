@@ -1,7 +1,7 @@
 import {type SCAuthTokenType} from './auth';
 import {type SCBannerType, SCBroadcastMessageBannerType, type SCBroadcastMessageType} from './broadcastMessage';
 import {SCCustomAdvPosition, type SCCustomAdvType} from './customAdv';
-import {type SCCustomMenuItemType, type SCCustomMenuType} from './customMenu';
+import {SCCustomMenu, type SCCustomMenuItemType, type SCCustomMenuType} from './customMenu';
 import {SCLanguageType} from './locale';
 import {
   type SCUserAutocompleteType,
@@ -219,6 +219,7 @@ export {
   type SCCategoryFollowedStatusType,
   SCCustomAdvPosition,
   type SCCustomAdvType,
+  SCCustomMenu,
   type SCCustomMenuItemType,
   type SCCustomMenuType,
   type SCEmbedType,
@@ -384,5 +385,5 @@ export {
   type SCCommunityType,
   type SCCustomerBillingInfo,
   type SCCountryType,
-	type SCContactUsRequestType
+  type SCContactUsRequestType
 };

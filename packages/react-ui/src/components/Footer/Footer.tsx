@@ -2,9 +2,17 @@ import React, {useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
 import {Box, Button, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
-import {SCCustomMenuItemType, SCCustomMenuType} from '@selfcommunity/types';
+import {SCCustomMenu, SCCustomMenuItemType, SCCustomMenuType} from '@selfcommunity/types';
 import {sortByAttr} from '@selfcommunity/utils';
-import {Link, SCPreferences, SCPreferencesContextType, useFetchMenuFooter, useSCPreferences} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
+  useFetchMenuFooter,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import FooterSkeleton from './Skeleton';
 import {PREFIX, EXPLORE_MENU_ITEM} from './constants';
 
@@ -85,8 +93,11 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   });
   const {className, menu = null, startActions = null, endActions = null, ...rest} = props;
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+
   // HOOKS
-  const {_menu, loading} = useFetchMenuFooter(menu);
+  const {_menu, loading} = useFetchMenuFooter(scUserContext.user ? SCCustomMenu.BASE : SCCustomMenu.NOT_LOGGED, menu);
 
   // PREFERENCES
   const {preferences}: SCPreferencesContextType = useSCPreferences();
