@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {Box, Paper, Typography, styled} from '@mui/material';
 import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
 import {FormattedMessage} from 'react-intl';
-import {useSCFetchCategory, useSCPaymentsEnabled} from '@selfcommunity/react-core';
+import {SCPreferences, useSCFetchCategory, useSCPaymentsEnabled, useSCPreferenceEnabled} from '@selfcommunity/react-core';
 import {SCCategoryType, SCContentType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -101,7 +101,7 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
 
   // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
-
+  const categoryFollowEnabled = useSCPreferenceEnabled(SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED);
   // PAYMENTS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
   /**
@@ -135,16 +135,18 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
             {scCategory.slogan}
           </Typography>
         )}
-        <Box className={classes.followed}>
-          <Typography className={classes.followedCounter} component="div">
-            <FormattedMessage
-              id="ui.categoryHeader.followedBy"
-              defaultMessage="ui.categoryHeader.followedBy"
-              values={{total: scCategory.followers_counter}}
-            />
-          </Typography>
-          <CategoryFollowersButton category={scCategory} categoryId={scCategory?.id} {...CategoryFollowersButtonProps} />
-        </Box>
+        {categoryFollowEnabled && (
+          <Box className={classes.followed}>
+            <Typography className={classes.followedCounter} component="div">
+              <FormattedMessage
+                id="ui.categoryHeader.followedBy"
+                defaultMessage="ui.categoryHeader.followedBy"
+                values={{total: scCategory.followers_counter}}
+              />
+            </Typography>
+            <CategoryFollowersButton category={scCategory} categoryId={scCategory?.id} {...CategoryFollowersButtonProps} />
+          </Box>
+        )}
         <Box className={classes.action}>
           {isPaymentsEnabled && scCategory.paywalls?.length > 0 && scCategory.payment_order && (
             <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} />

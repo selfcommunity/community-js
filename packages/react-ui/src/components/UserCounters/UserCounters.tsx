@@ -12,6 +12,7 @@ import {
   SCRoutingContextType,
   SCUserContextType,
   useSCFetchUser,
+  useSCPreferenceEnabled,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -98,6 +99,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
     SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferencesContext.preferences &&
     scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value;
   const scUserContext: SCUserContextType = useSCUser();
+  const categoryFollowEnabled = useSCPreferenceEnabled(SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED);
 
   // HOOKS
   const {scUser, refresh: refreshScUser, refreshing: refreshingScUser} = useSCFetchUser({id: userId, user});
@@ -199,22 +201,24 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
             </>
           ))}
       </>
-      <Button
-        className={classes.button}
-        variant="text"
-        component={Link}
-        to={scRoutingContext.url(SCRoutes.USER_PROFILE_CATEGORIES_ROUTE_NAME, scUser)}>
-        <FormattedMessage
-          id="ui.userCounters.categories"
-          defaultMessage="ui.userCounters.categories"
-          values={{
-            count: scUser?.categories_counter,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            b: (chunks) => <strong>{chunks}</strong>
-          }}
-        />
-      </Button>
+      {categoryFollowEnabled && (
+        <Button
+          className={classes.button}
+          variant="text"
+          component={Link}
+          to={scRoutingContext.url(SCRoutes.USER_PROFILE_CATEGORIES_ROUTE_NAME, scUser)}>
+          <FormattedMessage
+            id="ui.userCounters.categories"
+            defaultMessage="ui.userCounters.categories"
+            values={{
+              count: scUser?.categories_counter,
+              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+              // @ts-ignore
+              b: (chunks) => <strong>{chunks}</strong>
+            }}
+          />
+        </Button>
+      )}
     </Root>
   );
 }

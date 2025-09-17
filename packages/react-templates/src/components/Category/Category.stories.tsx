@@ -8,7 +8,7 @@ export default {
 
 export const Base: StoryObj<typeof CategoryTemplate> = {
   args: {
-		categoryId: 2
+		categoryId: 11
   },
   render: (args) => (
     <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
