@@ -7,18 +7,18 @@ export interface ContactUsRequestParams {
    * name field for the account
    */
   name?: string;
-	/**
-	 * Surname field for the account
-	 */
-	surname?: string;
-	/**
+  /**
+   * Surname field for the account
+   */
+  surname?: string;
+  /**
    * Email field for the account
    */
   email?: string;
   /**
-   * Contact request text
+   * Contact request message text
    */
-  body?: string;
+  message?: string;
   /**
    * Any other properties available in user_metadata_definition
    */

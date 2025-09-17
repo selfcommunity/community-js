@@ -8,9 +8,9 @@ export interface SCContactUsRequestType {
   id: number;
 
   /**
-   * Body of the request
+   * Message of the request
    */
-  body: string;
+  message: string;
 
   /**
    * Created at
