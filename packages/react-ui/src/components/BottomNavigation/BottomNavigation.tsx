@@ -40,7 +40,12 @@ const Root = styled(MuiBottomNavigation, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
 
-export type BottomNavigationProps = MuiBottomNavigationProps;
+export interface BottomNavigationProps extends MuiBottomNavigationProps {
+  /**
+   * Callback on click home
+   */
+  onClickHome?: () => void;
+}
 
 /**
  * > API documentation for the Community-JS Bottom Navigation component. Learn about the available props and the CSS API.
@@ -75,7 +80,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, children = null, ...rest} = props;
+  const {className, children = null, onClickHome, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -136,6 +141,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
               to={scUserContext.user ? scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}) : '/'}
               value={scUserContext.user ? scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}) : '/'}
               icon={<Icon>home</Icon>}
+              {...(onClickHome && {onClick: onClickHome})}
             />,
             // (scUserContext.user || contentAvailable) && exploreStreamEnabled ? (
             //   <BottomNavigationAction

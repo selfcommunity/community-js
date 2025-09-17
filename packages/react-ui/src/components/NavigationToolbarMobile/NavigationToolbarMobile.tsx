@@ -64,6 +64,10 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    */
   endActions?: React.ReactNode | null;
   /**
+   * Callback on click home
+   */
+  onClickHome?: () => void;
+  /**
    * Component for Navigation Menu Icon Button
    */
   NavigationMenuIconButtonComponent?: (inProps: NavigationMenuIconButtonProps) => JSX.Element;
@@ -128,6 +132,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     NavigationMenuIconButtonComponent = NavigationMenuIconButton,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
     ComposerIconButtonProps = {},
+    onClickHome,
     ...rest
   } = props;
 
@@ -186,7 +191,8 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
         to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
         className={classNames(className, classes.logo, {
           [classes.logoFlex]: preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL].value
-        })}>
+        })}
+        {...(onClickHome && {onClick: onClickHome})}>
         {!preserveDesktopLogo ? (
           <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE].value} alt="logo" />
         ) : (
