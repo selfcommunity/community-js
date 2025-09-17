@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.90](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.89...@selfcommunity/react-ui@0.11.0-alpha.90) (2025-09-17)
+
+
+### Features
+
+* added new footer widget into all feed components. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([06dd21d](https://github.com/selfcommunity/community-js/commit/06dd21d132b159a7f49c3fa488ac01cc487229ea))
+* created new custom hooks to festch footer menu items and added into them into navbar. Linear: https://linear.app/quentral/issue/QUE-2017/stessi-link-anche-nei-tre-puntini-a-destra-menu-user-separati-dalle ([ea64e78](https://github.com/selfcommunity/community-js/commit/ea64e78daa4757326dd6ad8754646fc37f81b7ad))
+
+
+
+
+
 # [0.11.0-alpha.89](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.88...@selfcommunity/react-ui@0.11.0-alpha.89) (2025-09-17)
 
 

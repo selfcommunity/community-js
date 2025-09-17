@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.28...@selfcommunity/react-templates@0.5.0-alpha.29) (2025-09-17)
+
+
+### Features
+
+* added new footer widget into all feed components. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([06dd21d](https://github.com/selfcommunity/community-js/commit/06dd21d132b159a7f49c3fa488ac01cc487229ea))
+
+
+
+
+
 # [0.5.0-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.27...@selfcommunity/react-templates@0.5.0-alpha.28) (2025-09-17)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.11...@selfcommunity/react-core@0.7.0-alpha.12) (2025-09-17)
+
+
+### Features
+
+* created new custom hooks to festch footer menu items and added into them into navbar. Linear: https://linear.app/quentral/issue/QUE-2017/stessi-link-anche-nei-tre-puntini-a-destra-menu-user-separati-dalle ([ea64e78](https://github.com/selfcommunity/community-js/commit/ea64e78daa4757326dd6ad8754646fc37f81b7ad))
+
+
+
+
+
 # [0.7.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.10...@selfcommunity/react-core@0.7.0-alpha.11) (2025-09-17)
 
 
