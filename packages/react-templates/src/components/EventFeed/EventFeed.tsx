@@ -13,7 +13,6 @@ import {
   FeedProps,
   FeedRef,
   FeedSidebarProps,
-  FooterWidget,
   InlineComposerWidget,
   RelatedEventsWidget,
   SCFeedObjectTemplateType,
@@ -104,38 +103,31 @@ export interface EventFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: FooterWidget,
+    component: EventLocationWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: EventLocationWidget,
+    component: EventMembersWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: EventMembersWidget,
+    component: EventMediaWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: EventMediaWidget,
-    componentProps: {},
-    column: 'right',
-    position: 3
-  },
-  {
-    type: 'widget',
     component: RelatedEventsWidget,
     componentProps: {},
     column: 'right',
-    position: 4
+    position: 3
   }
 ];
 

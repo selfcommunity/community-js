@@ -11,7 +11,6 @@ import {
   FeedProps,
   FeedRef,
   FeedSidebarProps,
-  FooterWidget,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
   SCFeedWidgetType,
@@ -93,38 +92,31 @@ export interface UserFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: FooterWidget,
+    component: UserLiveStreamWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: UserLiveStreamWidget,
+    component: UserFollowedCategoriesWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: UserFollowedCategoriesWidget,
+    component: UserFollowedUsersWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: UserFollowedUsersWidget,
-    componentProps: {},
-    column: 'right',
-    position: 3
-  },
-  {
-    type: 'widget',
     component: UserFollowersWidget,
     componentProps: {},
     column: 'right',
-    position: 4
+    position: 3
   }
 ];
 
