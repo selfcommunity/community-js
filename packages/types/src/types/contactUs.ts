@@ -12,13 +12,13 @@ export interface SCContactUsRequestType {
    */
   body: string;
 
-	/**
-	 * Created at
-	 */
-	created_at?: Date | string;
+  /**
+   * Created at
+   */
+  created_at?: Date | string;
 
-	/**
-	 * Updated at
-	 */
-	updated_at?: Date | string | null;
+  /**
+   * Updated at
+   */
+  updated_at?: Date | string | null;
 }
