@@ -1462,7 +1462,7 @@
   "ui.paywallsConfigurator.filterByName": "Filtra per nome",
   "ui.paywallsConfigurator.openPriceslist": "Seleziona prezzi",
   "ui.userAutocomplete.label": "Seleziona utenti",
-  "ui.userAutocomplete.empty": "Nessun utente trovato",
+  "ui.userAutocomplete.empty": "Nessun utente corrisponde alla ricerca",
   "ui.userAutocomplete.textarea.label": "Utenti selezionati",
   "ui.userAutocomplete.textarea.info": "<icon>info</icon> Incolla qui sotto i nomi utente, separati da spazi, virgole oppure a capo",
   "ui.userBillingInfo.infoLabel": "Indirizzo di fatturazione",
