@@ -457,7 +457,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
   /**
    * Renders root object (if not hidden by autoHide prop)
    */
-  if (!autoHide && scUserContext?.user?.role) {
+  if (!autoHide && (isAdmin || isEditor || isModerator)) {
     return (
       <>
         <Root className={classNames(classes.root, className, {[classes.tutorialOpen]: isTutorialOpen})} {...rest}>

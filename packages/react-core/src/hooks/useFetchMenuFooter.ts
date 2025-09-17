@@ -1,10 +1,10 @@
 import {CustomMenuService} from '@selfcommunity/api-services';
-import {SCCustomMenuType} from '@selfcommunity/types';
+import {SCCustomMenu, SCCustomMenuType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
-import {useEffect, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 
-export default function useFetchMenuFooter(menu: SCCustomMenuType | null) {
+export default function useFetchMenuFooter(id: SCCustomMenu, menu: SCCustomMenuType | null = null) {
   // STATES
   const [_menu, setMenu] = useState<SCCustomMenuType | null>(menu);
   const [loading, setLoading] = useState<boolean>(!menu);
@@ -12,9 +12,9 @@ export default function useFetchMenuFooter(menu: SCCustomMenuType | null) {
   /**
    * Fetches custom pages
    */
-  function fetchMenu() {
+  const fetchMenu = useCallback(() => {
     setLoading(true);
-    CustomMenuService.getBaseCustomMenu()
+    CustomMenuService.getASpecificCustomMenu(id)
       .then((menu: SCCustomMenuType) => {
         setMenu(menu);
       })
@@ -22,17 +22,17 @@ export default function useFetchMenuFooter(menu: SCCustomMenuType | null) {
         Logger.error(SCOPE_SC_CORE, error);
       })
       .then(() => setLoading(false));
-  }
+  }, []);
 
   /**
    * On mount, fetches legal and custom pages
    */
   useEffect(() => {
-    if (_menu) {
+    if (menu) {
       return;
     }
     fetchMenu();
-  }, []);
+  }, [id]);
 
   return {_menu, loading};
 }

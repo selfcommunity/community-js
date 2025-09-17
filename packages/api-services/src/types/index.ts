@@ -54,6 +54,7 @@ import {
   CheckoutCreateSessionParams,
   PaymentOrderParams
 } from './payment';
+import {ContactUsRequestParams} from './contactUs';
 
 export {
   AccountCreateParams,
@@ -138,5 +139,6 @@ export {
   CustomerPortalCreateSessionParams,
   CheckoutSessionParams,
   CheckoutCreateSessionParams,
-  PaymentOrderParams
+  PaymentOrderParams,
+	ContactUsRequestParams
 };

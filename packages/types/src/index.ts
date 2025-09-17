@@ -140,7 +140,8 @@ import {
   type SCCheckoutSessionComplete,
   type SCPaymentOrder,
   type SCPaymentsCustomerPortalSession,
-  type SCCommunityType
+  type SCCommunityType,
+  type SCContactUsRequestType
 } from './types';
 
 /**
@@ -202,7 +203,8 @@ import {
   SCPaymentProductTemplateType,
   SCPaymentRecurringInterval,
   SCCheckoutSessionUIMode,
-  SCCourseOrderingUsersType
+  SCCourseOrderingUsersType,
+  SCCustomMenu
 } from './types';
 
 /**
@@ -264,7 +266,8 @@ export {
   SCPaymentProductTemplateType,
   SCPaymentRecurringInterval,
   SCCheckoutSessionUIMode,
-  SCCourseOrderingUsersType
+  SCCourseOrderingUsersType,
+  SCCustomMenu
 };
 export {
   type SCBannerType,
@@ -405,5 +408,6 @@ export {
   type SCCheckoutSessionComplete,
   type SCPaymentOrder,
   type SCPaymentsCustomerPortalSession,
-  type SCCommunityType
+  type SCCommunityType,
+  type SCContactUsRequestType
 };
