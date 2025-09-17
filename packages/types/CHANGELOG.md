@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.4...@selfcommunity/types@0.8.0-alpha.5) (2025-09-17)
+
+
+### Bug Fixes
+
+* contact-us api service ([5059a41](https://github.com/selfcommunity/community-js/commit/5059a411b39cba4f11ee8cc6082ce739ae9dbf4f))
+* contact-us api service ([62d82be](https://github.com/selfcommunity/community-js/commit/62d82be8d0c3c5aaef37a7f20f5d0936b4ee4a32))
+* contact-us api service ([b75dbc2](https://github.com/selfcommunity/community-js/commit/b75dbc2c998498f57d836d2580299cdd725c95d3))
+
+
+
+
+
 # [0.8.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.3...@selfcommunity/types@0.8.0-alpha.4) (2025-09-15)
 
 
