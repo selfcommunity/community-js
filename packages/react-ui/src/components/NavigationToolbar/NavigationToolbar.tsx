@@ -97,6 +97,10 @@ export interface NavigationToolbarProps extends ToolbarProps {
    */
   onCloseNotificationMenu?: () => void;
   /**
+   * Callback on click home
+   */
+  onClickHome?: () => void;
+  /**
    * Props to spread to the NotificationsMenu
    * @default {}
    */
@@ -183,6 +187,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     children = null,
     NotificationMenuProps = {},
     ComposerIconButtonProps = {},
+    onClickHome,
     onOpenNotificationMenu,
     onCloseNotificationMenu,
     ...rest
@@ -271,7 +276,8 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           className={classNames(classes.home, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))})}
           aria-label="Home"
           to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
-          component={Link}>
+          component={Link}
+          {...(onClickHome && {onClick: onClickHome})}>
           <Icon>home</Icon>
         </IconButton>
       )}
@@ -329,7 +335,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
       <NavigationMenuIconButtonComponent {...NavigationMenuIconButtonComponentProps} />
-      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
+      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo} {...(onClickHome && {onClick: onClickHome})}>
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
       </Link>
       {!scUserContext.user && !preferences[SCPreferences.ADDONS_CLOSED_COMMUNITY] && (
