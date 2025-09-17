@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.17...@selfcommunity/react-theme-default@0.5.0-alpha.18) (2025-09-17)
+
+
+### Performance Improvements
+
+* added prop to CategoryHeader to show tag chip. Linear issue: https://linear.app/quentral/issue/QUE-2020/frontend-chip-tag-categorie ([99a45a3](https://github.com/selfcommunity/community-js/commit/99a45a31ca4061256f658d578d67cef338a75c64))
+
+
+
+
+
 # [0.5.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.16...@selfcommunity/react-theme-default@0.5.0-alpha.17) (2025-09-17)
 
 
