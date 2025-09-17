@@ -183,6 +183,7 @@ import UserSubscribedGroupsWidget, {
 import UserSuggestionWidget, {UserSuggestionWidgetProps, UserSuggestionWidgetSkeleton} from './components/UserSuggestionWidget';
 import UserLiveStreamWidget, {UserLiveStreamWidgetProps, UserLiveStreamWidgetSkeleton} from './components/UserLiveStreamWidget';
 import Widget, {WidgetProps} from './components/Widget';
+import FooterWidget, {FooterWidgetProps} from './components/FooterWidget';
 import {
   MEDIA_EMBED_SC_LINK_TYPE,
   MEDIA_EMBED_SC_SHARED_EVENT,
@@ -868,5 +869,7 @@ export {
   HiddenPurchasableContent,
   CommunityPaywalls,
   CommunityPaywallsProps,
-  CommunityPaywallsSkeleton
+  CommunityPaywallsSkeleton,
+  FooterWidget,
+  FooterWidgetProps
 };

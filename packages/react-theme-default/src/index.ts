@@ -219,6 +219,7 @@ import SCPaywallsConfigurator from './components/SCPaywallsConfigurator';
 import SCPdfPreview from './components/SCPdfPreview';
 import SCPaymentOrders from './components/SCPaymentOrders';
 import SCCheckoutHeaderInfoWidget from './components/SCCheckoutHeaderInfoWidget';
+import SCFooterWidget from './components/SCFooterWidget';
 /**
  * Style fragments - Imports - End
  */
@@ -517,7 +518,8 @@ const theme = {
     SCPaywallsConfigurator,
     SCPdfPreview,
     SCPaymentOrders,
-    SCCheckoutHeaderInfoWidget
+    SCCheckoutHeaderInfoWidget,
+    SCFooterWidget
   },
   selfcommunity: {
     user: {

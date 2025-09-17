@@ -23,6 +23,7 @@ import {
   SCRoutingContextType,
   SCThemeType,
   SCUserContextType,
+  useFetchMenuFooter,
   UserUtils,
   useSCPaymentsEnabled,
   useSCPreferences,
@@ -34,8 +35,9 @@ import {useThemeProps} from '@mui/system';
 import {FormattedMessage} from 'react-intl';
 import {PreferenceService, UserService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {Logger} from '@selfcommunity/utils';
-import {SCPreferenceName} from '@selfcommunity/types';
+import {Logger, sortByAttr} from '@selfcommunity/utils';
+import {SCCustomMenuItemType, SCPreferenceName} from '@selfcommunity/types';
+import {EXPLORE_MENU_ITEM} from '../Footer/constants';
 
 const PREFIX = 'SCNavigationSettingsIconButton';
 
@@ -50,19 +52,19 @@ const classes = {
 const Root = styled(IconButton, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 const SwipeableDrawerRoot = styled(SwipeableDrawer, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.drawerRoot
+  overridesResolver: (_props, styles) => styles.drawerRoot
 })(() => ({}));
 
 const MenuRoot = styled(Menu, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.menuRoot
+  overridesResolver: (_props, styles) => styles.menuRoot
 })(() => ({}));
 
 export interface NavigationSettingsItem {
@@ -130,6 +132,7 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const {_menu} = useFetchMenuFooter(null);
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -142,6 +145,9 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
   const connectionEnabled =
     SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferences.preferences &&
     scPreferences.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value;
+  const exploreStreamEnabled =
+    SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED in scPreferences.preferences &&
+    scPreferences.preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
 
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -341,6 +347,18 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
               </ListItem>
             ]
           : []),
+        <Divider key="footer_divider" />,
+        ...[
+          sortByAttr(_menu.items, 'order')
+            .filter((item: SCCustomMenuItemType) => exploreStreamEnabled || item.url !== EXPLORE_MENU_ITEM)
+            .map((item: SCCustomMenuItemType) => (
+              <ListItem className={classes.item} key={item.id}>
+                <ListItemButton component={Link} to={item.url}>
+                  {item.label}
+                </ListItemButton>
+              </ListItem>
+            ))
+        ],
         <Divider key="divider" />,
         <ListItem className={classes.item} key="logout">
           <ListItemButton onClick={handleLogout}>
@@ -504,6 +522,16 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
               </MenuItem>
             ]
           : []),
+        <Divider key="footer_divider" />,
+        ...[
+          sortByAttr(_menu.items, 'order')
+            .filter((item: SCCustomMenuItemType) => exploreStreamEnabled || item.url !== EXPLORE_MENU_ITEM)
+            .map((item: SCCustomMenuItemType) => (
+              <MenuItem className={classes.item} key={item.id} component={Link} to={item.url}>
+                {item.label}
+              </MenuItem>
+            ))
+        ],
         <Divider key="divider" />,
         <MenuItem className={classes.item} key="logout" onClick={handleLogout}>
           <FormattedMessage id="ui.navigationSettingsIconButton.logout" defaultMessage="ui.navigationSettingsIconButton.logout" />

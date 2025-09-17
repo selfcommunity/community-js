@@ -9,6 +9,7 @@ import {
   FeedProps,
   FeedRef,
   FeedSidebarProps,
+  FooterWidget,
   GroupInfoWidget,
   GroupMembersWidget,
   InlineComposerWidget,
@@ -30,7 +31,7 @@ import {SCCustomAdvPosition, SCFeedTypologyType, SCGroupSubscriptionStatusType, 
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
-import {SnackbarKey, useSnackbar} from 'notistack';
+import {useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
 import GroupFeedSkeleton from './Skeleton';
 
@@ -100,17 +101,24 @@ export interface GroupFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: GroupInfoWidget,
+    component: FooterWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: GroupMembersWidget,
+    component: GroupInfoWidget,
     componentProps: {},
     column: 'right',
     position: 1
+  },
+  {
+    type: 'widget',
+    component: GroupMembersWidget,
+    componentProps: {},
+    column: 'right',
+    position: 2
   }
 ];
 
