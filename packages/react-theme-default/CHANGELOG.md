@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.14...@selfcommunity/react-theme-default@0.5.0-alpha.15) (2025-09-17)
+
+
+### Bug Fixes
+
+* fixed user autocomplete and feedObj chip ([f036919](https://github.com/selfcommunity/community-js/commit/f03691900f451b74528d1e6c96307e5082c2bcd3))
+
+
+
+
+
 # [0.5.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.13...@selfcommunity/react-theme-default@0.5.0-alpha.14) (2025-09-16)
 
 
