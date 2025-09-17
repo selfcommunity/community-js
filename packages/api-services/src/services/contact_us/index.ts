@@ -1,6 +1,6 @@
 import Endpoints from '../../constants/Endpoints';
 import {ContactUsRequestParams} from '../../types';
-import {SCContactUsRequestType} from '@selfcommunity/types';
+import {type SCContactUsRequestType} from '@selfcommunity/types';
 import {apiRequest} from '../../utils/apiRequest';
 import {AxiosRequestConfig} from 'axios';
 
