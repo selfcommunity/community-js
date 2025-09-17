@@ -9,7 +9,7 @@ import {useThemeProps} from '@mui/system';
 import CategoryFollowersButton, {CategoryFollowersButtonProps} from '../CategoryFollowersButton';
 import {PREFIX} from './constants';
 import BuyButton from '../BuyButton';
-import {TagChip} from '@selfcommunity/react-ui';
+import TagChip from '../../shared/TagChip';
 
 const classes = {
   root: `${PREFIX}-root`,
