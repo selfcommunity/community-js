@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.30...@selfcommunity/react-templates@0.5.0-alpha.31) (2025-09-17)
+
+
+### Bug Fixes
+
+* updated components to insert FooterWidget. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([502dd36](https://github.com/selfcommunity/community-js/commit/502dd36d16022195d9295e382c6299e5bd36556a))
+
+
+
+
+
 # [0.5.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.29...@selfcommunity/react-templates@0.5.0-alpha.30) (2025-09-17)
 
 
