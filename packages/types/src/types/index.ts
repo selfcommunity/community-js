@@ -178,6 +178,7 @@ import {
 } from './payment';
 import {type SCCustomerBillingInfo, type SCCountryType} from './billing';
 import {type SCCommunityType} from './community';
+import {SCContactUsRequestType} from './contactUs';
 
 /**
  * Exports all types
@@ -382,5 +383,6 @@ export {
   SCPaymentRecurringInterval,
   type SCCommunityType,
   type SCCustomerBillingInfo,
-  type SCCountryType
+  type SCCountryType,
+	type SCContactUsRequestType
 };

@@ -56,6 +56,7 @@ import OnBoardingService, {OnBoardingApiClient, OnBoardingApiClientInterface} fr
 import CourseService, {CourseApiClient, CourseApiClientInterface} from './services/course';
 import PaymentService, {PaymentApiClient, PaymentApiClientInterface} from './services/payment';
 import CommunityService, {CommunityApiClient, CommunityApiClientInterface} from './services/community';
+import ContactUsService, {ContactUsApiClient, ContactUsApiClientInterface} from './services/contact_us';
 
 /**
  * Types
@@ -140,7 +141,8 @@ import {
   CustomerPortalCreateSessionParams,
   CheckoutSessionParams,
   CheckoutCreateSessionParams,
-  PaymentOrderParams
+  PaymentOrderParams,
+  ContactUsRequestParams
 } from './types';
 
 /**
@@ -349,5 +351,9 @@ export {
   CustomerPortalCreateSessionParams,
   CheckoutSessionParams,
   CheckoutCreateSessionParams,
-  PaymentOrderParams
+  PaymentOrderParams,
+  ContactUsRequestParams,
+  ContactUsService,
+  ContactUsApiClient,
+  ContactUsApiClientInterface
 };

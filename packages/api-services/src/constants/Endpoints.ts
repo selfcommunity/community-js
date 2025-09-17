@@ -1680,7 +1680,17 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/payments/customer_portal_session/'),
     method: 'POST'
   },
-  CreatePaymentProduct: {url: urlReplacer('/api/v2/payments/payment_product/price/'), method: 'POST'}
+  CreatePaymentProduct: {
+		url: urlReplacer('/api/v2/payments/payment_product/price/'),
+		method: 'POST'
+	},
+	/**
+	 * Contact-us Endpoints
+	 */
+	ContactRequest: {
+		url: urlReplacer('/api/v2/contact/request/'),
+		method: 'POST'
+	},
 };
 
 export default Endpoints;

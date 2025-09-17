@@ -140,7 +140,8 @@ import {
   type SCCheckoutSessionComplete,
   type SCPaymentOrder,
   type SCPaymentsCustomerPortalSession,
-  type SCCommunityType
+  type SCCommunityType,
+	type SCContactUsRequestType
 } from './types';
 
 /**
@@ -405,5 +406,6 @@ export {
   type SCCheckoutSessionComplete,
   type SCPaymentOrder,
   type SCPaymentsCustomerPortalSession,
-  type SCCommunityType
+  type SCCommunityType,
+	type SCContactUsRequestType
 };
