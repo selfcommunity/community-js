@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.93](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.92...@selfcommunity/react-ui@0.11.0-alpha.93) (2025-09-17)
+
+
+### Bug Fixes
+
+* added contition to show widget footer. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([3f5d23e](https://github.com/selfcommunity/community-js/commit/3f5d23e61ea85756711f1001c01d4d89048588da))
+* platform widget ([c28e208](https://github.com/selfcommunity/community-js/commit/c28e2084e5ba75d1cdd9664385f4dbac81401e3b))
+
+
+
+
+
 # [0.11.0-alpha.92](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.91...@selfcommunity/react-ui@0.11.0-alpha.92) (2025-09-17)
 
 

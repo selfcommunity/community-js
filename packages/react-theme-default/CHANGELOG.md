@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.16...@selfcommunity/react-theme-default@0.5.0-alpha.17) (2025-09-17)
+
+
+### Bug Fixes
+
+* item position on footer widget. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([7052883](https://github.com/selfcommunity/community-js/commit/70528835ff56654c6c79065722b7d8ddf7a92f39))
+
+
+
+
+
 # [0.5.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.15...@selfcommunity/react-theme-default@0.5.0-alpha.16) (2025-09-17)
 
 
