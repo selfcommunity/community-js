@@ -116,7 +116,7 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
 
   // Handlers
   const handleOpen = () => {
-    setOpen(true);
+    users.length > 0 && setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);

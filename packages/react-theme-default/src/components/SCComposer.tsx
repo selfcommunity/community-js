@@ -110,7 +110,11 @@ const Component = {
         }
       }
     }),
-    attributesRoot: () => ({}),
+    attributesRoot: ({theme}: any) => ({
+      '& .MuiChip-root': {
+        marginRight: theme.spacing(0.5)
+      }
+    }),
     contentDiscussionRoot: ({theme}: any) => ({
       '& .SCComposer-content-discussion-title': {
         '& .MuiInputBase-root': {

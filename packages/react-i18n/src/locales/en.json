@@ -1460,7 +1460,7 @@
   "ui.paywallsConfigurator.filterByName": "Filter by name",
   "ui.paywallsConfigurator.openPriceslist": "Add selecting price from list",
   "ui.userAutocomplete.label": "Select users",
-  "ui.userAutocomplete.empty": "No user found",
+  "ui.userAutocomplete.empty": "No matching users",
   "ui.userAutocomplete.textarea.label": "Selected Users",
   "ui.userAutocomplete.textarea.info": "<icon>info</icon> Paste the usernames below, separated by spaces, commas, or newlines",
   "ui.userBillingInfo.infoLabel": "Billing address",
