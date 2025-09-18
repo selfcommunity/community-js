@@ -16,35 +16,42 @@ import {Logger} from '@selfcommunity/utils';
  :::
  * @param props
  */
-const useSCFetchUsers = (props?: {search?: string}) => {
-  const {search = ''} = props || {};
+const useSCFetchUsers = (props?: {search: string; exclude?: string}) => {
+  const {search = '', exclude = ''} = props || {};
   const [data, setData] = useState<{users: SCUserAutocompleteType[]; isLoading: boolean}>({users: [], isLoading: false});
 
-  const fetchUsers = async (next: string = Endpoints.UserAutocomplete.url(), searchParam?: string): Promise<SCUserAutocompleteType[]> => {
+  const fetchUsers = async (
+    next: string = Endpoints.UserAutocomplete.url(),
+    searchParam?: string,
+    excludeParam?: string
+  ): Promise<SCUserAutocompleteType[]> => {
     const response = await http.request({
       url: next,
       method: Endpoints.UserAutocomplete.method,
-      params: searchParam ? {search: searchParam} : undefined,
+      params: {
+        search: searchParam,
+        ...(excludeParam && {exclude: excludeParam}),
+      },
     });
-    const data: any = response.data;
-    if (data.next) {
-      return data.results.concat(await fetchUsers(data.next, searchParam));
+    const result: any = response.data;
+    if (result.next) {
+      return result.results.concat(await fetchUsers(result.next, searchParam, excludeParam));
     }
-    return data.results;
+    return result.results;
   };
 
   useEffect(() => {
     if (!search) return;
-    fetchUsers(undefined, search)
-      .then((data) => {
-        setData({users: data, isLoading: false});
+    fetchUsers(undefined, search, exclude)
+      .then((users) => {
+        setData({users, isLoading: false});
       })
       .catch((error) => {
         console.error(error);
         Logger.error(SCOPE_SC_CORE, 'Unable to retrieve users');
         setData((prev) => ({...prev, isLoading: false}));
       });
-  }, [search]);
+  }, [search, exclude]);
 
   return data;
 };

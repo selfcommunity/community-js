@@ -1,4 +1,4 @@
-import React, {Fragment, SyntheticEvent, useEffect, useState} from 'react';
+import React, {Fragment, SyntheticEvent, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
@@ -18,6 +18,7 @@ import {
 import {useSCFetchUsers} from '@selfcommunity/react-core';
 import {SCUserAutocompleteType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
+import {UserService} from '@selfcommunity/api-services';
 
 const PREFIX = 'SCUserAutocomplete';
 
@@ -68,7 +69,6 @@ export interface UserAutocompleteProps
    * @default 0
    */
   limitCountGroups?: number;
-  endpointQueryParams?: Record<string, string | number | boolean>;
 }
 
 const Root = styled(Box, {
@@ -106,8 +106,19 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
   const [value, setValue] = useState<any>(Array.isArray(defaultValue) ? defaultValue : defaultValue ? [defaultValue] : []);
   const [textAreaValue, setTextAreaValue] = useState<string>('');
 
-  // Fetch users
-  const {users, isLoading} = useSCFetchUsers({search: inputValue});
+  // Exclude selected users by ID
+  const excludeIds = useMemo(
+    () =>
+      value
+        .map((u: SCUserAutocompleteType | string) => (typeof u === 'object' ? u.id : null))
+        .filter(Boolean)
+        .join(','),
+    [value]
+  );
+
+  // Fetch users excluding selected ones
+  const {users, isLoading} = useSCFetchUsers({search: inputValue, exclude: excludeIds});
+  const filteredUsers = users.filter((u) => !excludeIds.includes(u.id));
 
   useEffect(() => {
     onChange?.(value);
@@ -116,7 +127,7 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
 
   // Handlers
   const handleOpen = () => {
-    users.length > 0 && setOpen(true);
+    filteredUsers.length > 0 && setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
@@ -126,18 +137,29 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
     setValue(newValue);
   };
 
-  const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const names = e.target.value
-      .split(/\s|,|\n/)
-      .map((s) => s.trim())
-      .filter(Boolean);
+  const handleTextAreaChange = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const names = Array.from(
+      new Set(
+        e.target.value
+          .split(/\s|,|\n/)
+          .map((s) => s.trim())
+          .filter(Boolean)
+      )
+    );
 
-    const matched = names.map((name) => {
-      const user = users.find((u) => u.username === name);
-      return user || name;
-    });
+    let resolvedUsers: (SCUserAutocompleteType | string)[] = [];
 
-    setValue(matched);
+    try {
+      if (names.length > 0) {
+        const resp: SCUserAutocompleteType[] = await UserService.matchUsernames(names.join(','));
+        const matchedMap = new Map(resp.map((u) => [u.username, u]));
+        resolvedUsers = names.map((name) => matchedMap.get(name) || name);
+      }
+    } catch (err) {
+      console.error(`Failed fetching users`, err);
+      resolvedUsers = names;
+    }
+    setValue(resolvedUsers);
     setTextAreaValue(e.target.value);
   };
 
@@ -149,7 +171,7 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
         open={open}
         onOpen={handleOpen}
         onClose={handleClose}
-        options={users || []}
+        options={filteredUsers || []}
         getOptionLabel={(option: SCUserAutocompleteType) => option.username || ''}
         value={value}
         inputValue={inputValue}
@@ -164,12 +186,7 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
         disabled={disabled || isLoading}
         noOptionsText={<FormattedMessage id="ui.userAutocomplete.empty" defaultMessage="ui.userAutocomplete.empty" />}
         onChange={handleChange}
-        isOptionEqualToValue={(option: SCUserAutocompleteType, val: SCUserAutocompleteType | string) => {
-          if (typeof val === 'string') {
-            return option.username === val;
-          }
-          return option.id === val.id;
-        }}
+        isOptionEqualToValue={(option: SCUserAutocompleteType, val: SCUserAutocompleteType) => option.id === val.id}
         renderTags={(value, getTagProps) =>
           value.map((option: SCUserAutocompleteType | string, index) => {
             const username = typeof option === 'string' ? option : option.username;

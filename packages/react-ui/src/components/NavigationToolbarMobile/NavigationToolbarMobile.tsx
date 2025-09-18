@@ -22,6 +22,7 @@ import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from '.
 import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from '../NavigationMenuIconButton';
 import {PREFIX} from './constants';
 import {SCFeatureName} from '@selfcommunity/types';
+import {scroll} from 'seamless-scroll-polyfill';
 import ComposerIconButton, {ComposerIconButtonProps} from '../ComposerIconButton';
 
 const classes = {
@@ -178,6 +179,16 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   const handleCloseSearch = useCallback(() => {
     setSearchOpen(false);
   }, [setSearchOpen]);
+  const handleClickHome = useCallback(() => {
+    if (onClickHome) {
+      onClickHome();
+    } else {
+      const pathName = window.location.pathname;
+      if (pathName && (pathName === '/' || pathName === scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))) {
+        scroll(window, {top: 0, behavior: 'smooth'});
+      }
+    }
+  }, [onClickHome]);
 
   // RENDER
   if (scUserContext.loading) {
@@ -192,7 +203,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
         className={classNames(className, classes.logo, {
           [classes.logoFlex]: preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL].value
         })}
-        {...(onClickHome && {onClick: onClickHome})}>
+        onClick={handleClickHome}>
         {!preserveDesktopLogo ? (
           <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE].value} alt="logo" />
         ) : (

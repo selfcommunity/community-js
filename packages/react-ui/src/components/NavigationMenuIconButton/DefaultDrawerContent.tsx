@@ -28,7 +28,7 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Category, {CategoryProps} from '../Category';
 import {FormattedMessage} from 'react-intl';
 import {sortByAttr} from '@selfcommunity/utils';
@@ -38,6 +38,7 @@ import {useThemeProps} from '@mui/system';
 import BaseItem from '../../shared/BaseItem';
 import FormazionePlaceholder from '../../assets/custom/formazione';
 import {DefaultCategoryTagName} from '../../constants/DefaultDrawerContent';
+import {scroll} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCDefaultDrawerContent';
 
@@ -57,6 +58,7 @@ const Root = styled(Box, {
 export interface DefaultDrawerContentProps extends BoxProps {
   CategoryItemProps?: CategoryProps;
   tagImage?: string;
+  onClickHome?: () => void;
 }
 export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps) {
   const props: DefaultDrawerContentProps = useThemeProps({
@@ -64,7 +66,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
     name: PREFIX
   });
 
-  const {className, CategoryItemProps = {showTooltip: true}, tagImage = '/', ...rest} = props;
+  const {className, CategoryItemProps = {showTooltip: true}, tagImage = '/', onClickHome, ...rest} = props;
 
   // HOOKS
   const {categories} = useSCFetchCategories();
@@ -139,6 +141,17 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
     setExpanded(isExpanded ? tagName : false);
   };
 
+  const handleClickHome = useCallback(() => {
+    if (onClickHome) {
+      onClickHome();
+    } else {
+      const pathName = window.location.pathname;
+      if (pathName && (pathName === '/' || pathName === scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))) {
+        scroll(window, {top: 0, behavior: 'smooth'});
+      }
+    }
+  }, [onClickHome]);
+
   // Order categories
   useEffect(() => {
     if (!scUserContext.user || (scUserContext.user && showAllCategories)) {
@@ -182,7 +195,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
       <List className={classes.navigation}>
         {scUserContext.user && (
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} onClickHome={handleClickHome}>
               <ListItemIcon>
                 <Icon>home</Icon>
               </ListItemIcon>

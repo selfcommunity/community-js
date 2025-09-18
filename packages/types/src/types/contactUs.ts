@@ -5,12 +5,12 @@ export interface SCContactUsRequestType {
   /**
    * Id of the request
    */
-  id: number;
+  id?: number;
 
   /**
    * Message of the request
    */
-  message: string;
+  message?: string;
 
   /**
    * Created at
@@ -21,4 +21,9 @@ export interface SCContactUsRequestType {
    * Updated at
    */
   updated_at?: Date | string | null;
+
+  /**
+   * Any other properties
+   */
+  [p: string]: any;
 }

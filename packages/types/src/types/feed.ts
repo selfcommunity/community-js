@@ -1,4 +1,4 @@
-import {SCUserType} from './user';
+import {SCUserAutocompleteType, SCUserType} from './user';
 import {SCCategoryType} from './category';
 import {SCContributionLocation} from './location';
 import {SCPollType} from './poll';
@@ -260,7 +260,7 @@ export interface SCFeedObjectType {
   /**
    * Users addressing
    */
-  recipients?: any;
+  recipients?: SCUserAutocompleteType[];
 }
 
 /**
