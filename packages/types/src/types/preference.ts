@@ -167,7 +167,8 @@ export enum SCPreferenceName {
   SCHEDULED_POSTS_ENABLED = 'scheduled_posts_enabled',
   POST_CATEGORY_REQUIRED_ENABLED = 'post_category_required_enabled',
   POST_ADDRESSING_REQUIRED_ENABLED = 'post_addressing_required_enabled',
-  POST_USER_ADDRESSING_ENABLED = 'post_user_addressing_enabled'
+  POST_USER_ADDRESSING_ENABLED = 'post_user_addressing_enabled',
+  CONTACT_API_ENABLED = 'contact_api_enabled'
 }
 
 /**
