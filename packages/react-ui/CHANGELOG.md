@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.96](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.95...@selfcommunity/react-ui@0.11.0-alpha.96) (2025-09-18)
+
+
+### Bug Fixes
+
+* callback home navigation toolbar ([a7e19b5](https://github.com/selfcommunity/community-js/commit/a7e19b5394664463cdab6be4ef56a50bdfadbd9c))
+* fixed user tagging, added new api ([6fc5726](https://github.com/selfcommunity/community-js/commit/6fc5726b2b486d69da2f955e1ae1cda518e76db7))
+
+
+
+
+
 # [0.11.0-alpha.95](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.94...@selfcommunity/react-ui@0.11.0-alpha.95) (2025-09-17)
 
 
