@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
 import {SCFeatureName} from '@selfcommunity/types';
-import {useSCPreferences} from '@selfcommunity/react-core';
+import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 
 /**
  * Custom hook to check if the feature is enabled

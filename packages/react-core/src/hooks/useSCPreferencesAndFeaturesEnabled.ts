@@ -1,6 +1,6 @@
 import {useMemo} from 'react';
 import {SCFeatureName} from '@selfcommunity/types';
-import {useSCPreferences} from '@selfcommunity/react-core';
+import {useSCPreferences} from '../components/provider/SCPreferencesProvider';
 
 /**
  * Custom hook preferences and features at the same time
