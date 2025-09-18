@@ -195,7 +195,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
       <List className={classes.navigation}>
         {scUserContext.user && (
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} onClickHome={handleClickHome}>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} onClick={handleClickHome}>
               <ListItemIcon>
                 <Icon>home</Icon>
               </ListItemIcon>

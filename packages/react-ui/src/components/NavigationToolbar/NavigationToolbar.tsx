@@ -347,7 +347,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
       <NavigationMenuIconButtonComponent {...NavigationMenuIconButtonComponentProps} />
-      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo} {...(onClickHome && {onClick: onClickHome})}>
+      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo} onClick={handleClickHome}>
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
       </Link>
       {!scUserContext.user && !preferences[SCPreferences.ADDONS_CLOSED_COMMUNITY] && (
