@@ -58,6 +58,7 @@ const Root = styled(Box, {
 export interface DefaultDrawerContentProps extends BoxProps {
   CategoryItemProps?: CategoryProps;
   tagImage?: string;
+  onClose?: () => void;
   onClickHome?: () => void;
 }
 export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps) {
@@ -66,7 +67,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
     name: PREFIX
   });
 
-  const {className, CategoryItemProps = {showTooltip: true}, tagImage = '/', onClickHome, ...rest} = props;
+  const {className, CategoryItemProps = {showTooltip: true}, tagImage = '/', onClose, onClickHome, ...rest} = props;
 
   // HOOKS
   const {categories} = useSCFetchCategories();
@@ -303,8 +304,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
               expanded={expanded === tagName}
               onChange={handleChange(tagName)}
               elevation={0}
-              onFocus={(e) => e.stopPropagation()}
-              onClick={(e) => e.stopPropagation()}>
+              onFocus={(e) => e.stopPropagation()}>
               <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
                 <BaseItem
                   elevation={0}
@@ -332,6 +332,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
                             () => handleMouseEnter(c.id),
                             () => handleMouseLeave(c.id)
                           )}
+                          onClick={onClose}
                         />
                       </ListItem>
                     </Zoom>
@@ -356,6 +357,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
                       () => handleMouseEnter(c.id),
                       () => handleMouseLeave(c.id)
                     )}
+                    onClick={onClose}
                   />
                 </ListItem>
               </Zoom>

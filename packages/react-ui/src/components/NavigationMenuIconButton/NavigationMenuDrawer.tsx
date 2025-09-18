@@ -24,7 +24,7 @@ const classes = {
 const Root = styled(Drawer, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(({theme}) => ({}));
 
 export interface NavigationMenuDrawerProps extends DrawerProps {
@@ -89,7 +89,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
     showDrawerHeader = true,
     defaultDrawerContentProps = null,
     drawerHeaderContent = <DefaultHeaderContent />,
-    drawerContent = <DefaultDrawerContent {...defaultDrawerContentProps} />,
+    drawerContent = <DefaultDrawerContent onClose={() => onClose({}, 'backdropClick')} {...defaultDrawerContentProps} />,
     showDrawerFooterContent = true,
     drawerFooterContent = null,
     ScrollContainerProps = {hideTracksWhenNotNeeded: true},
@@ -131,9 +131,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
       <ScrollContainer {...ScrollContainerProps}>
         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
         {/* @ts-ignore */}
-        <List className={classes.drawerContent} onClick={onClose}>
-          {drawerContent}
-        </List>
+        <List className={classes.drawerContent}>{drawerContent}</List>
       </ScrollContainer>
       {showDrawerFooterContent && (
         <>
