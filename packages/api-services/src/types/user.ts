@@ -28,6 +28,10 @@ export interface UserAutocompleteParams extends BaseSearchParams {
    * Ordering fields (eg?: ?ordering=username). Minus char is used for descending ordering, eg. -username
    */
   ordering?: string;
+  /**
+   * Filter using the user ids
+   */
+  exclude?: string;
 }
 
 /**

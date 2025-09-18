@@ -101,6 +101,7 @@ export interface UserApiClientInterface {
   getUserLiveStream(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>>;
   getOrderHistory(id: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder[]>;
   getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder>;
+  matchUsernames(usernames: string, config?: AxiosRequestConfig): Promise<SCUserAutocompleteType[]>;
 }
 
 /**
@@ -685,6 +686,15 @@ export class UserApiClient {
   static getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder> {
     return apiRequest({...config, url: Endpoints.GetOrderDetail.url({id, order}), method: Endpoints.GetOrderDetail.method, params});
   }
+
+  /**
+   * This endpoint retrieve detail of an order
+   * @param usernames
+   * @param config
+   */
+  static matchUsernames(usernames: string, config?: AxiosRequestConfig): Promise<SCUserAutocompleteType[]> {
+    return apiRequest({...config, url: Endpoints.UserMatchUsernames.url({usernames}), method: Endpoints.UserMatchUsernames.method});
+  }
 }
 
 /**
@@ -906,5 +916,8 @@ export default class UserService {
   }
   static async getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder> {
     return UserApiClient.getOrderDetail(id, order, params, config);
+  }
+  static async matchUsernames(usernames: string, config?: AxiosRequestConfig): Promise<SCUserAutocompleteType[]> {
+    return UserApiClient.matchUsernames(usernames, config);
   }
 }
