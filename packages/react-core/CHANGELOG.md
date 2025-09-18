@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.15...@selfcommunity/react-core@0.7.0-alpha.16) (2025-09-18)
+
+
+### Bug Fixes
+
+* add contact_api_enabled preferences ([7b959c2](https://github.com/selfcommunity/community-js/commit/7b959c2d82d0548ff1610d76cd3296ace761994d))
+
+
+
+
+
 # [0.7.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.14...@selfcommunity/react-core@0.7.0-alpha.15) (2025-09-18)
 
 

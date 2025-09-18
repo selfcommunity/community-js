@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.7...@selfcommunity/types@0.8.0-alpha.8) (2025-09-18)
+
+
+### Bug Fixes
+
+* add contact_api_enabled preferences ([7b959c2](https://github.com/selfcommunity/community-js/commit/7b959c2d82d0548ff1610d76cd3296ace761994d))
+
+
+
+
+
 # [0.8.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.6...@selfcommunity/types@0.8.0-alpha.7) (2025-09-18)
 
 
