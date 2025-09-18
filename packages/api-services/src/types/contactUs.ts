@@ -20,7 +20,7 @@ export interface ContactUsRequestParams {
    */
   message?: string;
   /**
-   * Any other properties available in user_metadata_definition
+   * Any other properties
    */
   [p: string]: any;
 }

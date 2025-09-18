@@ -1,5 +1,5 @@
 import {Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, Tooltip, Icon} from '@mui/material';
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import NavigationToolbarSkeleton from './Skeleton';
@@ -23,6 +23,7 @@ import {
 } from '@selfcommunity/react-core';
 import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from '../NavigationMenuIconButton';
 import {PREFIX} from './constants';
+import {scroll} from 'seamless-scroll-polyfill';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -182,8 +183,8 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     startActions = null,
     endActions = null,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
-    NavigationMenuIconButtonComponentProps = {},
     NavigationMenuIconButtonComponent = NavigationMenuIconButton,
+    NavigationMenuIconButtonComponentProps = {},
     children = null,
     NotificationMenuProps = {},
     ComposerIconButtonProps = {},
@@ -264,6 +265,17 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     onCloseNotificationMenu && onCloseNotificationMenu();
   };
 
+  const handleClickHome = useCallback(() => {
+    if (onClickHome) {
+      onClickHome();
+    } else {
+      const pathName = window.location.pathname;
+      if (pathName && (pathName === '/' || pathName === scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))) {
+				scroll(window, {top: 0, behavior: 'smooth'});
+      }
+    }
+  }, [onClickHome]);
+
   // RENDER
   if (scUserContext.loading) {
     return <NavigationToolbarSkeleton />;
@@ -277,7 +289,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           aria-label="Home"
           to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
           component={Link}
-          {...(onClickHome && {onClick: onClickHome})}>
+          onClick={handleClickHome}>
           <Icon>home</Icon>
         </IconButton>
       )}

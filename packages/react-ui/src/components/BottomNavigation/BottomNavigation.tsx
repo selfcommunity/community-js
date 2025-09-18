@@ -6,7 +6,7 @@ import {
   Icon,
   styled
 } from '@mui/material';
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {
   Link,
   SCPreferences,
@@ -24,6 +24,7 @@ import classNames from 'classnames';
 import {SCFeatureName} from '@selfcommunity/types';
 import {iOS} from '@selfcommunity/utils';
 import ComposerIconButton from '../ComposerIconButton';
+import {scroll} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCBottomNavigation';
 
@@ -128,6 +129,17 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
   const contentAvailable = preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
   const isIOS = useMemo(() => iOS(), []);
 
+  const handleClickHome = useCallback(() => {
+    if (onClickHome) {
+      onClickHome();
+    } else {
+      const pathName = window.location.pathname;
+      if (pathName && (pathName === '/' || pathName === scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))) {
+				scroll(window, {top: 0, behavior: 'smooth'});
+      }
+    }
+  }, [onClickHome]);
+
   // RENDER
   return (
     <Root className={classNames(className, classes.root, {[classes.ios]: isIOS})} {...rest}>
@@ -141,7 +153,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
               to={scUserContext.user ? scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}) : '/'}
               value={scUserContext.user ? scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}) : '/'}
               icon={<Icon>home</Icon>}
-              {...(onClickHome && {onClick: onClickHome})}
+              onClick={handleClickHome}
             />,
             // (scUserContext.user || contentAvailable) && exploreStreamEnabled ? (
             //   <BottomNavigationAction
