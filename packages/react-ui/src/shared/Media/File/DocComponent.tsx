@@ -1,14 +1,20 @@
-import {Box, Icon, IconButton, Stack, styled, Typography} from '@mui/material';
+import {Box, Button, Icon, IconButton, Stack, styled, Typography} from '@mui/material';
 import {PREFIX} from './constants';
 import {Link} from '@selfcommunity/react-core';
 import {SCMediaType} from '@selfcommunity/types';
-import {MEDIA_TYPE_DOCUMENT} from '../../../constants/Media';
+import {useCallback} from 'react';
+import avi from '../../../assets/composer/avi';
+import mp3 from '../../../assets/composer/mp3';
+import pdf from '../../../assets/composer/pdf';
+import ppt from '../../../assets/composer/ppt';
+import psd from '../../../assets/composer/psd';
+import txt from '../../../assets/composer/txt';
+import xls from '../../../assets/composer/xls';
+import fallback from '../../../assets/composer/fallback';
 
 const classes = {
   docRoot: `${PREFIX}-doc-root`,
   imageWrapper: `${PREFIX}-image-wrapper`,
-  badgePdf: `${PREFIX}-badge-pdf`,
-  pdf: `${PREFIX}-pdf`,
   textWrapper: `${PREFIX}-text-wrapper`,
   title: `${PREFIX}-title`,
   subtitle: `${PREFIX}-subtitle`,
@@ -34,45 +40,65 @@ function formatBytes(bytes: number, decimals = 2) {
 }
 
 interface DocComponentProps {
-  doc: SCMediaType;
+  document: SCMediaType;
   index?: number;
   onDelete?: (id: number) => void;
-  openPreviewImage?: (index: number, type: string) => void;
   handleDownload?: (id: number) => void;
   onMediaClick?: (media: SCMediaType) => void;
 }
 
 export default function DocComponent(props: DocComponentProps) {
-  const {doc, index, onDelete, openPreviewImage, handleDownload, onMediaClick} = props;
+  const {document, index, onDelete, handleDownload, onMediaClick} = props;
+
+  const getImage = useCallback(() => {
+    switch (document.type) {
+      case 'avi':
+        return avi;
+      case 'doc':
+        return pdf; // TODO - use "doc" instead of "pdf" after api will be updated
+      case 'mp3':
+        return mp3;
+      case 'pdf':
+        return pdf;
+      case 'ppt':
+        return ppt;
+      case 'psd':
+        return psd;
+      case 'txt':
+        return txt;
+      case 'xsl':
+        return xls;
+      default:
+        return fallback;
+    }
+  }, [document.type]);
+
+  const imageComponent = <Box component="img" alt="pdf preview" src={getImage()} sx={{cursor: handleDownload ? 'pointer' : undefined}} />;
 
   return (
     <Root className={classes.docRoot}>
-      <Box
-        onClick={() => openPreviewImage?.(index, MEDIA_TYPE_DOCUMENT)}
-        sx={{cursor: openPreviewImage ? 'pointer' : undefined}}
-        className={classes.imageWrapper}>
-        <img alt="pdf preview" src={doc.image_thumbnail ? doc.image_thumbnail.url : doc.image} width="100%" height="100%" />
-        <Box className={classes.badgePdf}>
-          <Typography variant="body1" className={classes.pdf}>
-            PDF
-          </Typography>
-        </Box>
-      </Box>
+      {handleDownload ? (
+        <Button className={classes.imageWrapper} component={Link} to={document.url} target="_blank" onClick={() => onMediaClick?.(document)}>
+          {imageComponent}
+        </Button>
+      ) : (
+        <>{imageComponent}</>
+      )}
       <Stack className={classes.textWrapper}>
-        <Typography className={classes.title}>{doc.title}</Typography>
-        {doc.size && <Typography className={classes.subtitle}>{formatBytes(doc.size)}</Typography>}
+        <Typography className={classes.title}>{document.title}</Typography>
+        {document.size && <Typography className={classes.subtitle}>{formatBytes(document.size)}</Typography>}
       </Stack>
 
       {(handleDownload || onDelete) && (
         <Stack className={classes.actionWrapper}>
           {onDelete && (
-            <IconButton className={classes.action} onClick={() => onDelete(doc.id)}>
+            <IconButton className={classes.action} onClick={() => onDelete(document.id)}>
               <Icon>delete</Icon>
             </IconButton>
           )}
           {handleDownload && (
             <>
-              <IconButton className={classes.action} component={Link} to={doc.url} target="_blank" onClick={() => onMediaClick?.(doc)}>
+              <IconButton className={classes.action} component={Link} to={document.url} target="_blank" onClick={() => onMediaClick?.(document)}>
                 <Icon>visibility</Icon>
               </IconButton>
               <IconButton className={classes.action} onClick={() => handleDownload(index)}>

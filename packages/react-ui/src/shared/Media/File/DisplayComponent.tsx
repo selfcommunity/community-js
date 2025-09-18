@@ -1,13 +1,12 @@
-import {styled, Grid, Typography, Icon, Stack, IconButton} from '@mui/material';
+import {styled, Grid, Typography, Icon, Stack} from '@mui/material';
 import classNames from 'classnames';
-import {Fragment, useCallback, useEffect, useMemo, useState} from 'react';
+import {Fragment, useCallback, useMemo, useState} from 'react';
 import {useInView} from 'react-intersection-observer';
 import {Lightbox} from '../../Lightbox';
 import {PREFIX} from './constants';
 import DocComponent from './DocComponent';
 import {filteredDocs, filteredImages} from './filter';
 import {SCMediaType} from '@selfcommunity/types';
-import {MEDIA_TYPE_DOCUMENT, MEDIA_TYPE_IMAGE} from '../../../constants/Media';
 import {http, HttpResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
@@ -67,7 +66,6 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
 
   // STATE
   const [preview, setPreview] = useState(-1);
-  const [mediaType, setMediaType] = useState<string | null>(null);
   const [toolbarButtons, setToolbarButtons] = useState(undefined);
   const {ref, inView} = useInView({triggerOnce: false});
 
@@ -91,20 +89,16 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   const openPreviewImage = useCallback(
-    (index: number, type: string = MEDIA_TYPE_IMAGE) => {
+    (index: number) => {
       if (gallery === false) {
         // Prevent gallery
         return;
       }
 
       setPreview(index);
-      setMediaType(type);
-
-      if (type === MEDIA_TYPE_IMAGE) {
-        onMediaClick(images[index]);
-      }
+      onMediaClick(images[index]);
     },
-    [gallery, setPreview, setMediaType, images, onMediaClick]
+    [gallery, setPreview, images, onMediaClick]
   );
 
   // RENDERING
@@ -285,29 +279,6 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     [onMediaClick]
   );
 
-  const handleIndexChange = useCallback(
-    (index: number) => {
-      if (mediaType === MEDIA_TYPE_DOCUMENT) {
-        setToolbarButtons(
-          <IconButton onClick={() => handleDownload(index)}>
-            <Icon>download</Icon>
-          </IconButton>
-        );
-      } else {
-        setToolbarButtons(undefined);
-      }
-    },
-    [mediaType, docs, setToolbarButtons, handleDownload]
-  );
-
-  useEffect(() => {
-    if (preview !== -1) {
-      handleIndexChange(preview);
-    } else {
-      setMediaType(null);
-    }
-  }, [preview]);
-
   const imagesToShow = [...images];
   if (maxVisible && images.length > maxVisible) {
     imagesToShow.length = maxVisible;
@@ -323,20 +294,11 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       {imagesToShow.length >= 2 && imagesToShow.length < 4 && renderTwo()}
       {imagesToShow.length >= 4 && renderThree()}
 
-      {preview !== -1 && (
-        <Lightbox onClose={handleClose} index={preview} medias={mediaType === MEDIA_TYPE_IMAGE ? images : docs} toolbarButtons={toolbarButtons} />
-      )}
+      {preview !== -1 && <Lightbox onClose={handleClose} index={preview} medias={images} toolbarButtons={toolbarButtons} />}
 
       <Stack className={classes.docsWrapper}>
         {docs.map((doc, i) => (
-          <DocComponent
-            key={doc.id}
-            doc={doc}
-            index={i}
-            openPreviewImage={openPreviewImage}
-            handleDownload={handleDownload}
-            onMediaClick={onMediaClick}
-          />
+          <DocComponent key={doc.id} document={doc} index={i} handleDownload={handleDownload} onMediaClick={onMediaClick} />
         ))}
       </Stack>
     </Root>
