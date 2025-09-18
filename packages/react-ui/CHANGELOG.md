@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.100](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.99...@selfcommunity/react-ui@0.11.0-alpha.100) (2025-09-18)
+
+
+### Bug Fixes
+
+* fixed onclick problem on sub categories. Linear: https://linear.app/quentral/issue/QUE-2027/da-mobile-i-link-per-aprire-le-sottocategorie-di-formazione-non ([f4ceb90](https://github.com/selfcommunity/community-js/commit/f4ceb909875edcb1c273f234bfe271514119f1e5))
+
+
+
+
+
 # [0.11.0-alpha.99](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.98...@selfcommunity/react-ui@0.11.0-alpha.99) (2025-09-18)
 
 
