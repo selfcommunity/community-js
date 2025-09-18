@@ -166,28 +166,10 @@ const Component = {
       flexDirection: 'row',
       gap: '8px',
       '& .SCMediaFile-image-wrapper': {
-        border: '1px solid #DDD',
-        borderRadius: '2px',
         flexShrink: 0,
-        position: 'relative',
-        width: '50px',
-        height: '50px',
-        '& .SCMediaFile-badge-pdf': {
-          position: 'absolute',
-          bottom: theme.spacing(1),
-          left: 0,
-          width: theme.spacing(4),
-          height: theme.spacing(2),
-          border: '1px solid #DDD',
-          borderLeft: 0,
-          borderTopRightRadius: '3px',
-          borderBottomRightRadius: '3px',
-          '& .SCMediaFile-pdf': {
-            height: '100%',
-            fontWeight: 600,
-            lineHeight: 1,
-            padding: '1px'
-          }
+        padding: 0,
+        '&:hover': {
+          backgroundColor: 'unset'
         }
       },
       '& .SCMediaFile-text-wrapper': {
