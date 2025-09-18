@@ -89,7 +89,7 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
     showDrawerHeader = true,
     defaultDrawerContentProps = null,
     drawerHeaderContent = <DefaultHeaderContent />,
-    drawerContent = <DefaultDrawerContent onClose={() => onClose({}, 'backdropClick')} {...defaultDrawerContentProps} />,
+    drawerContent = <DefaultDrawerContent onClose={() => onClose?.({}, 'backdropClick')} {...defaultDrawerContentProps} />,
     showDrawerFooterContent = true,
     drawerFooterContent = null,
     ScrollContainerProps = {hideTracksWhenNotNeeded: true},
