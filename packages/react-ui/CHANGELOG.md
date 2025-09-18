@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.101](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.100...@selfcommunity/react-ui@0.11.0-alpha.101) (2025-09-18)
+
+
+### Features
+
+* updated doc images. Linear: https://linear.app/quentral/issue/QUE-2002/frontend-usare-le-icone-rappresentative-per-i-documenti-allegati-e ([6200312](https://github.com/selfcommunity/community-js/commit/62003126652b1c0e9a47899b3a9b320dd9996fb5))
+
+
+
+
+
 # [0.11.0-alpha.100](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.99...@selfcommunity/react-ui@0.11.0-alpha.100) (2025-09-18)
 
 
