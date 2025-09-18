@@ -71,7 +71,7 @@ const PreviewComponent = forwardRef((props: PreviewComponentProps, ref: Ref<unkn
       )),
     [images]
   );
-  const docElements = useMemo(() => docs.map((doc) => <DocComponent key={doc.id} doc={doc} onDelete={handleDelete} />), [docs]);
+  const docElements = useMemo(() => docs.map((doc) => <DocComponent key={doc.id} document={doc} onDelete={handleDelete} />), [docs]);
 
   return (
     <Root ref={ref} className={classNames(className, classes.previewRoot)} {...rest}>

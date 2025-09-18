@@ -9,12 +9,11 @@ import {
   SCCourseLessonCompletionStatusType,
   SCCoursePrivacyType,
   SCCourseSectionType,
-  SCCourseType,
-  SCEventSubscriptionStatusType
+  SCCourseType
 } from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import ActionButton from './Student/ActionButton';
-import {CLAPPING} from '../../assets/courses/clapping';
+import clapping from '../../assets/courses/clapping';
 import {
   SCRoutes,
   SCRoutingContextType,
@@ -289,9 +288,7 @@ function Student(inProps: StudentCourseDashboardProps) {
         ) : (
           isPaymentsEnabled &&
           scCourse.paywalls?.length > 0 &&
-          !(scCourse.join_status === SCCourseJoinStatusType.CREATOR) && (
-            <BuyButton contentType={SCContentType.COURSE} content={scCourse} />
-          )
+          !(scCourse.join_status === SCCourseJoinStatusType.CREATOR) && <BuyButton contentType={SCContentType.COURSE} content={scCourse} />
         )}
       </Stack>
     );
@@ -396,7 +393,7 @@ function Student(inProps: StudentCourseDashboardProps) {
                 <FormattedMessage id="ui.course.dashboard.student.completed" defaultMessage="ui.course.dashboard.student.completed" />
               </Typography>
               <img
-                src={CLAPPING}
+                src={clapping}
                 alt={intl.formatMessage({id: 'ui.course.dashboard.student.completed', defaultMessage: 'ui.course.dashboard.student.completed'})}
                 width={32}
                 height={32}
