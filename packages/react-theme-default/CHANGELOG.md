@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.18...@selfcommunity/react-theme-default@0.5.0-alpha.19) (2025-09-18)
+
+
+### Features
+
+* updated doc images. Linear: https://linear.app/quentral/issue/QUE-2002/frontend-usare-le-icone-rappresentative-per-i-documenti-allegati-e ([6200312](https://github.com/selfcommunity/community-js/commit/62003126652b1c0e9a47899b3a9b320dd9996fb5))
+
+
+
+
+
 # [0.5.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.17...@selfcommunity/react-theme-default@0.5.0-alpha.18) (2025-09-17)
 
 
