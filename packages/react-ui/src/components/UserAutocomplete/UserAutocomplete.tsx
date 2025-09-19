@@ -151,7 +151,7 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
 
     try {
       if (names.length > 0) {
-        const resp: SCUserAutocompleteType[] = await UserService.matchUsernames(names.join(','));
+        const resp: SCUserAutocompleteType[] = await UserService.matchUsernames(names);
         const matchedMap = new Map(resp.map((u) => [u.username, u]));
         resolvedUsers = names.map((name) => matchedMap.get(name) || name);
       }

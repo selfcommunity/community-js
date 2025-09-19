@@ -339,8 +339,8 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'GET'
   },
   UserMatchUsernames: {
-    url: urlReplacer('/api/v2/user/match/?usernames=$(usernames)'),
-    method: 'GET'
+    url: urlReplacer('/api/v2/user/match/'),
+    method: 'POST'
   },
   ListHiddenUsers: {
     url: urlReplacer('/api/v2/user/hidden_users/'),
