@@ -593,14 +593,14 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       } else if (event || (value && Object.prototype.hasOwnProperty.call(value, 'recurring'))) {
         dispatch({type: 'event', value});
       } else if (
-        (Array.isArray(value) &&
-          value.some((item) => (typeof item === 'object' && item !== null && !('color' in item)) || typeof item === 'string')) ||
-        (Array.isArray(recipients) && recipients.length > 0)
+        (value && Array.isArray(value) && value.some((item) => typeof item === 'object' && !('color' in item))) ||
+        (value === null && Array.isArray(recipients) && recipients.length > 0)
       ) {
         dispatch({
           type: 'multiple',
           value: {
             recipients: value,
+            addressing: [],
             addressingError:
               addressingRequiredEnabled && !value ? (
                 <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
@@ -612,6 +612,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           type: 'multiple',
           value: {
             addressing: value,
+            recipients: [],
             addressingError:
               addressingRequiredEnabled && !value ? (
                 <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
@@ -625,20 +626,21 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   );
 
   const handleAddAudienceLayer = useCallback(() => {
+    const defaultValue =
+      group || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'emotional_image_position'))
+        ? group
+        : event || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'recurring'))
+        ? event
+        : Array.isArray(recipients) && recipients.some((item) => typeof item === 'object' && item !== null && !('color' in item))
+        ? recipients
+        : addressing;
     handleAddLayer({
       name: 'audience',
       Component: AudienceLayer,
       ComponentProps: {
         onClose: handleRemoveLayer,
         onSave: handleChangeAudience,
-        defaultValue:
-          group || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'emotional_image_position'))
-            ? group
-            : event || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'recurring'))
-            ? event
-            : recipients?.length !== 0 || (recipients?.length !== 0 && !recipients.some((r) => 'color' in r))
-            ? recipients
-            : addressing
+        defaultValue: defaultValue
       }
     });
   }, [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing, event, group, recipients]);
@@ -1075,7 +1077,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <Icon>category</Icon>
           </IconButton>
           <IconButton
-            color={group || event || (addressing !== null && addressing?.length > 0) ? 'primary' : 'default'}
+            color={
+              group || event || (addressing !== null && addressing?.length > 0) || (recipients !== null && recipients?.length > 0)
+                ? 'primary'
+                : 'default'
+            }
             disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING) || Boolean(feedObject?.group) || Boolean(feedObject?.event)}
             onClick={handleAddAudienceLayer}>
             {group ? (
