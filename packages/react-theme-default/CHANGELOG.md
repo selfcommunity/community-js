@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.19...@selfcommunity/react-theme-default@0.5.0-alpha.20) (2025-09-19)
+
+
+### Bug Fixes
+
+* added margin into feed object medias section ([b5f3439](https://github.com/selfcommunity/community-js/commit/b5f3439292d7bd5aeac5985a5d97b1fafc3e96c7))
+
+
+
+
+
 # [0.5.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.18...@selfcommunity/react-theme-default@0.5.0-alpha.19) (2025-09-18)
 
 
