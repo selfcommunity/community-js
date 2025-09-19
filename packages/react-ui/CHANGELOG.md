@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.102](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.101...@selfcommunity/react-ui@0.11.0-alpha.102) (2025-09-19)
+
+
+### Bug Fixes
+
+* fixed composer tagging ([848aa5c](https://github.com/selfcommunity/community-js/commit/848aa5c9388971b1598bbbbb26e1efebd9849df6))
+* fixed tagging in composer ([ad503d4](https://github.com/selfcommunity/community-js/commit/ad503d4bb5881dcded7da70cef57d31516e6e237))
+
+
+### Performance Improvements
+
+* updated match usernames api ([290f5a6](https://github.com/selfcommunity/community-js/commit/290f5a6a397ed6c665c79fce26b21ea703002ce8))
+
+
+
+
+
 # [0.11.0-alpha.101](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.100...@selfcommunity/react-ui@0.11.0-alpha.101) (2025-09-18)
 
 

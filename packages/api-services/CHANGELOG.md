@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.6...@selfcommunity/api-services@0.7.0-alpha.7) (2025-09-19)
+
+
+### Performance Improvements
+
+* updated match usernames api ([290f5a6](https://github.com/selfcommunity/community-js/commit/290f5a6a397ed6c665c79fce26b21ea703002ce8))
+
+
+
+
+
 # [0.7.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.5...@selfcommunity/api-services@0.7.0-alpha.6) (2025-09-18)
 
 **Note:** Version bump only for package @selfcommunity/api-services

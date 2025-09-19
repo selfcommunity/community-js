@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.40...@selfcommunity/react-templates@0.5.0-alpha.41) (2025-09-19)
+
+
+### Bug Fixes
+
+* fixed tagging in composer ([ad503d4](https://github.com/selfcommunity/community-js/commit/ad503d4bb5881dcded7da70cef57d31516e6e237))
+
+
+
+
+
 # [0.5.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.39...@selfcommunity/react-templates@0.5.0-alpha.40) (2025-09-18)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

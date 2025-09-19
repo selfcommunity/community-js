@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.16...@selfcommunity/react-core@0.7.0-alpha.17) (2025-09-19)
+
+
+### Bug Fixes
+
+* hooks useSCPreference, useSCPreferenceEnabled, useSCPreferencesEnabled, useSCFeatureEnabled, useSCFeaturesEnabled, useSCPreferencesAndFeaturesEnabled, ([1c51a7a](https://github.com/selfcommunity/community-js/commit/1c51a7a42c701aea3d35bf01dc0bf4cae40da669))
+* hooks useSCPreference, useSCPreferenceEnabled, useSCPreferencesEnabled, useSCFeatureEnabled, useSCFeaturesEnabled, useSCPreferencesAndFeaturesEnabled, ([d2e59b9](https://github.com/selfcommunity/community-js/commit/d2e59b91d2c51cc8fab07ada4f67554b3e66ab53))
+* hooks useSCPreference, useSCPreferenceEnabled, useSCPreferencesEnabled, useSCFeatureEnabled, useSCFeaturesEnabled, useSCPreferencesAndFeaturesEnabled, ([16759ea](https://github.com/selfcommunity/community-js/commit/16759ea7a84512de074d2e1ca56d3eba2a1271f9))
+
+
+
+
+
 # [0.7.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.15...@selfcommunity/react-core@0.7.0-alpha.16) (2025-09-18)
 
 
