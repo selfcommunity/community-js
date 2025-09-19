@@ -593,13 +593,14 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       } else if (event || (value && Object.prototype.hasOwnProperty.call(value, 'recurring'))) {
         dispatch({type: 'event', value});
       } else if (
-        (value && Array.isArray(value) && value?.some((item) => typeof item === 'object' && item !== null && !('color' in item))) ||
+        (value && Array.isArray(value) && value.some((item) => typeof item === 'object' && !('color' in item))) ||
         (value === null && Array.isArray(recipients) && recipients.length > 0)
       ) {
         dispatch({
           type: 'multiple',
           value: {
             recipients: value,
+            addressing: [],
             addressingError:
               addressingRequiredEnabled && !value ? (
                 <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
@@ -611,6 +612,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           type: 'multiple',
           value: {
             addressing: value,
+            recipients: [],
             addressingError:
               addressingRequiredEnabled && !value ? (
                 <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
