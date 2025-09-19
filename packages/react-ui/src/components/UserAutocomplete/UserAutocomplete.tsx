@@ -1,4 +1,4 @@
-import React, {Fragment, SyntheticEvent, useEffect, useMemo, useState} from 'react';
+import React, {Fragment, SyntheticEvent, useCallback, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
@@ -117,7 +117,7 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
   );
 
   // Fetch users excluding selected ones
-  const {users, isLoading} = useSCFetchUsers({search: inputValue, exclude: excludeIds});
+  const {users, isLoading} = useSCFetchUsers({search: inputValue?.length >= 3 ? inputValue : '', exclude: excludeIds});
   const filteredUsers = users.filter((u) => !excludeIds.includes(u.id));
 
   useEffect(() => {
@@ -126,9 +126,12 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
   }, [value]);
 
   // Handlers
-  const handleOpen = () => {
-    filteredUsers.length > 0 && setOpen(true);
-  };
+  const handleOpen = useCallback(() => {
+    if (filteredUsers.length > 0) {
+      setOpen(true);
+    }
+  }, [filteredUsers]);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -146,22 +149,34 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
           .filter(Boolean)
       )
     );
-
-    let resolvedUsers: (SCUserAutocompleteType | string)[] = [];
-
     try {
       if (names.length > 0) {
         const resp: SCUserAutocompleteType[] = await UserService.matchUsernames(names);
-        const matchedMap = new Map(resp.map((u) => [u.username, u]));
-        resolvedUsers = names.map((name) => matchedMap.get(name) || name);
+        const resolvedUsernames = new Set(resp.map((u) => u.username));
+        const resolvedUsers = resp.filter((u) => resolvedUsernames.has(u.username));
+        setValue(resolvedUsers);
+        setTextAreaValue(resolvedUsers.map((u) => u.username).join('\n'));
+      } else {
+        setValue([]);
+        setTextAreaValue('');
       }
     } catch (err) {
-      console.error(`Failed fetching users`, err);
-      resolvedUsers = names;
+      console.error(`Failed fetching matching usernames`, err);
+      setValue([]);
+      setTextAreaValue('');
     }
-    setValue(resolvedUsers);
-    setTextAreaValue(e.target.value);
   };
+
+  const filterOptions = useCallback((options: SCUserAutocompleteType[], state: {inputValue: string}) => {
+    const search = state.inputValue.toLowerCase();
+
+    return options.filter((option) => {
+      const usernameMatch = option.username?.toLowerCase().includes(search);
+      const nameMatch = option.real_name?.toLowerCase().includes(search);
+
+      return usernameMatch || nameMatch;
+    });
+  }, []);
 
   return (
     <Root className={classes.root}>
@@ -172,6 +187,7 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
         onOpen={handleOpen}
         onClose={handleClose}
         options={filteredUsers || []}
+        filterOptions={filterOptions}
         getOptionLabel={(option: SCUserAutocompleteType) => option.username || ''}
         value={value}
         inputValue={inputValue}
@@ -186,7 +202,7 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
         disabled={disabled || isLoading}
         noOptionsText={<FormattedMessage id="ui.userAutocomplete.empty" defaultMessage="ui.userAutocomplete.empty" />}
         onChange={handleChange}
-        isOptionEqualToValue={(option: SCUserAutocompleteType, val: SCUserAutocompleteType) => option.id === val.id}
+        isOptionEqualToValue={(option: SCUserAutocompleteType, val: SCUserAutocompleteType) => (option ? val.id === option.id : false)}
         renderTags={(value, getTagProps) =>
           value.map((option: SCUserAutocompleteType | string, index) => {
             const username = typeof option === 'string' ? option : option.username;
@@ -204,9 +220,7 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
               <Avatar alt={option.username} src={option.avatar} sx={{marginRight: 1}} />
               <React.Fragment>
                 {parts.map((part, index) => (
-                  <Typography key={index} sx={{fontWeight: part.highlight ? 700 : 400}}>
-                    {part.text}
-                  </Typography>
+                  <Typography key={index}>{part.text}</Typography>
                 ))}
               </React.Fragment>
             </Box>
@@ -220,12 +234,13 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
             InputProps={{
               ...params.InputProps,
               autoComplete: 'off',
-              endAdornment: (
-                <Fragment>
-                  {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </Fragment>
-              )
+              endAdornment:
+                filteredUsers.length > 0 ? (
+                  <Fragment>
+                    {isLoading && <CircularProgress color="inherit" size={20} />}
+                    {params.InputProps.endAdornment}
+                  </Fragment>
+                ) : null
             }}
           />
         )}

@@ -152,6 +152,26 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
   const handleAutocompleteOpen = useCallback(() => setAutocompleteOpen(true), []);
   const handleAutocompleteClose = useCallback(() => setAutocompleteOpen(false), []);
 
+  const isAudienceTypeSelected = (type: AudienceTypes) => {
+    // "ALL" tab is never disabled
+    if (type === AudienceTypes.AUDIENCE_ALL) return false;
+    // Empty value → nothing is disabled
+    if (!value || (Array.isArray(value) && value.length === 0)) return false;
+
+    const valueType = (() => {
+      if (Array.isArray(value)) {
+        if (value.some((v) => 'color' in v)) return AudienceTypes.AUDIENCE_TAG;
+        return AudienceTypes.AUDIENCE_USERS;
+      } else {
+        if ('recurring' in value) return AudienceTypes.AUDIENCE_EVENT;
+        if ('managed_by' in value) return AudienceTypes.AUDIENCE_GROUP;
+        return AudienceTypes.AUDIENCE_USERS;
+      }
+    })();
+    // Disable all tabs except the currently selected type
+    return type !== valueType;
+  };
+
   return (
     <Root ref={ref} className={classNames(className, classes.root)} {...rest}>
       <DialogTitle className={classes.title}>
@@ -176,11 +196,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
           )}
           {eventsEnabled && (
             <Tab
-              disabled={
-                (Boolean(value?.length) && !Object.prototype.hasOwnProperty.call(value, 'recurring')) ||
-                (value !== undefined && Boolean(!value?.length) && audience !== AudienceTypes.AUDIENCE_ALL) ||
-                (Boolean(value?.length === 0) && audience === AudienceTypes.AUDIENCE_ALL && Boolean(defaultValue?.length !== 0))
-              }
+              disabled={isAudienceTypeSelected(AudienceTypes.AUDIENCE_EVENT)}
               value={AudienceTypes.AUDIENCE_EVENT}
               icon={<Icon>CalendarIcon</Icon>}
               label={<FormattedMessage id="ui.composer.layer.audience.event" defaultMessage="ui.composer.layer.audience.event" />}
@@ -188,35 +204,21 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
           )}
           {groupsEnabled && (
             <Tab
-              disabled={
-                (Boolean(value?.length) && !Object.prototype.hasOwnProperty.call(value, 'managed_by')) ||
-                (value !== undefined && Boolean(!value?.length) && audience !== AudienceTypes.AUDIENCE_ALL) ||
-                (Boolean(value?.length === 0) && audience === AudienceTypes.AUDIENCE_ALL && Boolean(defaultValue?.length !== 0))
-              }
+              disabled={isAudienceTypeSelected(AudienceTypes.AUDIENCE_GROUP)}
               value={AudienceTypes.AUDIENCE_GROUP}
               icon={<Icon>groups</Icon>}
               label={<FormattedMessage id="ui.composer.layer.audience.group" defaultMessage="ui.composer.layer.audience.group" />}
             />
           )}
           <Tab
-            disabled={
-              value &&
-              ((Array.isArray(value) && (value.some((v) => v?.username) || value.some((v) => typeof v === 'string'))) ||
-                (!Array.isArray(value) && Object.prototype.hasOwnProperty.call(value, 'managed_by'))) // group object
-            }
+            disabled={isAudienceTypeSelected(AudienceTypes.AUDIENCE_TAG)}
             value={AudienceTypes.AUDIENCE_TAG}
             icon={<Icon>label</Icon>}
             label={<FormattedMessage id="ui.composer.layer.audience.tag" defaultMessage="ui.composer.layer.audience.tag" />}
           />
           {usersTaggingEnabled && (
             <Tab
-              disabled={
-                value &&
-                ((Array.isArray(value) && value.length > 0 && !value.some((v) => v?.username) && !value.every((v) => typeof v === 'string')) ||
-                  (!Array.isArray(value) &&
-                    Object.keys(value).length > 0 &&
-                    (Object.prototype.hasOwnProperty.call(value, 'managed_by') || Object.prototype.hasOwnProperty.call(value, 'recurring'))))
-              }
+              disabled={isAudienceTypeSelected(AudienceTypes.AUDIENCE_USERS)}
               value={AudienceTypes.AUDIENCE_USERS}
               icon={<Icon>people_alt</Icon>}
               label={<FormattedMessage id="ui.composer.layer.audience.users" defaultMessage="ui.composer.layer.audience.users" />}

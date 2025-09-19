@@ -346,6 +346,7 @@ const Component = {
             }
           },
           '& .SCFeedObject-medias-section': {
+            margin: theme.spacing(1, 0),
             '& .SCFeedObjectMediaPreview-root': {
               margin: theme.spacing(0, 1)
             }
