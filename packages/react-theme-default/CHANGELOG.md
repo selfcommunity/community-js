@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.20...@selfcommunity/react-theme-default@0.5.0-alpha.21) (2025-09-22)
+
+
+### Bug Fixes
+
+* padding for MediaObject ([737e7a3](https://github.com/selfcommunity/community-js/commit/737e7a339a7b968b6e540d494f74ad34478463b0))
+
+
+
+
+
 # [0.5.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.19...@selfcommunity/react-theme-default@0.5.0-alpha.20) (2025-09-19)
 
 
