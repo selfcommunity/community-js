@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.103](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.102...@selfcommunity/react-ui@0.11.0-alpha.103) (2025-09-19)
+
+
+### Bug Fixes
+
+* fixed composer disabled tabs state ([5c5ad02](https://github.com/selfcommunity/community-js/commit/5c5ad022b7773986796c1ee7318b436af3e27e4b))
+* fixed user autocomplete(search after min chars, added control for non-existent usernames, added match also for real_name) ([d216795](https://github.com/selfcommunity/community-js/commit/d2167955dfcf58043b7f654581df5f9822fd54f2))
+
+
+
+
+
 # [0.11.0-alpha.102](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.101...@selfcommunity/react-ui@0.11.0-alpha.102) (2025-09-19)
 
 
