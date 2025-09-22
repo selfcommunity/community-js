@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.42...@selfcommunity/react-templates@0.5.0-alpha.43) (2025-09-22)
+
+
+### Bug Fixes
+
+* https://linear.app/quentral/issue/QUE-2006/frontend-aggiungere-widget-nel-feed-come-da-configurazione ([e20326e](https://github.com/selfcommunity/community-js/commit/e20326e131a92f5dc2ec1ab586c183390dd7a214))
+
+
+
+
+
 # [0.5.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.41...@selfcommunity/react-templates@0.5.0-alpha.42) (2025-09-19)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

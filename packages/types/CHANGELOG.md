@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.8...@selfcommunity/types@0.8.0-alpha.9) (2025-09-22)
+
+
+### Bug Fixes
+
+* https://linear.app/quentral/issue/QUE-2006/frontend-aggiungere-widget-nel-feed-come-da-configurazione ([e20326e](https://github.com/selfcommunity/community-js/commit/e20326e131a92f5dc2ec1ab586c183390dd7a214))
+
+
+
+
+
 # [0.8.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.7...@selfcommunity/types@0.8.0-alpha.8) (2025-09-18)
 
 
