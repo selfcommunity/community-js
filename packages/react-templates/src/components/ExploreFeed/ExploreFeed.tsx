@@ -15,7 +15,8 @@ import {
   UserSuggestionWidget,
   PlatformWidget,
   SCFeedWidgetType,
-  OnBoardingWidget
+  OnBoardingWidget,
+  CustomAdv
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
@@ -24,7 +25,7 @@ import {SCCustomAdvPosition} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
-import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
+import {SCPreferences, SCUserContext, SCUserContextType, UserUtils, useSCPreferenceEnabled} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -142,11 +143,26 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
   const {id = 'explore_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
   // CONTEXT
-  const {enqueueSnackbar} = useSnackbar();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const isAdvertisingCustomAdvEnabled = useSCPreferenceEnabled(SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED);
+  const isAdvertisingCustomAdvOnlyForAnonUsersEnabled = useSCPreferenceEnabled(SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED);
+  const {enqueueSnackbar} = useSnackbar();
 
   // REF
   const feedRef = useRef<FeedRef>();
+
+  /**
+   * Render advertising above the feed
+   */
+  function renderAdvertising() {
+    if (
+      isAdvertisingCustomAdvEnabled &&
+      ((isAdvertisingCustomAdvOnlyForAnonUsersEnabled && scUserContext.user === null) || !isAdvertisingCustomAdvOnlyForAnonUsersEnabled)
+    ) {
+      return <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FEED} />;
+    }
+    return null;
+  }
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
@@ -215,6 +231,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
         <>
           <InlineComposerWidget onSuccess={handleComposerSuccess} />
           {UserUtils.isAdmin(scUserContext.user) && <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />}
+          {renderAdvertising()}
         </>
       }
       FeedSidebarProps={FeedSidebarProps}

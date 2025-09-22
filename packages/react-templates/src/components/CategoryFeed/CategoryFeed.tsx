@@ -14,19 +14,20 @@ import {
   HiddenPurchasableContent,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
-  SCFeedWidgetType
+  SCFeedWidgetType,
+  CustomAdv
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {
   Link,
   SCPreferences,
-  SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
   SCUserContextType,
   UserUtils,
   useSCFetchCategory,
-  useSCPreferences,
+  useSCPreferenceEnabled,
+  useSCPreferencesAndFeaturesEnabled,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -163,7 +164,6 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
-  const {preferences, features}: SCPreferencesContextType = useSCPreferences();
   const {enqueueSnackbar} = useSnackbar();
 
   // REF
@@ -171,15 +171,22 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
 
   // Hooks
   const {scCategory} = useSCFetchCategory({id: categoryId, category});
-  const isPaymentsEnabled = useMemo(
-    () =>
-      preferences &&
-      features &&
-      features.includes(SCFeatureName.PAYMENTS) &&
-      SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED in preferences &&
-      preferences[SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED].value,
-    [preferences]
-  );
+  const isAdvertisingCustomAdvEnabled = useSCPreferenceEnabled(SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED);
+  const isAdvertisingCustomAdvOnlyForAnonUsersEnabled = useSCPreferenceEnabled(SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED);
+  const isPaymentsEnabled = useSCPreferencesAndFeaturesEnabled([SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED], [SCFeatureName.PAYMENTS]);
+
+  /**
+   * Render advertising above the feed
+   */
+  function renderAdvertising() {
+    if (
+      isAdvertisingCustomAdvEnabled &&
+      ((isAdvertisingCustomAdvOnlyForAnonUsersEnabled && scUserContext.user === null) || !isAdvertisingCustomAdvOnlyForAnonUsersEnabled)
+    ) {
+      return <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FEED} categoriesId={[scCategory.id]} />;
+    }
+    return null;
+  }
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
@@ -259,6 +266,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
               feedType={SCFeedTypologyType.CATEGORY}
             />
           )}
+          {renderAdvertising()}
         </>
       }
       CustomAdvProps={{categoriesId: [scCategory.id]}}
