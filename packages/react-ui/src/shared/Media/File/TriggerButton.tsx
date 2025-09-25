@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import {PREFIX} from './constants';
 import classNames from 'classnames';
-import {SCContextType, SCThemeType, useSCContext} from '@selfcommunity/react-core';
+import {SCContextType, SCPreferences, SCThemeType, useSCContext, useSCPreferences} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import MediaChunkUploader from '../../MediaChunkUploader';
 import ChunkedUploady from '@rpldy/chunked-uploady';
@@ -51,31 +51,6 @@ const MenuRoot = styled(Menu, {
   slot: 'TriggerMenuRoot'
 })(() => ({}));
 
-const PhotoUploadListItemButton = asUploadButton(
-  forwardRef((props: ListItemButtonProps, ref: any) => <ListItemButton {...props} aria-label="upload" ref={ref} />),
-  {accept: 'image/*', capture: 'camera'}
-);
-
-const GalleryUploadListItemButton = asUploadButton(
-  forwardRef((props: ListItemButtonProps, ref: any) => <ListItemButton {...props} aria-label="upload" ref={ref} />),
-  {accept: 'image/*'}
-);
-
-const DocumentUploadListItemButton = asUploadButton(
-  forwardRef((props: ListItemButtonProps, ref: any) => <ListItemButton {...props} aria-label="upload" ref={ref} />),
-  {accept: 'application/pdf'}
-);
-
-const GalleryUploadMenuItem = asUploadButton(
-  forwardRef((props: MenuItemProps, ref: any) => <MenuItem {...props} aria-label="upload" ref={ref} />),
-  {accept: 'image/*'}
-);
-
-const DocumentUploadMenuItem = asUploadButton(
-  forwardRef((props: MenuItemProps, ref: any) => <MenuItem {...props} aria-label="upload" ref={ref} />),
-  {accept: 'application/pdf'}
-);
-
 export interface TriggerIconButtonProps extends IconButtonProps {
   /**
    * Callback triggered when a media is added
@@ -91,47 +66,114 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
+  const {preferences} = useSCPreferences();
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
+  const acceptedMediaMimetypes = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_ACCEPTED_MEDIA_MIMETYPES in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_ACCEPTED_MEDIA_MIMETYPES].value,
+    [preferences]
+  );
+
+  const mimeTypesArray: string[] = useMemo(() => acceptedMediaMimetypes.split(','), [acceptedMediaMimetypes]);
+  const {imageMimeTypes, documentMimeTypes} = useMemo(
+    () =>
+      mimeTypesArray.reduce(
+        (acc: {imageMimeTypes: string; documentMimeTypes: string}, type: string): {imageMimeTypes: string; documentMimeTypes: string} => {
+          if (type.startsWith('image/')) {
+            acc = {
+              ...acc,
+              imageMimeTypes: acc.imageMimeTypes.concat(`${type},`)
+            };
+          } else {
+            acc = {
+              ...acc,
+              documentMimeTypes: acc.documentMimeTypes.concat(`${type},`)
+            };
+          }
+          return acc;
+        },
+        {imageMimeTypes: '', documentMimeTypes: ''}
+      ),
+    [mimeTypesArray]
+  );
+  const formattedImageMimeTypes = useMemo(() => imageMimeTypes.substring(0, imageMimeTypes.length - 1), [imageMimeTypes]);
+  const formattedDocumentMimeTypes = useMemo(() => documentMimeTypes.substring(0, documentMimeTypes.length - 1), [documentMimeTypes]);
+
+  const PhotoUploadListItemButton = asUploadButton(
+    forwardRef((props: ListItemButtonProps, ref: any) => <ListItemButton {...props} aria-label="upload" ref={ref} />),
+    {accept: formattedImageMimeTypes, capture: 'camera'}
+  );
+
+  const GalleryUploadListItemButton = asUploadButton(
+    forwardRef((props: ListItemButtonProps, ref: any) => <ListItemButton {...props} aria-label="upload" ref={ref} />),
+    {accept: formattedImageMimeTypes}
+  );
+
+  const DocumentUploadListItemButton = asUploadButton(
+    forwardRef((props: ListItemButtonProps, ref: any) => <ListItemButton {...props} aria-label="upload" ref={ref} />),
+    {accept: formattedDocumentMimeTypes}
+  );
+
+  const GalleryUploadMenuItem = asUploadButton(
+    forwardRef((props: MenuItemProps, ref: any) => <MenuItem {...props} aria-label="upload" ref={ref} />),
+    {accept: formattedImageMimeTypes}
+  );
+
+  const DocumentUploadMenuItem = asUploadButton(
+    forwardRef((props: MenuItemProps, ref: any) => <MenuItem {...props} aria-label="upload" ref={ref} />),
+    {accept: formattedDocumentMimeTypes}
+  );
+
   // HANDLERS
   const handleOpen = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   }, []);
+
   const handleClose = useCallback(() => {
     setAnchorEl(null);
   }, []);
-  const handleFilterByMime = useCallback((file: File) => {
-    if (file.type.startsWith('image/') || file.type === 'application/pdf') {
-      return true;
-    }
 
-    const _snackBar = enqueueSnackbar(<FormattedMessage id="ui.composer.media.file.error" defaultMessage="ui.composer.media.file.error" />, {
-      variant: 'error',
-      anchorOrigin: {horizontal: 'center', vertical: 'top'},
-      autoHideDuration: 5000,
-      SnackbarProps: {
-        onClick: () => {
-          closeSnackbar(_snackBar);
-        }
+  const handleFilterByMime = useCallback(
+    (file: File) => {
+      if (acceptedMediaMimetypes.includes(file.type)) {
+        return true;
       }
-    });
 
-    return false;
-  }, []);
+      const _snackBar = enqueueSnackbar(<FormattedMessage id="ui.composer.media.file.error" defaultMessage="ui.composer.media.file.error" />, {
+        variant: 'error',
+        anchorOrigin: {horizontal: 'center', vertical: 'top'},
+        autoHideDuration: 5000,
+        SnackbarProps: {
+          onClick: () => {
+            closeSnackbar(_snackBar);
+          }
+        }
+      });
+
+      return false;
+    },
+    [acceptedMediaMimetypes]
+  );
+
   const handleSuccess = useCallback(
     (media: SCMediaType) => {
       onAdd && onAdd(media);
     },
     [onAdd]
   );
+
   const handleProgress = useCallback((chunks: any) => {
     //console.log(chunks);
     setIsUploading(Object.keys(chunks).length > 0);
   }, []);
+
   const handleError = useCallback(
     (chunk: SCMediaChunkType, error: string) => {
       const _snackBar = enqueueSnackbar(`${chunk.name}: ${error}`, {

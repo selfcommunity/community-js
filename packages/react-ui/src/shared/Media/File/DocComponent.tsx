@@ -1,15 +1,13 @@
-import {Box, Button, Icon, IconButton, Stack, styled, Typography} from '@mui/material';
+import {Box, Icon, IconButton, Stack, styled, Typography} from '@mui/material';
 import {PREFIX} from './constants';
 import {Link} from '@selfcommunity/react-core';
-import {SCMediaType} from '@selfcommunity/types';
+import {SCMediaType, SCMimeTypes} from '@selfcommunity/types';
 import {useCallback} from 'react';
-import avi from '../../../assets/composer/avi';
-import mp3 from '../../../assets/composer/mp3';
-import pdf from '../../../assets/composer/pdf';
-import ppt from '../../../assets/composer/ppt';
-import psd from '../../../assets/composer/psd';
 import txt from '../../../assets/composer/txt';
+import pdf from '../../../assets/composer/pdf';
+import doc from '../../../assets/composer/doc';
 import xls from '../../../assets/composer/xls';
+import ppt from '../../../assets/composer/ppt';
 import fallback from '../../../assets/composer/fallback';
 
 const classes = {
@@ -51,39 +49,43 @@ export default function DocComponent(props: DocComponentProps) {
   const {document, index, onDelete, handleDownload, onMediaClick} = props;
 
   const getImage = useCallback(() => {
-    switch (document.type) {
-      case 'avi':
-        return avi;
-      case 'doc':
-        return pdf; // TODO - use "doc" instead of "pdf" after api will be updated
-      case 'mp3':
-        return mp3;
-      case 'pdf':
-        return pdf;
-      case 'ppt':
-        return ppt;
-      case 'psd':
-        return psd;
-      case 'txt':
+    switch (document.mimetype) {
+      case SCMimeTypes.PLAIN_TEXT:
+      case SCMimeTypes.CSV:
         return txt;
-      case 'xsl':
+      case SCMimeTypes.PDF:
+        return pdf;
+      case SCMimeTypes.DOC:
+      case SCMimeTypes.DOCX:
+      case SCMimeTypes.DOTX:
+      case SCMimeTypes.DOCM:
+      case SCMimeTypes.DOTM:
+        return doc;
+      case SCMimeTypes.XLS:
+      case SCMimeTypes.XLSX:
+      case SCMimeTypes.XLTX:
+      case SCMimeTypes.XLSM:
+      case SCMimeTypes.XLTM:
+      case SCMimeTypes.XLAM:
+      case SCMimeTypes.XLSB:
         return xls;
+      case SCMimeTypes.PPT:
+      case SCMimeTypes.PPTX:
+      case SCMimeTypes.POTX:
+      case SCMimeTypes.PPSX:
+      case SCMimeTypes.PPAM:
+      case SCMimeTypes.PPTM:
+      case SCMimeTypes.POTM:
+      case SCMimeTypes.PPSM:
+        return ppt;
       default:
         return fallback;
     }
-  }, [document.type]);
-
-  const imageComponent = <Box component="img" alt="pdf preview" src={getImage()} sx={{cursor: handleDownload ? 'pointer' : undefined}} />;
+  }, [document.mimetype]);
 
   return (
     <Root className={classes.docRoot}>
-      {handleDownload ? (
-        <Button className={classes.imageWrapper} component={Link} to={document.url} target="_blank" onClick={() => onMediaClick?.(document)}>
-          {imageComponent}
-        </Button>
-      ) : (
-        <>{imageComponent}</>
-      )}
+      <Box component="img" alt={document.title} src={getImage()} />
       <Stack className={classes.textWrapper}>
         <Typography className={classes.title}>{document.title}</Typography>
         {document.size && <Typography className={classes.subtitle}>{formatBytes(document.size)}</Typography>}
@@ -98,9 +100,11 @@ export default function DocComponent(props: DocComponentProps) {
           )}
           {handleDownload && (
             <>
-              <IconButton className={classes.action} component={Link} to={document.url} target="_blank" onClick={() => onMediaClick?.(document)}>
-                <Icon>visibility</Icon>
-              </IconButton>
+              {document.mimetype === SCMimeTypes.PDF && (
+                <IconButton className={classes.action} component={Link} to={document.url} target="_blank" onClick={() => onMediaClick?.(document)}>
+                  <Icon>visibility</Icon>
+                </IconButton>
+              )}
               <IconButton className={classes.action} onClick={() => handleDownload(index)}>
                 <Icon>download</Icon>
               </IconButton>

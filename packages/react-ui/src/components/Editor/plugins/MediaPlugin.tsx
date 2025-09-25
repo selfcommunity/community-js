@@ -1,4 +1,4 @@
-import React, {forwardRef, useEffect, useState} from 'react';
+import {forwardRef, useEffect, useMemo, useState} from 'react';
 import {COMMAND_PRIORITY_EDITOR, createCommand, LexicalCommand} from 'lexical';
 import {$insertNodeToNearestRoot} from '@lexical/utils';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
@@ -6,7 +6,7 @@ import {Box, CircularProgress, Icon, IconButton, IconButtonProps, styled} from '
 import ChunkedUploady from '@rpldy/chunked-uploady';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCMediaType} from '@selfcommunity/types';
-import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
+import {SCContextType, SCPreferences, SCUserContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import MediaChunkUploader from '../../../shared/MediaChunkUploader';
 import {SCMediaChunkType} from '../../../types/media';
 import {asUploadButton} from '@rpldy/upload-button';
@@ -61,9 +61,18 @@ export default function MediaPlugin(props: MediaPluginProps) {
   // CONTEXT
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
+  const {preferences} = useSCPreferences();
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
+
+  const acceptedMediaMimetypes = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_ACCEPTED_MEDIA_MIMETYPES in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_ACCEPTED_MEDIA_MIMETYPES].value,
+    [preferences]
+  );
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -92,12 +101,15 @@ export default function MediaPlugin(props: MediaPluginProps) {
 
   // HANDLERS
   const handleFileUploadFilter = (file: File): boolean => {
-    if (file.type.startsWith('image/')) {
+    const type = file.type;
+
+    if (type.startsWith('image/')) {
       setMediaType('image');
     } else {
       setMediaType('file');
     }
-    return file.type.startsWith('image/') || file.type.startsWith('application/');
+
+    return acceptedMediaMimetypes.includes(type);
   };
 
   const handleUploadSuccess = (media: SCMediaType) => {
@@ -127,7 +139,7 @@ export default function MediaPlugin(props: MediaPluginProps) {
     isUploading && isUploading(Object.keys(chunks).length !== 0);
   };
 
-  const handleUploadError = (chunk: SCMediaChunkType, error: string) => {
+  const handleUploadError = (_chunk: SCMediaChunkType, error: string) => {
     enqueueSnackbar(error, {
       variant: 'error',
       autoHideDuration: 3000
@@ -149,7 +161,7 @@ export default function MediaPlugin(props: MediaPluginProps) {
           method: Endpoints.ComposerChunkUploadMedia.method
         }}
         chunkSize={204800}
-        accept="image/*,application/*"
+        accept={acceptedMediaMimetypes}
         fileFilter={handleFileUploadFilter}
         multiple>
         <MediaChunkUploader type={mediaType} onSuccess={handleUploadSuccess} onProgress={handleUploadProgress} onError={handleUploadError} />
