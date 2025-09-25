@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.21...@selfcommunity/react-i18n@0.8.0-alpha.22) (2025-09-25)
+
+
+### Features
+
+* added new ddp; updated media object types. Linear: https://linear.app/quentral/issue/QUE-2001/frontend-sistemare-i-due-controlli-per-usare-la-nuova-dynamic-per-i ([d2947ae](https://github.com/selfcommunity/community-js/commit/d2947ae1678cdf68d848b59f430c174abb7e43dc))
+
+
+
+
+
 # [0.8.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.20...@selfcommunity/react-i18n@0.8.0-alpha.21) (2025-09-17)
 
 

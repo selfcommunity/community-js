@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.18...@selfcommunity/react-core@0.7.0-alpha.19) (2025-09-25)
+
+
+### Features
+
+* added new ddp; updated media object types. Linear: https://linear.app/quentral/issue/QUE-2001/frontend-sistemare-i-due-controlli-per-usare-la-nuova-dynamic-per-i ([d2947ae](https://github.com/selfcommunity/community-js/commit/d2947ae1678cdf68d848b59f430c174abb7e43dc))
+
+
+
+
+
 # [0.7.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.17...@selfcommunity/react-core@0.7.0-alpha.18) (2025-09-22)
 
 **Note:** Version bump only for package @selfcommunity/react-core
