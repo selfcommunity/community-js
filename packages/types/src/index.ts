@@ -204,7 +204,8 @@ import {
   SCPaymentRecurringInterval,
   SCCheckoutSessionUIMode,
   SCCourseOrderingUsersType,
-  SCCustomMenu
+  SCCustomMenu,
+  SCMimeTypes
 } from './types';
 
 /**
@@ -267,7 +268,8 @@ export {
   SCPaymentRecurringInterval,
   SCCheckoutSessionUIMode,
   SCCourseOrderingUsersType,
-  SCCustomMenu
+  SCCustomMenu,
+  SCMimeTypes
 };
 export {
   type SCBannerType,

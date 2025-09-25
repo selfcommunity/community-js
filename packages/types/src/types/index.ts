@@ -29,7 +29,7 @@ import {
 import {type SCTagType} from './tag';
 import {type SCCategoryAudienceType, type SCCategoryFollowedStatusType, type SCCategoryType, SCCategoryAutoFollowType} from './category';
 import {type SCEmbedType} from './embed';
-import {type SCChunkMediaType, type SCMediaType} from './media';
+import {type SCChunkMediaType, type SCMediaType, SCMimeTypes} from './media';
 import {SCMetadataTypeFieldType, type SCMetadataType} from './metadata';
 import {type SCContributionLocation, type SCLocalityType} from './location';
 import {type SCPollChoiceType, type SCPollType, type SCPollVoteType} from './poll';
@@ -225,6 +225,7 @@ export {
   type SCEmbedType,
   type SCMediaType,
   type SCChunkMediaType,
+  SCMimeTypes,
   type SCContributionLocation,
   type SCLocalityType,
   type SCPollChoiceType,

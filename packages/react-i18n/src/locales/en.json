@@ -232,7 +232,7 @@
   "ui.composer.media.file.photo": "Camera",
   "ui.composer.media.file.gallery": "Gallery",
   "ui.composer.media.file.document": "Documents",
-  "ui.composer.media.file.error": "Please upload an image or PDF file",
+  "ui.composer.media.file.error": "Unable to upload this file type",
   "ui.composer.media.link.add.error.urlError.invalid": "Please enter a valid URL.",
   "ui.composer.media.link.add.error.validationError": "Please enter a valid URL.",
   "ui.composer.media.link.add.help": "Insert a valid URL (youtube or web page).",
