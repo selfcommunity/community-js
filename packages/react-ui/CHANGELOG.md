@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.106](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.105...@selfcommunity/react-ui@0.11.0-alpha.106) (2025-09-26)
+
+
+### Features
+
+* updated ppt icon ([1499ab5](https://github.com/selfcommunity/community-js/commit/1499ab5759d3444b9eaa05233428798d95024b36))
+
+
+
+
+
 # [0.11.0-alpha.105](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.104...@selfcommunity/react-ui@0.11.0-alpha.105) (2025-09-25)
 
 
