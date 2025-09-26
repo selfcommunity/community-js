@@ -67,7 +67,8 @@ const Component = {
           bottom: theme.spacing(7),
           left: 0,
           right: 0,
-          justifyContent: 'center'
+          display: 'inline-table',
+          margin: 'auto'
         },
         '& .MuiDialogActions-root': {
           position: 'absolute',
