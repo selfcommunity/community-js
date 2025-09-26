@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.21...@selfcommunity/react-theme-default@0.5.0-alpha.22) (2025-09-26)
+
+
+### Bug Fixes
+
+* fixed display value on SCComposer-types. Linear: https://linear.app/quentral/issue/QUE-2091/sistemare-selettore-tipo-di-contenuto ([e2c766e](https://github.com/selfcommunity/community-js/commit/e2c766e9461b54ca637a9408db1b8863603f2027))
+
+
+
+
+
 # [0.5.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.20...@selfcommunity/react-theme-default@0.5.0-alpha.21) (2025-09-22)
 
 
