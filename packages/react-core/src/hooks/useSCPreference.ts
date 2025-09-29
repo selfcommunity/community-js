@@ -22,8 +22,8 @@ interface PreferenceValue<T = any> {
  * @returns the preference value or undefined/defaultValue if doesn't exist
  *
  * Ex.
- * const customValue = useSCPreference<string>(SCPreferences.CUSTOM_SETTING);
- * const numericValue = useSCPreference<number>(SCPreferences.CUSTOM_SETTING, 0);
+ * const customValue = useSCPreference&lt;string&gt;(SCPreferences.CUSTOM_SETTING);
+ * const numericValue = useSCPreference&lt;number&gt;(SCPreferences.CUSTOM_SETTING, 0);
  */
 function useSCPreference<T = any>(preferenceKey: string, defaultValue?: T): T | undefined {
   const {preferences} = useSCPreferences();

@@ -47,30 +47,34 @@ export class CommunityApiClient {
 
 /**
  *
- :::tip Community service can be used in the following way:
-
- ```jsx
- 1. Import the service from our library:
-
- import {CommunityService} from "@selfcommunity/api-services";
- ```
- ```jsx
- 2. Create a function and put the service inside it!
- The async function `getCommunities` will return the events matching the search query.
-
- async getCommunities() {
-         return await CommunityService.getCommunities({...});
-        }
- ```
- If you need to customize the request, you can add optional config params (`AxiosRequestConfig` type).
-
- 1. Declare it(or declare them, it is possible to add multiple params)
-
- const headers = headers: {Authorization: `Bearer ${yourToken}`}
-
- 2. Add it inside the brackets and pass it to the function, as shown in the previous example!
- ```
- :::
+ * :::tip Community service can be used in the following way:
+ *
+ * 1. Import the service from our library:
+ *
+ * ```ts
+ * import {CommunityService} from "@selfcommunity/api-services";
+ * ```
+ *
+ * 2. Create a function and put the service inside it! The async function `getCommunities`
+ * will return the events matching the search query.
+ *
+ * ```ts
+ * async function getCommunities() {
+ *   return await CommunityService.getCommunities({...});
+ * }
+ * ```
+ *
+ * If you need to customize the request, you can add optional config params (`AxiosRequestConfig` type).
+ *
+ * 1. Declare it (or declare multiple params):
+ *
+ * ```ts
+ * const headers = { Authorization: `Bearer ${yourToken}` };
+ * ```
+ *
+ * 2. Add it inside the brackets and pass it to the function, as shown in the previous example!
+ *
+ * :::
  */
 export default class CommunityService {
   static async getCommunities(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCommunityType>> {

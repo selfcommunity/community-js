@@ -20,20 +20,19 @@ import {
   SCPaymentProduct,
   SCPaymentPrice,
   SCPaymentsCustomerPortalSession,
-  SCPurchasableContent,
   SCPaywall
 } from '@selfcommunity/types';
 
 export interface PaymentApiClientInterface {
   /**
-   * Get payment products related to an object (aka paywalls) of type <content_type> and id <content_id> and the current payment_order
+   * Get payment products related to an object (aka paywalls) of type &lt;content_type&gt; and id &lt;content_id&gt; and the current payment_order
    * @param params
    * @param config
    */
   getPaymentContentStatus(params?: PaymentContentStatusParams, config?: AxiosRequestConfig): Promise<PaymentContentStatus>;
 
   /**
-   * Get payment products related to an object (aka paywalls) of type <content_type> and id <content_id>
+   * Get payment products related to an object (aka paywalls) of type &lt;content_type&gt; and id &lt;content_id&gt;
    * @param params
    * @param config
    */
@@ -62,7 +61,7 @@ export interface PaymentApiClientInterface {
   getPaymentProductPrices(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentPrice>>;
 
   /**
-   * Create session checkout with price_id for an object of type <content_type> and id <content_id>
+   * Create session checkout with price_id for an object of type &lt;content_type&gt; and id &lt;content_id&gt;
    * @param data
    * @param config
    */
@@ -126,7 +125,7 @@ export interface PaymentApiClientInterface {
  */
 export class PaymentApiClient {
   /**
-   * This endpoint retrieves all the products related to an object of type <content_type> and id <content_id> and the current payment_order
+   * This endpoint retrieves all the products related to an object of type &lt;content_type&gt; and id &lt;content_id&gt; and the current payment_order
    * @param params
    * @param config
    */
@@ -140,7 +139,7 @@ export class PaymentApiClient {
   }
 
   /**
-   * This endpoint retrieves all the products related to an object of type <content_type> and id <content_id>
+   * This endpoint retrieves all the products related to an object of type &lt;content_type&gt; and id &lt;content_id&gt;
    * @param params
    * @param config
    */
