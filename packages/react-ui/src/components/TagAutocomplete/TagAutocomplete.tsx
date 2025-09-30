@@ -139,10 +139,13 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   useEffect(() => {
     const loadDefault = async () => {
       if (typeof defaultValue === 'string' && defaultValue.trim() !== '') {
-        const results = await fetchTags('');
-        const match = results.find((t) => t.id === Number(defaultValue));
-        if (match) {
-          setValue(match);
+        try {
+          const res = await TagService.getSpecificTag(Number(defaultValue));
+          if (res) {
+            setValue(res);
+          }
+        } catch (e) {
+          Logger.error(SCOPE_SC_UI, e);
         }
       }
     };
