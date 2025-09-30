@@ -2,11 +2,13 @@ import React, {Fragment, SyntheticEvent, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {Autocomplete, AutocompleteProps, TextField, TextFieldProps, styled} from '@mui/material';
+import {Autocomplete, AutocompleteProps, TextField, TextFieldProps, styled, CircularProgress} from '@mui/material';
 import {SCTagType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import TagChip, {TagChipProps} from '../../shared/TagChip';
 import {TagService} from '@selfcommunity/api-services';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
 
 const PREFIX = 'SCTagAutocomplete';
 
@@ -39,7 +41,7 @@ export interface TagAutocompleteProps
       | 'renderInput'
     >
   > {
-  defaultValue: SCTagType[] | any;
+  defaultValue: SCTagType[] | string;
   /**
    * The props applied to text field
    * @default {variant: 'outlined, label: tags_label}
@@ -104,25 +106,28 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   const [value, setValue] = useState<string | SCTagType | (string | SCTagType)[]>(typeof defaultValue === 'string' ? null : defaultValue);
   const [tags, setTags] = useState<SCTagType[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const fetchTags = async (query: string): Promise<SCTagType[]> => {
+    setLoading(true);
+    try {
+      const res = await TagService.searchUserTags({search: query || ''});
+      const results = res?.results || [];
+      setTags(results);
+      return results;
+    } catch (error) {
+      Logger.error(SCOPE_SC_UI, error);
+      setTags([]);
+      return [];
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    let active = true;
     if (open && inputValue.length >= 3) {
-      TagService.searchUserTags({search: inputValue || ''})
-        .then((res) => {
-          if (active) {
-            setTags(res?.results || []);
-          }
-        })
-        .catch(() => {
-          if (active) {
-            setTags([]);
-          }
-        });
+      fetchTags(inputValue);
     }
-    return () => {
-      active = false;
-    };
   }, [open, inputValue]);
 
   useEffect(() => {
@@ -132,10 +137,15 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   }, [value]);
 
   useEffect(() => {
-    if (tags?.length !== 0 && typeof defaultValue === 'string') {
-      setValue(tags.find((t) => t.id === Number(defaultValue)));
-    }
-  }, [tags, defaultValue]);
+    const loadDefault = async () => {
+      if (typeof defaultValue === 'string' && defaultValue.trim() !== '') {
+        const results = await fetchTags(defaultValue);
+        const match = results.find((t) => t.name === defaultValue);
+        if (match) setValue(match);
+      }
+    };
+    loadDefault();
+  }, [defaultValue]);
 
   // Handlers
 
@@ -197,7 +207,14 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
             InputProps={{
               ...params.InputProps,
               autoComplete: 'addressing', // disable autocomplete and autofill
-              endAdornment: tags.length > 0 ? <Fragment>{params.InputProps.endAdornment}</Fragment> : null
+              endAdornment:
+                tags.length > 0 ? (
+                  <Fragment>
+                    {' '}
+                    {loading && <CircularProgress color="inherit" size={20} />}
+                    {params.InputProps.endAdornment}
+                  </Fragment>
+                ) : null
             }}
           />
         );
