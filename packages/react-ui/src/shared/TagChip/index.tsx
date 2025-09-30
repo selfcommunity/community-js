@@ -1,5 +1,5 @@
 import React from 'react';
-import {styled, Chip, ChipClasses, Theme, ChipPropsSizeOverrides, ChipPropsVariantOverrides} from '@mui/material';
+import {styled, Chip, ChipClasses, Theme, ChipPropsSizeOverrides, ChipPropsVariantOverrides, Tooltip} from '@mui/material';
 import classNames from 'classnames';
 import {SCTagType} from '@selfcommunity/types';
 import {OverridableStringUnion} from '@mui/types';
@@ -94,6 +94,11 @@ export interface TagChipProps {
    * @default false
    */
   ellipsis?: boolean;
+  /**
+   * If `true`, shows the description of the tag on hover (desktop) or long press (mobile).
+   * @default false
+   */
+  showDescription?: boolean;
 }
 
 export default function TagChip(props: TagChipProps): JSX.Element {
@@ -107,6 +112,7 @@ export default function TagChip(props: TagChipProps): JSX.Element {
     onClick = null,
     onDelete = null,
     className = null,
+    showDescription = false,
     ...rest
   } = props;
 
@@ -118,10 +124,7 @@ export default function TagChip(props: TagChipProps): JSX.Element {
     onDelete && onDelete(tag.id);
   };
 
-  /**
-   * Renders root object
-   */
-  return (
+  const root = (
     <Root
       className={classNames(className, {[classes.ellipsis]: ellipsis})}
       sx={{backgroundColor: `${tag.color}`, color: (theme) => theme.palette.getContrastText(tag.color)}}
@@ -131,4 +134,17 @@ export default function TagChip(props: TagChipProps): JSX.Element {
       {...rest}
     />
   );
+
+  /**
+   * Renders root object
+   */
+  if (showDescription && tag.description) {
+    return (
+      <Tooltip title={tag.description} placement="right" arrow>
+        {root}
+      </Tooltip>
+    );
+  }
+
+  return root;
 }
