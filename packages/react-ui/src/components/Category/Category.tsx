@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 import {Avatar, Tooltip, Typography, styled} from '@mui/material';
 import {
   Link,
@@ -13,7 +13,7 @@ import {SCCategoryAutoFollowType, SCCategoryType} from '@selfcommunity/types';
 import {CacheStrategies} from '@selfcommunity/utils';
 import CategorySkeleton from './Skeleton';
 import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
-import {defineMessages, useIntl} from 'react-intl';
+import {defineMessages, FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import BaseItemButton from '../../shared/BaseItemButton';
@@ -149,7 +149,6 @@ export default function Category(inProps: CategoryProps): JSX.Element {
   );
 
   // HOOKS
-  const intl = useIntl();
   const categoryFollowEnabled = useSCPreferenceEnabled(SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED);
 
   if (!scCategory) {
@@ -186,16 +185,13 @@ export default function Category(inProps: CategoryProps): JSX.Element {
         }
         secondary={
           <>
-            {showTooltip ? (
+            {showTooltip && showFollowers && categoryFollowEnabled ? (
               <Typography className={classes.secondary} component="p" variant="body2">
-                {showFollowers && categoryFollowEnabled ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}` : scCategory.slogan}
+                <FormattedMessage {...messages.categoryFollowers} values={{total: scCategory.followers_counter}} />
               </Typography>
             ) : (
-              <>
-                {showFollowers && categoryFollowEnabled
-                  ? `${intl.formatMessage(messages.categoryFollowers, {total: scCategory.followers_counter})}`
-                  : scCategory.slogan}
-              </>
+              showFollowers &&
+              categoryFollowEnabled && <FormattedMessage {...messages.categoryFollowers} values={{total: scCategory.followers_counter}} />
             )}
           </>
         }
