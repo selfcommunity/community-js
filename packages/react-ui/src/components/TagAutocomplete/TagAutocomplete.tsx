@@ -139,9 +139,11 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   useEffect(() => {
     const loadDefault = async () => {
       if (typeof defaultValue === 'string' && defaultValue.trim() !== '') {
-        const results = await fetchTags(defaultValue);
+        const results = await fetchTags('');
         const match = results.find((t) => t.id === Number(defaultValue));
-        if (match) setValue(match);
+        if (match) {
+          setValue(match);
+        }
       }
     };
     loadDefault();
@@ -193,6 +195,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
         return (
           <li {...props}>
             <TagChip
+              showDescription={true}
               key={option.id}
               disposable={false}
               tag={option}
