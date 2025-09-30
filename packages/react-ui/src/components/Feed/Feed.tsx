@@ -448,7 +448,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                 component: FooterWidget,
                 componentProps: {},
                 column: 'right',
-                position: 1
+                position: 100
               }
             ])
       ]
