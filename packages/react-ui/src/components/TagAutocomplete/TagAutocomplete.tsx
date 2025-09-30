@@ -125,7 +125,6 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
     };
   }, [open, inputValue]);
 
-
   useEffect(() => {
     if (value !== null) {
       onChange && onChange(value);
