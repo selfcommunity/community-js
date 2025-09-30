@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.112](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.111...@selfcommunity/react-ui@0.11.0-alpha.112) (2025-09-30)
+
+
+### Features
+
+* removed slogan when category follow is disabled. Linear: https://linear.app/quentral/issue/QUE-2032/fall-back-se-follow-categorie-disabilitato ([ccd45ff](https://github.com/selfcommunity/community-js/commit/ccd45ffc2acead0154fa8d19be899cabc4ad5df6))
+
+
+
+
+
 # [0.11.0-alpha.111](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.110...@selfcommunity/react-ui@0.11.0-alpha.111) (2025-09-30)
 
 
