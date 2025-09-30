@@ -311,8 +311,8 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/tag/'),
     method: 'POST'
   },
-  SearchTag: {
-    url: urlReplacer('/api/v2/tag/'),
+  SearchUserTags: {
+    url: urlReplacer('/api/v2/tag/user/search/'),
     method: 'GET'
   },
   Tag: {
