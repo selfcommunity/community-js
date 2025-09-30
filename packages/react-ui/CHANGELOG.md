@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.110](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.109...@selfcommunity/react-ui@0.11.0-alpha.110) (2025-09-30)
+
+
+### Features
+
+* widget reordering. Linear: https://linear.app/quentral/issue/QUE-2033/ordinamento-widget-nella-colonna-di-destra ([3b30393](https://github.com/selfcommunity/community-js/commit/3b30393ee05af3de3696eb64a432cd4c1c62f1e2))
+
+
+
+
+
 # [0.11.0-alpha.109](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.108...@selfcommunity/react-ui@0.11.0-alpha.109) (2025-09-30)
 
 
