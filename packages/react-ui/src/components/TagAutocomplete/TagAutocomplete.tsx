@@ -1,12 +1,12 @@
-import React, {SyntheticEvent, useEffect, useState} from 'react';
+import React, {Fragment, SyntheticEvent, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import {Autocomplete, AutocompleteProps, TextField, TextFieldProps, styled} from '@mui/material';
-import {useSCFetchAddressingTagList} from '@selfcommunity/react-core';
 import {SCTagType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import TagChip, {TagChipProps} from '../../shared/TagChip';
+import {TagService} from '@selfcommunity/api-services';
 
 const PREFIX = 'SCTagAutocomplete';
 
@@ -102,45 +102,59 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   // State
   const [open, setOpen] = useState<boolean>(false);
   const [value, setValue] = useState<string | SCTagType | (string | SCTagType)[]>(typeof defaultValue === 'string' ? null : defaultValue);
-
-  // HOOKS
-  const {scAddressingTags} = useSCFetchAddressingTagList({fetch: open || defaultValue});
+  const [tags, setTags] = useState<SCTagType[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
-    if (value === null) {
-      return;
+    let active = true;
+    if (open && inputValue.length >= 3) {
+      TagService.searchUserTags({search: inputValue || ''})
+        .then((res) => {
+          if (active) {
+            setTags(res?.results || []);
+          }
+        })
+        .catch(() => {
+          if (active) {
+            setTags([]);
+          }
+        });
     }
-    onChange && onChange(value);
+    return () => {
+      active = false;
+    };
+  }, [open, inputValue]);
+
+
+  useEffect(() => {
+    if (value !== null) {
+      onChange && onChange(value);
+    }
   }, [value]);
 
   useEffect(() => {
-    if (scAddressingTags?.length !== 0 && typeof defaultValue === 'string') {
-      setValue(scAddressingTags.find((t) => t.id === Number(defaultValue)));
+    if (tags?.length !== 0 && typeof defaultValue === 'string') {
+      setValue(tags.find((t) => t.id === Number(defaultValue)));
     }
-  }, [scAddressingTags, defaultValue]);
+  }, [tags, defaultValue]);
 
   // Handlers
 
   const handleOpen = () => {
-    setOpen(true);
+    if (inputValue.length >= 3) {
+      setOpen(true);
+    }
   };
+  const handleClose = () => setOpen(false);
+  const handleChange = (_event: SyntheticEvent, newValue: SCTagType[]) => setValue(newValue);
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleChange = (_event: SyntheticEvent, newValue: SCTagType[]) => {
-    setValue(newValue);
-  };
-
-  // Render
   return (
     <Root
       className={classes.root}
       open={open}
       onOpen={handleOpen}
       onClose={handleClose}
-      options={scAddressingTags || []}
+      options={tags || []}
       getOptionLabel={(option: SCTagType) => option.name || ''}
       value={value}
       selectOnFocus
@@ -150,16 +164,17 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
       noOptionsText={<FormattedMessage id="ui.composer.layer.audience.tags.empty" defaultMessage="ui.composer.layer.audience.tags.empty" />}
       onChange={handleChange}
       isOptionEqualToValue={(option: SCTagType, value: SCTagType) => value?.id === option?.id}
-      renderTags={(value, getTagProps) => {
-        return value.map((option: any, index) => <TagChip key={option.id} tag={option} {...getTagProps({index})} />);
-      }}
-      renderOption={(props, option: SCTagType, {selected, inputValue}) => {
+      inputValue={inputValue}
+      onInputChange={(_e, newInputValue) => setInputValue(newInputValue)}
+      renderTags={(value, getTagProps) => value.map((option: any, index) => <TagChip key={option.id} tag={option} {...getTagProps({index})} />)}
+      renderOption={(props, option: SCTagType, {inputValue}) => {
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
         return (
           <li {...props}>
             <TagChip
               key={option.id}
+              disposable={false}
               tag={option}
               label={
                 <React.Fragment>
@@ -183,7 +198,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
             InputProps={{
               ...params.InputProps,
               autoComplete: 'addressing', // disable autocomplete and autofill
-              endAdornment: <React.Fragment>{params.InputProps.endAdornment}</React.Fragment>
+              endAdornment: tags.length > 0 ? <Fragment>{params.InputProps.endAdornment}</Fragment> : null
             }}
           />
         );
