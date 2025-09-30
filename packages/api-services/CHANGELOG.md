@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.10...@selfcommunity/api-services@0.7.0-alpha.11) (2025-09-30)
+
+
+### Performance Improvements
+
+* changed tag autocomplete api. Linear issue: https://linear.app/quentral/issue/QUE-2102/cambiare-rotta-per-recuperare-le-tag-nel-filtra-ricerca-utenti ([f079d2a](https://github.com/selfcommunity/community-js/commit/f079d2a711f4cf11052859059e1f8be09e012a5f))
+
+
+
+
+
 # [0.7.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.9...@selfcommunity/api-services@0.7.0-alpha.10) (2025-09-29)
 
 

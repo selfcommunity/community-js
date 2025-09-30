@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.109](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.108...@selfcommunity/react-ui@0.11.0-alpha.109) (2025-09-30)
+
+
+### Performance Improvements
+
+* changed tag autocomplete api. Linear issue: https://linear.app/quentral/issue/QUE-2102/cambiare-rotta-per-recuperare-le-tag-nel-filtra-ricerca-utenti ([f079d2a](https://github.com/selfcommunity/community-js/commit/f079d2a711f4cf11052859059e1f8be09e012a5f))
+
+
+
+
+
 # [0.11.0-alpha.108](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.107...@selfcommunity/react-ui@0.11.0-alpha.108) (2025-09-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
