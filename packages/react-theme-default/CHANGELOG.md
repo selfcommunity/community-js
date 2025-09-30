@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.22...@selfcommunity/react-theme-default@0.5.0-alpha.23) (2025-09-30)
+
+
+### Features
+
+* added description to tags chip. Linear issue: https://linear.app/quentral/issue/QUE-2103/aggiungere-il-mouse-overtap-sulle-tag-per-visualizzare-la-descrizione ([2088407](https://github.com/selfcommunity/community-js/commit/2088407018cdccc28648a35a4ea2699ca50a08c7))
+
+
+
+
+
 # [0.5.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.21...@selfcommunity/react-theme-default@0.5.0-alpha.22) (2025-09-26)
 
 
