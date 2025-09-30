@@ -1,4 +1,4 @@
-import React, {Fragment, SyntheticEvent, useEffect, useState} from 'react';
+import React, {Fragment, SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
@@ -41,7 +41,7 @@ export interface TagAutocompleteProps
       | 'renderInput'
     >
   > {
-  defaultValue: SCTagType[] | string;
+  defaultValue: SCTagType[] | any;
   /**
    * The props applied to text field
    * @default {variant: 'outlined, label: tags_label}
@@ -140,7 +140,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
     const loadDefault = async () => {
       if (typeof defaultValue === 'string' && defaultValue.trim() !== '') {
         const results = await fetchTags(defaultValue);
-        const match = results.find((t) => t.name === defaultValue);
+        const match = results.find((t) => t.id === Number(defaultValue));
         if (match) setValue(match);
       }
     };
@@ -157,6 +157,17 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   const handleClose = () => setOpen(false);
   const handleChange = (_event: SyntheticEvent, newValue: SCTagType[]) => setValue(newValue);
 
+  const filterOptions = useCallback((options: SCTagType[], state: {inputValue: string}) => {
+    const search = state.inputValue.toLowerCase();
+
+    return options.filter((option) => {
+      const nameMatch = option.name?.toLowerCase().includes(search);
+      const descMatch = option.description?.toLowerCase().includes(search);
+
+      return nameMatch || descMatch;
+    });
+  }, []);
+
   return (
     <Root
       className={classes.root}
@@ -164,6 +175,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
       onOpen={handleOpen}
       onClose={handleClose}
       options={tags || []}
+      filterOptions={filterOptions}
       getOptionLabel={(option: SCTagType) => option.name || ''}
       value={value}
       selectOnFocus
@@ -175,7 +187,6 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
       isOptionEqualToValue={(option: SCTagType, value: SCTagType) => value?.id === option?.id}
       inputValue={inputValue}
       onInputChange={(_e, newInputValue) => setInputValue(newInputValue)}
-      renderTags={(value, getTagProps) => value.map((option: any, index) => <TagChip key={option.id} tag={option} {...getTagProps({index})} />)}
       renderOption={(props, option: SCTagType, {inputValue}) => {
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
@@ -206,11 +217,10 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
             {...TextFieldProps}
             InputProps={{
               ...params.InputProps,
-              autoComplete: 'addressing', // disable autocomplete and autofill
+              autoComplete: 'tags',
               endAdornment:
                 tags.length > 0 ? (
                   <Fragment>
-                    {' '}
                     {loading && <CircularProgress color="inherit" size={20} />}
                     {params.InputProps.endAdornment}
                   </Fragment>
