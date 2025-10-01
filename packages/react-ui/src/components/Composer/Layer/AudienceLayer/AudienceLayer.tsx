@@ -260,7 +260,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
             onChange={handleChange}
             isOptionEqualToValue={(option: SCTagType, value: SCTagType) => value.id === option.id}
             renderTags={(value, getTagProps) => {
-              return value.map((option: any, index) => <TagChip key={option.id} tag={option} {...getTagProps({index})} />);
+              return value.map((option: any, index) => <TagChip key={option.id} tag={option} {...getTagProps({index})} showDescription />);
             }}
             renderOption={(props, option: SCTagType, {selected, inputValue}) => {
               const matches = match(option.name, inputValue);
@@ -268,6 +268,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
               return (
                 <li {...props}>
                   <TagChip
+                    showDescription
                     disposable={false}
                     key={option.id}
                     tag={option}

@@ -213,7 +213,7 @@ export default function Tags(props: TagsProps): JSX.Element {
                               .filter((tag) => tag.visible)
                               .map((tag) => (
                                 <ItemList key={tag.id}>
-                                  <TagChip tag={tag} onClick={onClickTag} {...TagChipProps} />
+                                  <TagChip tag={tag} onClick={onClickTag} {...TagChipProps} showDescription />
                                 </ItemList>
                               ))}
                           </StackList>
@@ -232,7 +232,7 @@ export default function Tags(props: TagsProps): JSX.Element {
                   .filter((tag) => tag.visible)
                   .map((tag) => (
                     <ItemList key={tag.id}>
-                      <TagChip tag={tag} onClick={onClickTag} {...TagChipProps} />
+                      <TagChip tag={tag} onClick={onClickTag} {...TagChipProps} showDescription />
                     </ItemList>
                   ))}
               </StackList>

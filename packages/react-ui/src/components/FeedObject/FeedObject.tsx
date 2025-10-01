@@ -916,7 +916,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   {((obj.addressing ?? []).filter((tag) => tag.visible).length > 0 || obj?.group) && <Bullet />}
                   <Box className={classes.tag}>
                     {obj.addressing.length > 0 ? (
-                      <Tags tags={obj.addressing} TagChipProps={{disposable: false, clickable: false}} />
+                      <Tags tags={obj.addressing} TagChipProps={{disposable: false, clickable: false, showDescription: true}} />
                     ) : obj.group ? (
                       <Tooltip title={`${intl.formatMessage(messages.visibleToGroup, {group: obj.group.name})}`}>
                         <Icon color="disabled" fontSize="small">
