@@ -31,7 +31,6 @@ export interface CategoryAutocompleteProps
       | 'clearOnBlur'
       | 'blurOnSelect'
       | 'handleHomeEndKeys'
-      | 'clearIcon'
       | 'noOptionsText'
       | 'isOptionEqualToValue'
       | 'renderTags'
@@ -122,10 +121,6 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
   const {categories, isLoading} = useSCFetchCategories({endpointQueryParams});
 
   useEffect(() => {
-    if (value === null) {
-      return;
-    }
-
     onChange?.(value);
   }, [value]);
 
@@ -154,6 +149,7 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
       newValue = value;
     }
     setValue(newValue);
+    onChange?.(newValue);
   };
 
   // Render
