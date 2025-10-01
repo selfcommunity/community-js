@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.114](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.113...@selfcommunity/react-ui@0.11.0-alpha.114) (2025-09-30)
+
+
+### Bug Fixes
+
+* fixed tag autocomplete ([537cbd3](https://github.com/selfcommunity/community-js/commit/537cbd3443714434dac832774d660fed08ac2b9c))
+
+
+
+
+
 # [0.11.0-alpha.113](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.112...@selfcommunity/react-ui@0.11.0-alpha.113) (2025-09-30)
 
 
