@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.10...@selfcommunity/types@0.8.0-alpha.11) (2025-10-01)
+
+
+### Bug Fixes
+
+* added forced_username to SCInviteType ([434bdfc](https://github.com/selfcommunity/community-js/commit/434bdfc98f59a4234c4e74a1d73f8a54cd2d8be2))
+
+
+
+
+
 # [0.8.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.9...@selfcommunity/types@0.8.0-alpha.10) (2025-09-25)
 
 
