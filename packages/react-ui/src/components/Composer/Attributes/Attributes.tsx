@@ -127,7 +127,7 @@ export default (props: AttributesProps): JSX.Element => {
       )}
       {value?.addressing?.length > 0 &&
         value?.addressing.map((t: SCTagType) => (
-          <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<Icon>label</Icon>} onClick={handleClickTag} />
+          <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<Icon>label</Icon>} onClick={handleClickTag} showDescription />
         ))}
       <>
         {value?.recipients?.length > 0 && (

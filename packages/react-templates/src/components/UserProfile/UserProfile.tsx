@@ -466,7 +466,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
                       {scUser.tags
                         .filter((t) => t.visible)
                         .map((tag) => (
-                          <TagChip key={tag.id} tag={tag} clickable={false} disposable={false} />
+                          <TagChip key={tag.id} tag={tag} clickable={false} disposable={false} showDescription />
                         ))}
                     </Stack>
                   )}
