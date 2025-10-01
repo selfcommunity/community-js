@@ -226,7 +226,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
               ...params.InputProps,
               autoComplete: 'tags',
               endAdornment:
-                tags.length > 0 ? (
+                value || tags.length > 0 ? (
                   <Fragment>
                     {loading && <CircularProgress color="inherit" size={20} />}
                     {params.InputProps.endAdornment}
