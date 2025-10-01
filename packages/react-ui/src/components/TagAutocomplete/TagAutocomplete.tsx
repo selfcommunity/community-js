@@ -106,7 +106,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   const [value, setValue] = useState<string | SCTagType | (string | SCTagType)[]>(typeof defaultValue === 'string' ? null : defaultValue);
   const [tags, setTags] = useState<SCTagType[]>([]);
   const [inputValue, setInputValue] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const fetchTags = async (query: string): Promise<SCTagType[]> => {
     setLoading(true);
