@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.115](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.114...@selfcommunity/react-ui@0.11.0-alpha.115) (2025-10-01)
+
+
+### Performance Improvements
+
+* fixed category and tag autocomplete in order to manage clear ([f852cca](https://github.com/selfcommunity/community-js/commit/f852ccafa1a195e646bea7cd0f1032079d1922af))
+
+
+
+
+
 # [0.11.0-alpha.114](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.113...@selfcommunity/react-ui@0.11.0-alpha.114) (2025-09-30)
 
 
