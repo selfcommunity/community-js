@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.56...@selfcommunity/react-templates@0.5.0-alpha.57) (2025-10-01)
+
+
+### Performance Improvements
+
+* added description to tags ([2d1756c](https://github.com/selfcommunity/community-js/commit/2d1756ce1d3dfb7165b147a275279f848bdb80f8))
+
+
+
+
+
 # [0.5.0-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.55...@selfcommunity/react-templates@0.5.0-alpha.56) (2025-10-01)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
