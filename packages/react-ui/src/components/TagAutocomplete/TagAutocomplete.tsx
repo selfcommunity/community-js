@@ -131,9 +131,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   }, [open, inputValue]);
 
   useEffect(() => {
-    if (value !== null) {
-      onChange && onChange(value);
-    }
+    onChange?.(value);
   }, [value]);
 
   useEffect(() => {
@@ -160,7 +158,10 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
     }
   };
   const handleClose = () => setOpen(false);
-  const handleChange = (_event: SyntheticEvent, newValue: SCTagType[]) => setValue(newValue);
+  const handleChange = (_event: SyntheticEvent, newValue: SCTagType[]) => {
+    setValue(newValue);
+    onChange?.(newValue);
+  };
 
   const filterOptions = useCallback((options: SCTagType[], state: {inputValue: string}) => {
     const search = state.inputValue.toLowerCase();
