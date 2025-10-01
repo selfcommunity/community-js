@@ -16,6 +16,11 @@ export interface SCInviteType {
   name: string;
 
   /**
+   * The invitation username
+   */
+  forced_username?: string;
+
+  /**
    * The invitation email
    */
   email: string;
