@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.116](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.115...@selfcommunity/react-ui@0.11.0-alpha.116) (2025-10-01)
+
+
+### Bug Fixes
+
+* added forced_username to SCInviteType ([434bdfc](https://github.com/selfcommunity/community-js/commit/434bdfc98f59a4234c4e74a1d73f8a54cd2d8be2))
+
+
+
+
+
 # [0.11.0-alpha.115](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.114...@selfcommunity/react-ui@0.11.0-alpha.115) (2025-10-01)
 
 
