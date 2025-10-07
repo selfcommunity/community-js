@@ -183,7 +183,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
       isAdvertisingCustomAdvEnabled &&
       ((isAdvertisingCustomAdvOnlyForAnonUsersEnabled && scUserContext.user === null) || !isAdvertisingCustomAdvOnlyForAnonUsersEnabled)
     ) {
-      return <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FEED} categoriesId={[scCategory.id]} />;
+      return <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FEED_CATEGORY} categoriesId={[scCategory.id]} />;
     }
     return null;
   }
