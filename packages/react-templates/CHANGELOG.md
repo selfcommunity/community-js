@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.57...@selfcommunity/react-templates@0.5.0-alpha.58) (2025-10-07)
+
+
+### Features
+
+* added new adv position for category feed. Linear issue: https://linear.app/quentral/issue/QUE-2123/differenziare-la-nuova-posizione-sopra-il-feed-categorie-da-sopra-il ([57a351e](https://github.com/selfcommunity/community-js/commit/57a351eaee906645e76537631fec6ac67d6ec6f6))
+
+
+
+
+
 # [0.5.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.56...@selfcommunity/react-templates@0.5.0-alpha.57) (2025-10-01)
 
 
