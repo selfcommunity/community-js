@@ -67,8 +67,8 @@ const Root = styled(Box, {
 const DrawerRoot = styled(Drawer, {
   name: PREFIX,
   slot: 'AppearanceDrawerRoot',
-  overridesResolver: (props, styles) => styles.appearanceDrawerRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.appearanceDrawerRoot
+})(() => ({}));
 
 export default function Appearance(inProps: AppearanceProps) {
   // PROPS
@@ -92,7 +92,7 @@ export default function Appearance(inProps: AppearanceProps) {
   const intl = useIntl();
 
   // HANDLERS
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (_event, newValue) => {
     setTab(newValue);
     setData({});
   };
@@ -324,14 +324,16 @@ export default function Appearance(inProps: AppearanceProps) {
                   value={preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value || ''}
                   name="application_slogan1"
                   onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <Typography variant="body2">
-                        {preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value?.length
-                          ? 50 - preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value.length
-                          : 50}
-                      </Typography>
-                    )
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <Typography variant="body2">
+                          {preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value?.length
+                            ? 50 - preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value.length
+                            : 50}
+                        </Typography>
+                      )
+                    }
                   }}
                   error={Boolean(preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value?.length > 50)}
                 />
@@ -343,14 +345,16 @@ export default function Appearance(inProps: AppearanceProps) {
                   value={preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value || ''}
                   name="application_slogan2"
                   onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <Typography variant="body2">
-                        {preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value?.length
-                          ? 150 - preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value.length
-                          : 150}
-                      </Typography>
-                    )
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <Typography variant="body2">
+                          {preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value?.length
+                            ? 150 - preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value.length
+                            : 150}
+                        </Typography>
+                      )
+                    }
                   }}
                   error={Boolean(preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value?.length > 150)}
                 />

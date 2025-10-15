@@ -1,9 +1,7 @@
-import React from 'react';
-import {useMediaQuery, useTheme, styled} from '@mui/material';
+import {useMediaQuery, useTheme, styled, Grid2, Grid2Props} from '@mui/material';
 import {PREFIX} from './constants';
 import classNames from 'classnames';
 import PaymentProductSkeleton, {PaymentProductSkeletonProps} from '../PaymentProduct/Skeleton';
-import Grid, {Grid2Props} from '@mui/material/Unstable_Grid2';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 
@@ -12,7 +10,7 @@ const classes = {
   products: `${PREFIX}-products`
 };
 
-const Root = styled(Grid, {
+const Root = styled(Grid2, {
   name: PREFIX,
   slot: 'SkeletonRoot'
 })(() => ({
@@ -44,7 +42,7 @@ export interface CommunityPaywallsSkeletonProps extends Grid2Props {
  |root|.SCCommunityPaywallSkeleton-skeleton-root|Styles applied to the root element.|
  *
  */
-export default function CommunityPaywallsSkeleton(inProps): JSX.Element {
+export default function CommunityPaywallsSkeleton(inProps: CommunityPaywallsSkeletonProps): JSX.Element {
   // PROPS
   const props: CommunityPaywallsSkeletonProps = useThemeProps({
     props: inProps,
@@ -57,11 +55,11 @@ export default function CommunityPaywallsSkeleton(inProps): JSX.Element {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
-    <Root className={classNames(classes.root, className)} container spacing={4} {...rest}>
-      {[...Array(isMobile ? 2 : 3)].map((product, index) => (
-        <Grid xs={4} key={index}>
-          <PaymentProductSkeleton variant={'outlined'} {...PaymentProductSkeletonComponentProps} />
-        </Grid>
+    <Root className={classNames(classes.root, className)} container width="100%" spacing={4} {...rest}>
+      {[...Array(isMobile ? 2 : 3)].map((_product, index) => (
+        <Grid2 size={4} key={index}>
+          <PaymentProductSkeleton variant="outlined" {...PaymentProductSkeletonComponentProps} />
+        </Grid2>
       ))}
     </Root>
   );

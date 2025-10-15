@@ -4,8 +4,8 @@ import {
   Chip,
   Divider,
   FormControl,
-  Grid,
-  GridProps,
+  Grid2,
+  Grid2Props,
   Icon,
   IconButton,
   InputAdornment,
@@ -121,12 +121,12 @@ export interface EventsProps {
    * Props spread to grid container
    * @default {}
    */
-  GridContainerComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridContainerComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
   /**
    * Props spread to single grid item
    * @default {}
    */
-  GridItemComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridItemComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
 
   /**
    * Props to spread to CreateEvent component
@@ -398,12 +398,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const content = (
     <>
       {showFilters && (
-        <Grid container className={classes.filters} gap={2}>
+        <Grid2 container width="100%" className={classes.filters} gap={2}>
           {filters ? (
             filters
           ) : showUserEvents ? (
             <>
-              <Grid item>
+              <Grid2>
                 <EventsChipRoot
                   color={showMyEvents ? 'secondary' : 'default'}
                   variant={showMyEvents ? 'filled' : 'outlined'}
@@ -415,25 +415,25 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   onDelete={showMyEvents ? () => setShowMyEvents(false) : null}
                   disabled={loading}
                 />
-              </Grid>
-              <Grid item>
+              </Grid2>
+              <Grid2>
                 <PastEventsFilter
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
                   handleDeleteClick={handleDeletePastClick}
                   disabled={loading}
                 />
-              </Grid>
-              <Grid item xs={12} md={2}>
+              </Grid2>
+              <Grid2 size={{md: 2}}>
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
-              </Grid>
+              </Grid2>
             </>
           ) : general ? (
             <>
-              <Grid item xs={12} md={3}>
+              <Grid2 size={{md: 3}}>
                 <TextField
                   className={classes.search}
-                  size={'small'}
+                  size="small"
                   fullWidth
                   value={query}
                   label={<FormattedMessage id="ui.events.filterByName" defaultMessage="ui.events.filterByName" />}
@@ -446,36 +446,38 @@ export default function Events(inProps: EventsProps): JSX.Element {
                       fetchEvents();
                     }
                   }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        {isMobile ? (
-                          <IconButton onClick={() => fetchEvents()} disabled={loading}>
-                            <Icon>search</Icon>
-                          </IconButton>
-                        ) : (
-                          <Button
-                            size="small"
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => fetchEvents()}
-                            endIcon={<Icon>search</Icon>}
-                            disabled={loading}
-                          />
-                        )}
-                      </InputAdornment>
-                    )
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          {isMobile ? (
+                            <IconButton onClick={() => fetchEvents()} disabled={loading}>
+                              <Icon>search</Icon>
+                            </IconButton>
+                          ) : (
+                            <Button
+                              size="small"
+                              variant="contained"
+                              color="secondary"
+                              onClick={() => fetchEvents()}
+                              endIcon={<Icon>search</Icon>}
+                              disabled={loading}
+                            />
+                          )}
+                        </InputAdornment>
+                      )
+                    }
                   }}
                 />
-              </Grid>
-              <Grid item xs={12} md={2}>
+              </Grid2>
+              <Grid2 size={{md: 2}}>
                 <FormControl fullWidth>
                   <InputLabel>
                     <FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />
                   </InputLabel>
                   <Select
                     disabled={showOngoingEvents || loading}
-                    size={'small'}
+                    size="small"
                     label={<FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />}
                     value={dateSearch as any}
                     onChange={handleOnChangeTimeFrame}
@@ -486,19 +488,23 @@ export default function Events(inProps: EventsProps): JSX.Element {
                           checked={dateSearch === option.value}
                           value={option.value}
                           name="radio-button-select"
-                          inputProps={{'aria-label': option.label as any}}
+                          slotProps={{
+                            input: {
+                              'aria-label': `${option.label}`
+                            }
+                          }}
                         />
                         {option.label}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
-              </Grid>
-              <Grid item xs={12} md={2}>
+              </Grid2>
+              <Grid2 size={{md: 2}}>
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
-              </Grid>
+              </Grid2>
               {authUserId && (
-                <Grid item>
+                <Grid2>
                   <EventsChipRoot
                     color={showFollowed ? 'secondary' : 'default'}
                     variant={showFollowed ? 'filled' : 'outlined'}
@@ -510,19 +516,19 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     onDelete={showFollowed ? handleDeleteClick : null}
                     disabled={loading}
                   />
-                </Grid>
+                </Grid2>
               )}
-              <Grid item>
+              <Grid2>
                 <OngoingEventsFilter
                   showOngoingEvents={showOngoingEvents}
                   handleClick={handleChipOngoingClick}
                   handleDeleteClick={handleDeleteOngoingClick}
                   disabled={dateSearch !== SCEventDateFilterType.ALL || loading}
                 />
-              </Grid>
+              </Grid2>
             </>
           ) : null}
-        </Grid>
+        </Grid2>
       )}
       <>
         {loading ? (
@@ -556,15 +562,15 @@ export default function Events(inProps: EventsProps): JSX.Element {
               </Box>
             ) : (
               <>
-                <Grid container spacing={{xs: 2}} className={classes.events} {...GridContainerComponentProps}>
+                <Grid2 container width="100%" spacing={{xs: 2}} className={classes.events} {...GridContainerComponentProps}>
                   <>
                     {events.map((event: SCEventType) => (
-                      <Grid item xs={12} sm={12} md={6} key={event.id} className={classes.item} {...GridItemComponentProps}>
+                      <Grid2 size={{md: 6}} key={event.id} className={classes.item} {...GridItemComponentProps}>
                         <Event event={event} eventId={event.id} {...EventComponentProps} />
-                      </Grid>
+                      </Grid2>
                     ))}
                     {authUserId && events.length % 2 !== 0 && (
-                      <Grid item xs={12} sm={12} md={6} key={'skeleton-item'} className={classes.itemSkeleton} {...GridItemComponentProps}>
+                      <Grid2 size={{md: 6}} key="skeleton-item" className={classes.itemSkeleton} {...GridItemComponentProps}>
                         <EventSkeleton
                           {...EventSkeletonComponentProps}
                           skeletonsAnimation={false}
@@ -574,10 +580,10 @@ export default function Events(inProps: EventsProps): JSX.Element {
                             </CreateEventButton>
                           }
                         />
-                      </Grid>
+                      </Grid2>
                     )}
                   </>
-                </Grid>
+                </Grid2>
                 {Boolean(next) && (
                   <Button color="secondary" variant="text" onClick={handleNext} className={classes.showMore}>
                     <FormattedMessage id="ui.events.button.seeMore" defaultMessage="ui.events.button.seeMore" />

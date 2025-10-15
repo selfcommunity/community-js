@@ -18,13 +18,13 @@ const classes = {
 const Root = styled(BaseDialog, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({}));
+})(() => ({}));
 
 const Transition = React.forwardRef(function Transition(props: TransitionProps & {children: React.ReactElement}, ref: React.Ref<unknown>) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const NoTransition = React.forwardRef(function NoTransition(props: {children: React.ReactElement}, ref) {
+const NoTransition = React.forwardRef(function NoTransition(props: {children: React.ReactElement}) {
   return <React.Fragment> {props.children} </React.Fragment>;
 });
 
@@ -51,7 +51,7 @@ export default function PaywallsDialog(inProps: PaywallsDialogProps) {
 
   return (
     <Root
-      maxWidth={'sm'}
+      maxWidth="sm"
       fullWidth
       title={
         (PaywallsComponentProps && PaywallsComponentProps.prefetchedPaymentContentStatus?.payment_order) ||
@@ -65,7 +65,9 @@ export default function PaywallsDialog(inProps: PaywallsDialogProps) {
       open
       {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
       className={classNames(classes.root, className)}
-      TransitionComponent={Transition}
+      slots={{
+        transition: Transition
+      }}
       DialogContentProps={{dividers: false}}
       {...rest}>
       <Paywalls {...PaywallsComponentProps} />

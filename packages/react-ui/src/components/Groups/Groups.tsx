@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Box, Button, Grid, Icon, IconButton, InputAdornment, TextField, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
+import {Box, Button, Grid2, Icon, IconButton, InputAdornment, TextField, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCGroupType} from '@selfcommunity/types';
 import {Endpoints, GroupService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -250,11 +250,11 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   const content = (
     <>
       {showFilters && (groups.length !== 0 || search.length !== 0) && (
-        <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
+        <Grid2 container width="100%" direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
           {filters ? (
             filters
           ) : (
-            <Grid item xs={12} md={6}>
+            <Grid2 size={{md: 6}}>
               <TextField
                 className={classes.search}
                 fullWidth
@@ -269,40 +269,42 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
                     fetchGroups();
                   }
                 }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      {search.length > 0 && (
-                        <IconButton
-                          onClick={() => {
-                            setSearch('');
-                            fetchGroups('');
-                          }}
-                          disabled={loading}>
-                          <Icon>close</Icon>
-                        </IconButton>
-                      )}
-                      {isMobile ? (
-                        <IconButton onClick={() => fetchGroups()} disabled={loading}>
-                          <Icon>search</Icon>
-                        </IconButton>
-                      ) : (
-                        <Button
-                          size="small"
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => fetchGroups()}
-                          endIcon={<Icon>search</Icon>}
-                          disabled={loading}
-                        />
-                      )}
-                    </InputAdornment>
-                  )
+                slotProps={{
+                  input: {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {search.length > 0 && (
+                          <IconButton
+                            onClick={() => {
+                              setSearch('');
+                              fetchGroups('');
+                            }}
+                            disabled={loading}>
+                            <Icon>close</Icon>
+                          </IconButton>
+                        )}
+                        {isMobile ? (
+                          <IconButton onClick={() => fetchGroups()} disabled={loading}>
+                            <Icon>search</Icon>
+                          </IconButton>
+                        ) : (
+                          <Button
+                            size="small"
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => fetchGroups()}
+                            endIcon={<Icon>search</Icon>}
+                            disabled={loading}
+                          />
+                        )}
+                      </InputAdornment>
+                    )
+                  }
                 }}
               />
-            </Grid>
+            </Grid2>
           )}
-        </Grid>
+        </Grid2>
       )}
       <>
         {!groups.length ? (
@@ -343,12 +345,8 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
                   id="ui.groups.endMessage"
                   defaultMessage="ui.groups.endMessage"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
                     button: (chunk) => (
                       <Button color="secondary" variant="text" onClick={handleScrollUp}>
-                        {/*eslint-disable-next-line @typescript-eslint/ban-ts-ignore*/}
-                        {/*@ts-ignore*/}
                         {chunk}
                       </Button>
                     )
@@ -356,13 +354,13 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
                 />
               </Typography>
             }>
-            <Grid container spacing={{xs: 2}} className={classes.groups}>
+            <Grid2 container width="100%" spacing={{xs: 2}} className={classes.groups}>
               {groups.map((group: SCGroupType) => (
-                <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
+                <Grid2 size={{sm: 8, md: 6}} key={group.id} className={classes.item}>
                   <Group group={group} groupId={group.id} actionRedirect={true} {...GroupComponentProps} />
-                </Grid>
+                </Grid2>
               ))}
-            </Grid>
+            </Grid2>
           </InfiniteScroll>
         )}
       </>

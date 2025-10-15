@@ -1,5 +1,4 @@
-import React from 'react';
-import {Typography, Grid, Skeleton, Box, useTheme, useMediaQuery, styled} from '@mui/material';
+import {Typography, Grid2, Skeleton, Box, useTheme, useMediaQuery, styled} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 import PrizeItemSkeleton from './PrizeItemSkeleton';
 import {PREFIX} from './constants';
@@ -59,23 +58,23 @@ export default function LoyaltyProgramDetailSkeleton(): JSX.Element {
       <Typography className={classes.sectionTitle}>
         <Skeleton animation="wave" height={20} width={146} />
       </Typography>
-      <Grid container spacing={2} className={classes.pointsList}>
-        {[...Array(8)].map((prize, index) => (
-          <Grid item xs={12} sm={12} md={6} key={index}>
+      <Grid2 container width="100%" spacing={2} className={classes.pointsList}>
+        {[...Array(8)].map((_prize, index) => (
+          <Grid2 size={{md: 6}} key={index}>
             <Skeleton animation="wave" height={15} width="100%" />
-          </Grid>
+          </Grid2>
         ))}
-      </Grid>
+      </Grid2>
       <Typography className={classes.sectionTitle}>
         <Skeleton animation="wave" height={20} width={140} variant="text" />
       </Typography>
-      <Grid container spacing={isMobile ? 3 : 6}>
-        {[...Array(6)].map((prize, index) => (
-          <Grid item xs={12} sm={12} md={6} lg={4} key={index}>
+      <Grid2 container width="100%" spacing={isMobile ? 3 : 6}>
+        {[...Array(6)].map((_prize, index) => (
+          <Grid2 size={{md: 6, lg: 4}} key={index}>
             <PrizeItemSkeleton />
-          </Grid>
+          </Grid2>
         ))}
-      </Grid>
+      </Grid2>
     </Root>
   );
 }

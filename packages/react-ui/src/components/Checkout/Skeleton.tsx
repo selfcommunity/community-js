@@ -1,8 +1,6 @@
-import React from 'react';
-import {Box, Grid, Hidden, Stack, useTheme, Skeleton, styled} from '@mui/material';
+import {Box, Grid2, Stack, Skeleton, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import classNames from 'classnames';
-import {SCThemeType} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
@@ -14,7 +12,7 @@ const classes = {
   content: `${PREFIX}-content`
 };
 
-const Root = styled(Grid, {
+const Root = styled(Grid2, {
   name: PREFIX,
   slot: 'SkeletonRoot'
 })(({theme}) => ({
@@ -82,46 +80,41 @@ const Root = styled(Grid, {
 export default function CheckoutSkeleton(inProps): JSX.Element {
   const {className = {}, ...rest} = inProps;
 
-  // HOOKS
-  const theme = useTheme<SCThemeType>();
-
   return (
-    <Root className={classNames(classes.root, className)} container {...rest}>
-      <Grid item xs={12} md={6} className={classNames(classes.left, classes.paper, classes.header)}>
+    <Root className={classNames(classes.root, className)} container width="100%" {...rest}>
+      <Grid2 size={{md: 6}} className={classNames(classes.left, classes.paper, classes.header)}>
         <Skeleton variant="rounded" height={150} width={'100%'} />
-      </Grid>
-      <Grid item xs={12} md={6} className={classNames(classes.right, classes.header)}>
-        <Hidden mdDown>
-          <Stack direction="column" spacing={2} pt={2}>
-            <Skeleton variant="rounded" height={20} width={190} />
-            <Skeleton variant="rounded" height={90} width={'100%'} />
-          </Stack>
-        </Hidden>
-      </Grid>
-      <Grid item xs={12} md={6} className={classNames(classes.left, classes.paper)}>
+      </Grid2>
+      <Grid2 size={{md: 6}} className={classNames(classes.right, classes.header)}>
+        <Stack sx={{display: {xs: 'none', md: 'flex'}}} direction="column" spacing={2} pt={2}>
+          <Skeleton variant="rounded" height={20} width={190} />
+          <Skeleton variant="rounded" height={90} width={'100%'} />
+        </Stack>
+      </Grid2>
+      <Grid2 size={{md: 6}} className={classNames(classes.left, classes.paper)}>
         <Box className={classes.content}>
           <Skeleton variant="rounded" height={30} width={140} />
           <br />
           <Skeleton variant="rounded" height={110} />
           <br />
           <Skeleton variant="rounded" height={150} />
-          <Hidden mdDown>
+          <Box sx={{display: {xs: 'none', md: 'block'}}}>
             <br />
             <Skeleton variant="rounded" height={200} />
-          </Hidden>
+          </Box>
         </Box>
-      </Grid>
-      <Grid item xs={12} md={6} className={classes.right}>
+      </Grid2>
+      <Grid2 size={{md: 6}} className={classes.right}>
         <Box className={classes.content}>
           <Skeleton variant="rounded" height={110} />
-          <Hidden mdDown>
+          <Box sx={{display: {xs: 'none', md: 'block'}}}>
             <br />
             <Skeleton variant="rounded" height={70} />
             <br />
             <Skeleton variant="rounded" height={340} />
-          </Hidden>
+          </Box>
         </Box>
-      </Grid>
+      </Grid2>
     </Root>
   );
 }

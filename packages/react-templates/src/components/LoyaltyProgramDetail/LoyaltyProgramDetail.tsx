@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import {useContext, useEffect, useMemo, useState} from 'react';
 import {http, Endpoints, HttpResponse, UserService, LoyaltyService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCPrizeType} from '@selfcommunity/types';
-import {Box, Button, Card, CardActions, CardContent, CardMedia, Grid, Typography, useMediaQuery, useTheme, styled, Chip} from '@mui/material';
+import {Box, Button, Card, CardActions, CardContent, CardMedia, Grid2, Typography, useMediaQuery, useTheme, styled, Chip} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -137,7 +137,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
           }
         );
       })
-      .catch((error) => {
+      .catch(() => {
         setOpen(false);
         let _snackBar = enqueueSnackbar(
           <FormattedMessage
@@ -275,9 +275,9 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
             ) : null}
           </>
         }>
-        <Grid container spacing={!isMobile ? 3 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
+        <Grid2 container width="100%" spacing={!isMobile ? 3 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
           {prizes.map((prize: SCPrizeType) => (
-            <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={prize.id}>
+            <Grid2 size={{md: 6, lg: 4, xl: 3}} key={prize.id}>
               <Card className={classes.card}>
                 <CardMedia component="img" image={prize.image} />
                 <Box className={classes.prizePoints}>
@@ -321,9 +321,9 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
                   )}
                 </CardActions>
               </Card>
-            </Grid>
+            </Grid2>
           ))}
-        </Grid>
+        </Grid2>
       </InfiniteScroll>
       {open && (
         <ConfirmDialog

@@ -6,7 +6,7 @@ import {useThemeProps} from '@mui/system';
 import nodes from './nodes';
 import {InitialConfigType, LexicalComposer} from '@lexical/react/LexicalComposer';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
-import {EditorThemeClasses, LexicalEditor} from 'lexical';
+import {EditorThemeClasses} from 'lexical';
 import ToolbarPlugin, {ToolbarPluginProps} from './plugins/ToolbarPlugin';
 import {PREFIX} from './constants';
 import {HorizontalRulePlugin} from './plugins/HorizontalRulePlugin';
@@ -46,7 +46,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => {
     return [styles.root, props.className.includes(classes.toolbar) && styles.toolbar];
   }
-})(({theme}) => ({}));
+})(() => ({}));
 
 export type EditorRef = {
   focus: () => void;
@@ -235,7 +235,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     placeholder = <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />,
     isLessonCommentEditor = false
   } = props;
-  const apiRef = useRef<ApiRef>();
+  const apiRef = useRef<ApiRef | null>(null);
 
   // STATE
   const [focused, setFocused] = useState<boolean>(false);
@@ -249,7 +249,7 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     onMediaChange && onMediaChange(media);
   };
 
-  const handleError = (error: Error, editor: LexicalEditor) => {
+  const handleError = (error: Error) => {
     console.log(error);
   };
 

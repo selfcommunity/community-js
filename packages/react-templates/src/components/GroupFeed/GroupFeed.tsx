@@ -157,7 +157,7 @@ export default function GroupFeed(inProps: GroupFeedProps): JSX.Element {
   const {scGroup} = useSCFetchGroup({id: groupId, group});
 
   // REF
-  const feedRef = useRef<FeedRef>();
+  const feedRef = useRef<FeedRef | null>(null);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;

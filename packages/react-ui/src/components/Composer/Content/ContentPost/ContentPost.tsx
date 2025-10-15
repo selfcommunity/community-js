@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef} from 'react';
+import {useCallback, useEffect, useRef} from 'react';
 import {Box, BoxProps, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
 import Editor, {EditorProps} from '../../../Editor';
@@ -16,7 +16,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'ContentPostRoot'
-})(({theme}) => ({}));
+})(() => ({}));
 
 /**
  * Default post
@@ -69,7 +69,7 @@ export default (props: ContentPostProps): JSX.Element => {
   const {categoriesError = null, addressingError = null, error: generalError = null} = {...error};
 
   // REF
-  const editorRef = useRef<any>();
+  const editorRef = useRef<any>(null);
 
   // EFFECTS
   useEffect(() => {

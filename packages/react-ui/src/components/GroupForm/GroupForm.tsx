@@ -373,8 +373,10 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
             value={field.name}
             name="name"
             onChange={handleChange}
-            InputProps={{
-              endAdornment: <Typography variant="body2">{GROUP_TITLE_MAX_LENGTH - field.name.length}</Typography>
+            slotProps={{
+              input: {
+                endAdornment: <Typography variant="body2">{GROUP_TITLE_MAX_LENGTH - field.name.length}</Typography>
+              }
             }}
             error={Boolean(field?.name?.length > GROUP_TITLE_MAX_LENGTH)}
             helperText={
@@ -391,12 +393,14 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
             value={field.description}
             name="description"
             onChange={handleChange}
-            InputProps={{
-              endAdornment: (
-                <Typography variant="body2">
-                  {field.description?.length ? GROUP_DESCRIPTION_MAX_LENGTH - field.description.length : GROUP_DESCRIPTION_MAX_LENGTH}
-                </Typography>
-              )
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <Typography variant="body2">
+                    {field.description?.length ? GROUP_DESCRIPTION_MAX_LENGTH - field.description.length : GROUP_DESCRIPTION_MAX_LENGTH}
+                  </Typography>
+                )
+              }
             }}
             error={Boolean(field.description?.length > GROUP_DESCRIPTION_MAX_LENGTH)}
             helperText={
@@ -412,8 +416,6 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                   id="ui.groupForm.privacy.title"
                   defaultMessage="ui.groupForm.privacy.title"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
                     b: (chunks) => <strong>{chunks}</strong>
                   }}
                 />
@@ -440,8 +442,6 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                     id="ui.groupForm.privacy.public.info"
                     defaultMessage="ui.groupForm.privacy.public.info"
                     values={{
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
                       b: (chunks) => <strong>{chunks}</strong>
                     }}
                   />
@@ -452,8 +452,6 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                         id="ui.groupForm.privacy.private.info.edit"
                         defaultMessage="ui.groupForm.private.public.info.edit"
                         values={{
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                          // @ts-ignore
                           b: (chunks) => <strong>{chunks}</strong>
                         }}
                       />
@@ -462,8 +460,6 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                         id="ui.groupForm.privacy.private.info"
                         defaultMessage="ui.groupForm.private.public.info"
                         values={{
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                          // @ts-ignore
                           b: (chunks) => <strong>{chunks}</strong>
                         }}
                       />
@@ -482,8 +478,6 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                       id="ui.groupForm.visibility.title"
                       defaultMessage="ui.groupForm.visibility.title"
                       values={{
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore
                         b: (chunks) => <strong>{chunks}</strong>
                       }}
                     />
@@ -509,8 +503,6 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                         id="ui.groupForm.visibility.hidden.info"
                         defaultMessage="ui.groupForm.visibility.hidden.info"
                         values={{
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                          // @ts-ignore
                           b: (chunks) => <strong>{chunks}</strong>
                         }}
                       />
@@ -519,8 +511,6 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                         id="ui.groupForm.visibility.visible.info"
                         defaultMessage="ui.groupForm.visibility.visible.info"
                         values={{
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                          // @ts-ignore
                           b: (chunks) => <strong>{chunks}</strong>
                         }}
                       />

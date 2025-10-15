@@ -1,4 +1,4 @@
-import React, {RefObject, useEffect, useMemo, useRef, useState} from 'react';
+import {RefObject, useEffect, useMemo, useRef, useState} from 'react';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
 import {Avatar, Icon, IconButton, Stack, useMediaQuery, useTheme, styled} from '@mui/material';
@@ -170,7 +170,7 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // REFS
-  let editor: RefObject<EditorRef> = useRef<EditorRef>();
+  let editor: RefObject<EditorRef> = useRef<EditorRef | null>(null);
 
   /**
    * When CommentObjectReply is mount

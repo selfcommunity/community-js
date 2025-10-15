@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import classNames from 'classnames';
 import {LegalPageService, UserService} from '@selfcommunity/api-services';
-import {SCDataPortabilityType, SCLegalPagePoliciesType, SCLegalPageType, SCUserType} from '@selfcommunity/types';
+import {SCLegalPagePoliciesType, SCLegalPageType, SCUserType} from '@selfcommunity/types';
 import {arraysEqual, capitalize, Logger} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import ConsentSolutionSwitch from '../../shared/ConsentSolutionSwitch';
@@ -187,7 +187,6 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   const [loadingAck, setLoadingAck] = useState<boolean>(false);
   const [rejected, setRejected] = useState<boolean>(false);
 
-  const [dataPortability, setDataPortability] = useState<SCDataPortabilityType>(null);
   const [dataPortabilityChecked, setDataPortabilityChecked] = useState<boolean>(false);
 
   const [loadingDeleteAccount, setLoadingDeleteAccount] = useState<boolean>(false);
@@ -197,7 +196,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   const doc = documents[currentDocument];
 
   // REFS
-  const contentDialog = useRef<HTMLHeadingElement>(null);
+  const contentDialog = useRef<HTMLHeadingElement | null>(null);
 
   // INTL
   const intl = useIntl();
@@ -534,13 +533,15 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
         <Root
           aria-describedby="consent--solution-dialog"
           className={classNames(classes.root, className)}
-          TransitionComponent={DialogTransition}
-          maxWidth={'md'}
+          slots={{
+            transition: DialogTransition
+          }}
+          maxWidth="md"
           fullWidth
           open={ready}
           disableEscapeKeyDown
           onClose={handleClose}
-          scroll={'paper'}
+          scroll="paper"
           {...rest}>
           {content()}
         </Root>

@@ -44,7 +44,7 @@ const Transition = React.forwardRef(function Transition(props: TransitionProps &
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const NoTransition = React.forwardRef(function NoTransition(props: {children: React.ReactElement}, ref) {
+const NoTransition = React.forwardRef(function NoTransition(props: {children: React.ReactElement}) {
   return <React.Fragment> {props.children} </React.Fragment>;
 });
 
@@ -67,7 +67,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
   const [contentType, setContentType] = useState<SCContentType | null>(null);
-  const [contentId, setContentId] = useState<number | null>(null);
+  const [, setContentId] = useState<number | null>(null);
   const [content, setContent] = useState<SCEventType | SCGroupType | SCCourseType | SCCategoryType | null>(null);
   const [paymentPrice, setPaymentPrice] = useState<SCPaymentPrice | null>(null);
 
@@ -308,13 +308,12 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
 
   return (
     <Root
-      maxWidth={'sm'}
+      maxWidth="sm"
       fullWidth
-      scroll={'paper'}
+      scroll="paper"
       open
-      {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
+      {...(disableInitialTransition ? {slots: {transition: NoTransition}} : {slots: {transition: Transition}})}
       className={classNames(classes.root, className)}
-      TransitionComponent={Transition}
       {...rest}>
       <DialogTitle>{renderTitle()}</DialogTitle>
       <DialogContent>{loading ? <CircularProgress /> : renderContent()}</DialogContent>

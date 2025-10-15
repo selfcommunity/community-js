@@ -239,12 +239,25 @@ export default function GroupActionsMenu(inProps: GroupActionsMenuProps): JSX.El
               open
               onClose={handleClose}
               onOpen={handleOpen}
-              PaperProps={{className: classes.paper}}
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}
               disableSwipeToOpen>
               <List>{renderList()}</List>
             </SwipeableDrawerRoot>
           ) : (
-            <MenuRoot className={classes.menuRoot} anchorEl={anchorEl} open onClose={handleClose} PaperProps={{className: classes.paper}}>
+            <MenuRoot
+              className={classes.menuRoot}
+              anchorEl={anchorEl}
+              open
+              onClose={handleClose}
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}>
               {renderList()}
             </MenuRoot>
           )}

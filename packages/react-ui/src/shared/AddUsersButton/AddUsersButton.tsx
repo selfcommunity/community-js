@@ -278,8 +278,10 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
                   {...params}
                   variant="outlined"
                   placeholder={`${intl.formatMessage(messages.placeholder)}`}
-                  InputProps={{
-                    ...params.InputProps
+                  slotProps={{
+                    input: {
+                      ...params.InputProps
+                    }
                   }}
                 />
               )}

@@ -17,7 +17,7 @@ import {
   SCPurchasableContent
 } from '@selfcommunity/types';
 import classNames from 'classnames';
-import React, {MouseEvent, ReactNode, useCallback, useEffect, useState} from 'react';
+import React, {ReactNode, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import PaywallsDialog from '../PaywallsDialog';
 import {CategoryApiClient, CourseApiClient, EventApiClient, GroupApiClient} from '@selfcommunity/api-services';
@@ -169,25 +169,22 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
     setOpen(false);
   }, [open]);
 
-  const handleOpen = useCallback(
-    (e: MouseEvent<HTMLElement>) => {
-      if (!open) {
-        if (!scUserContext.user) {
-          scContext.settings.handleAnonymousAction();
-        } else {
-          setOpen(true);
-        }
+  const handleOpen = useCallback(() => {
+    if (!open) {
+      if (!scUserContext.user) {
+        scContext.settings.handleAnonymousAction();
+      } else {
+        setOpen(true);
       }
-    },
-    [scUserContext.user, open, scContext.settings]
-  );
+    }
+  }, [scUserContext.user, open, scContext.settings]);
 
   /**
    * Handle update order
    * Price param is the new price selected
    */
   const handleUpdatePaymentOrder = useCallback(
-    (price: SCPaymentPrice) => {
+    (_price: SCPaymentPrice) => {
       // update order/subscription when will be recurring payment
     },
     [paymentOrder, purchased]
@@ -303,7 +300,11 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
           {isMobile ? (
             <SwipeableDrawerRoot
               className={classes.drawerRoot}
-              PaperProps={{className: classes.paper}}
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}
               open
               onClose={handleClose}
               onOpen={handleOpen}

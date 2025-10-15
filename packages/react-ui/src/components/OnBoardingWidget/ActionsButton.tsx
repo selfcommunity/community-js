@@ -35,19 +35,19 @@ const classes = {
 const Root = styled(IconButton, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 const SwipeableDrawerRoot = styled(SwipeableDrawer, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.drawerRoot
+  overridesResolver: (_props, styles) => styles.drawerRoot
 })(() => ({}));
 
 const MenuRoot = styled(Menu, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.menuRoot
+  overridesResolver: (_props, styles) => styles.menuRoot
 })(() => ({}));
 
 export interface OnBoardingActionsButtonProps extends IconButtonProps {
@@ -163,7 +163,11 @@ export default function OnBoardingActionsButton(inProps: OnBoardingActionsButton
               open
               onClose={handleClose}
               onOpen={handleOpen}
-              PaperProps={{className: classes.paper}}
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}
               disableSwipeToOpen>
               <List>{renderList()}</List>
             </SwipeableDrawerRoot>
@@ -174,7 +178,11 @@ export default function OnBoardingActionsButton(inProps: OnBoardingActionsButton
               anchorEl={anchorEl}
               open
               onClose={handleClose}
-              PaperProps={{className: classes.paper}}>
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}>
               {renderList()}
             </MenuRoot>
           )}

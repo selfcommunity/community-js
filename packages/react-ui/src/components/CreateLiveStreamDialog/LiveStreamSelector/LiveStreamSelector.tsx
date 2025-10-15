@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {Box, Typography, Button, Paper, Container, Radio, Theme, Alert, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -9,7 +9,7 @@ import EventImage from '../../../assets/liveStream/event';
 import LiveImage from '../../../assets/liveStream/live';
 import {LiveStreamApiClient} from '@selfcommunity/api-services';
 import {WARNING_THRESHOLD_EXPIRING_SOON} from '../../LiveStreamRoom/constants';
-import {Link, SCContextType, SCPreferences, SCPreferencesContextType, useSCContext, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {Link, SCPreferences, SCPreferencesContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {SCCommunityEnvironment, SCCommunitySubscriptionTier} from '@selfcommunity/types';
 import {HUB_PROD, HUB_STAGE} from '../../PlatformWidget/constants';
 
@@ -25,14 +25,14 @@ const classes = {
 const Root = styled(Container, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({}));
+})(() => ({}));
 
 // Styled components
 const OptionCard = styled(Paper, {
   name: PREFIX,
   slot: 'optionCardRoot',
   shouldForwardProp: (prop) => prop !== 'selected'
-})<{theme?: Theme; selected: boolean}>(({theme, selected}) => ({
+})<{theme?: Theme; selected: boolean}>(() => ({
   '& h6': {
     fontWeight: 'bold',
     textTransform: 'uppercase'
@@ -42,7 +42,7 @@ const OptionCard = styled(Paper, {
 const FeatureItem = styled(Box, {
   name: PREFIX,
   slot: 'featureItemRoot'
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface LiveStreamSelectorProps {
   /**
@@ -98,7 +98,6 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
   const {className, liveSelected, onLiveSelected, onNext} = props;
 
   // CONTEXT
-  const scContext: SCContextType = useSCContext();
   const scUserContext = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
 
@@ -220,8 +219,6 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
           id="ui.liveStreamForm.selector.warningSubscriptionRequired"
           defaultMessage="ui.liveStreamForm.selector.warningSubscriptionRequired"
           values={{
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
             link: (...chunks) => (
               <Link target="_blank" to={`${isStage ? HUB_STAGE : HUB_PROD}dashboard/community/${communityStackId}/subscription`}>
                 {chunks}
@@ -289,7 +286,7 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
             <Box component="ul">
               {option.features.map((feature, featureIndex) => {
                 return (
-                  <FeatureItem component="li" key={featureIndex}>
+                  <FeatureItem as="li" key={featureIndex}>
                     <Typography variant="body2" color="text.secondary" sx={{flex: 1}}>
                       {feature}
                     </Typography>

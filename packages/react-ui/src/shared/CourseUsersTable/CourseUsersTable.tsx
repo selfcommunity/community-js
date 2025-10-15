@@ -218,33 +218,35 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           id: 'ui.courseUsersTable.searchBar.placeholder',
           defaultMessage: 'ui.courseUsersTable.searchBar.placeholder'
         })}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon>search</Icon>
-            </InputAdornment>
-          ),
-          endAdornment:
-            value.length > 0 ? (
-              <Stack className={classes.endAdornmentWrapper}>
-                <InputAdornment position="start">
-                  <IconButton color="inherit" onClick={handleSearchClear}>
-                    <Icon>close</Icon>
-                  </IconButton>
-                </InputAdornment>
-                <InputAdornment position="end">
-                  <LoadingButton
-                    color="primary"
-                    variant="contained"
-                    onClick={handleSearchStart}
-                    loading={loadingSearch}
-                    disabled={loadingSearch}
-                    className={classes.searchButton}>
-                    <Icon>search</Icon>
-                  </LoadingButton>
-                </InputAdornment>
-              </Stack>
-            ) : undefined
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <Icon>search</Icon>
+              </InputAdornment>
+            ),
+            endAdornment:
+              value.length > 0 ? (
+                <Stack className={classes.endAdornmentWrapper}>
+                  <InputAdornment position="start">
+                    <IconButton color="inherit" onClick={handleSearchClear}>
+                      <Icon>close</Icon>
+                    </IconButton>
+                  </InputAdornment>
+                  <InputAdornment position="end">
+                    <LoadingButton
+                      color="primary"
+                      variant="contained"
+                      onClick={handleSearchStart}
+                      loading={loadingSearch}
+                      disabled={loadingSearch}
+                      className={classes.searchButton}>
+                      <Icon>search</Icon>
+                    </LoadingButton>
+                  </InputAdornment>
+                </Stack>
+              ) : undefined
+          }
         }}
         value={value}
         onChange={handleChange}

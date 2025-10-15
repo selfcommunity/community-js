@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {Divider, Grid, Typography, styled} from '@mui/material';
+import {Divider, Grid2, Typography, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 
@@ -24,7 +24,7 @@ const classes = {
 export function PointElement({message, points}: {message: React.ReactNode; points: number}): JSX.Element {
   if (points > 0) {
     return (
-      <Grid item xs={12} sm={12} md={6}>
+      <Grid2 size={{md: 6}}>
         <Typography component="div" className={classes.element}>
           <Typography>{message}</Typography>
           <Typography>
@@ -37,12 +37,12 @@ export function PointElement({message, points}: {message: React.ReactNode; point
           </Typography>
         </Typography>
         <Divider />
-      </Grid>
+      </Grid2>
     );
   }
 }
 
-const Root = styled(Grid, {
+const Root = styled(Grid2, {
   name: PREFIX,
   slot: 'PointsListRoot'
 })(() => ({}));
@@ -73,7 +73,7 @@ export default function PointsList(props: PointsListProps): JSX.Element {
    */
 
   return (
-    <Root className={classNames(classes.root, className)} container spacing={2} {...rest}>
+    <Root className={classNames(classes.root, className)} container width="100%" spacing={2} {...rest}>
       {preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED].value && (
         <PointElement
           message={<FormattedMessage id="templates.loyaltyProgramDetail.points.post" defaultMessage="templates.loyaltyProgramDetail.points.post" />}

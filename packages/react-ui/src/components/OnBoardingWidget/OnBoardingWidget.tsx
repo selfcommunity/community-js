@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -86,20 +86,20 @@ const classes = {
 const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 const AccordionRoot = styled(Accordion, {
   name: PREFIX,
   slot: 'AccordionRoot',
-  overridesResolver: (props, styles) => styles.accordionRoot
+  overridesResolver: (_props, styles) => styles.accordionRoot
 })(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.dialogRoot
+})(() => ({}));
 
 export interface OnBoardingWidgetProps extends VirtualScrollerItemProps {
   /**
@@ -314,16 +314,16 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
 
   const startStep = async (stepId: number) => {
     showCategoriesWarningModal && setShowWarningCategoriesModal(false);
-		try {
-			await OnBoardingService.startAStep(stepId, GenerateContentsParams);
-			setIsGenerating(true);
-		} catch (error) {
-			Logger.error(SCOPE_SC_UI, error);
-			enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-				variant: 'error',
-				autoHideDuration: 3000
-			});
-		}
+    try {
+      await OnBoardingService.startAStep(stepId, GenerateContentsParams);
+      setIsGenerating(true);
+    } catch (error) {
+      Logger.error(SCOPE_SC_UI, error);
+      enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+        variant: 'error',
+        autoHideDuration: 3000
+      });
+    }
   };
 
   const handlePreferencesUpdate = () => {
@@ -399,10 +399,8 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     const categoryStep = steps.find((step) => step.step === SCOnBoardingStepType.CATEGORIES);
 
     if (categoryStep?.status === SCOnBoardingStepStatusType.IN_PROGRESS && categoryStep.results.length !== 0) {
-      categoryStep.results.forEach((c: any) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        const isAlreadyNotified = prevCategoriesStep?.results.some((result: any) => result.id === c.id);
+      categoryStep.results.forEach((c) => {
+        const isAlreadyNotified = prevCategoriesStep?.results.some((result) => result.id === c.id);
         if (!isAlreadyNotified) {
           notifyCategoryChanges(c);
         }
@@ -466,8 +464,6 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                       id="ui.onBoardingWidget.accordion.expanded.title.mobile"
                       defaultMessage="ui.onBoardingWidget.accordion.expanded.title.mobile"
                       values={{
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore
                         b: (chunks) => <strong>{chunks}</strong>
                       }}
                     />
@@ -493,12 +489,12 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                       id="ui.onBoardingWidget.accordion.expanded.summary"
                       defaultMessage="ui.onBoardingWidget.accordion.expanded.summary"
                       values={{
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore
                         b: (chunks) => <strong>{chunks}</strong>,
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore
-                        icon: (...chunks) => <Icon>{chunks}</Icon>
+                        icon: (...chunks) => (
+                          <Icon>
+                            <>{chunks}</>
+                          </Icon>
+                        )
                       }}
                     />
                   </Typography>
@@ -510,13 +506,12 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                   id="ui.onBoardingWidget.accordion.collapsed"
                   defaultMessage="ui.onBoardingWidget.accordion.collapsed"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
                     b: (chunks) => <strong>{chunks}</strong>,
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
-                    // eslint-disable-next-line prettier/prettier
-                    icon: (...chunks) => <Icon color="secondary" fontSize="medium">{chunks}</Icon>
+                    icon: (...chunks) => (
+                      <Icon color="secondary" fontSize="medium">
+                        {chunks}
+                      </Icon>
+                    )
                   }}
                 />
               </Typography>
@@ -558,8 +553,12 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                               checked={step.status === SCOnBoardingStepStatusType.COMPLETED}
                               tabIndex={-1}
                               disableRipple
-                              inputProps={{'aria-labelledby': step.step}}
-                              size={'small'}
+                              slotProps={{
+                                input: {
+                                  'aria-labelledby': `${step.step}`
+                                }
+                              }}
+                              size="small"
                             />
                           </ListItemIcon>
                           <ListItemText
@@ -635,8 +634,6 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                           id="ui.onBoardingWidget.ai.categories.warning.confirm"
                           defaultMessage="ui.onBoardingWidget.ai.categories.warning.confirm"
                           values={{
-                            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                            // @ts-ignore
                             b: (chunks) => <b>{chunks}</b>
                           }}
                         />

@@ -1,4 +1,4 @@
-import React, {Fragment, SyntheticEvent, useCallback, useEffect, useMemo, useState} from 'react';
+import React, {SyntheticEvent, useCallback, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
@@ -231,16 +231,18 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
             {...params}
             {...TextFieldProps}
             margin="dense"
-            InputProps={{
-              ...params.InputProps,
-              autoComplete: 'off',
-              endAdornment:
-                filteredUsers.length > 0 ? (
-                  <Fragment>
-                    {isLoading && <CircularProgress color="inherit" size={20} />}
-                    {params.InputProps.endAdornment}
-                  </Fragment>
-                ) : null
+            slotProps={{
+              input: {
+                ...params.InputProps,
+                autoComplete: 'off',
+                endAdornment:
+                  filteredUsers.length > 0 ? (
+                    <>
+                      {isLoading && <CircularProgress color="inherit" size={20} />}
+                      {params.InputProps.endAdornment}
+                    </>
+                  ) : null
+              }
             }}
           />
         )}
@@ -253,8 +255,6 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
           id="ui.userAutocomplete.textarea.info"
           defaultMessage="ui.userAutocomplete.textarea.info"
           values={{
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
             icon: (...chunks) => <Icon>{chunks}</Icon>
           }}
         />

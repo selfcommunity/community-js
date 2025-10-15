@@ -361,17 +361,19 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
                   {...params}
                   variant="outlined"
                   placeholder={`${intl.formatMessage(messages.placeholder)}`}
-                  InputProps={{
-                    ...params.InputProps,
-                    className: classes.input,
-                    startAdornment: (
-                      <>
-                        <InputAdornment position="start">
-                          <Icon className={classes.icon}>search</Icon>
-                        </InputAdornment>
-                        {params.InputProps.startAdornment}
-                      </>
-                    )
+                  slotProps={{
+                    input: {
+                      ...params.InputProps,
+                      className: classes.input,
+                      startAdornment: (
+                        <>
+                          <InputAdornment position="start">
+                            <Icon className={classes.icon}>search</Icon>
+                          </InputAdornment>
+                          {params.InputProps.startAdornment}
+                        </>
+                      )
+                    }
                   }}
                 />
               )}

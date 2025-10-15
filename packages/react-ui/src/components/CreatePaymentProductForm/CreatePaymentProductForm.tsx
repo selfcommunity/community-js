@@ -231,9 +231,11 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
             </>
           )
         }
-        InputProps={{
-          startAdornment: <InputAdornment position="start">€</InputAdornment>,
-          inputComponent: NumericFormatCustom as any
+        slotProps={{
+          input: {
+            startAdornment: <InputAdornment position="start">€</InputAdornment>,
+            inputComponent: NumericFormatCustom as any
+          }
         }}
         fullWidth
         error={Boolean(fieldsError && fieldsError.unitAmount)}

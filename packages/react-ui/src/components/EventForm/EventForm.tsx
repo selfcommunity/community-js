@@ -538,8 +538,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           value={field.name}
           name="name"
           onChange={handleChange}
-          InputProps={{
-            endAdornment: <Typography variant="body2">{EVENT_TITLE_MAX_LENGTH - field.name.length}</Typography>
+          slotProps={{
+            input: {
+              endAdornment: <Typography variant="body2">{EVENT_TITLE_MAX_LENGTH - field.name.length}</Typography>
+            }
           }}
           error={Boolean(field.name.length > EVENT_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
           helperText={
@@ -567,16 +569,18 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 textField: (params) => (
                   <TextField
                     {...params}
-                    InputProps={{
-                      ...params.InputProps,
-                      placeholder: `${intl.formatMessage(messages.startDate)}`,
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <IconButton>
-                            <Icon>CalendarIcon</Icon>
-                          </IconButton>
-                        </InputAdornment>
-                      )
+                    slotProps={{
+                      input: {
+                        ...params.slotProps.input,
+                        placeholder: `${intl.formatMessage(messages.startDate)}`,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <IconButton>
+                              <Icon>CalendarIcon</Icon>
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }
                     }}
                   />
                 )
@@ -603,16 +607,18 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 textField: (params) => (
                   <TextField
                     {...params}
-                    InputProps={{
-                      ...params.InputProps,
-                      placeholder: `${intl.formatMessage(messages.startTime)}`,
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <IconButton>
-                            <Icon>access_time</Icon>
-                          </IconButton>
-                        </InputAdornment>
-                      )
+                    slotProps={{
+                      input: {
+                        ...params.slotProps.input,
+                        placeholder: `${intl.formatMessage(messages.startTime)}`,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <IconButton>
+                              <Icon>access_time</Icon>
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }
                     }}
                   />
                 )
@@ -682,16 +688,18 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 textField: (params) => (
                   <TextField
                     {...params}
-                    InputProps={{
-                      ...params.InputProps,
-                      placeholder: `${intl.formatMessage(messages.endDate)}`,
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <IconButton>
-                            <Icon>calendar_off</Icon>
-                          </IconButton>
-                        </InputAdornment>
-                      )
+                    slotProps={{
+                      input: {
+                        ...params.slotProps.input,
+                        placeholder: `${intl.formatMessage(messages.endDate)}`,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <IconButton>
+                              <Icon>calendar_off</Icon>
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }
                     }}
                   />
                 )
@@ -718,16 +726,18 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                 textField: (params) => (
                   <TextField
                     {...params}
-                    InputProps={{
-                      ...params.InputProps,
-                      placeholder: `${intl.formatMessage(messages.endTime)}`,
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <IconButton>
-                            <Icon>access_time</Icon>
-                          </IconButton>
-                        </InputAdornment>
-                      )
+                    slotProps={{
+                      input: {
+                        ...params.slotProps.input,
+                        placeholder: `${intl.formatMessage(messages.endTime)}`,
+                        startAdornment: (
+                          <InputAdornment position="start">
+                            <IconButton>
+                              <Icon>access_time</Icon>
+                            </IconButton>
+                          </InputAdornment>
+                        )
+                      }
                     }}
                   />
                 )
@@ -792,8 +802,6 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   id="ui.eventForm.privacy.public.info"
                   defaultMessage="ui.eventForm.privacy.public.info"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                    // @ts-ignores
                     b: (chunks) => <strong>{chunks}</strong>
                   }}
                 />
@@ -802,8 +810,6 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   id="ui.eventForm.privacy.private.info"
                   defaultMessage="ui.eventForm.private.public.info"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                    // @ts-ignore
                     b: (chunks) => <strong>{chunks}</strong>
                   }}
                 />
@@ -819,12 +825,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           value={field.description}
           name="description"
           onChange={handleChange}
-          InputProps={{
-            endAdornment: (
-              <Typography variant="body2">
-                {field.description?.length ? EVENT_DESCRIPTION_MAX_LENGTH - field.description.length : EVENT_DESCRIPTION_MAX_LENGTH}
-              </Typography>
-            )
+          slotProps={{
+            input: {
+              endAdornment: (
+                <Typography variant="body2">
+                  {field.description?.length ? EVENT_DESCRIPTION_MAX_LENGTH - field.description.length : EVENT_DESCRIPTION_MAX_LENGTH}
+                </Typography>
+              )
+            }
           }}
           error={Boolean(field.description?.length > EVENT_DESCRIPTION_MAX_LENGTH)}
           helperText={

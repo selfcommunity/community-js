@@ -251,16 +251,18 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
                 label={<FormattedMessage id="ui.eventForm.address.live.placeholder" defaultMessage="ui.eventForm.address.live.placeholder" />}
                 variant="outlined"
                 fullWidth
-                InputProps={{
-                  ...params.InputProps,
-                  endAdornment: (
-                    <>
-                      <InputAdornment position="start">
-                        <Icon>add_location_alt</Icon>
-                      </InputAdornment>
-                      {params.InputProps.endAdornment}
-                    </>
-                  )
+                slotProps={{
+                  input: {
+                    ...params.InputProps,
+                    endAdornment: (
+                      <>
+                        <InputAdornment position="start">
+                          <Icon>add_location_alt</Icon>
+                        </InputAdornment>
+                        {params.InputProps.endAdornment}
+                      </>
+                    )
+                  }
                 }}
               />
             )}
@@ -273,8 +275,10 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
             type="url"
             placeholder={`${intl.formatMessage(messages.virtualPlaceholder)}`}
             helperText={<FormattedMessage id="ui.eventForm.address.online.help" defaultMessage="ui.eventForm.address.online.help" />}
-            InputProps={{
-              endAdornment: <Icon>play_circle_outline</Icon>
+            slotProps={{
+              input: {
+                endAdornment: <Icon>play_circle_outline</Icon>
+              }
             }}
             value={event ? event.link : ''}
             onChange={handleLinkChange}

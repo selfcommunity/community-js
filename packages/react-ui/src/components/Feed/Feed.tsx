@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {forwardRef, ForwardRefRenderFunction, ReactNode, useContext, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
 import {
   Link,
@@ -13,7 +12,7 @@ import {
   usePreviousValue,
   useSCFetchFeed
 } from '@selfcommunity/react-core';
-import {styled, useTheme, Box, Button, CardContent, Grid, Hidden, Theme, Typography, useMediaQuery} from '@mui/material';
+import {styled, useTheme, Box, Button, CardContent, Grid2, Theme, Typography, useMediaQuery} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
@@ -57,7 +56,7 @@ const classes = {
   paginationLink: `${PREFIX}-pagination-link`
 };
 
-const Root = styled(Grid, {
+const Root = styled(Grid2, {
   name: PREFIX,
   slot: 'Root'
 })(() => ({}));
@@ -345,11 +344,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
-  const limit = useMemo(() => endpointQueryParams.limit || DEFAULT_PAGINATION_LIMIT, [endpointQueryParams]);
+  const limit = +useMemo(() => endpointQueryParams.limit || DEFAULT_PAGINATION_LIMIT, [endpointQueryParams]);
   const offset = useMemo(() => {
     if (prefetchedData) {
-      const currentOffset = getQueryStringParameter(prefetchedData.previous, 'offset') || 0;
-      return prefetchedData.previous ? parseInt(currentOffset) + limit : 0;
+      const currentOffset = +getQueryStringParameter(prefetchedData.previous, 'offset') || 0;
+      return prefetchedData.previous ? currentOffset + limit : 0;
     }
     return endpointQueryParams.offset || 0;
   }, [endpointQueryParams, prefetchedData]);
@@ -429,13 +428,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         ...(advEnabled && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_FEED_SIDEBAR)
           ? [
               {
-                type: 'widget',
+                type: 'widget' as const,
                 component: CustomAdv,
                 componentProps: {
                   position: SCCustomAdvPosition.POSITION_FEED_SIDEBAR,
                   ...CustomAdvProps
                 },
-                column: 'right',
+                column: 'right' as const,
                 position: 0
               }
             ]
@@ -444,10 +443,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           ? []
           : [
               {
-                type: 'widget',
+                type: 'widget' as const,
                 component: FooterWidget,
                 componentProps: {},
-                column: 'right',
+                column: 'right' as const,
                 position: 100
               }
             ])
@@ -592,10 +591,10 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
 
   /**
    * Callback subscribe events
-   * @param msg
+   * @param _msg
    * @param data
    */
-  const subscriber = (msg, data) => {
+  const subscriber = (_msg, data) => {
     if (data.refresh) {
       refresh();
     }
@@ -761,8 +760,8 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
       setHeadData([...[data], ...headData]);
       if (syncPagination) {
         // Adding an element, re-sync next and previous of feedDataObject
-        const nextOffset = parseInt(getQueryStringParameter(feedDataObject.next, 'offset') || feedDataObject.results.length - 1) + 1;
-        const previousOffset = parseInt(getQueryStringParameter(feedDataObject.previous, 'offset') || offset) + 1;
+        const nextOffset = (parseInt(getQueryStringParameter(feedDataObject.next, 'offset')) || feedDataObject.results.length - 1) + 1;
+        const previousOffset = (parseInt(getQueryStringParameter(feedDataObject.previous, 'offset')) || +offset) + 1;
         feedDataObject.updateState({
           previous: updateQueryStringParameter(feedDataObject.previous, 'offset', previousOffset),
           next: updateQueryStringParameter(feedDataObject.next, 'offset', nextOffset),
@@ -820,7 +819,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   if (feedDataObject.isLoadingNext && !feedDataLeft.length) {
     return (
       <FeedSkeleton>
-        {[...Array(3)].map((v, i) => (
+        {[...Array(3)].map((_v, i) => (
           <ItemSkeleton key={i} {...ItemSkeletonProps} />
         ))}
       </FeedSkeleton>
@@ -828,13 +827,13 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   }
 
   return (
-    <Root container spacing={2} id={id} className={classNames(classes.root, className)}>
+    <Root container width="100%" spacing={2} id={id} className={classNames(classes.root, className)}>
       {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_BELOW_TOPBAR) ? (
-        <Grid item xs={12}>
+        <Grid2>
           <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_TOPBAR} {...CustomAdvProps} />
-        </Grid>
+        </Grid2>
       ) : null}
-      <Grid item xs={12} md={7}>
+      <Grid2 size={{md: 7}}>
         <InfiniteScroll
           ref={containerRef}
           className={classes.left}
@@ -847,7 +846,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           footer={NextPageLink}
           loaderNext={<ItemSkeleton {...ItemSkeletonProps} />}
           loaderPrevious={<ItemSkeleton {...ItemSkeletonProps} />}
-          scrollThreshold={'90%'}
+          scrollThreshold="90%"
           endMessage={
             <Box className={classes.end}>
               <Widget className={classes.endMessage}>
@@ -885,19 +884,17 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             {...VirtualizedScrollerProps}
           />
         </InfiniteScroll>
-      </Grid>
+      </Grid2>
       {feedDataRight.length > 0 && !hideAdvs && (
-        <Hidden smDown>
-          <Grid item xs={12} md={5}>
-            <StickyBoxComp className={classes.right} {...FeedSidebarProps}>
-              <React.Suspense fallback={<GenericSkeleton />}>
-                {feedDataRight.map((d, i) => (
-                  <d.component key={i} {...d.componentProps}></d.component>
-                ))}
-              </React.Suspense>
-            </StickyBoxComp>
-          </Grid>
-        </Hidden>
+        <Grid2 sx={{display: {sx: 'none', sm: 'block'}}} size={{md: 5}}>
+          <StickyBoxComp className={classes.right} {...FeedSidebarProps}>
+            <React.Suspense fallback={<GenericSkeleton />}>
+              {feedDataRight.map((d, i) => (
+                <d.component key={i} {...d.componentProps}></d.component>
+              ))}
+            </React.Suspense>
+          </StickyBoxComp>
+        </Grid2>
       )}
     </Root>
   );

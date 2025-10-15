@@ -16,7 +16,7 @@ const classes = {
 const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(({theme}) => ({
   borderRadius: 7,
   color: theme.palette.common.white,
@@ -28,7 +28,7 @@ const Root = styled(Button, {
 const MenuRoot = styled(Menu, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.menuRoot
+  overridesResolver: (_props, styles) => styles.menuRoot
 })(({theme}) => ({
   '& .MuiPaper-root': {
     minWidth: 120,
@@ -116,7 +116,18 @@ export default function LiveStreamSettingsMenu(inProps: LiveStreamSettingsMenuPr
         </Typography>
         <FormControlLabel
           labelPlacement="start"
-          control={<Switch checked={blurEnabled} disabled={actionBlurDisabled} onChange={handleBlur} inputProps={{'aria-label': 'controlled'}} />}
+          control={
+            <Switch
+              checked={blurEnabled}
+              disabled={actionBlurDisabled}
+              onChange={handleBlur}
+              slotProps={{
+                input: {
+                  'aria-label': 'controlled'
+                }
+              }}
+            />
+          }
           label={
             <FormattedMessage
               id="ui.liveStreamRoom.settingsMenu.visualEffect.blurEffect"

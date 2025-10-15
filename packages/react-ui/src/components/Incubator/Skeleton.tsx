@@ -1,6 +1,5 @@
-import React from 'react';
 import Widget from '../Widget';
-import {Button, CardActions, CardContent, Grid, Typography, styled, Skeleton} from '@mui/material';
+import {Button, CardActions, CardContent, Grid2, Typography, styled, Skeleton} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {
@@ -51,23 +50,23 @@ export default function IncubatorSkeleton(props): JSX.Element {
           <Skeleton animation="wave" height={10} width="50%" variant="text" />
           <Skeleton animation="wave" height={10} width="80%" variant="text" />
         </Typography>
-        <Grid container spacing={1} className={classes.progressBar}>
-          <Grid item xs={12} md={12}>
+        <Grid2 container width="100%" spacing={1} className={classes.progressBar}>
+          <Grid2>
             <Skeleton animation="wave" height={20} width="100%" variant="rectangular" />
-          </Grid>
-          <Grid item xs>
+          </Grid2>
+          <Grid2 size="grow">
             <Skeleton animation="wave" height={10} width="100%" variant="text" />
-          </Grid>
-          <Grid item xs>
+          </Grid2>
+          <Grid2 size="grow">
             <Skeleton animation="wave" height={10} width="100%" variant="text" />
-          </Grid>
-          <Grid item xs>
+          </Grid2>
+          <Grid2 size="grow">
             <Skeleton animation="wave" height={10} width="100%" variant="text" />
-          </Grid>
-        </Grid>
+          </Grid2>
+        </Grid2>
       </CardContent>
       <CardActions className={classes.action}>
-        <Button disabled variant={'outlined'} size={'small'}>
+        <Button disabled variant="outlined" size="small">
           <Skeleton animation="wave" height={20} width={50} variant="text" />
         </Button>
       </CardActions>

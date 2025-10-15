@@ -1,4 +1,3 @@
-import React from 'react';
 import {ChipProps, FormControl, InputLabel, MenuItem, Radio, Select, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {useThemeProps} from '@mui/system';
@@ -73,7 +72,11 @@ export default function LocationEventsFilter(inProps: LocationEventsFilterProps)
               checked={value === option.value}
               value={option.value}
               name="radio-button-select"
-              inputProps={{'aria-label': option.label as any}}
+              slotProps={{
+                input: {
+                  'aria-label': `${option.label}`
+                }
+              }}
             />
             {option.label}
           </MenuItem>

@@ -22,9 +22,9 @@ export default {
  * General template structure
  * @param args
  */
-const template = (args) => {
+const template = (args: any) => {
   // REF
-  const feedRef = useRef<FeedRef>();
+  const feedRef = useRef<FeedRef | null>(null);
 
   // HANDLERS
   const handleRefresh = () => {
@@ -45,9 +45,9 @@ const template = (args) => {
  * General template FIXED structure
  * @param args
  */
-const templateContainerFixed = (args) => {
+const templateContainerFixed = (args: any) => {
   // REF
-  const feedRef = useRef<FeedRef>();
+  const feedRef = useRef<FeedRef | null>(null);
 
   // HANDLERS
   const handleRefresh = () => {

@@ -7,7 +7,7 @@ import {SCCategoryType, SCContentType, SCCoursePrivacyType, SCCourseType, SCCour
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
-import React, {ChangeEvent, Fragment, useCallback, useMemo, useState} from 'react';
+import {ChangeEvent, Fragment, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
@@ -428,8 +428,10 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   value={field.name}
                   name="name"
                   onChange={handleChange}
-                  InputProps={{
-                    endAdornment: <Typography variant="body2">{COURSE_TITLE_MAX_LENGTH - field.name.length}</Typography>
+                  slotProps={{
+                    input: {
+                      endAdornment: <Typography variant="body2">{COURSE_TITLE_MAX_LENGTH - field.name.length}</Typography>
+                    }
                   }}
                   error={Boolean((!!course && !field.name) || field.name.length > COURSE_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
                   helperText={
@@ -450,12 +452,14 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   value={field.description}
                   name="description"
                   onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <Typography variant="body2">
-                        {field.description?.length ? COURSE_DESCRIPTION_MAX_LENGTH - field.description.length : COURSE_DESCRIPTION_MAX_LENGTH}
-                      </Typography>
-                    )
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <Typography variant="body2">
+                          {field.description?.length ? COURSE_DESCRIPTION_MAX_LENGTH - field.description.length : COURSE_DESCRIPTION_MAX_LENGTH}
+                        </Typography>
+                      )
+                    }
                   }}
                   error={Boolean((!!field.privacy && !field.description) || field.description?.length > COURSE_DESCRIPTION_MAX_LENGTH)}
                   helperText={

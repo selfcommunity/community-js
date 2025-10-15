@@ -167,7 +167,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
   const {enqueueSnackbar} = useSnackbar();
 
   // REF
-  const feedRef = useRef<FeedRef>();
+  const feedRef = useRef<FeedRef | null>(null);
 
   // Hooks
   const {scCategory} = useSCFetchCategory({id: categoryId, category});

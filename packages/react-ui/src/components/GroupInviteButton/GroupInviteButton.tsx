@@ -39,14 +39,14 @@ const classes = {
 const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.dialogRoot
+})(() => ({}));
 
 export interface GroupInviteButtonProps extends ButtonProps {
   /**
@@ -251,7 +251,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
 
   // Autocomplete Handlers
 
-  const handleInputChange = (event, value, reason) => {
+  const handleInputChange = (_event, value, reason) => {
     switch (reason) {
       case 'input':
         setValue(value);
@@ -370,17 +370,19 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
                   {...params}
                   variant="outlined"
                   placeholder={`${intl.formatMessage(messages.placeholder)}`}
-                  InputProps={{
-                    ...params.InputProps,
-                    className: classes.input,
-                    startAdornment: (
-                      <>
-                        <InputAdornment position="start">
-                          <Icon className={classes.icon}>search</Icon>
-                        </InputAdornment>
-                        {params.InputProps.startAdornment}
-                      </>
-                    )
+                  slotProps={{
+                    input: {
+                      ...params.InputProps,
+                      className: classes.input,
+                      startAdornment: (
+                        <>
+                          <InputAdornment position="start">
+                            <Icon className={classes.icon}>search</Icon>
+                          </InputAdornment>
+                          {params.InputProps.startAdornment}
+                        </>
+                      )
+                    }
                   }}
                 />
               )}

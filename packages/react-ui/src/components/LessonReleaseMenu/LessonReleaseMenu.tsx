@@ -220,16 +220,18 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
                 <TextField
                   {...params}
                   error={false}
-                  InputProps={{
-                    ...params.InputProps,
-                    placeholder: `${intl.formatMessage(messages.pickerPlaceholder)}`,
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton disabled={isDisabled}>
-                          <Icon>expand_more</Icon>
-                        </IconButton>
-                      </InputAdornment>
-                    )
+                  slotProps={{
+                    input: {
+                      ...params.slotProps.input,
+                      placeholder: `${intl.formatMessage(messages.pickerPlaceholder)}`,
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton disabled={isDisabled}>
+                            <Icon>expand_more</Icon>
+                          </IconButton>
+                        </InputAdornment>
+                      )
+                    }
                   }}
                 />
               )
@@ -264,14 +266,16 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
             size="small"
             value={placeholderStructured}
             onClick={isDisabled ? undefined : handleClick}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleClick} disabled={isDisabled}>
-                    <Icon>expand_more</Icon>
-                  </IconButton>
-                </InputAdornment>
-              )
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleClick} disabled={isDisabled}>
+                      <Icon>expand_more</Icon>
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }
             }}
             disabled={isDisabled}
           />
@@ -297,9 +301,11 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
                   type="number"
                   value={dripDelay}
                   onChange={handleValueChange}
-                  InputProps={{
-                    inputProps: {
-                      min: 0
+                  slotProps={{
+                    input: {
+                      inputProps: {
+                        min: 0
+                      }
                     }
                   }}
                 />

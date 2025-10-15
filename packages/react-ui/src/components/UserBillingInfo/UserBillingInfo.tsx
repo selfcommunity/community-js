@@ -6,13 +6,13 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
-  Grid,
+  Grid2,
   Icon,
   InputAdornment,
   TextField,
   Tooltip,
   Typography,
-	styled
+  styled
 } from '@mui/material';
 import {camelCase} from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -137,7 +137,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
 
   // STATE
   const [state, dispatch] = useReducer(reducer, getInitialState({mode}));
-  const [customer, setCustomer] = useState();
+  const [customer] = useState();
 
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
@@ -574,9 +574,9 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
               </>
             ) : (
               <Box>
-                <Grid container spacing={3}>
+                <Grid2 container width="100%" spacing={3}>
                   {/* Name - name */}
-                  <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="name"
@@ -588,10 +588,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.nameError}
                       fullWidth
                     />
-                  </Grid>
+                  </Grid2>
 
                   {/* address_line1 */}
-                  <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_line1"
@@ -603,10 +603,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.addressLine1Error}
                       fullWidth
                     />
-                  </Grid>
+                  </Grid2>
 
                   {/* address_line2 */}
-                  <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_line2"
@@ -618,10 +618,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.addressLine2Error}
                       fullWidth
                     />
-                  </Grid>
+                  </Grid2>
 
                   {/* country */}
-                  <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                     <Autocomplete
                       id="country-select-demo"
                       options={countries}
@@ -630,8 +630,6 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       onChange={handleChange('address_country')}
                       getOptionLabel={(option) => option.label}
                       renderOption={(props, option) => {
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
                         const {key, ...rest} = props;
                         return (
                           <Box key={key} component="li" sx={{'& > img': {mr: 2, flexShrink: 0}}} {...rest}>
@@ -654,33 +652,35 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                           id="address_country"
                           name="address_country"
                           error={Boolean(state.addressCountryError)}
-                          InputProps={{
-                            ...params.InputProps,
-                            ...(state.address_country && {
-                              startAdornment: (
-                                <InputAdornment position="start">
-                                  <img
-                                    loading="lazy"
-                                    width="20"
-                                    srcSet={`https://flagcdn.com/w40/${state.address_country.code.toLowerCase()}.png 2x`}
-                                    src={`https://flagcdn.com/w20/${state.address_country.code.toLowerCase()}.png`}
-                                    alt=""
-                                  />
-                                </InputAdornment>
-                              )
-                            })
-                          }}
-                          inputProps={{
-                            ...params.inputProps,
-                            autoComplete: 'new-password' // disable autocomplete and autofill
+                          slotProps={{
+                            input: {
+                              ...params.InputProps,
+                              ...(state.address_country && {
+                                startAdornment: (
+                                  <InputAdornment position="start">
+                                    <img
+                                      loading="lazy"
+                                      width="20"
+                                      srcSet={`https://flagcdn.com/w40/${state.address_country.code.toLowerCase()}.png 2x`}
+                                      src={`https://flagcdn.com/w20/${state.address_country.code.toLowerCase()}.png`}
+                                      alt=""
+                                    />
+                                  </InputAdornment>
+                                )
+                              })
+                            },
+                            htmlInput: {
+                              ...params.inputProps,
+                              autoComplete: 'new-password' // disable autocomplete and autofill
+                            }
                           }}
                         />
                       )}
                     />
-                  </Grid>
+                  </Grid2>
 
                   {/* address_state */}
-                  <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_state"
@@ -692,10 +692,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.addressStateError}
                       fullWidth
                     />
-                  </Grid>
+                  </Grid2>
 
                   {/* address_postal_code */}
-                  <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_postal_code"
@@ -707,10 +707,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.addressPostalCodeError}
                       fullWidth
                     />
-                  </Grid>
+                  </Grid2>
 
                   {/* address_city */}
-                  <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_city"
@@ -720,19 +720,21 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       value={state.address_city}
                       error={Boolean(state.addressCityError)}
                       helperText={state.addressCityError}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Icon>public</Icon>
-                          </InputAdornment>
-                        )
+                      slotProps={{
+                        input: {
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Icon>public</Icon>
+                            </InputAdornment>
+                          )
+                        }
                       }}
                       fullWidth
                     />
-                  </Grid>
+                  </Grid2>
 
                   {/* Phone - phone */}
-                  <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="phone"
@@ -742,19 +744,21 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       value={state.phone}
                       error={Boolean(state.phoneError)}
                       helperText={state.phoneError}
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">
-                            <Icon>person</Icon>
-                          </InputAdornment>
-                        )
+                      slotProps={{
+                        input: {
+                          startAdornment: (
+                            <InputAdornment position="start">
+                              <Icon>person</Icon>
+                            </InputAdornment>
+                          )
+                        }
                       }}
                       fullWidth
                     />
-                  </Grid>
+                  </Grid2>
 
                   {/* TaxCode (TIN/CF) */}
-                  <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="tax_code"
@@ -766,9 +770,9 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.taxCodeError}
                       fullWidth
                     />
-                  </Grid>
+                  </Grid2>
 
-                  <Grid item xs={12}>
+                  <Grid2>
                     <FormGroup>
                       <FormControlLabel
                         disabled={Boolean(disableButtons)}
@@ -795,14 +799,14 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                         }
                       />
                     </FormGroup>
-                  </Grid>
+                  </Grid2>
 
                   {state.isBusiness && (
                     <Grow in={state.isBusiness}>
-                      <Grid item xs={12}>
-                        <Grid container spacing={3}>
+                      <Grid2>
+                        <Grid2 container width="100%" spacing={3}>
                           {/* tax_id_data */}
-                          <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                          <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                             <TextField
                               variant="outlined"
                               id="tax_id_data"
@@ -824,49 +828,51 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                                   ? VAT_EXAMPLE[state.address_country.code as string]
                                   : ''
                               }
-                              InputProps={{
-                                endAdornment: state.taxIdVerificationStatus !== null && (
-                                  <InputAdornment position="end">
-                                    {state.taxIdVerificationStatus === 'verified' ? (
-                                      <Icon color="primary">done</Icon>
-                                    ) : state.taxIdVerificationStatus === 'pending' ? (
-                                      <Tooltip
-                                        id="tooltip-warning"
-                                        title={
-                                          <FormattedMessage
-                                            id="ui.userBillingInfo.taxCheckPending"
-                                            defaultMessage="ui.userBillingInfo.taxCheckPending"
-                                          />
-                                        }
-                                        enterDelay={300}
-                                        leaveDelay={300}
-                                        placement="top">
-                                        <Icon color="warning">help</Icon>
-                                      </Tooltip>
-                                    ) : (
-                                      <Tooltip
-                                        id="tooltip-warning"
-                                        title={
-                                          <FormattedMessage
-                                            id="ui.userBillingInfo.taxCheckWarning"
-                                            defaultMessage="ui.userBillingInfo.taxCheckWarning"
-                                          />
-                                        }
-                                        enterDelay={300}
-                                        leaveDelay={300}
-                                        placement="top">
-                                        <Icon color="warning">help</Icon>
-                                      </Tooltip>
-                                    )}
-                                  </InputAdornment>
-                                )
+                              slotProps={{
+                                input: {
+                                  endAdornment: state.taxIdVerificationStatus !== null && (
+                                    <InputAdornment position="end">
+                                      {state.taxIdVerificationStatus === 'verified' ? (
+                                        <Icon color="primary">done</Icon>
+                                      ) : state.taxIdVerificationStatus === 'pending' ? (
+                                        <Tooltip
+                                          id="tooltip-warning"
+                                          title={
+                                            <FormattedMessage
+                                              id="ui.userBillingInfo.taxCheckPending"
+                                              defaultMessage="ui.userBillingInfo.taxCheckPending"
+                                            />
+                                          }
+                                          enterDelay={300}
+                                          leaveDelay={300}
+                                          placement="top">
+                                          <Icon color="warning">help</Icon>
+                                        </Tooltip>
+                                      ) : (
+                                        <Tooltip
+                                          id="tooltip-warning"
+                                          title={
+                                            <FormattedMessage
+                                              id="ui.userBillingInfo.taxCheckWarning"
+                                              defaultMessage="ui.userBillingInfo.taxCheckWarning"
+                                            />
+                                          }
+                                          enterDelay={300}
+                                          leaveDelay={300}
+                                          placement="top">
+                                          <Icon color="warning">help</Icon>
+                                        </Tooltip>
+                                      )}
+                                    </InputAdornment>
+                                  )
+                                }
                               }}
                               fullWidth
                             />
-                          </Grid>
+                          </Grid2>
 
                           {/* SDI */}
-                          <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                          <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                             <TextField
                               variant="outlined"
                               id="sdi"
@@ -885,10 +891,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                               helperText={state.sdiError}
                               fullWidth
                             />
-                          </Grid>
+                          </Grid2>
 
                           {/* PEC */}
-                          <Grid item xs={12} sm={inlineDisplay ? 12 : 6}>
+                          <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
                             <TextField
                               variant="outlined"
                               id="pec"
@@ -905,31 +911,33 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                               value={state.pec}
                               error={Boolean(state.pecError)}
                               helperText={state.pecError}
-                              InputProps={{
-                                type: 'email',
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                    <Icon>email</Icon>
-                                  </InputAdornment>
-                                )
+                              slotProps={{
+                                input: {
+                                  type: 'email',
+                                  startAdornment: (
+                                    <InputAdornment position="start">
+                                      <Icon>email</Icon>
+                                    </InputAdornment>
+                                  )
+                                }
                               }}
                               fullWidth
                             />
-                          </Grid>
-                        </Grid>
-                      </Grid>
+                          </Grid2>
+                        </Grid2>
+                      </Grid2>
                     </Grow>
                   )}
 
                   {state.error && (
-                    <Grid item xs={12}>
+                    <Grid2>
                       <Typography align="left" color="secondary">
                         {state.error}
                       </Typography>
-                    </Grid>
+                    </Grid2>
                   )}
 
-                  <Grid item xs={12}>
+                  <Grid2>
                     <Typography align="left">
                       <LoadingButton
                         variant="contained"
@@ -946,8 +954,8 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                         </Button>
                       )}
                     </Typography>
-                  </Grid>
-                </Grid>
+                  </Grid2>
+                </Grid2>
               </Box>
             )}
           </Fragment>

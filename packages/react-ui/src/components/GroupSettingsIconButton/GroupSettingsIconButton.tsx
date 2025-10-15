@@ -216,12 +216,25 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
               open
               onClose={handleClose}
               onOpen={handleOpen}
-              PaperProps={{className: classes.paper}}
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}
               disableSwipeToOpen>
               <List>{renderList()}</List>
             </SwipeableDrawerRoot>
           ) : (
-            <MenuRoot className={classes.menuRoot} anchorEl={anchorEl} open onClose={handleClose} PaperProps={{className: classes.paper}}>
+            <MenuRoot
+              className={classes.menuRoot}
+              anchorEl={anchorEl}
+              open
+              onClose={handleClose}
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}>
               {renderList()}
             </MenuRoot>
           )}
@@ -235,8 +248,6 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
               id="ui.groupSettingsIconButton.dialog.msg"
               defaultMessage="ui.groupSettingsIconButton.dialog.msg"
               values={{
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
                 b: (...chunks) => <strong>{chunks}</strong>,
                 user: user.username,
                 group: group.name

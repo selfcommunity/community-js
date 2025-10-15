@@ -3,7 +3,7 @@ import {Alert, Box, BoxProps, FormGroup, Paper, TextField, Typography, styled} f
 import {useThemeProps} from '@mui/system';
 import {SCCommunityEnvironment, SCCommunitySubscriptionTier, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import React, {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
+import {ChangeEvent, useCallback, useEffect, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {LIVE_STREAM_DESCRIPTION_MAX_LENGTH, LIVE_STREAM_TITLE_MAX_LENGTH, LIVE_STREAM_SLUG_MAX_LENGTH} from '../../constants/LiveStream';
 import {LIVESTREAM_DEFAULT_SETTINGS, PREFIX} from './constants';
@@ -35,7 +35,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface LiveStreamFormProps extends BoxProps {
   /**
@@ -280,8 +280,6 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
           id="ui.liveStreamForm.selector.warningSubscriptionRequired"
           defaultMessage="ui.liveStreamForm.selector.warningSubscriptionRequired"
           values={{
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
             link: (...chunks) => (
               <Link target="_blank" to={`${isStage ? HUB_STAGE : HUB_PROD}dashboard/community/${communityStackId}/subscription`}>
                 {chunks}
@@ -353,8 +351,10 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
           value={field.title}
           name="title"
           onChange={handleChange}
-          InputProps={{
-            endAdornment: <Typography variant="body2">{LIVE_STREAM_TITLE_MAX_LENGTH - field.title.length}</Typography>
+          slotProps={{
+            input: {
+              endAdornment: <Typography variant="body2">{LIVE_STREAM_TITLE_MAX_LENGTH - field.title.length}</Typography>
+            }
           }}
           error={Boolean(field.title.length > LIVE_STREAM_TITLE_MAX_LENGTH) || Boolean(error['titleError'])}
           helperText={
@@ -373,8 +373,10 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
           value={field.slug}
           name="slug"
           onChange={handleChange}
-          InputProps={{
-            endAdornment: <Typography variant="body2">{LIVE_STREAM_SLUG_MAX_LENGTH - field.slug.length}</Typography>
+          slotProps={{
+            input: {
+              endAdornment: <Typography variant="body2">{LIVE_STREAM_SLUG_MAX_LENGTH - field.slug.length}</Typography>
+            }
           }}
           error={Boolean(field.slug.length > LIVE_STREAM_SLUG_MAX_LENGTH) || Boolean(error['slugError'])}
           helperText={
@@ -394,12 +396,14 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
           value={field.description}
           name="description"
           onChange={handleChange}
-          InputProps={{
-            endAdornment: (
-              <Typography variant="body2">
-                {field.description?.length ? LIVE_STREAM_DESCRIPTION_MAX_LENGTH - field.description.length : LIVE_STREAM_DESCRIPTION_MAX_LENGTH}
-              </Typography>
-            )
+          slotProps={{
+            input: {
+              endAdornment: (
+                <Typography variant="body2">
+                  {field.description?.length ? LIVE_STREAM_DESCRIPTION_MAX_LENGTH - field.description.length : LIVE_STREAM_DESCRIPTION_MAX_LENGTH}
+                </Typography>
+              )
+            }
           }}
           error={Boolean(field.description?.length > LIVE_STREAM_DESCRIPTION_MAX_LENGTH)}
           helperText={

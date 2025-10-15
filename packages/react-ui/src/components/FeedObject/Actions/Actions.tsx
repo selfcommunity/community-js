@@ -1,6 +1,4 @@
-import React from 'react';
-import {styled} from '@mui/material';
-import {Grid} from '@mui/material';
+import {Grid2, styled} from '@mui/material';
 import Vote, {VoteProps} from './Vote';
 import Comment, {CommentProps} from './Comment';
 import Share, {ShareProps} from './Share';
@@ -15,7 +13,7 @@ const classes = {
   action: `${PREFIX}-actions-action`
 };
 
-const Root = styled(Grid, {
+const Root = styled(Grid2, {
   name: PREFIX,
   slot: 'ActionsRoot'
 })(() => ({}));
@@ -133,14 +131,14 @@ export default function Actions(props: ActionsProps): JSX.Element {
    */
   const columnWidth = getColumnWidth();
   return (
-    <Root container className={classNames(classes.root, className)}>
+    <Root container width="100%" className={classNames(classes.root, className)}>
       {!hideVoteAction && (
-        <Grid item xs={columnWidth} className={classes.action}>
+        <Grid2 size={columnWidth} className={classes.action}>
           <Vote feedObjectId={feedObjectId || obj.id} feedObject={obj} feedObjectType={feedObjectType || obj.type} {...VoteActionProps} />
-        </Grid>
+        </Grid2>
       )}
       {!hideCommentAction && (
-        <Grid item xs={columnWidth} className={classes.action}>
+        <Grid2 size={columnWidth} className={classes.action}>
           <Comment
             feedObject={obj}
             feedObjectType={feedObjectType}
@@ -148,12 +146,12 @@ export default function Actions(props: ActionsProps): JSX.Element {
             onCommentAction={handleExpandActivities}
             {...CommentActionProps}
           />
-        </Grid>
+        </Grid2>
       )}
       {!hideShareAction && (
-        <Grid item xs={columnWidth} className={classes.action}>
+        <Grid2 size={columnWidth} className={classes.action}>
           <Share feedObject={obj} feedObjectType={feedObjectType} id={feedObjectId} {...ShareActionProps} />
-        </Grid>
+        </Grid2>
       )}
     </Root>
   );

@@ -1,4 +1,3 @@
-import React from 'react';
 import {Box, Tooltip, Typography, styled, Icon} from '@mui/material';
 import {FormattedRelativeTime, useIntl} from 'react-intl';
 import classNames from 'classnames';
@@ -13,7 +12,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root]
+  overridesResolver: (_props, styles) => [styles.root]
 })(() => ({
   width: 'auto',
   display: 'inline-flex',
@@ -66,7 +65,7 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
   if (date) {
     const formattedDate = getRelativeTime(date);
     return (
-      <Root component="span" className={classNames(classes.root, className)} {...rest}>
+      <Root as="span" className={classNames(classes.root, className)} {...rest}>
         {showStartIcon && <Icon>access_time</Icon>}
         <Tooltip
           title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'})}`}

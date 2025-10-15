@@ -14,7 +14,7 @@ import {
   Stack,
   CircularProgress,
   styled,
-  Grid,
+  Grid2,
   TextField,
   InputAdornment,
   IconButton,
@@ -313,11 +313,11 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
 
   return (
     <Root variant="outlined" className={classNames(classes.root, className)} {...rest}>
-      <Grid container className={classes.filters} gap={3}>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
+      <Grid2 container width="100%" className={classes.filters} gap={3}>
+        <Grid2 size={{md: 3}}>
           <TextField
             className={classes.search}
-            size={'small'}
+            size="small"
             fullWidth
             value={query}
             label={<FormattedMessage id="ui.paymentOrders.search" defaultMessage="ui.paymentOrders.search" />}
@@ -330,37 +330,39 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                 fetchInvoices();
               }
             }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  {query.length > 0 && (
-                    <IconButton
-                      onClick={() => {
-                        setQuery('');
-                        fetchInvoices('');
-                      }}
-                      disabled={isLoading}>
-                      <Icon>close</Icon>
-                    </IconButton>
-                  )}
-                  {isMobile ? (
-                    <IconButton onClick={() => fetchInvoices()} disabled={isLoading}></IconButton>
-                  ) : (
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => fetchInvoices()}
-                      endIcon={<Icon>search</Icon>}
-                      disabled={isLoading}
-                    />
-                  )}
-                </InputAdornment>
-              )
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {query.length > 0 && (
+                      <IconButton
+                        onClick={() => {
+                          setQuery('');
+                          fetchInvoices('');
+                        }}
+                        disabled={isLoading}>
+                        <Icon>close</Icon>
+                      </IconButton>
+                    )}
+                    {isMobile ? (
+                      <IconButton onClick={() => fetchInvoices()} disabled={isLoading}></IconButton>
+                    ) : (
+                      <Button
+                        size="small"
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => fetchInvoices()}
+                        endIcon={<Icon>search</Icon>}
+                        disabled={isLoading}
+                      />
+                    )}
+                  </InputAdornment>
+                )
+              }
             }}
           />
-        </Grid>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
+        </Grid2>
+        <Grid2 size={{md: 3}}>
           <TextField
             select
             fullWidth
@@ -375,8 +377,8 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
               </MenuItem>
             ))}
           </TextField>
-        </Grid>
-        <Grid item xs={12} sm={8} md={4}>
+        </Grid2>
+        <Grid2 size={{sm: 8, md: 4}}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
             adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
@@ -384,8 +386,8 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
               cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`,
               clearButtonLabel: `${intl.formatMessage(messages.pickerClearAction)}`
             }}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
+            <Grid2 container width="100%" spacing={2}>
+              <Grid2 size={6}>
                 <MobileDatePicker
                   className={classes.picker}
                   label={<FormattedMessage id="ui.paymentOrders.dateFrom" defaultMessage="ui.paymentOrders.dateFrom" />}
@@ -395,16 +397,18 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                       <TextField
                         {...params}
                         size="small"
-                        InputProps={{
-                          ...params.InputProps,
-                          placeholder: `${intl.formatMessage(messages.dateFrom)}`,
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton>
-                                <Icon>CalendarIcon</Icon>
-                              </IconButton>
-                            </InputAdornment>
-                          )
+                        slotProps={{
+                          input: {
+                            ...params.slotProps.input,
+                            placeholder: `${intl.formatMessage(messages.dateFrom)}`,
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton>
+                                  <Icon>CalendarIcon</Icon>
+                                </IconButton>
+                              </InputAdornment>
+                            )
+                          }
                         }}
                       />
                     )
@@ -421,8 +425,8 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   }}
                   onChange={(newValue) => setStartDate(newValue)}
                 />
-              </Grid>
-              <Grid item xs={6}>
+              </Grid2>
+              <Grid2 size={6}>
                 <MobileDatePicker
                   className={classes.picker}
                   label={<FormattedMessage id="ui.paymentOrders.dateTo" defaultMessage="ui.paymentOrders.dateTo" />}
@@ -432,16 +436,18 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                       <TextField
                         {...params}
                         size="small"
-                        InputProps={{
-                          ...params.InputProps,
-                          placeholder: `${intl.formatMessage(messages.dateTo)}`,
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton>
-                                <Icon>CalendarIcon</Icon>
-                              </IconButton>
-                            </InputAdornment>
-                          )
+                        slotProps={{
+                          input: {
+                            ...params.slotProps.input,
+                            placeholder: `${intl.formatMessage(messages.dateTo)}`,
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton>
+                                  <Icon>CalendarIcon</Icon>
+                                </IconButton>
+                              </InputAdornment>
+                            )
+                          }
                         }}
                       />
                     )
@@ -458,11 +464,11 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   }}
                   onChange={(newValue) => setEndDate(newValue)}
                 />
-              </Grid>
-            </Grid>
+              </Grid2>
+            </Grid2>
           </LocalizationProvider>
-        </Grid>
-      </Grid>
+        </Grid2>
+      </Grid2>
       <Box className={classes.content}>
         {!isLoading ? (
           <TableContainer style={{margin: 'auto', borderRadius: 0}}>

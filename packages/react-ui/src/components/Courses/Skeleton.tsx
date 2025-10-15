@@ -1,6 +1,5 @@
-import React from 'react';
 import {PREFIX} from './constants';
-import {Box, Grid, GridProps, styled} from '@mui/material';
+import {Box, Grid2, Grid2Props, styled} from '@mui/material';
 import classNames from 'classnames';
 import {CourseSkeleton} from '../Course';
 import CourseCreatePlaceholder from '../Course/CreatePlaceholder';
@@ -33,12 +32,12 @@ export interface CoursesSkeletonProps {
    * Props spread to grid container
    * @default {}
    */
-  GridContainerComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridContainerComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
   /**
    * Props spread to single grid item
    * @default {}
    */
-  GridItemComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridItemComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
 
   /**
    * @default 20
@@ -85,13 +84,13 @@ export default function CoursesSkeleton(inProps: CoursesSkeletonProps): JSX.Elem
   } = inProps;
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Grid container spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
-        {[...Array(coursesNumber)].map((course, index) => (
-          <Grid item xs={12} sm={12} md={6} lg={3} key={index} {...GridItemComponentProps} className={classes.item}>
+      <Grid2 container width="100%" spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
+        {[...Array(coursesNumber)].map((_course, index) => (
+          <Grid2 size={{md: 6, lg: 3}} key={index} {...GridItemComponentProps} className={classes.item}>
             {teacherView ? <CourseCreatePlaceholder /> : <CourseSkeleton {...CourseSkeletonProps} />}
-          </Grid>
+          </Grid2>
         ))}
-      </Grid>
+      </Grid2>
     </Root>
   );
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import {styled, Box, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import CommentObject, {CommentObjectProps} from '../CommentObject';
@@ -237,7 +237,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
   const commentObjId = commentObj ? commentObj.id : null;
 
   // REFS
-  const commentsContainerRef = useRef();
+  const commentsContainerRef = useRef<HTMLElement | null>(null);
 
   /**
    * Total number of comments
@@ -324,7 +324,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     // (usually >= (topBar + offset) and in center of the screen)
     setTimeout(() => {
       // Get the comment inside commentsContainer
-      const el = commentsContainerRef.current ? (commentsContainerRef.current as HTMLElement).querySelector(`#comment_object_${comment.id}`) : null;
+      const el = commentsContainerRef.current ? commentsContainerRef.current.querySelector(`#comment_object_${comment.id}`) : null;
       if (el) {
         el.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'center'});
       }

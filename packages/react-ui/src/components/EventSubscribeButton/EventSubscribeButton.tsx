@@ -259,7 +259,11 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
                     value={option.value}
                     onChange={handleToggleAction}
                     name={`${option.value}-option`}
-                    inputProps={{'aria-label': `${option.label}`}}
+                    slotProps={{
+                      input: {
+                        'aria-label': `${option.label}`
+                      }
+                    }}
                   />
                 )
               }
@@ -350,7 +354,11 @@ export default function EventSubscribeButton(inProps: EventSubscribeButtonProps)
                   {isMobile ? (
                     <SwipeableDrawerRoot
                       className={classes.drawerRoot}
-                      PaperProps={{className: classes.paper}}
+                      slotProps={{
+                        paper: {
+                          className: classes.paper
+                        }
+                      }}
                       open
                       onClose={handleClose}
                       onOpen={handleOpen}

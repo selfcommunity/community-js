@@ -1,5 +1,5 @@
 import {Autocomplete, AutocompleteProps, Avatar, Box, Fade, IconButton, styled, TextField, Typography, Icon} from '@mui/material';
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -26,8 +26,8 @@ const classes = {
 const Root = styled(Autocomplete, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({
   [`& .${classes.input}`]: {
     flexGrow: 1
   }
@@ -84,7 +84,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
     autoFocus = false,
     onSearch = null,
     onClear = null,
-    onSuggestionSelect = (suggestion: SCSuggestionType) => null,
+    onSuggestionSelect = (_suggestion: SCSuggestionType) => null,
     ...rest
   } = props;
 
@@ -99,7 +99,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
   // INTL
   const intl = useIntl();
 
-  const handleInputChange = (event, value, reason) => {
+  const handleInputChange = (_event, value, reason) => {
     switch (reason) {
       case 'input':
         setValue(value);
@@ -108,7 +108,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
     }
   };
 
-  const handleChange = (event, value, reason, detail) => {
+  const handleChange = (event, value, reason, _detail) => {
     event.preventDefault();
     event.stopPropagation();
     switch (reason) {
@@ -124,7 +124,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
     return false;
   };
 
-  const handleClear = (event) => {
+  const handleClear = (_event) => {
     setValue('');
     setOptions([]);
     onClear && onClear();
@@ -211,19 +211,21 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
           placeholder={`${intl.formatMessage(messages.placeholder, {
             community: scPreferences.preferences[SCPreferences.TEXT_APPLICATION_NAME].value
           })}`}
-          InputProps={{
-            ...params.InputProps,
-            autoFocus,
-            name: 'search-autocomplete',
-            className: classes.input,
-            startAdornment: <Icon className={classes.icon}>search</Icon>,
-            endAdornment: (
-              <Fade in={value.length > 0 || Boolean(onClear)} appear={false}>
-                <IconButton className={classes.clear} onClick={handleClear} size="small">
-                  <Icon>close</Icon>
-                </IconButton>
-              </Fade>
-            )
+          slotProps={{
+            input: {
+              ...params.InputProps,
+              autoFocus,
+              name: 'search-autocomplete',
+              className: classes.input,
+              startAdornment: <Icon className={classes.icon}>search</Icon>,
+              endAdornment: (
+                <Fade in={value.length > 0 || Boolean(onClear)} appear={false}>
+                  <IconButton className={classes.clear} onClick={handleClear} size="small">
+                    <Icon>close</Icon>
+                  </IconButton>
+                </Fade>
+              )
+            }
           }}
         />
       )}
