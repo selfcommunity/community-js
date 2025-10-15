@@ -57,16 +57,16 @@
 	"peerDependencies": {
 		"@emotion/react": "^11.11.3",
 		"@emotion/styled": "^11.11.0",
-		"@mui/material": "^5.15.3",
-		"react": "^17.0.2 || 18",
-		"react-dom": "17 || 18"
+		"@mui/material": "^6.5.0",
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0"
 	},
 	"dependencies": {
 		"@emotion/react": "^11.11.3",
 		"@emotion/styled": "^11.11.0",
-		"@mui/material": "^5.15.3",
-		"react": "^17.0.2 || 18",
-		"react-dom": "17 || 18"
+		"@mui/material": "^6.5.0",
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.7.4",
@@ -76,8 +76,8 @@
 		"@types/chai": "^4.2.14",
 		"@types/enzyme": "^3.10.8",
 		"@types/jest": "^26.0.20",
-		"@types/react": "17 || 18",
-		"@types/react-dom": "17 || 18",
+		"@types/react": "18",
+		"@types/react-dom": "18",
 		"@types/sinon": "^9.0.10",
 		"@typescript-eslint/eslint-plugin": "^4.14.2",
 		"@typescript-eslint/parser": "^4.14.2",
