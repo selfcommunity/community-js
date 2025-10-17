@@ -100,6 +100,7 @@
 		"@rpldy/uploady": "^1.7.1",
 		"csstype": "^3.1.2",
 		"emotion-theming": "^11.0.0",
+		"minimatch": "^10.0.3",
 		"notistack": "^3.0.1",
 		"pubsub-js": "^1.9.5",
 		"react": "^19.2.0",
