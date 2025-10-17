@@ -74,10 +74,10 @@ const Root = styled(Box, {
   slot: 'Root'
 })(() => ({}));
 
-export const EventsChipRoot = styled(Chip, {
+const EventsChipRoot = styled(Chip, {
   name: PREFIX,
   slot: 'EventsChipRoot',
-  shouldForwardProp: (prop) => prop !== 'showFollowed' && prop !== 'showPastEvents' && prop !== 'showOngoingEvents'
+  shouldForwardProp: (prop) => prop !== 'showFollowed'
 })(() => ({}));
 
 export interface EventsProps {

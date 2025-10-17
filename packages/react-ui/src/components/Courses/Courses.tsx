@@ -59,7 +59,7 @@ const Root = styled(Box, {
   slot: 'Root'
 })(() => ({}));
 
-export const CoursesChipRoot = styled(Chip, {
+const CoursesChipRoot = styled(Chip, {
   name: PREFIX,
   slot: 'CoursesChipRoot',
   shouldForwardProp: (prop) => prop !== 'showMine' && prop !== 'showManagedCourses'
