@@ -61,7 +61,14 @@ const config = {
 								require.resolve('@babel/preset-react'),
 								{ runtime: 'automatic' },
 							],
-							require.resolve('@babel/preset-typescript'),
+							[
+								require.resolve('@babel/preset-typescript'),
+								{
+									onlyRemoveTypeImports: true,
+									allowDeclareFields: true,
+									allowNamespaces: true
+								},
+							],
 						],
 						plugins: [
 							// Usa i transform moderni
@@ -71,6 +78,8 @@ const config = {
 							'@babel/plugin-transform-object-rest-spread',
 							'@babel/plugin-transform-nullish-coalescing-operator',
 							'@babel/plugin-transform-optional-chaining',
+							// Fix for TypeScript type exports in Babel scope tracker
+							['@babel/plugin-transform-typescript', { allowNamespaces: true }],
 						],
 					},
         }
