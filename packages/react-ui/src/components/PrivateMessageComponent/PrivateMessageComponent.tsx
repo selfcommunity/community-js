@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useState} from 'react';
-import {Grid2, useMediaQuery, useTheme, styled} from '@mui/material';
+import {Grid, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCPreferences, SCPreferencesContextType, SCThemeType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -15,7 +15,7 @@ const classes = {
   hide: `${PREFIX}-hide`
 };
 
-const Root = styled(Grid2, {
+const Root = styled(Grid, {
   name: PREFIX,
   slot: 'Root'
 })(() => ({}));
@@ -199,7 +199,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function renderSnippets() {
     return (
-      <Grid2 size={{md: 5}} className={classNames(classes.snippetsBox, {[classes.hide]: isMobile && mobileThreadView})}>
+      <Grid size={{md: 5}} className={classNames(classes.snippetsBox, {[classes.hide]: isMobile && mobileThreadView})}>
         <PrivateMessageSnippets
           snippetActions={{
             onSnippetClick: handleThreadOpening,
@@ -211,7 +211,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           elevation={0}
           type={_type}
         />
-      </Grid2>
+      </Grid>
     );
   }
   /**
@@ -219,7 +219,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function renderThread() {
     return (
-      <Grid2 size={{md: 7}} className={classNames(classes.threadBox, {[classes.hide]: isMobile && mobileSnippetsView})}>
+      <Grid size={{md: 7}} className={classNames(classes.threadBox, {[classes.hide]: isMobile && mobileSnippetsView})}>
         <PrivateMessageThread
           threadObj={obj}
           type={_type}
@@ -229,7 +229,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
           onSingleMessageOpen={handleSingleMessage}
           elevation={0}
         />
-      </Grid2>
+      </Grid>
     );
   }
 

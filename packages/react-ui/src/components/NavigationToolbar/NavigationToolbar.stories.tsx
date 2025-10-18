@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { INITIAL_VIEWPORTS } from 'storybook/viewport';
 import NavigationToolbar from './index';
-import {AppBar, Box, Button, Grid2, IconButton, Typography, Icon, Paper} from '@mui/material';
+import {AppBar, Box, Button, Grid, IconButton, Typography, Icon, Paper} from '@mui/material';
 import {useCallback, useState} from 'react';
 import {NavigationMenuDrawer} from '../NavigationMenuIconButton';
 
@@ -54,15 +54,15 @@ const templateContent = (args: any) => {
 			}}
 		/>
 		<Box sx={{flexGrow: 1, marginTop: '70px'}}>
-			<Grid2 container width="100%" sx={{width: '100%'}}>
-				<Grid2 size={{xs: 2}}></Grid2>
-				<Grid2 size={{xs: 8}}>
+			<Grid container width="100%" sx={{width: '100%'}}>
+				<Grid size={{xs: 2}}></Grid>
+				<Grid size={{xs: 8}}>
 					<Paper sx={{height: 200, width: '100%'}}>
 						Content
 					</Paper>
-				</Grid2>
-				<Grid2 size={{xs: 2}}></Grid2>
-			</Grid2>
+				</Grid>
+				<Grid size={{xs: 2}}></Grid>
+			</Grid>
 		</Box>
 	</Box>
 };

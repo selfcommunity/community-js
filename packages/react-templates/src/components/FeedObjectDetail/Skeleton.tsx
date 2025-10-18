@@ -1,5 +1,5 @@
 import {CommentsFeedObjectSkeleton, FeedObjectSkeleton, SCFeedObjectTemplateType, RelatedFeedObjectsWidgetSkeleton} from '@selfcommunity/react-ui';
-import {Box, Grid2, styled} from '@mui/material';
+import {Box, Grid, styled} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {
@@ -35,15 +35,15 @@ export default function FeedObjectDetailSkeleton(props): JSX.Element {
   const {FeedObjectSkeletonProps = {}, CommentsFeedObjectSkeletonProps = {}, RelatedFeedObjectsSkeletonProps = {}} = props;
   return (
     <Root className={classes.root}>
-      <Grid2 container width="100%" spacing={2}>
-        <Grid2 size={{md: 7}}>
+      <Grid container width="100%" spacing={2}>
+        <Grid size={{md: 7}}>
           <FeedObjectSkeleton template={SCFeedObjectTemplateType.DETAIL} {...FeedObjectSkeletonProps} />
           <CommentsFeedObjectSkeleton count={4} {...CommentsFeedObjectSkeletonProps} />
-        </Grid2>
-        <Grid2 size={{md: 5}}>
+        </Grid>
+        <Grid size={{md: 5}}>
           <RelatedFeedObjectsWidgetSkeleton {...RelatedFeedObjectsSkeletonProps} />
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </Root>
   );
 }

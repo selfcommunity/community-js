@@ -4,8 +4,8 @@ import {
   Chip,
   Divider,
   FormControl,
-  Grid2,
-  Grid2Props,
+  Grid,
+  GridProps,
   Icon,
   IconButton,
   InputAdornment,
@@ -121,12 +121,12 @@ export interface EventsProps {
    * Props spread to grid container
    * @default {}
    */
-  GridContainerComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridContainerComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
   /**
    * Props spread to single grid item
    * @default {}
    */
-  GridItemComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridItemComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
 
   /**
    * Props to spread to CreateEvent component
@@ -398,12 +398,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const content = (
     <>
       {showFilters && (
-        <Grid2 container width="100%" className={classes.filters} gap={2}>
+        <Grid container width="100%" className={classes.filters} gap={2}>
           {filters ? (
             filters
           ) : showUserEvents ? (
             <>
-              <Grid2>
+              <Grid>
                 <EventsChipRoot
                   color={showMyEvents ? 'secondary' : 'default'}
                   variant={showMyEvents ? 'filled' : 'outlined'}
@@ -415,22 +415,22 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   onDelete={showMyEvents ? () => setShowMyEvents(false) : null}
                   disabled={loading}
                 />
-              </Grid2>
-              <Grid2>
+              </Grid>
+              <Grid>
                 <PastEventsFilter
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
                   handleDeleteClick={handleDeletePastClick}
                   disabled={loading}
                 />
-              </Grid2>
-              <Grid2 size={{md: 2}}>
+              </Grid>
+              <Grid size={{md: 2}}>
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
-              </Grid2>
+              </Grid>
             </>
           ) : general ? (
             <>
-              <Grid2 size={{md: 3}}>
+              <Grid size={{md: 3}}>
                 <TextField
                   className={classes.search}
                   size="small"
@@ -469,8 +469,8 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     }
                   }}
                 />
-              </Grid2>
-              <Grid2 size={{md: 2}}>
+              </Grid>
+              <Grid size={{md: 2}}>
                 <FormControl fullWidth>
                   <InputLabel>
                     <FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />
@@ -499,12 +499,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     ))}
                   </Select>
                 </FormControl>
-              </Grid2>
-              <Grid2 size={{md: 2}}>
+              </Grid>
+              <Grid size={{md: 2}}>
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
-              </Grid2>
+              </Grid>
               {authUserId && (
-                <Grid2>
+                <Grid>
                   <EventsChipRoot
                     color={showFollowed ? 'secondary' : 'default'}
                     variant={showFollowed ? 'filled' : 'outlined'}
@@ -516,19 +516,19 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     onDelete={showFollowed ? handleDeleteClick : null}
                     disabled={loading}
                   />
-                </Grid2>
+                </Grid>
               )}
-              <Grid2>
+              <Grid>
                 <OngoingEventsFilter
                   showOngoingEvents={showOngoingEvents}
                   handleClick={handleChipOngoingClick}
                   handleDeleteClick={handleDeleteOngoingClick}
                   disabled={dateSearch !== SCEventDateFilterType.ALL || loading}
                 />
-              </Grid2>
+              </Grid>
             </>
           ) : null}
-        </Grid2>
+        </Grid>
       )}
       <>
         {loading ? (
@@ -562,15 +562,15 @@ export default function Events(inProps: EventsProps): JSX.Element {
               </Box>
             ) : (
               <>
-                <Grid2 container width="100%" spacing={{xs: 2}} className={classes.events} {...GridContainerComponentProps}>
+                <Grid container width="100%" spacing={{xs: 2}} className={classes.events} {...GridContainerComponentProps}>
                   <>
                     {events.map((event: SCEventType) => (
-                      <Grid2 size={{md: 6}} key={event.id} className={classes.item} {...GridItemComponentProps}>
+                      <Grid size={{md: 6}} key={event.id} className={classes.item} {...GridItemComponentProps}>
                         <Event event={event} eventId={event.id} {...EventComponentProps} />
-                      </Grid2>
+                      </Grid>
                     ))}
                     {authUserId && events.length % 2 !== 0 && (
-                      <Grid2 size={{md: 6}} key="skeleton-item" className={classes.itemSkeleton} {...GridItemComponentProps}>
+                      <Grid size={{md: 6}} key="skeleton-item" className={classes.itemSkeleton} {...GridItemComponentProps}>
                         <EventSkeleton
                           {...EventSkeletonComponentProps}
                           skeletonsAnimation={false}
@@ -580,10 +580,10 @@ export default function Events(inProps: EventsProps): JSX.Element {
                             </CreateEventButton>
                           }
                         />
-                      </Grid2>
+                      </Grid>
                     )}
                   </>
-                </Grid2>
+                </Grid>
                 {Boolean(next) && (
                   <Button color="secondary" variant="text" onClick={handleNext} className={classes.showMore}>
                     <FormattedMessage id="ui.events.button.seeMore" defaultMessage="ui.events.button.seeMore" />

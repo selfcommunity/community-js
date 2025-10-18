@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import {styled, Grid2} from '@mui/material';
+import {styled, Grid} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {CommunityApiClient, SCPaginatedResponse} from '@selfcommunity/api-services';
@@ -15,7 +15,7 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(Grid2, {
+const Root = styled(Grid, {
   slot: 'Root',
   name: PREFIX
 })(() => ({}));
@@ -77,7 +77,7 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
   return (
     <Root className={classNames(classes.root, className)} container width="100%" spacing={4} {...rest}>
       {scCommunity.paywalls.map((p, i) => (
-        <Grid2 size={{md: 4}} key={i}>
+        <Grid size={{md: 4}} key={i}>
           <PaymentProduct
             paymentProduct={p}
             contentType={SCContentType.COMMUNITY}
@@ -86,7 +86,7 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
             {...(scCommunity.payment_order && {paymentOrder: scCommunity.payment_order, onUpdatePaymentOrder})}
             {...(callbackUrl && {PaymentProductPriceComponentProps: {returnUrlParams: {callbackUrl}}})}
           />
-        </Grid2>
+        </Grid>
       ))}
     </Root>
   );

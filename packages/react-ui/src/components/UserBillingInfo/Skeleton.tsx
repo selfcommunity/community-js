@@ -1,4 +1,4 @@
-import {Box, Grid2, Skeleton} from '@mui/material';
+import {Box, Grid, Skeleton} from '@mui/material';
 import {UserBillingInfoMode} from '../../constants/Billing';
 
 /**
@@ -38,28 +38,28 @@ export default function UserBillingInfoSkeleton(props: UserSkeletonBillingInfoPr
     );
   }
   return (
-    <Grid2 container width="100%" spacing={3}>
-      <Grid2 size={{sm: 6}}>
+    <Grid container width="100%" spacing={3}>
+      <Grid size={{sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
-      </Grid2>
-      <Grid2 size={{sm: 6}}>
+      </Grid>
+      <Grid size={{sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
-      </Grid2>
-      <Grid2 size={{sm: 6}}>
+      </Grid>
+      <Grid size={{sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
-      </Grid2>
-      <Grid2 size={{sm: 6}}>
+      </Grid>
+      <Grid size={{sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
-      </Grid2>
-      <Grid2 size={{sm: 6}}>
+      </Grid>
+      <Grid size={{sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
-      </Grid2>
-      <Grid2 size={{sm: 6}}>
+      </Grid>
+      <Grid size={{sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
-      </Grid2>
-      <Grid2 size={{sm: 6}} justifyContent="center">
+      </Grid>
+      <Grid size={{sm: 6}} justifyContent="center">
         <Skeleton variant="rounded" height={30} width={100} />
-      </Grid2>
-    </Grid2>
+      </Grid>
+    </Grid>
   );
 }

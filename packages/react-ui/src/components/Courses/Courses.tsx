@@ -3,8 +3,8 @@ import {
   Button,
   Chip,
   FormControl,
-  Grid2,
-  Grid2Props,
+  Grid,
+  GridProps,
   Icon,
   IconButton,
   InputAdornment,
@@ -106,12 +106,12 @@ export interface CoursesProps {
    * Props spread to grid container
    * @default {}
    */
-  GridContainerComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridContainerComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
   /**
    * Props spread to single grid item
    * @default {}
    */
-  GridItemComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridItemComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
 
   /**
    * Show/Hide filters
@@ -334,12 +334,12 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   const c = (
     <>
       {showFilters && (
-        <Grid2 container width="100%" className={classes.filters} gap={2}>
+        <Grid container width="100%" className={classes.filters} gap={2}>
           {filters ? (
             filters
           ) : (
             <>
-              <Grid2 size={{md: 3}}>
+              <Grid size={{md: 3}}>
                 <TextField
                   className={classes.search}
                   size={'small'}
@@ -378,9 +378,9 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     }
                   }}
                 />
-              </Grid2>
+              </Grid>
               {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && (
-                <Grid2>
+                <Grid>
                   <CoursesChipRoot
                     color={showManagedCourses ? 'primary' : 'default'}
                     variant={showManagedCourses ? 'filled' : 'outlined'}
@@ -392,15 +392,15 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     onDelete={showManagedCourses ? () => setShowManagedCourses(false) : null}
                     disabled={loading || showMine}
                   />
-                </Grid2>
+                </Grid>
               )}
-              <Grid2 size={{md: 'auto'}}>
+              <Grid size={{md: 'auto'}}>
                 <FormControl fullWidth>
                   <CategoryAutocomplete onChange={handleOnChangeCategory} className={classes.category} size="small" multiple={true} />
                 </FormControl>
-              </Grid2>
+              </Grid>
               {authUserId && (
-                <Grid2>
+                <Grid>
                   <CoursesChipRoot
                     color={showMine ? 'primary' : 'default'}
                     variant={showMine ? 'filled' : 'outlined'}
@@ -412,11 +412,11 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                     onDelete={showMine ? handleDeleteClick : null}
                     disabled={loading || showManagedCourses}
                   />
-                </Grid2>
+                </Grid>
               )}
             </>
           )}
-        </Grid2>
+        </Grid>
       )}
       <>
         {!courses.length ? (
@@ -475,20 +475,20 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                 />
               </Typography>
             }>
-            <Grid2 container width="100%" spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
+            <Grid container width="100%" spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
               <>
                 {courses.map((course: SCCourseType) => (
-                  <Grid2 size={{md: 6, lg: 3}} key={course.id} className={classes.item} {...GridItemComponentProps}>
+                  <Grid size={{md: 6, lg: 3}} key={course.id} className={classes.item} {...GridItemComponentProps}>
                     <Course courseId={course.id} {...CourseComponentProps} />
-                  </Grid2>
+                  </Grid>
                 ))}
                 {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && courses.length % 2 !== 0 && (
-                  <Grid2 size={{md: 6, lg: 3}} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
+                  <Grid size={{md: 6, lg: 3}} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
                     <CourseCreatePlaceholder CreateCourseButtonComponentProps={CreateCourseButtonComponentProps} />
-                  </Grid2>
+                  </Grid>
                 )}
               </>
-            </Grid2>
+            </Grid>
           </InfiniteScroll>
         )}
       </>

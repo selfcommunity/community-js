@@ -6,7 +6,7 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
-  Grid2,
+  Grid,
   Icon,
   InputAdornment,
   TextField,
@@ -574,9 +574,9 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
               </>
             ) : (
               <Box>
-                <Grid2 container width="100%" spacing={3}>
+                <Grid container width="100%" spacing={3}>
                   {/* Name - name */}
-                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="name"
@@ -588,10 +588,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.nameError}
                       fullWidth
                     />
-                  </Grid2>
+                  </Grid>
 
                   {/* address_line1 */}
-                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_line1"
@@ -603,10 +603,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.addressLine1Error}
                       fullWidth
                     />
-                  </Grid2>
+                  </Grid>
 
                   {/* address_line2 */}
-                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_line2"
@@ -618,10 +618,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.addressLine2Error}
                       fullWidth
                     />
-                  </Grid2>
+                  </Grid>
 
                   {/* country */}
-                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                     <Autocomplete
                       id="country-select-demo"
                       options={countries}
@@ -677,10 +677,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                         />
                       )}
                     />
-                  </Grid2>
+                  </Grid>
 
                   {/* address_state */}
-                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_state"
@@ -692,10 +692,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.addressStateError}
                       fullWidth
                     />
-                  </Grid2>
+                  </Grid>
 
                   {/* address_postal_code */}
-                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_postal_code"
@@ -707,10 +707,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.addressPostalCodeError}
                       fullWidth
                     />
-                  </Grid2>
+                  </Grid>
 
                   {/* address_city */}
-                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_city"
@@ -731,10 +731,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       }}
                       fullWidth
                     />
-                  </Grid2>
+                  </Grid>
 
                   {/* Phone - phone */}
-                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="phone"
@@ -755,10 +755,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       }}
                       fullWidth
                     />
-                  </Grid2>
+                  </Grid>
 
                   {/* TaxCode (TIN/CF) */}
-                  <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="tax_code"
@@ -770,9 +770,9 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       helperText={state.taxCodeError}
                       fullWidth
                     />
-                  </Grid2>
+                  </Grid>
 
-                  <Grid2>
+                  <Grid>
                     <FormGroup>
                       <FormControlLabel
                         disabled={Boolean(disableButtons)}
@@ -799,14 +799,14 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                         }
                       />
                     </FormGroup>
-                  </Grid2>
+                  </Grid>
 
                   {state.isBusiness && (
                     <Grow in={state.isBusiness}>
-                      <Grid2>
-                        <Grid2 container width="100%" spacing={3}>
+                      <Grid>
+                        <Grid container width="100%" spacing={3}>
                           {/* tax_id_data */}
-                          <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                          <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                             <TextField
                               variant="outlined"
                               id="tax_id_data"
@@ -869,10 +869,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                               }}
                               fullWidth
                             />
-                          </Grid2>
+                          </Grid>
 
                           {/* SDI */}
-                          <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                          <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                             <TextField
                               variant="outlined"
                               id="sdi"
@@ -891,10 +891,10 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                               helperText={state.sdiError}
                               fullWidth
                             />
-                          </Grid2>
+                          </Grid>
 
                           {/* PEC */}
-                          <Grid2 size={{sm: inlineDisplay ? 12 : 6}}>
+                          <Grid size={{sm: inlineDisplay ? 12 : 6}}>
                             <TextField
                               variant="outlined"
                               id="pec"
@@ -923,21 +923,21 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                               }}
                               fullWidth
                             />
-                          </Grid2>
-                        </Grid2>
-                      </Grid2>
+                          </Grid>
+                        </Grid>
+                      </Grid>
                     </Grow>
                   )}
 
                   {state.error && (
-                    <Grid2>
+                    <Grid>
                       <Typography align="left" color="secondary">
                         {state.error}
                       </Typography>
-                    </Grid2>
+                    </Grid>
                   )}
 
-                  <Grid2>
+                  <Grid>
                     <Typography align="left">
                       <LoadingButton
                         variant="contained"
@@ -954,8 +954,8 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                         </Button>
                       )}
                     </Typography>
-                  </Grid2>
-                </Grid2>
+                  </Grid>
+                </Grid>
               </Box>
             )}
           </Fragment>

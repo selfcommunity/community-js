@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
-import {Box, Grid2, TextField, Typography, styled} from '@mui/material';
+import {Box, Grid, TextField, Typography, styled} from '@mui/material';
 import {CategoryService, Endpoints} from '@selfcommunity/api-services';
 import {AxiosRequestConfig} from 'axios';
 import {
@@ -248,11 +248,11 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
   const c = (
     <>
       {showFilters && (
-        <Grid2 container width="100%" direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
+        <Grid container width="100%" direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
           {filters ? (
             filters
           ) : (
-            <Grid2 size={{md: 6}}>
+            <Grid size={{md: 6}}>
               <TextField
                 fullWidth
                 value={filterName}
@@ -261,30 +261,30 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
                 onChange={handleOnChangeFilterName}
                 disabled={loading}
               />
-            </Grid2>
+            </Grid>
           )}
-        </Grid2>
+        </Grid>
       )}
       {loading ? (
         <CategoriesSkeletonComponent {...CategoriesSkeletonProps} />
       ) : (
-        <Grid2 container width="100%" spacing={{xs: 3}} className={classes.categories}>
+        <Grid container width="100%" spacing={{xs: 3}} className={classes.categories}>
           {!filteredCategories.length ? (
-            <Grid2>
+            <Grid>
               <Typography className={classes.noResults} variant="body2">
                 <FormattedMessage id="ui.categories.noResults" defaultMessage="ui.categories.noResults" />
               </Typography>
-            </Grid2>
+            </Grid>
           ) : (
             <>
               {filteredCategories.map((category: SCCategoryType) => (
-                <Grid2 size={{sm: 6, lg: 4}} key={category.id}>
+                <Grid size={{sm: 6, lg: 4}} key={category.id}>
                   <CategoryComponent category={category} {...CategoryComponentProps} showTooltip={true} className={classes.category} />
-                </Grid2>
+                </Grid>
               ))}
             </>
           )}
-        </Grid2>
+        </Grid>
       )}
     </>
   );

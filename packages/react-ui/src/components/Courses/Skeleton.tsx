@@ -1,5 +1,5 @@
 import {PREFIX} from './constants';
-import {Box, Grid2, Grid2Props, styled} from '@mui/material';
+import {Box, Grid, GridProps, styled} from '@mui/material';
 import classNames from 'classnames';
 import {CourseSkeleton} from '../Course';
 import CourseCreatePlaceholder from '../Course/CreatePlaceholder';
@@ -32,12 +32,12 @@ export interface CoursesSkeletonProps {
    * Props spread to grid container
    * @default {}
    */
-  GridContainerComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridContainerComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
   /**
    * Props spread to single grid item
    * @default {}
    */
-  GridItemComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridItemComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
 
   /**
    * @default 20
@@ -84,13 +84,13 @@ export default function CoursesSkeleton(inProps: CoursesSkeletonProps): JSX.Elem
   } = inProps;
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Grid2 container width="100%" spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
+      <Grid container width="100%" spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
         {[...Array(coursesNumber)].map((_course, index) => (
-          <Grid2 size={{md: 6, lg: 3}} key={index} {...GridItemComponentProps} className={classes.item}>
+          <Grid size={{md: 6, lg: 3}} key={index} {...GridItemComponentProps} className={classes.item}>
             {teacherView ? <CourseCreatePlaceholder /> : <CourseSkeleton {...CourseSkeletonProps} />}
-          </Grid2>
+          </Grid>
         ))}
-      </Grid2>
+      </Grid>
     </Root>
   );
 }

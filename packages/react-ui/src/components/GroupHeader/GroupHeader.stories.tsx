@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import GroupHeader from './index';
 import GroupInfoWidget from '../GroupInfoWidget';
-import { Grid2 } from '@mui/material';
+import { Grid } from '@mui/material';
 import GroupRequestsWidget from '../GroupRequestsWidget';
 import GroupMembersWidget from '../GroupMembersWidget';
 
@@ -37,17 +37,17 @@ const NotifyChangeGroupTemplate = (args: any) => (
 	<div style={{width: '100%'}}>
 		<GroupHeader {...args} />
 		<br/>
-		<Grid2 container width="100%" spacing={2}>
-			<Grid2 size={6}>
+		<Grid container width="100%" spacing={2}>
+			<Grid size={6}>
 				<GroupRequestsWidget {...args} />
-			</Grid2>
-			<Grid2 size={6}>
+			</Grid>
+			<Grid size={6}>
 				<GroupMembersWidget {...args} />
-			</Grid2>
-			<Grid2 size={6}>
+			</Grid>
+			<Grid size={6}>
 				<GroupInfoWidget {...args} />
-			</Grid2>
-		</Grid2>
+			</Grid>
+		</Grid>
 	</div>
 );
 

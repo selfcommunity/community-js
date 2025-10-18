@@ -14,7 +14,7 @@ import {
   Stack,
   CircularProgress,
   styled,
-  Grid2,
+  Grid,
   TextField,
   InputAdornment,
   IconButton,
@@ -313,8 +313,8 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
 
   return (
     <Root variant="outlined" className={classNames(classes.root, className)} {...rest}>
-      <Grid2 container width="100%" className={classes.filters} gap={3}>
-        <Grid2 size={{md: 3}}>
+      <Grid container width="100%" className={classes.filters} gap={3}>
+        <Grid size={{md: 3}}>
           <TextField
             className={classes.search}
             size="small"
@@ -361,8 +361,8 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
               }
             }}
           />
-        </Grid2>
-        <Grid2 size={{md: 3}}>
+        </Grid>
+        <Grid size={{md: 3}}>
           <TextField
             select
             fullWidth
@@ -377,8 +377,8 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
               </MenuItem>
             ))}
           </TextField>
-        </Grid2>
-        <Grid2 size={{sm: 8, md: 4}}>
+        </Grid>
+        <Grid size={{sm: 8, md: 4}}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
             adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
@@ -386,8 +386,8 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
               cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`,
               clearButtonLabel: `${intl.formatMessage(messages.pickerClearAction)}`
             }}>
-            <Grid2 container width="100%" spacing={2}>
-              <Grid2 size={6}>
+            <Grid container width="100%" spacing={2}>
+              <Grid size={6}>
                 <MobileDatePicker
                   className={classes.picker}
                   label={<FormattedMessage id="ui.paymentOrders.dateFrom" defaultMessage="ui.paymentOrders.dateFrom" />}
@@ -425,8 +425,8 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   }}
                   onChange={(newValue) => setStartDate(newValue)}
                 />
-              </Grid2>
-              <Grid2 size={6}>
+              </Grid>
+              <Grid size={6}>
                 <MobileDatePicker
                   className={classes.picker}
                   label={<FormattedMessage id="ui.paymentOrders.dateTo" defaultMessage="ui.paymentOrders.dateTo" />}
@@ -464,11 +464,11 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   }}
                   onChange={(newValue) => setEndDate(newValue)}
                 />
-              </Grid2>
-            </Grid2>
+              </Grid>
+            </Grid>
           </LocalizationProvider>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
       <Box className={classes.content}>
         {!isLoading ? (
           <TableContainer style={{margin: 'auto', borderRadius: 0}}>

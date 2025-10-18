@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {Divider, Grid2, Typography, styled} from '@mui/material';
+import {Divider, Grid, Typography, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 
@@ -24,7 +24,7 @@ const classes = {
 export function PointElement({message, points}: {message: React.ReactNode; points: number}): JSX.Element {
   if (points > 0) {
     return (
-      <Grid2 size={{md: 6}}>
+      <Grid size={{md: 6}}>
         <Typography component="div" className={classes.element}>
           <Typography>{message}</Typography>
           <Typography>
@@ -37,12 +37,12 @@ export function PointElement({message, points}: {message: React.ReactNode; point
           </Typography>
         </Typography>
         <Divider />
-      </Grid2>
+      </Grid>
     );
   }
 }
 
-const Root = styled(Grid2, {
+const Root = styled(Grid, {
   name: PREFIX,
   slot: 'PointsListRoot'
 })(() => ({}));

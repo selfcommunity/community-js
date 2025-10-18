@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useMemo, useState} from 'react';
-import {Backdrop, Box, Button, Collapse, Divider, Grid2, Icon, IconButton, Stack, Tooltip, Typography, styled, Grow} from '@mui/material';
+import {Backdrop, Box, Button, Collapse, Divider, Grid, Icon, IconButton, Stack, Tooltip, Typography, styled, Grow} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {Link, SCContextType, SCUserContext, SCUserContextType, UserUtils, useSCContext} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
@@ -367,17 +367,17 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
    * Render tutorial
    */
   const tutorial = (
-    <Grid2 container width="100%" spacing={isAdmin ? 1 : 3} justifyContent="center" className={classes.tutorial}>
+    <Grid container width="100%" spacing={isAdmin ? 1 : 3} justifyContent="center" className={classes.tutorial}>
       {!isTutorialOpen && (
-        <Grid2 size="auto" alignItems="center" justifyContent="center">
+        <Grid size="auto" alignItems="center" justifyContent="center">
           <IconButton size="medium" onClick={handleOpenTutorial}>
             <Icon>info</Icon>
           </IconButton>
-        </Grid2>
+        </Grid>
       )}
       <Collapse in={isTutorialOpen} className={classes.tutorialContent}>
         {isTutorialOpen && (
-          <Grid2 size="auto">
+          <Grid size="auto">
             <Typography variant={'body2'} className={classes.tutorialTitle} component={'div'}>
               <Grow in timeout={1000}>
                 <span>{actions[tutorialIndex].title}</span>
@@ -416,18 +416,18 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
                 )}
               </Button>
             </Stack>
-          </Grid2>
+          </Grid>
         )}
       </Collapse>
-    </Grid2>
+    </Grid>
   );
 
   /**
    * Renders platform card
    */
   const content = (
-    <Grid2 container width="100%" spacing={isAdmin ? 1 : 3} justifyContent="center" className={classes.content}>
-      <Grid2>
+    <Grid container width="100%" spacing={isAdmin ? 1 : 3} justifyContent="center" className={classes.content}>
+      <Grid>
         {title ? (
           title
         ) : (
@@ -439,19 +439,19 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
             </Tooltip>
           </Box>
         )}
-      </Grid2>
-      <Grid2 className={classes.actions}>
-        <Grid2 size={1} className={classes.action}></Grid2>
+      </Grid>
+      <Grid className={classes.actions}>
+        <Grid size={1} className={classes.action}></Grid>
         {actions.map((a: PlatformWidgetActionType, i: number) => {
           return (
-            <Grid2 key={i} size="auto" className={classNames(classes.action, {[classes.actionHighlighted]: tutorialIndex === i && isTutorialOpen})}>
+            <Grid key={i} size="auto" className={classNames(classes.action, {[classes.actionHighlighted]: tutorialIndex === i && isTutorialOpen})}>
               {a.render}
-            </Grid2>
+            </Grid>
           );
         })}
-        <Grid2 size={1} className={classes.action}></Grid2>
-      </Grid2>
-    </Grid2>
+        <Grid size={1} className={classes.action}></Grid>
+      </Grid>
+    </Grid>
   );
 
   /**

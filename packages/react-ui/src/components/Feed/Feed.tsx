@@ -12,7 +12,7 @@ import {
   usePreviousValue,
   useSCFetchFeed
 } from '@selfcommunity/react-core';
-import {styled, useTheme, Box, Button, CardContent, Grid2, Theme, Typography, useMediaQuery} from '@mui/material';
+import {styled, useTheme, Box, Button, CardContent, Grid, Theme, Typography, useMediaQuery} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
@@ -56,7 +56,7 @@ const classes = {
   paginationLink: `${PREFIX}-pagination-link`
 };
 
-const Root = styled(Grid2, {
+const Root = styled(Grid, {
   name: PREFIX,
   slot: 'Root'
 })(() => ({}));
@@ -829,11 +829,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   return (
     <Root container width="100%" spacing={2} id={id} className={classNames(classes.root, className)}>
       {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_BELOW_TOPBAR) ? (
-        <Grid2>
+        <Grid>
           <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_TOPBAR} {...CustomAdvProps} />
-        </Grid2>
+        </Grid>
       ) : null}
-      <Grid2 size={{md: 7}}>
+      <Grid size={{md: 7}}>
         <InfiniteScroll
           ref={containerRef}
           className={classes.left}
@@ -884,9 +884,9 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
             {...VirtualizedScrollerProps}
           />
         </InfiniteScroll>
-      </Grid2>
+      </Grid>
       {feedDataRight.length > 0 && !hideAdvs && (
-        <Grid2 sx={{display: {sx: 'none', sm: 'block'}}} size={{md: 5}}>
+        <Grid sx={{display: {sx: 'none', sm: 'block'}}} size={{md: 5}}>
           <StickyBoxComp className={classes.right} {...FeedSidebarProps}>
             <React.Suspense fallback={<GenericSkeleton />}>
               {feedDataRight.map((d, i) => (
@@ -894,7 +894,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
               ))}
             </React.Suspense>
           </StickyBoxComp>
-        </Grid2>
+        </Grid>
       )}
     </Root>
   );

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
-import {Box, Button, Grid2, Icon, IconButton, InputAdornment, TextField, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
+import {Box, Button, Grid, Icon, IconButton, InputAdornment, TextField, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCGroupType} from '@selfcommunity/types';
 import {Endpoints, GroupService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -250,11 +250,11 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   const content = (
     <>
       {showFilters && (groups.length !== 0 || search.length !== 0) && (
-        <Grid2 container width="100%" direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
+        <Grid container width="100%" direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
           {filters ? (
             filters
           ) : (
-            <Grid2 size={{md: 6}}>
+            <Grid size={{md: 6}}>
               <TextField
                 className={classes.search}
                 fullWidth
@@ -302,9 +302,9 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
                   }
                 }}
               />
-            </Grid2>
+            </Grid>
           )}
-        </Grid2>
+        </Grid>
       )}
       <>
         {!groups.length ? (
@@ -354,13 +354,13 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
                 />
               </Typography>
             }>
-            <Grid2 container width="100%" spacing={{xs: 2}} className={classes.groups}>
+            <Grid container width="100%" spacing={{xs: 2}} className={classes.groups}>
               {groups.map((group: SCGroupType) => (
-                <Grid2 size={{sm: 8, md: 6}} key={group.id} className={classes.item}>
+                <Grid size={{sm: 8, md: 6}} key={group.id} className={classes.item}>
                   <Group group={group} groupId={group.id} actionRedirect={true} {...GroupComponentProps} />
-                </Grid2>
+                </Grid>
               ))}
-            </Grid2>
+            </Grid>
           </InfiniteScroll>
         )}
       </>

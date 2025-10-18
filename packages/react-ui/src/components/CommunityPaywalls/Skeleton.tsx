@@ -1,4 +1,4 @@
-import {useMediaQuery, useTheme, styled, Grid2, Grid2Props} from '@mui/material';
+import {useMediaQuery, useTheme, styled, Grid, GridProps} from '@mui/material';
 import {PREFIX} from './constants';
 import classNames from 'classnames';
 import PaymentProductSkeleton, {PaymentProductSkeletonProps} from '../PaymentProduct/Skeleton';
@@ -10,14 +10,14 @@ const classes = {
   products: `${PREFIX}-products`
 };
 
-const Root = styled(Grid2, {
+const Root = styled(Grid, {
   name: PREFIX,
   slot: 'SkeletonRoot'
 })(() => ({
   overflow: 'hidden'
 }));
 
-export interface CommunityPaywallsSkeletonProps extends Grid2Props {
+export interface CommunityPaywallsSkeletonProps extends GridProps {
   className?: string;
   PaymentProductSkeletonComponentProps?: PaymentProductSkeletonProps;
 }
@@ -57,9 +57,9 @@ export default function CommunityPaywallsSkeleton(inProps: CommunityPaywallsSkel
   return (
     <Root className={classNames(classes.root, className)} container width="100%" spacing={4} {...rest}>
       {[...Array(isMobile ? 2 : 3)].map((_product, index) => (
-        <Grid2 size={4} key={index}>
+        <Grid size={4} key={index}>
           <PaymentProductSkeleton variant="outlined" {...PaymentProductSkeletonComponentProps} />
-        </Grid2>
+        </Grid>
       ))}
     </Root>
   );

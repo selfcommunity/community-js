@@ -1,4 +1,4 @@
-import {Box, Grid2, Stack, Skeleton, styled} from '@mui/material';
+import {Box, Grid, Stack, Skeleton, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import classNames from 'classnames';
 
@@ -12,7 +12,7 @@ const classes = {
   content: `${PREFIX}-content`
 };
 
-const Root = styled(Grid2, {
+const Root = styled(Grid, {
   name: PREFIX,
   slot: 'SkeletonRoot'
 })(({theme}) => ({
@@ -82,16 +82,16 @@ export default function CheckoutSkeleton(inProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} container width="100%" {...rest}>
-      <Grid2 size={{md: 6}} className={classNames(classes.left, classes.paper, classes.header)}>
+      <Grid size={{md: 6}} className={classNames(classes.left, classes.paper, classes.header)}>
         <Skeleton variant="rounded" height={150} width={'100%'} />
-      </Grid2>
-      <Grid2 size={{md: 6}} className={classNames(classes.right, classes.header)}>
+      </Grid>
+      <Grid size={{md: 6}} className={classNames(classes.right, classes.header)}>
         <Stack sx={{display: {xs: 'none', md: 'flex'}}} direction="column" spacing={2} pt={2}>
           <Skeleton variant="rounded" height={20} width={190} />
           <Skeleton variant="rounded" height={90} width={'100%'} />
         </Stack>
-      </Grid2>
-      <Grid2 size={{md: 6}} className={classNames(classes.left, classes.paper)}>
+      </Grid>
+      <Grid size={{md: 6}} className={classNames(classes.left, classes.paper)}>
         <Box className={classes.content}>
           <Skeleton variant="rounded" height={30} width={140} />
           <br />
@@ -103,8 +103,8 @@ export default function CheckoutSkeleton(inProps): JSX.Element {
             <Skeleton variant="rounded" height={200} />
           </Box>
         </Box>
-      </Grid2>
-      <Grid2 size={{md: 6}} className={classes.right}>
+      </Grid>
+      <Grid size={{md: 6}} className={classes.right}>
         <Box className={classes.content}>
           <Skeleton variant="rounded" height={110} />
           <Box sx={{display: {xs: 'none', md: 'block'}}}>
@@ -114,7 +114,7 @@ export default function CheckoutSkeleton(inProps): JSX.Element {
             <Skeleton variant="rounded" height={340} />
           </Box>
         </Box>
-      </Grid2>
+      </Grid>
     </Root>
   );
 }

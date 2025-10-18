@@ -1,5 +1,5 @@
 import {useMemo, useState} from 'react';
-import {Box, Grid2, styled} from '@mui/material';
+import {Box, Grid, styled} from '@mui/material';
 import {
   CommentsFeedObject,
   CommentsFeedObjectProps,
@@ -205,22 +205,22 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
 
   return (
     <Root id={id} className={classNames(classes.root, className)}>
-      <Grid2 container width="100%" spacing={2}>
-        <Grid2 size={{md: 7}}>
+      <Grid container width="100%" spacing={2}>
+        <Grid size={{md: 7}}>
           <FeedObject {...FeedObjectProps} feedObject={obj} template={SCFeedObjectTemplateType.DETAIL} onReply={handleReply} />
           {renderAdvertising()}
           {commentsEnabled && (
             <CommentsFeedObject key={`comments_${obj.id}`} showTitle feedObject={obj} comments={comments} {...CommentsFeedObjectProps} />
           )}
-        </Grid2>
-        <Grid2 size={{md: 5}}>
+        </Grid>
+        <Grid size={{md: 5}}>
           <Box sx={{display: {sx: 'none', md: 'block'}}}>
             <StickyBox {...FeedSidebarProps}>
               <RelatedFeedObjectsWidget key={`related_${obj.id}`} feedObject={obj} feedObjectId={obj.id} {...RelatedFeedObjectProps} />
             </StickyBox>
           </Box>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </Root>
   );
 }

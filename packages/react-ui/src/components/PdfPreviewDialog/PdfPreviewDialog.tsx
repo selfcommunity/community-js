@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Grid2, IconButton, Slide, Icon, Toolbar, Typography, styled} from '@mui/material';
+import {AppBar, Grid, IconButton, Slide, Icon, Toolbar, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {TransitionProps} from '@mui/material/transitions';
@@ -100,11 +100,11 @@ export default function PdfPreviewDialog(inProps: PdfPreviewDialogProps) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Grid2 container width="100%" className={classes.content}>
-        <Grid2 justifyContent="center" alignContent="center">
+      <Grid container width="100%" className={classes.content}>
+        <Grid justifyContent="center" alignContent="center">
           <PdfPreview {...PdfPreviewComponentProps} pdfUrl={pdfUrl} />
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </Root>
   );
 }

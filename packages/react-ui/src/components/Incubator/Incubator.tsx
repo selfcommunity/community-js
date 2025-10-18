@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Typography, Grid2, Box, Button, ButtonProps, CardContent, CardActions, styled, LinearProgress, LinearProgressProps} from '@mui/material';
+import {Typography, Grid, Box, Button, ButtonProps, CardContent, CardActions, styled, LinearProgress, LinearProgressProps} from '@mui/material';
 import {SCIncubatorType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchIncubator, useSCRouting} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
@@ -35,21 +35,21 @@ function LinearProgressWithLabel({className, ...props}: LinearProgressProps & {v
           </Typography>
         )}
       </Box>
-      <Grid2 container width="100%" spacing={2} className={className}>
-        <Grid2 size="grow">
+      <Grid container width="100%" spacing={2} className={className}>
+        <Grid size="grow">
           <Typography>
             <FormattedMessage defaultMessage="ui.incubator.progressBar.proposal" id="ui.incubator.progressBar.proposal" />
           </Typography>
-        </Grid2>
-        <Grid2 size="grow">
+        </Grid>
+        <Grid size="grow">
           <FormattedMessage defaultMessage="ui.incubator.progressBar.collectingSubscribers" id="ui.incubator.progressBar.collectingSubscribers" />
-        </Grid2>
-        <Grid2 size="grow">
+        </Grid>
+        <Grid size="grow">
           <Typography align="right">
             <FormattedMessage defaultMessage="ui.incubator.progressBar.approved" id="ui.incubator.progressBar.approved" />
           </Typography>
-        </Grid2>
-      </Grid2>
+        </Grid>
+      </Grid>
     </Box>
   );
 }

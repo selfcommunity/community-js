@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid2, useMediaQuery, useTheme, styled} from '@mui/material';
+import {Grid, useMediaQuery, useTheme, styled} from '@mui/material';
 import PrivateMessageSnippetsSkeleton from '../PrivateMessageSnippets/Skeleton';
 import PrivateMessageThreadSkeleton from '../PrivateMessageThread/Skeleton';
 import classNames from 'classnames';
@@ -11,7 +11,7 @@ const classes = {
   snippetsSection: `${PREFIX}-snippets-section`,
   threadSection: `${PREFIX}-thread-section`
 };
-const Root = styled(Grid2, {
+const Root = styled(Grid, {
   name: PREFIX,
   slot: 'SkeletonRoot'
 })(() => ({}));
@@ -53,13 +53,13 @@ export default function PrivateMessageComponentSkeleton(props: PrivateMessageCom
   return (
     <Root container width="100%" className={classNames(classes.root, className)}>
       {!isMobile && (
-        <Grid2 size={{md: 5}} className={classes.snippetsSection}>
+        <Grid size={{md: 5}} className={classes.snippetsSection}>
           <PrivateMessageSnippetsSkeleton />
-        </Grid2>
+        </Grid>
       )}
-      <Grid2 size={{md: 7}} className={classes.threadSection}>
+      <Grid size={{md: 7}} className={classes.threadSection}>
         <PrivateMessageThreadSkeleton />
-      </Grid2>
+      </Grid>
     </Root>
   );
 }

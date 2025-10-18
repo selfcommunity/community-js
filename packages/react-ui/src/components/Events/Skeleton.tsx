@@ -1,5 +1,5 @@
 import {PREFIX} from './constants';
-import {Box, Grid2, Grid2Props, styled} from '@mui/material';
+import {Box, Grid, GridProps, styled} from '@mui/material';
 import classNames from 'classnames';
 import {EventSkeleton} from '../Event';
 
@@ -31,12 +31,12 @@ export interface EventsSkeletonProps {
    * Props spread to grid container
    * @default {}
    */
-  GridContainerComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridContainerComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
   /**
    * Props spread to single grid item
    * @default {}
    */
-  GridItemComponentProps?: Pick<Grid2Props, Exclude<keyof Grid2Props, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
+  GridItemComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
 
   /**
    * @default 20
@@ -69,13 +69,13 @@ export default function EventsSkeleton(inProps: EventsSkeletonProps): JSX.Elemen
   const {className, EventSkeletonProps = {}, eventsNumber = 8, GridContainerComponentProps = {}, GridItemComponentProps = {}, ...rest} = inProps;
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Grid2 container width="100%" spacing={{xs: 3}} className={classes.events} {...GridContainerComponentProps}>
+      <Grid container width="100%" spacing={{xs: 3}} className={classes.events} {...GridContainerComponentProps}>
         {[...Array(eventsNumber)].map((_event, index) => (
-          <Grid2 size={{md: 6}} key={index} {...GridItemComponentProps} className={classes.item}>
+          <Grid size={{md: 6}} key={index} {...GridItemComponentProps} className={classes.item}>
             <EventSkeleton {...EventSkeletonProps} />
-          </Grid2>
+          </Grid>
         ))}
-      </Grid2>
+      </Grid>
     </Root>
   );
 }
