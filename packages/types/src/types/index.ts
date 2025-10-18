@@ -154,7 +154,7 @@ import {
   type SCLiveStreamSettingsType,
   type SCLiveStreamMonthlyDurationType,
   type SCLiveStreamConnectionDetailsResponseErrorType,
-  type SCLiveStreamConnectionDetailsErrorType
+  SCLiveStreamConnectionDetailsErrorType
 } from './liveStream';
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType, SCOnBoardingStepIdType} from './onboarding';
 import {SCCommunitySubscriptionTier} from './tier';
