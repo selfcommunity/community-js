@@ -89,8 +89,6 @@
     "@livekit/krisp-noise-filter": "0.2.12",
     "@livekit/track-processors": "^0.3.3",
     "@lottiefiles/react-lottie-player": "^3.5.4",
-    "@mui/lab": "~5.0.0-alpha.159",
-    "@mui/material": "^5.15.3",
     "@mui/x-date-pickers": "^6.18.7",
     "@react-google-maps/api": "^2.19.3",
     "@rpldy/chunked-sender": "^1.7.1",

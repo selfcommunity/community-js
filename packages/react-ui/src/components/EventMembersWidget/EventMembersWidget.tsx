@@ -329,7 +329,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
               />
             )}
           </TabList>
-          <TabPanel value={TabContentType.PARTICIPANTS} className={classes.tabPanel}>
+          <TabPanel value={TabContentType.PARTICIPANTS} sx={{className: classes.tabPanel}}>
             <TabContentComponent
               tabValue={TabContentType.PARTICIPANTS}
               state={participants}
@@ -343,7 +343,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
             />
           </TabPanel>
           {hasAllow && (
-            <TabPanel value={TabContentType.INVITED} className={classes.tabPanel}>
+            <TabPanel value={TabContentType.INVITED} sx={{className: classes.tabPanel}}>
               <TabContentComponent
                 tabValue={TabContentType.INVITED}
                 state={invited}
@@ -359,7 +359,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
             </TabPanel>
           )}
           {hasAllow && (
-            <TabPanel value={TabContentType.REQUESTS} className={classes.tabPanel}>
+            <TabPanel value={TabContentType.REQUESTS} sx={{className: classes.tabPanel}}>
               <TabContentComponent
                 tabValue={TabContentType.REQUESTS}
                 state={requests}

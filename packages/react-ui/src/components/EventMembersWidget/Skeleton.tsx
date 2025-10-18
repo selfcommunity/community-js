@@ -1,10 +1,10 @@
-import { TabContext, TabList, TabPanel } from '@mui/lab';
-import { CardContent, List, ListItem, Skeleton, Stack, Tab } from '@mui/material';
-import { Box, styled } from '@mui/system';
+import {TabContext, TabList, TabPanel} from '@mui/lab';
+import {CardContent, List, ListItem, Skeleton, Stack, Tab} from '@mui/material';
+import {Box, styled} from '@mui/system';
 import 'swiper/css';
-import { UserSkeleton } from '../User';
+import {UserSkeleton} from '../User';
 import Widget from '../Widget';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,
@@ -45,7 +45,7 @@ export default function EventMembersWidgetSkeleton() {
               ))}
             </TabList>
           </Box>
-          <TabPanel value="1" className={classes.tabPanel}>
+          <TabPanel value="1" sx={{className: classes.tabPanel}}>
             <List>
               {[1, 2, 3, 4].map((_element, i) => (
                 <ListItem key={i}>
@@ -56,8 +56,8 @@ export default function EventMembersWidgetSkeleton() {
               <Skeleton className={classes.actionButton} animation="wave" width="52px" height="20px" />
             </List>
           </TabPanel>
-          <TabPanel value="2" className={classes.tabPanel}></TabPanel>
-          <TabPanel value="3" className={classes.tabPanel}></TabPanel>
+          <TabPanel value="2" sx={{className: classes.tabPanel}}></TabPanel>
+          <TabPanel value="3" sx={{className: classes.tabPanel}}></TabPanel>
         </TabContext>
       </CardContent>
     </Root>

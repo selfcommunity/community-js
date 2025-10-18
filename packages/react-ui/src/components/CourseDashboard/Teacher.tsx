@@ -99,11 +99,11 @@ function Teacher(inProps: TeacherCourseDashboardProps) {
           ))}
         </TabList>
 
-        <TabPanel className={classes.tabPanel} value={TabContentType.STUDENTS}>
+        <TabPanel sx={{className: classes.tabPanel}} value={TabContentType.STUDENTS}>
           <Students course={scCourse} />
         </TabPanel>
 
-        <TabPanel className={classes.tabPanel} value={TabContentType.COMMENTS}>
+        <TabPanel sx={{className: classes.tabPanel}} value={TabContentType.COMMENTS}>
           <Comments course={scCourse} />
         </TabPanel>
       </TabContext>
