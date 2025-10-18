@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import CourseForm, { CourseFormProps } from './index';
 import { SCCourseJoinStatusType, SCCoursePrivacyType, SCCourseTypologyType, SCLanguageType } from '@selfcommunity/types';
 import { SCCourseFormStepType } from '../../constants/Course';

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Paywalls from './index';
 import {SCContentType} from '@selfcommunity/types';
 

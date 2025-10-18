@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import {prefetchedCourses} from './prefetchedCourses';
 import Courses from './index';
 import CoursesSkeleton from './Skeleton';

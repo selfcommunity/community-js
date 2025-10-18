@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import NavigationToolbarMobileSkeleton from './Skeleton';
 import { AppBar } from '@mui/material';
-import {INITIAL_VIEWPORTS} from '@storybook/addon-viewport';
+import {INITIAL_VIEWPORTS} from 'storybook/viewport';
 
 export default {
   title: 'Design System/React UI/Skeleton/Navigation Toolbar Mobile',

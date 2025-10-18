@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import { INITIAL_VIEWPORTS } from 'storybook/viewport';
 import NavigationToolbar from './index';
 import {AppBar, Box, Button, Grid2, IconButton, Typography, Icon, Paper} from '@mui/material';
 import {useCallback, useState} from 'react';

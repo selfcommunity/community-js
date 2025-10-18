@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import UserInfo from './index';
 import { DEFAULT_FIELDS } from '../../constants/UserProfile';
 

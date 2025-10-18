@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import GroupSkeletonTemplate from './Skeleton';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export

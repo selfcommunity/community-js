@@ -1,5 +1,5 @@
 import {useRef} from 'react';
-import type {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react-webpack5';
 import Feed, {FeedProps, FeedRef} from './Feed';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCContributionType, SCNotificationTopicType} from '@selfcommunity/types';

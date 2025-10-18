@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Tags, {TagsComponentType} from './index';
 import {SCTagType} from '@selfcommunity/types';
 

@@ -2,6 +2,7 @@ import { dirname, join } from "path";
 const path = require("path");
 const toPath = (filePath) => path.join(process.cwd(), filePath);
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const webpack = require('webpack');
 
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 const config = {
@@ -15,11 +16,12 @@ const config = {
     "../packages/react-ui/src/shared/**/*.stories.@(js|jsx|ts|tsx)",
     "../packages/react-templates/src/components/**/*.stories.@(js|jsx|ts|tsx)",
   ],
+
   addons: [
     getAbsolutePath("@storybook/addon-links"),
-    getAbsolutePath("@storybook/addon-essentials"),
-    getAbsolutePath("@storybook/addon-interactions"),
+    getAbsolutePath("@storybook/addon-docs")
   ],
+
   framework: {
     name: getAbsolutePath("@storybook/react-webpack5"),
     options: {
@@ -27,13 +29,73 @@ const config = {
       "fsCache": true
     },
   },
+
   features: {
     "postcss": false
   },
+
   core: {
     disableTelemetry: true, // Disables telemetry
   },
+
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+    skipBabel: true,
+    check: false,
+  },
+
   "webpackFinal": async (config) => {
+    // Add TypeScript and JSX support
+    config.module.rules.push({
+      test: /\.(ts|tsx)$/,
+      use: [
+        {
+					loader: require.resolve('babel-loader'),
+					options: {
+						presets: [
+							[
+								require.resolve('@babel/preset-env'),
+								{ loose: false },
+							],
+							[
+								require.resolve('@babel/preset-react'),
+								{ runtime: 'automatic' },
+							],
+							require.resolve('@babel/preset-typescript'),
+						],
+						plugins: [
+							// Usa i transform moderni
+							['@babel/plugin-transform-class-properties', { loose: false }],
+							['@babel/plugin-transform-private-methods', { loose: false }],
+							['@babel/plugin-transform-private-property-in-object', { loose: false }],
+							'@babel/plugin-transform-object-rest-spread',
+							'@babel/plugin-transform-nullish-coalescing-operator',
+							'@babel/plugin-transform-optional-chaining',
+						],
+					},
+        }
+      ],
+      exclude: /node_modules/
+    });
+
+    // Make sure .tsx and .ts are included in the resolve extensions
+    if (config.resolve.extensions) {
+      config.resolve.extensions.push('.ts', '.tsx');
+    } else {
+      config.resolve.extensions = ['.js', '.jsx', '.ts', '.tsx'];
+    }
+
+    // Add DefinePlugin to make process.env available in the browser
+    if (!config.plugins) {
+      config.plugins = [];
+    }
+
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        'process.env': JSON.stringify(process.env)
+      })
+    );
+
     return {
       ...config,
       "resolve": {
@@ -60,10 +122,7 @@ const config = {
         },
       },
     };
-  },
-  docs: {
-    autodocs: 'tags',
-  },
+  }
 };
 export default config;
 

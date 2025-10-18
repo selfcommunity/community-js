@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Footer from './index';
 import LanguageSwitcher from '../../shared/LanguageSwitcher';
 import {Box} from '@mui/material';

@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import NavigationToolbarMobile, { NavigationToolbarMobileProps } from './index';
 import { AppBar, Icon, IconButton, Typography } from '@mui/material';
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import { INITIAL_VIEWPORTS } from 'storybook/viewport';
 import React from 'react';
 
 export default {

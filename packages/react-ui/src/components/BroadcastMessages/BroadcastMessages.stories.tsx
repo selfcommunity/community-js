@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import BroadcastMessages from './index';
 import {CacheStrategies} from '@selfcommunity/utils';
 

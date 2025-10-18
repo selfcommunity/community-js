@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import RelatedFeedObjectsWidget from './index';
 import {SCContributionType} from '@selfcommunity/types';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
