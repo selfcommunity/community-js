@@ -380,7 +380,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                 />
               </Grid>
               {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && (
-                <Grid size={{xs: 12}}>
+                <Grid size="grow">
                   <CoursesChipRoot
                     color={showManagedCourses ? 'primary' : 'default'}
                     variant={showManagedCourses ? 'filled' : 'outlined'}
