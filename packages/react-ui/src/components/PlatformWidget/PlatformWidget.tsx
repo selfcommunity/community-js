@@ -427,7 +427,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
    */
   const content = (
     <Grid container width="100%" spacing={isAdmin ? 1 : 3} justifyContent="center" className={classes.content}>
-      <Grid>
+      <Grid size="grow">
         {title ? (
           title
         ) : (

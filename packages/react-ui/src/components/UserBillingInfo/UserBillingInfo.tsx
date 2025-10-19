@@ -772,7 +772,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                     />
                   </Grid>
 
-                  <Grid>
+                  <Grid size="grow">
                     <FormGroup>
                       <FormControlLabel
                         disabled={Boolean(disableButtons)}
@@ -803,7 +803,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
 
                   {state.isBusiness && (
                     <Grow in={state.isBusiness}>
-                      <Grid>
+                      <Grid size="grow">
                         <Grid container width="100%" spacing={3}>
                           {/* tax_id_data */}
                           <Grid size={{sm: inlineDisplay ? 12 : 6}}>
@@ -930,14 +930,14 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                   )}
 
                   {state.error && (
-                    <Grid>
+                    <Grid size="grow">
                       <Typography align="left" color="secondary">
                         {state.error}
                       </Typography>
                     </Grid>
                   )}
 
-                  <Grid>
+                  <Grid size="grow">
                     <Typography align="left">
                       <LoadingButton
                         variant="contained"

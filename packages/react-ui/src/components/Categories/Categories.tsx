@@ -270,7 +270,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
       ) : (
         <Grid container width="100%" spacing={{xs: 3}} className={classes.categories}>
           {!filteredCategories.length ? (
-            <Grid>
+            <Grid size="grow">
               <Typography className={classes.noResults} variant="body2">
                 <FormattedMessage id="ui.categories.noResults" defaultMessage="ui.categories.noResults" />
               </Typography>

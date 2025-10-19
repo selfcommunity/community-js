@@ -403,7 +403,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
             filters
           ) : showUserEvents ? (
             <>
-              <Grid>
+							<Grid size="grow">
                 <EventsChipRoot
                   color={showMyEvents ? 'secondary' : 'default'}
                   variant={showMyEvents ? 'filled' : 'outlined'}
@@ -416,7 +416,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   disabled={loading}
                 />
               </Grid>
-              <Grid>
+							<Grid size="grow">
                 <PastEventsFilter
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
@@ -424,7 +424,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   disabled={loading}
                 />
               </Grid>
-              <Grid size={{md: 2}}>
+              <Grid size="grow">
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
               </Grid>
             </>
@@ -504,7 +504,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
               </Grid>
               {authUserId && (
-                <Grid>
+                <Grid size="grow">
                   <EventsChipRoot
                     color={showFollowed ? 'secondary' : 'default'}
                     variant={showFollowed ? 'filled' : 'outlined'}
@@ -518,7 +518,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   />
                 </Grid>
               )}
-              <Grid>
+              <Grid size="grow">
                 <OngoingEventsFilter
                   showOngoingEvents={showOngoingEvents}
                   handleClick={handleChipOngoingClick}
