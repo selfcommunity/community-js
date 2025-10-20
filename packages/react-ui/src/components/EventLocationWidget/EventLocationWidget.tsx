@@ -1,6 +1,6 @@
 import {Box, CardContent, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
-import {GoogleMap, MarkerF} from '@react-google-maps/api';
+import {APIProvider, Map, Marker} from '@vis.gl/react-google-maps';
 import {useSCGoogleApiLoader, useSCFetchEvent} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
@@ -91,13 +91,6 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
   // HOOKS
   const {isLoaded, geocodingApiKey} = useSCGoogleApiLoader();
 
-  const mapOptions = {
-    fullscreenControl: false, // Disables the fullscreen control
-    mapTypeControl: false, // Disables the map type selector (satellite/map)
-    streetViewControl: false, // Disables the Street View pegman control
-    zoomControl: false // Disables the zoom control (+/- buttons)
-  };
-
   if (!geocodingApiKey || scEvent?.location === SCEventLocationType.ONLINE) {
     return <HiddenPlaceholder />;
   }
@@ -119,21 +112,27 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
           <FormattedMessage id="ui.eventLocationWidget.title" defaultMessage="ui.eventLocationWidget.title" />
         </Typography>
         <Box className={classes.map}>
-          <GoogleMap
-            mapContainerClassName={classes.map}
-            center={{
-              lat: scEvent.geolocation_lat,
-              lng: scEvent.geolocation_lng
-            }}
-            options={mapOptions}
-            zoom={15}>
-            <MarkerF
-              position={{
+          <APIProvider apiKey={geocodingApiKey}>
+            <Map
+              className={classes.map}
+              center={{
                 lat: scEvent.geolocation_lat,
                 lng: scEvent.geolocation_lng
               }}
-            />
-          </GoogleMap>
+              zoom={15}
+              fullscreenControl={false} // Disables the fullscreen control
+              mapTypeControl={false} // Disables the map type selector (satellite/map)
+              streetViewControl={false} // Disables the Street View pegman control
+              zoomControl={false} // Disables the zoom control (+/- buttons)
+            >
+              <Marker
+                position={{
+                  lat: scEvent.geolocation_lat,
+                  lng: scEvent.geolocation_lng
+                }}
+              />
+            </Map>
+          </APIProvider>
         </Box>
         <Typography variant="h4" className={classes.locationTitle}>
           {formatEventLocationGeolocation(scEvent.geolocation, true)}
