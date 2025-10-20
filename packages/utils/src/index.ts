@@ -21,7 +21,7 @@ import WSClient, {WSClientType, WSClientPropTypes} from './utils/websocket';
 import {resizeImage} from './utils/image';
 
 /**
- * Export all utilities
+ * Export utilities
  */
 export {
   capitalize,
