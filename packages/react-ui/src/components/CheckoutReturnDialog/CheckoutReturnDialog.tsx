@@ -44,9 +44,9 @@ const Transition = React.forwardRef(function Transition(props: TransitionProps &
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const NoTransition = React.forwardRef(function NoTransition(props: {children: React.ReactElement}) {
-  return <React.Fragment> {props.children} </React.Fragment>;
-});
+const NoTransition = function NoTransition(props: {children: React.ReactElement}) {
+  return <React.Fragment>{props.children}</React.Fragment>;
+};
 
 export interface CheckoutReturnDialogProps extends DialogProps {
   className?: string;

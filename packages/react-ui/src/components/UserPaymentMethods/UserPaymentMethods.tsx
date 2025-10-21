@@ -1,4 +1,4 @@
-import React, {forwardRef, ForwardRefRenderFunction, useCallback, useEffect, useMemo, useState} from 'react';
+import {ForwardRefRenderFunction, useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Box,
   Button,
@@ -15,7 +15,7 @@ import {
   TableHead,
   TableRow,
   Typography,
-	styled
+  styled
 } from '@mui/material';
 import {PaymentIcon, PaymentTypeExtended} from 'react-svg-credit-card-payment-icons';
 import {SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
@@ -86,8 +86,7 @@ export type UserPaymentMethodsRef = {};
  * @param inProps
  */
 const UserPaymentMethods: ForwardRefRenderFunction<UserPaymentMethodsRef, UserPaymentMethodsProps> = (
-  inProps: UserPaymentMethodsProps,
-  ref: React.ForwardedRef<UserPaymentMethodsRef>
+  inProps: UserPaymentMethodsProps
 ): JSX.Element => {
   // PROPS
   const props: UserPaymentMethodsProps = useThemeProps({
@@ -534,4 +533,4 @@ const UserPaymentMethods: ForwardRefRenderFunction<UserPaymentMethodsRef, UserPa
   );
 };
 
-export default forwardRef(UserPaymentMethods);
+export default UserPaymentMethods;
