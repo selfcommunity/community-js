@@ -15,8 +15,8 @@ const classes = {
 const Root = styled(SnackbarContent, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 /**
  * Custom Snackbar for notistack messages

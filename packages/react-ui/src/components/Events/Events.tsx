@@ -403,7 +403,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
             filters
           ) : showUserEvents ? (
             <>
-							<Grid size="grow">
+              <Grid size="grow">
                 <EventsChipRoot
                   color={showMyEvents ? 'secondary' : 'default'}
                   variant={showMyEvents ? 'filled' : 'outlined'}
@@ -416,7 +416,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   disabled={loading}
                 />
               </Grid>
-							<Grid size="grow">
+              <Grid size="grow">
                 <PastEventsFilter
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
