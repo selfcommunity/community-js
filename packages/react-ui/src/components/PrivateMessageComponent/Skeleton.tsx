@@ -53,11 +53,11 @@ export default function PrivateMessageComponentSkeleton(props: PrivateMessageCom
   return (
     <Root container width="100%" className={classNames(classes.root, className)}>
       {!isMobile && (
-        <Grid size={{md: 5}} className={classes.snippetsSection}>
+        <Grid size={{xs: 12, md: 5}} className={classes.snippetsSection}>
           <PrivateMessageSnippetsSkeleton />
         </Grid>
       )}
-      <Grid size={{md: 7}} className={classes.threadSection}>
+      <Grid size={{xs: 12, md: 7}} className={classes.threadSection}>
         <PrivateMessageThreadSkeleton />
       </Grid>
     </Root>

@@ -55,7 +55,7 @@ export default function CategoriesSkeleton(inProps: CategoriesSkeletonProps): JS
     <Root className={classNames(classes.root, className)} {...rest}>
       <Grid container width="100%" spacing={{xs: 3}} className={classes.categories}>
         {[...Array(15)].map((_category, index) => (
-          <Grid size={{sm: 6, md: 4}} key={index}>
+          <Grid size={{xs: 12, sm: 6, md: 4}} key={index}>
             <CategorySkeleton elevation={0} variant="outlined" {...CategorySkeletonProps} />
           </Grid>
         ))}

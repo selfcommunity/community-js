@@ -60,7 +60,7 @@ export default function GroupsSkeleton(inProps: GroupsSkeletonProps): JSX.Elemen
     <Root className={classNames(classes.root, className)} {...rest}>
       <Grid container width="100%" spacing={{xs: 3}} className={classes.groups}>
         {[...Array(groupsNumber)].map((_category, index) => (
-          <Grid size={{sm: 8, md: 6}} key={index}>
+          <Grid size={{xs: 12, sm: 8, md: 6}} key={index}>
             <GroupSkeleton elevation={0} variant="outlined" {...GroupSkeletonProps} />
           </Grid>
         ))}

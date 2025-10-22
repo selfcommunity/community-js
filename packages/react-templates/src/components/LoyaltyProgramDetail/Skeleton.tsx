@@ -47,20 +47,20 @@ export default function LoyaltyProgramDetailSkeleton(): JSX.Element {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   return (
     <Root className={classes.root}>
-      <Typography className={classes.title} component={'div'}>
+      <Typography className={classes.title} component="div">
         {!isMobile && <Skeleton animation="wave" height={30} width={140} variant="text" />}
         <Skeleton animation="wave" variant="circular" width={172} height={30} className={classes.chip} />
       </Typography>
       <Typography className={classes.sectionTitle}>
-        <Skeleton animation="wave" height={20} width={'50%'} variant="text" />
-        <Skeleton animation="wave" height={17} width={'80%'} variant="text" className={classes.subTitle} />
+        <Skeleton animation="wave" height={20} width="50%" variant="text" />
+        <Skeleton animation="wave" height={17} width="80%" variant="text" className={classes.subTitle} />
       </Typography>
       <Typography className={classes.sectionTitle}>
         <Skeleton animation="wave" height={20} width={146} />
       </Typography>
       <Grid container width="100%" spacing={2} className={classes.pointsList}>
         {[...Array(8)].map((_prize, index) => (
-          <Grid size={{md: 6}} key={index}>
+          <Grid size={{xs: 12, md: 6}} key={index}>
             <Skeleton animation="wave" height={15} width="100%" />
           </Grid>
         ))}
@@ -70,7 +70,7 @@ export default function LoyaltyProgramDetailSkeleton(): JSX.Element {
       </Typography>
       <Grid container width="100%" spacing={isMobile ? 3 : 6}>
         {[...Array(6)].map((_prize, index) => (
-          <Grid size={{md: 6, lg: 4}} key={index}>
+          <Grid size={{xs: 12, md: 6, lg: 4}} key={index}>
             <PrizeItemSkeleton />
           </Grid>
         ))}

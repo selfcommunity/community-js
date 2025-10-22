@@ -101,7 +101,7 @@ export default function PdfPreviewDialog(inProps: PdfPreviewDialogProps) {
         </Toolbar>
       </AppBar>
       <Grid container width="100%" className={classes.content}>
-        <Grid justifyContent="center" alignContent="center">
+        <Grid size={12} justifyContent="center" alignContent="center">
           <PdfPreview {...PdfPreviewComponentProps} pdfUrl={pdfUrl} />
         </Grid>
       </Grid>

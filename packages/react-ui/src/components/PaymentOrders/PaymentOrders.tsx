@@ -314,7 +314,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
   return (
     <Root variant="outlined" className={classNames(classes.root, className)} {...rest}>
       <Grid container width="100%" className={classes.filters} gap={3}>
-        <Grid size={{md: 3}}>
+        <Grid size={{xs: 12, md: 3}}>
           <TextField
             className={classes.search}
             size="small"
@@ -362,7 +362,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
             }}
           />
         </Grid>
-        <Grid size={{md: 3}}>
+        <Grid size={{xs: 12, md: 3}}>
           <TextField
             select
             fullWidth
@@ -378,7 +378,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
             ))}
           </TextField>
         </Grid>
-        <Grid size={{sm: 8, md: 4}}>
+        <Grid size={{xs: 12, sm: 8, md: 4}}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
             adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}

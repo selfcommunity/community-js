@@ -39,15 +39,15 @@ export default function PlatformWidgetSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
       <Grid container width="100%" justifyContent="center" className={classes.content}>
-        <Grid className={classes.title}>
+        <Grid size={12} className={classes.title}>
           <Skeleton animation="wave" height={25} width={170} />
         </Grid>
-        <Grid className={classes.actions}>
+        <Grid size={12} className={classes.actions}>
           <Skeleton animation="wave" height={35} width={110} />
           <Skeleton animation="wave" height={35} width={110} />
           <Skeleton animation="wave" height={35} width={110} />
         </Grid>
-        <Grid justifyContent="center" alignItems="center" className={classes.tutorial}>
+        <Grid size={12} justifyContent="center" alignItems="center" className={classes.tutorial}>
           <Skeleton animation="wave" variant="circular" width={25} height={25} />
         </Grid>
       </Grid>
