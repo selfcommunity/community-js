@@ -119,7 +119,7 @@
     "lexical": "0.28.0",
     "libphonenumber-js": "^1.10.53",
     "livekit-client": "2.5.9",
-    "mui-color-input": "4.0.1",
+    "mui-color-input": "7.0.0",
     "notistack": "^3.0.1",
     "pdfjs-dist": "3.11.174",
     "prop-types": "^15.8.1",
