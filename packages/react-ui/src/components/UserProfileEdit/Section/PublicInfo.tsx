@@ -24,8 +24,8 @@ import {SCUserProfileFields} from '../../../types';
 import MetadataField from '../../../shared/MetadataField';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {format, isBefore, isValid, parseISO, startOfHour} from 'date-fns';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from '../constants';
 
@@ -231,10 +231,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
         return null;
       case SCUserProfileFields.DATE_OF_BIRTH:
         return (
-          <LocalizationProvider
-            dateAdapter={AdapterDateFns}
-            key={field}
-            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} key={field} adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}>
             <DatePicker
               label={intl.formatMessage({
                 id: `ui.userInfo.${camelCase(field)}`,

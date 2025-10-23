@@ -43,8 +43,8 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {LocalizationProvider, MobileDatePicker} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import Category from '../Category';
 
 const PREFIX = 'SCPaymentOrders';
@@ -380,7 +380,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
         <Grid size={{xs: 12, sm: 8, md: 4}}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
-            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+            adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}
             localeText={{
               cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`,
               clearButtonLabel: `${intl.formatMessage(messages.pickerClearAction)}`

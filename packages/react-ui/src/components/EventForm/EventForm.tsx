@@ -35,8 +35,8 @@ import {
 import {SCContentType, SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
-import enLocale from 'date-fns/locale/en-US';
-import itLocale from 'date-fns/locale/it';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import PubSub from 'pubsub-js';
 import {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -555,7 +555,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         <Box className={classes.dateTime}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
-            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+            adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}
             localeText={{
               cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`
             }}>
@@ -675,7 +675,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         <Box className={classes.dateTime}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
-            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+            adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}
             localeText={{
               cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`
             }}>

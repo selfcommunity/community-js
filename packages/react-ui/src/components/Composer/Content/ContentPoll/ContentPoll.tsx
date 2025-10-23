@@ -20,8 +20,8 @@ import {ReactSortable} from 'react-sortablejs';
 import {DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_POLL_MIN_CLOSE_DATE_DELTA, COMPOSER_POLL_TITLE_MAX_LENGTH} from '../../../../constants/Composer';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import {SCPollChoiceType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -30,8 +30,8 @@ import {ComposerContentType} from '../../../../types/composer';
 import {PREFIX} from '../../constants';
 
 const localeMap = {
-  en: enLocale,
-  it: itLocale
+  en: it,
+  it: enUS
 };
 
 const classes = {
