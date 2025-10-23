@@ -61,7 +61,7 @@
   "peerDependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@mui/lab": "^7.0.0",
+    "@mui/lab": "^7.0.1-beta.18",
     "@mui/material": "^7.3.4",
     "@mui/x-date-pickers": "^8.14.1",
     "@rpldy/chunked-sender": "^1.7.1",
@@ -89,7 +89,7 @@
     "@livekit/krisp-noise-filter": "0.2.12",
     "@livekit/track-processors": "^0.3.3",
     "@lottiefiles/react-lottie-player": "^3.5.4",
-    "@mui/lab": "^7.0.0",
+    "@mui/lab": "^7.0.1-beta.18",
     "@mui/material": "^7.3.4",
     "@mui/x-date-pickers": "^8.14.1",
     "@rpldy/chunked-sender": "^1.7.1",
