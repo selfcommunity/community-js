@@ -75,7 +75,7 @@ export default function FeedSkeleton(props: FeedSkeletonProps): JSX.Element {
       <Grid size={{xs: 12, md: 7}}>
         <div className={classes.left}>{children}</div>
       </Grid>
-      <Grid sx={{display: {sx: 'none', sm: 'block'}}} size={{xs: 12, md: 5}}>
+      <Grid sx={{display: {xs: 'none', sm: 'block'}}} size={{xs: 12, md: 5}}>
         <div className={classes.right}>{sidebar}</div>
       </Grid>
     </Root>

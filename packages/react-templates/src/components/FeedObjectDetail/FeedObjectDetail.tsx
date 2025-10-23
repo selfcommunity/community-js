@@ -214,7 +214,7 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
           )}
         </Grid>
         <Grid size={{xs: 12, md: 5}}>
-          <Box sx={{display: {sx: 'none', md: 'block'}}}>
+          <Box sx={{display: {xs: 'none', md: 'block'}}}>
             <StickyBox {...FeedSidebarProps}>
               <RelatedFeedObjectsWidget key={`related_${obj.id}`} feedObject={obj} feedObjectId={obj.id} {...RelatedFeedObjectProps} />
             </StickyBox>

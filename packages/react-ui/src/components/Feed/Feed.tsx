@@ -886,7 +886,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         </InfiniteScroll>
       </Grid>
       {feedDataRight.length > 0 && !hideAdvs && (
-        <Grid sx={{display: {sx: 'none', sm: 'block'}}} size={{xs: 12, md: 5}}>
+        <Grid sx={{display: {xs: 'none', sm: 'block'}}} size={{xs: 12, md: 5}}>
           <StickyBoxComp className={classes.right} {...FeedSidebarProps}>
             <React.Suspense fallback={<GenericSkeleton />}>
               {feedDataRight.map((d, i) => (

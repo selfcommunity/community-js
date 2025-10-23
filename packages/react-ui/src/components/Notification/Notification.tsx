@@ -285,7 +285,9 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
               </UserAvatar>
             </Link>
           }
-          titleTypographyProps={{className: classes.title, variant: 'subtitle1'}}
+          slotProps={{
+            title: {className: classes.title, variant: 'subtitle1'}
+          }}
           title={
             <>
               <Link
@@ -330,7 +332,9 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
               </UserAvatar>
             </Link>
           }
-          titleTypographyProps={{className: classes.title, variant: 'subtitle1'}}
+          slotProps={{
+            title: {className: classes.title, variant: 'subtitle1'}
+          }}
           title={
             <>
               <Link
@@ -380,7 +384,12 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       return (
         <CardHeader
           className={classes.header}
-          titleTypographyProps={{className: classes.title, variant: 'subtitle1'}}
+          slotProps={{
+            title: {
+              className: classes.title,
+              variant: 'subtitle1'
+            }
+          }}
           title={
             <Link to={scRoutingContext.url(getContributionRouteName(contribution), getRouteData(notificationObject[contribution.type]))}>
               {getContributionSnippet(contribution)}
