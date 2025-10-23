@@ -1,11 +1,10 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Box, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, styled} from '@mui/material';
+import {Box, Button, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import {FormattedMessage} from 'react-intl';
 import {SCCourseLessonStatusType, SCCourseLessonType} from '@selfcommunity/types';
-import {LoadingButton} from '@mui/lab';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -100,9 +99,9 @@ export default function LessonEditForm(inProps: LessonEditFormProps): JSX.Elemen
           />
         </FormControl>
       </Box>
-      <LoadingButton className={classes.button} variant="contained" size="small" onClick={onSave} loading={updating}>
+      <Button className={classes.button} variant="contained" size="small" onClick={onSave} loading={updating}>
         <FormattedMessage id="ui.lessonEditForm.button.save" defaultMessage="ui.lessonEditForm.button.save" />
-      </LoadingButton>
+      </Button>
     </Root>
   );
 }

@@ -1,5 +1,4 @@
-import {LoadingButton} from '@mui/lab';
-import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, TextField, Typography, Chip, styled} from '@mui/material';
+import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, TextField, Typography, Chip, styled, Button} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {CourseService, formatHttpErrorCode} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContextType, UserUtils, useSCPaymentsEnabled, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
@@ -494,7 +493,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
           )}
           <Box
             className={classNames(classes.actions, _step === SCCourseFormStepType.CUSTOMIZATION && course ? classes.stepCustomization : undefined)}>
-            <LoadingButton
+            <Button
               size="small"
               loading={field.isSubmitting}
               disabled={
@@ -523,7 +522,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
               ) : (
                 <FormattedMessage id="ui.courseForm.button.create" defaultMessage="ui.courseForm.button.create" />
               )}
-            </LoadingButton>
+            </Button>
           </Box>
         </Box>
       </Root>

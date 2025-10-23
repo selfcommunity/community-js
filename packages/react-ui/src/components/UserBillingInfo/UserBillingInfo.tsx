@@ -25,7 +25,6 @@ import {SCCustomerBillingInfo} from '@selfcommunity/types/src/types';
 import {countries, COUNTRY_CODES} from '../../constants/Country';
 import UserBillingInfoSkeleton from './Skeleton';
 import Grow from '@mui/material/Grow';
-import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
 // import {getCountryOption} from '../../utils/address';
 import {SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
@@ -939,7 +938,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
 
                   <Grid size="grow">
                     <Typography align="left">
-                      <LoadingButton
+                      <Button
                         variant="contained"
                         size="small"
                         color="primary"
@@ -947,7 +946,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                         loading={state.isProcessing}
                         onClick={handleSubmit}>
                         {buttonLabel}
-                      </LoadingButton>
+                      </Button>
                       {onBack && state.initialDataCompleted && (
                         <Button variant="text" size="small" onClick={handleBack} disabled={Boolean(disableButtons)}>
                           <FormattedMessage id="ui.userBillingInfo.back" defaultMessage="ui.userBillingInfo.back" />

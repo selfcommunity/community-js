@@ -1,8 +1,8 @@
-import {LoadingButton} from '@mui/lab';
 import {
   Alert,
   Box,
   BoxProps,
+  Button,
   FormControl,
   FormGroup,
   Icon,
@@ -859,7 +859,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           </Box>
         )}
         <Box className={classes.actions}>
-          <LoadingButton
+          <Button
             loading={field.isSubmitting}
             disabled={
               !field.name ||
@@ -884,7 +884,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ) : (
               <FormattedMessage id="ui.eventForm.button.create" defaultMessage="ui.eventForm.button.create" />
             )}
-          </LoadingButton>
+          </Button>
         </Box>
       </FormGroup>
     </Root>

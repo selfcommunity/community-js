@@ -1,9 +1,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {LoadingButton, LoadingButtonProps} from '@mui/lab';
 import classNames from 'classnames';
 import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
-import {Avatar, Box, List, ListItem, Tab, Tabs, Typography, Icon, styled} from '@mui/material';
+import {Avatar, Box, List, ListItem, Tab, Tabs, Typography, Icon, styled, Button, ButtonProps} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserContextType, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../shared/BaseDialog';
@@ -21,7 +20,7 @@ const classes = {
   dialogVoteBadge: `${PREFIX}-dialog-vote-badge`
 };
 
-const Root = styled(LoadingButton, {
+const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => [styles.root, styles.voted]
@@ -33,7 +32,7 @@ const DialogRoot = styled(BaseDialog, {
   overridesResolver: (_props, styles) => styles.dialogRoot
 })(() => ({}));
 
-export interface VoteAudienceButtonProps extends Pick<LoadingButtonProps, Exclude<keyof LoadingButtonProps, 'onClick' | 'disabled' | 'loading'>> {
+export interface VoteAudienceButtonProps extends Pick<ButtonProps, Exclude<keyof ButtonProps, 'onClick' | 'disabled' | 'loading'>> {
   /**
    * Id of the contribution object to vote
    * @default null
@@ -97,10 +96,10 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
   const scUserContext: SCUserContextType = useSCUser();
 
   // HANDLERS
-  const handleOpen = (_event) => {
+  const handleOpen = () => {
     setOpen(true);
   };
-  const handleClose = (_event) => {
+  const handleClose = () => {
     setOpen(false);
   };
   const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
@@ -150,7 +149,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
       return (
         <Box className={classes.reactionList}>
           {contributionReactionsCount &&
-            contributionReactionsCount.slice(0, 3).map((count: any, _i) => (
+            contributionReactionsCount.slice(0, 3).map((count: any) => (
               <Icon key={count.reaction.id}>
                 <img alt={count.reaction.label} src={count.reaction.image} width="100%" height="100%" />
               </Icon>

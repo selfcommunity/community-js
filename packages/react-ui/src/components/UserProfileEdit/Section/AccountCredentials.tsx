@@ -9,7 +9,6 @@ import BaseDialog from '../../../shared/BaseDialog';
 import PasswordTextField from '../../../shared/PasswordTextField';
 import EmailTextField from '../../../shared/EmailTextField';
 import {SCUserType} from '@selfcommunity/types';
-import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from '../constants';
 
@@ -366,7 +365,7 @@ export default function AccountCredentials(props: AccountCredentialProps): JSX.E
               helperText={error.confirmPassword}
             />
           </FormGroup>
-          <LoadingButton
+          <Button
             className={classes.confirmChangeButton}
             loading={isSubmittingPassword}
             disabled={!field.confirmPassword || Boolean(error.confirmPassword) || Boolean(error.password) || Boolean(error.newPassword)}
@@ -376,7 +375,7 @@ export default function AccountCredentials(props: AccountCredentialProps): JSX.E
               id="ui.userProfileEditAccountCredentials.changePassword"
               defaultMessage="ui.userProfileEditAccountCredentials.changePassword"
             />
-          </LoadingButton>
+          </Button>
         </PasswordDialogRoot>
       )}
     </Root>

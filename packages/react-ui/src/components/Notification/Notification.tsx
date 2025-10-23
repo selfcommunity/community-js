@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import CommentNotification from './Comment';
 import UserFollowNotification from './UserFollow';
 import UndeletedForNotification from './UndeletedFor';
@@ -17,14 +17,13 @@ import LiveStreamNotification from './LiveStream/LiveStream';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {getContribution, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import ContributionFollowNotification from './ContributionFollow';
-import {Avatar, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Tooltip, styled, CardContent, Icon} from '@mui/material';
+import {Avatar, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Tooltip, styled, CardContent, Icon, Button} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import ContributionNotification from './Contribution';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import classNames from 'classnames';
-import LoadingButton from '@mui/lab/LoadingButton';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import {Logger} from '@selfcommunity/utils';
@@ -221,7 +220,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
   function handleStopContentNotification(contribution) {
     setLoadingSuspendNotification(true);
     performSuspendNotification(contribution)
-      .then((data) => {
+      .then(() => {
         const newObj: SCNotificationAggregatedType = obj;
         newObj[contribution.type].suspended = !newObj[contribution.type].suspended;
         setObj(newObj);
@@ -397,15 +396,15 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
                     <FormattedMessage id={'ui.notification.notificationSuspend'} defaultMessage={'ui.notification.notificationSuspend'} />
                   )
                 }>
-                <LoadingButton
+                <Button
                   variant="text"
                   size="small"
                   loading={loadingSuspendNotification}
-                  color={'inherit'}
+                  color="inherit"
                   classes={{root: classes.stopButton}}
                   onClick={() => handleStopContentNotification(contribution)}>
                   {contribution.suspended ? <Icon color={'primary'}>notifications_off</Icon> : <Icon color={'inherit'}>notifications_active</Icon>}
-                </LoadingButton>
+                </Button>
               </Tooltip>
             )
           }

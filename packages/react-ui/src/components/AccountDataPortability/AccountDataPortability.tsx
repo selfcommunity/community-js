@@ -1,8 +1,7 @@
-import React, {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {useThemeProps} from '@mui/system';
-import {Box, BoxProps, Typography, styled, Icon} from '@mui/material';
+import {Box, BoxProps, Typography, styled, Icon, Button} from '@mui/material';
 import classNames from 'classnames';
-import {LoadingButton} from '@mui/lab';
 import {DataPortabilityService} from '@selfcommunity/api-services';
 import {SCDataPortabilityType} from '@selfcommunity/types';
 import {capitalize, Logger} from '@selfcommunity/utils';
@@ -23,8 +22,8 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 export interface AccountDataPortabilityProps extends BoxProps {
   /**
@@ -186,16 +185,12 @@ export default function AccountDataPortability(inProps: AccountDataPortabilityPr
           id="ui.accountDataPortability.info"
           defaultMessage="ui.accountDataPortability.info"
           values={{
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
             li: (chunks) => <li>{chunks}</li>,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
             ul: (chunks) => <ul>{chunks}</ul>
           }}
         />
       </Typography>
-      <LoadingButton
+      <Button
         size="small"
         loading={(dataPortability && dataPortability.computing) || loading}
         disabled={
@@ -214,18 +209,18 @@ export default function AccountDataPortability(inProps: AccountDataPortabilityPr
         ) : (
           <FormattedMessage id="ui.accountDataPortability.createButton" defaultMessage="ui.accountDataPortability.createButton" />
         )}
-      </LoadingButton>
+      </Button>
       {dataPortability && !dataPortability.computing && dataPortability.generated_at && (
-        <LoadingButton
+        <Button
           size="small"
           loading={downloadingDataPortability}
           loadingPosition="start"
           startIcon={<Icon>cloud_download_outlined</Icon>}
-          variant={'outlined'}
+          variant="outlined"
           className={classes.downloadButton}
           onClick={handleDownloadDataPortabilityFile}>
           <FormattedMessage id="ui.accountDataPortability.downloadButton" defaultMessage="ui.accountDataPortability.downloadButton" />
-        </LoadingButton>
+        </Button>
       )}
       <br />
       {dataPortability && !dataPortability.computing && dataPortability.generated_at && (

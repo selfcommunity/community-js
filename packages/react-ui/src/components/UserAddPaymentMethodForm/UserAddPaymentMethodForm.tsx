@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
-import {styled, useTheme} from '@mui/material/styles';
-import {SCThemeType, SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
+import {SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PaymentMethod as StripePaymentMethod} from '@stripe/stripe-js';
 import {loadStripe, Stripe} from '@stripe/stripe-js';
-import {Button, Paper, Stack, Typography} from '@mui/material';
+import {Button, Paper, Stack, styled, Typography} from '@mui/material';
 import {AddressElement, PaymentElement, useElements} from '@stripe/react-stripe-js';
 import {getDefaultLocale} from '../../utils/payment';
-import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
 
 const classes = {
@@ -213,9 +211,9 @@ export default function UserAddPaymentMethodForm(inProps: UserAddPaymentMethodFo
           <Button onClick={onHandleClose} variant="outlined">
             <FormattedMessage id="ui.userAddPaymentMethodForm.cancelButton" defaultMessage="ui.userAddPaymentMethodForm.cancelButton" />
           </Button>
-          <LoadingButton disabled={!ready} loading={loading} type="submit" variant="contained">
+          <Button disabled={!ready} loading={loading} type="submit" variant="contained">
             <FormattedMessage id="ui.userAddPaymentMethodForm.addButton" defaultMessage="ui.userAddPaymentMethodForm.addButton" />
-          </LoadingButton>
+          </Button>
         </Stack>
         {/* Show error message to your customers */}
         {errorMessage && <div>{errorMessage}</div>}

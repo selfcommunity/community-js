@@ -1,11 +1,10 @@
 import {RefObject, useEffect, useMemo, useRef, useState} from 'react';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, Icon, IconButton, Stack, useMediaQuery, useTheme, styled} from '@mui/material';
+import {Avatar, Icon, IconButton, Stack, useMediaQuery, useTheme, styled, Button} from '@mui/material';
 import {SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import Editor, {EditorRef, EditorProps} from '../Editor';
 import classNames from 'classnames';
-import {LoadingButton} from '@mui/lab';
 import BaseItem from '../../shared/BaseItem';
 import UserAvatar from '../../shared/UserAvatar';
 import {useThemeProps} from '@mui/system';
@@ -275,26 +274,20 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
           {!isEditorEmpty && (
             <Stack direction="row" spacing={2} className={classes.actions}>
               {onReply && !replyIcon && (
-                <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={!editable} className={classes.buttonReply}>
+                <Button variant="outlined" size="small" onClick={handleReply} loading={!editable} className={classes.buttonReply}>
                   <FormattedMessage id="ui.commentObject.replyComment.reply" defaultMessage="ui.commentObject.replyComment.reply" />
-                </LoadingButton>
+                </Button>
               )}
               {onSave && (
                 <>
                   {onCancel && (
-                    <LoadingButton
-                      variant={'text'}
-                      size="small"
-                      onClick={handleCancel}
-                      disabled={!editable}
-                      color="inherit"
-                      className={classes.buttonCancel}>
+                    <Button variant="text" size="small" onClick={handleCancel} disabled={!editable} color="inherit" className={classes.buttonCancel}>
                       <FormattedMessage id="ui.commentObject.replyComment.cancel" defaultMessage="ui.commentObject.replyComment.cancel" />
-                    </LoadingButton>
+                    </Button>
                   )}
-                  <LoadingButton variant="outlined" size="small" onClick={handleSave} loading={!editable} className={classes.buttonSave}>
+                  <Button variant="outlined" size="small" onClick={handleSave} loading={!editable} className={classes.buttonSave}>
                     <FormattedMessage id="ui.commentObject.replyComment.save" defaultMessage="ui.commentObject.replyComment.save" />
-                  </LoadingButton>
+                  </Button>
                 </>
               )}
             </Stack>

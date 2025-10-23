@@ -1,9 +1,8 @@
 import {useMemo, useRef, useState} from 'react';
-import {LoadingButton, LoadingButtonProps} from '@mui/lab';
 import classNames from 'classnames';
 import {SCCommentType, SCContributionType, SCFeedObjectType, SCReactionType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
-import {IconButton, Paper, Popper, Tooltip, useMediaQuery, useTheme, styled, Icon} from '@mui/material';
+import {IconButton, Paper, Popper, Tooltip, useMediaQuery, useTheme, styled, Icon, Button, ButtonProps} from '@mui/material';
 import {SCContextType, SCThemeType, SCUserContextType, UserUtils, useSCContext, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
@@ -19,7 +18,7 @@ const classes = {
   reaction: `${PREFIX}-reaction`
 };
 
-const Root = styled(LoadingButton, {
+const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => [styles.root, styles.voted]
@@ -31,7 +30,7 @@ const PopperRoot = styled(Popper, {
   overridesResolver: (_props, styles) => styles.popperRoot
 })(() => ({}));
 
-export interface VoteButtonProps extends Pick<LoadingButtonProps, Exclude<keyof LoadingButtonProps, 'onClick' | 'disabled' | 'loading'>> {
+export interface VoteButtonProps extends Pick<ButtonProps, Exclude<keyof ButtonProps, 'onClick' | 'disabled' | 'loading'>> {
   /**
    * Id of the contribution object to vote
    * @default null
@@ -107,7 +106,7 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
     handleClearTimeout();
     timeoutRef.current = setTimeout(() => setAnchorEl(event.target), 1000);
   };
-  const handleMouseLeave = (_event) => {
+  const handleMouseLeave = () => {
     handleClearTimeout();
     timeoutRef.current = setTimeout(() => setAnchorEl(null), 500);
   };

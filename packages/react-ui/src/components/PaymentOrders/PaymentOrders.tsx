@@ -25,7 +25,6 @@ import {
   MenuItem
 } from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import LoadingButton from '@mui/lab/LoadingButton';
 import {useInView} from 'react-intersection-observer';
 import {PaymentService} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
@@ -548,9 +547,9 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                       <Stack direction="row" justifyContent="left" alignItems="center" spacing={2}>
                         {order.content_type === SCContentType.EVENT && <PaymentOrderPdfButton paymentOrder={order} />}
                         {Boolean(!order.paid && order.billing_reason === 'subscription_create') && (
-                          <LoadingButton size="small" variant="contained" disabled={true}>
+                          <Button size="small" variant="contained" disabled={true}>
                             <FormattedMessage id="ui.paymentOrders.pay" defaultMessage="ui.paymentOrders.pay" />
-                          </LoadingButton>
+                          </Button>
                         )}
                       </Stack>
                     </TableCell>

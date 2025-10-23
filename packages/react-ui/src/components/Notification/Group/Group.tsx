@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {Avatar, Box, Stack, Typography, styled} from '@mui/material';
+import {useContext, useEffect, useState} from 'react';
+import {Avatar, Box, Button, Stack, Typography, styled} from '@mui/material';
 import {
   Link,
   SCRoutes,
@@ -15,7 +15,6 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
-import {LoadingButton} from '@mui/lab';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
 import {PREFIX} from '../constants';
@@ -172,8 +171,8 @@ export default function GroupNotification(props: NotificationGroupProps): JSX.El
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
             {status && status !== SCGroupSubscriptionStatusType.SUBSCRIBED && (
-              <LoadingButton
-                color={'primary'}
+              <Button
+                color="primary"
                 variant="outlined"
                 size="small"
                 classes={{root: classes.acceptButton}}
@@ -186,7 +185,7 @@ export default function GroupNotification(props: NotificationGroupProps): JSX.El
                     : scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, notificationObject.group)
                 }>
                 <FormattedMessage id="ui.notification.group.button.see" defaultMessage="ui.notification.group.button.see" />
-              </LoadingButton>
+              </Button>
             )}
           </Stack>
         }
