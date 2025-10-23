@@ -23,8 +23,8 @@ const Component = {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             display: '-webkit-box',
-            '-webkit-line-clamp': '1',
-            '-webkit-box-orient': 'vertical'
+            WebkitLineClamp: '1',
+            WebkitBoxOrient: 'vertical'
           }
         },
         '& .SCEventInfoDetails-join-live': {

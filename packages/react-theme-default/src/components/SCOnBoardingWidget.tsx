@@ -33,7 +33,7 @@ const Component = {
           '&::-webkit-scrollbar': {
             display: 'none'
           },
-          '-webkit-overflow-scrolling': 'touch',
+          WebkitOverflowScrolling: 'touch',
           '& .MuiButtonBase-root, .MuiListItem-root': {
             marginRight: theme.spacing(0.5),
             padding: 0,
@@ -63,7 +63,7 @@ const Component = {
         }
       }
     }),
-    dialogRoot: ({theme}: any) => ({
+    dialogRoot: () => ({
       '& .SCOnBoardingWidget-dialog-content': {
         whiteSpace: 'pre-line',
         fontSize: '1.143rem'
@@ -78,7 +78,7 @@ const Component = {
         }
       }
     }),
-    actionsDrawerRoot: ({theme}: any) => ({}),
+    actionsDrawerRoot: () => ({}),
     accordionRoot: ({theme, expanded}: any) => ({
       boxShadow: 'none',
       '& .MuiAccordionDetails-root ': {

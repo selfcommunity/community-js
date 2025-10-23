@@ -96,7 +96,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       }
 
       setPreview(index);
-      onMediaClick(images[index]);
+      onMediaClick?.(images[index]);
     },
     [gallery, setPreview, images, onMediaClick]
   );
