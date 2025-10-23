@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {Avatar, Box, Stack, Typography, styled} from '@mui/material';
+import {useContext, useEffect, useMemo, useState} from 'react';
+import {Avatar, Box, Button, Stack, Typography, styled} from '@mui/material';
 import {
   Link,
   SCConnectionsManagerType,
@@ -19,7 +19,6 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
-import {LoadingButton} from '@mui/lab';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
 import {PREFIX} from '../constants';
@@ -237,8 +236,8 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
         actions={
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-            <LoadingButton
-              color={'primary'}
+            <Button
+              color="primary"
               variant="outlined"
               size="small"
               classes={{root: classes.replyButton}}
@@ -260,7 +259,7 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
               ) : (
                 <FormattedMessage id="ui.notification.privateMessage.btnViewLabel" defaultMessage="ui.notification.privateMessage.btnViewLabel" />
               )}
-            </LoadingButton>
+            </Button>
           </Stack>
         }
         primary={

@@ -254,7 +254,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
           {filters ? (
             filters
           ) : (
-            <Grid size={{md: 6}}>
+            <Grid size={{xs: 12, md: 6}}>
               <TextField
                 className={classes.search}
                 fullWidth
@@ -356,7 +356,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
             }>
             <Grid container width="100%" spacing={{xs: 2}} className={classes.groups}>
               {groups.map((group: SCGroupType) => (
-                <Grid size={{sm: 8, md: 6}} key={group.id} className={classes.item}>
+                <Grid size={{xs: 12, sm: 8, md: 6}} key={group.id} className={classes.item}>
                   <Group group={group} groupId={group.id} actionRedirect={true} {...GroupComponentProps} />
                 </Grid>
               ))}

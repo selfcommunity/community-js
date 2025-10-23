@@ -339,7 +339,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
             filters
           ) : (
             <>
-              <Grid size={{md: 3}}>
+              <Grid size={{xs: 12, md: 3}}>
                 <TextField
                   className={classes.search}
                   size={'small'}
@@ -394,7 +394,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                   />
                 </Grid>
               )}
-              <Grid size={{md: 'auto'}}>
+              <Grid size={{xs: 12, md: 'auto'}}>
                 <FormControl fullWidth>
                   <CategoryAutocomplete onChange={handleOnChangeCategory} className={classes.category} size="small" multiple={true} />
                 </FormControl>
@@ -478,12 +478,12 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
             <Grid container width="100%" spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
               <>
                 {courses.map((course: SCCourseType) => (
-                  <Grid size={{md: 6, lg: 3}} key={course.id} className={classes.item} {...GridItemComponentProps}>
+                  <Grid size={{xs: 12, md: 6, lg: 3}} key={course.id} className={classes.item} {...GridItemComponentProps}>
                     <Course courseId={course.id} {...CourseComponentProps} />
                   </Grid>
                 ))}
                 {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && courses.length % 2 !== 0 && (
-                  <Grid size={{md: 6, lg: 3}} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
+                  <Grid size={{xs: 12, md: 6, lg: 3}} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
                     <CourseCreatePlaceholder CreateCourseButtonComponentProps={CreateCourseButtonComponentProps} />
                   </Grid>
                 )}

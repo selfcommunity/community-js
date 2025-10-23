@@ -51,7 +51,7 @@ export default function IncubatorSkeleton(props): JSX.Element {
           <Skeleton animation="wave" height={10} width="80%" variant="text" />
         </Typography>
         <Grid container width="100%" spacing={1} className={classes.progressBar}>
-					<Grid size="grow">
+          <Grid size="grow">
             <Skeleton animation="wave" height={20} width="100%" variant="rectangular" />
           </Grid>
           <Grid size="grow">

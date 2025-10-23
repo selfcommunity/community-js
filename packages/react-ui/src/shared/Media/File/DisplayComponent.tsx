@@ -144,6 +144,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
         }}>
         <Grid
           ref={ref}
+          size={12}
           className={classNames(classes.border, classes.heightOne, {
             ...(isGif || isLandscape ? {[classes.background]: true} : {[classes.backgroundPortrait]: true}),
             [classes.gallery]: gallery,
@@ -195,7 +196,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     return (
       <Grid container width="100%">
         <Grid
-          size={{xs: 4, md: 4}}
+          size={4}
           className={classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 2)}
           style={{background: `url(${getImageUrl(conditionalRender ? images[1] : images[2])})`}}>
@@ -203,7 +204,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           {renderTitle(images[1])}
         </Grid>
         <Grid
-          size={{xs: 4, md: 4}}
+          size={4}
           className={classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}
           onClick={() => openPreviewImage(conditionalRender ? 2 : 3)}
           style={{background: `url(${getImageUrl(conditionalRender ? images[2] : images[3])})`}}>
@@ -211,7 +212,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           {renderTitle(images[2])}
         </Grid>
         <Grid
-          size={{xs: 4, md: 4}}
+          size={4}
           className={classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}
           onClick={() => openPreviewImage(conditionalRender ? 3 : 4)}
           style={{background: `url(${getImageUrl(conditionalRender ? images[3] : images[4])})`}}>

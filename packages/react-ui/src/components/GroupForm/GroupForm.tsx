@@ -1,12 +1,11 @@
 import React, {useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
-import {Avatar, Box, Divider, FormGroup, Icon, Paper, Stack, Switch, TextField, Typography, styled} from '@mui/material';
+import {Avatar, Box, Button, Divider, FormGroup, Icon, Paper, Stack, Switch, TextField, Typography, styled} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCPreferences, SCPreferencesContextType, UserUtils, useSCPaymentsEnabled, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
-import {LoadingButton} from '@mui/lab';
 import ChangeGroupPicture from '../ChangeGroupPicture';
 import ChangeGroupCover from '../ChangeGroupCover';
 import {GROUP_DESCRIPTION_MAX_LENGTH, GROUP_TITLE_MAX_LENGTH} from '../../constants/Group';
@@ -324,7 +323,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
       onClose={handleClose}
       className={classNames(classes.root, className)}
       actions={
-        <LoadingButton
+        <Button
           loading={field.isSubmitting}
           disabled={
             !field.name ||
@@ -340,7 +339,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
           ) : (
             <FormattedMessage id="ui.groupForm.button.create" defaultMessage="ui.groupForm.button.create" />
           )}
-        </LoadingButton>
+        </Button>
       }
       {...rest}>
       <>

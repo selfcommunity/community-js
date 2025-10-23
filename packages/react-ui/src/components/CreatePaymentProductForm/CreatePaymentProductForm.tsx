@@ -6,7 +6,6 @@ import classNames from 'classnames';
 import {useSCPaymentsEnabled} from '@selfcommunity/react-core';
 import {SCPaymentProduct} from '@selfcommunity/types';
 import {PREFIX} from './constants';
-import {LoadingButton} from '@mui/lab';
 import {PaymentApiClient} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -251,9 +250,9 @@ export default function CreatePaymentProductForm(inProps: CreatePaymentProductFo
             <FormattedMessage id="ui.createPaymentProductForm.btn.cancel" defaultMessage="ui.createPaymentProductForm.btn.cancel" />
           </Button>
         )}
-        <LoadingButton loading={loading} variant="contained" size="small" color="error" onClick={handleCreateProduct}>
+        <Button loading={loading} variant="contained" size="small" color="error" onClick={handleCreateProduct}>
           <FormattedMessage id="ui.createPaymentProductForm.btn.create" defaultMessage="ui.createPaymentProductForm.btn.create" />
-        </LoadingButton>
+        </Button>
       </Stack>
     </Root>
   );

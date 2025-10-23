@@ -5,7 +5,6 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserContext, SCUserContextType, useSCFetchGroup} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
-import {LoadingButton} from '@mui/lab';
 import {GroupService} from '@selfcommunity/api-services';
 import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import User from '../User';
@@ -331,7 +330,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
               <Typography className={classes.dialogTitle}>
                 <FormattedMessage id="ui.groupInviteButton.dialog.title" defaultMessage="ui.groupInviteButton.dialog.title" />
               </Typography>
-              <LoadingButton
+              <Button
                 size="small"
                 color="secondary"
                 variant="contained"
@@ -339,7 +338,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
                 loading={isSending}
                 disabled={!invited.length}>
                 <FormattedMessage id="ui.groupInviteButton.dialog.button.end" defaultMessage="ui.groupInviteButton.dialog.button.end" />
-              </LoadingButton>
+              </Button>
             </>
           }>
           <Box className={classes.dialogContent}>

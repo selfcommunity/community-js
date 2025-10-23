@@ -1,5 +1,4 @@
-import {LoadingButton} from '@mui/lab';
-import {Alert, Box, BoxProps, FormGroup, Paper, TextField, Typography, styled} from '@mui/material';
+import {Alert, Box, BoxProps, Button, FormGroup, Paper, TextField, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCCommunityEnvironment, SCCommunitySubscriptionTier, SCLiveStreamType} from '@selfcommunity/types';
 import classNames from 'classnames';
@@ -421,7 +420,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
           </Box>
         )}
         <Box className={classes.actions}>
-          <LoadingButton
+          <Button
             loading={field.isSubmitting}
             disabled={
               !field.title ||
@@ -440,7 +439,7 @@ export default function LiveStreamForm(inProps: LiveStreamFormProps): JSX.Elemen
             ) : (
               <FormattedMessage id="ui.liveStreamForm.button.create" defaultMessage="ui.liveStreamForm.button.create" />
             )}
-          </LoadingButton>
+          </Button>
         </Box>
       </FormGroup>
     </Root>

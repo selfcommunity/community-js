@@ -24,7 +24,7 @@ const classes = {
 export function PointElement({message, points}: {message: React.ReactNode; points: number}): JSX.Element {
   if (points > 0) {
     return (
-      <Grid size={{md: 6}}>
+      <Grid size={{xs: 12, md: 6}}>
         <Typography component="div" className={classes.element}>
           <Typography>{message}</Typography>
           <Typography>

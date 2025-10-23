@@ -206,15 +206,15 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
   return (
     <Root id={id} className={classNames(classes.root, className)}>
       <Grid container width="100%" spacing={2}>
-        <Grid size={{md: 7}}>
+        <Grid size={{xs: 12, md: 7}}>
           <FeedObject {...FeedObjectProps} feedObject={obj} template={SCFeedObjectTemplateType.DETAIL} onReply={handleReply} />
           {renderAdvertising()}
           {commentsEnabled && (
             <CommentsFeedObject key={`comments_${obj.id}`} showTitle feedObject={obj} comments={comments} {...CommentsFeedObjectProps} />
           )}
         </Grid>
-        <Grid size={{md: 5}}>
-          <Box sx={{display: {sx: 'none', md: 'block'}}}>
+        <Grid size={{xs: 12, md: 5}}>
+          <Box sx={{display: {xs: 'none', md: 'block'}}}>
             <StickyBox {...FeedSidebarProps}>
               <RelatedFeedObjectsWidget key={`related_${obj.id}`} feedObject={obj} feedObjectId={obj.id} {...RelatedFeedObjectProps} />
             </StickyBox>

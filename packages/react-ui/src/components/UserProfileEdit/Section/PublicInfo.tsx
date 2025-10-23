@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useMemo, useState} from 'react';
-import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField, useMediaQuery, useTheme, Icon, styled} from '@mui/material';
+import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField, useMediaQuery, useTheme, Icon, styled, Button} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
 import {Endpoints, formatHttpErrorCode, http, HttpResponse} from '@selfcommunity/api-services';
@@ -24,9 +24,8 @@ import {SCUserProfileFields} from '../../../types';
 import MetadataField from '../../../shared/MetadataField';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {format, isBefore, isValid, parseISO, startOfHour} from 'date-fns';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
-import {LoadingButton} from '@mui/lab';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from '../constants';
 
@@ -232,10 +231,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
         return null;
       case SCUserProfileFields.DATE_OF_BIRTH:
         return (
-          <LocalizationProvider
-            dateAdapter={AdapterDateFns}
-            key={field}
-            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} key={field} adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}>
             <DatePicker
               label={intl.formatMessage({
                 id: `ui.userInfo.${camelCase(field)}`,
@@ -378,7 +374,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
       {_fields.map((field) => {
         return renderField(field);
       })}
-      <LoadingButton
+      <Button
         className={classes.btnSave}
         fullWidth
         variant="contained"
@@ -387,7 +383,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
         loading={saving.length > 0}
         disabled={saving.length > 0 || !editing.length || Object.keys(error).length > 0}>
         <FormattedMessage id={'ui.userInfo.button.save'} defaultMessage={'ui.userInfo.button.save'} />
-      </LoadingButton>
+      </Button>
       {endActions}
     </Root>
   );

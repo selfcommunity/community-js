@@ -1,5 +1,4 @@
-import {LoadingButton, LoadingButtonProps} from '@mui/lab';
-import {Stack, StackProps, Typography, Icon, styled} from '@mui/material';
+import {Stack, StackProps, Typography, Icon, styled, Button, ButtonProps} from '@mui/material';
 import ChunkedUploady from '@rpldy/chunked-uploady';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCMediaType} from '@selfcommunity/types';
@@ -18,7 +17,7 @@ const classes = {
   triggerIcon: `${PREFIX}-trigger-icon`
 };
 
-const Root = styled(LoadingButton, {
+const Root = styled(Button, {
   name: PREFIX,
   slot: 'TriggerRoot',
   overridesResolver: (_props, styles) => styles.triggerRoot,
@@ -30,7 +29,7 @@ const GalleryUploadStack = asUploadButton(
   {accept: 'image/*'}
 );
 
-export interface TriggerIconButtonProps extends LoadingButtonProps {
+export interface TriggerIconButtonProps extends ButtonProps {
   /**
    * Callback triggered when a media is added
    * @param media

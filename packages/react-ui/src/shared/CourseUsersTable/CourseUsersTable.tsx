@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Icon,
   IconButton,
   InputAdornment,
@@ -20,7 +21,6 @@ import {
 import {ChangeEvent, Dispatch, memo, useCallback, useEffect, useRef, useState} from 'react';
 import {FormattedDate, FormattedMessage, useIntl} from 'react-intl';
 import RowSkeleton from './RowSkeleton';
-import {LoadingButton} from '@mui/lab';
 import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import EmptyStatus from '../EmptyStatus';
@@ -234,7 +234,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                     </IconButton>
                   </InputAdornment>
                   <InputAdornment position="end">
-                    <LoadingButton
+                    <Button
                       color="primary"
                       variant="contained"
                       onClick={handleSearchStart}
@@ -242,7 +242,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                       disabled={loadingSearch}
                       className={classes.searchButton}>
                       <Icon>search</Icon>
-                    </LoadingButton>
+                    </Button>
                   </InputAdornment>
                 </Stack>
               ) : undefined
@@ -345,7 +345,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
       </TableContainer>
 
       {users.length > 0 && (
-        <LoadingButton
+        <Button
           size="small"
           variant="outlined"
           color="inherit"
@@ -356,7 +356,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           <Typography variant="body2">
             <FormattedMessage id="ui.courseUsersTable.btn.label" defaultMessage="ui.courseUsersTable.btn.label" />
           </Typography>
-        </LoadingButton>
+        </Button>
       )}
 
       {users.length === 0 && (

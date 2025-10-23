@@ -1,4 +1,3 @@
-import {LoadingButton} from '@mui/lab';
 import {Avatar, Box, Button, Chip, Icon, IconButton, InputAdornment, TextField, Typography, styled, Autocomplete, ButtonProps} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {EventService} from '@selfcommunity/api-services';
@@ -322,7 +321,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
               <Typography className={classes.dialogTitle}>
                 <FormattedMessage id="ui.eventInviteButton.dialog.title" defaultMessage="ui.eventInviteButton.dialog.title" />
               </Typography>
-              <LoadingButton
+              <Button
                 size="small"
                 color="secondary"
                 variant="contained"
@@ -330,7 +329,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
                 loading={isSending}
                 disabled={!invited.length}>
                 <FormattedMessage id="ui.eventInviteButton.dialog.button.end" defaultMessage="ui.eventInviteButton.dialog.button.end" />
-              </LoadingButton>
+              </Button>
             </>
           }>
           <Box className={classes.dialogContent}>

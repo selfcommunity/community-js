@@ -1,4 +1,3 @@
-import {LoadingButton} from '@mui/lab';
 import {
   Box,
   Button,
@@ -58,7 +57,7 @@ const options = [
   }
 ];
 
-const RequestRoot = styled(LoadingButton, {
+const RequestRoot = styled(Button, {
   name: PREFIX,
   slot: 'RequestRoot'
 })(() => ({}));

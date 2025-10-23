@@ -77,7 +77,7 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
   return (
     <Root className={classNames(classes.root, className)} container width="100%" spacing={4} {...rest}>
       {scCommunity.paywalls.map((p, i) => (
-        <Grid size={{md: 4}} key={i}>
+        <Grid size={{xs: 12, md: 4}} key={i}>
           <PaymentProduct
             paymentProduct={p}
             contentType={SCContentType.COMMUNITY}

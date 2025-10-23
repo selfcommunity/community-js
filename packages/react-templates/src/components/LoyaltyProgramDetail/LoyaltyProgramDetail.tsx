@@ -277,7 +277,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
         }>
         <Grid container width="100%" spacing={!isMobile ? 3 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
           {prizes.map((prize: SCPrizeType) => (
-            <Grid size={{md: 6, lg: 4, xl: 3}} key={prize.id}>
+            <Grid size={{xs: 12, md: 6, lg: 4, xl: 3}} key={prize.id}>
               <Card className={classes.card}>
                 <CardMedia component="img" image={prize.image} />
                 <Box className={classes.prizePoints}>

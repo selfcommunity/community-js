@@ -199,7 +199,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function renderSnippets() {
     return (
-      <Grid size={{md: 5}} className={classNames(classes.snippetsBox, {[classes.hide]: isMobile && mobileThreadView})}>
+      <Grid size={{xs: 12, md: 5}} className={classNames(classes.snippetsBox, {[classes.hide]: isMobile && mobileThreadView})}>
         <PrivateMessageSnippets
           snippetActions={{
             onSnippetClick: handleThreadOpening,
@@ -219,7 +219,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function renderThread() {
     return (
-      <Grid size={{md: 7}} className={classNames(classes.threadBox, {[classes.hide]: isMobile && mobileSnippetsView})}>
+      <Grid size={{xs: 12, md: 7}} className={classNames(classes.threadBox, {[classes.hide]: isMobile && mobileSnippetsView})}>
         <PrivateMessageThread
           threadObj={obj}
           type={_type}

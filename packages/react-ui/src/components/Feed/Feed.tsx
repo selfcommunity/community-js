@@ -829,11 +829,11 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   return (
     <Root container width="100%" spacing={2} id={id} className={classNames(classes.root, className)}>
       {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_BELOW_TOPBAR) ? (
-        <Grid size={{md: 12}}>
+        <Grid size={12}>
           <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_TOPBAR} {...CustomAdvProps} />
         </Grid>
       ) : null}
-      <Grid size={{md: 7}}>
+      <Grid size={{xs: 12, md: 7}}>
         <InfiniteScroll
           ref={containerRef}
           className={classes.left}
@@ -886,7 +886,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
         </InfiniteScroll>
       </Grid>
       {feedDataRight.length > 0 && !hideAdvs && (
-        <Grid sx={{display: {sx: 'none', sm: 'block'}}} size={{md: 5}}>
+        <Grid sx={{display: {xs: 'none', sm: 'block'}}} size={{xs: 12, md: 5}}>
           <StickyBoxComp className={classes.right} {...FeedSidebarProps}>
             <React.Suspense fallback={<GenericSkeleton />}>
               {feedDataRight.map((d, i) => (

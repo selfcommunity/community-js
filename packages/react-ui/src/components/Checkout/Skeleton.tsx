@@ -82,16 +82,16 @@ export default function CheckoutSkeleton(inProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} container width="100%" {...rest}>
-      <Grid size={{md: 6}} className={classNames(classes.left, classes.paper, classes.header)}>
-        <Skeleton variant="rounded" height={150} width={'100%'} />
+      <Grid size={{xs: 12, md: 6}} className={classNames(classes.left, classes.paper, classes.header)}>
+        <Skeleton variant="rounded" height={150} width="100%" />
       </Grid>
-      <Grid size={{md: 6}} className={classNames(classes.right, classes.header)}>
+      <Grid size={{xs: 12, md: 6}} className={classNames(classes.right, classes.header)}>
         <Stack sx={{display: {xs: 'none', md: 'flex'}}} direction="column" spacing={2} pt={2}>
           <Skeleton variant="rounded" height={20} width={190} />
-          <Skeleton variant="rounded" height={90} width={'100%'} />
+          <Skeleton variant="rounded" height={90} width="100%" />
         </Stack>
       </Grid>
-      <Grid size={{md: 6}} className={classNames(classes.left, classes.paper)}>
+      <Grid size={{xs: 12, md: 6}} className={classNames(classes.left, classes.paper)}>
         <Box className={classes.content}>
           <Skeleton variant="rounded" height={30} width={140} />
           <br />
@@ -104,7 +104,7 @@ export default function CheckoutSkeleton(inProps): JSX.Element {
           </Box>
         </Box>
       </Grid>
-      <Grid size={{md: 6}} className={classes.right}>
+      <Grid size={{xs: 12, md: 6}} className={classes.right}>
         <Box className={classes.content}>
           <Skeleton variant="rounded" height={110} />
           <Box sx={{display: {xs: 'none', md: 'block'}}}>

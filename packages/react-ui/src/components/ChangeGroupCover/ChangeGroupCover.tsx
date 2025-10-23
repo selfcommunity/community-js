@@ -1,11 +1,10 @@
-import React, {useContext, useRef, useState} from 'react';
-import {Alert, styled, Icon} from '@mui/material';
+import {useContext, useRef, useState} from 'react';
+import {Alert, styled, Icon, Button} from '@mui/material';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {defineMessages, useIntl} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
-import {LoadingButton} from '@mui/lab';
 import {GroupService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
@@ -15,7 +14,7 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(LoadingButton, {
+const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root'
 })(() => ({}));

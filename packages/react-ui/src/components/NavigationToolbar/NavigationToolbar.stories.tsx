@@ -55,13 +55,13 @@ const templateContent = (args: any) => {
 		/>
 		<Box sx={{flexGrow: 1, marginTop: '70px'}}>
 			<Grid container width="100%" sx={{width: '100%'}}>
-				<Grid size={{xs: 2}}></Grid>
-				<Grid size={{xs: 8}}>
+				<Grid size={2}></Grid>
+				<Grid size={8}>
 					<Paper sx={{height: 200, width: '100%'}}>
 						Content
 					</Paper>
 				</Grid>
-				<Grid size={{xs: 2}}></Grid>
+				<Grid size={2}></Grid>
 			</Grid>
 		</Box>
 	</Box>

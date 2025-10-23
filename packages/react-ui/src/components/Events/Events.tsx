@@ -430,7 +430,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
             </>
           ) : general ? (
             <>
-              <Grid size={{md: 3}}>
+              <Grid size={{xs: 12, md: 3}}>
                 <TextField
                   className={classes.search}
                   size="small"
@@ -470,7 +470,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   }}
                 />
               </Grid>
-              <Grid size={{md: 2}}>
+              <Grid size={{xs: 12, md: 2}}>
                 <FormControl fullWidth>
                   <InputLabel>
                     <FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />
@@ -500,7 +500,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid size={{md: 2}}>
+              <Grid size={{xs: 12, md: 2}}>
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
               </Grid>
               {authUserId && (
@@ -565,12 +565,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 <Grid container width="100%" spacing={{xs: 2}} className={classes.events} {...GridContainerComponentProps}>
                   <>
                     {events.map((event: SCEventType) => (
-                      <Grid size={{md: 6}} key={event.id} className={classes.item} {...GridItemComponentProps}>
+                      <Grid size={{xs: 12, md: 6}} key={event.id} className={classes.item} {...GridItemComponentProps}>
                         <Event event={event} eventId={event.id} {...EventComponentProps} />
                       </Grid>
                     ))}
                     {authUserId && events.length % 2 !== 0 && (
-                      <Grid size={{md: 6}} key="skeleton-item" className={classes.itemSkeleton} {...GridItemComponentProps}>
+                      <Grid size={{xs: 12, md: 6}} key="skeleton-item" className={classes.itemSkeleton} {...GridItemComponentProps}>
                         <EventSkeleton
                           {...EventSkeletonComponentProps}
                           skeletonsAnimation={false}

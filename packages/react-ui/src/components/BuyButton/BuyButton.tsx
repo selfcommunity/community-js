@@ -1,5 +1,4 @@
-import {LoadingButton} from '@mui/lab';
-import {Icon, styled, SwipeableDrawer, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Button, Icon, styled, SwipeableDrawer, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCContextType, SCThemeType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {
@@ -38,7 +37,7 @@ const classes = {
   notGoing: `${PREFIX}-not-going`
 };
 
-const RequestRoot = styled(LoadingButton, {
+const RequestRoot = styled(Button, {
   name: PREFIX,
   slot: 'RequestRoot'
 })(() => ({}));

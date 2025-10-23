@@ -252,7 +252,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
           {filters ? (
             filters
           ) : (
-            <Grid size={{md: 6}}>
+            <Grid size={{xs: 12, md: 6}}>
               <TextField
                 fullWidth
                 value={filterName}
@@ -278,7 +278,7 @@ export default function Categories(inProps: CategoriesProps): JSX.Element {
           ) : (
             <>
               {filteredCategories.map((category: SCCategoryType) => (
-                <Grid size={{sm: 6, lg: 4}} key={category.id}>
+                <Grid size={{xs: 12, sm: 6, lg: 4}} key={category.id}>
                   <CategoryComponent category={category} {...CategoryComponentProps} showTooltip={true} className={classes.category} />
                 </Grid>
               ))}

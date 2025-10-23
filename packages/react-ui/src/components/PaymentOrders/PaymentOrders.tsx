@@ -25,7 +25,6 @@ import {
   MenuItem
 } from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import LoadingButton from '@mui/lab/LoadingButton';
 import {useInView} from 'react-intersection-observer';
 import {PaymentService} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
@@ -44,8 +43,8 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {LocalizationProvider, MobileDatePicker} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import Category from '../Category';
 
 const PREFIX = 'SCPaymentOrders';
@@ -314,7 +313,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
   return (
     <Root variant="outlined" className={classNames(classes.root, className)} {...rest}>
       <Grid container width="100%" className={classes.filters} gap={3}>
-        <Grid size={{md: 3}}>
+        <Grid size={{xs: 12, md: 3}}>
           <TextField
             className={classes.search}
             size="small"
@@ -362,7 +361,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
             }}
           />
         </Grid>
-        <Grid size={{md: 3}}>
+        <Grid size={{xs: 12, md: 3}}>
           <TextField
             select
             fullWidth
@@ -378,10 +377,10 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
             ))}
           </TextField>
         </Grid>
-        <Grid size={{sm: 8, md: 4}}>
+        <Grid size={{xs: 12, sm: 8, md: 4}}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
-            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+            adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}
             localeText={{
               cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`,
               clearButtonLabel: `${intl.formatMessage(messages.pickerClearAction)}`
@@ -548,9 +547,9 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                       <Stack direction="row" justifyContent="left" alignItems="center" spacing={2}>
                         {order.content_type === SCContentType.EVENT && <PaymentOrderPdfButton paymentOrder={order} />}
                         {Boolean(!order.paid && order.billing_reason === 'subscription_create') && (
-                          <LoadingButton size="small" variant="contained" disabled={true}>
+                          <Button size="small" variant="contained" disabled={true}>
                             <FormattedMessage id="ui.paymentOrders.pay" defaultMessage="ui.paymentOrders.pay" />
-                          </LoadingButton>
+                          </Button>
                         )}
                       </Stack>
                     </TableCell>

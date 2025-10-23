@@ -22,8 +22,8 @@ import {DateTimePickerTabs, LocalizationProvider, MobileDateTimePicker} from '@m
 import {SCCourseSectionType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {SCContextType, useSCContext} from '@selfcommunity/react-core';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import {CourseService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
@@ -195,7 +195,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
       {course && course.type === SCCourseTypologyType.SCHEDULED ? (
         <LocalizationProvider
           dateAdapter={AdapterDateFns}
-          adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+          adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}
           localeText={{
             okButtonLabel: `${intl.formatMessage(messages.pickerOkMessage)}`,
             cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelMessage)}`,

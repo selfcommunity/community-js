@@ -11,7 +11,6 @@ import {formatColorLabel, formatLogoLabel} from '../../../../utils/onBoarding';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
-import {LoadingButton} from '@mui/lab';
 import ScrollContainer from '../../../../shared/ScrollContainer';
 
 const messages = defineMessages({
@@ -277,7 +276,7 @@ export default function Appearance(inProps: AppearanceProps) {
                       </Box>
                     </React.Fragment>
                   ))}
-                <LoadingButton
+                <Button
                   loading={loading || updating}
                   disabled={loading || updating || Object.keys(data).length === 0}
                   variant="outlined"
@@ -288,7 +287,7 @@ export default function Appearance(inProps: AppearanceProps) {
                     id="ui.onBoardingWidget.step.appearance.titleSlogan.button"
                     defaultMessage="ui.onBoardingWidget.step.appearance.titleSlogan.button"
                   />
-                </LoadingButton>
+                </Button>
               </Box>
             )}
 
@@ -302,13 +301,13 @@ export default function Appearance(inProps: AppearanceProps) {
                       <Box className={classes.logoContainer}>
                         <img src={logo.value} className={classes.logo} />
                         <input type="file" onChange={(event) => handleUpload(event, logo.name)} hidden accept=".gif,.png,.jpg,.jpeg" id={logo.name} />
-                        <LoadingButton
+                        <Button
                           className={classes.uploadButton}
                           onClick={() => document.getElementById(`${logo.name}`).click()}
                           loading={Boolean(loadingLogo) && Boolean(logo.name === loadingLogo)}
                           disabled={Boolean(loadingLogo) && Boolean(logo.name !== loadingLogo)}>
                           <Icon>upload</Icon>
-                        </LoadingButton>
+                        </Button>
                       </Box>
                     </React.Fragment>
                   ))}
@@ -358,7 +357,7 @@ export default function Appearance(inProps: AppearanceProps) {
                   }}
                   error={Boolean(preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value?.length > 150)}
                 />
-                <LoadingButton
+                <Button
                   loading={updating}
                   disabled={updating || Object.keys(data).length === 0}
                   variant="outlined"
@@ -369,7 +368,7 @@ export default function Appearance(inProps: AppearanceProps) {
                     id="ui.onBoardingWidget.step.appearance.titleSlogan.button"
                     defaultMessage="ui.onBoardingWidget.step.appearance.titleSlogan.button"
                   />
-                </LoadingButton>
+                </Button>
               </Box>
             )}
           </Box>

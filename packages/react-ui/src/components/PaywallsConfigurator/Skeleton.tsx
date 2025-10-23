@@ -47,7 +47,7 @@ export default function PaywallsConfiguratorSkeleton(inProps): JSX.Element {
     <Root className={classNames(classes.root, className)} {...rest}>
       <Grid container width="100%" spacing={{xs: 3}} className={classes.products}>
         {[...Array(isMobile ? 1 : 2)].map((_product, index) => (
-          <Grid key={index}>
+          <Grid size={12} key={index}>
             <PaymentProductSkeleton elevation={0} variant="outlined" {...PaymentProductSkeletonProps} />
           </Grid>
         ))}

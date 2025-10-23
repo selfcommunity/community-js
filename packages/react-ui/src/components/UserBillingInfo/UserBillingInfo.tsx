@@ -25,7 +25,6 @@ import {SCCustomerBillingInfo} from '@selfcommunity/types/src/types';
 import {countries, COUNTRY_CODES} from '../../constants/Country';
 import UserBillingInfoSkeleton from './Skeleton';
 import Grow from '@mui/material/Grow';
-import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
 // import {getCountryOption} from '../../utils/address';
 import {SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
@@ -576,7 +575,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
               <Box>
                 <Grid container width="100%" spacing={3}>
                   {/* Name - name */}
-                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="name"
@@ -591,7 +590,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                   </Grid>
 
                   {/* address_line1 */}
-                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_line1"
@@ -606,7 +605,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                   </Grid>
 
                   {/* address_line2 */}
-                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_line2"
@@ -621,7 +620,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                   </Grid>
 
                   {/* country */}
-                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                     <Autocomplete
                       id="country-select-demo"
                       options={countries}
@@ -680,7 +679,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                   </Grid>
 
                   {/* address_state */}
-                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_state"
@@ -695,7 +694,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                   </Grid>
 
                   {/* address_postal_code */}
-                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_postal_code"
@@ -710,7 +709,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                   </Grid>
 
                   {/* address_city */}
-                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="address_city"
@@ -734,7 +733,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                   </Grid>
 
                   {/* Phone - phone */}
-                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="phone"
@@ -758,7 +757,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                   </Grid>
 
                   {/* TaxCode (TIN/CF) */}
-                  <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                  <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                     <TextField
                       variant="outlined"
                       id="tax_code"
@@ -806,7 +805,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                       <Grid size="grow">
                         <Grid container width="100%" spacing={3}>
                           {/* tax_id_data */}
-                          <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                          <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                             <TextField
                               variant="outlined"
                               id="tax_id_data"
@@ -872,7 +871,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                           </Grid>
 
                           {/* SDI */}
-                          <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                          <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                             <TextField
                               variant="outlined"
                               id="sdi"
@@ -894,7 +893,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                           </Grid>
 
                           {/* PEC */}
-                          <Grid size={{sm: inlineDisplay ? 12 : 6}}>
+                          <Grid size={{xs: 12, sm: inlineDisplay ? 12 : 6}}>
                             <TextField
                               variant="outlined"
                               id="pec"
@@ -939,7 +938,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
 
                   <Grid size="grow">
                     <Typography align="left">
-                      <LoadingButton
+                      <Button
                         variant="contained"
                         size="small"
                         color="primary"
@@ -947,7 +946,7 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
                         loading={state.isProcessing}
                         onClick={handleSubmit}>
                         {buttonLabel}
-                      </LoadingButton>
+                      </Button>
                       {onBack && state.initialDataCompleted && (
                         <Button variant="text" size="small" onClick={handleBack} disabled={Boolean(disableButtons)}>
                           <FormattedMessage id="ui.userBillingInfo.back" defaultMessage="ui.userBillingInfo.back" />

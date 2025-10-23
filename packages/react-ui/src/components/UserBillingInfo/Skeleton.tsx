@@ -39,25 +39,25 @@ export default function UserBillingInfoSkeleton(props: UserSkeletonBillingInfoPr
   }
   return (
     <Grid container width="100%" spacing={3}>
-      <Grid size={{sm: 6}}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid size={{sm: 6}}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid size={{sm: 6}}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid size={{sm: 6}}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid size={{sm: 6}}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid size={{sm: 6}}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid size={{sm: 6}} justifyContent="center">
+      <Grid size={{xs: 12, sm: 6}} justifyContent="center">
         <Skeleton variant="rounded" height={30} width={100} />
       </Grid>
     </Grid>
