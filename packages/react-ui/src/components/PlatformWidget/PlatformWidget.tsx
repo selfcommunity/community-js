@@ -57,11 +57,11 @@ const Root = styled(Widget, {
     display: 'flex',
     paddingBottom: 0,
     boxShadow: 'inset -1px -3px 7px -4px #CECECE',
-    '-webkit-overflow-scrolling': 'touch',
+    WebkitOverflowScrolling: 'touch',
     overflowX: 'auto',
     overflowY: 'hidden',
     scrollbarWidth: 'none' /* Firefox */,
-    '-ms-overflow-style': 'none' /* IE and Edge */,
+    MsOverflowStyle: 'none' /* IE and Edge */,
     '&::-webkit-scrollbar': {
       display: 'none'
     }
