@@ -565,13 +565,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               minDate={minStartDate}
               label={field.startDate && <FormattedMessage id="ui.eventForm.date.placeholder" defaultMessage="ui.eventForm.date.placeholder" />}
               value={field.startDate}
+              enableAccessibleFieldDOMStructure={false}
               slots={{
                 textField: (params) => (
                   <TextField
                     {...params}
                     slotProps={{
                       input: {
-                        ...params.slotProps.input,
+                        ...params.slotProps?.input,
                         placeholder: `${intl.formatMessage(messages.startDate)}`,
                         startAdornment: (
                           <InputAdornment position="start">
@@ -603,13 +604,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               minTime={minStartTime}
               label={field.startTime && <FormattedMessage id="ui.eventForm.time.placeholder" defaultMessage="ui.eventForm.time.placeholder" />}
               value={field.startTime}
+              enableAccessibleFieldDOMStructure={false}
               slots={{
                 textField: (params) => (
                   <TextField
                     {...params}
                     slotProps={{
                       input: {
-                        ...params.slotProps.input,
+                        ...params.slotProps?.input,
                         placeholder: `${intl.formatMessage(messages.startTime)}`,
                         startAdornment: (
                           <InputAdornment position="start">
@@ -684,13 +686,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               minDate={field.startDate}
               label={<FormattedMessage id="ui.eventForm.date.end.placeholder" defaultMessage="ui.eventForm.date.end.placeholder" />}
               value={field.endDate}
+              enableAccessibleFieldDOMStructure={false}
               slots={{
                 textField: (params) => (
                   <TextField
                     {...params}
                     slotProps={{
                       input: {
-                        ...params.slotProps.input,
+                        ...params.slotProps?.input,
                         placeholder: `${intl.formatMessage(messages.endDate)}`,
                         startAdornment: (
                           <InputAdornment position="start">
@@ -722,13 +725,14 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               disablePast={disablePastEndTime}
               label={field.endTime && <FormattedMessage id="ui.eventForm.time.end.placeholder" defaultMessage="ui.eventForm.time.end.placeholder" />}
               value={field.endTime}
+              enableAccessibleFieldDOMStructure={false}
               slots={{
                 textField: (params) => (
                   <TextField
                     {...params}
                     slotProps={{
                       input: {
-                        ...params.slotProps.input,
+                        ...params.slotProps?.input,
                         placeholder: `${intl.formatMessage(messages.endTime)}`,
                         startAdornment: (
                           <InputAdornment position="start">
