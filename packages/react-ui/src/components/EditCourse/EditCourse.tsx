@@ -161,7 +161,7 @@ export default function EditCourse(inProps: EditCourseProps) {
         </TabList>
 
         {panelData.map((data, i) => (
-          <TabPanel key={i} sx={{className: classes.tabPanel}} value={data.value}>
+          <TabPanel key={i} className={classes.tabPanel} value={data.value}>
             {data.children}
           </TabPanel>
         ))}
