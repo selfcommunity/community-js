@@ -213,6 +213,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
               )
             }
             value={drippedAt}
+            enableAccessibleFieldDOMStructure={false}
             slots={{
               //actionBar: PickerActionBar,
               tabs: (props) => <DateTimePickerTabs {...props} />,
@@ -222,7 +223,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
                   error={false}
                   slotProps={{
                     input: {
-                      ...params.slotProps.input,
+                      ...params.slotProps?.input,
                       placeholder: `${intl.formatMessage(messages.pickerPlaceholder)}`,
                       endAdornment: (
                         <InputAdornment position="end">

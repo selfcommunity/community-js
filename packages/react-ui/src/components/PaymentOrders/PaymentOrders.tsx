@@ -391,6 +391,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   className={classes.picker}
                   label={<FormattedMessage id="ui.paymentOrders.dateFrom" defaultMessage="ui.paymentOrders.dateFrom" />}
                   value={startDate}
+                  enableAccessibleFieldDOMStructure={false}
                   slots={{
                     textField: (params) => (
                       <TextField
@@ -398,7 +399,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                         size="small"
                         slotProps={{
                           input: {
-                            ...params.slotProps.input,
+                            ...params.slotProps?.input,
                             placeholder: `${intl.formatMessage(messages.dateFrom)}`,
                             endAdornment: (
                               <InputAdornment position="end">
@@ -430,6 +431,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   className={classes.picker}
                   label={<FormattedMessage id="ui.paymentOrders.dateTo" defaultMessage="ui.paymentOrders.dateTo" />}
                   value={endDate}
+                  enableAccessibleFieldDOMStructure={false}
                   slots={{
                     textField: (params) => (
                       <TextField
@@ -437,7 +439,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                         size="small"
                         slotProps={{
                           input: {
-                            ...params.slotProps.input,
+                            ...params.slotProps?.input,
                             placeholder: `${intl.formatMessage(messages.dateTo)}`,
                             endAdornment: (
                               <InputAdornment position="end">
