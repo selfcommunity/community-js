@@ -490,11 +490,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                       defaultMessage="ui.onBoardingWidget.accordion.expanded.summary"
                       values={{
                         b: (chunks) => <strong>{chunks}</strong>,
-                        icon: (...chunks) => (
-                          <Icon>
-                            <>{chunks}</>
-                          </Icon>
-                        )
+                        icon: (...chunks) => <Icon>{chunks}</Icon>
                       }}
                     />
                   </Typography>
