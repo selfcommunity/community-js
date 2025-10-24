@@ -45,7 +45,7 @@ export default function EventMembersWidgetSkeleton() {
               ))}
             </TabList>
           </Box>
-          <TabPanel value="1" sx={{className: classes.tabPanel}}>
+          <TabPanel value="1" className={classes.tabPanel}>
             <List>
               {[1, 2, 3, 4].map((_element, i) => (
                 <ListItem key={i}>
@@ -56,8 +56,8 @@ export default function EventMembersWidgetSkeleton() {
               <Skeleton className={classes.actionButton} animation="wave" width="52px" height="20px" />
             </List>
           </TabPanel>
-          <TabPanel value="2" sx={{className: classes.tabPanel}}></TabPanel>
-          <TabPanel value="3" sx={{className: classes.tabPanel}}></TabPanel>
+          <TabPanel value="2" className={classes.tabPanel} />
+          <TabPanel value="3" className={classes.tabPanel} />
         </TabContext>
       </CardContent>
     </Root>

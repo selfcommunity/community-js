@@ -269,7 +269,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
                   // @ts-ignore
                   const {children, ...rest} = params.children.props;
                   return (
-                    <InputAdornment position={'end'}>
+                    <InputAdornment position="end">
                       <IconButton {...rest}>{children}</IconButton>
                       {isSaving && <CircularProgress size={10} />}
                     </InputAdornment>
