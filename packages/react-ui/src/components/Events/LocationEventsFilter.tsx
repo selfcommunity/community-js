@@ -61,7 +61,7 @@ export default function LocationEventsFilter(inProps: LocationEventsFilterProps)
       </InputLabel>
       <Select
         disabled={disabled}
-        size={'small'}
+        size="small"
         label={<FormattedMessage id="ui.events.location" defaultMessage="ui.events.location" />}
         value={value}
         onChange={handleOnChange}

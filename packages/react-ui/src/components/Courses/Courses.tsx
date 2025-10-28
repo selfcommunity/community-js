@@ -342,7 +342,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
               <Grid size={{xs: 12, md: 3}}>
                 <TextField
                   className={classes.search}
-                  size={'small'}
+                  size="small"
                   fullWidth
                   value={query}
                   label={<FormattedMessage id="ui.courses.filterByName" defaultMessage="ui.courses.filterByName" />}

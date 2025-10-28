@@ -6,7 +6,7 @@ export default {
   component: ComposerIconButton,
 } as Meta<typeof ComposerIconButton>;
 
-const template = (args) => (
+const template = (args: ComposerIconButtonProps) => (
   <div style={{width: '100%'}}>
     <ComposerIconButton {...args} />
   </div>

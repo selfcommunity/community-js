@@ -9,7 +9,7 @@ export default {
   }
 } as Meta<typeof EventInviteButton>;
 
-const template = (args) => (
+const template = (args: EventInviteButtonProps) => (
   <div style={{width: 800}}>
     <EventInviteButton {...args} />
   </div>

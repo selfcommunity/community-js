@@ -119,9 +119,15 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               id={`ui.notification.event.${notificationObject.type}`}
               defaultMessage={`ui.notification.event.${notificationObject.type}`}
               values={{
-                icon: (...chunks) => <Icon>{chunks}</Icon>,
+                icon: (chunks) => <Icon key={`ui.notification.event.${notificationObject.type}.icon`}>{chunks}</Icon>,
                 event: notificationObject.event.name,
-                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>{chunks}</Link>
+                link: (chunks) => (
+                  <Link
+                    key={`ui.notification.event.${notificationObject.type}.link`}
+                    to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>
+                    {chunks}
+                  </Link>
+                )
               }}
             />
           </Box>
@@ -224,9 +230,15 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               id={`ui.notification.${notificationObject.type}`}
               defaultMessage={`ui.notification.${notificationObject.type}`}
               values={{
-                icon: (...chunks) => <Icon>{chunks}</Icon>,
+                icon: (chunks) => <Icon key={`ui.notification.${notificationObject.type}.icon`}>{chunks}</Icon>,
                 event: notificationObject.event.name,
-                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>{chunks}</Link>
+                link: (chunks) => (
+                  <Link
+                    key={`ui.notification.${notificationObject.type}.link`}
+                    to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>
+                    {chunks}
+                  </Link>
+                )
               }}
             />
             <EventItem event={notificationObject.event as any} actions={<></>} elevation={0} />

@@ -6,12 +6,12 @@ export default {
   component: NotificationPopupSkeleton,
 } as Meta<typeof NotificationPopupSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 280}}>
     <NotificationPopupSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<NotificationPopupSkeleton> = {
+export const Base: StoryObj<typeof NotificationPopupSkeleton> = {
   render: template
 };

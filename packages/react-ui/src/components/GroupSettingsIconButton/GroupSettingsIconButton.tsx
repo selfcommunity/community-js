@@ -248,7 +248,7 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
               id="ui.groupSettingsIconButton.dialog.msg"
               defaultMessage="ui.groupSettingsIconButton.dialog.msg"
               values={{
-                b: (...chunks) => <strong>{chunks}</strong>,
+                b: (chunks) => <strong key="ui.groupSettingsIconButton.dialog.msg.b">{chunks}</strong>,
                 user: user.username,
                 group: group.name
               }}

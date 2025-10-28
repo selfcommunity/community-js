@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import LiveStreamRoom from './index';
+import LiveStreamRoom, { LiveStreamRoomProps } from './index';
 
 export default {
   title: 'Design System/React UI/Livestream/LiveStreamRoom',
   component: LiveStreamRoom,
 } as Meta<typeof LiveStreamRoom>;
 
-const template = (args) => (
+const template = (args: LiveStreamRoomProps) => (
  	<LiveStreamRoom {...args} />
 );
 

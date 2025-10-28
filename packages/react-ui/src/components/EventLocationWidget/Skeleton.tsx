@@ -1,4 +1,3 @@
-import React from 'react';
 import {PREFIX} from './constants';
 import Widget from '../Widget';
 import {Box, CardContent, Skeleton, styled} from '@mui/material';
@@ -38,12 +37,12 @@ export default function EventLocationWidgetSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
       <CardContent>
-        <Skeleton animation="wave" height={30} width="20%" variant={'text'} />
+        <Skeleton animation="wave" height={30} width="20%" variant="text" />
         <Box className={classes.map}>
-          <Skeleton variant="rectangular" animation="wave" height={'100%'} width={'100%'} />
+          <Skeleton variant="rectangular" animation="wave" height="100%" width="100%" />
         </Box>
-        <Skeleton animation="wave" height={20} width="30%" variant={'text'} />
-        <Skeleton animation="wave" height={20} width="40%" variant={'text'} />
+        <Skeleton animation="wave" height={20} width="30%" variant="text" />
+        <Skeleton animation="wave" height={20} width="40%" variant="text" />
       </CardContent>
     </Root>
   );

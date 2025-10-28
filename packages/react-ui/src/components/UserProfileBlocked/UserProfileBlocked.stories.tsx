@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import UserProfileBlocked from './index';
+import UserProfileBlocked, { UserProfileBlockedProps } from './index';
 
 export default {
   title: 'Design System/React UI/User Profile Blocked ',
@@ -8,7 +8,7 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   },
   args: {
@@ -17,13 +17,13 @@ export default {
 } as Meta<typeof UserProfileBlocked>;
 
 
-const template = (args) => (
+const template = (args: UserProfileBlockedProps) => (
   <div style={{width: '100%'}}>
     <UserProfileBlocked {...args} />
   </div>
 );
 
-export const Base: StoryObj<UserProfileBlocked> = {
+export const Base: StoryObj<typeof UserProfileBlocked> = {
   args: {
     userId: 455
   },

@@ -6,7 +6,7 @@ export default {
   component: GroupForm,
 } as Meta<typeof GroupForm>;
 
-const template = (args) => (
+const template = (args: GroupFormProps) => (
   <div style={{width: 800}}>
     <GroupForm{...args} />
   </div>

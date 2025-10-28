@@ -6,13 +6,13 @@ export default {
   component: CategoryTrendingFeedWidgetSkeleton
 } as Meta<typeof CategoryTrendingFeedWidgetSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <CategoryTrendingFeedWidgetSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<CategoryTrendingFeedWidgetSkeleton> = {
+export const Base: StoryObj<typeof CategoryTrendingFeedWidgetSkeleton> = {
   args: {
     contained: true,
   },

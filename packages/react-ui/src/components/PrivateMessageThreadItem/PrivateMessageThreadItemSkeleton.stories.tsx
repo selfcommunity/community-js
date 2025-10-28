@@ -6,13 +6,13 @@ export default {
   component: PrivateMessageThreadItemSkeleton
 } as Meta<typeof PrivateMessageThreadItemSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <PrivateMessageThreadItemSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<PrivateMessageThreadItemSkeleton> = {
+export const Base: StoryObj<typeof PrivateMessageThreadItemSkeleton> = {
   args: {
     contained: true
   },

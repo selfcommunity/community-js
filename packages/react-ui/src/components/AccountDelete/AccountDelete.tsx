@@ -144,8 +144,8 @@ export default function AccountDelete(inProps: AccountDeleteProps): JSX.Element 
           defaultMessage="ui.accountDelete.message"
           values={{
             communityName,
-            li: (chunks) => <li>{chunks}</li>,
-            ul: (chunks) => <ul>{chunks}</ul>
+            li: (chunks) => <li key="ui.accountDelete.message.li">{chunks}</li>,
+            ul: (chunks) => <ul key="ui.accountDelete.message.ul">{chunks}</ul>
           }}
         />
       </Typography>
@@ -155,7 +155,7 @@ export default function AccountDelete(inProps: AccountDeleteProps): JSX.Element 
           defaultMessage="ui.accountDelete.confirmMessage"
           values={{
             username: scUserContext.user.username,
-            b: (chunks) => <b>{chunks}</b>
+            b: (chunks) => <b key="ui.accountDelete.confirmMessage.b">{chunks}</b>
           }}
         />
         <TextField name="confirm" value={confirm} onChange={handleChange} autoComplete="off" size="small" />

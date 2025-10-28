@@ -7,9 +7,9 @@ export default {
 } as Meta<typeof CategoryFeedSkeletonTemplate>;
 
 export const Base: StoryObj<typeof CategoryFeedSkeletonTemplate> = {
-  render: (args) => (
+  render: () => (
     <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
-      <CategoryFeedSkeletonTemplate {...args} />
+      <CategoryFeedSkeletonTemplate />
     </div>
   )
 };

@@ -6,7 +6,7 @@ export default {
   component: EditGroupButton,
 } as Meta<typeof EditGroupButton>;
 
-const template = (args) => (
+const template = (args: EditGroupButtonProps) => (
   <div style={{width: 800}}>
     <EditGroupButton {...args} />
   </div>

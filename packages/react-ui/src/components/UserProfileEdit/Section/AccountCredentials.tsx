@@ -339,7 +339,7 @@ export default function AccountCredentials(props: AccountCredentialProps): JSX.E
               }}
               onClose={handlePopoverClose}>
               <Box sx={{p: '10px'}}>
-                <Typography component={'span'} sx={{whiteSpace: 'pre-line'}}>
+                <Typography component="span" sx={{whiteSpace: 'pre-line'}}>
                   <FormattedMessage
                     id="ui.userProfileEditAccountCredentials.newPassword.info"
                     defaultMessage="ui.userProfileEditAccountCredentials.newPassword.info"

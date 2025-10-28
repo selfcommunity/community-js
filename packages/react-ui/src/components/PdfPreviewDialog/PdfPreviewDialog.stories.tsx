@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import PdfPreviewDialog from './index';
+import PdfPreviewDialog, { PdfPreviewDialogProps } from './index';
 
 export default {
 	title: 'Design System/React UI/PdfPreviewDialog',
 	component: PdfPreviewDialog,
 } as Meta<typeof PdfPreviewDialog>;
 
-const template = (args) => (
+const template = (args: PdfPreviewDialogProps) => (
 	<div style={{ maxWidth: 400 }}>
 		<PdfPreviewDialog {...args} />
 	</div>

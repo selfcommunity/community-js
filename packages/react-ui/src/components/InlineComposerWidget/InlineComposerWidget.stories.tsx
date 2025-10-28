@@ -6,7 +6,7 @@ export default {
   component: InlineComposerWidget
 } as Meta<typeof InlineComposerWidget>;
 
-const template = (args) => (
+const template = (args: InlineComposerWidgetProps) => (
   <div style={{maxWidth: 500}}>
     <InlineComposerWidget {...args} />
   </div>

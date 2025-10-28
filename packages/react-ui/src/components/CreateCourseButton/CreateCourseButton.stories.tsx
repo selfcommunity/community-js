@@ -6,7 +6,7 @@ export default {
   component: CreateCourseButton,
 } as Meta<typeof CreateCourseButton>;
 
-const template = (args) => (
+const template = (args: CreateCourseButtonProps) => (
   <div style={{width: 800}}>
     <CreateCourseButton {...args} />
   </div>

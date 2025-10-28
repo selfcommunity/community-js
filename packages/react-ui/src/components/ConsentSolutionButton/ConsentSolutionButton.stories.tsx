@@ -7,7 +7,7 @@ export default {
   component: ConsentSolutionButton,
 } as Meta<typeof ConsentSolutionButton>;
 
-const template = (args) => (
+const template = (args: ConsentSolutionButtonProps) => (
   <div style={{width: 800}}>
     <ConsentSolutionButton {...args} />
   </div>

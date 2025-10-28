@@ -255,7 +255,7 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
           id="ui.userAutocomplete.textarea.info"
           defaultMessage="ui.userAutocomplete.textarea.info"
           values={{
-            icon: (...chunks) => <Icon>{chunks}</Icon>
+            icon: (chunks) => <Icon key="ui.userAutocomplete.textarea.info.icon">{chunks}</Icon>
           }}
         />
       </Typography>

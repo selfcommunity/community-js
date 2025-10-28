@@ -203,7 +203,7 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
           {!files.length && Object.keys(uploading).length === 0 && Object.keys(errors).length === 0 && (
             <UploadDropZone className={classes.uploadSection}>
               <UploadButton inputFieldName="file" className={classes.uploadButton} />
-              <Typography textAlign={'center'} fontWeight={'medium'}>
+              <Typography textAlign="center" fontWeight="medium">
                 <FormattedMessage id="ui.privateMessage.editor.media.uploader.msg" defaultMessage="ui.privateMessage.editor.media.uploader.msg" />
               </Typography>
             </UploadDropZone>
@@ -250,11 +250,11 @@ export default function MessageMediaUploader(props: MessageMediaUploaderProps): 
                         }
                       />
                       {isHovered[item.file_uuid] && (
-                        <Box component={'span'} className={classes.previewInfo}>
-                          <Typography noWrap textAlign={'center'}>
+                        <Box component="span" className={classes.previewInfo}>
+                          <Typography noWrap textAlign="center">
                             {item.file.name}
                           </Typography>
-                          <Typography textAlign={'center'} fontWeight={'light'}>
+                          <Typography textAlign="center" fontWeight="light">
                             {bytesToSize(item.file.size)}
                           </Typography>
                         </Box>

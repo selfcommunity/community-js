@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import IncubatorListWidget from './index';
+import IncubatorListWidget, { IncubatorListWidgetProps } from './index';
 
 export default {
   title: 'Design System/React UI/IncubatorListWidget',
@@ -8,7 +8,7 @@ export default {
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     variant: {
       options: ['elevation', 'outlined'],
@@ -24,12 +24,12 @@ export default {
 } as Meta<typeof IncubatorListWidget>;
 
 
-const template = (args) => (
+const template = (args: IncubatorListWidgetProps) => (
   <div style={{width: 500}}>
     <IncubatorListWidget {...args} />
   </div>
 );
 
-export const Base: StoryObj<IncubatorListWidget> = {
+export const Base: StoryObj<typeof IncubatorListWidget> = {
   render: template
 };

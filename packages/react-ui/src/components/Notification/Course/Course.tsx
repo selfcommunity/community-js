@@ -116,8 +116,9 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
                   notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                     ? notificationObject.comment.lesson_name
                     : notificationObject.course.name,
-                link: (...chunks) => (
+                link: (chunks) => (
                   <Link
+                    key={`ui.notification.course.${notificationObject.type}.link`}
                     to={scRoutingContext.url(
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                         ? SCRoutes.COURSE_LESSON_ROUTE_NAME
@@ -188,8 +189,9 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
                   notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                     ? notificationObject.comment.lesson_name
                     : notificationObject.course.name,
-                link: (...chunks) => (
+                link: (chunks) => (
                   <Link
+                    key={`ui.notification.course.${notificationObject.type}.link`}
                     to={scRoutingContext.url(
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                         ? SCRoutes.COURSE_LESSON_ROUTE_NAME

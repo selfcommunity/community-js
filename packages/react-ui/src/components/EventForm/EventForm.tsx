@@ -806,7 +806,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   id="ui.eventForm.privacy.public.info"
                   defaultMessage="ui.eventForm.privacy.public.info"
                   values={{
-                    b: (chunks) => <strong>{chunks}</strong>
+                    b: (chunks) => <strong key="ui.eventForm.privacy.public.info.b">{chunks}</strong>
                   }}
                 />
               ) : (
@@ -814,7 +814,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   id="ui.eventForm.privacy.private.info"
                   defaultMessage="ui.eventForm.private.public.info"
                   values={{
-                    b: (chunks) => <strong>{chunks}</strong>
+                    b: (chunks) => <strong key="ui.eventForm.privacy.private.info.b">{chunks}</strong>
                   }}
                 />
               )}

@@ -1,20 +1,16 @@
-import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import type { Meta } from '@storybook/react-webpack5';
 import NavigationToolbarSkeleton from './Skeleton';
 import { AppBar } from '@mui/material';
 
 export default {
   title: 'Design System/React UI/Skeleton/Navigation Toolbar',
   component: NavigationToolbarSkeleton,
-  argTypes: {},
-  args: {}
 } as Meta<typeof NavigationToolbarSkeleton>;
 
-const MainTemplate: StoryObj<typeof NavigationToolbarSkeleton> = (args) => (
+const MainTemplate = () => (
   <AppBar position="relative">
-    <NavigationToolbarSkeleton {...args} />
+    <NavigationToolbarSkeleton />
   </AppBar>
 );
 
 export const Main = MainTemplate.bind({});
-
-Main.args = {};

@@ -177,7 +177,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
           {/*<Link className={classes.name} to={scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, incubator)}>*/}
           {/*  {incubator.name}*/}
           {/*</Link>*/}
-          <Typography component={'span'}>
+          <Typography component="span">
             <FormattedMessage
               defaultMessage="ui.incubator.proposedBy"
               id="ui.incubator.proposedBy"
@@ -192,7 +192,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
               }}
             />
           </Typography>
-          <Typography component={'p'} className={!detailView ? classes.slogan : null}>
+          <Typography component="p" className={!detailView ? classes.slogan : null}>
             {scIncubator.slogan}
           </Typography>
           <LinearProgressWithLabel

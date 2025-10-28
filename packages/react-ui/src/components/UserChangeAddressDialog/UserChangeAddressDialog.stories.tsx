@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import UserChangeAddressDialog from './index';
+import UserChangeAddressDialog, { UserChangeAddressDialogProps } from './index';
 
 export default {
   title: 'Design System/React UI/Payments/UserChangeAddressDialog',
@@ -8,12 +8,12 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 7}}
+      table: {defaultValue: {summary: '7'}}
     }
   }
 } as Meta<typeof UserChangeAddressDialog>;
 
-const template = (args) => (
+const template = (args: UserChangeAddressDialogProps) => (
   <div style={{width: '100%'}}>
     <UserChangeAddressDialog {...args} />
   </div>

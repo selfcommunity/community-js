@@ -54,13 +54,13 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({}));
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.dialogRoot
+})(() => ({}));
 
 export interface LiveStreamRoomProps extends BoxProps {
   /**
@@ -229,8 +229,14 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
               let _msg = (
                 <FormattedMessage
                   id="ui.liveStreamRoom.connect.error.generic"
-                  defaultMessage="'ui.liveStreamRoom.connect.error.generic"
-                  values={{link: (...chunks: [parts: ReactNode[]]) => <Link to={'/'}>{chunks}</Link>}}
+                  defaultMessage="ui.liveStreamRoom.connect.error.generic"
+                  values={{
+                    link: (chunks: [parts: ReactNode[]]) => (
+                      <Link key="ui.liveStreamRoom.connect.error.generic.link" to="/">
+                        {chunks}
+                      </Link>
+                    )
+                  }}
                 />
               );
               if (error.response.data.errors[0].code) {
@@ -240,8 +246,9 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                     id={_error}
                     defaultMessage={_error}
                     values={{
-                      link: (...chunks: [parts: ReactNode[]]) => (
+                      link: (chunks: [parts: ReactNode[]]) => (
                         <a
+                          key={`ui.liveStreamRoom.connect.error.${camelCase(error.response.data.errors[0].code)}.link`}
                           style={{color: '#FFF'}}
                           href={
                             error.response.data.errors[0].code === SCLiveStreamConnectionDetailsErrorType.PARTICIPATE_THE_EVENT_TO_JOIN_LIVE_STREAM &&
@@ -328,7 +335,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
   return (
     <Root id={id} className={classNames(classes.root, className)} {...rest}>
       {scLiveStream.closed_at_by_host ? (
-        <DialogRoot open maxWidth={'md'} fullWidth>
+        <DialogRoot open maxWidth="md" fullWidth>
           <DialogContent className={classes.endConferenceWrap}>
             <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
               <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO].value} alt="logo"></img>
@@ -336,7 +343,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
             <Typography variant="h5">
               <FormattedMessage id="ui.liveStreamRoom.conference.closed" defaultMessage="ui.liveStreamRoom.conference.closed" />
             </Typography>
-            <Button variant="contained" color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
+            <Button variant="contained" color="secondary" component={Link} to="/" className={classes.btnBackHome}>
               <FormattedMessage id="ui.liveStreamRoom.button.backHome" defaultMessage="ui.liveStreamRoom.button.backHome" />
             </Button>
           </DialogContent>
@@ -347,7 +354,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
             <>
               {startPrejoinContent && <Box className={classes.startPrejoinContent}>{startPrejoinContent}</Box>}
               {scLiveStream?.title && (
-                <Typography component={'div'} variant="h4" className={classes.title} alignContent={'center'}>
+                <Typography component="div" variant="h4" className={classes.title} alignContent="center">
                   {scLiveStream?.title}
                 </Typography>
               )}
@@ -369,7 +376,7 @@ export default function LiveStreamRoom(inProps: LiveStreamRoomProps): JSX.Elemen
                 {loading && (
                   <Box className={classes.prejoinLoader}>
                     <CircularProgress />
-                    <Typography component={'div'} variant="body2">
+                    <Typography component="div" variant="body2">
                       <FormattedMessage id="ui.liveStreamRoom.connecting" defaultMessage="ui.liveStreamRoom.connecting" />
                     </Typography>
                   </Box>

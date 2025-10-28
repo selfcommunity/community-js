@@ -9,7 +9,7 @@ export default {
   }
 } as Meta<typeof GroupInviteButton>;
 
-const template = (args) => (
+const template = (args: GroupInviteButtonProps) => (
   <div style={{width: 800}}>
     <GroupInviteButton {...args} />
   </div>

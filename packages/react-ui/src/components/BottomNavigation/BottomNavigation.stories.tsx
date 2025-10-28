@@ -14,7 +14,7 @@ export default {
   },
 } as Meta<typeof BottomNavigation>;
 
-const template = (args) => (
+const template = (args: BottomNavigationProps) => (
   <BottomNavigation {...args} />
 );
 

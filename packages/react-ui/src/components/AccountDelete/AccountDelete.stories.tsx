@@ -1,17 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import AccountDelete from './AccountDelete';
+import AccountDelete, { AccountDeleteProps } from './AccountDelete';
 
 export default {
   title: 'Design System/React UI/Account Delete',
   component: AccountDelete
 } as Meta<typeof AccountDelete>;
 
-const template = (args) => (
+const template = (args: AccountDeleteProps) => (
   <div style={{width: 600}}>
     <AccountDelete {...args} />
   </div>
 );
 
-export const Base: StoryObj<AccountDelete> = {
+export const Base: StoryObj<typeof AccountDelete> = {
   render: template
 };

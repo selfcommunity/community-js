@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import UserSuggestionWidget from './index';
+import UserSuggestionWidget, { UserSuggestionWidgetProps } from './index';
 
 export default {
   title: 'Design System/React UI/User Suggestion Widget',
@@ -8,7 +8,7 @@ export default {
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     variant: {
       options: ['elevation', 'outlined'],
@@ -23,12 +23,12 @@ export default {
   }
 } as Meta<typeof UserSuggestionWidget>;
 
-const template = (args) => (
+const template = (args: UserSuggestionWidgetProps) => (
   <div style={{width: 400}}>
     <UserSuggestionWidget {...args} />
   </div>
 );
 
-export const Base: StoryObj<UserSuggestionWidget> = {
+export const Base: StoryObj<typeof UserSuggestionWidget> = {
   render: template
 }

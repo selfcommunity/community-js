@@ -150,7 +150,7 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
                             participant: trackReference.participant,
                             source: Track.Source.Microphone
                           }}
-                          show={'muted'}></TrackMutedIndicator>
+                          show="muted"></TrackMutedIndicator>
                         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                         {/* @ts-ignore */}
                         <ParticipantName>{!disableTileActions && <ParticipantTileActions />}</ParticipantName>

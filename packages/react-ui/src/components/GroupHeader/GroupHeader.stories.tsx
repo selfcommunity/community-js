@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
-import GroupHeader from './index';
+import GroupHeader, { GroupHeaderProps } from './index';
 import GroupInfoWidget from '../GroupInfoWidget';
 import { Grid } from '@mui/material';
 import GroupRequestsWidget from '../GroupRequestsWidget';
@@ -20,7 +20,7 @@ export default {
   }
 } as Meta<typeof GroupHeader>;
 
-const BaseTemplate = (args: any) => (
+const BaseTemplate = (args: GroupHeaderProps) => (
   <div style={{width: '100%'}}>
     <GroupHeader {...args} />
   </div>
@@ -33,7 +33,7 @@ export const Base: StoryObj<typeof GroupHeader> = {
   render: BaseTemplate
 };
 
-const NotifyChangeGroupTemplate = (args: any) => (
+const NotifyChangeGroupTemplate = (args: GroupHeaderProps) => (
 	<div style={{width: '100%'}}>
 		<GroupHeader {...args} />
 		<br/>

@@ -155,8 +155,8 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
                   {notificationObject.message.sender.username}
                 </Link>{' '}
                 <FormattedMessage
-                  id={'ui.userToastNotifications.privateMessage.sentMessage'}
-                  defaultMessage={'ui.userToastNotifications.privateMessage.sentMessage'}
+                  id="ui.userToastNotifications.privateMessage.sentMessage"
+                  defaultMessage="ui.userToastNotifications.privateMessage.sentMessage"
                 />
                 :
                 <Box className={classes.messageWrap}>
@@ -192,7 +192,7 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
                     className={classes.messageLabel}>
                     {intl.formatMessage(messages.receivePrivateMessage, {
                       total: 1,
-                      b: (...chunks) => <strong>{chunks}</strong>
+                      b: (chunks) => <strong key="ui.notification.receivePrivateMessage.b">{chunks}</strong>
                     })}
                   </Link>
                 </Typography>
@@ -212,9 +212,9 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
                       : scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)
                   }>
                   {scUserContext.user && follower ? (
-                    <FormattedMessage id="ui.userToastNotifications.replyMessage" defaultMessage={'ui.userToastNotifications.replyMessage'} />
+                    <FormattedMessage id="ui.userToastNotifications.replyMessage" defaultMessage="ui.userToastNotifications.replyMessage" />
                   ) : (
-                    <FormattedMessage id="ui.userToastNotifications.viewMessage" defaultMessage={'ui.userToastNotifications.viewMessage'} />
+                    <FormattedMessage id="ui.userToastNotifications.viewMessage" defaultMessage="ui.userToastNotifications.viewMessage" />
                   )}
                 </Link>
               </Typography>

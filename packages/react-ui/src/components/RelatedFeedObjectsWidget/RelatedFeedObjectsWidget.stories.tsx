@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import RelatedFeedObjectsWidget from './index';
+import RelatedFeedObjectsWidget, { RelatedFeedObjectWidgetProps } from './index';
 import {SCContributionType} from '@selfcommunity/types';
 import {SCFeedObjectTemplateType} from '../../types/feedObject';
-import SearchAutocomplete from '../SearchAutocomplete';
 
 export default {
   title: 'Design System/React UI/Related Feed Objects Widget',
@@ -11,12 +10,12 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 67522}}
+      table: {defaultValue: {summary: '67522'}}
     },
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     variant: {
       options: ['elevation', 'outlined'],
@@ -27,13 +26,13 @@ export default {
   }
 } as Meta<typeof RelatedFeedObjectsWidget>;
 
-const template = (args) => (
+const template = (args: RelatedFeedObjectWidgetProps) => (
   <div style={{maxWidth: 500}}>
     <RelatedFeedObjectsWidget {...args} />
   </div>
 );
 
-export const Base: StoryObj<SearchAutocomplete> = {
+export const Base: StoryObj<typeof RelatedFeedObjectsWidget> = {
   args: {
     feedObjectId: 1673,
     feedObjectType: SCContributionType.POST,

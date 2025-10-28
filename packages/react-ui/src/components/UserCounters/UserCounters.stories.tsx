@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import UserCounters from './index';
+import UserCounters, { UserCountersProps } from './index';
 
 export default {
   title: 'Design System/React UI/User Counters ',
@@ -8,7 +8,7 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   },
   args: {
@@ -16,7 +16,7 @@ export default {
   }
 } as Meta<typeof UserCounters>;
 
-const template = (args) => (
+const template = (args: UserCountersProps) => (
   <div style={{width: '100%'}}>
     <UserCounters {...args} />
     {/*
@@ -26,14 +26,14 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<UserCounters> = {
+export const Base: StoryObj<typeof UserCounters> = {
   args: {
     userId: 1
   },
   render: template
 };
 
-export const AuthenticatedUser: StoryObj<UserCounters> = {
+export const AuthenticatedUser: StoryObj<typeof UserCounters> = {
   args: {
     userId: 167
   },

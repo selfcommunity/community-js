@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import {prefetchedEvents} from './prefetchedEvents';
-import Events from './index';
-import EventsSkeleton from './Skeleton';
+import Events, { EventsProps } from './index';
 import { Endpoints } from '@selfcommunity/api-services';
 import {SCEventTemplateType} from '../../types/event';
 
@@ -12,7 +11,7 @@ export default {
     showFilters: {
       control: {type: 'boolean'},
       description: 'Show/Hide filters.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   },
   args: {
@@ -20,13 +19,13 @@ export default {
   }
 } as Meta<typeof Events>;
 
-const template = (args) => (
+const template = (args: EventsProps) => (
   <div style={{maxWidth: 1280}}>
     <Events {...args} />
   </div>
 );
 
-export const Base: StoryObj<typeof EventsSkeleton> = {
+export const Base: StoryObj<typeof Events> = {
   render: template
 };
 
@@ -43,13 +42,13 @@ export const EventsCards: StoryObj<typeof Events> = {
   args: {
     showFilters: true,
     GridContainerComponentProps: {spacing: {md: 3}},
-    GridItemComponentProps: {md: 3},
+    GridItemComponentProps: {size: {md: 3}},
     EventComponentProps: {template: SCEventTemplateType.PREVIEW},
     EventSkeletonComponentProps: {template: SCEventTemplateType.PREVIEW},
     EventsSkeletonComponentProps: {
       eventsNumber: 4,
       GridContainerComponentProps: {spacing: {md: 3}},
-      GridItemComponentProps: {md: 3}
+      GridItemComponentProps: {size: {md: 3}}
     },
   },
   render: template
@@ -61,13 +60,13 @@ export const MyEventsCards: StoryObj<typeof Events> = {
 		general: false,
 		showFilters: true,
 		GridContainerComponentProps: {spacing: {md: 3}},
-		GridItemComponentProps: {md: 3},
+		GridItemComponentProps: {size: {md: 3}},
 		EventComponentProps: {template: SCEventTemplateType.PREVIEW},
 		EventSkeletonComponentProps: {template: SCEventTemplateType.PREVIEW},
 		EventsSkeletonComponentProps: {
 			eventsNumber: 4,
 			GridContainerComponentProps: {spacing: {md: 3}},
-			GridItemComponentProps: {md: 3}
+			GridItemComponentProps: {size: {md: 3}}
 		},
 	},
 	render: template

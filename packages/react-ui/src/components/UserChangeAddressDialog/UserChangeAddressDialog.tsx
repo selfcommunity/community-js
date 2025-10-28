@@ -119,10 +119,10 @@ export default function UserChangeAddressDialog(inProps: UserChangeAddressDialog
       open={open}
       actions={
         <>
-          <Button variant={'outlined'} onClick={handleClose}>
+          <Button variant="outlined" onClick={handleClose}>
             <FormattedMessage defaultMessage="ui.userChangeAddressDialog.btnClose" id="component.userChangeAddressDialog.btnClose" />
           </Button>
-          <Button loading={loading} disabled={loading} variant={'contained'} onClick={handleSave}>
+          <Button loading={loading} disabled={loading} variant="contained" onClick={handleSave}>
             <FormattedMessage defaultMessage="ui.userChangeAddressDialog.btnSave" id="component.userChangeAddressDialog.btnSave" />
           </Button>
         </>

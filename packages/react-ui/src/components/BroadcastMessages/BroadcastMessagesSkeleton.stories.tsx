@@ -6,12 +6,12 @@ export default {
   component: BroadcastMessagesSkeleton
 } as Meta<typeof BroadcastMessagesSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <BroadcastMessagesSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<BroadcastMessagesSkeleton> = {
+export const Base: StoryObj<typeof BroadcastMessagesSkeleton> = {
   render: template
 };

@@ -70,7 +70,7 @@ export default function DateTimeAgo(props: DateTimeAgoProps): JSX.Element {
         <Tooltip
           title={`${intl.formatDate(date, {year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric'})}`}
           enterTouchDelay={0}>
-          <Typography variant={'body2'} component={'span'}>
+          <Typography variant="body2" component="span">
             <FormattedRelativeTime value={-formattedDate.value} unit={formattedDate.unit as any} numeric="auto" />
           </Typography>
         </Tooltip>

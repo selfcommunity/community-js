@@ -6,13 +6,13 @@ export default {
   component: PlatformWidgetSkeleton
 } as Meta<typeof PlatformWidgetSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 470}}>
     <PlatformWidgetSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<PlatformWidgetSkeleton> = {
+export const Base: StoryObj<typeof PlatformWidgetSkeleton> = {
   args: {
     contained: true,
   },

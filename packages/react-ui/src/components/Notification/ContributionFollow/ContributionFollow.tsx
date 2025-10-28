@@ -109,7 +109,7 @@ export default function ContributionFollowNotification(props: ContributionFollow
               {notificationObject.user.username}
             </Link>{' '}
             {intl.formatMessage(messages.contributionFollow, {
-              b: (...chunks) => <strong>{chunks}</strong>
+              b: (chunks) => <strong key="ui.notification.contributionFollow.follow.b">{chunks}</strong>
             })}
           </Typography>
         }
@@ -139,13 +139,13 @@ export default function ContributionFollowNotification(props: ContributionFollow
           template === SCNotificationObjectTemplateType.TOAST && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <DateTimeAgo date={notificationObject.active_at} />
-              <Typography color="primary" component={'div'}>
+              <Typography color="primary" component="div">
                 <Link
                   to={scRoutingContext.url(
                     SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
                     getRouteData(notificationObject[contributionType])
                   )}>
-                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage="ui.userToastNotifications.viewContribution" />
                 </Link>
               </Typography>
             </Stack>

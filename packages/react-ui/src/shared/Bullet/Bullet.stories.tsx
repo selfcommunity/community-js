@@ -6,8 +6,8 @@ export default {
   component: Bullet
 } as Meta<typeof Bullet>;
 
-const template = (args) => <Bullet {...args} />;
+const template = (args: any) => <Bullet {...args} />;
 
-export const Base: StoryObj<Bullet> = {
+export const Base: StoryObj<typeof Bullet> = {
   render: template
 };

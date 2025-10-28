@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import UserInfoDialog from './index';
+import UserInfoDialog, { UserInfoDialogProps } from './index';
 
 export default {
   title: 'Design System/React UI/User Info Dialog',
   component: UserInfoDialog
 } as Meta<typeof UserInfoDialog>;
 
-const template = (args) => (
+const template = (args: UserInfoDialogProps) => (
   <div style={{width: 400}}>
-    <UserInfoDialog {...args}></UserInfoDialog>
+    <UserInfoDialog {...args} />
   </div>
 );
 
-export const Base: StoryObj<UserInfoDialog> = {
+export const Base: StoryObj<typeof UserInfoDialog> = {
   args: {
     open: true,
     userId: 1,

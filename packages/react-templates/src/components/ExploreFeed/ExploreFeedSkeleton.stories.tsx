@@ -8,9 +8,11 @@ export default {
 } as Meta<typeof ExploreFeedSkeletonTemplate>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-export const Base: StoryObj<typeof ExploreFeedSkeletonTemplate> = {render: (args) => (
-  <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
-    <ExploreFeedSkeletonTemplate {...args} />
-  </div>
-)};
+export const Base: StoryObj<typeof ExploreFeedSkeletonTemplate> = {
+  render: () => (
+    <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
+      <ExploreFeedSkeletonTemplate />
+    </div>
+  )
+};
 

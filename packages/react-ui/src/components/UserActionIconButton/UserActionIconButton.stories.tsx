@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import UserActionIconButton from './index';
+import UserActionIconButton, { UserActionIconButtonProps } from './index';
 
 export default {
   title: 'Design System/React UI/User Actions',
@@ -8,7 +8,7 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 167}}
+      table: {defaultValue: {summary: '167'}}
     }
   },
   args: {
@@ -16,13 +16,13 @@ export default {
   }
 } as Meta<typeof UserActionIconButton>;
 
-const template = (args) => (
+const template = (args: UserActionIconButtonProps) => (
   <div style={{width: '100%'}}>
     <UserActionIconButton {...args} />
   </div>
 );
 
-export const Base: StoryObj<UserActionIconButton> = {
+export const Base: StoryObj<typeof UserActionIconButton> = {
   args: {
     userId: 167
   },

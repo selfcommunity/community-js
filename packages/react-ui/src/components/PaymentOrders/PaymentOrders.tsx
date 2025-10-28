@@ -539,7 +539,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                     </TableCell>
                     <TableCell scope="row">
                       <Chip
-                        variant={'outlined'}
+                        variant="outlined"
                         label={<FormattedMessage id="ui.paymentOrders.status.paid" defaultMessage="ui.paymentOrders.status.paid" />}
                         color="success"
                         size="small"

@@ -76,7 +76,7 @@
     "pdfjs-dist": "3.11.174",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-intl": "^6.4.7"
+    "react-intl": "^6.8.9"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -129,7 +129,7 @@
     "react-custom-scrollbars-4": "^4.5.1",
     "react-dom": "^19.2.0",
     "react-intersection-observer": "^9.4.3",
-    "react-intl": "^6.4.7",
+    "react-intl": "^6.8.9",
     "react-lazyload": "^3.2.1",
     "react-number-format": "^5.4.3",
     "react-pdf": "^7.7.1",

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import Tags, {TagsComponentType} from './index';
+import Tags, {TagsComponentType, TagsProps} from './index';
 import {SCTagType} from '@selfcommunity/types';
 
 export default {
@@ -70,7 +70,7 @@ const tags: SCTagType[] = [
   }
 ];
 
-const template = (args) => <Tags tags={tags} {...args} />;
+const template = (args: TagsProps) => <Tags tags={tags} {...args} />;
 
 export const Base: StoryObj<typeof Tags> = {
   args: {

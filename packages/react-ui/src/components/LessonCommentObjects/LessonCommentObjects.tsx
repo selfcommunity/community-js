@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import LessonCommentObject, {LessonCommentObjectProps, LessonCommentObjectSkeleton} from '../LessonCommentObject';
 import {Box, List, ListItem, styled} from '@mui/material';
@@ -245,7 +245,7 @@ export default function LessonCommentObjects(inProps: LessonCommentObjectsProps)
         <>
           {commentsObject.comments.length > 0 ? (
             <InfiniteScroll
-              height={'100%'}
+              height="100%"
               dataLength={commentsObject.comments.length}
               next={handleNext}
               hasMoreNext={Boolean(commentsObject.next)}

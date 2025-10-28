@@ -120,8 +120,9 @@ export default function GroupNotification(props: NotificationGroupProps): JSX.El
               defaultMessage={`ui.notification.${notificationObject.type}`}
               values={{
                 group: notificationObject.group.name,
-                link: (...chunks) => (
+                link: (chunks) => (
                   <Link
+                    key={`ui.notification.${notificationObject.type}.link`}
                     to={
                       notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP ||
                       notificationObject.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP

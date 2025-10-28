@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import UserProfileEdit from './index';
+import UserProfileEdit, { UserProfileEditProps } from './index';
 import { DEFAULT_FIELDS, DEFAULT_SETTINGS } from '../../constants/UserProfile';
 
 export default {
@@ -9,7 +9,7 @@ export default {
     id: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   },
   args: {
@@ -17,7 +17,7 @@ export default {
   }
 } as Meta<typeof UserProfileEdit>;
 
-const template = (args) => (
+const template = (args: UserProfileEditProps) => (
   <div style={{width: 400}}>
     <UserProfileEdit {...args} />
   </div>

@@ -415,7 +415,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                   id="ui.groupForm.privacy.title"
                   defaultMessage="ui.groupForm.privacy.title"
                   values={{
-                    b: (chunks) => <strong>{chunks}</strong>
+                    b: (chunks) => <strong key="ui.groupForm.privacy.title.b">{chunks}</strong>
                   }}
                 />
               </Typography>
@@ -441,7 +441,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                     id="ui.groupForm.privacy.public.info"
                     defaultMessage="ui.groupForm.privacy.public.info"
                     values={{
-                      b: (chunks) => <strong>{chunks}</strong>
+                      b: (chunks) => <strong key="ui.groupForm.privacy.public.info.b">{chunks}</strong>
                     }}
                   />
                 ) : (
@@ -451,7 +451,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                         id="ui.groupForm.privacy.private.info.edit"
                         defaultMessage="ui.groupForm.private.public.info.edit"
                         values={{
-                          b: (chunks) => <strong>{chunks}</strong>
+                          b: (chunks) => <strong key="ui.groupForm.private.public.info.edit.b">{chunks}</strong>
                         }}
                       />
                     ) : (
@@ -459,7 +459,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                         id="ui.groupForm.privacy.private.info"
                         defaultMessage="ui.groupForm.private.public.info"
                         values={{
-                          b: (chunks) => <strong>{chunks}</strong>
+                          b: (chunks) => <strong key="ui.groupForm.private.public.info.b">{chunks}</strong>
                         }}
                       />
                     )}
@@ -477,7 +477,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                       id="ui.groupForm.visibility.title"
                       defaultMessage="ui.groupForm.visibility.title"
                       values={{
-                        b: (chunks) => <strong>{chunks}</strong>
+                        b: (chunks) => <strong key="ui.groupForm.visibility.title.b">{chunks}</strong>
                       }}
                     />
                   </Typography>
@@ -502,7 +502,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                         id="ui.groupForm.visibility.hidden.info"
                         defaultMessage="ui.groupForm.visibility.hidden.info"
                         values={{
-                          b: (chunks) => <strong>{chunks}</strong>
+                          b: (chunks) => <strong key="ui.groupForm.visibility.hidden.info.b">{chunks}</strong>
                         }}
                       />
                     ) : (
@@ -510,7 +510,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                         id="ui.groupForm.visibility.visible.info"
                         defaultMessage="ui.groupForm.visibility.visible.info"
                         values={{
-                          b: (chunks) => <strong>{chunks}</strong>
+                          b: (chunks) => <strong key="ui.groupForm.visibility.visible.info.b">{chunks}</strong>
                         }}
                       />
                     )}

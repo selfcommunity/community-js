@@ -6,7 +6,7 @@ export default {
   component: EventForm,
 } as Meta<typeof EventForm>;
 
-const template = (args) => (
+const template = (args: EventFormProps) => (
   <div style={{width: 800}}>
     <EventForm {...args} />
   </div>

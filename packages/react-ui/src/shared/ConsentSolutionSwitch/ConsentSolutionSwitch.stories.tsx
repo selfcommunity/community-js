@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import ConsentSolutionSwitch from './index';
+import ConsentSolutionSwitch, { ConsentSolutionSwitchProps } from './index';
 
 export default {
   title: 'Design System/React UI Shared/ConsentSolutionSwitch',
@@ -7,13 +7,13 @@ export default {
 } as Meta<typeof ConsentSolutionSwitch>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const template = (args) => <ConsentSolutionSwitch {...args} />;
+const template = (args: ConsentSolutionSwitchProps) => <ConsentSolutionSwitch {...args} />;
 
-export const Base: StoryObj<ConsentSolutionSwitch> = {
+export const Base: StoryObj<typeof ConsentSolutionSwitch> = {
   render: template
 };
 
-export const Loading: StoryObj<ConsentSolutionSwitch> = {
+export const Loading: StoryObj<typeof ConsentSolutionSwitch> = {
   args: {
     loading: true
   },
