@@ -155,7 +155,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
                   defaultMessage="ui.userCounters.followings"
                   values={{
                     count: scUser?.followings_counter,
-                    b: (chunks) => <strong key="ui.userCounters.followings.b">{chunks}</strong>
+                    b: (chunks) => <strong key={Math.random()}>{chunks}</strong>
                   }}
                 />
               </Button>
@@ -170,7 +170,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
                   defaultMessage="ui.userCounters.followers"
                   values={{
                     count: scUser?.followers_counter,
-                    b: (chunks) => <strong key="ui.userCounters.followers.b">{chunks}</strong>
+                    b: (chunks) => <strong key={Math.random()}>{chunks}</strong>
                   }}
                 />
               </Button>
@@ -187,7 +187,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
                   defaultMessage="ui.userCounters.connections"
                   values={{
                     count: scUser?.connections_counter,
-                    b: (chunks) => <strong key="ui.userCounters.connections.b">{chunks}</strong>
+                    b: (chunks) => <strong key={Math.random()}>{chunks}</strong>
                   }}
                 />
               </Button>
@@ -206,7 +206,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
             defaultMessage="ui.userCounters.categories"
             values={{
               count: scUser?.categories_counter,
-              b: (chunks) => <strong key="ui.userCounters.categories.b">{chunks}</strong>
+              b: (chunks) => <strong key={Math.random()}>{chunks}</strong>
             }}
           />
         </Button>

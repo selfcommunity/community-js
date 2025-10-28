@@ -441,7 +441,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                     id="ui.groupForm.privacy.public.info"
                     defaultMessage="ui.groupForm.privacy.public.info"
                     values={{
-                      b: (chunks) => <strong key="ui.groupForm.privacy.public.info.b">{chunks}</strong>
+                      b: (chunks) => <strong key={Math.random()}>{chunks}</strong>
                     }}
                   />
                 ) : (
@@ -451,7 +451,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                         id="ui.groupForm.privacy.private.info.edit"
                         defaultMessage="ui.groupForm.private.public.info.edit"
                         values={{
-                          b: (chunks) => <strong key="ui.groupForm.private.public.info.edit.b">{chunks}</strong>
+                          b: (chunks) => <strong key={Math.random()}>{chunks}</strong>
                         }}
                       />
                     ) : (
@@ -459,7 +459,7 @@ export default function GroupForm(inProps: GroupFormProps): JSX.Element {
                         id="ui.groupForm.privacy.private.info"
                         defaultMessage="ui.groupForm.private.public.info"
                         values={{
-                          b: (chunks) => <strong key="ui.groupForm.private.public.info.b">{chunks}</strong>
+                          b: (chunks) => <strong key={Math.random()}>{chunks}</strong>
                         }}
                       />
                     )}
