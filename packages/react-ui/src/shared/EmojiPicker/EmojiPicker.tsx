@@ -1,4 +1,3 @@
-import React from 'react';
 import {Box, styled} from '@mui/material';
 import {EmojiStyle, PickerProps} from 'emoji-picker-react';
 import {useThemeProps} from '@mui/system';
@@ -23,7 +22,7 @@ const Root = styled(Box, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
 
-interface EmojiPickerProps extends PickerProps {
+export interface EmojiPickerProps extends PickerProps {
   className?: string;
 }
 

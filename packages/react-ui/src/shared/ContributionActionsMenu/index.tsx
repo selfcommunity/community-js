@@ -994,7 +994,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
             </MenuItem>
             <Collapse in={open} timeout="auto" unmountOnExit>
               {renderReports(FLAG_CONTRIBUTION_SECTION)}
-              <Typography variant={'caption'} component="div" className={classes.footerSubItems}>
+              <Typography variant="caption" component="div" className={classes.footerSubItems}>
                 {intl.formatMessage(messages.footer)}
               </Typography>
             </Collapse>
@@ -1356,8 +1356,6 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   return (
     <Root className={classNames(classes.root, className)}>
       <IconButton
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         ref={(ref) => {
           popperRef.current = ref;
         }}
@@ -1391,7 +1389,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               placement="bottom-end">
               {({TransitionProps, placement}) => (
                 <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
-                  <Paper variant={'outlined'} className={classes.paper}>
+                  <Paper variant="outlined" className={classes.paper}>
                     <ClickAwayListener onClickAway={handleClose}>{renderContent()}</ClickAwayListener>
                   </Paper>
                 </Grow>

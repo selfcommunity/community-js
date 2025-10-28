@@ -382,7 +382,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
         onClick={handleSave}
         loading={saving.length > 0}
         disabled={saving.length > 0 || !editing.length || Object.keys(error).length > 0}>
-        <FormattedMessage id={'ui.userInfo.button.save'} defaultMessage={'ui.userInfo.button.save'} />
+        <FormattedMessage id="ui.userInfo.button.save" defaultMessage="ui.userInfo.button.save" />
       </Button>
       {endActions}
     </Root>

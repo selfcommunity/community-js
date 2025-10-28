@@ -190,7 +190,6 @@ export default function Tags(props: TagsProps): JSX.Element {
               <Icon ref={popperRef} fontSize="small" onClick={handleToggle} aria-haspopup="true">
                 label
               </Icon>
-              {/* @ts-ignore */}
               <TagsPopper
                 open={open}
                 anchorEl={popperRef.current}
@@ -204,7 +203,7 @@ export default function Tags(props: TagsProps): JSX.Element {
                 ]}>
                 {({TransitionProps, placement, ...rest}) => (
                   <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
-                    <Paper variant={'outlined'} className={classes.paper}>
+                    <Paper variant="outlined" className={classes.paper}>
                       <ClickAwayListener onClickAway={handleClose}>
                         <>
                           {renderTitle()}

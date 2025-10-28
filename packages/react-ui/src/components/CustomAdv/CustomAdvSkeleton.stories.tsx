@@ -6,13 +6,13 @@ export default {
   component: CustomAdvSkeleton
 } as Meta<typeof CustomAdvSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: 400}}>
-    <CustomAdvSkeleton {...args} />
+    <CustomAdvSkeleton />
   </div>
 );
 
-export const Base: StoryObj<CustomAdvSkeleton> = {
+export const Base: StoryObj<typeof CustomAdvSkeleton> = {
   args: {
     contained: true
   },

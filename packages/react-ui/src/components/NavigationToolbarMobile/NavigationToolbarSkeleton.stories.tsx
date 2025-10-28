@@ -15,13 +15,13 @@ export default {
   },
 } as Meta<typeof NavigationToolbarMobileSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <AppBar position="relative">
-    <NavigationToolbarMobileSkeleton {...args} />
+    <NavigationToolbarMobileSkeleton />
   </AppBar>
 );
 
-export const Base: StoryObj<NavigationToolbarMobileSkeleton> = {
+export const Base: StoryObj<typeof NavigationToolbarMobileSkeleton> = {
   parameters: {
     viewport: {
       defaultViewport: 'iphone6',

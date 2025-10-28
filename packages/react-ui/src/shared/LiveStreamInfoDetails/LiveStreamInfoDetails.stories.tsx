@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import LiveStreamInfoDetails from './index';
+import LiveStreamInfoDetails, { LiveStreamInfoDetailsProps } from './index';
 
 export default {
 	title: 'Design System/React UI Shared/LiveStreamInfoDetails',
@@ -8,17 +8,17 @@ export default {
 		liveStreamId: {
 			control: { type: 'number' },
 			description: 'LiveStream Id',
-			table: { defaultValue: { summary: 1 } }
+			table: { defaultValue: { summary: '1' } }
 		},
 		hasInProgress: {
 			control: { type: 'boolean' },
 			description: 'Show in progress',
-			table: { defaultValue: { summary: false } }
+			table: { defaultValue: { summary: '' } }
 		},
 	}
 } as Meta<typeof LiveStreamInfoDetails>;
 
-const template = (args) => (
+const template = (args: LiveStreamInfoDetailsProps) => (
 	<div style={{ maxWidth: 400 }}>
 		<LiveStreamInfoDetails {...args} />
 	</div>

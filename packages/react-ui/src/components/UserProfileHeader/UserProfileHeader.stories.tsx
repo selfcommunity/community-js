@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
-import UserProfileHeader from './index';
+import UserProfileHeader, { UserProfileHeaderProps } from './index';
 
 export default {
   title: 'Design System/React UI/User Profile Header',
@@ -9,7 +9,7 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 167}}
+      table: {defaultValue: {summary: '167'}}
     }
   },
   args: {
@@ -17,7 +17,7 @@ export default {
   }
 } as Meta<typeof UserProfileHeader>;
 
-const template = (args) => (
+const template = (args: UserProfileHeaderProps) => (
   <div style={{width: '100%'}}>
     <UserProfileHeader {...args} />
   </div>

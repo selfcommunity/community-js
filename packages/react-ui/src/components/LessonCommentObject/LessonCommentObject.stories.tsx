@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import LessonCommentObject from './index';
+import LessonCommentObject, { LessonCommentObjectProps } from './index';
 
 export default {
   title: 'Design System/React UI/LessonCommentObject',
@@ -8,12 +8,12 @@ export default {
     commentObjectId: {
       control: {type: 'number'},
       description: 'LessonCommentObject Id',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     variant: {
       options: ['elevation', 'outlined'],
@@ -31,7 +31,7 @@ export default {
 
 } as Meta<typeof LessonCommentObject>;
 
-const template = (args) => (
+const template = (args: LessonCommentObjectProps) => (
   <div style={{width: 500}}>
     <LessonCommentObject {...args} />
   </div>

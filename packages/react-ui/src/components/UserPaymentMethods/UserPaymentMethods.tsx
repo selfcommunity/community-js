@@ -22,7 +22,7 @@ import {SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 import UserPaymentMethodsSkeleton from './Skeleton';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage} from 'react-intl';
 import {useInView} from 'react-intersection-observer';
 import {useSnackbar} from 'notistack';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
@@ -93,7 +93,7 @@ const UserPaymentMethods: ForwardRefRenderFunction<UserPaymentMethodsRef, UserPa
     props: inProps,
     name: PREFIX
   });
-  const {className = null, showBillingAddress = false, ...rest} = props;
+  const {className = null, showBillingAddress = false} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -115,7 +115,6 @@ const UserPaymentMethods: ForwardRefRenderFunction<UserPaymentMethodsRef, UserPa
 
   // HOOKS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
-  const intl = useIntl();
   const {inView} = useInView({triggerOnce: false});
   const {enqueueSnackbar} = useSnackbar();
 
@@ -125,8 +124,8 @@ const UserPaymentMethods: ForwardRefRenderFunction<UserPaymentMethodsRef, UserPa
   const loadMore = useCallback(async () => {
     // eslint-disable-next-line @typescript-eslint/require-await
     const loadItems = async () => {
-      const startingAfterId = paymentMethods.length ? paymentMethods[paymentMethods.length - 1].id : null;
-      /* getAccountCustomerPaymentMethod(startingAfterId).then((res) => {
+      /* const startingAfterId = paymentMethods.length ? paymentMethods[paymentMethods.length - 1].id : null;
+      getAccountCustomerPaymentMethod(startingAfterId).then((res) => {
         setHasMore(res.paymentMethods.has_more);
         setPaymentMethods(paymentMethods.concat(res.paymentMethods.data));
         setIsLoadingPage(false);
@@ -404,7 +403,7 @@ const UserPaymentMethods: ForwardRefRenderFunction<UserPaymentMethodsRef, UserPa
               <FormattedMessage id="ui.userPaymentMethods.myPaymentMethods" defaultMessage="ui.userPaymentMethods.myPaymentMethods" />
             </Typography>
             {paymentMethods.length > 0 && (
-              <Button size="small" variant={'outlined'} onClick={handleOpenAddPaymentMethodDialog}>
+              <Button size="small" variant="outlined" onClick={handleOpenAddPaymentMethodDialog}>
                 <FormattedMessage id="ui.userPaymentMethods.btnAdd" defaultMessage="ui.userPaymentMethods.btnAdd" />
               </Button>
             )}
@@ -455,13 +454,13 @@ const UserPaymentMethods: ForwardRefRenderFunction<UserPaymentMethodsRef, UserPa
                         <TableCell scope="row">
                           <Stack direction="row" justifyContent="left" alignItems="center" spacing={2}>
                             <Box>
-                              <Typography variant={'body1'}>{method.billing_details.name}</Typography>
-                              <Typography variant={'body1'}>
+                              <Typography variant="body1">{method.billing_details.name}</Typography>
+                              <Typography variant="body1">
                                 {method.billing_details?.address?.line1}
                                 <br />
                                 {method.billing_details?.address?.line2}
                               </Typography>
-                              <Typography variant={'body1'}>
+                              <Typography variant="body1">
                                 {method.billing_details?.address?.postal_code} - {method.billing_details?.address?.city} -{' '}
                                 {method.billing_details?.address?.country}
                               </Typography>
@@ -483,7 +482,7 @@ const UserPaymentMethods: ForwardRefRenderFunction<UserPaymentMethodsRef, UserPa
                         )}
                       </TableCell>
                       <TableCell scope="row">
-                        <Button variant={'contained'} onClick={() => handleDelete(method.id)}>
+                        <Button variant="contained" onClick={() => handleDelete(method.id)}>
                           <FormattedMessage id="ui.userPaymentMethods.btnRemove" defaultMessage="ui.userPaymentMethods.btnRemove" />
                         </Button>
                       </TableCell>
@@ -498,7 +497,7 @@ const UserPaymentMethods: ForwardRefRenderFunction<UserPaymentMethodsRef, UserPa
               <Typography variant="body2" mb={2}>
                 <FormattedMessage id="ui.userPaymentMethods.noPaymentMethods" defaultMessage="ui.userPaymentMethods.noPaymentMethods" />
               </Typography>
-              <Button size="small" variant={'contained'} onClick={handleOpenAddPaymentMethodDialog}>
+              <Button size="small" variant="contained" onClick={handleOpenAddPaymentMethodDialog}>
                 <FormattedMessage id="ui.userPaymentMethods.btnAdd" defaultMessage="ui.userPaymentMethods.btnAdd" />
               </Button>
             </>

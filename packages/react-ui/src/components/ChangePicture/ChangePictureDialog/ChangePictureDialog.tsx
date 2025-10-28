@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import {useContext, useEffect, useRef, useState} from 'react';
 import {Alert, Box, IconButton, ImageList, ImageListItem, ImageListItemBar, styled, Typography, Button, CircularProgress, Icon} from '@mui/material';
 import {Endpoints, UserService} from '@selfcommunity/api-services';
 import {SCContext, SCContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
@@ -40,7 +40,7 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
   const scContext: SCContextType = useContext(SCContext);
 
   //STATE
-  const [file, setFile] = useState(scUserContext.user['avatar']);
+  const [, setFile] = useState(scUserContext.user['avatar']);
   const [error, setError] = useState<boolean>(false);
   const [alert, setAlert] = useState<boolean>(false);
   const [primary, setPrimary] = useState(null);
@@ -230,21 +230,17 @@ export default function ChangePictureDialog(props: CPDialogProps): JSX.Element {
             id="ui.changePicture.info"
             defaultMessage="ui.changePicture.info"
             values={{
-              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // @ts-ignore
-              li: (chunks) => <li>{chunks}</li>,
-              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // @ts-ignore
-              ul: (chunks) => <ul>{chunks}</ul>
+              li: (chunks) => <li key="ui.changePicture.info.li">{chunks}</li>,
+              ul: (chunks) => <ul key="ui.changePicture.info.ul">{chunks}</ul>
             }}
           />
         </Typography>
       </Box>
-      <ImageList cols={3} rowHeight={'auto'} id="avatarsList" classes={{root: classes.imagesList}}>
+      <ImageList cols={3} rowHeight="auto" id="avatarsList" classes={{root: classes.imagesList}}>
         {avatars.map((avatar) => (
           <Box className={classes.imageItem} key={avatar.id}>
             <ImageListItem className={primary === avatar.id ? classes.primary : ''} key={avatar.id} onClick={() => selectPrimaryAvatar(avatar)}>
-              <img src={avatar.avatar} loading="lazy" alt={'img'} />
+              <img src={avatar.avatar} loading="lazy" alt="img" />
               <ImageListItemBar
                 position="top"
                 actionIcon={

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import UserProfileFollowedUsersWidget from './index';
+import UserProfileFollowedUsersWidget, { UserFollowedUsersWidgetProps } from './index';
 
 export default {
   title: 'Design System/React UI/User Followed Users Widget',
@@ -8,12 +8,12 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   }
 } as Meta<typeof UserProfileFollowedUsersWidget>;
 
-const template = (args) => (
+const template = (args: UserFollowedUsersWidgetProps) => (
   <div style={{width: 400}}>
     <UserProfileFollowedUsersWidget {...args} />
   </div>

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import CategoryFollowersButton from './index';
+import CategoryFollowersButton, { CategoryFollowersButtonProps } from './index';
 
 export default {
   title: 'Design System/React UI/Category Followers Button ',
@@ -8,18 +8,18 @@ export default {
     categoryId: {
       control: {type: 'number'},
       description: 'Category Id',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   }
 } as Meta<typeof CategoryFollowersButton>;
 
-const template = (args) => (
+const template = (args: CategoryFollowersButtonProps) => (
   <div style={{width: '100%'}}>
     <CategoryFollowersButton {...args} />
   </div>
 );
 
-export const Base: StoryObj<CategoryFollowersButton> = {
+export const Base: StoryObj<typeof CategoryFollowersButton> = {
   args: {
     categoryId: 1
   },

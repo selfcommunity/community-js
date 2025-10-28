@@ -6,12 +6,12 @@ export default {
   component: CategoryHeaderSkeleton
 } as Meta<typeof CategoryHeaderSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: '100%'}}>
-    <CategoryHeaderSkeleton {...args} />
+    <CategoryHeaderSkeleton />
   </div>
 );
 
-export const Base: StoryObj<CategoryHeaderSkeleton> = {
+export const Base: StoryObj<typeof CategoryHeaderSkeleton> = {
   render: template
 }

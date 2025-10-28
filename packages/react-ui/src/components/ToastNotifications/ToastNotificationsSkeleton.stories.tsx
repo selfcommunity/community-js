@@ -6,13 +6,13 @@ export default {
   component: ToastNotificationsSkeleton
 } as Meta<typeof ToastNotificationsSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: 400}}>
-    <ToastNotificationsSkeleton {...args} />
+    <ToastNotificationsSkeleton />
   </div>
 );
 
-export const Base: StoryObj<ToastNotificationsSkeleton> = {
+export const Base: StoryObj<typeof ToastNotificationsSkeleton> = {
   args: {
     contained: true
   },

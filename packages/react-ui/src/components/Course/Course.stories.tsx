@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import Course from './index';
+import Course, { CourseProps } from './index';
 import { SCCourseTemplateType } from '../../types';
 
 export default {
@@ -9,12 +9,12 @@ export default {
 		courseId: {
 			control: { type: 'number' },
 			description: 'Course Id',
-			table: { defaultValue: { summary: 1 } }
+			table: { defaultValue: { summary: '1' } }
 		},
 		elevation: {
 			control: { type: 'number' },
 			description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-			table: { defaultValue: { summary: 1 } }
+			table: { defaultValue: { summary: '1' } }
 		},
 		variant: {
 			options: ['elevation', 'outlined'],
@@ -25,7 +25,7 @@ export default {
 	}
 } as Meta<typeof Course>;
 
-const template = (args) => (
+const template = (args: CourseProps) => (
 	<div style={{ maxWidth: 400 }}>
 		<Course {...args} />
 	</div>

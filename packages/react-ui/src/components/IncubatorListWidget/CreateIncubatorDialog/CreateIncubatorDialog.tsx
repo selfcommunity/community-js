@@ -100,7 +100,7 @@ export default function CreateIncubatorDialog(props: CreateIncubatorDialogProps)
   let dialogContent;
   if (submitted) {
     dialogContent = (
-      <Typography variant={'subtitle2'} className={classes.submittedMessage}>
+      <Typography variant="subtitle2" className={classes.submittedMessage}>
         <FormattedMessage
           id="ui.incubatorListWidget.createIncubatorDialog.propose.success"
           defaultMessage="ui.incubatorListWidget.createIncubatorDialog.propose.success"
@@ -110,7 +110,7 @@ export default function CreateIncubatorDialog(props: CreateIncubatorDialogProps)
   } else {
     dialogContent = (
       <>
-        <Typography component={'span'} className={classes.intro}>
+        <Typography component="span" className={classes.intro}>
           <FormattedMessage
             id="ui.incubatorsListDialog.createIncubatorDialog.intro"
             defaultMessage="ui.incubatorsListDialog.createIncubatorDialog.intro"

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import CourseCreatePlaceholder from './CreatePlaceholder';
+import { CourseSkeletonProps } from './Skeleton';
 
 export default {
 	title: 'Design System/React UI/Course/Create Placeholder',
@@ -7,7 +8,7 @@ export default {
 	argTypes: {}
 } as Meta<typeof CourseCreatePlaceholder>;
 
-const template = (args) => (
+const template = (args: CourseSkeletonProps) => (
 	<div style={{ maxWidth: 400 }}>
 		<CourseCreatePlaceholder {...args} />
 	</div>

@@ -6,9 +6,9 @@ export default {
   component: InlineComposerWidgetSkeleton,
 } as Meta<typeof InlineComposerWidgetSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: 400}}>
-    <InlineComposerWidgetSkeleton {...args} />
+    <InlineComposerWidgetSkeleton />
   </div>
 );
 

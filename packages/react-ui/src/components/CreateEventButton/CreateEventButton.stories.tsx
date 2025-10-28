@@ -6,7 +6,7 @@ export default {
   component: CreateEventButton,
 } as Meta<typeof CreateEventButton>;
 
-const template = (args) => (
+const template = (args: CreateEventButtonProps) => (
   <div style={{width: 800}}>
     <CreateEventButton {...args} />
   </div>

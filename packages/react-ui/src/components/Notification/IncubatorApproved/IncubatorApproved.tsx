@@ -1,4 +1,3 @@
-import React from 'react';
 import {Avatar, Button, Stack, Typography, styled} from '@mui/material';
 import {SCNotificationIncubatorType} from '@selfcommunity/types';
 import {Link, SCRoutingContextType, useSCRouting, SCRoutes} from '@selfcommunity/react-core';
@@ -89,7 +88,7 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
               <Typography component="div" className={classes.categoryApprovedText} color="inherit">
                 {intl.formatMessage(messages.incubatorApproved, {
                   name: notificationObject.incubator.name,
-                  b: (...chunks) => <strong>{chunks}</strong>
+                  b: (chunks) => <strong key="ui.notification.incubatorApproved.approved.b.1">{chunks}</strong>
                 })}
               </Typography>
             </Link>
@@ -99,7 +98,7 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
               <Typography component="div" className={classes.categoryApprovedText} color="inherit">
                 {intl.formatMessage(messages.incubatorApproved, {
                   name: notificationObject.incubator.name,
-                  b: (...chunks) => <strong>{chunks}</strong>
+                  b: (chunks) => <strong key="ui.notification.incubatorApproved.approved.b.2">{chunks}</strong>
                 })}
               </Typography>
             </>
@@ -117,19 +116,16 @@ export default function IncubatorApprovedNotification(props: NotificationIncubat
             component={Link}
             to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator.approved_category)}
             className={classes.viewIncubatorButton}>
-            <FormattedMessage
-              id={'ui.notification.incubatorApproved.viewIncubator'}
-              defaultMessage={'ui.notification.incubatorApproved.viewIncubator'}
-            />
+            <FormattedMessage id="ui.notification.incubatorApproved.viewIncubator" defaultMessage="ui.notification.incubatorApproved.viewIncubator" />
           </Button>
         ) : template === SCNotificationObjectTemplateType.TOAST ? (
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <DateTimeAgo date={notificationObject.active_at} />
-            <Typography color="primary" component={'div'}>
+            <Typography color="primary" component="div">
               <Link to={scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, notificationObject.incubator)}>
                 <FormattedMessage
                   id="ui.userToastNotifications.incubatorApproved.viewIncubator"
-                  defaultMessage={'ui.userToastNotifications.incubatorApproved.viewIncubator'}
+                  defaultMessage="ui.userToastNotifications.incubatorApproved.viewIncubator"
                 />
               </Link>
             </Typography>

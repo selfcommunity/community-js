@@ -15,7 +15,7 @@ export default {
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     template: {
       options: [SCFeedObjectTemplateType.SNIPPET, SCFeedObjectTemplateType.PREVIEW, SCFeedObjectTemplateType.DETAIL],
@@ -41,7 +41,7 @@ export default {
   }
 } as Meta<typeof FeedObjectSkeleton>;
 
-const template = (args) => (
+const template = (args: FeedObjectSkeletonProps) => (
   <div style={{width: 400}}>
     <FeedObjectSkeleton {...args} />
   </div>

@@ -6,7 +6,7 @@ export default {
   component: Editor
 } as Meta<typeof Editor>;
 
-const template = (args) => (
+const template = (args: EditorProps) => (
   <div style={{width: 600}}>
     <Editor {...args} />
   </div>

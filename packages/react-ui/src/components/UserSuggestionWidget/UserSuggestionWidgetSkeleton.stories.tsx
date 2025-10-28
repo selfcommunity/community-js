@@ -6,7 +6,7 @@ export default {
   component: UserSuggestionWidgetSkeleton
 } as Meta<typeof UserSuggestionWidgetSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <UserSuggestionWidgetSkeleton {...args} />
   </div>

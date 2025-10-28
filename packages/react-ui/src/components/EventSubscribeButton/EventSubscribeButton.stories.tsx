@@ -9,7 +9,7 @@ export default {
   }
 } as Meta<typeof EventSubscribeButton>;
 
-const template = (args) => (
+const template = (args: EventSubscribeButtonProps) => (
     <EventSubscribeButton {...args} />
 );
 

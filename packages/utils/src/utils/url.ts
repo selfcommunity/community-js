@@ -13,7 +13,7 @@ export const urlReplacer = (path: string) => {
     }
     return tpl;
   };
-  return (params: object) => replacer(path, params);
+  return (params: Record<string, unknown>) => replacer(path, params);
 };
 
 /**

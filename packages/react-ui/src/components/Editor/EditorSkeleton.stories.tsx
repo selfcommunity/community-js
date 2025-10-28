@@ -6,9 +6,9 @@ export default {
   component: EditorSkeleton
 } as Meta<typeof EditorSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: 400}}>
-    <EditorSkeleton {...args} />
+    <EditorSkeleton />
   </div>
 );
 

@@ -265,7 +265,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
                   id="templates.loyaltyProgramDetail.content.end.message"
                   defaultMessage="templates.loyaltyProgramDetail.content.end.message"
                 />
-                <Button color={'secondary'} onClick={handleScrollUp}>
+                <Button color="secondary" onClick={handleScrollUp}>
                   <FormattedMessage
                     id="templates.loyaltyProgramDetail.content.end.button"
                     defaultMessage="templates.loyaltyProgramDetail.content.end.button"

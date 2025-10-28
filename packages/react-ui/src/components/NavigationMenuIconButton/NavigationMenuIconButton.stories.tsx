@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import NavigationMenuIconButton from './index';
+import NavigationMenuIconButton, { NavigationMenuIconButtonProps } from './index';
 import {Typography} from '@mui/material';
 
 export default {
@@ -8,7 +8,7 @@ export default {
 } as Meta<typeof NavigationMenuIconButton>;
 
 
-const template = (args) => (
+const template = (args: NavigationMenuIconButtonProps) => (
   <div style={{width: '100%'}}>
     <NavigationMenuIconButton {...args} />
   </div>

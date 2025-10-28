@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import {prefetchedCourses} from './prefetchedCourses';
-import Courses from './index';
-import CoursesSkeleton from './Skeleton';
+import Courses, { CoursesProps } from './index';
 
 export default {
   title: 'Design System/React UI/Courses',
@@ -10,19 +9,19 @@ export default {
     showFilters: {
       control: {type: 'boolean'},
       description: 'Show/Hide filters.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   },
   args: {}
 } as Meta<typeof Courses>;
 
-const template = (args) => (
+const template = (args: CoursesProps) => (
   <div style={{maxWidth: 1280}}>
     <Courses {...args} />
   </div>
 );
 
-export const Base: StoryObj<typeof CoursesSkeleton> = {
+export const Base: StoryObj<typeof Courses> = {
   render: template
 };
 

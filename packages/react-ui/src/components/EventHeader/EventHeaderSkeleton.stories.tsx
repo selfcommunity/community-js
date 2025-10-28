@@ -8,9 +8,9 @@ export default {
   args: {}
 } as Meta<typeof EventHeaderSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: '100%'}}>
-    <EventHeaderSkeleton {...args} />
+    <EventHeaderSkeleton />
   </div>
 );
 

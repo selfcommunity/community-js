@@ -6,13 +6,13 @@ export default {
   component: RelatedFeedObjectsWidgetSkeleton
 } as Meta<typeof RelatedFeedObjectsWidgetSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: 400}}>
-    <RelatedFeedObjectsWidgetSkeleton {...args} />
+    <RelatedFeedObjectsWidgetSkeleton />
   </div>
 );
 
-export const Base: StoryObj<RelatedFeedObjectsWidgetSkeleton> = {
+export const Base: StoryObj<typeof RelatedFeedObjectsWidgetSkeleton> = {
   args: {
     contained: true
   },

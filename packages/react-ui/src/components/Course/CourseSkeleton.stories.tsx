@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import CourseSkeleton from './Skeleton';
+import CourseSkeleton, { CourseSkeletonProps } from './Skeleton';
 import { SCCourseTemplateType } from '../../types/course';
 
 export default {
@@ -7,7 +7,7 @@ export default {
   component: CourseSkeleton
 } as Meta<typeof CourseSkeleton>;
 
-const template = (args) => (
+const template = (args: CourseSkeletonProps) => (
   <div style={{ width: '400px' }}>
     <CourseSkeleton {...args} />
   </div>

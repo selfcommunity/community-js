@@ -571,7 +571,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     return (
       <CardContent>
         <InfiniteScroll
-          height={'100%'}
+          height="100%"
           dataLength={messageObjs.length}
           previous={handlePrevious}
           inverse={true}

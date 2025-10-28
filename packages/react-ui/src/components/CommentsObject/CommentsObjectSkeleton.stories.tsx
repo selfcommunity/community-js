@@ -8,7 +8,7 @@ export default {
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   },
   args: {
@@ -22,13 +22,13 @@ export default {
   }
 } as Meta<typeof CommentsObjectSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <CommentsObjectSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<CommentsObjectSkeleton> = {
+export const Base: StoryObj<typeof CommentsObjectSkeleton> = {
   render: template
 };
 

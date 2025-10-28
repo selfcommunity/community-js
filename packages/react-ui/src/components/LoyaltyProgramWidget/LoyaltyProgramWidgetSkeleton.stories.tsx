@@ -6,12 +6,12 @@ export default {
   component: LoyaltyProgramWidgetSkeleton
 } as Meta<typeof LoyaltyProgramWidgetSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: 400}}>
-    <LoyaltyProgramWidgetSkeleton {...args} />
+    <LoyaltyProgramWidgetSkeleton />
   </div>
 );
 
-export const Base: StoryObj<LoyaltyProgramWidgetSkeleton> = {
+export const Base: StoryObj<typeof LoyaltyProgramWidgetSkeleton> = {
   render: template
 };

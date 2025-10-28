@@ -6,13 +6,13 @@ export default {
   component: PrivateMessageEditorSkeleton
 } as Meta<typeof PrivateMessageEditorSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: 400}}>
-    <PrivateMessageEditorSkeleton {...args} />
+    <PrivateMessageEditorSkeleton />
   </div>
 );
 
-export const Base: StoryObj<PrivateMessageEditorSkeleton> = {
+export const Base: StoryObj<typeof PrivateMessageEditorSkeleton> = {
   args: {
     contained: true
   },

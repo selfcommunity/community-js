@@ -9,7 +9,7 @@ export default {
   }
 } as Meta<typeof PaymentOrderPdfButton>;
 
-const template = (args) => (
+const template = (args: PaymentOrderPdfButtonProps) => (
     <PaymentOrderPdfButton {...args} />
 );
 

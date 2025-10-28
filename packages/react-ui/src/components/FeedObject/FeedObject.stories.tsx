@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import FeedObject from './index';
+import FeedObject, { FeedObjectProps } from './index';
 import { SCFeedObjectTemplateType } from '../../types/feedObject';
 import { SCContributionType } from '@selfcommunity/types';
 
@@ -10,7 +10,7 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 9}}
+      table: {defaultValue: {summary: '9'}}
     },
     feedObjectType: {
       options: [SCContributionType.POST, SCContributionType.DISCUSSION, SCContributionType.STATUS],
@@ -26,7 +26,7 @@ export default {
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     variant: {
       options: ['elevation', 'outlined'],
@@ -43,14 +43,14 @@ export default {
 
 } as Meta<typeof FeedObject>;
 
-const template = (args) => {
+const template = (args: FeedObjectProps) => {
   return (<div style={{width: '100%', maxWidth: 800}}>
     <FeedObject {...args} />
   </div>);
 };
 
 
-export const Base: StoryObj<FeedObject> = {
+export const Base: StoryObj<typeof FeedObject> = {
   args: {
     feedObjectId: 2620,
     feedObjectType: SCContributionType.POST
@@ -58,7 +58,7 @@ export const Base: StoryObj<FeedObject> = {
   render: template
 };
 
-export const CacheBase: StoryObj<FeedObject> = {
+export const CacheBase: StoryObj<typeof FeedObject> = {
   args: {
     feedObjectId: 1372,
     feedObjectType: SCContributionType.DISCUSSION
@@ -66,7 +66,7 @@ export const CacheBase: StoryObj<FeedObject> = {
   render: template
 };
 
-export const BaseWithImage: StoryObj<FeedObject> = {
+export const BaseWithImage: StoryObj<typeof FeedObject> = {
   args: {
     feedObjectId: 404,
     feedObjectType: SCContributionType.DISCUSSION
@@ -75,7 +75,7 @@ export const BaseWithImage: StoryObj<FeedObject> = {
 };
 
 
-export const BaseWithImage2: StoryObj<FeedObject> = {
+export const BaseWithImage2: StoryObj<typeof FeedObject> = {
   args: {
     feedObjectId: 328,
     feedObjectType: SCContributionType.POST
@@ -83,7 +83,7 @@ export const BaseWithImage2: StoryObj<FeedObject> = {
   render: template
 };
 
-export const BaseWithImage3: StoryObj<FeedObject> = {
+export const BaseWithImage3: StoryObj<typeof FeedObject> = {
   args: {
     feedObjectId: 380,
     feedObjectType: SCContributionType.POST
@@ -91,7 +91,7 @@ export const BaseWithImage3: StoryObj<FeedObject> = {
   render: template
 };
 
-export const BaseWithImage3More: StoryObj<FeedObject> = {
+export const BaseWithImage3More: StoryObj<typeof FeedObject> = {
   args: {
     feedObjectId: 2815,
     feedObjectType: SCContributionType.POST
@@ -99,7 +99,7 @@ export const BaseWithImage3More: StoryObj<FeedObject> = {
   render: template
 };
 
-export const BaseWithVideo: StoryObj<FeedObject> = {
+export const BaseWithVideo: StoryObj<typeof FeedObject> = {
   args: {
     feedObjectId: 55,
     feedObjectType: SCContributionType.DISCUSSION

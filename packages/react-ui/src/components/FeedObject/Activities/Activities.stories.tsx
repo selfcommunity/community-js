@@ -11,7 +11,7 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 9}}
+      table: {defaultValue: {summary: '9'}}
     },
     feedObjectType: {
       options: [SCContributionType.POST, SCContributionType.DISCUSSION, SCContributionType.STATUS],
@@ -22,7 +22,7 @@ export default {
 } as Meta<ActivitiesProps>;
 
 
-const template = (args) => {
+const template = (args: ActivitiesProps) => {
   return (<div style={{width: '100%', maxWidth: 800}}>
     <Activities {...args} />
   </div>);

@@ -54,11 +54,11 @@ const templateContainerFixed = (args: any) => {
     feedRef && feedRef.current && feedRef.current.refresh();
   };
 
-  // The feed is wrapped in a container with position fixed and scrollbar and overflow: auto, so pass to the Feed scrollableTargetId={'scrollableDiv'}
+  // The feed is wrapped in a container with position fixed and scrollbar and overflow: auto, so pass to the Feed scrollableTargetId="scrollableDiv"
   return (
     <div>
       <Button
-        id={'testButton'}
+        id="testButton"
         color="info"
         variant="contained"
         size="small"
@@ -69,7 +69,7 @@ const templateContainerFixed = (args: any) => {
       <div
         style={{position: 'fixed', bottom: 0, left: 0, right: 0, top: 70, zIndex: 1, maxWidth: '100% !important', height: '92vh', overflow: 'auto'}}
         id="scrollableDiv">
-        <Feed {...args} ref={feedRef} scrollableTargetId={'scrollableDiv'} />
+        <Feed {...args} ref={feedRef} scrollableTargetId="scrollableDiv" />
       </div>
     </div>
   );

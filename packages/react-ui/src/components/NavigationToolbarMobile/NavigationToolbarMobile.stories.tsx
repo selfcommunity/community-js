@@ -2,7 +2,6 @@ import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import NavigationToolbarMobile, { NavigationToolbarMobileProps } from './index';
 import { AppBar, Icon, IconButton, Typography } from '@mui/material';
 import { INITIAL_VIEWPORTS } from 'storybook/viewport';
-import React from 'react';
 
 export default {
   title: 'Design System/React UI/Navigation Toolbar Mobile',
@@ -17,7 +16,7 @@ export default {
 } as Meta<NavigationToolbarMobileProps>;
 
 
-const template = (args) => (
+const template = (args: NavigationToolbarMobileProps) => (
   <AppBar position="relative" elevation={0}>
     <NavigationToolbarMobile {...args}></NavigationToolbarMobile>
   </AppBar>
@@ -26,7 +25,7 @@ const template = (args) => (
 export const Base: StoryObj<NavigationToolbarMobileProps> = {
   args: {
     /* the args you need here will depend on your component */
-		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q), autoFocus: true, onSuggestionSelect: (type) => console.log(type)},
+		SearchAutocompleteComponentProps: {onSearch: (q: any) => console.log(q), autoFocus: true, onSuggestionSelect: (type: any) => console.log(type)},
     value: '/'
   },
   parameters: {
@@ -40,7 +39,7 @@ export const Base: StoryObj<NavigationToolbarMobileProps> = {
 
 export const Custom: StoryObj<NavigationToolbarMobileProps> = {
   args: {
-		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q), autoFocus: true, onSuggestionSelect: (type) => console.log(type)},
+		SearchAutocompleteComponentProps: {onSearch: (q: any) => console.log(q), autoFocus: true, onSuggestionSelect: (type: any) => console.log(type)},
     value: '/',
     children: <><IconButton><Icon>arrow_back</Icon></IconButton><Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography></>
   },
@@ -54,7 +53,7 @@ export const Custom: StoryObj<NavigationToolbarMobileProps> = {
 
 export const Actions: StoryObj<NavigationToolbarMobileProps> = {
   args: {
-		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q), autoFocus: true},
+		SearchAutocompleteComponentProps: {onSearch: (q: any) => console.log(q), autoFocus: true},
     value: '/',
     startActions: <>
       <IconButton>

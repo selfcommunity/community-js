@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Box, Collapse, List, ListItem, ListItemButton, ListItemText, Typography, styled, Icon} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCFeedUnitActivityType, SCFeedUnitActivityTypologyType} from '@selfcommunity/types';
@@ -78,16 +78,15 @@ export default function RelevantActivities(props: RelevantActivitiesProps): JSX.
       ) : (
         <List>
           {activities.slice(0, showMaxRelevantActivities).map((a: SCFeedUnitActivityType, i) => (
-            <ListItem className={classes.activity} key={i}>{renderActivity(a, i)}</ListItem>
+            <ListItem className={classes.activity} key={i}>
+              {renderActivity(a, i)}
+            </ListItem>
           ))}
           {!openOtherActivities && activities.length > showMaxRelevantActivities && (
             <ListItemButton onClick={() => setOpenOtherActivities((prev) => !prev)}>
               <ListItemText
                 primary={
-                  <FormattedMessage
-                    id={'ui.feedObject.relevantActivities.showOthers'}
-                    defaultMessage={'ui.feedObject.relevantActivities.showOthers'}
-                  />
+                  <FormattedMessage id="ui.feedObject.relevantActivities.showOthers" defaultMessage="ui.feedObject.relevantActivities.showOthers" />
                 }
               />
               {openOtherActivities ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
@@ -95,7 +94,9 @@ export default function RelevantActivities(props: RelevantActivitiesProps): JSX.
           )}
           <Collapse in={openOtherActivities} timeout="auto" unmountOnExit>
             {activities.slice(showMaxRelevantActivities).map((a: SCFeedUnitActivityType, i) => (
-              <ListItem className={classes.activity} key={i}>{renderActivity(a, i)}</ListItem>
+              <ListItem className={classes.activity} key={i}>
+                {renderActivity(a, i)}
+              </ListItem>
             ))}
           </Collapse>
         </List>

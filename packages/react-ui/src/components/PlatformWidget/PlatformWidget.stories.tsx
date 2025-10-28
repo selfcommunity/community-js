@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import PlatformWidget from './index';
+import PlatformWidget, { PlatformWidgetProps } from './index';
 import { Button, Typography } from '@mui/material';
-import React from 'react';
 
 
 export default {
@@ -9,7 +8,7 @@ export default {
   component: PlatformWidget
 } as Meta<typeof PlatformWidget>;
 
-const template = (args) => (
+const template = (args: PlatformWidgetProps) => (
   <div style={{width: 450}}>
     <PlatformWidget {...args} />
   </div>

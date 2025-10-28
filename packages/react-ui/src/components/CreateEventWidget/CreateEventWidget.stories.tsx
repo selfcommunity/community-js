@@ -10,4 +10,4 @@ export default {
 } as Meta<typeof CreateEventWidget>;
 
 
-export const Base: StoryObj<CreateEventWidget> = {};
+export const Base: StoryObj<typeof CreateEventWidget> = {};

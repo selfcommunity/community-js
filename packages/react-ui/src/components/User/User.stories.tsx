@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import User from './index';
+import User, { UserProps } from './index';
 
 export default {
   title: 'Design System/React UI/User',
@@ -8,12 +8,12 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     variant: {
       options: ['elevation', 'outlined'],
@@ -24,13 +24,13 @@ export default {
   }
 } as Meta<typeof User>;
 
-const template = (args) => (
+const template = (args: UserProps) => (
   <div style={{width: 400}}>
     <User {...args} />
   </div>
 );
 
-export const Base: StoryObj<User> = {
+export const Base: StoryObj<typeof User> = {
   args: {
     userId: 32,
     elevation: 1,

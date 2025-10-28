@@ -22,7 +22,7 @@ export default {
   }
 } as Meta<typeof LessonCommentObjectsSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <LessonCommentObjectsSkeleton {...args} />
   </div>

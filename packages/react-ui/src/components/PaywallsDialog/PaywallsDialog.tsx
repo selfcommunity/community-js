@@ -61,7 +61,7 @@ export default function PaywallsDialog(inProps: PaywallsDialogProps) {
           <FormattedMessage id="ui.paywallsDialog.title" defaultMessage="ui.paywallsDialog.title" />
         )
       }
-      scroll={'paper'}
+      scroll="paper"
       open
       {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
       className={classNames(classes.root, className)}

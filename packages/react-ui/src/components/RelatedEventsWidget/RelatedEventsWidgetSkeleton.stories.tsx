@@ -4,8 +4,8 @@ import { RelatedEventsWidgetSkeleton } from './index';
 export default {
   title: 'Design System/React UI/Skeleton/Related Events Widget',
   component: RelatedEventsWidgetSkeleton,
-  render: (args) => (
-    <RelatedEventsWidgetSkeleton {...args} />
+  render: () => (
+    <RelatedEventsWidgetSkeleton />
   )
 } as Meta<typeof RelatedEventsWidgetSkeleton>;
 

@@ -6,13 +6,13 @@ export default {
   component: AvatarGroupSkeleton
 } as Meta<typeof AvatarGroupSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <AvatarGroupSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<AvatarGroupSkeleton> = {
+export const Base: StoryObj<typeof AvatarGroupSkeleton> = {
   args: {
     contained: true
   },

@@ -6,13 +6,13 @@ export default {
   component: GenericSkeleton
 } as Meta<typeof GenericSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <GenericSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<GenericSkeleton> = {
+export const Base: StoryObj<typeof GenericSkeleton> = {
   args: {
     contained: true
   },

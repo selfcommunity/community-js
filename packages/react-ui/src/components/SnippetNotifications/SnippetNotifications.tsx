@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import {useEffect, useMemo, useRef, useState} from 'react';
 import CommentNotification from '../Notification/Comment';
 import UserFollowNotification from '../Notification/UserFollow';
 import UndeletedForNotification from '../Notification/UndeletedFor';
@@ -255,10 +255,10 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
 
   /**
    * Notification subscriber
-   * @param msg
+   * @param _msg
    * @param data
    */
-  const notificationSubscriber = (msg, data): void => {
+  const notificationSubscriber = (_msg, data): void => {
     /**
      * Ignore notifications of type: notification_banner
      * (data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER)
@@ -408,13 +408,19 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
                     disableTypography
                     image={<Avatar alt={preferences[SCPreferences.TEXT_APPLICATION_NAME]} src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE]} />}
                     primary={
-                      <Typography component={'div'}>
+                      <Typography component="div">
                         {intl.formatMessage(
                           {id: 'ui.snippetNotifications.broadcastMessages', defaultMessage: 'ui.snippetNotifications.broadcastMessages'},
                           {
                             count: scUserContext.user.unseen_notification_banners_counter,
-                            b: (...chunks) => <strong>{chunks}</strong>,
-                            link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>{chunks}</Link>
+                            b: (chunks) => <strong key="ui.snippetNotifications.broadcastMessages.b">{chunks}</strong>,
+                            link: (chunks) => (
+                              <Link
+                                key="ui.snippetNotifications.broadcastMessages.link"
+                                to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
+                                {chunks}
+                              </Link>
+                            )
                           }
                         )}
                       </Typography>

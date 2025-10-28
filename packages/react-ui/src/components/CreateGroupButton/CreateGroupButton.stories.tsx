@@ -6,7 +6,7 @@ export default {
   component: CreateGroupButton,
 } as Meta<typeof CreateGroupButton>;
 
-const template = (args) => (
+const template = (args: CreateGroupButtonProps) => (
   <div style={{width: 800}}>
     <CreateGroupButton {...args} />
   </div>

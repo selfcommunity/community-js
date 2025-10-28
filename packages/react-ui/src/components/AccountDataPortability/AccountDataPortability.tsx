@@ -185,8 +185,8 @@ export default function AccountDataPortability(inProps: AccountDataPortabilityPr
           id="ui.accountDataPortability.info"
           defaultMessage="ui.accountDataPortability.info"
           values={{
-            li: (chunks) => <li>{chunks}</li>,
-            ul: (chunks) => <ul>{chunks}</ul>
+            li: (chunks) => <li key="ui.accountDataPortability.info.li">{chunks}</li>,
+            ul: (chunks) => <ul key="ui.accountDataPortability.info.ul">{chunks}</ul>
           }}
         />
       </Typography>

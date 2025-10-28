@@ -219,8 +219,11 @@ export default function LiveStreamSelector(inProps: LiveStreamSelectorProps): JS
           id="ui.liveStreamForm.selector.warningSubscriptionRequired"
           defaultMessage="ui.liveStreamForm.selector.warningSubscriptionRequired"
           values={{
-            link: (...chunks) => (
-              <Link target="_blank" to={`${isStage ? HUB_STAGE : HUB_PROD}dashboard/community/${communityStackId}/subscription`}>
+            link: (chunks) => (
+              <Link
+                key="ui.liveStreamForm.selector.warningSubscriptionRequired.link"
+                target="_blank"
+                to={`${isStage ? HUB_STAGE : HUB_PROD}dashboard/community/${communityStackId}/subscription`}>
                 {chunks}
               </Link>
             )

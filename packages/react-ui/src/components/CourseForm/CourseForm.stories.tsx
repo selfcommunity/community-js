@@ -8,7 +8,7 @@ export default {
   component: CourseForm,
 } as Meta<typeof CourseForm>;
 
-const template = (args) => (
+const template = (args: CourseFormProps) => (
   <div style={{width: 800}}>
     <CourseForm {...args} />
   </div>
@@ -20,7 +20,7 @@ export const Base: StoryObj<CourseFormProps> = {
   render: template
 };
 
-export const EditForm: StoryObj<typeof CourseForm> = {
+export const EditForm: StoryObj<CourseFormProps> = {
   args: {
     step: SCCourseFormStepType.CUSTOMIZATION,
     course: {

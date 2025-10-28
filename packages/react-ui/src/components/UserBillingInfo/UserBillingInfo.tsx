@@ -539,31 +539,31 @@ const UserBillingInfo: ForwardRefRenderFunction<UserBillingInfoRef, UserBillingI
               <>
                 {state.name ? (
                   <>
-                    <Typography variant={'body1'}>{state.name}</Typography>
-                    <Typography variant={'body1'}>
+                    <Typography variant="body1">{state.name}</Typography>
+                    <Typography variant="body1">
                       {state.address_line1}
                       <br />
                       {state.address_line2}
                     </Typography>
-                    <Typography variant={'body1'}>
+                    <Typography variant="body1">
                       {state.address_postal_code} - {state.address_city} - {state.address_country && state.address_country.label}
                     </Typography>
-                    {Boolean(state.tax_code && !state.isBusiness) && <Typography variant={'body1'}>{state.tax_code}</Typography>}
+                    {Boolean(state.tax_code && !state.isBusiness) && <Typography variant="body1">{state.tax_code}</Typography>}
                     {state.isBusiness && (
                       <>
-                        {state.tax_id_data && <Typography variant={'body1'}>VAT: {state.tax_id_data.value}</Typography>}
-                        {state.sdi && <Typography variant={'body1'}>SDI: {state.sdi}</Typography>}
-                        {state.pec && <Typography variant={'body1'}>PEC: {state.pec}</Typography>}
+                        {state.tax_id_data && <Typography variant="body1">VAT: {state.tax_id_data.value}</Typography>}
+                        {state.sdi && <Typography variant="body1">SDI: {state.sdi}</Typography>}
+                        {state.pec && <Typography variant="body1">PEC: {state.pec}</Typography>}
                       </>
                     )}
                   </>
                 ) : (
-                  <Typography variant={'body1'}>
+                  <Typography variant="body1">
                     <FormattedMessage id="ui.userBillingInfo.noInfo" defaultMessage="ui.userBillingInfo.noInfo" />
                   </Typography>
                 )}
                 {state.initialDataCompleted && (
-                  <Button sx={{mt: 1}} variant={'contained'} size={'small'} disabled={Boolean(disableButtons)} onClick={handleChangeViewMode}>
+                  <Button sx={{mt: 1}} variant="contained" size="small" disabled={Boolean(disableButtons)} onClick={handleChangeViewMode}>
                     <FormattedMessage
                       id="component.CheckoutForm.billingInfoChangeButton"
                       defaultMessage="component.CheckoutForm.billingInfoChangeButton"

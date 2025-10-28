@@ -6,9 +6,9 @@ export default {
   component: UserPaymentMethodsPortalSkeleton
 } as Meta<typeof UserPaymentMethodsPortalSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: '100%'}}>
-    <UserPaymentMethodsPortalSkeleton {...args} />
+    <UserPaymentMethodsPortalSkeleton />
   </div>
 );
 

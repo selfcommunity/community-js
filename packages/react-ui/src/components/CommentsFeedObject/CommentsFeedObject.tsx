@@ -251,7 +251,7 @@ export default function CommentsFeedObject(inProps: CommentsFeedObjectProps): JS
     () => () => {
       if (showTitle) {
         return (
-          <Typography variant="h6" gutterBottom color={'inherit'}>
+          <Typography variant="h6" gutterBottom color="inherit">
             <FormattedMessage id="ui.commentsObject.title" defaultMessage="ui.commentsObject.title" values={{total: total}} />
           </Typography>
         );

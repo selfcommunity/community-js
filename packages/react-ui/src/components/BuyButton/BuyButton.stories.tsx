@@ -9,7 +9,7 @@ export default {
   }
 } as Meta<typeof BuyButton>;
 
-const template = (args) => (
+const template = (args: BuyButtonProps) => (
     <BuyButton {...args} />
 );
 

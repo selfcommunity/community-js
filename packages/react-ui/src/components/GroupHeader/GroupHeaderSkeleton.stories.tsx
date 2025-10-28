@@ -8,9 +8,9 @@ export default {
   args: {}
 } as Meta<typeof GroupHeaderSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: '100%'}}>
-    <GroupHeaderSkeleton {...args} />
+    <GroupHeaderSkeleton />
   </div>
 );
 

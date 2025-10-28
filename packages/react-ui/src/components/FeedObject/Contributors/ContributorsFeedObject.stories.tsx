@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import ContributorsFeedObject from './index';
+import ContributorsFeedObject, { ContributorsFeedObjectProps } from './index';
 import {SCContributionType} from '@selfcommunity/types';
 
 export default {
@@ -9,7 +9,7 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 17}}
+      table: {defaultValue: {summary: '17'}}
     },
     feedObjectType: {
       options: [SCContributionType.POST, SCContributionType.DISCUSSION, SCContributionType.STATUS],
@@ -24,12 +24,12 @@ export default {
 
 } as Meta<typeof ContributorsFeedObject>;
 
-const template = (args) => {
+const template = (args: ContributorsFeedObjectProps) => {
 	return (  <div style={{width: 800}}>
 		<ContributorsFeedObject {...args} />
 	</div>);
 };
 
-export const Base: StoryObj<ContributorsFeedObject> = {
+export const Base: StoryObj<typeof ContributorsFeedObject> = {
 	render: template
 };

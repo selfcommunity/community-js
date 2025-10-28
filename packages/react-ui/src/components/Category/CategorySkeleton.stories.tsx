@@ -6,7 +6,7 @@ export default {
   component: CategorySkeleton
 } as Meta<typeof CategorySkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <CategorySkeleton {...args} />
   </div>

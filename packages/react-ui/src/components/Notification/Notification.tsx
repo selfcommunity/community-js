@@ -300,7 +300,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
               </Link>{' '}
               {intl.formatMessage(messages.receivePrivateMessage, {
                 total: notificationObject.aggregated.length,
-                b: (...chunks) => <strong>{chunks}</strong>
+                b: (chunks) => <strong key="ui.notification.receivePrivateMessage.b">{chunks}</strong>
               })}
             </>
           }
@@ -350,8 +350,9 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
                 defaultMessage={`ui.notification.${notificationObject.aggregated[0].type}`}
                 values={{
                   group: groupNotification.group.name,
-                  link: (...chunks) => (
+                  link: (chunks) => (
                     <Link
+                      key={`ui.notification.${notificationObject.aggregated[0].type}.link`}
                       to={
                         notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP ||
                         notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP
@@ -400,9 +401,9 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
               <Tooltip
                 title={
                   contribution.suspended ? (
-                    <FormattedMessage id={'ui.notification.notificationSuspended'} defaultMessage={'ui.notification.notificationSuspended'} />
+                    <FormattedMessage id="ui.notification.notificationSuspended" defaultMessage="ui.notification.notificationSuspended" />
                   ) : (
-                    <FormattedMessage id={'ui.notification.notificationSuspend'} defaultMessage={'ui.notification.notificationSuspend'} />
+                    <FormattedMessage id="ui.notification.notificationSuspend" defaultMessage="ui.notification.notificationSuspend" />
                   )
                 }>
                 <Button
@@ -412,7 +413,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
                   color="inherit"
                   classes={{root: classes.stopButton}}
                   onClick={() => handleStopContentNotification(contribution)}>
-                  {contribution.suspended ? <Icon color={'primary'}>notifications_off</Icon> : <Icon color={'inherit'}>notifications_active</Icon>}
+                  {contribution.suspended ? <Icon color="primary">notifications_off</Icon> : <Icon color="inherit">notifications_active</Icon>}
                 </Button>
               </Tooltip>
             )
@@ -522,7 +523,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
           {notificationObject.aggregated.length > showMaxAggregated && (
             <>
               <ListItemButton onClick={setStateAggregated} classes={{root: classes.showOtherAggregated}}>
-                <ListItemText primary={<FormattedMessage id={'ui.notification.showOthers'} defaultMessage={'ui.notification.showOthers'} />} />
+                <ListItemText primary={<FormattedMessage id="ui.notification.showOthers" defaultMessage="ui.notification.showOthers" />} />
                 {openOtherAggregated ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
               </ListItemButton>
               <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit classes={{root: classes.collapsed}}>

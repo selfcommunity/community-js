@@ -6,9 +6,9 @@ export default {
   component: UserLiveStreamWidgetSkeleton,
 } as Meta<typeof UserLiveStreamWidgetSkeleton>;
 
-const template = (args) => (
+const template = () => (
 	<div style={{width: 400}}>
-		<UserLiveStreamWidgetSkeleton {...args} />
+		<UserLiveStreamWidgetSkeleton />
 	</div>
 );
 

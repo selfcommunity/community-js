@@ -1,4 +1,4 @@
-import {useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -439,17 +439,22 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     return content;
   };
 
+  const handleAccordionChange = useCallback(() => {
+    setExpanded((prev) => !prev);
+  }, [setExpanded]);
+
   if (!isAdmin || !showOnBoarding) {
     return <HiddenPlaceholder />;
   }
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <AccordionRoot defaultExpanded className={classes.accordionRoot} expanded={expanded}>
+      <AccordionRoot defaultExpanded className={classes.accordionRoot} expanded={expanded} onChange={handleAccordionChange}>
         <AccordionSummary
           expandIcon={<OnBoardingActionsButton isExpanded={expanded} onExpandChange={handleExpand} onHideOnBoarding={handlePreferencesUpdate} />}
           aria-controls="accordion"
-          id="onBoarding-accordion">
+          id="onBoarding-accordion"
+          component="div">
           <>
             {expanded ? (
               <>
@@ -464,7 +469,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                       id="ui.onBoardingWidget.accordion.expanded.title.mobile"
                       defaultMessage="ui.onBoardingWidget.accordion.expanded.title.mobile"
                       values={{
-                        b: (chunks) => <strong>{chunks}</strong>
+                        b: (chunks) => <strong key="ui.onBoardingWidget.accordion.expanded.title.mobile.b">{chunks}</strong>
                       }}
                     />
                   </Typography>
@@ -489,8 +494,8 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                       id="ui.onBoardingWidget.accordion.expanded.summary"
                       defaultMessage="ui.onBoardingWidget.accordion.expanded.summary"
                       values={{
-                        b: (chunks) => <strong>{chunks}</strong>,
-                        icon: (...chunks) => <Icon>{chunks}</Icon>
+                        b: (chunks) => <strong key="ui.onBoardingWidget.accordion.expanded.summary.b">{chunks}</strong>,
+                        icon: (chunks) => <Icon key="ui.onBoardingWidget.accordion.expanded.summary.icon">{chunks}</Icon>
                       }}
                     />
                   </Typography>
@@ -502,9 +507,9 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                   id="ui.onBoardingWidget.accordion.collapsed"
                   defaultMessage="ui.onBoardingWidget.accordion.collapsed"
                   values={{
-                    b: (chunks) => <strong>{chunks}</strong>,
-                    icon: (...chunks) => (
-                      <Icon color="secondary" fontSize="medium">
+                    b: (chunks) => <strong key="ui.onBoardingWidget.accordion.collapsed.b">{chunks}</strong>,
+                    icon: (chunks) => (
+                      <Icon key="ui.onBoardingWidget.accordion.collapsed.icon" color="secondary" fontSize="medium">
                         {chunks}
                       </Icon>
                     )
@@ -630,7 +635,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                           id="ui.onBoardingWidget.ai.categories.warning.confirm"
                           defaultMessage="ui.onBoardingWidget.ai.categories.warning.confirm"
                           values={{
-                            b: (chunks) => <b>{chunks}</b>
+                            b: (chunks) => <b key="ui.onBoardingWidget.ai.categories.warning.confirm.b">{chunks}</b>
                           }}
                         />
                       </Typography>

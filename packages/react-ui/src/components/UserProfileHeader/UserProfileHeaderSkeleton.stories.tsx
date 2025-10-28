@@ -8,9 +8,9 @@ export default {
   args: {}
 } as Meta<typeof UserProfileHeaderSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: '100%'}}>
-    <UserProfileHeaderSkeleton {...args} />
+    <UserProfileHeaderSkeleton />
   </div>
 );
 

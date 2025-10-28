@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-webpack5';
-import GroupMembersWidget from './index';
+import GroupMembersWidget, { GroupMembersWidgetProps } from './index';
 
 export default {
   title: 'Design System/React UI/Group Members Widget',
@@ -13,7 +13,7 @@ export default {
 } as Meta<typeof GroupMembersWidget>;
 
 
-const template = (args) => (
+const template = (args: GroupMembersWidgetProps) => (
   <div style={{width: 400}}>
     <GroupMembersWidget {...args} />
   </div>

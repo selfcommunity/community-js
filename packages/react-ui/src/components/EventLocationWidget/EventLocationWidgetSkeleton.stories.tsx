@@ -6,8 +6,8 @@ export default {
   component: EventLocationWidgetSkeleton
 } as Meta<typeof EventLocationWidgetSkeleton>;
 
-const template = (args) => (
-  <EventLocationWidgetSkeleton {...args} />
+const template = () => (
+  <EventLocationWidgetSkeleton />
 );
 
 export const Base: StoryObj<typeof EventLocationWidgetSkeleton> = {

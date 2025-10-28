@@ -6,7 +6,7 @@ export default {
   component: Course,
   argTypes: {
     viewDashboard: {
-      control: 'string'
+      control: 'text'
     }
   },
   args: {

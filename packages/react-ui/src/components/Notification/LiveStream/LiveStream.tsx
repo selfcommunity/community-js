@@ -111,9 +111,15 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
               id={`ui.notification.${notificationObject.type}.title`}
               defaultMessage={`ui.notification.${notificationObject.type}.title`}
               values={{
-                icon: (...chunks) => <Icon>{chunks}</Icon>,
+                icon: (chunks) => <Icon key={`ui.notification.${notificationObject.type}.title.icon`}>{chunks}</Icon>,
                 live: notificationObject.live_stream.title,
-                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, notificationObject.live_stream)}>{chunks}</Link>
+                link: (chunks) => (
+                  <Link
+                    key={`ui.notification.${notificationObject.type}.title.link`}
+                    to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, notificationObject.live_stream)}>
+                    {chunks}
+                  </Link>
+                )
               }}
             />
           </Box>
@@ -175,7 +181,13 @@ export default function LiveStreamNotification(props: NotificationLiveStreamProp
               defaultMessage={`ui.notification.${notificationObject.type}`}
               values={{
                 live: notificationObject.live_stream.title,
-                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, notificationObject.live_stream)}>{chunks}</Link>
+                link: (chunks) => (
+                  <Link
+                    key={`ui.notification.${notificationObject.type}.link`}
+                    to={scRoutingContext.url(SCRoutes.LIVESTREAM_ROUTE_NAME, notificationObject.live_stream)}>
+                    {chunks}
+                  </Link>
+                )
               }}
             />
             <LiveStream liveStream={notificationObject.live_stream as any} hideInProgress={!inProgress} actions={<></>} elevation={0} />

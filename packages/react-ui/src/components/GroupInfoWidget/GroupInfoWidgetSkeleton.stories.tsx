@@ -6,13 +6,13 @@ export default {
   component: GroupInfoWidgetSkeleton
 } as Meta<typeof GroupInfoWidgetSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: 400}}>
-    <GroupInfoWidgetSkeleton {...args} />
+    <GroupInfoWidgetSkeleton />
   </div>
 );
 
-export const Base: StoryObj<GroupInfoWidgetSkeleton> = {
+export const Base: StoryObj<typeof GroupInfoWidgetSkeleton> = {
   args: {
     contained: true,
   },

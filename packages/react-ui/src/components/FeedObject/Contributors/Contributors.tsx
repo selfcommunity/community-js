@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {CacheStrategies} from '@selfcommunity/utils';
 import {useSCFetchContributors} from '@selfcommunity/react-core';
 import {SCContributionType, SCFeedObjectType, SCUserType} from '@selfcommunity/types';
@@ -111,7 +111,7 @@ export default function ContributorsFeedObject(props: ContributorsFeedObjectProp
             {contributorsObject.contributors.length > 0 ? (
               <>
                 <Button variant="text" onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}} color="inherit">
-                  <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
+                  <FormattedMessage id="ui.feedObject.contributors.participants" defaultMessage="ui.feedObject.contributors.participants" />:
                   <AvatarGroup {...rest}>
                     {contributorsObject.contributors.map((c: SCUserType, i) => (
                       <Avatar alt={c.username} src={c.avatar} key={i} />
@@ -152,7 +152,7 @@ export default function ContributorsFeedObject(props: ContributorsFeedObjectProp
                         <List>
                           {contributorsObject.contributors.map((c, i) => (
                             <ListItem key={i}>
-                              <User elevation={0} user={c} key={c.id} sx={{m: 0}} onClick={()=> setOpenContributorsDialog(false)}/>
+                              <User elevation={0} user={c} key={c.id} sx={{m: 0}} onClick={() => setOpenContributorsDialog(false)} />
                             </ListItem>
                           ))}
                         </List>

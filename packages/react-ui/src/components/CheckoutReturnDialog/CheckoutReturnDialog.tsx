@@ -187,7 +187,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
               <FormattedMessage id="ui.checkoutReturnDialog.buy.event" defaultMessage="ui.checkoutReturnDialog.buy.event" />
             )}
           </Typography>
-          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
+          <Button size="medium" variant="contained" onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.event.button" defaultMessage="ui.checkoutReturnDialog.event.button" />
           </Button>
         </>
@@ -201,7 +201,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
           <Typography variant="body2" color="textSecondary">
             <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
           </Typography>
-          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
+          <Button size="medium" variant="contained" onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />
           </Button>
         </>
@@ -225,7 +225,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
               <FormattedMessage id="ui.checkoutReturnDialog.buy.course" defaultMessage="ui.checkoutReturnDialog.buy.course" />
             )}
           </Typography>
-          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
+          <Button size="medium" variant="contained" onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.course.button" defaultMessage="ui.checkoutReturnDialog.course.button" />
           </Button>
         </>
@@ -249,7 +249,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
               <FormattedMessage id="ui.checkoutReturnDialog.buy.group" defaultMessage="ui.checkoutReturnDialog.buy.group" />
             )}
           </Typography>
-          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
+          <Button size="medium" variant="contained" onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.group.button" defaultMessage="ui.checkoutReturnDialog.group.button" />
           </Button>
         </>
@@ -277,7 +277,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
               </Typography>
             </>
           )}
-          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
+          <Button size="medium" variant="contained" onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.community.button" defaultMessage="ui.checkoutReturnDialog.community.button" />
           </Button>
         </>

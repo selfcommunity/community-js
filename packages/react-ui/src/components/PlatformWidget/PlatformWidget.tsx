@@ -378,16 +378,16 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
       <Collapse in={isTutorialOpen} className={classes.tutorialContent}>
         {isTutorialOpen && (
           <Grid size="auto">
-            <Typography variant={'body2'} className={classes.tutorialTitle} component={'div'}>
+            <Typography variant="body2" className={classes.tutorialTitle} component="div">
               <Grow in timeout={1000}>
                 <span>{actions[tutorialIndex].title}</span>
               </Grow>
-              <IconButton size={'small'} className={classes.tutorialTitleClose} onClick={handleCloseTutorial}>
+              <IconButton size="small" className={classes.tutorialTitleClose} onClick={handleCloseTutorial}>
                 <Icon>close</Icon>
               </IconButton>
             </Typography>
             <Grow in timeout={1200}>
-              <Typography variant={'body2'} className={classes.tutorialDesc}>
+              <Typography variant="body2" className={classes.tutorialDesc}>
                 {actions[tutorialIndex].content}
               </Typography>
             </Grow>
@@ -400,7 +400,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
                   <FormattedMessage id="ui.platformWidget.tutorial.previous" defaultMessage="ui.platformWidget.tutorial.previous" />
                 )}
               </Button>
-              <Typography component={'div'}>
+              <Typography component="div">
                 {tutorialIndex + 1}/{actions.length}
               </Typography>
               <Button

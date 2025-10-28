@@ -19,7 +19,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(({theme}) => ({
   [`& .${classes.form} .MuiTextField-root, &.${classes.root} .MuiButton-root`]: {
     margin: theme.spacing(1, 0, 1, 0)
@@ -161,9 +161,7 @@ export default function AccountRecover(inProps: AccountRecoverProps): JSX.Elemen
             {id: 'ui.accountRecover.success', defaultMessage: 'ui.accountRecover.success'},
             {
               email,
-              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // @ts-ignore
-              b: (chunks) => <b>{chunks}</b>
+              b: (chunks) => <b key="ui.accountRecover.success.b">{chunks}</b>
             }
           )}
           {successAction}

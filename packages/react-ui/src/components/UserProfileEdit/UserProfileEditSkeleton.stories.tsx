@@ -6,12 +6,12 @@ export default {
   component: UserProfileEditSkeleton,
 } as Meta<typeof UserProfileEditSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: '100%'}}>
-    <UserProfileEditSkeleton {...args} />
+    <UserProfileEditSkeleton />
   </div>
 );
 
-export const Base: StoryObj<UserProfileEditSkeleton> = {
+export const Base: StoryObj<typeof UserProfileEditSkeleton> = {
   render: template
 };
