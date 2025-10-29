@@ -151,7 +151,10 @@ const Component = {
       '& .SCMediaFile-docs-wrapper': {
         display: 'flex',
         flexDirection: 'column',
-        gap: theme.spacing(2)
+        gap: theme.spacing(2),
+        '& > .SCMediaFile-doc': {
+          cursor: 'grab'
+        }
       }
     }),
     triggerRoot: () => ({}),
