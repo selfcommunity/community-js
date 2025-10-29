@@ -660,7 +660,7 @@
   "ui.feedObject.contributors.noOtherContributors": "Non ci sono altri partecipanti.",
   "ui.feedObject.contributors.participants": "Partecipanti",
   "ui.feedObject.contributors.title": "{total, plural, =0 {# Partecipanti} one {# Partecipante} other {# Partecipanti}}",
-  "ui.feedObject.error": "Il contenuto non è disponibile al momento",
+  "ui.feedObject.error": "Questo post è indirizzato privatamente e non è visibile.",
   "ui.feedObject.follow": "Salva",
   "ui.feedObject.poll.choice.vote": "Vota",
   "ui.feedObject.poll.closed": "Chiuso",
