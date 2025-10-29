@@ -116,6 +116,7 @@ const Component = {
           flexBasis: 120,
           flexGrow: 0,
           flexShrink: 0,
+          cursor: 'grab',
           '& .SCMediaFile-title': {
             position: 'absolute',
             left: theme.spacing(1),

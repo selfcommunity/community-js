@@ -86,7 +86,7 @@ const ScheduledLayer = React.forwardRef((props: ScheduledLayerProps, ref: React.
             className={classes.picker}
             disablePast
             value={scheduledAt}
-            onChange={(value) => setScheduledAt(value)}
+            onChange={setScheduledAt}
             onAccept={handleUpdate}
             slots={{
               toolbar: CustomToolbar,
