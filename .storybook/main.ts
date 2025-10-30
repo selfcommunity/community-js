@@ -1,8 +1,15 @@
+import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 import { dirname, join } from "path";
-const path = require("path");
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const customRequire = createRequire(import.meta.url);
+const path = customRequire("path");
 const toPath = (filePath) => path.join(process.cwd(), filePath);
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const webpack = require('webpack');
+const TsconfigPathsPlugin = customRequire('tsconfig-paths-webpack-plugin');
+const webpack = customRequire('webpack');
 
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 const config = {
@@ -50,19 +57,19 @@ const config = {
       test: /\.(ts|tsx)$/,
       use: [
         {
-					loader: require.resolve('babel-loader'),
+					loader: customRequire.resolve('babel-loader'),
 					options: {
 						presets: [
 							[
-								require.resolve('@babel/preset-env'),
+								customRequire.resolve('@babel/preset-env'),
 								{ loose: false },
 							],
 							[
-								require.resolve('@babel/preset-react'),
+								customRequire.resolve('@babel/preset-react'),
 								{ runtime: 'automatic' },
 							],
 							[
-								require.resolve('@babel/preset-typescript'),
+								customRequire.resolve('@babel/preset-typescript'),
 								{
 									onlyRemoveTypeImports: true,
 									allowDeclareFields: true,
@@ -94,28 +101,27 @@ const config = {
       config.resolve.extensions = ['.js', '.jsx', '.ts', '.tsx'];
     }
 
-    // Add DefinePlugin to make process.env available in the browser
-    if (!config.plugins) {
-      config.plugins = [];
-    }
+		// Add TsconfigPathsPlugin
+		config.resolve.plugins = [
+			...(config.resolve.plugins || []),
+			new TsconfigPathsPlugin({
+				extensions: config.resolve.extensions,
+				configFile: path.resolve(__dirname, "../tsconfig.json"),
+			}),
+		];
 
-    config.plugins.push(
-      new webpack.DefinePlugin({
-        'process.env': JSON.stringify(process.env)
-      })
-    );
+		config.plugins = [
+			...(config.plugins || []),
+			new webpack.DefinePlugin({
+				// 👇 se ti serve qualche env var personalizzata, mettila qui:
+				'process.env': JSON.stringify(process.env)
+			}),
+		];
 
     return {
       ...config,
       "resolve": {
         ...config.resolve,
-        "plugins": [
-          ...(config.resolve.plugins || []),
-          new TsconfigPathsPlugin({
-            extensions: config.resolve.extensions,
-            configFile: path.resolve(__dirname, "../tsconfig.json"),
-          }),
-        ],
         "alias": {
           ...config.resolve.alias,
           "@emotion/core": toPath("node_modules/@emotion/react"),
@@ -136,5 +142,5 @@ const config = {
 export default config;
 
 function getAbsolutePath(value: string): string {
-  return dirname(require.resolve(join(value, "package.json")));
+  return dirname(customRequire.resolve(join(value, "package.json")));
 }

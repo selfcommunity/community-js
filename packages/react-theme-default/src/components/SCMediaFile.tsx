@@ -116,6 +116,7 @@ const Component = {
           flexBasis: 120,
           flexGrow: 0,
           flexShrink: 0,
+          cursor: 'grab',
           '& .SCMediaFile-title': {
             position: 'absolute',
             left: theme.spacing(1),
@@ -151,7 +152,10 @@ const Component = {
       '& .SCMediaFile-docs-wrapper': {
         display: 'flex',
         flexDirection: 'column',
-        gap: theme.spacing(2)
+        gap: theme.spacing(2),
+        '& > .SCMediaFile-doc': {
+          cursor: 'grab'
+        }
       }
     }),
     triggerRoot: () => ({}),

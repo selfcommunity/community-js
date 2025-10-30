@@ -50,6 +50,10 @@ import Category from '../Category';
 const PREFIX = 'SCPaymentOrders';
 
 const messages = defineMessages({
+  datePicker: {
+    id: 'ui.paymentOrders.picker.date',
+    defaultMessage: 'ui.paymentOrders.picker.date'
+  },
   dateFrom: {
     id: 'ui.paymentOrders.dateFrom',
     defaultMessage: 'ui.paymentOrders.dateFrom'
@@ -382,8 +386,8 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
             dateAdapter={AdapterDateFns}
             adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}
             localeText={{
-              cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`,
-              clearButtonLabel: `${intl.formatMessage(messages.pickerClearAction)}`
+              cancelButtonLabel: intl.formatMessage(messages.pickerCancelAction),
+              clearButtonLabel: intl.formatMessage(messages.pickerClearAction)
             }}>
             <Grid container width="100%" spacing={2}>
               <Grid size={6}>
@@ -392,38 +396,29 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   label={<FormattedMessage id="ui.paymentOrders.dateFrom" defaultMessage="ui.paymentOrders.dateFrom" />}
                   value={startDate}
                   enableAccessibleFieldDOMStructure={false}
+                  localeText={{
+                    toolbarTitle: intl.formatMessage(messages.datePicker)
+                  }}
                   slots={{
-                    textField: (params) => (
-                      <TextField
-                        {...params}
-                        size="small"
-                        slotProps={{
-                          input: {
-                            ...params.slotProps?.input,
-                            placeholder: `${intl.formatMessage(messages.dateFrom)}`,
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <IconButton>
-                                  <Icon>CalendarIcon</Icon>
-                                </IconButton>
-                              </InputAdornment>
-                            )
-                          }
-                        }}
-                      />
+                    openPickerButton: (params) => (
+                      <IconButton {...params}>
+                        <Icon>CalendarIcon</Icon>
+                      </IconButton>
                     )
                   }}
                   slotProps={{
                     actionBar: {
                       actions: ['cancel', 'clear', 'accept']
                     },
-                    toolbar: {
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                      // @ts-ignore
-                      toolbarTitle: <FormattedMessage id="ui.paymentOrders.picker.date" defaultMessage="ui.paymentOrders.picker.date" />
+                    textField: {
+                      slotProps: {
+                        input: {
+                          placeholder: intl.formatMessage(messages.dateFrom)
+                        }
+                      }
                     }
                   }}
-                  onChange={(newValue) => setStartDate(newValue)}
+                  onChange={setStartDate}
                 />
               </Grid>
               <Grid size={6}>
@@ -432,38 +427,29 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                   label={<FormattedMessage id="ui.paymentOrders.dateTo" defaultMessage="ui.paymentOrders.dateTo" />}
                   value={endDate}
                   enableAccessibleFieldDOMStructure={false}
+                  localeText={{
+                    toolbarTitle: intl.formatMessage(messages.datePicker)
+                  }}
                   slots={{
-                    textField: (params) => (
-                      <TextField
-                        {...params}
-                        size="small"
-                        slotProps={{
-                          input: {
-                            ...params.slotProps?.input,
-                            placeholder: `${intl.formatMessage(messages.dateTo)}`,
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <IconButton>
-                                  <Icon>CalendarIcon</Icon>
-                                </IconButton>
-                              </InputAdornment>
-                            )
-                          }
-                        }}
-                      />
+                    openPickerButton: (params) => (
+                      <IconButton {...params}>
+                        <Icon>CalendarIcon</Icon>
+                      </IconButton>
                     )
                   }}
                   slotProps={{
                     actionBar: {
                       actions: ['cancel', 'clear', 'accept']
                     },
-                    toolbar: {
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                      // @ts-ignore
-                      toolbarTitle: <FormattedMessage id="ui.paymentOrders.picker.date" defaultMessage="ui.paymentOrders.picker.date" />
+                    textField: {
+                      slotProps: {
+                        input: {
+                          placeholder: intl.formatMessage(messages.dateTo)
+                        }
+                      }
                     }
                   }}
-                  onChange={(newValue) => setEndDate(newValue)}
+                  onChange={setEndDate}
                 />
               </Grid>
             </Grid>

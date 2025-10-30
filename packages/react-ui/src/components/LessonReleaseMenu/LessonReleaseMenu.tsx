@@ -214,50 +214,35 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
             }
             value={drippedAt}
             enableAccessibleFieldDOMStructure={false}
+            localeText={{
+              toolbarTitle: intl.formatMessage(messages.pickerPlaceholder)
+            }}
             slots={{
-              //actionBar: PickerActionBar,
               tabs: (props) => <DateTimePickerTabs {...props} />,
-              textField: (params) => (
-                <TextField
-                  {...params}
-                  error={false}
-                  slotProps={{
-                    input: {
-                      ...params.slotProps?.input,
-                      placeholder: `${intl.formatMessage(messages.pickerPlaceholder)}`,
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <IconButton disabled={isDisabled}>
-                            <Icon>expand_more</Icon>
-                          </IconButton>
-                        </InputAdornment>
-                      )
-                    }
-                  }}
-                />
+              openPickerButton: (params) => (
+                <IconButton {...params}>
+                  <Icon>expand_more</Icon>
+                </IconButton>
               )
             }}
             slotProps={{
               tabs: {
                 hidden: false
               },
-              toolbar: {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                toolbarTitle: (
-                  <FormattedMessage
-                    id="ui.lessonReleaseMenu.scheduled.picker.placeholder"
-                    defaultMessage="ui.lessonReleaseMenu.scheduled.picker.placeholder"
-                  />
-                )
-              },
               actionBar: {
                 actions: ['cancel', 'clear', 'accept']
+              },
+              textField: {
+                error: false,
+                slotProps: {
+                  input: {
+                    placeholder: intl.formatMessage(messages.pickerPlaceholder)
+                  }
+                }
               }
             }}
-            onChange={(value) => setDrippedAt(value)}
+            onChange={setDrippedAt}
             onAccept={handleUpdate}
-            onClear={() => setDrippedAt(null)}
             disabled={isDisabled}
           />
         </LocalizationProvider>
