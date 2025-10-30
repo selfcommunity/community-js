@@ -101,28 +101,27 @@ const config = {
       config.resolve.extensions = ['.js', '.jsx', '.ts', '.tsx'];
     }
 
-    // Add DefinePlugin to make process.env available in the browser
-    if (!config.plugins) {
-      config.plugins = [];
-    }
+		// Add TsconfigPathsPlugin
+		config.resolve.plugins = [
+			...(config.resolve.plugins || []),
+			new TsconfigPathsPlugin({
+				extensions: config.resolve.extensions,
+				configFile: path.resolve(__dirname, "../tsconfig.json"),
+			}),
+		];
 
-    config.plugins.push(
-      new webpack.DefinePlugin({
-        'process.env': JSON.stringify(process.env)
-      })
-    );
+		config.plugins = [
+			...(config.plugins || []),
+			new webpack.DefinePlugin({
+				// 👇 se ti serve qualche env var personalizzata, mettila qui:
+				'process.env': JSON.stringify(process.env)
+			}),
+		];
 
     return {
       ...config,
       "resolve": {
         ...config.resolve,
-        "plugins": [
-          ...(config.resolve.plugins || []),
-          new TsconfigPathsPlugin({
-            extensions: config.resolve.extensions,
-            configFile: path.resolve(__dirname, "../tsconfig.json"),
-          }),
-        ],
         "alias": {
           ...config.resolve.alias,
           "@emotion/core": toPath("node_modules/@emotion/react"),
