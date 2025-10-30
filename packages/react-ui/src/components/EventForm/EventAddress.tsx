@@ -121,7 +121,7 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
   );
 
   // HOOKS
-  const {isLoaded, geocodingApiKey} = useSCGoogleApiLoader();
+  const {isLoaded, geocodingApiKey, placesLibrary} = useSCGoogleApiLoader();
 
   // HANDLERS
   const handleChange = (_event: SyntheticEvent, newValue: SCEventLocationType) => {
@@ -177,9 +177,9 @@ export default function EventAddress(inProps: EventAddressProps): JSX.Element {
 
     if (inputValue.length >= 3) {
       const newTimeoutId = setTimeout(() => {
-        const autocompleteService = new window.google.maps.places.AutocompleteService();
+        const autocompleteService = new placesLibrary.AutocompleteService(); // TODO - deprecated, to fix when possibile
         autocompleteService.getPlacePredictions({input: inputValue}, (predictions, status) => {
-          if (status === window.google.maps.places.PlacesServiceStatus.OK && predictions) {
+          if (status === placesLibrary.PlacesServiceStatus.OK && predictions) {
             setSuggestions(
               predictions.map((prediction) => ({
                 description: prediction.description,

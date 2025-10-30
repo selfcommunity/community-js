@@ -138,7 +138,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
   // STATE
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [user, setUser] = useState<SCUserType>();
+  const [user, setUser] = useState<SCUserType | null>(null);
   const [error, setError] = useState<any>({});
   const [editing, setEditing] = useState<SCUserProfileFields[]>([]);
   const [saving, setSaving] = useState<SCUserProfileFields[]>([]);
@@ -263,18 +263,24 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
               }}
               disableFuture
               disabled={isSaving}
+              enableAccessibleFieldDOMStructure={false}
               slots={{
-                inputAdornment: (params) => {
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  const {children, ...rest} = params.children.props;
-                  return (
-                    <InputAdornment position="end">
-                      <IconButton {...rest}>{children}</IconButton>
-                      {isSaving && <CircularProgress size={10} />}
-                    </InputAdornment>
-                  );
-                }
+                textField: (params) => (
+                  <TextField
+                    {...params}
+                    slotProps={{
+                      input: {
+                        ...params.slotProps?.input,
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            {params.slotProps?.input?.endAdornment}
+                            {isSaving && <CircularProgress size={10} />}
+                          </InputAdornment>
+                        )
+                      }
+                    }}
+                  />
+                )
               }}
               // onAccept={isMobile ? handleSave(SCUserProfileFields.DATE_OF_BIRTH) : null}
               slotProps={{
@@ -283,15 +289,17 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
                   fullWidth: true,
                   variant: 'outlined',
                   helperText: _error || null,
-                  InputProps: {
-                    endAdornment: isMobile && (
-                      <>
-                        <IconButton disabled={!isEditing}>
-                          <Icon>CalendarIcon</Icon>
-                        </IconButton>
-                        {isSaving ? <CircularProgress size={10} /> : null}
-                      </>
-                    )
+                  slotProps: {
+                    input: {
+                      endAdornment: isMobile && (
+                        <>
+                          <IconButton disabled={!isEditing}>
+                            <Icon>CalendarIcon</Icon>
+                          </IconButton>
+                          {isSaving && <CircularProgress size={10} />}
+                        </>
+                      )
+                    }
                   }
                 }
               }}

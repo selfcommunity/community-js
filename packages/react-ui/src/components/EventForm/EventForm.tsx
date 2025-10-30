@@ -28,6 +28,7 @@ import {
   SCPreferencesContextType,
   UserUtils,
   useSCContext,
+  useSCGoogleApiLoader,
   useSCPaymentsEnabled,
   useSCPreferences,
   useSCUser
@@ -52,6 +53,7 @@ import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
 import CoverPlaceholder from '../../assets/deafultCover';
 import PaywallsConfigurator from '../PaywallsConfigurator';
 import {ContentAccessType} from '../PaywallsConfigurator/constants';
+import {APIProvider} from '@vis.gl/react-google-maps';
 
 const messages = defineMessages({
   titleDate: {
@@ -256,6 +258,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const [field, setField] = useState<InitialFieldState>(initialFieldState);
   const [error, setError] = useState<any>({});
   const [genericError, setGenericError] = useState<string | null>(null);
+
+  // HOOKS
+  const {geocodingApiKey, libraries} = useSCGoogleApiLoader();
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -749,27 +754,29 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             />
           </LocalizationProvider>
         </Box>
-        <EventAddress
-          forwardGeolocationData={handleGeoData}
-          forwardLivestreamSettingsData={handleLiveStreamSettingsData}
-          event={
-            {
-              ...event,
-              ...{
-                name: field.name,
-                start_date: field.startDate,
-                location: field.location,
-                geolocation: field.geolocation,
-                live_stream: {
-                  title: field.name || intl.formatMessage(messages.name),
-                  ...(event && event.live_stream?.created_at && {created_at: field.startDate}),
-                  settings: field.liveStreamSettings
+        <APIProvider apiKey={geocodingApiKey} libraries={libraries}>
+          <EventAddress
+            forwardGeolocationData={handleGeoData}
+            forwardLivestreamSettingsData={handleLiveStreamSettingsData}
+            event={
+              {
+                ...event,
+                ...{
+                  name: field.name,
+                  start_date: field.startDate,
+                  location: field.location,
+                  geolocation: field.geolocation,
+                  live_stream: {
+                    title: field.name || intl.formatMessage(messages.name),
+                    ...(event && event.live_stream?.created_at && {created_at: field.startDate}),
+                    settings: field.liveStreamSettings
+                  }
                 }
-              }
-            } as unknown as SCEventType
-          }
-          {...EventAddressComponentProps}
-        />
+              } as unknown as SCEventType
+            }
+            {...EventAddressComponentProps}
+          />
+        </APIProvider>
         {privateEnabled && (
           <Box className={classes.privacySection}>
             <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">

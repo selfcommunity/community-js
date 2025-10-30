@@ -89,7 +89,7 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
   const {scEvent} = useSCFetchEvent({id: eventId, event});
 
   // HOOKS
-  const {isLoaded, geocodingApiKey} = useSCGoogleApiLoader();
+  const {isLoaded, geocodingApiKey, libraries} = useSCGoogleApiLoader();
 
   if (!geocodingApiKey || scEvent?.location === SCEventLocationType.ONLINE) {
     return <HiddenPlaceholder />;
@@ -112,7 +112,7 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
           <FormattedMessage id="ui.eventLocationWidget.title" defaultMessage="ui.eventLocationWidget.title" />
         </Typography>
         <Box className={classes.map}>
-          <APIProvider apiKey={geocodingApiKey}>
+          <APIProvider apiKey={geocodingApiKey} libraries={libraries}>
             <Map
               className={classes.map}
               center={{
