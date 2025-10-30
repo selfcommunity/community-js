@@ -1,8 +1,16 @@
+import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 import { dirname, join } from "path";
-const path = require("path");
+
+// @ts-ignore
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+// @ts-ignore
+const customRequire = createRequire(import.meta.url);
+const path = customRequire("path");
 const toPath = (filePath) => path.join(process.cwd(), filePath);
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const webpack = require('webpack');
+const TsconfigPathsPlugin = customRequire('tsconfig-paths-webpack-plugin');
+const webpack = customRequire('webpack');
 
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 const config = {
@@ -50,19 +58,19 @@ const config = {
       test: /\.(ts|tsx)$/,
       use: [
         {
-					loader: require.resolve('babel-loader'),
+					loader: customRequire.resolve('babel-loader'),
 					options: {
 						presets: [
 							[
-								require.resolve('@babel/preset-env'),
+								customRequire.resolve('@babel/preset-env'),
 								{ loose: false },
 							],
 							[
-								require.resolve('@babel/preset-react'),
+								customRequire.resolve('@babel/preset-react'),
 								{ runtime: 'automatic' },
 							],
 							[
-								require.resolve('@babel/preset-typescript'),
+								customRequire.resolve('@babel/preset-typescript'),
 								{
 									onlyRemoveTypeImports: true,
 									allowDeclareFields: true,
@@ -136,5 +144,5 @@ const config = {
 export default config;
 
 function getAbsolutePath(value: string): string {
-  return dirname(require.resolve(join(value, "package.json")));
+  return dirname(customRequire.resolve(join(value, "package.json")));
 }
