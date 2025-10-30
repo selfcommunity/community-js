@@ -2,10 +2,9 @@ import { fileURLToPath } from "node:url";
 import { createRequire } from "node:module";
 import { dirname, join } from "path";
 
-// @ts-ignore
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-// @ts-ignore
+
 const customRequire = createRequire(import.meta.url);
 const path = customRequire("path");
 const toPath = (filePath) => path.join(process.cwd(), filePath);
