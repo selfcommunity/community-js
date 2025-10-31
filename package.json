@@ -87,7 +87,7 @@
     "@mui/lab": "^7.0.1-beta.18",
     "@mui/material": "^7.3.4",
     "@mui/system": "^7.3.3",
-    "@mui/x-date-pickers": "^8.14.1",
+    "@mui/x-date-pickers": "^8.16.0",
     "@rpldy/chunked-sender": "^1.7.1",
     "@rpldy/chunked-uploady": "^1.7.1",
     "@rpldy/upload-button": "^1.7.1",
