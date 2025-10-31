@@ -190,7 +190,7 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
         const matches = match(option.full_address, inputValue);
         const parts = parse(option.full_address, matches);
         return (
-          <li key={`${option.lat}_${option.lng}`} {...props} style={{whiteSpace: 'break-spaces'}}>
+          <li {...props} key={`${option.lat}_${option.lng}`} style={{whiteSpace: 'break-spaces'}}>
             {parts.map((part, index) =>
               part.highlight ? (
                 <span key={index} style={{fontWeight: 700}}>
