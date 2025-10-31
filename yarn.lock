@@ -3957,7 +3957,7 @@
     "@typescript-eslint/types" "8.46.2"
     eslint-visitor-keys "^4.2.1"
 
-"@vis.gl/react-google-maps@^1.6.1":
+"@vis.gl/react-google-maps@^1.7.0":
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/@vis.gl/react-google-maps/-/react-google-maps-1.7.0.tgz#aa9b644493272ad10f8337614667cd577b45e553"
   integrity sha512-8lUmsQp++iGYkEitWXIz/Ds/dPB+/NcssyNjhIqWtZpNL1WUiaJMWGmBktoKT2vyxT0ZXFzE/Rg/xPLklJGYHw==
