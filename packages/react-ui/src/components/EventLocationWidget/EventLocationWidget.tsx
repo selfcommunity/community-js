@@ -1,6 +1,6 @@
 import {Box, CardContent, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
-import {APIProvider} from '@vis.gl/react-google-maps';
+import {APIProvider, Map} from '@vis.gl/react-google-maps';
 import {useSCGoogleApiLoader, useSCFetchEvent} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
@@ -114,7 +114,7 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
         </Typography>
         <Box className={classes.map}>
           <APIProvider apiKey={geocodingApiKey} libraries={libraries}>
-            <EventMap event={scEvent} className={classes.map} />
+						<EventMap event={scEvent} className={classes.map} />
           </APIProvider>
         </Box>
         <Typography variant="h4" className={classes.locationTitle}>

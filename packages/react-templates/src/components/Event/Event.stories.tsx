@@ -14,7 +14,7 @@ export default {
 
 export const Base: StoryObj<typeof EventTemplate> = {
   args: {
-		eventId: 37
+		eventId: 2183
   },
   render: (args) => (
     <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
@@ -24,7 +24,7 @@ export const Base: StoryObj<typeof EventTemplate> = {
 
 export const BaseContainerFixed: StoryObj<typeof EventTemplate> = {
 	args: {
-		eventId: 77
+		eventId: 2183
 	},
 	render: (args) => {
 		return <div style={{position: 'fixed', bottom: 0, left: 0, right: 0, top: 70, zIndex: 1, maxWidth: '100% !important', height: '92vh', overflow: 'auto'}} id="scrollableDiv">
