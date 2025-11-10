@@ -20,7 +20,6 @@ if (!fs.existsSync(certsDir)) {
 // Check if mkcert is installed
 try {
   execSync('mkcert -version', { stdio: 'pipe' });
-  console.log('mkcert is already installed');
 } catch (error) {
   console.error('\x1b[31m%s\x1b[0m', 'Error: mkcert is not installed!');
   console.error('\x1b[33m%s\x1b[0m', 'Please install it first:');
@@ -40,21 +39,27 @@ try {
   process.exit(1); // Exit with error code to prevent Storybook from starting
 }
 
-// Generate certificates for localhost
-try {
-  // Install local CA if not already installed
-  execSync('mkcert -install', { stdio: 'inherit' });
+// Generate certificates for localhost only if they don't exist
+if (!fs.existsSync(keyPath) || !fs.existsSync(certPath)) {
+  try {
+    // Install local CA if not already installed
+    execSync('mkcert -install', { stdio: 'inherit' });
 
-  // Generate certificate for localhost
-  execSync(
-    `mkcert -key-file ${keyPath} -cert-file ${certPath} localhost 127.0.0.1 ::1`,
-    {
-      stdio: 'inherit',
-    },
+    // Generate certificate for localhost
+    execSync(
+      `mkcert -key-file ${keyPath} -cert-file ${certPath} localhost 127.0.0.1 ::1`,
+      {
+        stdio: 'inherit',
+      },
+    );
+
+    console.log('Successfully generated SSL certificates for localhost');
+  } catch (error) {
+    console.error('Error generating certificates:', error.message);
+    process.exit(1);
+  }
+} else {
+  console.log(
+    'SSL certificates for localhost already exist, skipping generation',
   );
-
-  console.log('Successfully generated SSL certificates for localhost');
-} catch (error) {
-  console.error('Error generating certificates:', error.message);
-  process.exit(1);
 }
