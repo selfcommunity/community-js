@@ -147,7 +147,7 @@
 		"tslib": "2.6.2",
 		"use-deep-compare-effect": "^1.8.1",
 		"use-resize-observer": "^9.1.0",
-		"virtual-scroller": "^1.12.3",
+		"virtual-scroller": "~1.13.1",
 		"yjs": "^13.6.7"
 	},
 	"devDependencies": {
