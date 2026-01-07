@@ -440,8 +440,8 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
           </Box>
         )}
       </Grid>
-      <Grid className={classes.actions}>
-        <Grid size={1} className={classes.action}></Grid>
+      <Grid size={12} className={classes.actions}>
+        <Grid size={1} className={classes.action} />
         {actions.map((a: PlatformWidgetActionType, i: number) => {
           return (
             <Grid key={i} size="auto" className={classNames(classes.action, {[classes.actionHighlighted]: tutorialIndex === i && isTutorialOpen})}>
@@ -449,7 +449,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
             </Grid>
           );
         })}
-        <Grid size={1} className={classes.action}></Grid>
+        <Grid size={1} className={classes.action} />
       </Grid>
     </Grid>
   );
