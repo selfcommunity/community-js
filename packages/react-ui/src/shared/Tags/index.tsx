@@ -8,7 +8,7 @@ const PREFIX = 'SCTags';
 const TagsPopperRoot = styled(Box, {
   name: `${PREFIX}`,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({
   cursor: 'pointer'
 }));
@@ -23,7 +23,7 @@ const classes = {
 const TagsPopper = styled(Popper, {
   name: `${PREFIX}Popper`,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({
   zIndex: 2,
   [`& .${classes.paper}`]: {
@@ -37,13 +37,13 @@ const TagsPopper = styled(Popper, {
 const ListRoot = styled(Stack, {
   name: `${PREFIX}List`,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })({});
 
 const StackList = styled(Stack, {
   name: `${PREFIX}Stack`,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })({
   flexWrap: 'wrap',
   justifyContent: 'flex-start',
@@ -56,7 +56,7 @@ const StackList = styled(Stack, {
 const ItemList = styled(Box, {
   name: `${PREFIX}ItemList`,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(({theme}) => ({
   padding: theme.spacing(0.2),
   textAlign: 'center',
@@ -117,16 +117,7 @@ export interface TagsProps {
 }
 export default function Tags(props: TagsProps): JSX.Element {
   // PROPS
-  const {
-    tags = [],
-    title = null,
-    type = TagsComponentType.POPPER,
-    onOpen = null,
-    onClose = null,
-    onClickTag = null,
-    TagChipProps = {},
-    ...rest
-  } = props;
+  const {tags = [], title = null, type = TagsComponentType.POPPER, onClickTag = null, TagChipProps = {}, ...rest} = props;
 
   // STATE
   const [open, setOpen] = useState<boolean>(false);
@@ -140,14 +131,14 @@ export default function Tags(props: TagsProps): JSX.Element {
     }
   }
 
-  function handleClose() {
+  function handleClose(event: MouseEvent | TouchEvent) {
     if (popperRef.current && popperRef.current.contains(event.target)) {
       return;
     }
 
     setOpen(false);
     if (rest.onClose) {
-      rest.onClose();
+      rest.onClose(event);
     }
   }
 
@@ -205,7 +196,7 @@ export default function Tags(props: TagsProps): JSX.Element {
                   <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
                     <Paper variant="outlined" className={classes.paper}>
                       <ClickAwayListener onClickAway={handleClose}>
-                        <>
+                        <Box>
                           {renderTitle()}
                           <StackList spacing={2} {...rest}>
                             {tags
@@ -216,7 +207,7 @@ export default function Tags(props: TagsProps): JSX.Element {
                                 </ItemList>
                               ))}
                           </StackList>
-                        </>
+                        </Box>
                       </ClickAwayListener>
                     </Paper>
                   </Grow>
