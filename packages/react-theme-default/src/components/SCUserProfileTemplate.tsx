@@ -40,7 +40,7 @@ const Component = {
         height: 'fit-content'
       }
     }),
-    skeletonRoot: () => ({})
+    skeletonRoot: ({theme}: any) => ({})
   }
 };
 
