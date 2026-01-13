@@ -46,7 +46,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'ContentPollRoot'
-})(({theme}) => ({}));
+})(() => ({}));
 
 const messages = defineMessages({
   choicePlaceholder: {
@@ -57,7 +57,7 @@ const messages = defineMessages({
 
 const SortableComponent = forwardRef<HTMLDivElement, any>(({children, ...props}, ref) => {
   return (
-    <FormGroup direction="column" ref={ref} {...props}>
+    <FormGroup sx={{display: 'flex', flexDirection: 'column'}} ref={ref} {...props}>
       {children}
     </FormGroup>
   );
@@ -147,7 +147,7 @@ export default (inProps: ContentPollProps): JSX.Element => {
 
   const handleDeleteChoice = useCallback(
     (index: number) => {
-      return (event: SyntheticEvent) => {
+      return () => {
         const _choices = [...poll.choices];
         _choices.splice(index, 1);
         onChange({...value, poll: {...poll, choices: _choices}});
