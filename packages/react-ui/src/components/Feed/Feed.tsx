@@ -13,8 +13,7 @@ import {
   usePreviousValue,
   useSCFetchFeed
 } from '@selfcommunity/react-core';
-import {styled, useTheme} from '@mui/material/styles';
-import {Box, Button, CardContent, Grid, Hidden, Theme, Typography, useMediaQuery} from '@mui/material';
+import {styled, useTheme, Box, Button, CardContent, Grid, Hidden, Theme, Typography, useMediaQuery} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {GenericSkeleton} from '../Skeleton';
 import {SCFeedWidgetType} from '../../types/feed';
@@ -36,6 +35,7 @@ import FeedSkeleton from './Skeleton';
 import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import StickyBoxComp, {StickyBoxProps} from '../../shared/StickyBox';
 import {PREFIX} from './constants';
+import FooterWidget from '../FooterWidget';
 
 const messages = defineMessages({
   refresh: {
@@ -439,7 +439,18 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
                 position: 0
               }
             ]
-          : [])
+          : []),
+        ...(oneColLayout
+          ? []
+          : [
+              {
+                type: 'widget',
+                component: FooterWidget,
+                componentProps: {},
+                column: 'right',
+                position: 100
+              }
+            ])
       ]
         .map((w, i) => Object.assign({}, w, {position: w.position * (w.column === 'right' ? 5 : 1), id: `${w.column}_${i}`}))
         .sort(widgetSort),
@@ -803,7 +814,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
           </VirtualScrollChild>
         );
       },
-    []
+    [authUserId]
   );
 
   if (feedDataObject.isLoadingNext && !feedDataLeft.length) {

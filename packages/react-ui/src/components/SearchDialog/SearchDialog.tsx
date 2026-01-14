@@ -32,7 +32,10 @@ export interface SearchDialogProps extends DialogProps {
    */
   className?: string;
 
-  SearchAutocompleteProps: SearchAutocompleteProps;
+  /**
+   * Overrides props for the SearchAutocomplete component.
+   */
+  SearchAutocompleteComponentProps: SearchAutocompleteProps;
 
   /**
    * Other props
@@ -46,12 +49,12 @@ export default function Search(inProps: SearchDialogProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, SearchAutocompleteProps = {autoFocus: true}, ...rest} = props;
+  const {className, SearchAutocompleteComponentProps = {autoFocus: true}, ...rest} = props;
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <DialogContent>
-        <SearchAutocomplete className={classes.search} blurOnSelect={false} open disablePortal {...SearchAutocompleteProps} />
+        <SearchAutocomplete className={classes.search} blurOnSelect={false} open disablePortal {...SearchAutocompleteComponentProps} />
       </DialogContent>
     </Root>
   );

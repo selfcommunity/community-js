@@ -17,6 +17,7 @@ export type ComposerContentType = Omit<
   SCFeedPostType,
   | 'id'
   | 'last_activity_at'
+  | 'last_edited_at'
   | 'added_at'
   | 'slug'
   | 'summary'

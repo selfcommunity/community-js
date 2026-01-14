@@ -1,25 +1,19 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-nocheck
-
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Waypoint} from 'react-waypoint';
 import ReactPlayer from 'react-player';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
+import {SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
+import {DEFAULT_VIDEO_PLAY_TRACKING_DELAY_SECONDS} from '../../constants/Media';
 
 const PREFIX = 'SCAutoPlayer';
 
 const Root = styled(Waypoint, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 export interface AutoPlayerProps {
-  /**
-   * Handles player autoplay
-   * @default true
-   */
-  enableAutoplay?: boolean;
   /**
    * Handles player loop
    * @default false
@@ -62,27 +56,28 @@ export interface AutoPlayerProps {
 
 export default function AutoPlayer(props: AutoPlayerProps) {
   // PROPS
-  const {
-    enableAutoplay = true,
-    loop = false,
-    muted = true,
-    playsinline = true,
-    controls = true,
-    stopOnUnmount = true,
-    pip = true,
-    onVideoWatch,
-    ...rest
-  } = props;
+  const {loop = false, muted = true, playsinline = true, controls = true, stopOnUnmount = true, pip = true, onVideoWatch, ...rest} = props;
 
   // STATE
   const [shouldPlay, setShouldPlay] = useState<boolean>(false);
   const [played, setPlayed] = useState(0);
+  const [startPlay, setStartPlay] = useState(0);
+
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
+
+  const enableAutoplay =
+    SCPreferences.CONFIGURATIONS_VIDEO_AUTOPLAY_ENABLED in preferences && preferences[SCPreferences.CONFIGURATIONS_VIDEO_AUTOPLAY_ENABLED].value;
+
+  const videoPlayTrackingDelaySeconds =
+    SCPreferences.CONFIGURATIONS_VIDEO_PLAY_TRACKING_DELAY_SECONDS in preferences
+      ? preferences[SCPreferences.CONFIGURATIONS_VIDEO_PLAY_TRACKING_DELAY_SECONDS].value
+      : DEFAULT_VIDEO_PLAY_TRACKING_DELAY_SECONDS;
 
   useEffect(() => {
-    if (played >= 10 && played <= 11) {
-      onVideoWatch();
+    if (played >= startPlay + videoPlayTrackingDelaySeconds && played <= startPlay + videoPlayTrackingDelaySeconds + 1) {
+      onVideoWatch?.();
     }
-  }, [played]);
+  }, [played, startPlay]);
 
   /**
    * Handle viewport enter
@@ -114,7 +109,11 @@ export default function AutoPlayer(props: AutoPlayerProps) {
           playing={shouldPlay}
           muted={muted}
           onProgress={(progress) => {
-            setPlayed(progress.playedSeconds);
+            const playedSeconds = progress.playedSeconds;
+            if (played === 0) {
+              setStartPlay(playedSeconds);
+            }
+            setPlayed(playedSeconds);
           }}
           playsinline={playsinline}
           config={{

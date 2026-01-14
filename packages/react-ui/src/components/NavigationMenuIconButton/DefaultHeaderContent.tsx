@@ -8,8 +8,7 @@ import {
   useSCRouting
 } from '@selfcommunity/react-core';
 import React, {useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, BoxProps} from '@mui/material';
+import {Box, BoxProps, styled} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 

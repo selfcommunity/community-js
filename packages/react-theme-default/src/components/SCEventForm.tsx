@@ -114,6 +114,9 @@ const Component = {
         '& .SCEventForm-event-address-tab-content': {
           padding: theme.spacing(0.5, 2, 2, 2)
         }
+      },
+      '& .SCEventForm-paywalls-configurator-wrap': {
+        margin: '1px'
       }
     })
   }

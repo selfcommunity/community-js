@@ -17,10 +17,10 @@ const Component = {
         }
       }
     }),
-    popperRoot: ({theme}: any) => ({
+    popperRoot: () => ({
       zIndex: 1400,
       '& .SCVoteButton-reaction .MuiIcon-root': {
-        fontSize: '22px'
+        fontSize: '30px'
       }
     })
   }

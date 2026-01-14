@@ -1,5 +1,5 @@
-import React, {useMemo, useRef} from 'react';
-import {styled} from '@mui/material/styles';
+import {useMemo, useRef} from 'react';
+import {styled} from '@mui/material';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCUserContextType, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
@@ -16,7 +16,8 @@ import {
   SCFeedWidgetType,
   UserFollowedCategoriesWidget,
   UserFollowedUsersWidget,
-  UserFollowersWidget
+  UserFollowersWidget,
+  UserLiveStreamWidget
 } from '@selfcommunity/react-ui';
 import {UserFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
@@ -91,24 +92,31 @@ export interface UserFeedProps {
 const WIDGETS: SCFeedWidgetType[] = [
   {
     type: 'widget',
-    component: UserFollowedCategoriesWidget,
+    component: UserLiveStreamWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: UserFollowedUsersWidget,
+    component: UserFollowedCategoriesWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: UserFollowersWidget,
+    component: UserFollowedUsersWidget,
     componentProps: {},
     column: 'right',
     position: 2
+  },
+  {
+    type: 'widget',
+    component: UserFollowersWidget,
+    componentProps: {},
+    column: 'right',
+    position: 3
   }
 ];
 
@@ -157,7 +165,8 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
-    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+    const messageId = feedObject.scheduled_at ? 'ui.composer.scheduled.success' : 'ui.inlineComposerWidget.success';
+    enqueueSnackbar(<FormattedMessage id={messageId} defaultMessage={messageId} />, {
       variant: 'success',
       autoHideDuration: 3000
     });
@@ -165,10 +174,10 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
     const feedUnit = {
       type: feedObject.type,
       [feedObject.type]: feedObject,
-      seen_by_id: [],
+      seen: false,
       has_boost: false
     };
-    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+    !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   // WIDGETS
@@ -195,7 +204,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
       }}
       widgets={_widgets}
       ItemComponent={FeedObject}
-      itemPropsGenerator={(scUser, item) => ({
+      itemPropsGenerator={(_scUser, item) => ({
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null

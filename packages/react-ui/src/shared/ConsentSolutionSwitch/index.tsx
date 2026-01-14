@@ -1,8 +1,6 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {CircularProgress, Switch, SwitchProps} from '@mui/material';
+import {styled, CircularProgress, Switch, SwitchProps, Icon} from '@mui/material';
 import {useThemeProps} from '@mui/system';
-import Icon from '@mui/material/Icon';
 
 const PREFIX = 'SCConsentSolutionSwitch';
 

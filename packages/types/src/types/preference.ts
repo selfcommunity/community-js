@@ -14,7 +14,8 @@ export enum SCPreferenceSection {
   ADVERTISING = 'advertising',
   CONFIGURATIONS = 'configurations',
   PROVIDERS = 'providers',
-  WEBMASTER = 'webmaster'
+  WEBMASTER = 'webmaster',
+  STATIC = 'static'
 }
 
 /**
@@ -76,6 +77,7 @@ export enum SCPreferenceName {
   CUSTOM_NAVBAR_ITEM_TEXT = 'custom_navbar_item_text',
   CUSTOM_NAVBAR_ITEM_URL = 'custom_navbar_item_url',
   CUSTOM_NAVBAR_ITEM_IMAGE = 'custom_navbar_item_image',
+  CONNECTION_ENABLED = 'connection_enabled',
   FOLLOW_ENABLED = 'follow_enabled',
   EXPLORE_STREAM_ENABLED = 'explore_stream_enabled',
   EXPLORE_STREAM_ORDER_BY = 'explore_stream_order_by',
@@ -104,6 +106,7 @@ export enum SCPreferenceName {
   URL_TEMPLATE_NOTIFICATIONS = 'url_template_notifications',
   URL_TEMPLATE_USER_PRIVATE_MESSAGES = 'url_template_private_message',
   URL_TEMPLATE_INCUBATOR = 'url_template_incubator',
+  URL_TEMPLATE_LIVE_STREAM = 'url_template_live_stream',
   APP_URL = 'app_url',
   USER_METADATA_DEFINITIONS = 'user_metadata_definition',
   TAG_MANAGER_CONTAINER_ID = 'tag_manager_container_id',
@@ -137,8 +140,36 @@ export enum SCPreferenceName {
   EVENTS_VISIBILITY_ENABLED = 'events_visibility_enabled',
   EVENTS_PRIVATE_ENABLED = 'events_private_enabled',
   EVENTS_ONLY_STAFF_ENABLED = 'events_only_staff_enabled',
+  COURSES_ENABLED = 'courses_enabled',
+  COURSES_VISIBILITY_ENABLED = 'courses_visibility_enabled',
+  COURSES_PRIVATE_ENABLED = 'courses_private_enabled',
+  COURSES_ONLY_STAFF_ENABLED = 'courses_only_staff_enabled',
+  COURSES_ADVANCED_ENABLED = 'courses_advanced_enabled',
+  LIVE_STREAM_ENABLED = 'live_stream_enabled',
+  LIVE_STREAM_ONLY_STAFF_ENABLED = 'live_stream_only_staff_enabled',
+  LIVE_STREAM_VIDEO_CONFERENCE_ENABLED = 'live_stream_video_conference_enabled',
   ONBOARDING_ENABLED = 'onboarding_enabled',
-  ONBOARDING_HIDDEN = 'onboarding_hidden'
+  ONBOARDING_HIDDEN = 'onboarding_hidden',
+  SUBSCRIPTION_TIER = 'subscription_tier',
+  PAYMENTS_ENABLED = 'payments_enabled',
+  STRIPE_CONNECTED_ACCOUNT_ID = 'stripe_connected_account_id',
+  ENVIRONMENT = 'env',
+  STACK_ID = 'stackid',
+  STRIPE_PUBLIC_KEY = 'stripe_public_key',
+  PRIVATE_MESSAGES_ENABLED = 'private_messages_enabled',
+  CONTEXT_MENU_ENABLED = 'context_menu_enabled',
+  CATEGORY_FOLLOW_ENABLED = 'category_follow_enabled',
+  SHARE_POST_ENABLED = 'share_post_enabled',
+  COMMENTS_ENABLED = 'comments_enabled',
+  SIDEBAR_SHOW_ALL_CATEGORIES_ENABLED = 'sidebar_show_all_categories_enabled',
+  VIDEO_AUTOPLAY_ENABLED = 'video_autoplay_enabled',
+  VIDEO_PLAY_TRACKING_DELAY_SECONDS = 'video_play_tracking_delay_seconds',
+  SCHEDULED_POSTS_ENABLED = 'scheduled_posts_enabled',
+  POST_CATEGORY_REQUIRED_ENABLED = 'post_category_required_enabled',
+  POST_ADDRESSING_REQUIRED_ENABLED = 'post_addressing_required_enabled',
+  POST_USER_ADDRESSING_ENABLED = 'post_user_addressing_enabled',
+  CONTACT_API_ENABLED = 'contact_api_enabled',
+  ACCEPTED_MEDIA_MIMETYPES = 'accepted_media_mimetypes'
 }
 
 /**

@@ -3,6 +3,219 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0-alpha.13) (2025-10-07)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+# [0.7.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.11...@selfcommunity/api-services@0.7.0-alpha.12) (2025-10-01)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+# [0.7.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.10...@selfcommunity/api-services@0.7.0-alpha.11) (2025-09-30)
+
+
+### Performance Improvements
+
+* changed tag autocomplete api. Linear issue: https://linear.app/quentral/issue/QUE-2102/cambiare-rotta-per-recuperare-le-tag-nel-filtra-ricerca-utenti ([f079d2a](https://github.com/selfcommunity/community-js/commit/f079d2a711f4cf11052859059e1f8be09e012a5f))
+
+
+
+
+
+# [0.7.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.9...@selfcommunity/api-services@0.7.0-alpha.10) (2025-09-29)
+
+
+### Bug Fixes
+
+* fixed comments mdx for doc ([8f274c1](https://github.com/selfcommunity/community-js/commit/8f274c139dc2dc6d11c918c179a31f24ff7e46b1))
+
+
+
+
+
+# [0.7.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.8...@selfcommunity/api-services@0.7.0-alpha.9) (2025-09-25)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+# [0.7.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.7...@selfcommunity/api-services@0.7.0-alpha.8) (2025-09-22)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+# [0.7.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.6...@selfcommunity/api-services@0.7.0-alpha.7) (2025-09-19)
+
+
+### Performance Improvements
+
+* updated match usernames api ([290f5a6](https://github.com/selfcommunity/community-js/commit/290f5a6a397ed6c665c79fce26b21ea703002ce8))
+
+
+
+
+
+# [0.7.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.5...@selfcommunity/api-services@0.7.0-alpha.6) (2025-09-18)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+# [0.7.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.4...@selfcommunity/api-services@0.7.0-alpha.5) (2025-09-18)
+
+
+### Bug Fixes
+
+* callback home navigation toolbar ([a7e19b5](https://github.com/selfcommunity/community-js/commit/a7e19b5394664463cdab6be4ef56a50bdfadbd9c))
+* fixed user tagging, added new api ([6fc5726](https://github.com/selfcommunity/community-js/commit/6fc5726b2b486d69da2f955e1ae1cda518e76db7))
+
+
+
+
+
+# [0.7.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.3...@selfcommunity/api-services@0.7.0-alpha.4) (2025-09-17)
+
+
+### Bug Fixes
+
+* contact-us api service, callback home navigation toolbar ([1315a38](https://github.com/selfcommunity/community-js/commit/1315a38aaa8d14ad75080f512d108c9950a55473))
+
+
+
+
+
+# [0.7.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.2...@selfcommunity/api-services@0.7.0-alpha.3) (2025-09-17)
+
+
+### Bug Fixes
+
+* added type to fix error ([90e1fa8](https://github.com/selfcommunity/community-js/commit/90e1fa85447d405f94048ac69b7da4628a9d2207))
+* contact-us api service ([5059a41](https://github.com/selfcommunity/community-js/commit/5059a411b39cba4f11ee8cc6082ce739ae9dbf4f))
+* contact-us api service ([07abdc8](https://github.com/selfcommunity/community-js/commit/07abdc81fa42b1f3278a87e9b85f98ce5367dfc2))
+* contact-us api service ([b75dbc2](https://github.com/selfcommunity/community-js/commit/b75dbc2c998498f57d836d2580299cdd725c95d3))
+
+
+
+
+
+# [0.7.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.1...@selfcommunity/api-services@0.7.0-alpha.2) (2025-09-16)
+
+
+### Features
+
+* added new api to dowload csv. Linear: https://linear.app/quentral/issue/QUE-1985/frontend-nel-caso-in-cui-lutente-loggato-sia-lautore-di-un-contenuto-e ([28529af](https://github.com/selfcommunity/community-js/commit/28529af9e8a159990a052b2e5f58b2519fefaf0c))
+
+
+
+
+
+# [0.7.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.0...@selfcommunity/api-services@0.7.0-alpha.1) (2025-09-04)
+
+
+### Bug Fixes
+
+* CommunityPaywalls ([68c6e14](https://github.com/selfcommunity/community-js/commit/68c6e142a09cdae50303c7672bb66640bc5881e1))
+* payment_waiting ([85af9fc](https://github.com/selfcommunity/community-js/commit/85af9fc96217e9f824a807b2d391bb34af154f65))
+* payment_waiting ([07a2235](https://github.com/selfcommunity/community-js/commit/07a2235b2b7532aef3613d7d5e942b205f6598d6))
+* payment_waiting group/course ([997106e](https://github.com/selfcommunity/community-js/commit/997106ef7cba0d335c0081c5ce12ad3faab980cd))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([0a0f739](https://github.com/selfcommunity/community-js/commit/0a0f739055bb5fcc1b95b2ca2b0d6386a4939047))
+* payments ([b85a180](https://github.com/selfcommunity/community-js/commit/b85a180cacbe50b580e9a729ef4b8681a0a9ed64))
+* payments ([dcc8552](https://github.com/selfcommunity/community-js/commit/dcc8552a61b3249c8f29810b39eff412dd8dbec3))
+* payments ([370983c](https://github.com/selfcommunity/community-js/commit/370983c46e142fca9c0e83a92072afe8f6c1ec0b))
+* payments ([a15eeb8](https://github.com/selfcommunity/community-js/commit/a15eeb8549d8064acfcd1ff2cdcf2ec4864b4f5e))
+* payments ([ec6d32e](https://github.com/selfcommunity/community-js/commit/ec6d32e82b4c778c265804c05d3002ac48faa4bb))
+* payments ([21e9a56](https://github.com/selfcommunity/community-js/commit/21e9a561872b29e616cdc6b0e820ac11eb396712))
+* payments ([233f5eb](https://github.com/selfcommunity/community-js/commit/233f5eb248e41f67ce2139955fde0261e54f071d))
+* payments ([720e295](https://github.com/selfcommunity/community-js/commit/720e2951048faa5fdedcf4874f6bf7211cf64804))
+* payments ([8ebe701](https://github.com/selfcommunity/community-js/commit/8ebe701424cf269df90cb524919cab946b8f1dbe))
+* payments ([ea3f7c2](https://github.com/selfcommunity/community-js/commit/ea3f7c267cf169442834fa50d6335a0cd15c30f0))
+* payments ([ffc87ee](https://github.com/selfcommunity/community-js/commit/ffc87eea62a9b6788843883d4bd34bbddcc1f8e5))
+* payments and other features ([a0bd0eb](https://github.com/selfcommunity/community-js/commit/a0bd0eb3aea472a65033fd1e4160ddf55a3c05a0))
+* payments category, group, event ([d0e2b24](https://github.com/selfcommunity/community-js/commit/d0e2b248fe14b667031529fe772f745129811f84))
+* paywall ([a6372be](https://github.com/selfcommunity/community-js/commit/a6372befda9a0b749c2d994c9be9ac90ec95b968))
+* paywall ([62d9ee1](https://github.com/selfcommunity/community-js/commit/62d9ee1fe4c60b5d801f708eac65c3462e0aafc3))
+* paywall ([46e72c4](https://github.com/selfcommunity/community-js/commit/46e72c40e0fc88db92da5b74f70c66fbf5f209a2))
+* paywall ([7913a21](https://github.com/selfcommunity/community-js/commit/7913a21732d4b2baf965ed016751c688e9a22ec3))
+* peerDependencies ([97c38fe](https://github.com/selfcommunity/community-js/commit/97c38fe2c7294c95c489f503117f09f6053d929d))
+
+
+### Features
+
+* added endpoints/services actions to manage scheduled posts. Linear issue: https://linear.app/quentral/issue/QUE-1793/frontend-creazione-e-gestione-dei-post-programmati ([eb8cfd2](https://github.com/selfcommunity/community-js/commit/eb8cfd23fe6d01f44e74c19edc095d8abd385c99))
+
+
+### Performance Improvements
+
+* added filters to payment orders table. Linear issue: https://linear.app/quentral/issue/QUE-1295/inserire-nel-componente-paymentorders-i-filtri-in-testa-alla-tabella ([5ed71b0](https://github.com/selfcommunity/community-js/commit/5ed71b0186c39e69a3e27b8cda49c3c8d5338b9d))
+
+
+
+
+
+## [0.6.7-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.7-alpha.2...@selfcommunity/api-services@0.6.7-alpha.3) (2025-02-26)
+
+
+### Bug Fixes
+
+* category can_create_only_staff ([a9ebbf3](https://github.com/selfcommunity/community-js/commit/a9ebbf3c483bd428f63f7567227c96dcead9638f))
+
+
+
+
+
+## [0.6.7-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.7-alpha.1...@selfcommunity/api-services@0.6.7-alpha.2) (2025-02-25)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+## [0.6.7-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.7-alpha.0...@selfcommunity/api-services@0.6.7-alpha.1) (2025-01-08)
+
+
+### Bug Fixes
+
+* dependencies ([bfb228f](https://github.com/selfcommunity/community-js/commit/bfb228fe482d247b87605a57e7de34faf7087214))
+* livestream ([6bad845](https://github.com/selfcommunity/community-js/commit/6bad845bb3e4e8d7a774600bb7ac97ca0da372e1))
+* livestream ([71d006b](https://github.com/selfcommunity/community-js/commit/71d006b642183eeda860f21772789a3cdf0bd3d7))
+* livestream ([37d2561](https://github.com/selfcommunity/community-js/commit/37d2561218ed54bcbfc7e8725dd39ef7196e78d8))
+* livestream ([619ae76](https://github.com/selfcommunity/community-js/commit/619ae76fd237be7bad9bbec0afdc3052bf662d31))
+* livestream ([7b9c841](https://github.com/selfcommunity/community-js/commit/7b9c841bc0815f6a99e9d1c06cf77237601dc527))
+* livestream ([9e7d4f2](https://github.com/selfcommunity/community-js/commit/9e7d4f293b64190ed520194ab1ff4d381d9a443e))
+* livestream ([9e5f413](https://github.com/selfcommunity/community-js/commit/9e5f413f97ef3a471b3368b0dc79f450d0d0d163))
+* livestream ([d6c209b](https://github.com/selfcommunity/community-js/commit/d6c209b1ff2f23f4bb3176b6c4d33703c6fedd77))
+* livestream in progress - fix deps - remove webpack-atoms (use fiber) and conflict with livekit deps ([68ed5ba](https://github.com/selfcommunity/community-js/commit/68ed5ba4394740787bfd89b1e7d195f9ad2954d4))
+* update react-ui deps -> react-lazyload ([d492ec9](https://github.com/selfcommunity/community-js/commit/d492ec98f5ba4dd5b7272578012d96f25d6f62fd))
+
+
+
+
+
+## [0.6.7-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.6...@selfcommunity/api-services@0.6.7-alpha.0) (2024-12-19)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
 ## [0.6.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.6.6-alpha.1...@selfcommunity/api-services@0.6.6) (2024-12-17)
 
 **Note:** Version bump only for package @selfcommunity/api-services

@@ -8,7 +8,7 @@ export default {
 
 const template = (args) => (
   <div style={{width: 800}}>
-    <EventForm{...args} />
+    <EventForm {...args} />
   </div>
 );
 

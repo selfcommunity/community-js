@@ -1,9 +1,7 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import Box from '@mui/material/Box';
 import {SCMediaObjectType} from '../../types/media';
 import {useSCMediaClick} from '@selfcommunity/react-core';
-import {BoxProps} from '@mui/material';
+import {Box, BoxProps, styled} from '@mui/material';
 import {SCMediaType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import {File, Link, Share} from '../../shared/Media';

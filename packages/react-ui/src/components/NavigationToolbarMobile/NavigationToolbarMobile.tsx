@@ -1,4 +1,4 @@
-import {Badge, BottomNavigationAction, Button, IconButton, styled, Toolbar, ToolbarProps} from '@mui/material';
+import {Badge, Button, IconButton, styled, Toolbar, ToolbarProps, Icon} from '@mui/material';
 import React, {useCallback, useMemo, useState} from 'react';
 import {
   Link,
@@ -12,7 +12,6 @@ import {
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import Icon from '@mui/material/Icon';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import NavigationToolbarMobileSkeleton from './Skeleton';
@@ -23,6 +22,7 @@ import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from '.
 import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from '../NavigationMenuIconButton';
 import {PREFIX} from './constants';
 import {SCFeatureName} from '@selfcommunity/types';
+import {scroll} from 'seamless-scroll-polyfill';
 import ComposerIconButton, {ComposerIconButtonProps} from '../ComposerIconButton';
 
 const classes = {
@@ -55,7 +55,7 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
   /**
    * Props spread to SearchAutocomplete component
    */
-  SearchAutocompleteProps?: SearchAutocompleteProps;
+  SearchAutocompleteComponentProps?: SearchAutocompleteProps;
   /**
    * Actions to be inserted before composer IconButton
    */
@@ -65,6 +65,10 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    */
   endActions?: React.ReactNode | null;
   /**
+   * Callback on click home
+   */
+  onClickHome?: () => void;
+  /**
    * Component for Navigation Menu Icon Button
    */
   NavigationMenuIconButtonComponent?: (inProps: NavigationMenuIconButtonProps) => JSX.Element;
@@ -72,11 +76,11 @@ export interface NavigationToolbarMobileProps extends ToolbarProps {
    * Component for Navigation Settings
    */
   NavigationSettingsIconButtonComponent?: (inProps: NavigationSettingsIconButtonProps) => JSX.Element;
-	/**
-	 * Props to spread to the ComposerIconButton
-	 * @default {}
-	 */
-	ComposerIconButtonProps?: ComposerIconButtonProps;
+  /**
+   * Props to spread to the ComposerIconButton
+   * @default {}
+   */
+  ComposerIconButtonProps?: ComposerIconButtonProps;
 }
 
 /**
@@ -122,13 +126,14 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
     className = '',
     disableSearch = false,
     preserveDesktopLogo = false,
-    SearchAutocompleteProps = {},
+    SearchAutocompleteComponentProps = {},
     children = null,
     startActions = null,
     endActions = null,
     NavigationMenuIconButtonComponent = NavigationMenuIconButton,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
-		ComposerIconButtonProps = {},
+    ComposerIconButtonProps = {},
+    onClickHome,
     ...rest
   } = props;
 
@@ -158,6 +163,7 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
       preferences &&
       features &&
       features.includes(SCFeatureName.TAGGING) &&
+      features.includes(SCFeatureName.EVENT) &&
       SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
     [preferences, features]
@@ -169,10 +175,20 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
   // HANDLERS
   const handleOpenSearch = useCallback(() => {
     setSearchOpen(true);
-  }, []);
+  }, [setSearchOpen]);
   const handleCloseSearch = useCallback(() => {
     setSearchOpen(false);
-  }, []);
+  }, [setSearchOpen]);
+  const handleClickHome = useCallback(() => {
+    if (onClickHome) {
+      onClickHome();
+    } else {
+      const pathName = window.location.pathname;
+      if (pathName && (pathName === '/' || pathName === scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))) {
+        scroll(window, {top: 0, behavior: 'smooth'});
+      }
+    }
+  }, [onClickHome]);
 
   // RENDER
   if (scUserContext.loading) {
@@ -186,7 +202,8 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
         to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
         className={classNames(className, classes.logo, {
           [classes.logoFlex]: preferences[SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL].value
-        })}>
+        })}
+        onClick={handleClickHome}>
         {!preserveDesktopLogo ? (
           <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO_MOBILE].value} alt="logo" />
         ) : (
@@ -214,13 +231,11 @@ export default function NavigationToolbarMobile(inProps: NavigationToolbarMobile
             className={classes.searchDialog}
             fullScreen
             open={searchOpen}
-            SearchAutocompleteProps={{...SearchAutocompleteProps, onClear: handleCloseSearch}}></SearchDialog>
+            SearchAutocompleteComponentProps={{...SearchAutocompleteComponentProps, onClear: handleCloseSearch}}></SearchDialog>
         </>
       )}
       {endActions}
-      {(!postOnlyStaffEnabled || (UserUtils.isStaff(scUserContext.user) && postOnlyStaffEnabled)) &&
-        groupsEnabled &&
-        eventsEnabled &&
+      {(!postOnlyStaffEnabled || UserUtils.isStaff(scUserContext.user) || UserUtils.isPublisher(scUserContext.user)) &&
         (scUserContext.user || contentAvailable) &&
         exploreStreamEnabled && <ComposerIconButton {...ComposerIconButtonProps} />}
       {scUserContext.user && (groupsEnabled || eventsEnabled) && (

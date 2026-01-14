@@ -1,7 +1,7 @@
-import React, {useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Button, ButtonBaseProps, Icon, Stack, useMediaQuery, useTheme} from '@mui/material';
+import {useMemo, useState} from 'react';
+import {Avatar, Button, ButtonBaseProps, Icon, Stack, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
+import {CacheStrategies} from '@selfcommunity/utils/src/utils/cache';
 import {
   Link,
   SCRoutes,
@@ -9,6 +9,7 @@ import {
   SCThemeType,
   SCUserContextType,
   useSCFetchGroup,
+  useSCPaymentsEnabled,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -41,8 +42,8 @@ const classes = {
 const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}: any) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 export interface GroupProps extends WidgetProps {
   /**
@@ -59,7 +60,7 @@ export interface GroupProps extends WidgetProps {
    * Props to spread to group subscribe/unsubscribe button
    * @default {}
    */
-  groupSubscribeButtonProps?: GroupSubscribeButtonProps;
+  GroupSubscribeButtonComponentProps?: GroupSubscribeButtonProps;
   /**
    * Badge content to show as group avatar badge if show reaction is true.
    */
@@ -79,6 +80,10 @@ export interface GroupProps extends WidgetProps {
    * @default {}
    */
   buttonProps?: ButtonBaseProps;
+  /**
+   * Override default cache strategy on fetch element
+   */
+  cacheStrategy?: CacheStrategies;
   /**
    * Any other properties
    */
@@ -129,12 +134,13 @@ export default function Group(inProps: GroupProps): JSX.Element {
     elevation,
     hideActions = false,
     actionRedirect = false,
-    groupSubscribeButtonProps = {},
+    GroupSubscribeButtonComponentProps = {},
+    cacheStrategy,
     ...rest
   } = props;
 
   // STATE
-  const {scGroup} = useSCFetchGroup({id: groupId, group});
+  const {scGroup} = useSCFetchGroup({id: groupId, group, ...(cacheStrategy && {cacheStrategy})});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -153,6 +159,9 @@ export default function Group(inProps: GroupProps): JSX.Element {
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
   /**
    * Render authenticated actions
    * @return {JSX.Element}
@@ -170,7 +179,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
             )}
           </Button>
         ) : (
-          <GroupSubscribeButton group={group} groupId={groupId} {...groupSubscribeButtonProps} />
+          <GroupSubscribeButton group={group} groupId={groupId} {...GroupSubscribeButtonComponentProps} />
         )}
       </Stack>
     );
@@ -200,6 +209,12 @@ export default function Group(inProps: GroupProps): JSX.Element {
               ? formatCroppedName(scGroup.name, GROUP_NAME_MAX_LENGTH_MOBILE)
               : formatCroppedName(scGroup.name, GROUP_NAME_MAX_LENGTH_DESKTOP)}{' '}
             <Icon className={classes.icon}>{group?.privacy === SCGroupPrivacyType.PRIVATE ? 'private' : 'public'}</Icon>
+            {isPaymentsEnabled && scGroup.paywalls?.length && (
+              <>
+                &nbsp;
+                <Icon>pagamenti</Icon>
+              </>
+            )}
           </>
         }
         secondary={`${intl.formatMessage(messages.groupMembers, {total: scGroup.subscribers_counter})}`}

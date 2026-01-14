@@ -3,6 +3,1998 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.119](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.118...@selfcommunity/react-ui@0.11.0-alpha.119) (2025-10-07)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.118](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.117...@selfcommunity/react-ui@0.11.0-alpha.118) (2025-10-01)
+
+
+### Performance Improvements
+
+* added description to tags ([2d1756c](https://github.com/selfcommunity/community-js/commit/2d1756ce1d3dfb7165b147a275279f848bdb80f8))
+
+
+
+
+
+# [0.11.0-alpha.117](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.116...@selfcommunity/react-ui@0.11.0-alpha.117) (2025-10-01)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.116](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.115...@selfcommunity/react-ui@0.11.0-alpha.116) (2025-10-01)
+
+
+### Bug Fixes
+
+* added forced_username to SCInviteType ([434bdfc](https://github.com/selfcommunity/community-js/commit/434bdfc98f59a4234c4e74a1d73f8a54cd2d8be2))
+
+
+
+
+
+# [0.11.0-alpha.115](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.114...@selfcommunity/react-ui@0.11.0-alpha.115) (2025-10-01)
+
+
+### Performance Improvements
+
+* fixed category and tag autocomplete in order to manage clear ([f852cca](https://github.com/selfcommunity/community-js/commit/f852ccafa1a195e646bea7cd0f1032079d1922af))
+
+
+
+
+
+# [0.11.0-alpha.114](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.113...@selfcommunity/react-ui@0.11.0-alpha.114) (2025-09-30)
+
+
+### Bug Fixes
+
+* fixed tag autocomplete ([537cbd3](https://github.com/selfcommunity/community-js/commit/537cbd3443714434dac832774d660fed08ac2b9c))
+
+
+
+
+
+# [0.11.0-alpha.113](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.112...@selfcommunity/react-ui@0.11.0-alpha.113) (2025-09-30)
+
+
+### Features
+
+* added description to tags chip. Linear issue: https://linear.app/quentral/issue/QUE-2103/aggiungere-il-mouse-overtap-sulle-tag-per-visualizzare-la-descrizione ([2088407](https://github.com/selfcommunity/community-js/commit/2088407018cdccc28648a35a4ea2699ca50a08c7))
+
+
+
+
+
+# [0.11.0-alpha.112](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.111...@selfcommunity/react-ui@0.11.0-alpha.112) (2025-09-30)
+
+
+### Features
+
+* removed slogan when category follow is disabled. Linear: https://linear.app/quentral/issue/QUE-2032/fall-back-se-follow-categorie-disabilitato ([ccd45ff](https://github.com/selfcommunity/community-js/commit/ccd45ffc2acead0154fa8d19be899cabc4ad5df6))
+
+
+
+
+
+# [0.11.0-alpha.111](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.110...@selfcommunity/react-ui@0.11.0-alpha.111) (2025-09-30)
+
+
+### Bug Fixes
+
+* fixed tag autocomplete ([ac59e8a](https://github.com/selfcommunity/community-js/commit/ac59e8abb717ffa5a1a3a6da1afff26aa09f4f7c))
+
+
+
+
+
+# [0.11.0-alpha.110](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.109...@selfcommunity/react-ui@0.11.0-alpha.110) (2025-09-30)
+
+
+### Features
+
+* widget reordering. Linear: https://linear.app/quentral/issue/QUE-2033/ordinamento-widget-nella-colonna-di-destra ([3b30393](https://github.com/selfcommunity/community-js/commit/3b30393ee05af3de3696eb64a432cd4c1c62f1e2))
+
+
+
+
+
+# [0.11.0-alpha.109](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.108...@selfcommunity/react-ui@0.11.0-alpha.109) (2025-09-30)
+
+
+### Performance Improvements
+
+* changed tag autocomplete api. Linear issue: https://linear.app/quentral/issue/QUE-2102/cambiare-rotta-per-recuperare-le-tag-nel-filtra-ricerca-utenti ([f079d2a](https://github.com/selfcommunity/community-js/commit/f079d2a711f4cf11052859059e1f8be09e012a5f))
+
+
+
+
+
+# [0.11.0-alpha.108](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.107...@selfcommunity/react-ui@0.11.0-alpha.108) (2025-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.107](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.106...@selfcommunity/react-ui@0.11.0-alpha.107) (2025-09-26)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.106](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.105...@selfcommunity/react-ui@0.11.0-alpha.106) (2025-09-26)
+
+
+### Features
+
+* updated ppt icon ([1499ab5](https://github.com/selfcommunity/community-js/commit/1499ab5759d3444b9eaa05233428798d95024b36))
+
+
+
+
+
+# [0.11.0-alpha.105](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.104...@selfcommunity/react-ui@0.11.0-alpha.105) (2025-09-25)
+
+
+### Features
+
+* added new ddp; updated media object types. Linear: https://linear.app/quentral/issue/QUE-2001/frontend-sistemare-i-due-controlli-per-usare-la-nuova-dynamic-per-i ([d2947ae](https://github.com/selfcommunity/community-js/commit/d2947ae1678cdf68d848b59f430c174abb7e43dc))
+
+
+
+
+
+# [0.11.0-alpha.104](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.103...@selfcommunity/react-ui@0.11.0-alpha.104) (2025-09-22)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.103](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.102...@selfcommunity/react-ui@0.11.0-alpha.103) (2025-09-19)
+
+
+### Bug Fixes
+
+* fixed composer disabled tabs state ([5c5ad02](https://github.com/selfcommunity/community-js/commit/5c5ad022b7773986796c1ee7318b436af3e27e4b))
+* fixed user autocomplete(search after min chars, added control for non-existent usernames, added match also for real_name) ([d216795](https://github.com/selfcommunity/community-js/commit/d2167955dfcf58043b7f654581df5f9822fd54f2))
+
+
+
+
+
+# [0.11.0-alpha.102](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.101...@selfcommunity/react-ui@0.11.0-alpha.102) (2025-09-19)
+
+
+### Bug Fixes
+
+* fixed composer tagging ([848aa5c](https://github.com/selfcommunity/community-js/commit/848aa5c9388971b1598bbbbb26e1efebd9849df6))
+* fixed tagging in composer ([ad503d4](https://github.com/selfcommunity/community-js/commit/ad503d4bb5881dcded7da70cef57d31516e6e237))
+
+
+### Performance Improvements
+
+* updated match usernames api ([290f5a6](https://github.com/selfcommunity/community-js/commit/290f5a6a397ed6c665c79fce26b21ea703002ce8))
+
+
+
+
+
+# [0.11.0-alpha.101](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.100...@selfcommunity/react-ui@0.11.0-alpha.101) (2025-09-18)
+
+
+### Features
+
+* updated doc images. Linear: https://linear.app/quentral/issue/QUE-2002/frontend-usare-le-icone-rappresentative-per-i-documenti-allegati-e ([6200312](https://github.com/selfcommunity/community-js/commit/62003126652b1c0e9a47899b3a9b320dd9996fb5))
+
+
+
+
+
+# [0.11.0-alpha.100](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.99...@selfcommunity/react-ui@0.11.0-alpha.100) (2025-09-18)
+
+
+### Bug Fixes
+
+* fixed onclick problem on sub categories. Linear: https://linear.app/quentral/issue/QUE-2027/da-mobile-i-link-per-aprire-le-sottocategorie-di-formazione-non ([f4ceb90](https://github.com/selfcommunity/community-js/commit/f4ceb909875edcb1c273f234bfe271514119f1e5))
+
+
+
+
+
+# [0.11.0-alpha.99](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.98...@selfcommunity/react-ui@0.11.0-alpha.99) (2025-09-18)
+
+
+### Bug Fixes
+
+* fixed onclick problem on sub categories. Linear: https://linear.app/quentral/issue/QUE-2027/da-mobile-i-link-per-aprire-le-sottocategorie-di-formazione-non ([6c6b185](https://github.com/selfcommunity/community-js/commit/6c6b1855c74bf0394304bc41947ced52ab502c1f))
+
+
+
+
+
+# [0.11.0-alpha.98](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.97...@selfcommunity/react-ui@0.11.0-alpha.98) (2025-09-18)
+
+
+### Bug Fixes
+
+* callback home navigation toolbar ([b6b5f96](https://github.com/selfcommunity/community-js/commit/b6b5f96e9dc89827d4543b1392ec19a4e31eaf88))
+
+
+
+
+
+# [0.11.0-alpha.97](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.96...@selfcommunity/react-ui@0.11.0-alpha.97) (2025-09-18)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.96](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.95...@selfcommunity/react-ui@0.11.0-alpha.96) (2025-09-18)
+
+
+### Bug Fixes
+
+* callback home navigation toolbar ([a7e19b5](https://github.com/selfcommunity/community-js/commit/a7e19b5394664463cdab6be4ef56a50bdfadbd9c))
+* fixed user tagging, added new api ([6fc5726](https://github.com/selfcommunity/community-js/commit/6fc5726b2b486d69da2f955e1ae1cda518e76db7))
+
+
+
+
+
+# [0.11.0-alpha.95](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.94...@selfcommunity/react-ui@0.11.0-alpha.95) (2025-09-17)
+
+
+### Performance Improvements
+
+* added prop to CategoryHeader to show tag chip. Linear issue: https://linear.app/quentral/issue/QUE-2020/frontend-chip-tag-categorie ([99a45a3](https://github.com/selfcommunity/community-js/commit/99a45a31ca4061256f658d578d67cef338a75c64))
+
+
+
+
+
+# [0.11.0-alpha.94](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.93...@selfcommunity/react-ui@0.11.0-alpha.94) (2025-09-17)
+
+
+### Bug Fixes
+
+* contact-us api service, callback home navigation toolbar ([1315a38](https://github.com/selfcommunity/community-js/commit/1315a38aaa8d14ad75080f512d108c9950a55473))
+
+
+
+
+
+# [0.11.0-alpha.93](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.92...@selfcommunity/react-ui@0.11.0-alpha.93) (2025-09-17)
+
+
+### Bug Fixes
+
+* added contition to show widget footer. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([3f5d23e](https://github.com/selfcommunity/community-js/commit/3f5d23e61ea85756711f1001c01d4d89048588da))
+* platform widget ([c28e208](https://github.com/selfcommunity/community-js/commit/c28e2084e5ba75d1cdd9664385f4dbac81401e3b))
+
+
+
+
+
+# [0.11.0-alpha.92](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.91...@selfcommunity/react-ui@0.11.0-alpha.92) (2025-09-17)
+
+
+### Bug Fixes
+
+* updated components to insert FooterWidget. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([502dd36](https://github.com/selfcommunity/community-js/commit/502dd36d16022195d9295e382c6299e5bd36556a))
+
+
+
+
+
+# [0.11.0-alpha.91](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.90...@selfcommunity/react-ui@0.11.0-alpha.91) (2025-09-17)
+
+
+### Bug Fixes
+
+* hidden categories followers if ddp is disabled. Linear issue: https://linear.app/quentral/issue/QUE-1997/se-category-follow-enabled-=-false-rimuovere-seguito-da-e-gli-avatar ([54871e4](https://github.com/selfcommunity/community-js/commit/54871e4fe097bbf31714758c6b575a2713161cf3))
+
+
+
+
+
+# [0.11.0-alpha.90](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.89...@selfcommunity/react-ui@0.11.0-alpha.90) (2025-09-17)
+
+
+### Features
+
+* added new footer widget into all feed components. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([06dd21d](https://github.com/selfcommunity/community-js/commit/06dd21d132b159a7f49c3fa488ac01cc487229ea))
+* created new custom hooks to festch footer menu items and added into them into navbar. Linear: https://linear.app/quentral/issue/QUE-2017/stessi-link-anche-nei-tre-puntini-a-destra-menu-user-separati-dalle ([ea64e78](https://github.com/selfcommunity/community-js/commit/ea64e78daa4757326dd6ad8754646fc37f81b7ad))
+
+
+
+
+
+# [0.11.0-alpha.89](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.88...@selfcommunity/react-ui@0.11.0-alpha.89) (2025-09-17)
+
+
+### Bug Fixes
+
+* fixed user autocomplete and feedObj chip ([f036919](https://github.com/selfcommunity/community-js/commit/f03691900f451b74528d1e6c96307e5082c2bcd3))
+
+
+
+
+
+# [0.11.0-alpha.88](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.87...@selfcommunity/react-ui@0.11.0-alpha.88) (2025-09-16)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.87](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.86...@selfcommunity/react-ui@0.11.0-alpha.87) (2025-09-16)
+
+
+### Bug Fixes
+
+* show followers on category obj if feature is enabled. ([3e8422e](https://github.com/selfcommunity/community-js/commit/3e8422e9d1d4352957663e4312f39259af739cd4))
+
+
+
+
+
+# [0.11.0-alpha.86](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.85...@selfcommunity/react-ui@0.11.0-alpha.86) (2025-09-16)
+
+
+### Bug Fixes
+
+* fixed user tagging. Added search to fetch users hook ([9ead1e5](https://github.com/selfcommunity/community-js/commit/9ead1e5122af7c7a4f0b9e8373fa7bebbba1a015))
+
+
+### Features
+
+* added new api to dowload csv. Linear: https://linear.app/quentral/issue/QUE-1985/frontend-nel-caso-in-cui-lutente-loggato-sia-lautore-di-un-contenuto-e ([28529af](https://github.com/selfcommunity/community-js/commit/28529af9e8a159990a052b2e5f58b2519fefaf0c))
+
+
+
+
+
+# [0.11.0-alpha.85](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.84...@selfcommunity/react-ui@0.11.0-alpha.85) (2025-09-16)
+
+
+### Bug Fixes
+
+* removed unused ref to fix console error ([a63e570](https://github.com/selfcommunity/community-js/commit/a63e570fade750a1ff0cebddef97fd5bef5fa5bc))
+
+
+
+
+
+# [0.11.0-alpha.84](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.83...@selfcommunity/react-ui@0.11.0-alpha.84) (2025-09-16)
+
+
+### Bug Fixes
+
+* fixed attributes ([82e3ffe](https://github.com/selfcommunity/community-js/commit/82e3ffe0d74342d90ecabf7d78219e2647a5dba8))
+* fixed composer ([ab9ff7b](https://github.com/selfcommunity/community-js/commit/ab9ff7ba55031805c712dd1475eb1b522f681b03))
+* fixed user autocomplete ([5f57bc9](https://github.com/selfcommunity/community-js/commit/5f57bc94596748a41e0f493f651017b6ccb01466))
+
+
+### Performance Improvements
+
+* distinguished addressing error when user tagging is not enabled. ([e1d13d7](https://github.com/selfcommunity/community-js/commit/e1d13d7f7988c87599d7951c2b8203a1de4288eb))
+
+
+
+
+
+# [0.11.0-alpha.83](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.82...@selfcommunity/react-ui@0.11.0-alpha.83) (2025-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.82](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.81...@selfcommunity/react-ui@0.11.0-alpha.82) (2025-09-15)
+
+
+### Bug Fixes
+
+* moved and refactored signed label ([c92d9fe](https://github.com/selfcommunity/community-js/commit/c92d9fef0b05de6620fdd114de91c289c2a7a54a))
+* replaced seen_by_id with seen. ([1743121](https://github.com/selfcommunity/community-js/commit/1743121f9c14123ffee6c62d2bf28c81d3d1de0f))
+
+
+### Performance Improvements
+
+* fixed feedObj visibility icon when recipients are tagged ([fafcbf2](https://github.com/selfcommunity/community-js/commit/fafcbf2915eb0610bb4d5e847c77c658de89d796))
+
+
+
+
+
+# [0.11.0-alpha.81](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.80...@selfcommunity/react-ui@0.11.0-alpha.81) (2025-09-15)
+
+
+### Features
+
+* added user tagging in composer. Linear issue: https://linear.app/quentral/issue/QUE-1842/frontend-aggiungere-tab-utenti-con-textarea-chip-interni-per-ogni ([b7a7b17](https://github.com/selfcommunity/community-js/commit/b7a7b1738bb852890ed47cb964d9341bcc53214b))
+
+
+
+
+
+# [0.11.0-alpha.80](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.79...@selfcommunity/react-ui@0.11.0-alpha.80) (2025-09-15)
+
+
+### Bug Fixes
+
+* fixed spaces between new symbol and categories. ([600cd10](https://github.com/selfcommunity/community-js/commit/600cd101f981c1c96e74a5d42de9899c2d26a95e))
+
+
+### Features
+
+* removed extra sections if postOnlyStaffEnabled is true. Linear: https://linear.app/quentral/issue/QUE-1984/togliere-la-parte-di-menu-di-segnalazione-moderazione-nel-post-nel ([ad51263](https://github.com/selfcommunity/community-js/commit/ad51263fd17acfd3b8c41d70bfcb2318aa4f8faa))
+
+
+
+
+
+# [0.11.0-alpha.79](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.78...@selfcommunity/react-ui@0.11.0-alpha.79) (2025-09-12)
+
+
+### Bug Fixes
+
+* Appearance OnBoardingWidget ([0bbffd2](https://github.com/selfcommunity/community-js/commit/0bbffd2e95f7fa00e60f00d356417a57296f0c75))
+* fixed badge pdf into DocComponent ([c2a1ea7](https://github.com/selfcommunity/community-js/commit/c2a1ea7e1f7ed0d84ff5bc49298627cd93bba7e8))
+* fixed click tracking on video and shared feed. ([82b3cbb](https://github.com/selfcommunity/community-js/commit/82b3cbb4ec9d2146c5557acee57177f6b16b48c7))
+* markRead feedObject ([41bd16c](https://github.com/selfcommunity/community-js/commit/41bd16c04ab44c54bb0f7746c10442fada3b7034))
+
+
+### Features
+
+* added symbol to mark new post. Linear: https://linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new#comment-8227fe81 ([95067f7](https://github.com/selfcommunity/community-js/commit/95067f7b7d9f8f781af93f64a6f7ac93b9b025ea)), closes [/linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new#comment-8227fe81](https://github.com//linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new/issues/comment-8227fe81)
+
+
+
+
+
+# [0.11.0-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.77...@selfcommunity/react-ui@0.11.0-alpha.78) (2025-09-11)
+
+
+### Bug Fixes
+
+* add pref video_play_tracking_delay_seconds ([d6eecb7](https://github.com/selfcommunity/community-js/commit/d6eecb759ab6718aa5a843dab912f5e2a90624d3))
+* fixed bug on click on shared feed object; updated click on DocComponent. Linear: https://linear.app/quentral/issue/QUE-1896/ricontrollare-la-chiamata-media-click-per-tutte-le-tipologie-di ([52736a2](https://github.com/selfcommunity/community-js/commit/52736a2cd42b603f3b842d2d23673f55f3ed4b87))
+
+
+### Features
+
+* added ddp for tracking video into AutoPLayer. Linear: https://linear.app/quentral/issue/QUE-1829/frontend-gestire-segnale-allevento-play-del-video-dopo-x-sec-dynamic ([480be9f](https://github.com/selfcommunity/community-js/commit/480be9fc73ef2183d41c196a30dee785518b5665))
+* restyled preview pdf on DocCompoent. Linear: https://linear.app/quentral/issue/QUE-1973/label-pdf-in-overlay-thumbnail-immagine-preview-pdf-caricato-nel-post; https://linear.app/quentral/issue/QUE-1972/re-styling-miniatura-preview-pdf-aggiunta-bordo-e-icona ([92a0d2f](https://github.com/selfcommunity/community-js/commit/92a0d2fd5e233190cbaf1f1eb28251cb4a674039))
+
+
+
+
+
+# [0.11.0-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.76...@selfcommunity/react-ui@0.11.0-alpha.77) (2025-09-10)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.75...@selfcommunity/react-ui@0.11.0-alpha.76) (2025-09-09)
+
+
+### Bug Fixes
+
+* allow users with publisher role to access limited poll feature. ([688a460](https://github.com/selfcommunity/community-js/commit/688a46012a425f5f3d045846dd1a8761422c8151))
+* fixed discussion title error. Linear issue: https://linear.app/quentral/issue/QUE-1970/il-titolo-di-un-articolo-diventa-rosso-se-ce-un-errore-manca-categoria ([95bc169](https://github.com/selfcommunity/community-js/commit/95bc169c8c5718a6944b8fed379c4d6316aeadac))
+
+
+### Performance Improvements
+
+* added target blank for custom adv link. Linear issue: https://linear.app/quentral/issue/QUE-1971/impostare-come-default-lapertura-in-una-nuova-tab-dei-link-da-banners ([c103cad](https://github.com/selfcommunity/community-js/commit/c103cadef62d9b8bd7f65dde9a016b79f699d9c4))
+
+
+
+
+
+# [0.11.0-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.74...@selfcommunity/react-ui@0.11.0-alpha.75) (2025-09-09)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.73...@selfcommunity/react-ui@0.11.0-alpha.74) (2025-09-08)
+
+
+### Bug Fixes
+
+* hidden pm setting from user profile notification settings if not enabled. ([d21b545](https://github.com/selfcommunity/community-js/commit/d21b5450de37bde51ca6b0d924a7c341c54b57be))
+
+
+
+
+
+# [0.11.0-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.72...@selfcommunity/react-ui@0.11.0-alpha.73) (2025-09-08)
+
+
+### Features
+
+* added currency icon into fee courses, events and groups. Linear: https://linear.app/quentral/issue/QUE-1955/icona-per-distinguere-dalle-liste-i-corsi-gruppi-ed-eventi-a-pagamento ([53708cb](https://github.com/selfcommunity/community-js/commit/53708cb6aaaba1e42eb2930722f66c5661ed136a))
+
+
+
+
+
+# [0.11.0-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.71...@selfcommunity/react-ui@0.11.0-alpha.72) (2025-09-08)
+
+
+### Bug Fixes
+
+* fixed CategoryFollowButton anonymous rendering ([2d1fca7](https://github.com/selfcommunity/community-js/commit/2d1fca78b1387fe9702c453e0d08a625d7c78921))
+
+
+### Features
+
+* updated reactions size; added tooltip on reactions. Linear: https://linear.app/quentral/issue/QUE-1947/dimensioni-da-correggere-per-iconografia-reactions-valida-per-tutte-le ([238ab2d](https://github.com/selfcommunity/community-js/commit/238ab2de7e45736aa55d8fd0eb0d4bfdb21db61b))
+* updated some icons and sizes into PaywallsConfigurator. Linear: https://linear.app/quentral/issue/QUE-1932/modifica-icone-modale-creazione-contenuto-a-pagamento ([0c8324b](https://github.com/selfcommunity/community-js/commit/0c8324bf11fedb59518f1d039a31cbfec3a63057))
+
+
+
+
+
+# [0.11.0-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.70...@selfcommunity/react-ui@0.11.0-alpha.71) (2025-09-05)
+
+
+### Bug Fixes
+
+* fixed composer icon when tag is selected, added icon for selected action. Linear issue: https://linear.app/quentral/issue/QUE-1952/nella-creazione-di-un-post-andrebbero-evidenziate-le-parti-gia ([1388004](https://github.com/selfcommunity/community-js/commit/1388004143501991f9bfc858d5ca97f9e686ad25))
+
+
+
+
+
+# [0.11.0-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.69...@selfcommunity/react-ui@0.11.0-alpha.70) (2025-09-05)
+
+
+### Bug Fixes
+
+* fixed visibleTags condition. Linear issue: https://linear.app/quentral/issue/QUE-1951/feedfeedobjectdetail-che-si-rompe-se-ce-uno-share-allinterno ([14b7c7c](https://github.com/selfcommunity/community-js/commit/14b7c7c8846d016297c85c68ab0d84150ffc8101))
+* livestream with hideParticipantsList ([a09209c](https://github.com/selfcommunity/community-js/commit/a09209c4cd4f73edf73c4d125539e8e3959f35ef))
+* livestream with hideParticipantsList ([97a8877](https://github.com/selfcommunity/community-js/commit/97a8877e78f51e5d6f12059117c8a6290a14d641))
+* missing category error on poll obj. Linear issue: https://linear.app/quentral/issue/QUE-1950/creando-un-sondaggio-usando-publisher-scompare-la-scelta-postsondaggio ([4c83852](https://github.com/selfcommunity/community-js/commit/4c8385256d46dbdc63bf1de7dbc345e43f79d500))
+
+
+
+
+
+# [0.11.0-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.68...@selfcommunity/react-ui@0.11.0-alpha.69) (2025-09-04)
+
+
+### Bug Fixes
+
+* fixed pdf preview. Linear: https://linear.app/quentral/issue/QUE-1784/controllo-visualizzazione-pdf-biglietto-evento ([18900d4](https://github.com/selfcommunity/community-js/commit/18900d4e7bc642e3be03fc40ab3fb3bfc29496a6))
+
+
+
+
+
+# [0.11.0-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.67...@selfcommunity/react-ui@0.11.0-alpha.68) (2025-09-04)
+
+
+### Bug Fixes
+
+* added new ddp connection_enabled and adapted follow/connection logic. Linear issue: https://linear.app/quentral/issue/QUE-1837/frontend-considerare-nuova-ddp-connection-enabled ([ec1cde5](https://github.com/selfcommunity/community-js/commit/ec1cde5d142724373523be830ba531827a6122aa))
+* added paid button to course/group header ([a41bd0c](https://github.com/selfcommunity/community-js/commit/a41bd0c42a52c7acb1842f1bd7148fb37e7ed4f7))
+* added style for buy button hover state ([7bfabeb](https://github.com/selfcommunity/community-js/commit/7bfabebb75d537e8edf654d5b7f0f0f341d56f03))
+* checkout ([eabfc62](https://github.com/selfcommunity/community-js/commit/eabfc62c38eefb6838ba830c885ce2d59fd95557))
+* CheckoutReturnDialog ([7d9ad51](https://github.com/selfcommunity/community-js/commit/7d9ad517e938aee4751cf3bd9d816ac7007bd32f))
+* CheckoutReturnDialog ([9468def](https://github.com/selfcommunity/community-js/commit/9468def96c64da6d224aa3013b13a29f86ac52d5))
+* CommunityPaywalls ([de3b05d](https://github.com/selfcommunity/community-js/commit/de3b05d1051f7cabdc8d49ecabf2e695e66e5af6))
+* CommunityPaywalls ([fc68906](https://github.com/selfcommunity/community-js/commit/fc68906badf912a8b90730ff7934edf791546b9d))
+* CommunityPaywalls ([68c6e14](https://github.com/selfcommunity/community-js/commit/68c6e142a09cdae50303c7672bb66640bc5881e1))
+* CommunityPaywalls ([5a8f272](https://github.com/selfcommunity/community-js/commit/5a8f2723df4eec5b1adf84dc50501eb9a4ba4325))
+* CommunityPaywalls ([fb49a62](https://github.com/selfcommunity/community-js/commit/fb49a620184b51bc3ece71ffcae275645a84e0e3))
+* contentProducts ([66d3047](https://github.com/selfcommunity/community-js/commit/66d304700e5624fdae9ceb74fb381575838ce89f))
+* course ([0014377](https://github.com/selfcommunity/community-js/commit/0014377f8263e931fe87b3462c4f8facb2f9166f))
+* course ([e28c00a](https://github.com/selfcommunity/community-js/commit/e28c00aea5d7e099c61f98ed078dd6262cd85ec4))
+* course manager ([8307619](https://github.com/selfcommunity/community-js/commit/83076194b0928d0084c08db3aa3de73ca3288b9b))
+* course manager ([5e5f645](https://github.com/selfcommunity/community-js/commit/5e5f64599f064782d4c729030583aacebddb0c62))
+* course snippet, orders ([c1d3ee5](https://github.com/selfcommunity/community-js/commit/c1d3ee5ccb72fe084497fa8acf1b66978185e68b))
+* enqueMessage ([2fc8982](https://github.com/selfcommunity/community-js/commit/2fc89825fb44731ac131aca14958851e02863ac4))
+* event and group managers ([e768f5a](https://github.com/selfcommunity/community-js/commit/e768f5a0d8efd9cd7e3a57730e01e70740a70f2d))
+* events subscription ([7f8e1f6](https://github.com/selfcommunity/community-js/commit/7f8e1f67d4ec3945ee65aea294d6a38094ca2451))
+* events subscription ([56716de](https://github.com/selfcommunity/community-js/commit/56716de98ebefd2b16e86c5820ae8ae5a3f6c40c))
+* fixed addressing error ([673e9e8](https://github.com/selfcommunity/community-js/commit/673e9e828572a9a70be1c4683c58a6d06b748eb8))
+* fixed canEdit condition in the composer when addressing/categories ddp are required. ([5b33973](https://github.com/selfcommunity/community-js/commit/5b33973726f04b02e570209dfeb89c7c96422183))
+* fixed categories preferencies. Linear: https://linear.app/quentral/issue/QUE-1840/frontend-gestione-ddp-per-definire-se-il-menu-visualizza-tutte-le ([3cec8b2](https://github.com/selfcommunity/community-js/commit/3cec8b283c185c159cb29c8738aac069ff184c33))
+* fixed CheckoutReturnDialog ([cccdd41](https://github.com/selfcommunity/community-js/commit/cccdd414eae4db5aa5f80d96e637fe2194e35c73))
+* fixed composer edit onChange ([5077588](https://github.com/selfcommunity/community-js/commit/5077588691f84ed5eb0552268924e62ca12dbd17))
+* fixed contribution action menu visibility for user roles. ([f6b81c8](https://github.com/selfcommunity/community-js/commit/f6b81c8082eeaa89176be7fa1994f1d3dc09dd31))
+* fixed default category tag img rendering ([20973f0](https://github.com/selfcommunity/community-js/commit/20973f09bd7beabdb1ba505bf197e6de54a5965c))
+* fixed edit scheduled post if not published yet, added scheduled feed in storybook. ([86f3ee4](https://github.com/selfcommunity/community-js/commit/86f3ee44d2c3b4f5f6b592a32658c312144e6e20))
+* fixed event form props. Linear: https://linear.app/quentral/issue/QUE-1518/problema-salvataggio-modifica-evento ([1383c5d](https://github.com/selfcommunity/community-js/commit/1383c5db062bea8ab00b68a59bfde19f10cfaf92))
+* fixed how to show comments. Linear: https://linear.app/quentral/issue/QUE-1905/frontend-pur-avendo-disabilitato-i-commenti-appare-sulla-destra-un ([7e60013](https://github.com/selfcommunity/community-js/commit/7e6001312a87d59c0740c3990f5cbfff862084aa))
+* fixed how to show comments. Linear: https://linear.app/quentral/issue/QUE-1905/frontend-pur-avendo-disabilitato-i-commenti-appare-sulla-destra-un ([87ab5fc](https://github.com/selfcommunity/community-js/commit/87ab5fc31d8cb2c2b56f3a8609aa810d88fbd913))
+* fixed import ([9921799](https://github.com/selfcommunity/community-js/commit/9921799b3f0df8a673e28344d7e92cfc5404e2f7))
+* fixed invited tab into EventMembersWidget ([275cef5](https://github.com/selfcommunity/community-js/commit/275cef51bd739b43098a5d816c3d0084fc1a7692))
+* fixed missing dollar symbol in payment product price. Linear issue: https://linear.app/quentral/issue/QUE-1536/se-un-prodotto-ha-prezzo-dollaro-viene-mostrato-false-nella-pwa ([47883ac](https://github.com/selfcommunity/community-js/commit/47883ace3a43cc5600b05e6705b964d58dd56dc0))
+* fixed not visible tag rendering ([fee8bdb](https://github.com/selfcommunity/community-js/commit/fee8bdb2328ce2accae20e1c5fd60fded08e15bb))
+* fixed payment orders search clear ([21db62a](https://github.com/selfcommunity/community-js/commit/21db62a61ae11c65ee8ee30536659a73a9a22462))
+* fixed PaymentProductPrice label for recurring payments ([9185f97](https://github.com/selfcommunity/community-js/commit/9185f97aed042433059c4f2f879ede73cb871c93))
+* fixed private messages ddp. Linear issue: https://linear.app/quentral/issue/QUE-1830/frontend-gestire-ddp-per-attivazione-e-disattivazione-messaggi-privati ([b4bdd1b](https://github.com/selfcommunity/community-js/commit/b4bdd1b0cd7a1814eddc5eaf6e95bfe5276d0ba2))
+* fixed publisher role. Part of Linear issue: https://linear.app/quentral/issue/QUE-1904/frontend-cliccando-i-3-puntini-la-chiamata-status-da-403 ([d967f6f](https://github.com/selfcommunity/community-js/commit/d967f6f8a4581090a0f9cc837aaa88eb6469b2d2))
+* fixed refreshing requests tab into EventMembersWidget. Linear: https://linear.app/quentral/issue/QUE-1462/gestione-richieste-di-partecipazione-ad-un-evento-in-real-time ([5dbc6da](https://github.com/selfcommunity/community-js/commit/5dbc6dade721152efc823f7a090d267bc76b83e8))
+* form event/group/course ([97a00ce](https://github.com/selfcommunity/community-js/commit/97a00ce75290d1155bdb17aa77ebc10cd71ff4ce))
+* form event/group/course ([894aa14](https://github.com/selfcommunity/community-js/commit/894aa14e22c8582c4ec0d5ac5ce022066cee5a6c))
+* forms ([b65281f](https://github.com/selfcommunity/community-js/commit/b65281f90c6d15a162188ca73617c6208d0cdefb))
+* hidden all tag in the composer if tagging is required./Hidden icon cancel from tags list rendering./Hidden tag in feed object info if the tags are not visible. Linear issues: https://linear.app/quentral/issue/QUE-1942/nascondere-tutti-se-e-attiva-la-dynamic-che-obbliga-a-selezionare-la and https://linear.app/quentral/issue/QUE-1945/feedobj-nascondere-tag-se-e-not-visible-dal-feed-objecte-anche ([c8c59c9](https://github.com/selfcommunity/community-js/commit/c8c59c97ff65740d86fe03764d00d86831fc6c56))
+* hidden FeedObj actions if draft. Linear issue: https://linear.app/quentral/issue/QUE-1939/disabilitare-azioni-feed-object-se-e-pianificato-draft-a-true ([6b94642](https://github.com/selfcommunity/community-js/commit/6b946428893498342fba92045cdb768d7b5b82b9))
+* init paywall ([51cbd58](https://github.com/selfcommunity/community-js/commit/51cbd5885c738751f54361e653735278f67946cf))
+* payment_waiting ([b756d66](https://github.com/selfcommunity/community-js/commit/b756d66c16ba8487bb69b7974eeee231161fa93d))
+* payment_waiting ([9ee5db4](https://github.com/selfcommunity/community-js/commit/9ee5db4d56c842572caf603b75d5c15efe192ae4))
+* payment_waiting ([85af9fc](https://github.com/selfcommunity/community-js/commit/85af9fc96217e9f824a807b2d391bb34af154f65))
+* payment_waiting ([9637c2d](https://github.com/selfcommunity/community-js/commit/9637c2d7e6878ea660aec60cd145492e15ebf2ef))
+* payment_waiting ([07a2235](https://github.com/selfcommunity/community-js/commit/07a2235b2b7532aef3613d7d5e942b205f6598d6))
+* payment_waiting group/course ([997106e](https://github.com/selfcommunity/community-js/commit/997106ef7cba0d335c0081c5ce12ad3faab980cd))
+* paymentOrders ([dab464a](https://github.com/selfcommunity/community-js/commit/dab464af0fb3bb067ff5d1b7dfc15e904044bc6b))
+* paymentOrders ([12c2476](https://github.com/selfcommunity/community-js/commit/12c24769a44a3ab373e07abf0f81f3a7585fcc73))
+* PaymentOrders missing translations. Linear issue: https://linear.app/quentral/issue/QUE-1548/mancano-alcune-traduzioni-nella-pagina-i-miei-pagamenti-e-titolo ([573e63f](https://github.com/selfcommunity/community-js/commit/573e63f7b587f42ef94d280af70d9b5fec0e5bc8))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([0b4f134](https://github.com/selfcommunity/community-js/commit/0b4f134e284f9f35ed535b3be4a3f2e0b817a27a))
+* payments ([cf214d0](https://github.com/selfcommunity/community-js/commit/cf214d0ae4dc45b9d3c6691b6a39dc368830ccab))
+* payments ([16425dc](https://github.com/selfcommunity/community-js/commit/16425dc65cce1a0ae38053ee7f9f541102698288))
+* payments ([d4f8849](https://github.com/selfcommunity/community-js/commit/d4f8849f605ddfa0a45cab734d85fb4c8a762ecf))
+* payments ([c379e8f](https://github.com/selfcommunity/community-js/commit/c379e8f245a5a753eb9cbbaafe90550f23d54f41))
+* payments ([3b43007](https://github.com/selfcommunity/community-js/commit/3b43007cdac0eb45f011145ff8fe5caddacd248f))
+* payments ([abdf058](https://github.com/selfcommunity/community-js/commit/abdf058f3f9e74c9dbcdf4ef4e602fc40cf52a2f))
+* payments ([f97300a](https://github.com/selfcommunity/community-js/commit/f97300af97b138c202afabf832a2b01db18a42be))
+* payments ([3c82e7a](https://github.com/selfcommunity/community-js/commit/3c82e7a0bcd4d61e58479007f03b74c8e4ea0e6f))
+* payments ([b85a180](https://github.com/selfcommunity/community-js/commit/b85a180cacbe50b580e9a729ef4b8681a0a9ed64))
+* payments ([2af202b](https://github.com/selfcommunity/community-js/commit/2af202b812b148fa4899bfca8a24cc7c5838aae8))
+* payments ([0fe03a4](https://github.com/selfcommunity/community-js/commit/0fe03a40f36238b617aeff8b1df6862c08e4da84))
+* payments ([dcc8552](https://github.com/selfcommunity/community-js/commit/dcc8552a61b3249c8f29810b39eff412dd8dbec3))
+* payments ([1c5dd55](https://github.com/selfcommunity/community-js/commit/1c5dd55eb701c8e42f05b2cd0654ae500512cd5b))
+* payments ([b0f3602](https://github.com/selfcommunity/community-js/commit/b0f3602061d4027883d01f0f3d59ecf6b1673fd1))
+* payments ([f5817dd](https://github.com/selfcommunity/community-js/commit/f5817dd7c43efc6bb4f8a3daefc012ba04262997))
+* payments ([7487c8f](https://github.com/selfcommunity/community-js/commit/7487c8f072810dc8e2d3012620b3d1480aa25e49))
+* payments ([370983c](https://github.com/selfcommunity/community-js/commit/370983c46e142fca9c0e83a92072afe8f6c1ec0b))
+* payments ([08b1b20](https://github.com/selfcommunity/community-js/commit/08b1b2021c998f1ab231790fd1ab6f3856dabcdb))
+* payments ([1e4249c](https://github.com/selfcommunity/community-js/commit/1e4249ce475441205f4ea7ddeff82181b7c71848))
+* payments ([a15eeb8](https://github.com/selfcommunity/community-js/commit/a15eeb8549d8064acfcd1ff2cdcf2ec4864b4f5e))
+* payments ([ec6d32e](https://github.com/selfcommunity/community-js/commit/ec6d32e82b4c778c265804c05d3002ac48faa4bb))
+* payments ([c787ea0](https://github.com/selfcommunity/community-js/commit/c787ea0bcc2962f4fcd498006d7b4dd5c593934d))
+* payments ([2989dd1](https://github.com/selfcommunity/community-js/commit/2989dd1ec555ecd3f1d6c8686ba9b416d243280c))
+* payments ([1a0bedf](https://github.com/selfcommunity/community-js/commit/1a0bedf2a2b14d1b8987c0d7ab0902518191a766))
+* payments ([21e9a56](https://github.com/selfcommunity/community-js/commit/21e9a561872b29e616cdc6b0e820ac11eb396712))
+* payments ([a41005d](https://github.com/selfcommunity/community-js/commit/a41005dc04b3410d9a20a2468aa76e1c5b938bbb))
+* payments ([233f5eb](https://github.com/selfcommunity/community-js/commit/233f5eb248e41f67ce2139955fde0261e54f071d))
+* payments ([720e295](https://github.com/selfcommunity/community-js/commit/720e2951048faa5fdedcf4874f6bf7211cf64804))
+* payments ([aed15e7](https://github.com/selfcommunity/community-js/commit/aed15e7f36b51ca0c022ed3564b087cc672a5822))
+* payments ([cc09416](https://github.com/selfcommunity/community-js/commit/cc09416018fe4f25407e188d0f4d259ed74f2cc7))
+* payments ([8ebe701](https://github.com/selfcommunity/community-js/commit/8ebe701424cf269df90cb524919cab946b8f1dbe))
+* payments ([a68e9c1](https://github.com/selfcommunity/community-js/commit/a68e9c1200b1161dd7a27cf22d14843b8b8a0895))
+* payments ([657860c](https://github.com/selfcommunity/community-js/commit/657860c7016b3926f990dbff2050b01097a11e66))
+* payments ([5afc030](https://github.com/selfcommunity/community-js/commit/5afc030308911daffd4672ef44fcb47e4b064873))
+* payments ([ea3f7c2](https://github.com/selfcommunity/community-js/commit/ea3f7c267cf169442834fa50d6335a0cd15c30f0))
+* payments ([34467bd](https://github.com/selfcommunity/community-js/commit/34467bd9ef03dc0988d0a4ccd3747adbecedc85e))
+* payments ([fb3b088](https://github.com/selfcommunity/community-js/commit/fb3b08894cb2f7f2be0a49e24349661d8cfc53f4))
+* payments ([979fe35](https://github.com/selfcommunity/community-js/commit/979fe354140b5b1a88fbe36a5c532e33a1d5c22e))
+* payments category, group, event ([d0e2b24](https://github.com/selfcommunity/community-js/commit/d0e2b248fe14b667031529fe772f745129811f84))
+* paywall ([62d0819](https://github.com/selfcommunity/community-js/commit/62d0819cc5f78c2a2dfec6488a9f4ccdf2fb1ffb))
+* paywall ([a6372be](https://github.com/selfcommunity/community-js/commit/a6372befda9a0b749c2d994c9be9ac90ec95b968))
+* paywall ([62d9ee1](https://github.com/selfcommunity/community-js/commit/62d9ee1fe4c60b5d801f708eac65c3462e0aafc3))
+* paywall ([46e72c4](https://github.com/selfcommunity/community-js/commit/46e72c40e0fc88db92da5b74f70c66fbf5f209a2))
+* paywall ([7913a21](https://github.com/selfcommunity/community-js/commit/7913a21732d4b2baf965ed016751c688e9a22ec3))
+* paywall ([e24ad25](https://github.com/selfcommunity/community-js/commit/e24ad25edc5fef5c27a8b3dbefe5ce95da3d7295))
+* paywalls configurator ([5ee1af0](https://github.com/selfcommunity/community-js/commit/5ee1af02465fa97a71136a9d6f80c943b5440610))
+* products ([3d73568](https://github.com/selfcommunity/community-js/commit/3d735685d942e1fd0397c4fa85e5d84b520dfc94))
+* products ([661f0c5](https://github.com/selfcommunity/community-js/commit/661f0c5905aa7b64e9301d34ba5710f5a15429f9))
+* removed connections link from menu/removed unnecessary bullet separator from user counters. Linear issue: https://linear.app/quentral/issue/QUE-1909/frontend-dal-menu-in-alto-a-destra-va-rimosso-connessioni-nel-caso ([5b779e4](https://github.com/selfcommunity/community-js/commit/5b779e423621774b871382b887ee5295f6529161))
+* removed unnecessary control ([59996ba](https://github.com/selfcommunity/community-js/commit/59996ba115a1a86153f917061c07f2801af3fdcf))
+* removed unnecessary function ([eb92e6a](https://github.com/selfcommunity/community-js/commit/eb92e6acd5e2a38514ea0eed06c2ecef8ddf4338))
+* revert last modify ([3559ae3](https://github.com/selfcommunity/community-js/commit/3559ae3880f944b72e5e07c8ff228e610ff79c6c))
+* reverted admin actions in the contribution action menu ([e22372c](https://github.com/selfcommunity/community-js/commit/e22372c2d4e704dba47471f36819c85f16e1c5bb))
+* style ([0511ef7](https://github.com/selfcommunity/community-js/commit/0511ef795178a44c149d4a099d5a87439de21b5d))
+* try to fix EventSubscribeButton problems. Linear: https://linear.app/quentral/issue/QUE-1461/errore-nellannullamento-di-una-richiesta-di-partecipazione-ad-evento ([1ce47aa](https://github.com/selfcommunity/community-js/commit/1ce47aaba4a1786b9f67873f920dfaa054a75337))
+
+
+### Features
+
+* added composer controls for new ddp post_category_required_enabled and post_addressing_required_enabled. Linear issue: https://linear.app/quentral/issue/QUE-1914/frontend-nella-form-post-se-abilitata-post-category-required-enabled-e ([d69994e](https://github.com/selfcommunity/community-js/commit/d69994ef5455d9dd4037e7087e986f46eb5c9566))
+* added control to show comments. Linear: https://linear.app/quentral/issue/QUE-1905/frontend-puravendo-disabilitato-i-commenti-appare-sulla-destra-un ([2c4c761](https://github.com/selfcommunity/community-js/commit/2c4c761032178bd276107bd166fc5f3674f7e05b))
+* added ddp for category_follow_enabled and managed CategoriesSuggestionWidget, UserFollowedCategoriesWidget, CategoryFollowButton visibility. ([0a33908](https://github.com/selfcommunity/community-js/commit/0a3390861bdffebb33112d9773ce774bd9bc9495))
+* added ddp to manage autoplay on videos. Linaer: https://linear.app/quentral/issue/QUE-1796/frontend-togliere-dappertutto-autoplay-youtube-deve-essere-tutto-con ([e5c9c30](https://github.com/selfcommunity/community-js/commit/e5c9c306661dd4bf53f5ad67b98919b76a472f37))
+* added endpoints/services actions to manage scheduled posts. Linear issue: https://linear.app/quentral/issue/QUE-1793/frontend-creazione-e-gestione-dei-post-programmati ([eb8cfd2](https://github.com/selfcommunity/community-js/commit/eb8cfd23fe6d01f44e74c19edc095d8abd385c99))
+* added scheduled post in the composer. Linear issue: https://linear.app/quentral/issue/QUE-1863/frontend-gestire-ddp-se-post-programmati ([78b31ce](https://github.com/selfcommunity/community-js/commit/78b31ce29badbc05a141631e6037365761ee5f47))
+* managed categories preferencies. Linear: https://linear.app/quentral/issue/QUE-1840/frontend-gestione-ddp-per-definire-se-il-menu-visualizza-tutte-le ([b526431](https://github.com/selfcommunity/community-js/commit/b5264312e818e42fea5060d425dfd2c994c57994))
+* managed ddp to hide comments and share; updated reaction layout. Linear: https://linear.app/quentral/issue/QUE-1856/frontend-in-base-alle-due-ddp-togliere-la-parte-di-post-per-fare-i ([fc94144](https://github.com/selfcommunity/community-js/commit/fc941444d6653cc040bd589963ce611a5e084f70))
+* restyled pdf preview and display. Linear: https://linear.app/quentral/issue/QUE-1797/frontend-sistemare-grafica-del-post-anche-in-stream-con-youtube-video ([1debc9f](https://github.com/selfcommunity/community-js/commit/1debc9fb07f4061a80d88676e012561a04c0d95f))
+* setted enableAutoplay to false. Linear: https://linear.app/quentral/issue/QUE-1796/frontend-togliere-dappertutto-autoplay-youtube-deve-essere-tutto-con ([b16a53b](https://github.com/selfcommunity/community-js/commit/b16a53be99d53de251d2917945f13d7bccaafc68))
+
+
+### Performance Improvements
+
+* added filters to payment orders table. Linear issue: https://linear.app/quentral/issue/QUE-1295/inserire-nel-componente-paymentorders-i-filtri-in-testa-alla-tabella ([5ed71b0](https://github.com/selfcommunity/community-js/commit/5ed71b0186c39e69a3e27b8cda49c3c8d5338b9d))
+* added paid event link button event header ([18c8e72](https://github.com/selfcommunity/community-js/commit/18c8e7228ae019b2ccdcf90fbeba865b515678eb))
+* is scheduledPost is enabled, added edit, delete and publish now actions for admins/moderators. ([1a299cd](https://github.com/selfcommunity/community-js/commit/1a299cdd71d7f0128bb03486f3b6a32484155e02))
+* nested tagged categories in DefaultDrawerContent. Linear issue: https://linear.app/quentral/issue/QUE-1920/fronted-se-esiste-una-category-tag-nel-menu-categorie-raggruppare-le ([5257f36](https://github.com/selfcommunity/community-js/commit/5257f36147df6f8eb7e494f27de8754cd144f739))
+* refactored checkout header, added info card ([9b2515b](https://github.com/selfcommunity/community-js/commit/9b2515ba0a06ae4f92b5337e2f241e04746ad641))
+* refactored checkout return dialog ([a84bf0b](https://github.com/selfcommunity/community-js/commit/a84bf0bb91e32fc9ad15182edb137aeffb3767a8))
+* updated payment product/products layout. Linear issue: https://linear.app/quentral/issue/QUE-1789/pwa-pagamenti ([df75e57](https://github.com/selfcommunity/community-js/commit/df75e57eec8691177c8c32f52255ffc40083a1f2))
+
+
+
+
+
+# [0.11.0-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.66...@selfcommunity/react-ui@0.11.0-alpha.67) (2025-04-22)
+
+
+### Bug Fixes
+
+* fixes comments for doc ([a439764](https://github.com/selfcommunity/community-js/commit/a439764e3624e2117eb26ce2332f7d54ad70dd07))
+* fixes comments for doc ([7ec394e](https://github.com/selfcommunity/community-js/commit/7ec394ee89e181ab8eea99fac73dd0f274a38db7))
+
+
+
+
+
+# [0.11.0-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.65...@selfcommunity/react-ui@0.11.0-alpha.66) (2025-04-18)
+
+
+### Bug Fixes
+
+* fixes imports for doc ([7c7292b](https://github.com/selfcommunity/community-js/commit/7c7292bfb050ffc73a0985eaa307326ec48ca65c))
+
+
+
+
+
+# [0.11.0-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.64...@selfcommunity/react-ui@0.11.0-alpha.65) (2025-04-17)
+
+
+### Bug Fixes
+
+* fixes for doc ([e4f6247](https://github.com/selfcommunity/community-js/commit/e4f6247e7326a1d286b27a71ed34dbf8709d3a55))
+
+
+
+
+
+# [0.11.0-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.63...@selfcommunity/react-ui@0.11.0-alpha.64) (2025-04-15)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.62...@selfcommunity/react-ui@0.11.0-alpha.63) (2025-04-15)
+
+
+### Bug Fixes
+
+* test course enabled ([72216c5](https://github.com/selfcommunity/community-js/commit/72216c51f526773011fc3c46565679f9bbb84e20))
+
+
+
+
+
+# [0.11.0-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.61...@selfcommunity/react-ui@0.11.0-alpha.62) (2025-04-14)
+
+
+### Bug Fixes
+
+* explore visible on anonymous view ([d4507b8](https://github.com/selfcommunity/community-js/commit/d4507b8679e76ffa03c1e125f149b4132a5a86ad))
+
+
+
+
+
+# [0.11.0-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.60...@selfcommunity/react-ui@0.11.0-alpha.61) (2025-04-14)
+
+
+### Bug Fixes
+
+* added anonymous action when anonymous user try to enroll to course ([39c8d5c](https://github.com/selfcommunity/community-js/commit/39c8d5cad42bfab5e982a9df304ffbc6fe79bab3))
+* added date clear button for LessonReleaseMenu component/removed error.Linear issues: https://linear.app/quentral/issue/QUE-1341/manca-bottone-clear-date-nel-selettore-data and https://linear.app/quentral/issue/QUE-1338/problema-dopo-pubblicazione-sezione ([92cba3c](https://github.com/selfcommunity/community-js/commit/92cba3c9f9101d1e1b2dac5960096ff16bf92876))
+* added infinite scroll to courses component. Linear issue: https://linear.app/quentral/issue/QUE-1328/paginazione-corsi ([faa6493](https://github.com/selfcommunity/community-js/commit/faa6493f827679f73eb681dfe20e8cebb16107d3))
+* added media in course lesson comment and edit, added props to editor. ([caf10b9](https://github.com/selfcommunity/community-js/commit/caf10b9d0f32d69a4eb860552bbd8eb850b035df))
+* added media in course lesson comment and edit, added props to editor. ([4acd38f](https://github.com/selfcommunity/community-js/commit/4acd38f3fd1ea1c6515ae2945c7da182f97864e1))
+* added missing dep tslib ([7b5c65f](https://github.com/selfcommunity/community-js/commit/7b5c65f4c7f806374d4d1b8c23b06cff9e95f2d3))
+* added some Skeleton Components ([eff8b38](https://github.com/selfcommunity/community-js/commit/eff8b38eb9797bdeacc5610ef297817f0a701dd4))
+* added SwipeableDrawer on menu actions into EditCourse ([08b79f7](https://github.com/selfcommunity/community-js/commit/08b79f73e4a1f802ec599b4ad7028f3f11dc96e1))
+* bug fixing ([a5dae23](https://github.com/selfcommunity/community-js/commit/a5dae23a8a7ad9b7f6f6c88f73043eed665197f0))
+* changed course max length. Linear issue: https://linear.app/quentral/issue/QUE-1330/2-problemi-conteggio-caratteri-descrizione-corso ([7371b57](https://github.com/selfcommunity/community-js/commit/7371b57f53af4021fab4894df40efc8613371275))
+* changed mobile action icon ([255658e](https://github.com/selfcommunity/community-js/commit/255658ec3b442d5f8db0be8289ea9185b4dc1a54))
+* comments refreshing. Linear issue: https://linear.app/quentral/issue/QUE-1312/problema-cache-commenti ([87ab3b4](https://github.com/selfcommunity/community-js/commit/87ab3b48429527ae6b365d622f809c54e50fe89e))
+* course card/skeleton ([d6be742](https://github.com/selfcommunity/community-js/commit/d6be74250714e5da14c57730e4fc081337c66eb7))
+* course edit save button state ([08448b6](https://github.com/selfcommunity/community-js/commit/08448b644f948e08efceea6fe586f60a64c7b597))
+* course form image uploading before save. Linear issue: https://linear.app/quentral/issue/QUE-1305/quando-cambio-la-cover-del-corso-viene-lanciata-la-patch ([71d7f8b](https://github.com/selfcommunity/community-js/commit/71d7f8b26d6890fb76ed8dd9424da72420e722aa))
+* course tag chip ([81777d6](https://github.com/selfcommunity/community-js/commit/81777d6cd17df9753c32c0640bd75493bc303273))
+* courses cards style ([add7e8b](https://github.com/selfcommunity/community-js/commit/add7e8b636fa0fe9460d500b776498ecd4217b48))
+* courses filter visibility from anonymous ([4468f46](https://github.com/selfcommunity/community-js/commit/4468f4608200467886e9573a8e9d2e190309ae7c))
+* description can go to the next line. Linear: https://linear.app/quentral/issue/QUE-1331/la-descrizione-dovrebbe-rispettare-gli-a-capo-riga ([354262d](https://github.com/selfcommunity/community-js/commit/354262d27e5ba697b818efde8326a6e4a4371c7c))
+* double lesson selected style. Linear issue: https://linear.app/quentral/issue/QUE-1344/se-ci-sono-lezioni-con-lo-stesso-nome-vengono-selezionate-tutte ([00b96b2](https://github.com/selfcommunity/community-js/commit/00b96b2b960f5ce79549b399b367ea46caf27e6d))
+* edit event ([920bc1f](https://github.com/selfcommunity/community-js/commit/920bc1fb6bc1ff4842cc6ac6a80169b41454570b))
+* explore icon hidden if at least one among grouping, events or courses is enabled. ([1422f98](https://github.com/selfcommunity/community-js/commit/1422f98d54312bee8de84e48123a93b8cc1cb963))
+* export right custom hook ([a307531](https://github.com/selfcommunity/community-js/commit/a307531dd4304461eed8fe63e45b72422c5b35c3))
+* finished adding course api, fixed build, changed some translation and types ([574a544](https://github.com/selfcommunity/community-js/commit/574a544b8ddc8497ebddbc156d7a71ff79b3db81))
+* finished course card/chip ([7179226](https://github.com/selfcommunity/community-js/commit/7179226ec55607648d5033761bf09cdf67c5d0ba))
+* fixed a bug ([ede4726](https://github.com/selfcommunity/community-js/commit/ede4726f83070b8da7433333476023eb47c4a2bc))
+* fixed a bug into comments. Linear: https://linear.app/quentral/issue/QUE-1407/salvando-i-dati-di-un-corso-in-generale-vengono-sovrascritti-i-dati-in ([1239121](https://github.com/selfcommunity/community-js/commit/1239121ba61ef1f3f2f64bf5a74a338677683663))
+* fixed a bug into some and every cicles ([c7cff5c](https://github.com/selfcommunity/community-js/commit/c7cff5c2eb19d2b24b9a9a8d76395901a576867e))
+* fixed a ui reports ([44eca7c](https://github.com/selfcommunity/community-js/commit/44eca7c0f7b8f43cc27463872a1c88f56f595285))
+* fixed AddUsersButton ([43f4858](https://github.com/selfcommunity/community-js/commit/43f48589e3d01e5284d17beb89fe53878618cc51))
+* fixed and refactored some codes ([e82ff64](https://github.com/selfcommunity/community-js/commit/e82ff64ef8ad63a6d6c537b50074c111b346d5b9))
+* fixed bug on add lesson after add section ([6b68d10](https://github.com/selfcommunity/community-js/commit/6b68d10e074324e1652bad59f2127fdc9b68dd32))
+* fixed button to disable next lesson ([71b52f5](https://github.com/selfcommunity/community-js/commit/71b52f51aa1b8da09efe67a7457aaefc64717b07))
+* fixed cache problem between students tab and users tab. Linear: https://linear.app/quentral/issue/QUE-1351/problema-cache-tra-dashboard-insegnante-tab-studenti-e-edit-del-corso ([5f483d5](https://github.com/selfcommunity/community-js/commit/5f483d53f595d76984c186f7bcc6c4da706a7e22))
+* fixed cache problem into Users and Requests tab ([612d912](https://github.com/selfcommunity/community-js/commit/612d91283286a0ab062b7dbbff190a8ad7e49d36))
+* fixed case to show CourseParticipantsButton ([96746da](https://github.com/selfcommunity/community-js/commit/96746daa0adb60eb8b40bbb60d239960412ce4e2))
+* fixed comments cache. Linear issue: https://linear.app/quentral/issue/QUE-1312/problema-cache-commenti ([9e3dedb](https://github.com/selfcommunity/community-js/commit/9e3dedbbf97ba7d2d610f94dedab07575359df8d))
+* fixed comments not appearing. Linear issue: https://linear.app/quentral/issue/QUE-1292/i-commenti-non-vengono-visualizzati ([a6b5f6d](https://github.com/selfcommunity/community-js/commit/a6b5f6de3dc61773523982eccd2de7288039062f))
+* fixed condition ([1d951f9](https://github.com/selfcommunity/community-js/commit/1d951f9b6fd4fc1c5566deedb6f71d2a9a81479f))
+* fixed condition to disable button for next lesson ([044bc36](https://github.com/selfcommunity/community-js/commit/044bc36206a98015a526127b6d2156ef7b10b959))
+* fixed condition to disable button for next lesson ([6c1a135](https://github.com/selfcommunity/community-js/commit/6c1a135c9c5c243753ca59e5eec3cbc621d2c90a))
+* fixed condition to disable button for next lesson ([d623dd4](https://github.com/selfcommunity/community-js/commit/d623dd4499313fb933d8fe010a30d99b375b226e))
+* fixed condition to publish course form ([898ae44](https://github.com/selfcommunity/community-js/commit/898ae44fb8e65a52132664aca9607d1ad98fa66b))
+* fixed condition to show course description into student's dashboard ([4421910](https://github.com/selfcommunity/community-js/commit/4421910b96f2e391318ff2f16d9acdb2046ddacc))
+* fixed contrast color on course pages. Linear: https://linear.app/quentral/issue/QUE-1260/backgroundbox-outline-per-la-ui-dei-corsi ([7e49999](https://github.com/selfcommunity/community-js/commit/7e4999988f5dcf5bb86cf80132b090bfc9fa4900))
+* fixed control to make next url lesson ([81f8c22](https://github.com/selfcommunity/community-js/commit/81f8c22a3b2d2848dbba797172f88f42c44947dd))
+* fixed control to show CourseCompletedDialog ([689adc6](https://github.com/selfcommunity/community-js/commit/689adc64368f3e54a7049c7ee9afae0fc774603a))
+* fixed course card ([be77e03](https://github.com/selfcommunity/community-js/commit/be77e0367c470af21810701220bcaaf3f672b78c))
+* fixed course edit image loading. Linear issue: https://linear.app/quentral/issue/QUE-1263/non-funziona-il-cambio-cover-del-corso ([ab1edc6](https://github.com/selfcommunity/community-js/commit/ab1edc617cff2415b7474fefaac1fa7b2c1c92e2))
+* fixed course form component ([3bac9e2](https://github.com/selfcommunity/community-js/commit/3bac9e2ded30d8376fab115233fa8c285c785dbe))
+* fixed course form titles. Linear issue: https://linear.app/quentral/issue/QUE-1401/quando-creo-un-corso-la-finestra-riporta-il-titolo-scegli-il-tipo-di ([27fe5b7](https://github.com/selfcommunity/community-js/commit/27fe5b79c91c893a8415596026256a765e9c20f2))
+* fixed course item ([fe88d6d](https://github.com/selfcommunity/community-js/commit/fe88d6db235bfd844c689757057dfd0212072fb4))
+* fixed course participants button ([c8091de](https://github.com/selfcommunity/community-js/commit/c8091de3c7c9a38e2d29d704a9974be3b5bb8e44))
+* fixed course preview avatar ([bee3f5e](https://github.com/selfcommunity/community-js/commit/bee3f5ef2ac5c7834211bf98b05041a6c6746b71))
+* fixed courses ([61cfbd8](https://github.com/selfcommunity/community-js/commit/61cfbd83d4ad2a2d5413fc35dd93344a64767a63))
+* fixed courses component cards ([5f17fdb](https://github.com/selfcommunity/community-js/commit/5f17fdb01f56957904f22d3a14cefbdbc31aa09e))
+* fixed courses endpoint ([8e9b157](https://github.com/selfcommunity/community-js/commit/8e9b157eab53acfd287acc0ebdb50a9f3e42c1e3))
+* fixed courses filter ([85a8492](https://github.com/selfcommunity/community-js/commit/85a8492c1e3591a1d41a92f5a22d19a859139f7e))
+* fixed emoji dialog position on lesson comment editor. Linear issue: https://linear.app/quentral/issue/QUE-1413/il-selettore-di-emoji-copre-il-commento-che-sto-inserendo ([4b1323e](https://github.com/selfcommunity/community-js/commit/4b1323e339ef671c7841c00e21205eb29ca802b7))
+* fixed enroll to the course on student's dashboard ([0073cdb](https://github.com/selfcommunity/community-js/commit/0073cdbb384b42bc13b6753d28c8c37d3e40c30c))
+* fixed groups search ([4944a92](https://github.com/selfcommunity/community-js/commit/4944a9296f1a4130888867f1eecdbdcf09bb3be7))
+* fixed helper text on course description; fixed updating scCourse when change lesson status. Linear: https://linear.app/quentral/issue/QUE-1446/modificando-le-opzioni-di-un-corso-non-si-riesce-a-salvare-i ([9ee5111](https://github.com/selfcommunity/community-js/commit/9ee51115705609970a4f08a3b57db43d0232b21e))
+* fixed how to show dates into course tables and comments ([22ad12c](https://github.com/selfcommunity/community-js/commit/22ad12c8e780fe6b74b32b081588c82a25eca9f7))
+* fixed isCourseNew function for course badge ([7b4ce34](https://github.com/selfcommunity/community-js/commit/7b4ce34bbb73e9dc906cf6abd0ee5cc43f5b3485))
+* fixed lesson comment editor. Linear issue: https://linear.app/quentral/issue/QUE-1364/commenti-lezione-senza-editor-se-non-ci-sono-commenti ([b275597](https://github.com/selfcommunity/community-js/commit/b275597ad905c6229af52bb5cbba040a98094e25))
+* fixed lesson comment objs comment reply ([786454e](https://github.com/selfcommunity/community-js/commit/786454edc27d4f16ecb34a2d2df39ff54322aa61))
+* fixed lesson drawer/content ([dd7da44](https://github.com/selfcommunity/community-js/commit/dd7da443f3e31b159ef50155b550fd5c66003d8d))
+* fixed lesson media preview/ aligned editor ([a482f67](https://github.com/selfcommunity/community-js/commit/a482f67441e5a13445d7c5f82a9c89c0d74dfde7))
+* fixed locked lesson in course list drawer ([55c4fed](https://github.com/selfcommunity/community-js/commit/55c4fed644c2aaed427768abfcb86d6744a891be))
+* fixed missing icons. Linear issue: https://linear.app/quentral/issue/QUE-1288/home-page-da-sloggati-non-si-vedono-i-corsi-e-gruppi ([04b2f52](https://github.com/selfcommunity/community-js/commit/04b2f52f38e8efc2e39ccd9ef44ad1dfa7b08690))
+* fixed missing translation ([50e27f5](https://github.com/selfcommunity/community-js/commit/50e27f5e069fd949a9338f72c403420117754aef))
+* fixed mobile edit mode for lesson/ updated icon font ([891463d](https://github.com/selfcommunity/community-js/commit/891463d609795da35e45de70c3997ea7290f6085))
+* fixed numberFormatter function ([98b9a9b](https://github.com/selfcommunity/community-js/commit/98b9a9b46960d150fa7a305f81c76ba31a458559))
+* fixed other comments button link ([7249b38](https://github.com/selfcommunity/community-js/commit/7249b3874cf141a1b60f03e29e93e7051b777405))
+* fixed saving new section and lesson ([7e0c81c](https://github.com/selfcommunity/community-js/commit/7e0c81c9b0ca63341038a35839a3f0a1133f9198))
+* fixed Skeleton on CourseUsersTable ([520506a](https://github.com/selfcommunity/community-js/commit/520506aad5a59fa415a89d19a8fdeac9068c33f5))
+* fixed some bugs ([4940fa1](https://github.com/selfcommunity/community-js/commit/4940fa1461a439a3ef7c2394eb39933f4d3369f5))
+* fixed some bugs into stundets' dashboard; refactored some codes ([d8c3d18](https://github.com/selfcommunity/community-js/commit/d8c3d180b8563f69d5a99da6d995c10d665cab52))
+* fixed some bus into lessons tab into EditCourse ([1b5fde4](https://github.com/selfcommunity/community-js/commit/1b5fde4b813028e9066ff6f7d95f6c4668db1afc))
+* fixed some codes ([eba1a69](https://github.com/selfcommunity/community-js/commit/eba1a695be1443f4220bf1f35f8025f6bab393cd))
+* fixed some codes ([04d00fc](https://github.com/selfcommunity/community-js/commit/04d00fc51b600c008d5cb216b1fec7ca2108f3d9))
+* fixed some codes ([08b6a94](https://github.com/selfcommunity/community-js/commit/08b6a946a3d8dc1db63c57ff43b0f3fbb5f4327b))
+* fixed some codes ([256f97e](https://github.com/selfcommunity/community-js/commit/256f97eb8d1f7c4b8660f006804ace6456f7d834))
+* fixed some codes ([3bf1293](https://github.com/selfcommunity/community-js/commit/3bf1293682f35d8d31545b66914d9a783c866f03))
+* fixed some codes ([267adb5](https://github.com/selfcommunity/community-js/commit/267adb5419911e40285b419fee0dbfedc8a2f264))
+* fixed some codes ([da37684](https://github.com/selfcommunity/community-js/commit/da37684a363ee7729e76bce420edffc8fd23d72c))
+* fixed some codes ([9df47e3](https://github.com/selfcommunity/community-js/commit/9df47e3bf13970ee66ee60e6c3ba20141946dcb2))
+* fixed some codes; wip edit mode ([5655d21](https://github.com/selfcommunity/community-js/commit/5655d21f331874416113562a1ae61c61c0656bbb))
+* fixed some css props ([3a31598](https://github.com/selfcommunity/community-js/commit/3a31598df84be2a5282cfe47d57fdb26c6defb58))
+* fixed some mobile ui ([68458c5](https://github.com/selfcommunity/community-js/commit/68458c5ee5e04f0cbb20a6e154406a26bbcbe862))
+* fixed some problems ([8c8d1d1](https://github.com/selfcommunity/community-js/commit/8c8d1d15db718d794928fa705b511d302688b18f))
+* fixed some reports ([8cd91a6](https://github.com/selfcommunity/community-js/commit/8cd91a65533bdfe81a3ff298551d4e1117a5338a))
+* fixed some ui reports ([9e891e5](https://github.com/selfcommunity/community-js/commit/9e891e5f4c1326ffc829cc0991334fea877f3b64))
+* fixed to show element into student's dashboard for secret course ([0f12df0](https://github.com/selfcommunity/community-js/commit/0f12df09a889d123e78872bd2daa89d8c2e8097b))
+* fixed ui bug when delete section or lesson. Linear: https://linear.app/quentral/issue/QUE-1329/correggere-apertura-dialog-di-conferma-eliminazione-sezionelezione ([a9a22a6](https://github.com/selfcommunity/community-js/commit/a9a22a63c26ed6077d3986f5df687fb578189187))
+* fixed ui bugs ([2f79703](https://github.com/selfcommunity/community-js/commit/2f79703d82d10be6fc24e9075e71f0726c9d8213))
+* fixed users counter on CourseParticipantsButton ([deb56eb](https://github.com/selfcommunity/community-js/commit/deb56ebdb0b21544a2fc5caa32597c4938db1399))
+* fixed wrong merge ([81d107a](https://github.com/selfcommunity/community-js/commit/81d107a1343f3edc240062d299916c1788184581))
+* fixes ([47920c9](https://github.com/selfcommunity/community-js/commit/47920c9108ce1ae54f083031ccf47af98ca4a2c9))
+* hidden description if not exist. Linear: https://linear.app/quentral/issue/QUE-1340/nascondere-descrizione-corso-se-vuota ([50ea8dc](https://github.com/selfcommunity/community-js/commit/50ea8dc6be062f6f7d0c13def0c7e45189288315))
+* increased lesson comment obj page size ([d8dfbf9](https://github.com/selfcommunity/community-js/commit/d8dfbf9fd27208b634dd75c21fe553999b08b93c))
+* lesson appbar ([a9be629](https://github.com/selfcommunity/community-js/commit/a9be629a8ab2c59f4c6c1bff92b59d5e25f4b033))
+* lesson template fixes ([88ba1aa](https://github.com/selfcommunity/community-js/commit/88ba1aa91e2b4c052f91df4f2dd5312cff61894f))
+* Linear issue: https://linear.app/quentral/issue/QUE-1371/nellelenco-corsi-rimane-uno-strano-box-grigio-sotto ([a814cc0](https://github.com/selfcommunity/community-js/commit/a814cc0e7aeccf7956437ef665fc789edaa612d8))
+* maked LessonReleaseMenu controlled component. Linear: https://linear.app/quentral/issue/QUE-1336/problema-cache-ordinamento-sezioni ([123561b](https://github.com/selfcommunity/community-js/commit/123561bff30ab8ce7a510a745298f3d4ed3716c8))
+* moved clapping image into assets ([366ad52](https://github.com/selfcommunity/community-js/commit/366ad5228a712d455994711025b9ef573eb13f57))
+* moved components from lesson template to ui ([a98ca04](https://github.com/selfcommunity/community-js/commit/a98ca04412c50a154c3eaa6d7ae9199f3843ad66))
+* moved course form enum steps to constants, exported in ui package. ([ec4c507](https://github.com/selfcommunity/community-js/commit/ec4c5076a00db088e583f7b410684ca74824a885))
+* moved logic from lesson template to ui components ([159484e](https://github.com/selfcommunity/community-js/commit/159484eb9bb26f90d79a14ca362b26efc4c33081))
+* navigation links ([c10cfdf](https://github.com/selfcommunity/community-js/commit/c10cfdf87e3d598bad7511ecfed328730e299a96))
+* navigation links ([29a8934](https://github.com/selfcommunity/community-js/commit/29a8934de02405761e8870a2227d1d7a0a319a35))
+* navigation links ([68aea1c](https://github.com/selfcommunity/community-js/commit/68aea1ccacbd85cebd0a2f9368b80bf0b6f86c76))
+* NavigationToolbar ([3618df0](https://github.com/selfcommunity/community-js/commit/3618df055b809c4dd90c20f9fa0c1ff3891b79b5))
+* refactored courses page. Removed empty box with skeleton and changed  filters buttons. Linear issues: https://linear.app/quentral/issue/QUE-1373/se-nellelenco-corsi-non-ci-sono-risultati-restano-i-4-widget-in and https://linear.app/quentral/issue/QUE-1384/revisione-pagina-con-lista-corsi ([ec4bdab](https://github.com/selfcommunity/community-js/commit/ec4bdabc754a55114c1c212b9a3f98549a524895))
+* refactored dashboard skeletons; fixed some codes ([60adba9](https://github.com/selfcommunity/community-js/commit/60adba95ee0e6ff1b498ce3f6b6eed4f898f3148))
+* refactored edit course skeletons; fixed some codes ([b83edbd](https://github.com/selfcommunity/community-js/commit/b83edbdf89a6742063afdf77214ec29c08c928f3))
+* refactored getUrlLesson function; fixed other comments link ([3b2b3c0](https://github.com/selfcommunity/community-js/commit/3b2b3c0b676ebf15bfa21780ffd84ce81ca75f06))
+* refactored lesson media uploading/rendering for media files. Fixed also linear issues: https://linear.app/quentral/issue/QUE-1240/componente-video-incastonato-con-preview-ebeddata and  https://linear.app/quentral/issue/QUE-1269/a-volte-aggiungendo-un-pdf-ad-una-lezione-non-appare-la-preview ([91617ee](https://github.com/selfcommunity/community-js/commit/91617eea3f6581f5dfefcd7c1bb9f6e81f17a008))
+* removed chars from skeleton ([e12d987](https://github.com/selfcommunity/community-js/commit/e12d987f20dce0addf473b1ae8dce341a3b3aef9))
+* removed manager role from course join button, fixed course button. ([e0358b4](https://github.com/selfcommunity/community-js/commit/e0358b4da9ff806fab822d1428709faa4914fc0d))
+* removed unused file ([d5e51f3](https://github.com/selfcommunity/community-js/commit/d5e51f3f5f02916fdb3a71e28b5f159592add4ca))
+* renamed SCCourseFormStepType enum steps ([b21812f](https://github.com/selfcommunity/community-js/commit/b21812f51944e9beaa1a016e38fe5c13ac8376a3))
+* restored course condition to block publishing if there are no lessons and added a box to inform user. Linear issues: https://linear.app/quentral/issue/QUE-1294/dalledit-dei-corsi-non-riesco-a-salvare-le-modifiche and https://linear.app/quentral/issue/QUE-1243/aggiungere-condizione-che-il-corso-per-passare-da-draft-pubblicato ([b9eaf27](https://github.com/selfcommunity/community-js/commit/b9eaf272e81fe2e2023cd3dd7c2a11ec322d7e9a))
+* toggle complete lesson, lesson component props ([f374be0](https://github.com/selfcommunity/community-js/commit/f374be00d035b37ae2b447ebfcc1f11b8d30a8d6))
+* try to fix cache problems ([a6e2cb3](https://github.com/selfcommunity/community-js/commit/a6e2cb3b0a18bd258bd1a96fda33e7f03f8df28a))
+* try to fix error when publish the course. Linear: https://linear.app/quentral/issue/QUE-1370/alla-pubblicazione-di-un-corso-che-era-in-bozza-mi-ha-dato-questo ([5db6d55](https://github.com/selfcommunity/community-js/commit/5db6d559b8563be618fa3da4d8bbd05a539805c3))
+* tslib only for deps ([7eb7bdd](https://github.com/selfcommunity/community-js/commit/7eb7bddf330152e0d04949d53e16fd0d605b414b))
+* update classnames and pubsub-js libs ([d566302](https://github.com/selfcommunity/community-js/commit/d56630291b8871fad03a2e23a53b15735d25cfa2))
+* updated call to retrieve dashboard users ([2f8b45a](https://github.com/selfcommunity/community-js/commit/2f8b45a85754a862ec4d4c8a80bbda7325d7aeac))
+* updated courses endpoints/services ([3910469](https://github.com/selfcommunity/community-js/commit/3910469f64f1abf151db61aefc92d997e0ea5c87))
+* updated lesson template component(still in progress) ([1aaedc5](https://github.com/selfcommunity/community-js/commit/1aaedc5e0c9033d65f387c953c152ab929f0dbd1))
+* updated link button ([32b8d3e](https://github.com/selfcommunity/community-js/commit/32b8d3eba8cb570e979533ba7ac1bdf5ffe745ba))
+* updated updateCourse with pathCourse. Linear: https://linear.app/quentral/issue/QUE-1406/quando-aggiorno-la-categoria-di-un-corso-viene-sempre-passata-la-lista ([8c8656c](https://github.com/selfcommunity/community-js/commit/8c8656c1955ef1bc193de42cba5ecb41795e9d51))
+
+
+### Features
+
+* added api on student's dashboard; fixed some codes into teacher's dashboard ([eaa28f9](https://github.com/selfcommunity/community-js/commit/eaa28f9afa0113ee47f2b03173fcbacdb2a493dd))
+* added available data next to the section name; added popover on course type. Linear: https://linear.app/quentral/issue/QUE-1335/sarebbe-bello-capire-quando-una-sezione-verra-resa-pubblica ([7087471](https://github.com/selfcommunity/community-js/commit/70874718effa5d426847782a0cb97c8bcd530b79))
+* added button on course chip status. Linear: https://linear.app/quentral/issue/QUE-1377/farei-in-modo-che-nei-due-punti-in-cui-facciamo-vedere-che-il-corso-e ([a5f91ef](https://github.com/selfcommunity/community-js/commit/a5f91ef968769b523635b5ffac71fc73f84c755c))
+* added confirm dialog when reject or remove user from course. Linear: https://linear.app/quentral/issue/QUE-1382/nella-lista-utenti-dovrebbe-essere-possibile-rimuovere-un-utente-se ([b562d9d](https://github.com/selfcommunity/community-js/commit/b562d9d4a8ed21a59072417c973a9edaf0d820d9))
+* added contrast color ([44f904a](https://github.com/selfcommunity/community-js/commit/44f904a64a020b73104d8a7d8d36430134cff91e))
+* added CourseCompletedDialog into LessonObject ([8b5b74a](https://github.com/selfcommunity/community-js/commit/8b5b74ae3df16eb74dfa5c887df2a1abf201413e))
+* added create course into ComposerIconButton ([30c6767](https://github.com/selfcommunity/community-js/commit/30c676709976b1508d39877642a5ee56eda9ebfa))
+* added dialog to confirm section or lesson's delete ([814cf3d](https://github.com/selfcommunity/community-js/commit/814cf3d39f0bb9e59aa24fbea2fcdfef9b68f5ca))
+* added EditCourse template ([f792ca0](https://github.com/selfcommunity/community-js/commit/f792ca0b4a02a529da862aff7dd76433200e7fc3))
+* added link to user avatar into SeeProgressButton ([7a91fea](https://github.com/selfcommunity/community-js/commit/7a91fea38b5c74a45138fab693b7acccc938fe7e))
+* added request tab and fixed some codes ([689c250](https://github.com/selfcommunity/community-js/commit/689c250ea5c81155c35775902a3a5c1204208b71))
+* added skeleton when load other comments ([22cb9f8](https://github.com/selfcommunity/community-js/commit/22cb9f88b8462b249c0c3067bf7e7c693a3b6631))
+* added snackbar when move section or lesson; added control to not save if destination is equal to source ([7489f99](https://github.com/selfcommunity/community-js/commit/7489f993dd92b1858089da639e70816e05a1b4c4))
+* added snackbar when users are added to the course ([f0809f4](https://github.com/selfcommunity/community-js/commit/f0809f4be4b08de377047823d75d67b10e3a453f))
+* added starting search after enter click into CourseUsersTable. Linear: https://linear.app/quentral/issue/QUE-1412/ricontrollare-la-pagina-utenti ([87efa93](https://github.com/selfcommunity/community-js/commit/87efa93c2d50aa3556043733a26625bb64d8278b))
+* added user created courses widget. Linear issue: https://linear.app/quentral/issue/QUE-1244/widget-corsi-creati-nel-profilo-utente. fix: fixed course component and style ([3a9155f](https://github.com/selfcommunity/community-js/commit/3a9155f56ade13b6f0131ffd6c76da33a8d0cec1))
+* course notifications. Linear issue: https://linear.app/quentral/issue/QUE-1405/notifiche-corsi ([c437994](https://github.com/selfcommunity/community-js/commit/c437994399810b2d261992c239144f9168949b70))
+* created AddUsersButton ([7bbe784](https://github.com/selfcommunity/community-js/commit/7bbe784eedf19008fc914814d2eb8a10de13a8a3))
+* created CourseTypePopover ([3010620](https://github.com/selfcommunity/community-js/commit/30106200a68960234d0435b063ef5522d13d3472))
+* finished Users tab with mocked data ([a52ac61](https://github.com/selfcommunity/community-js/commit/a52ac61ef97215949dfb9406aceecb084404997c))
+* fix livestream ([46bc954](https://github.com/selfcommunity/community-js/commit/46bc954bcf188148409efdfb22edbf226c767493))
+* hidden calendar if course is self ([8e792eb](https://github.com/selfcommunity/community-js/commit/8e792ebda7352c58faf236987de67d3fada9b3fe))
+* hidden course progress if join_status=null. Linear: https://linear.app/quentral/issue/QUE-1381/se-sono-un-utente-non-iscritto-ad-un-corso-non-dovrei-vedere ([ba22a53](https://github.com/selfcommunity/community-js/commit/ba22a539f8acc3bc545e2ae2b28a9546044e5476))
+* implemented AddUserButton stories; exported main component ([1273541](https://github.com/selfcommunity/community-js/commit/12735416b74126c55de35116f1000cd2f092cf24))
+* implemented LessonCompletedDialog ([1b83427](https://github.com/selfcommunity/community-js/commit/1b834273d8391a483c105acd4eb227c7e3cb7e4b))
+* implemented manage error and skeleton ([eb07322](https://github.com/selfcommunity/community-js/commit/eb07322941a826f75a83291ba923fbc8cec91e12))
+* implemented options tab component ([2a7a55b](https://github.com/selfcommunity/community-js/commit/2a7a55bda02622b4869b0ef79d1bda98f9e3e040))
+* improved controls on disabled components when adding section or lesson ([6d5ef1d](https://github.com/selfcommunity/community-js/commit/6d5ef1d307f0a849fa4b0b684d5c6e659571c5f2))
+* improved disabled calendar into edit course when adding section or lesson. Linear: https://linear.app/quentral/issue/QUE-1333/quando-si-crea-una-sezione-o-un-corso-la-parte-calendario-diventa ([42f8f89](https://github.com/selfcommunity/community-js/commit/42f8f89f19864e989aa6e29b1d7b765d9069449d))
+* integrated calendar into lesson table ([470dd4a](https://github.com/selfcommunity/community-js/commit/470dd4acb0fba768d55c6c8ea0ab825eecc1bbc3))
+* makes lesson as link into AccordionLessons ([cecfc22](https://github.com/selfcommunity/community-js/commit/cecfc22e6024f47f5d8d7b63f2f048fa29531b1c))
+* push customize tab ([90f507b](https://github.com/selfcommunity/community-js/commit/90f507bb115a9b4aba5e87a80060710e28f9bba0))
+* pushed comments tab ([27a098f](https://github.com/selfcommunity/community-js/commit/27a098f693cda9d5fda49263ae046cad2b8dffc8))
+* pushed common dashboard header; wip teacher dashboard ([b5ff3bb](https://github.com/selfcommunity/community-js/commit/b5ff3bb5c700456c1f4380b258b61ed31b5c86b9))
+* pushed dialog to confirm course publishing ([dc8efcb](https://github.com/selfcommunity/community-js/commit/dc8efcb14566076e688f244ceea97ccfdb25a3cb))
+* pushed Info component ([765d4f8](https://github.com/selfcommunity/community-js/commit/765d4f8eb590c01133e82b917ad32fa53b08e775))
+* pushed student dashboard ([ce44044](https://github.com/selfcommunity/community-js/commit/ce440441d0616fb59f0464bd63389b3c479bb758))
+* refactore, fixed and wip some components ([ac0bbfb](https://github.com/selfcommunity/community-js/commit/ac0bbfb710ec09c077cba64229b1984c4235a59c))
+* tab Students almost completed ([f8af79e](https://github.com/selfcommunity/community-js/commit/f8af79e5d8940ca083c40f12b5ee05d28fe6be62))
+* updated api joinOrAcceptInviteToCourse. Linear: https://linear.app/quentral/issue/QUE-1343/problema-lezioni-dopo-iscrizione-ad-un-corso ([427bf35](https://github.com/selfcommunity/community-js/commit/427bf35860c795c9116d6b3882ddd36002247afa))
+* updated CourseUsersTable search from backend ([ce3038f](https://github.com/selfcommunity/community-js/commit/ce3038fd835f1e8e25b7e505bda3199125403df3))
+* wip ActionButton ([29d2659](https://github.com/selfcommunity/community-js/commit/29d2659d66c8373cec31e8626c9846897c8861b3))
+* wip dashboard and edit ([fcffd42](https://github.com/selfcommunity/community-js/commit/fcffd426571d270688f87eb76d92eabea8a3ddfd))
+* wip edit tab lessons ([639a23c](https://github.com/selfcommunity/community-js/commit/639a23c0ae3f0c0cfe2c7ab72a8c8d4b37dc8b96))
+* wip edit tab lessons api ([5412df3](https://github.com/selfcommunity/community-js/commit/5412df3acc48d73655dc593c2a2c3ef908f57e73))
+* wip edit tab lessons api ([657cf2e](https://github.com/selfcommunity/community-js/commit/657cf2ee21a3031ddad5ff3a24d765713e1b853b))
+* wip edit tab lessons api ([1175b09](https://github.com/selfcommunity/community-js/commit/1175b09450c568082db6be6982c1d65d9f1f6d7d))
+* wip from mock to api ([4c646b0](https://github.com/selfcommunity/community-js/commit/4c646b02aa38f028db48d8b101202e9a5c313525))
+* wip Lessons tab into EditCourse component ([e9594d6](https://github.com/selfcommunity/community-js/commit/e9594d6adef829b2cb2914271437cbce277b89cb))
+* wip tab users; refactored some components ([f9a0bc2](https://github.com/selfcommunity/community-js/commit/f9a0bc2537c9e5dd97497e98979415e87e435b7c))
+* wip Teacher dashboard ([3f3de07](https://github.com/selfcommunity/community-js/commit/3f3de0794befda1ab464f9a92dfa78b521761a37))
+
+
+### Performance Improvements
+
+* added api to course create/course edit form ([839d0ca](https://github.com/selfcommunity/community-js/commit/839d0ca5b29321ae54ab525bff3ac3ccf03c1b52))
+* added api to lesson release menu component ([21ac441](https://github.com/selfcommunity/community-js/commit/21ac441820684f322dec45e3116b4962ddf4acf3))
+* added badge for joined courses. Linear issue: https://linear.app/quentral/issue/QUE-1385/aggiunta-badge-stai-partecipando/fixed translations for courses button + edit course. linear issues: https://linear.app/quentral/issue/QUE-1378/ce-scritto-spazio-ma-credo-fosse-corso-controllare-anche-in-inglese and https://linear.app/quentral/issue/QUE-1388/bottone-i-corsi-per-me-diventa-i-miei-corsi/https://linear.app/quentral/issue/QUE-1386/bottone-creati-da-me-diventa-gestiti-da-me ([136b8be](https://github.com/selfcommunity/community-js/commit/136b8be5de4ea2f26567e87c7f8a032603ec9f0f))
+* added course advanced enabled in course form. Linear issue: https://linear.app/quentral/issue/QUE-1404/in-base-alla-dynamic-preference-configurationscourses-advanced-enabled ([4b455c0](https://github.com/selfcommunity/community-js/commit/4b455c00f1373fa6b34327004bdc5b57ca7f98ce))
+* added course api to course participants button ([754e4ef](https://github.com/selfcommunity/community-js/commit/754e4efdc9112ff3e371a8d7ce411f69983286ef))
+* added CourseJoinButton, fixed some errors ([7d74837](https://github.com/selfcommunity/community-js/commit/7d74837e5c4fe78ee02388b10024e9ca8f68b835))
+* added field to SCCourseJoinStatusType ([1b1c8b6](https://github.com/selfcommunity/community-js/commit/1b1c8b6ca3cddd628f9db19cf6ad9d482c1282c5))
+* added lesson list/comments draft ([17b336e](https://github.com/selfcommunity/community-js/commit/17b336e9aac3db72a9f7343aaff6ff98ae4f8eb8))
+* added link to course creator avatar and username. Linear issue: https://linear.app/quentral/issue/QUE-1242/avatar-username-link-attivi-per-view-profilo-insegnante ([773cd91](https://github.com/selfcommunity/community-js/commit/773cd91ffac4b7729ab1692416a191370b5f10b2))
+* added link to course snippet. Linear issue: https://linear.app/quentral/issue/QUE-1354/il-click-nel-widget-dei-corsi-che-un-utente-ha-creato-non-apre-il ([3e16f5b](https://github.com/selfcommunity/community-js/commit/3e16f5be0895fc71cd1bfb5a7676078d1c1ad463))
+* added link to teacher dashboard edit menu item ([e2d5913](https://github.com/selfcommunity/community-js/commit/e2d5913796db5b6725344eb8ee9a789979c5db2d))
+* added manager param to courses "my courses" filter. ([05e5055](https://github.com/selfcommunity/community-js/commit/05e5055a84828fcb1ddfadee4d1d000b20a31e66))
+* added mark complete/incomplete a lesson, fixed lesson template component ([579aade](https://github.com/selfcommunity/community-js/commit/579aade220cdec86991e32b1f79e0e4547f0c42a))
+* added preview mode ([e9a11c5](https://github.com/selfcommunity/community-js/commit/e9a11c585ae515b400befc7e4fc62366a1ce0a2e))
+* added resizable drawer to lesson component. Added placeholder to editor component ([383e016](https://github.com/selfcommunity/community-js/commit/383e0168ca3b5f10d1c69645cb78991c29b07b86))
+* added spacing to course cards ([2711522](https://github.com/selfcommunity/community-js/commit/2711522df957f2bda7375475ce7fcb5e36038c07))
+* added specific url to course requests section. Linear issue: https://linear.app/quentral/issue/QUE-1436/alla-ricezione-della-notifica-sarebbe-meglio-essere-portati ([a7a8333](https://github.com/selfcommunity/community-js/commit/a7a8333215499bd50c0553ccda910e5d69aa5909))
+* added UserCreatedCoursesWidget to UserProfile ([3a7236d](https://github.com/selfcommunity/community-js/commit/3a7236d5b02d004fa2678b8f8beab5306e5ad161))
+* changed lesson file preview rendering. Linear issue: https://linear.app/quentral/issue/QUE-1375/preview-di-un-pdf-allegato-sarebbe-meglio-un-rettangolo-piccolo-con ([a5c5e5d](https://github.com/selfcommunity/community-js/commit/a5c5e5d69415849abebb921bbfe7d5ca17a34a33))
+* fix courses component/added api ([9dd896e](https://github.com/selfcommunity/community-js/commit/9dd896e79384b920ba4f5ee62e9cbc59142651e7))
+* moved lesson component to templates.(still in progress) ([a5ea48f](https://github.com/selfcommunity/community-js/commit/a5ea48f1122f1225e226492fd5785837ab86d58d))
+* switched course dashboard comments route ([15dedb4](https://github.com/selfcommunity/community-js/commit/15dedb4d6042b836ec58ef742672a287da212244))
+* switched course notification comments route ([ca07227](https://github.com/selfcommunity/community-js/commit/ca0722719516bc47a72ad0997751911905db78f7))
+
+
+
+
+
+# [0.11.0-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.59...@selfcommunity/react-ui@0.11.0-alpha.60) (2025-04-14)
+
+
+### Bug Fixes
+
+* fixed social share ([8a41094](https://github.com/selfcommunity/community-js/commit/8a4109480227ac0d47e67bbe7a78665eb322fcef))
+
+
+
+
+
+# [0.11.0-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.58...@selfcommunity/react-ui@0.11.0-alpha.59) (2025-04-14)
+
+
+### Bug Fixes
+
+* social share visibility when community is closed. Linear issue: https://linear.app/quentral/issue/QUE-1458/bug-social-share-visibile-nonostante-la-community-chiusa-e-con-i ([2824bd4](https://github.com/selfcommunity/community-js/commit/2824bd4357fce1a6d035ff127d350851f6d12e66))
+
+
+
+
+
+# [0.11.0-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.57...@selfcommunity/react-ui@0.11.0-alpha.58) (2025-04-10)
+
+
+### Bug Fixes
+
+* fixed event end date. Linear: https://linear.app/quentral/issue/QUE-1454/eventi-il-campo-data-di-fine-si-comporta-in-maniera-strana-segnala ([d0b9cd4](https://github.com/selfcommunity/community-js/commit/d0b9cd4ba80e5f53af27b2a686bff8307198ac80))
+* fixed switch event privacy. Linear: https://linear.app/quentral/issue/QUE-1455/eventi-se-cambio-la-privacy-dellevento-privato-pubblico-poi-non-posso ([3651870](https://github.com/selfcommunity/community-js/commit/3651870d98f1a71ee4467e9a2d4568bfb4c36d5a))
+
+
+
+
+
+# [0.11.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.56...@selfcommunity/react-ui@0.11.0-alpha.57) (2025-04-09)
+
+
+### Bug Fixes
+
+* fixing caache problems. Linear: https://linear.app/quentral/issue/QUE-1397/problema-con-linvito-ricevuto ([0b8bff9](https://github.com/selfcommunity/community-js/commit/0b8bff9fd18443d60927bd4c5cf2810ffd191f15))
+
+
+
+
+
+# [0.11.0-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.55...@selfcommunity/react-ui@0.11.0-alpha.56) (2025-04-09)
+
+
+### Bug Fixes
+
+* fixing cache problems ([f0737d7](https://github.com/selfcommunity/community-js/commit/f0737d7ea877e103de042f66bfef18c33a46977d))
+
+
+
+
+
+# [0.11.0-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.54...@selfcommunity/react-ui@0.11.0-alpha.55) (2025-04-09)
+
+
+### Bug Fixes
+
+* fixed footer menu entries when explore feed preference is disabled. Linear issue: https://linear.app/quentral/issue/QUE-1450/footer-con-esplora-disabilitato ([03a564c](https://github.com/selfcommunity/community-js/commit/03a564c1604b4c814508e9ead0315a518f1b6488))
+
+
+
+
+
+# [0.11.0-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.53...@selfcommunity/react-ui@0.11.0-alpha.54) (2025-04-08)
+
+
+### Bug Fixes
+
+* fixed cache problems into EventMembersWidget. Linear: https://linear.app/quentral/issue/QUE-1391/widget-richieste-di-partecipazione-ad-un-evento-non-fa-un-refresh ([2b09634](https://github.com/selfcommunity/community-js/commit/2b09634b4328a2e6b53797d06308e1ac0bc8a2aa))
+* fixed end time event form. Linear: https://linear.app/quentral/issue/QUE-1398/in-creazione-evento-problema-ora-di-fine-evento ([ebf4ff4](https://github.com/selfcommunity/community-js/commit/ebf4ff4457e45271ea89e5d25f0ad61bf06bb568))
+* fixed privacy switch. Linear: https://linear.app/quentral/issue/QUE-1449/modificando-un-evento-privato-ci-sono-alcuni-problemi ([c49979d](https://github.com/selfcommunity/community-js/commit/c49979d14067bda76591aa673abea7255bc11058))
+
+
+
+
+
+# [0.11.0-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.52...@selfcommunity/react-ui@0.11.0-alpha.53) (2025-04-08)
+
+
+### Bug Fixes
+
+* fixed groups search ([c17bd99](https://github.com/selfcommunity/community-js/commit/c17bd996f49c56b1f4b0ec8b4dfb11fca340750e))
+* fixed user link into RelatedEventsWidget. Linear: https://linear.app/quentral/issue/QUE-1395/il-widget-altri-eventi-di-xxx-ha-lavatar-con-link-sbagliato ([535947b](https://github.com/selfcommunity/community-js/commit/535947b0228e5c588d3e2f732d2d5b71ed8c4d1d))
+
+
+### Performance Improvements
+
+* added accept action for user requested to join event notification. Linear issue: https://linear.app/quentral/issue/QUE-1441/notifiche-evento ([5e8d3cf](https://github.com/selfcommunity/community-js/commit/5e8d3cf52ffb92cf9d6c4b1f5c6a0d45b53139fe))
+
+
+
+
+
+# [0.11.0-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.51...@selfcommunity/react-ui@0.11.0-alpha.52) (2025-04-07)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.50...@selfcommunity/react-ui@0.11.0-alpha.51) (2025-04-07)
+
+
+### Bug Fixes
+
+* NavigationToolbar ([19fb671](https://github.com/selfcommunity/community-js/commit/19fb671ac747e4ceca3839434183c4698c4f8c12))
+
+
+
+
+
+# [0.11.0-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.49...@selfcommunity/react-ui@0.11.0-alpha.50) (2025-04-07)
+
+
+### Bug Fixes
+
+* event notification accept action state ([7c80079](https://github.com/selfcommunity/community-js/commit/7c80079eb06c8aecf1849e0e0d39a31ad27b77bc))
+* notification event button loading condition ([9515922](https://github.com/selfcommunity/community-js/commit/951592256997c5b0757784cf2629adeadf18546f))
+
+
+
+
+
+# [0.11.0-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.48...@selfcommunity/react-ui@0.11.0-alpha.49) (2025-04-07)
+
+
+### Bug Fixes
+
+* liveStream ([c459dfa](https://github.com/selfcommunity/community-js/commit/c459dfa3f87feaa95b78ccbaebd7b1a76e422d96))
+
+
+
+
+
+# [0.11.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.47...@selfcommunity/react-ui@0.11.0-alpha.48) (2025-04-07)
+
+
+### Bug Fixes
+
+* liveStream ([5c30e40](https://github.com/selfcommunity/community-js/commit/5c30e401bf89116636a1b25c15928e7aa6bfed82))
+* liveStream ([a12f049](https://github.com/selfcommunity/community-js/commit/a12f049e4ce58fe7c912b237e3151c8635111bca))
+
+
+### Performance Improvements
+
+* added action accept to event request notification. Linear issue: https://linear.app/quentral/issue/QUE-1441/notifiche-evento ([af939ce](https://github.com/selfcommunity/community-js/commit/af939ce5e6782699f51e16257630715f3a1a68de))
+
+
+
+
+
+# [0.11.0-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.46...@selfcommunity/react-ui@0.11.0-alpha.47) (2025-04-07)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.45...@selfcommunity/react-ui@0.11.0-alpha.46) (2025-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.44...@selfcommunity/react-ui@0.11.0-alpha.45) (2025-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.43...@selfcommunity/react-ui@0.11.0-alpha.44) (2025-04-02)
+
+
+### Bug Fixes
+
+* edit event ([c71d07f](https://github.com/selfcommunity/community-js/commit/c71d07fa3b32d20c30166260e09df6fe57e39a72))
+
+
+
+
+
+# [0.11.0-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.42...@selfcommunity/react-ui@0.11.0-alpha.43) (2025-04-02)
+
+
+### Bug Fixes
+
+* liveStream ([d1cdd45](https://github.com/selfcommunity/community-js/commit/d1cdd4575ffb4475504b0fd453e60dd4305a3dbd))
+
+
+
+
+
+# [0.11.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.41...@selfcommunity/react-ui@0.11.0-alpha.42) (2025-03-31)
+
+
+### Bug Fixes
+
+* pubsub-js ([179ff95](https://github.com/selfcommunity/community-js/commit/179ff957e9ba5dd4247983d413b1b4625dddaa20))
+
+
+
+
+
+# [0.11.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.40...@selfcommunity/react-ui@0.11.0-alpha.41) (2025-03-31)
+
+
+### Bug Fixes
+
+* classnames ([3eaa996](https://github.com/selfcommunity/community-js/commit/3eaa9961d9c6d254e8e965b06fd40aa66595065a))
+
+
+
+
+
+# [0.11.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.39...@selfcommunity/react-ui@0.11.0-alpha.40) (2025-03-31)
+
+
+### Bug Fixes
+
+* add to calendar for events. Linear issue: https://linear.app/quentral/issue/QUE-1396/aggiungendo-al-calendario-un-evento-virtuale-mi-completa-la-posizione ([541d213](https://github.com/selfcommunity/community-js/commit/541d21390ff00d4733e29fdbfa5a56130937c7df))
+* Linear issue: https://linear.app/quentral/issue/QUE-1394/se-clicco-la-notifica-ha-accettato-la-tua-richiesta-per-levento-sulla ([7a58875](https://github.com/selfcommunity/community-js/commit/7a588754e8ff36ee0c0b1f13d0ae5c003ba1f814))
+
+
+
+
+
+# [0.11.0-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.38...@selfcommunity/react-ui@0.11.0-alpha.39) (2025-03-28)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.37...@selfcommunity/react-ui@0.11.0-alpha.38) (2025-03-27)
+
+
+### Bug Fixes
+
+* fixed EventParticipantsButton 403 error on console ([42e05e5](https://github.com/selfcommunity/community-js/commit/42e05e5f40dd973a555a2f3cacac8fac78512fbe))
+
+
+### Performance Improvements
+
+* added condition to hide title in the pwa suggested events ([c6a5c8b](https://github.com/selfcommunity/community-js/commit/c6a5c8bffcff854a8d0bef74bc04cc4345c21577))
+* added finished chip to events ([e1a70f8](https://github.com/selfcommunity/community-js/commit/e1a70f8090fc2c01c699d96923e76425e673769a))
+* changed finished event chip style ([b142055](https://github.com/selfcommunity/community-js/commit/b1420554f1d0d4a5ba4891126b4630d5331ca616))
+* moved events page title to community-js and hidden user events if none ([6b5f712](https://github.com/selfcommunity/community-js/commit/6b5f7121ba650471c08ed192d7cc57540668f3b0))
+
+
+
+
+
+# [0.11.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.36...@selfcommunity/react-ui@0.11.0-alpha.37) (2025-03-24)
+
+
+### Bug Fixes
+
+* bump lexical deps to 0.28.0 ([a7dacb8](https://github.com/selfcommunity/community-js/commit/a7dacb8347f908bc0fe370e4a91f756d2001544e))
+* bump lexical deps to 0.28.0 ([de199e0](https://github.com/selfcommunity/community-js/commit/de199e0a54fd51c4e2a7b594505cab42d51af759))
+
+
+
+
+
+# [0.11.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.35...@selfcommunity/react-ui@0.11.0-alpha.36) (2025-03-24)
+
+
+### Bug Fixes
+
+* fixed counter showed on followers button. Linear issue: https://linear.app/quentral/issue/QUE-1353/bug-counter-categorie-al-follow ([a2103fc](https://github.com/selfcommunity/community-js/commit/a2103fc6aa768cbe4d31dd465339d25a06921873))
+
+
+
+
+
+# [0.11.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.34...@selfcommunity/react-ui@0.11.0-alpha.35) (2025-03-24)
+
+
+### Bug Fixes
+
+* rename SearchAutocompleteProps in NavigationToolbarMobile, NavigationToolbar, SearchDialog ([0238b49](https://github.com/selfcommunity/community-js/commit/0238b49acf2709ba778df179708a151191f94fca))
+
+
+
+
+
+# [0.11.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.33...@selfcommunity/react-ui@0.11.0-alpha.34) (2025-03-23)
+
+
+### Bug Fixes
+
+* editor ([74fd90b](https://github.com/selfcommunity/community-js/commit/74fd90b38fe6ddd8dcf912b95e4553bd758e309d))
+* editor ([fe1c776](https://github.com/selfcommunity/community-js/commit/fe1c7765f1a136a4b51146b4e3b7f7ddda34c1bf))
+
+
+
+
+
+# [0.11.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.32...@selfcommunity/react-ui@0.11.0-alpha.33) (2025-03-14)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.31...@selfcommunity/react-ui@0.11.0-alpha.32) (2025-03-14)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.30...@selfcommunity/react-ui@0.11.0-alpha.31) (2025-03-12)
+
+
+### Bug Fixes
+
+* group request/invited list bug. Linear issue: https://linear.app/quentral/issue/QUE-1257/in-un-gruppo-chiuso-non-e-possibile-accettare-un-richiedente ([edd8726](https://github.com/selfcommunity/community-js/commit/edd8726c8a1ed02dfc5d2f17e1bf4aa9de098e51))
+
+
+
+
+
+# [0.11.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.29...@selfcommunity/react-ui@0.11.0-alpha.30) (2025-02-27)
+
+
+### Bug Fixes
+
+* live stream video processor (safari/iOS) ([3fc316f](https://github.com/selfcommunity/community-js/commit/3fc316f236bfe3931bdae2071ae131ce404e22c4))
+
+
+
+
+
+# [0.11.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.28...@selfcommunity/react-ui@0.11.0-alpha.29) (2025-02-27)
+
+
+### Bug Fixes
+
+* category can_create_only_staff ([2835897](https://github.com/selfcommunity/community-js/commit/28358975dd7fd42d052509e89587f3ac260e58ed))
+
+
+
+
+
+# [0.11.0-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.27...@selfcommunity/react-ui@0.11.0-alpha.28) (2025-02-26)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.26...@selfcommunity/react-ui@0.11.0-alpha.27) (2025-02-26)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.25...@selfcommunity/react-ui@0.11.0-alpha.26) (2025-02-26)
+
+
+### Bug Fixes
+
+* category can_create_only_staff ([a9ebbf3](https://github.com/selfcommunity/community-js/commit/a9ebbf3c483bd428f63f7567227c96dcead9638f))
+
+
+
+
+
+# [0.11.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.24...@selfcommunity/react-ui@0.11.0-alpha.25) (2025-02-26)
+
+
+### Bug Fixes
+
+* live stream ([976b885](https://github.com/selfcommunity/community-js/commit/976b88550cf00cd6ec80806e4578488f4843bdff))
+
+
+
+
+
+# [0.11.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.23...@selfcommunity/react-ui@0.11.0-alpha.24) (2025-02-26)
+
+
+### Bug Fixes
+
+* live stream video processor ([e193ca4](https://github.com/selfcommunity/community-js/commit/e193ca4c9e218bb18e57eb8579cf378d67df5a62))
+
+
+
+
+
+# [0.11.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.22...@selfcommunity/react-ui@0.11.0-alpha.23) (2025-02-25)
+
+
+### Bug Fixes
+
+* live stream create button ([e2bfc4e](https://github.com/selfcommunity/community-js/commit/e2bfc4eefe3d82ec4c9c27a9ab522b19459cdeb5))
+* live stream create button ([e11a7b9](https://github.com/selfcommunity/community-js/commit/e11a7b9a034c59b581d2b203a8d6066837511f19))
+
+
+
+
+
+# [0.11.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.21...@selfcommunity/react-ui@0.11.0-alpha.22) (2025-02-25)
+
+
+### Bug Fixes
+
+* live stream video conference ([0e38f00](https://github.com/selfcommunity/community-js/commit/0e38f00be0a988502c67926ee3d91d5043b4bec7))
+
+
+
+
+
+# [0.11.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.20...@selfcommunity/react-ui@0.11.0-alpha.21) (2025-02-24)
+
+
+### Bug Fixes
+
+* live stream no participants ([1ac77d0](https://github.com/selfcommunity/community-js/commit/1ac77d08b7325824627d4743b1c1f6b67cbae46f))
+* live stream no participants ([6e17a8a](https://github.com/selfcommunity/community-js/commit/6e17a8ab67fbc01779be9c75099026d7236957ad))
+
+
+
+
+
+# [0.11.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.19...@selfcommunity/react-ui@0.11.0-alpha.20) (2025-02-24)
+
+
+### Bug Fixes
+
+* live stream no participants ([f8df0e0](https://github.com/selfcommunity/community-js/commit/f8df0e023211d64ae8151de8f9157ff2820ab298))
+
+
+
+
+
+# [0.11.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.18...@selfcommunity/react-ui@0.11.0-alpha.19) (2025-02-24)
+
+
+### Bug Fixes
+
+* live stream no participants ([6378470](https://github.com/selfcommunity/community-js/commit/6378470c881af9a3f7f02ecf17293e1ba821ea5a))
+
+
+
+
+
+# [0.11.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.17...@selfcommunity/react-ui@0.11.0-alpha.18) (2025-02-12)
+
+
+### Bug Fixes
+
+* live stream dialog errors ([34b1f83](https://github.com/selfcommunity/community-js/commit/34b1f836d7d410722642eab77e6cd2e3261a8015))
+
+
+
+
+
+# [0.11.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.16...@selfcommunity/react-ui@0.11.0-alpha.17) (2025-02-11)
+
+
+### Bug Fixes
+
+* live stream ([48bac91](https://github.com/selfcommunity/community-js/commit/48bac911f55dd95158b2ae438f18a8c9746161ac))
+
+
+
+
+
+# [0.11.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.15...@selfcommunity/react-ui@0.11.0-alpha.16) (2025-02-06)
+
+
+### Bug Fixes
+
+* warning live stream form in a free trial community ([96fe99b](https://github.com/selfcommunity/community-js/commit/96fe99b443b74e9ce4660b097fb9d07ad7413eb7))
+* warning live stream form in a free trial community ([44a7667](https://github.com/selfcommunity/community-js/commit/44a766717ec7f5bf6b8c9f90a21c867f5a5649b0))
+
+
+
+
+
+# [0.11.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.14...@selfcommunity/react-ui@0.11.0-alpha.15) (2025-01-30)
+
+
+### Bug Fixes
+
+* added required prop to redirect after create an event ([b2cdee4](https://github.com/selfcommunity/community-js/commit/b2cdee473ce1db07c85d8e787802b59ae9ff133d))
+
+
+
+
+
+# [0.11.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.13...@selfcommunity/react-ui@0.11.0-alpha.14) (2025-01-30)
+
+
+### Bug Fixes
+
+* added required prop to redirect after create an event ([cfbbed4](https://github.com/selfcommunity/community-js/commit/cfbbed46aac380dfdbf020b56100b40100965c68))
+
+
+
+
+
+# [0.11.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.12...@selfcommunity/react-ui@0.11.0-alpha.13) (2025-01-30)
+
+
+### Bug Fixes
+
+* added required prop to redirect after create an event ([d08d158](https://github.com/selfcommunity/community-js/commit/d08d15800f96e0697200bdae2a917183b902abd8))
+
+
+
+
+
+# [0.11.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.11...@selfcommunity/react-ui@0.11.0-alpha.12) (2025-01-30)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.10...@selfcommunity/react-ui@0.11.0-alpha.11) (2025-01-22)
+
+
+### Bug Fixes
+
+* fixed to show back button on CreateLiveStreamDialog ([b3dde17](https://github.com/selfcommunity/community-js/commit/b3dde17345af31a11bf0d204d540ab2092579549))
+
+
+
+
+
+# [0.11.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.9...@selfcommunity/react-ui@0.11.0-alpha.10) (2025-01-22)
+
+
+### Bug Fixes
+
+* fixed text overflow on LiveStreamFormSettings ([da77c9d](https://github.com/selfcommunity/community-js/commit/da77c9d5fed422c60a0af1dee392117826dd951d))
+
+
+
+
+
+# [0.11.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.8...@selfcommunity/react-ui@0.11.0-alpha.9) (2025-01-21)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.7...@selfcommunity/react-ui@0.11.0-alpha.8) (2025-01-21)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [0.11.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.6...@selfcommunity/react-ui@0.11.0-alpha.7) (2025-01-16)
+
+
+### Bug Fixes
+
+* FeedObject activities min-height ([ff030e3](https://github.com/selfcommunity/community-js/commit/ff030e3b3171558410ae26860c8dc070cbd3ddca))
+
+
+
+
+
+# [0.11.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.5...@selfcommunity/react-ui@0.11.0-alpha.6) (2025-01-15)
+
+
+### Bug Fixes
+
+* FeedObject format content ([52729f8](https://github.com/selfcommunity/community-js/commit/52729f83e4b0501b93d45adac1db02994516078d))
+
+
+
+
+
+# [0.11.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.4...@selfcommunity/react-ui@0.11.0-alpha.5) (2025-01-15)
+
+
+### Bug Fixes
+
+* ComposerIconButton ([eba379d](https://github.com/selfcommunity/community-js/commit/eba379dc5f21d12a62a9462253c170ee4b9a0ff2))
+* FeedObject format content ([0eb9341](https://github.com/selfcommunity/community-js/commit/0eb934199f8b7524aa1e916db684b8a0cf9865d4))
+* fixed some dialog opening condition ([4b20867](https://github.com/selfcommunity/community-js/commit/4b20867fe591c484543f2fa8aebd36f27ab3f441))
+* liveStream dialog copy ([3b8accc](https://github.com/selfcommunity/community-js/commit/3b8accc926af1021da37699ab8b4837bcb7775a1))
+* LiveStreamSelector component ([5e24d4b](https://github.com/selfcommunity/community-js/commit/5e24d4b994ff49bd19b3eab357265e57133edf17))
+* ToolbarPlugin, PrivateMessage content style ([f0547e5](https://github.com/selfcommunity/community-js/commit/f0547e59e67c55b9e3afa8f48ec4d94df160b587))
+
+
+
+
+
+# [0.11.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.3...@selfcommunity/react-ui@0.11.0-alpha.4) (2025-01-14)
+
+
+### Bug Fixes
+
+* error on play video ([00603d9](https://github.com/selfcommunity/community-js/commit/00603d9d60defefbef0f8a5aa5113ba9c2cdab65))
+
+
+
+
+
+# [0.11.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.2...@selfcommunity/react-ui@0.11.0-alpha.3) (2025-01-14)
+
+
+### Bug Fixes
+
+* Composer with fixed toolbar editor when create discussion ([3cdc1a5](https://github.com/selfcommunity/community-js/commit/3cdc1a52e3b4d5667c6c1e030303bdc07b391c2b))
+* font ComposerIconButton ([4b2530b](https://github.com/selfcommunity/community-js/commit/4b2530bc317c0d8aa9c484422f9a56f81187eaf6))
+* font ComposerIconButton ([fd285fd](https://github.com/selfcommunity/community-js/commit/fd285fd504dbb81e17d599b7314a42f9d6a96b49))
+
+
+
+
+
+# [0.11.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.1...@selfcommunity/react-ui@0.11.0-alpha.2) (2025-01-13)
+
+
+### Bug Fixes
+
+* NavigationToolbar ([5f80e78](https://github.com/selfcommunity/community-js/commit/5f80e78cdb3c5ef5b3f089b64ee2be9b2491723a))
+
+
+
+
+
+# [0.11.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.0...@selfcommunity/react-ui@0.11.0-alpha.1) (2025-01-13)
+
+
+### Bug Fixes
+
+* optimization ([8a8399f](https://github.com/selfcommunity/community-js/commit/8a8399f6e6a2f16fc508c20d623c76c11e7dbe32))
+
+
+
+
+
+# [0.11.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.17...@selfcommunity/react-ui@0.11.0-alpha.0) (2025-01-13)
+
+
+### Bug Fixes
+
+* optimization ([c69948e](https://github.com/selfcommunity/community-js/commit/c69948e9a5023a08227eb0482ce08a06f9b2a826))
+* optimization ([f04e305](https://github.com/selfcommunity/community-js/commit/f04e305752c5f69d04faa7720494851ed65942c2))
+
+
+### Features
+
+* modified ComposerIconButton to accept Menu ([96189ba](https://github.com/selfcommunity/community-js/commit/96189ba88f517868e1895e9aa2f18a81e35935ba))
+
+
+
+
+
+## [0.10.5-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.16...@selfcommunity/react-ui@0.10.5-alpha.17) (2025-01-13)
+
+
+### Bug Fixes
+
+* style liveStream navigation ([fa19ef9](https://github.com/selfcommunity/community-js/commit/fa19ef9220037e00170598f316a006e2dad26091))
+
+
+
+
+
+## [0.10.5-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.15...@selfcommunity/react-ui@0.10.5-alpha.16) (2025-01-13)
+
+
+### Bug Fixes
+
+* style liveStream navigation ([c315f47](https://github.com/selfcommunity/community-js/commit/c315f47d854b6739cee63d38bf82fc5aee0f4a14))
+
+
+
+
+
+## [0.10.5-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.14...@selfcommunity/react-ui@0.10.5-alpha.15) (2025-01-13)
+
+
+### Bug Fixes
+
+* link livestream event ([4578d18](https://github.com/selfcommunity/community-js/commit/4578d18835428a147f6d54dfb12ace779b7e1ddc))
+
+
+
+
+
+## [0.10.5-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.13...@selfcommunity/react-ui@0.10.5-alpha.14) (2025-01-13)
+
+
+### Bug Fixes
+
+* create_live_stream and create_event permissions ([1856088](https://github.com/selfcommunity/community-js/commit/18560886796be2e23e02572627bb8be6048ca337))
+* icon CreateLiveStreamButton ([7d3b875](https://github.com/selfcommunity/community-js/commit/7d3b875baa23419126f12c83f1a17be1d30dc919))
+* livestream ([b891f46](https://github.com/selfcommunity/community-js/commit/b891f46d612f6a3ca55a35821c967cbf7679e7a3))
+* peerDependencies project root ([7c29158](https://github.com/selfcommunity/community-js/commit/7c29158cff08f6b43525a5e9a0c345cb3bc403ce))
+
+
+
+
+
+## [0.10.5-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.12...@selfcommunity/react-ui@0.10.5-alpha.13) (2025-01-10)
+
+
+### Bug Fixes
+
+* liveStream errors ([b399573](https://github.com/selfcommunity/community-js/commit/b3995738bda178ce82eace90f78b5d2b1f45b6c0))
+
+
+
+
+
+## [0.10.5-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.11...@selfcommunity/react-ui@0.10.5-alpha.12) (2025-01-09)
+
+
+### Bug Fixes
+
+* event id error on partecipate live ([8c7f9ce](https://github.com/selfcommunity/community-js/commit/8c7f9cebea886098d1e18bc1bc9b7a0e5b21cc4c))
+
+
+
+
+
+## [0.10.5-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.10...@selfcommunity/react-ui@0.10.5-alpha.11) (2025-01-09)
+
+
+### Bug Fixes
+
+* event id error on partecipate live ([325a53f](https://github.com/selfcommunity/community-js/commit/325a53f571410ecb009fa46b9cf0171b628f64f7))
+
+
+
+
+
+## [0.10.5-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.9...@selfcommunity/react-ui@0.10.5-alpha.10) (2025-01-09)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.10.5-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.8...@selfcommunity/react-ui@0.10.5-alpha.9) (2025-01-09)
+
+
+### Bug Fixes
+
+* event form ([2b12782](https://github.com/selfcommunity/community-js/commit/2b12782cc0d83d843f2c8f468b3a42091c854933))
+
+
+
+
+
+## [0.10.5-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.7...@selfcommunity/react-ui@0.10.5-alpha.8) (2025-01-09)
+
+
+### Bug Fixes
+
+* event form ([ee1e9ea](https://github.com/selfcommunity/community-js/commit/ee1e9ea51175306632fc42be716f7b85b351a33e))
+
+
+
+
+
+## [0.10.5-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.6...@selfcommunity/react-ui@0.10.5-alpha.7) (2025-01-09)
+
+
+### Bug Fixes
+
+* event form live stream ([5a53805](https://github.com/selfcommunity/community-js/commit/5a538058c97df59586789fa47c61703dc10e0f77))
+
+
+
+
+
+## [0.10.5-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.5...@selfcommunity/react-ui@0.10.5-alpha.6) (2025-01-09)
+
+
+### Bug Fixes
+
+* chip post group, event live stream ([18777f9](https://github.com/selfcommunity/community-js/commit/18777f926561ea35b086d42b33ff30be6389d560))
+
+
+
+
+
+## [0.10.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.4...@selfcommunity/react-ui@0.10.5-alpha.5) (2025-01-08)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [0.10.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.3...@selfcommunity/react-ui@0.10.5-alpha.4) (2025-01-08)
+
+
+### Bug Fixes
+
+* liveStreamPermissions ([e27a82c](https://github.com/selfcommunity/community-js/commit/e27a82cd1ac063c3ba752d4c366edd46b58ec792))
+
+
+
+
+
+## [0.10.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.2...@selfcommunity/react-ui@0.10.5-alpha.3) (2025-01-08)
+
+
+### Bug Fixes
+
+* added prop into EventParticipantsButton.stories ([1aaa453](https://github.com/selfcommunity/community-js/commit/1aaa45373bd55ba8f2681648eeae076114703a4b))
+* dependencies ([c2e095a](https://github.com/selfcommunity/community-js/commit/c2e095aa5e1f3de6dd1026ae52d0070af8e120be))
+* dependencies ([bfb228f](https://github.com/selfcommunity/community-js/commit/bfb228fe482d247b87605a57e7de34faf7087214))
+* EventInfoDetails ([d869110](https://github.com/selfcommunity/community-js/commit/d8691100a6e3d5a4ea3f81f456b880938e3db324))
+* initial livestream ([f3a0751](https://github.com/selfcommunity/community-js/commit/f3a0751ad804366a9a1bf466b76cbe9bc87d688d))
+* initial livestream ([d81f1b7](https://github.com/selfcommunity/community-js/commit/d81f1b7640e34f1fd85ab2720b364f612cb4a505))
+* livestream ([89c9e54](https://github.com/selfcommunity/community-js/commit/89c9e546bdab64e18d2897f2d785e924faec64c9))
+* livestream ([6813faf](https://github.com/selfcommunity/community-js/commit/6813faf43ac23f57ac2a9d002b688d2da16cf4e9))
+* livestream ([4aad356](https://github.com/selfcommunity/community-js/commit/4aad356dea12e1e770258172598ac85d6fc5767c))
+* livestream ([6bad845](https://github.com/selfcommunity/community-js/commit/6bad845bb3e4e8d7a774600bb7ac97ca0da372e1))
+* livestream ([def85a6](https://github.com/selfcommunity/community-js/commit/def85a6afbf1bb50292fffbeaf416006d77bb2f4))
+* livestream ([22f7eda](https://github.com/selfcommunity/community-js/commit/22f7eda3dd11e302bb04512f674fdfb20db335ae))
+* livestream ([1a40790](https://github.com/selfcommunity/community-js/commit/1a407906414b46407ca61f04e60d098c9629a7ab))
+* livestream ([eafaa82](https://github.com/selfcommunity/community-js/commit/eafaa824d1092cfd97a73b68382c36cf8d667b1e))
+* livestream ([eacb6d1](https://github.com/selfcommunity/community-js/commit/eacb6d1c49dea4722a28d9e379466d62cf45e0b8))
+* livestream ([9378cc2](https://github.com/selfcommunity/community-js/commit/9378cc26c55c25c3a60c09e886d3d9bf0eb9f0ae))
+* livestream ([70d8372](https://github.com/selfcommunity/community-js/commit/70d8372a4c969d89813452a235e3fd30d7c366b4))
+* livestream ([18ef561](https://github.com/selfcommunity/community-js/commit/18ef561c17ef54f424602baf8e2b82e6ba8fa417))
+* livestream ([ff1cbb8](https://github.com/selfcommunity/community-js/commit/ff1cbb873c51c864c4dc38bd5bc6a42924502105))
+* livestream ([92b0f7e](https://github.com/selfcommunity/community-js/commit/92b0f7e4574365b6e08eb8218a430fb9c46b7957))
+* livestream ([5ac9b4c](https://github.com/selfcommunity/community-js/commit/5ac9b4cde6b1ba2228ca8cf87f95214894f99ae3))
+* livestream ([b377001](https://github.com/selfcommunity/community-js/commit/b37700156ff3d2effee800d85fd97ee72bde8ef1))
+* livestream ([1147934](https://github.com/selfcommunity/community-js/commit/11479345459d7fd0ac3f08c77b7379d795d779f0))
+* livestream ([50f493b](https://github.com/selfcommunity/community-js/commit/50f493b7b374215a995f1cd2879600fa4103e8ed))
+* livestream ([b4f0ebd](https://github.com/selfcommunity/community-js/commit/b4f0ebd98a2318650727677e1a08bc439ee6546f))
+* livestream ([a15c02f](https://github.com/selfcommunity/community-js/commit/a15c02f7dbe96b5eaaab60a04384a1cb928ba9b5))
+* livestream ([9139df7](https://github.com/selfcommunity/community-js/commit/9139df75d054dfcb1a6664f39fb146a16e69e77f))
+* livestream ([67c67cb](https://github.com/selfcommunity/community-js/commit/67c67cb8d1e28b44cbcd6e767080a394e74cd12f))
+* livestream ([b3df735](https://github.com/selfcommunity/community-js/commit/b3df7359d334426f09c6619630f1ade4a8ca462a))
+* livestream ([71d006b](https://github.com/selfcommunity/community-js/commit/71d006b642183eeda860f21772789a3cdf0bd3d7))
+* livestream ([f5535c1](https://github.com/selfcommunity/community-js/commit/f5535c161bfe9e634337e41ef22ed72389583557))
+* livestream ([ef2116f](https://github.com/selfcommunity/community-js/commit/ef2116fdbb4bc02009993809eb41072252903e8d))
+* livestream ([37d2561](https://github.com/selfcommunity/community-js/commit/37d2561218ed54bcbfc7e8725dd39ef7196e78d8))
+* livestream ([d9f1c98](https://github.com/selfcommunity/community-js/commit/d9f1c989b2f3f32c19475b11cb193ef5adf46b1a))
+* livestream ([e96ce30](https://github.com/selfcommunity/community-js/commit/e96ce30c08d0c7deca161d3e18c89ba72682e10b))
+* livestream ([6d6f23c](https://github.com/selfcommunity/community-js/commit/6d6f23c5d7ba6488113562e65a53f8fbf3983dcc))
+* livestream ([1377ebf](https://github.com/selfcommunity/community-js/commit/1377ebf0d7cf56fae914c2af5ae96d8161350d51))
+* livestream ([619ae76](https://github.com/selfcommunity/community-js/commit/619ae76fd237be7bad9bbec0afdc3052bf662d31))
+* livestream ([594e1c3](https://github.com/selfcommunity/community-js/commit/594e1c3659025a7d587edc55108ba527ca1f753d))
+* livestream ([44ad31b](https://github.com/selfcommunity/community-js/commit/44ad31b8ba204773f6451975523f8277fe265538))
+* livestream ([a5b9329](https://github.com/selfcommunity/community-js/commit/a5b9329f7b8b578f583653c6aa8e4478d422d9fa))
+* livestream ([6920be3](https://github.com/selfcommunity/community-js/commit/6920be38b7f3c7cf5e5e3dffd5033d0da8771dac))
+* livestream ([5edaa84](https://github.com/selfcommunity/community-js/commit/5edaa8489f5accf087793e060bc57fd58c1889c3))
+* livestream ([9e7d4f2](https://github.com/selfcommunity/community-js/commit/9e7d4f293b64190ed520194ab1ff4d381d9a443e))
+* livestream ([111eeae](https://github.com/selfcommunity/community-js/commit/111eeae0c2a9809edcc1b14ad8dbe0c8f34e2f08))
+* livestream ([b46f765](https://github.com/selfcommunity/community-js/commit/b46f7651c9c88ea875cf2fa27ac297237451421e))
+* livestream ([7feb3ba](https://github.com/selfcommunity/community-js/commit/7feb3ba3a18b863c53781dac8d12dbd026188b6a))
+* livestream ([c3d1a0e](https://github.com/selfcommunity/community-js/commit/c3d1a0e75bd37545c0cb55355b933f771efc17c1))
+* livestream ([621d293](https://github.com/selfcommunity/community-js/commit/621d29305b2c13b28bf1dc777794168f5b55341e))
+* livestream ([16759e7](https://github.com/selfcommunity/community-js/commit/16759e76a397437c5f9c01574a8d95fc396cd7ba))
+* livestream ([f1636e8](https://github.com/selfcommunity/community-js/commit/f1636e856c2e78e5040a868ea0bf161fc2dc9384))
+* livestream ([8da590e](https://github.com/selfcommunity/community-js/commit/8da590ef46d1063cc016fc6ba53eac91e0946f67))
+* livestream ([6beed7b](https://github.com/selfcommunity/community-js/commit/6beed7be1014314b58f48fc86d4f62c2729255aa))
+* livestream ([3cc5749](https://github.com/selfcommunity/community-js/commit/3cc5749afda55ae8185f98c8b7eb5174171720ef))
+* livestream ([835216c](https://github.com/selfcommunity/community-js/commit/835216ce6c38dd39d5fa480e472759b18b27b5bf))
+* livestream ([646a4e6](https://github.com/selfcommunity/community-js/commit/646a4e671fa5ab5cd1253155eba1bc521a4a9172))
+* livestream ([7fb821d](https://github.com/selfcommunity/community-js/commit/7fb821dc2dd6cbb574b801ed216272f40573868e))
+* livestream ([a6ba6af](https://github.com/selfcommunity/community-js/commit/a6ba6af20e8a5422b7c3658c8f4faa1bf436a57b))
+* livestream ([c618a19](https://github.com/selfcommunity/community-js/commit/c618a19c29446456c4d300cde6303a16c825c8b2))
+* livestream ([6f16326](https://github.com/selfcommunity/community-js/commit/6f1632698e7c00d3f3019cec12292d6044f95412))
+* livestream ([1cada61](https://github.com/selfcommunity/community-js/commit/1cada61139a8a64c33929126bbaae0908c7c3393))
+* livestream ([9e5f413](https://github.com/selfcommunity/community-js/commit/9e5f413f97ef3a471b3368b0dc79f450d0d0d163))
+* livestream ([d6c209b](https://github.com/selfcommunity/community-js/commit/d6c209b1ff2f23f4bb3176b6c4d33703c6fedd77))
+* livestream ([7b2ebd8](https://github.com/selfcommunity/community-js/commit/7b2ebd80ef47544cbc327a89eba27bcadb5375e4))
+* livestream ([f6ee43d](https://github.com/selfcommunity/community-js/commit/f6ee43d4802a4f82f623f0ef2311822ec02b1ba1))
+* livestream ([e4b8e4d](https://github.com/selfcommunity/community-js/commit/e4b8e4d17853be9a01796ee60bd278cb737557d3))
+* livestream ([c522b53](https://github.com/selfcommunity/community-js/commit/c522b531c9e91cd58db906783e7968a1bdb2534f))
+* livestream ([6f82d9e](https://github.com/selfcommunity/community-js/commit/6f82d9e7da6e2e8746fbe02a8e33c899ae3c2807))
+* livestream ([d51dfa7](https://github.com/selfcommunity/community-js/commit/d51dfa70e07225a1af3adc0474cc66ce009ec6d2))
+* livestream ([d960f5f](https://github.com/selfcommunity/community-js/commit/d960f5f8c5ffab0b2597350f3c659ab5f71701c2))
+* livestream ([cd0587c](https://github.com/selfcommunity/community-js/commit/cd0587cc8945595ad07c41ca91c93d9a89072761))
+* livestream ([5501bae](https://github.com/selfcommunity/community-js/commit/5501baead47dd4449ab5abde1917050e24480219))
+* livestream assets, resolution ([b9efade](https://github.com/selfcommunity/community-js/commit/b9efade9dfb276968fa11b829146ba2dc5479ea1))
+* livestream assets, resolution ([b7c31d2](https://github.com/selfcommunity/community-js/commit/b7c31d2bf6941f7f7f84a64dc9893b8a779080c7))
+* livestream ban user ([b1501da](https://github.com/selfcommunity/community-js/commit/b1501dab527231b0f26b668572a1756e768714f2))
+* liveStream check status ([3ddd8a7](https://github.com/selfcommunity/community-js/commit/3ddd8a7e8b747acd07169b7ce64f1e68e353121f))
+* liveStream check status ([31c5d4a](https://github.com/selfcommunity/community-js/commit/31c5d4a892e2597872e52468f26d751a53c9a56c))
+* livestream copy link ([42a8b35](https://github.com/selfcommunity/community-js/commit/42a8b35a9b4d67d683f7f31a7b73f171f7b2ac74))
+* livestream hideParticipantsList ([ecb5f7d](https://github.com/selfcommunity/community-js/commit/ecb5f7d015da188e286de31c362afc266f257152))
+* livestream in progress ([21f11ae](https://github.com/selfcommunity/community-js/commit/21f11ae69c2de4f60c87947012b0affb4593b250))
+* livestream in progress ([e7e0575](https://github.com/selfcommunity/community-js/commit/e7e0575714277f3ed0fd8829ad02cf37f2d8f60c))
+* livestream in progress - fix deps - remove webpack-atoms (use fiber) and conflict with livekit deps ([68ed5ba](https://github.com/selfcommunity/community-js/commit/68ed5ba4394740787bfd89b1e7d195f9ad2954d4))
+* livestream slug ([10c97ee](https://github.com/selfcommunity/community-js/commit/10c97eed1af6388c97e7b97fb5760e3e9d42f7d2))
+* liveStreamForm re-enable button on submit error ([b1f5f50](https://github.com/selfcommunity/community-js/commit/b1f5f50d50d43ab6cfef94d0ad8ae3589fa1233e))
+* update react-ui deps -> react-lazyload ([d492ec9](https://github.com/selfcommunity/community-js/commit/d492ec98f5ba4dd5b7272578012d96f25d6f62fd))
+
+
+
+
+
+## [0.10.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.1...@selfcommunity/react-ui@0.10.5-alpha.2) (2024-12-30)
+
+
+### Bug Fixes
+
+* feedObject comments pagination ([c476e6b](https://github.com/selfcommunity/community-js/commit/c476e6bab81829bed84571e1370da6813a3b95f3))
+* link in post target 'blank' and display inline ([2b7d90d](https://github.com/selfcommunity/community-js/commit/2b7d90d25d10bb607eb8140d2c7ce6b67ca195d5))
+* load video (problem with lazy load in the pwa preview container) ([19534d5](https://github.com/selfcommunity/community-js/commit/19534d55131093f9c9967951636f260b6fde93c9))
+* scrollContainer stories ([902ee0f](https://github.com/selfcommunity/community-js/commit/902ee0f4af2c9f0c1dd5dfd21edde857d257465c))
+* sort media in composer ([243fcfb](https://github.com/selfcommunity/community-js/commit/243fcfbfa752270ef78334a7b7fd7689983601bf))
+
+
+
+
+
+## [0.10.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.5-alpha.0...@selfcommunity/react-ui@0.10.5-alpha.1) (2024-12-19)
+
+
+### Performance Improvements
+
+* added it translation for cancel action in event form datetime pickers ([d7507bc](https://github.com/selfcommunity/community-js/commit/d7507bcd69f89296a67ce4f9d62859d93ea9e85b))
+
+
+
+
+
+## [0.10.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4...@selfcommunity/react-ui@0.10.5-alpha.0) (2024-12-19)
+
+
+### Bug Fixes
+
+* removed account delete button for community creator. Linear issue: https://linear.app/quentral/issue/QUE-1058/inibire-la-possibilita-di-cancellare-lutente-che-ha-creato-la ([460e9bb](https://github.com/selfcommunity/community-js/commit/460e9bbac899cef3d7b2ee55d88fd975bbf0e918))
+
+
+
+
+
 ## [0.10.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.10.4-alpha.17...@selfcommunity/react-ui@0.10.4) (2024-12-17)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

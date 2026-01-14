@@ -1,7 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Stack, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Avatar, Box, Stack, Typography, styled, Icon} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCNotificationUnDeletedForType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';

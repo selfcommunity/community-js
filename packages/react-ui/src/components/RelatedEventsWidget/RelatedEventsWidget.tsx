@@ -198,10 +198,7 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
     <Root className={classes.root} {...rest}>
       <CardContent className={classes.content}>
         <Stack className={classes.header}>
-          <Button
-            component={Link}
-            to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, {id: scUserContext.user?.id})}
-            className={classes.avatarWrapper}>
+          <Button component={Link} to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scEvent.managed_by)} className={classes.avatarWrapper}>
             <Avatar variant="rounded" src={scEvent.managed_by.avatar} alt={scEvent.managed_by.username} className={classes.avatar} />
           </Button>
           <Typography variant="h4">
@@ -228,34 +225,32 @@ export default function RelatedEventsWidget(inProps: RelatedEventsWidgetProps) {
         </CardActions>
       )}
 
-      {openDialog && (
-        <DialogRoot
-          className={classes.dialogRoot}
-          title={intl.formatMessage(messages.title, {user: scEvent.managed_by.username})}
-          onClose={handleToggleDialogOpen}
-          open={openDialog}
-          {...dialogProps}>
-          <InfiniteScroll
-            dataLength={state.results.length}
-            next={handleNext}
-            hasMoreNext={Boolean(state.next)}
-            loaderNext={<EventSkeleton elevation={0} {...eventComponentProps} />}
-            className={classes.infiniteScroll}
-            endMessage={
-              <Typography className={classes.endMessage}>
-                <FormattedMessage id="ui.relatedEventsWidget.noMoreResults" defaultMessage="ui.eventMembersWidget.noMoreResults" />
-              </Typography>
-            }>
-            <List>
-              {state.results.map((event: SCEventType) => (
-                <ListItem key={event.id}>
-                  <Event elevation={0} event={event} {...eventComponentProps} />
-                </ListItem>
-              ))}
-            </List>
-          </InfiniteScroll>
-        </DialogRoot>
-      )}
+      <DialogRoot
+        className={classes.dialogRoot}
+        title={intl.formatMessage(messages.title, {user: scEvent.managed_by.username})}
+        onClose={handleToggleDialogOpen}
+        open={openDialog}
+        {...dialogProps}>
+        <InfiniteScroll
+          dataLength={state.results.length}
+          next={handleNext}
+          hasMoreNext={Boolean(state.next)}
+          loaderNext={<EventSkeleton elevation={0} {...eventComponentProps} />}
+          className={classes.infiniteScroll}
+          endMessage={
+            <Typography className={classes.endMessage}>
+              <FormattedMessage id="ui.relatedEventsWidget.noMoreResults" defaultMessage="ui.eventMembersWidget.noMoreResults" />
+            </Typography>
+          }>
+          <List>
+            {state.results.map((event: SCEventType) => (
+              <ListItem key={event.id}>
+                <Event elevation={0} event={event} {...eventComponentProps} />
+              </ListItem>
+            ))}
+          </List>
+        </InfiniteScroll>
+      </DialogRoot>
     </Root>
   );
 }

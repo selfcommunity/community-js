@@ -12,7 +12,8 @@ import {
   SCGroupType,
   SCMediaType,
   SCPollType,
-  SCTagType
+  SCTagType,
+  SCUserAutocompleteType
 } from '@selfcommunity/types';
 import {Endpoints, formatHttpErrorCode, http, HttpResponse} from '@selfcommunity/api-services';
 import {
@@ -25,7 +26,6 @@ import {
   useSCUser
 } from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
-import Icon from '@mui/material/Icon';
 import {
   Alert,
   AlertTitle,
@@ -39,9 +39,11 @@ import {
   IconButton,
   Slide,
   Theme,
-  useMediaQuery
+  useMediaQuery,
+  Icon,
+  styled,
+  useTheme
 } from '@mui/material';
-import {styled, useTheme} from '@mui/material/styles';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_POLL} from '../../constants/Composer';
 import {MEDIA_TYPE_SHARE} from '../../constants/Media';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -67,7 +69,8 @@ import {PREFIX} from './constants';
 import ComposerSkeleton from './Skeleton';
 import CloseLayer from './Layer/CloseLayer';
 import BackdropScrollDisabled from '../../shared/BackdropScrollDisabled';
-import {disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks} from 'body-scroll-lock';
+import {clearAllBodyScrollLocks} from 'body-scroll-lock';
+import ScheduledLayer from './Layer/ScheduledLayer';
 
 const DialogTransition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -87,6 +90,8 @@ const classes = {
   attributes: `${PREFIX}-attributes`,
   medias: `${PREFIX}-medias`,
   actions: `${PREFIX}-actions`,
+  selectedAction: `${PREFIX}-selected-action`,
+  actionSelectedIcon: `${PREFIX}-action-selected-icon`,
   layerTransitionRoot: `${PREFIX}-layer-transition-root`
 };
 
@@ -98,7 +103,7 @@ const Root = styled(Dialog, {
 const LayerTransitionRoot = styled(Slide, {
   name: PREFIX,
   slot: 'LayerTransitionRoot'
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scroll'> {
   /**
@@ -128,9 +133,11 @@ export interface ComposerProps extends Omit<DialogProps, 'defaultValue' | 'scrol
     group?: SCGroupType;
     audience?: string;
     addressing?: SCTagType[];
+    recipients?: any;
     medias?: SCMediaType[];
     poll?: SCPollType;
     location?: string;
+    scheduled_at?: string;
   };
   /**
    * Media objects available
@@ -167,15 +174,17 @@ const COMPOSER_INITIAL_STATE = {
   html: '',
   htmlError: null,
   categories: [],
+  categoriesError: null,
   group: null,
   event: null,
-  categoriesError: null,
   groupsError: null,
   addressing: null,
   addressingError: null,
+  recipients: [],
   medias: [],
   poll: null,
   location: null,
+  scheduled_at: null,
   error: null
 };
 
@@ -248,7 +257,6 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     EditorProps = {},
     onClose = null,
     onSuccess = null,
-    maxWidth,
     feedType,
     ...rest
   } = props;
@@ -266,7 +274,60 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [layer, setLayer] = useState<ComposerLayerType | null>();
   const [state, dispatch] = useReducer(reducer, {...COMPOSER_INITIAL_STATE, ...defaultValue, key: random()});
-  const {key, id, type, title, titleError, html, categories, event, group, addressing, audience, medias, poll, pollError, location, error} = state;
+  const {
+    key,
+    id,
+    type,
+    title,
+    titleError,
+    html,
+    categories,
+    categoriesError,
+    event,
+    group,
+    addressing,
+    addressingError,
+    recipients,
+    audience,
+    medias,
+    poll,
+    pollError,
+    location,
+    scheduled_at,
+    error
+  } = state;
+
+  //MEMO
+  const scheduledPostsEnabled = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED].value,
+    [preferences]
+  );
+  const addressingRequiredEnabled = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_POST_ADDRESSING_REQUIRED_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_POST_ADDRESSING_REQUIRED_ENABLED].value,
+    [preferences]
+  );
+  const categoryRequiredEnabled = useMemo(
+    () =>
+      preferences &&
+      SCPreferences.CONFIGURATIONS_POST_CATEGORY_REQUIRED_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_POST_CATEGORY_REQUIRED_ENABLED].value,
+    [preferences]
+  );
+  const usersTaggingEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.TAGGING) &&
+      SCPreferences.CONFIGURATIONS_POST_USER_ADDRESSING_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_POST_USER_ADDRESSING_ENABLED].value,
+    [preferences, features]
+  );
 
   const destructureFeedObject = (_feedObject) => {
     if (_feedObject.type === SCContributionType.POST) {
@@ -288,9 +349,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           event: _feedObject.event,
           group: _feedObject.group,
           addressing: _feedObject.addressing,
+          recipients: _feedObject.recipients,
           medias: _feedObject.medias,
           poll: _feedObject.poll,
-          location: _feedObject.location
+          location: _feedObject.location,
+          scheduled_at: _feedObject.scheduled_at
         }
       });
       setIsLoading(false);
@@ -322,9 +385,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       !isLoading &&
       ((type === SCContributionType.DISCUSSION && title.length > 0 && title.length < COMPOSER_TITLE_MAX_LENGTH) ||
         (type === SCContributionType.POST && (stripHtml(html).length > 0 || medias.length > 0 || hasPoll)) ||
-        (type === COMPOSER_TYPE_POLL && hasPoll))
+        (type === COMPOSER_TYPE_POLL && hasPoll)) &&
+      (!addressingRequiredEnabled || (addressing && addressing.length > 0) || (recipients && recipients.length > 0)) &&
+      (!categoryRequiredEnabled || (categories && categories.length > 0))
     );
-  }, [isLoading, type, title, html, medias, hasPoll]);
+  }, [isLoading, type, title, html, medias, hasPoll, addressing, recipients, addressingRequiredEnabled, categories, categoryRequiredEnabled]);
   const isIOS = useMemo(() => iOS(), []);
 
   // Load feed object
@@ -435,6 +500,18 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     dispatch({type: 'type', value});
   }, []);
 
+  const getAddressingError = (content) => {
+    const isMissing = addressingRequiredEnabled && !content.addressing?.length && !content.recipients?.length;
+
+    if (!isMissing) return null;
+
+    return usersTaggingEnabled ? (
+      <FormattedMessage id="ui.composer.addressingRecipients.error.missing" defaultMessage="ui.composer.addressingRecipients.error.missing" />
+    ) : (
+      <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
+    );
+  };
+
   const handleChangePoll = useCallback((content: ComposerContentType): void => {
     dispatch({
       type: 'multiple',
@@ -443,7 +520,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         pollError:
           content.poll.title.length > COMPOSER_TITLE_MAX_LENGTH
             ? {titleError: <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />}
-            : null
+            : null,
+        addressingError: getAddressingError(content)
       }
     });
   }, []);
@@ -456,6 +534,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         titleError:
           content.title.length > COMPOSER_TITLE_MAX_LENGTH ? (
             <FormattedMessage id="ui.composer.title.error.maxlength" defaultMessage="ui.composer.title.error.maxlength" />
+          ) : null,
+        addressingError: getAddressingError(content),
+        categoriesError:
+          categoryRequiredEnabled && content.categories.length === 0 ? (
+            <FormattedMessage id="ui.composer.categories.error.missing" defaultMessage="ui.composer.categories.error.missing" />
           ) : null
       }
     });
@@ -465,13 +548,27 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     dispatch({
       type: 'multiple',
       value: {
-        ...content
+        ...content,
+        addressingError: getAddressingError(content),
+        categoriesError:
+          categoryRequiredEnabled && content.categories.length === 0 ? (
+            <FormattedMessage id="ui.composer.categories.error.missing" defaultMessage="ui.composer.categories.error.missing" />
+          ) : null
       }
     });
   }, []);
 
   const handleChangeCategories = useCallback((value: SCCategoryType[]) => {
-    dispatch({type: 'categories', value});
+    dispatch({
+      type: 'multiple',
+      value: {
+        categories: value,
+        categoriesError:
+          categoryRequiredEnabled && (!value || value.length === 0) ? (
+            <FormattedMessage id="ui.composer.categories.error.missing" defaultMessage="ui.composer.categories.error.missing" />
+          ) : null
+      }
+    });
     setLayer(null);
   }, []);
 
@@ -490,37 +587,63 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   );
 
   const handleChangeAudience = useCallback(
-    (value: SCTagType[] | SCGroupType | SCEventType | null) => {
+    (value: SCTagType[] | SCGroupType | SCEventType | SCUserAutocompleteType[] | string | null) => {
       if (group || (value && Object.prototype.hasOwnProperty.call(value, 'emotional_image_position'))) {
         dispatch({type: 'group', value});
       } else if (event || (value && Object.prototype.hasOwnProperty.call(value, 'recurring'))) {
         dispatch({type: 'event', value});
+      } else if (
+        (value && Array.isArray(value) && value.some((item) => typeof item === 'object' && !('color' in item))) ||
+        (value === null && Array.isArray(recipients) && recipients.length > 0)
+      ) {
+        dispatch({
+          type: 'multiple',
+          value: {
+            recipients: value,
+            addressing: [],
+            addressingError:
+              addressingRequiredEnabled && !value ? (
+                <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
+              ) : null
+          }
+        });
       } else {
-        dispatch({type: 'addressing', value});
+        dispatch({
+          type: 'multiple',
+          value: {
+            addressing: value,
+            recipients: [],
+            addressingError:
+              addressingRequiredEnabled && !value ? (
+                <FormattedMessage id="ui.composer.addressing.error.missing" defaultMessage="ui.composer.addressing.error.missing" />
+              ) : null
+          }
+        });
       }
       setLayer(null);
     },
-    [group]
+    [group, event, recipients]
   );
 
-  const handleAddAudienceLayer = useCallback(
-    () =>
-      handleAddLayer({
-        name: 'audience',
-        Component: AudienceLayer,
-        ComponentProps: {
-          onClose: handleRemoveLayer,
-          onSave: handleChangeAudience,
-          defaultValue:
-            group || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'emotional_image_position'))
-              ? group
-              : event || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'recurring'))
-              ? event
-              : addressing
-        }
-      }),
-    [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing, event, group]
-  );
+  const handleAddAudienceLayer = useCallback(() => {
+    const defaultValue =
+      group || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'emotional_image_position'))
+        ? group
+        : event || (addressing && Object.prototype.hasOwnProperty.call(addressing, 'recurring'))
+        ? event
+        : Array.isArray(recipients) && recipients.some((item) => typeof item === 'object' && item !== null && !('color' in item))
+        ? recipients
+        : addressing;
+    handleAddLayer({
+      name: 'audience',
+      Component: AudienceLayer,
+      ComponentProps: {
+        onClose: handleRemoveLayer,
+        onSave: handleChangeAudience,
+        defaultValue: defaultValue
+      }
+    });
+  }, [handleAddLayer, handleRemoveLayer, handleChangeAudience, addressing, event, group, recipients]);
 
   const handleChangeLocation = useCallback((value: SCContributionLocation | null) => {
     dispatch({type: 'location', value});
@@ -539,6 +662,25 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         }
       }),
     [handleAddLayer, handleRemoveLayer, handleChangeLocation, location]
+  );
+
+  const handleChangeScheduled = useCallback((value: string | null) => {
+    dispatch({type: 'scheduled_at', value});
+    setLayer(null);
+  }, []);
+
+  const handleAddScheduledLayer = useCallback(
+    () =>
+      handleAddLayer({
+        name: 'scheduled_at',
+        Component: ScheduledLayer,
+        ComponentProps: {
+          onClose: handleRemoveLayer,
+          onSave: handleChangeScheduled,
+          defaultValue: scheduled_at
+        }
+      }),
+    [handleAddLayer, handleRemoveLayer, handleChangeScheduled, scheduled_at]
   );
 
   const handleChangeMedias = useCallback((value: SCMediaType[] | null) => {
@@ -580,7 +722,14 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const handleChangeAttributes = useCallback((content: Omit<ComposerContentType, 'title' | 'html'>): void => {
     dispatch({
       type: 'multiple',
-      value: {...content}
+      value: {
+        ...content,
+        addressingError: getAddressingError(content),
+        categoriesError:
+          categoryRequiredEnabled && content.categories.length === 0 ? (
+            <FormattedMessage id="ui.composer.categories.error.missing" defaultMessage="ui.composer.categories.error.missing" />
+          ) : null
+      }
     });
   }, []);
 
@@ -593,12 +742,18 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         case 'addressing':
           handleAddAudienceLayer();
           break;
+        case 'recipients':
+          handleAddAudienceLayer();
+          break;
         case 'location':
           handleAddLocationLayer();
           break;
+        case 'scheduled_at':
+          handleAddScheduledLayer();
+          break;
       }
     },
-    [handleAddCategoryLayer, handleAddAudienceLayer, handleAddLocationLayer]
+    [handleAddCategoryLayer, handleAddAudienceLayer, handleAddLocationLayer, handleAddScheduledLayer]
   );
 
   const handleSubmit = useCallback(
@@ -621,14 +776,25 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         medias: medias.map((m) => m.id),
         categories: _categories.filter((item, index) => _categories.indexOf(item) === index)
       };
-      if ((preferences[SCPreferences.ADDONS_POLLS_ENABLED].value || UserUtils.isStaff(scUserContext.user)) && hasPoll) {
+      if (
+        (preferences[SCPreferences.ADDONS_POLLS_ENABLED].value ||
+          UserUtils.isStaff(scUserContext.user) ||
+          UserUtils.isPublisher(scUserContext.user)) &&
+        hasPoll
+      ) {
         data.poll = poll;
       }
       if (preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && location) {
         data.location = location;
       }
+      if (preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED].value && scheduled_at) {
+        data.scheduled_at = scheduled_at;
+      }
       if (features.includes(SCFeatureName.TAGGING) && addressing !== null) {
         data.addressing = addressing.map((t) => t.id);
+      }
+      if (features.includes(SCFeatureName.TAGGING) && recipients !== null) {
+        data.recipients = recipients.map((r) => (typeof r === 'string' ? r : r.username));
       }
       if (
         features.includes(SCFeatureName.TAGGING) &&
@@ -682,14 +848,30 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         })
         .then(() => setIsSubmitting(false));
     },
-    [scUserContext.user, feedObjectType, id, type, title, html, categories, event, group, addressing, audience, medias, poll, location, hasPoll]
+    [
+      scUserContext.user,
+      feedObjectType,
+      id,
+      type,
+      title,
+      html,
+      categories,
+      event,
+      group,
+      addressing,
+      recipients,
+      audience,
+      medias,
+      poll,
+      location,
+      scheduled_at,
+      hasPoll
+    ]
   );
 
   //edited here
   const handleClose = useCallback(
     (e: SyntheticEvent, reason?: string): void => {
-      console.log(e);
-      console.log(reason);
       if (unloadRef.current) {
         window.onbeforeunload = null;
       }
@@ -767,8 +949,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <ContentPoll
             key={key}
             onChange={handleChangePoll}
-            value={{html, event, group, addressing, medias, poll, location}}
-            error={pollError}
+            value={{html, event, group, addressing, recipients, medias, poll, location, scheduled_at}}
+            error={{pollError, categoriesError, addressingError}}
             disabled={isSubmitting}
           />
         );
@@ -776,10 +958,11 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         return (
           <ContentDiscussion
             key={key}
-            value={{title, html, categories, event, group, addressing, medias, poll, location}}
-            error={{titleError, error}}
+            value={{title, html, categories, event, group, addressing, recipients, medias, poll, location, scheduled_at}}
+            error={{titleError, categoriesError, addressingError, error}}
             onChange={handleChangeDiscussion}
             disabled={isSubmitting}
+            isContentSwitchButtonVisible={!canSubmit && !editMode}
             EditorProps={{
               toolbar: true,
               uploadImage: true,
@@ -791,8 +974,8 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         return (
           <ContentPost
             key={key}
-            value={{html, categories, event, group, addressing, medias, poll, location}}
-            error={{error}}
+            value={{html, categories, event, group, addressing, recipients, medias, poll, location, scheduled_at}}
+            error={{error, categoriesError, addressingError}}
             onChange={handleChangePost}
             disabled={isSubmitting}
             EditorProps={{
@@ -812,14 +995,18 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     event,
     group,
     addressing,
+    recipients,
     medias,
     poll,
     pollError,
     location,
+    scheduled_at,
     error,
     handleChangePoll,
     handleChangePost,
-    isSubmitting
+    isSubmitting,
+    canSubmit,
+    editMode
   ]);
 
   if (!scUserContext.user && !(scUserContext.loading && open)) {
@@ -830,7 +1017,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     <Root
       ref={dialogRef}
       TransitionComponent={DialogTransition}
-      BackdropComponent={BackdropScrollDisabled}
+      slots={{backdrop: BackdropScrollDisabled}}
       onClose={handleClose}
       {...rest}
       disableEscapeKeyDown
@@ -844,12 +1031,16 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
             <Icon>close</Icon>
           </IconButton>
           <LoadingButton size="small" type="submit" color="secondary" variant="contained" disabled={!canSubmit} loading={isSubmitting}>
-            <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
+            {scheduledPostsEnabled && !scheduled_at ? (
+              <FormattedMessage id="ui.composer.submit.now" defaultMessage="ui.composer.submit.now" />
+            ) : (
+              <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
+            )}
           </LoadingButton>
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Attributes
-            value={{categories, event, group, addressing, location}}
+            value={{categories, event, group, addressing, recipients, location}}
             className={classes.attributes}
             onChange={handleChangeAttributes}
             onClick={handleClickAttributes}
@@ -882,18 +1073,27 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
                 />
               );
             })}
-          <IconButton disabled={isSubmitting} onClick={handleAddCategoryLayer}>
+          <IconButton disabled={isSubmitting} onClick={handleAddCategoryLayer} color={categories?.length !== 0 ? 'primary' : 'default'}>
             <Icon>category</Icon>
           </IconButton>
           <IconButton
+            color={
+              group || event || (addressing !== null && addressing?.length > 0) || (recipients !== null && recipients?.length > 0)
+                ? 'primary'
+                : 'default'
+            }
             disabled={isSubmitting || !features.includes(SCFeatureName.TAGGING) || Boolean(feedObject?.group) || Boolean(feedObject?.event)}
             onClick={handleAddAudienceLayer}>
-            {(!group && addressing === null) || (!event && addressing === null) || addressing?.length === 0 ? (
-              <Icon>public</Icon>
-            ) : group ? (
+            {group ? (
               <Icon>groups</Icon>
             ) : event ? (
               <Icon>CalendarIcon</Icon>
+            ) : addressing === null || addressing?.length === 0 ? (
+              addressingRequiredEnabled ? (
+                <Icon>label</Icon>
+              ) : (
+                <Icon>public</Icon>
+              )
             ) : (
               <Icon>label</Icon>
             )}
@@ -901,6 +1101,21 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           {preferences[SCPreferences.ADDONS_POST_GEOLOCATION_ENABLED].value && (
             <IconButton disabled={isSubmitting} onClick={handleAddLocationLayer} color={location !== null ? 'primary' : 'default'}>
               <Icon>add_location_alt</Icon>
+            </IconButton>
+          )}
+          {preferences[SCPreferences.CONFIGURATIONS_SCHEDULED_POSTS_ENABLED].value && (
+            <IconButton
+              disabled={isSubmitting || (Boolean(feedObject?.scheduled_at) && Boolean(!feedObject?.draft))}
+              onClick={handleAddScheduledLayer}
+              color={scheduled_at !== null ? 'primary' : 'default'}>
+              <Box className={classes.selectedAction}>
+                <Icon>access_time</Icon>
+                {scheduled_at !== null && (
+                  <Icon color="primary" className={classes.actionSelectedIcon}>
+                    fiber_manual_record
+                  </Icon>
+                )}
+              </Box>
             </IconButton>
           )}
         </DialogActions>

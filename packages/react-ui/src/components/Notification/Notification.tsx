@@ -1,6 +1,4 @@
 import React, {useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import CardContent from '@mui/material/CardContent';
 import CommentNotification from './Comment';
 import UserFollowNotification from './UserFollow';
 import UndeletedForNotification from './UndeletedFor';
@@ -14,11 +12,12 @@ import KindlyNoticeForNotification from './KindlyNoticeFor';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import KindlyNoticeFlagNotification from './KindlyNoticeFlag';
 import VoteUpNotification from './VoteUp';
-import Icon from '@mui/material/Icon';
+import EventNotification from './Event/Event';
+import LiveStreamNotification from './LiveStream/LiveStream';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {getContribution, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import ContributionFollowNotification from './ContributionFollow';
-import {Avatar, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Tooltip} from '@mui/material';
+import {Avatar, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Tooltip, styled, CardContent, Icon} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
@@ -42,7 +41,7 @@ import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../shared/UserAvatar';
 import {PREFIX} from './constants';
 import GroupNotification from './Group';
-import EventNotification from './Event/Event';
+import CourseNotification from './Course';
 
 const messages = defineMessages({
   receivePrivateMessage: {
@@ -73,7 +72,7 @@ const Root = styled(Widget, {
 export interface NotificationProps extends CardProps, VirtualScrollerItemProps {
   /**
    * Id of the UserNotification
-   * @default `notification_<notificationObject.sid>`
+   * @default `notification_notificationObject.sid`
    */
   id?: string;
 
@@ -486,6 +485,17 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT
     ) {
       return <EventNotification notificationObject={n} key={i} />;
+    } else if (
+      n.type === SCNotificationTypologyType.USER_ADDED_TO_COURSE ||
+      n.type === SCNotificationTypologyType.MANAGER_ADDED_TO_COURSE ||
+      n.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON ||
+      n.type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE ||
+      n.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE ||
+      n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE
+    ) {
+      return <CourseNotification notificationObject={n} key={i} />;
+    } else if (n.type === SCNotificationTypologyType.LIVE_STREAM_STARTED) {
+      return <LiveStreamNotification notificationObject={n} key={i} />;
     }
     return null;
   }

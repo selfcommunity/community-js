@@ -1,13 +1,25 @@
 import {asUploadButton} from '@rpldy/upload-button';
 import React, {forwardRef, ReactNode, useContext, useState} from 'react';
-import {Alert, AlertTitle, Box, CardContent, CardHeader, Fade, IconButton, ImageListItemBar, List, ListItem, Typography} from '@mui/material';
-import {ButtonProps} from '@mui/material/Button/Button';
-import Icon from '@mui/material/Icon';
+import {
+  Alert,
+  AlertTitle,
+  Box,
+  CardContent,
+  CardHeader,
+  Fade,
+  IconButton,
+  ImageListItemBar,
+  List,
+  ListItem,
+  Typography,
+  ButtonProps,
+  Icon,
+  styled
+} from '@mui/material';
 import ChunkedUploady from '@rpldy/chunked-uploady';
 import {SCMessageFileType, SCPrivateMessageUploadThumbnailType} from '@selfcommunity/types';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCContext, SCContextType} from '@selfcommunity/react-core';
-import {styled} from '@mui/material/styles';
 import {SCMessageChunkType} from '../../../types/media';
 import Widget from '../../Widget';
 import MessageChunkUploader from '../../../shared/MessageChunkUploader';

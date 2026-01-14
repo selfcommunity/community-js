@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useReducer, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, SuggestionService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {
@@ -148,10 +147,12 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
-  const followEnabled = useMemo(
+  const followOrConnectionEnabled = useMemo(
     () =>
-      SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
-      scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
+      (SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+        scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value) ||
+      (SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferencesContext.preferences &&
+        scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value),
     [scPreferencesContext.preferences]
   );
 
@@ -183,13 +184,13 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (scUserContext.user) {
+    if (scUserContext.user && followOrConnectionEnabled) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
       };
     }
-  }, [scUserContext.user]);
+  }, [scUserContext.user, followOrConnectionEnabled]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length <= limit && state.initialized) {
@@ -242,7 +243,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
   };
 
   // RENDER
-  if ((autoHide && !state.count && state.initialized) || !scUserContext.user) {
+  if ((autoHide && !state.count && state.initialized) || !scUserContext.user || !followOrConnectionEnabled) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {

@@ -1,4 +1,13 @@
 /**
+ * SCCustomMenu enum
+ */
+export enum SCCustomMenu {
+  BASE = 'base',
+  NOT_LOGGED = 'not_logged',
+  USER = 'user'
+}
+
+/**
  * SCCustomMenuItemType interface
  */
 export interface SCCustomMenuItemType {

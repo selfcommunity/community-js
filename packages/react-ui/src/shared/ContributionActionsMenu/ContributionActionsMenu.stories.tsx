@@ -18,13 +18,13 @@ export default {
     }
   },
   args: {
-    feedObjectId: 379, // 9,
+    feedObjectId: 22,
     feedObjectType: SCContributionType.POST
   }
 } as Meta<typeof ContributionActionsMenu>;
 
 const template = (args) => <ContributionActionsMenu {...args} />;
 
-export const Base: StoryObj<ContributionActionsMenu> = {
+export const Base: StoryObj<typeof ContributionActionsMenu> = {
   render: template
 };

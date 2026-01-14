@@ -1,7 +1,6 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
-import {Box, BoxProps, TextField, Typography} from '@mui/material';
+import {Box, BoxProps, TextField, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
 import {UserService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';

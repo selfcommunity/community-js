@@ -1,7 +1,5 @@
 import React, {ChangeEvent, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField, useMediaQuery, useTheme} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField, useMediaQuery, useTheme, Icon, styled} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
 import {Endpoints, formatHttpErrorCode, http, HttpResponse} from '@selfcommunity/api-services';

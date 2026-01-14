@@ -1,16 +1,11 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import {Alert, Box, IconButton, ImageList, ImageListItem, ImageListItemBar} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Alert, Box, IconButton, ImageList, ImageListItem, ImageListItemBar, styled, Typography, Button, CircularProgress, Icon} from '@mui/material';
 import {Endpoints, UserService} from '@selfcommunity/api-services';
 import {SCContext, SCContextType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog, {BaseDialogProps} from '../../../shared/BaseDialog';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
-import CircularProgress from '@mui/material/CircularProgress';
 import {scroll} from 'seamless-scroll-polyfill';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';

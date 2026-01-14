@@ -5,5 +5,16 @@ import ImagePlugin from './ImagePlugin';
 import MentionsPlugin from './MentionsPlugin';
 import OnChangePlugin from './OnChangePlugin';
 import HashtagPlugin from './HashtagPlugin';
+import MediaPlugin, {MediaPluginProps} from './MediaPlugin';
 
-export {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin, HashtagPlugin};
+export {
+  AutoLinkPlugin,
+  DefaultHtmlValuePlugin,
+  EmojiPlugin,
+  ImagePlugin,
+  MentionsPlugin,
+  OnChangePlugin,
+  HashtagPlugin,
+  MediaPlugin,
+  MediaPluginProps
+};

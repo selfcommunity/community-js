@@ -51,7 +51,12 @@ import WebhookService, {WebhookApiClient, WebhookApiClientInterface} from './ser
 import ReactionService, {ReactionApiClient, ReactionApiClientInterface} from './services/reactions';
 import GroupService, {GroupApiClient, GroupApiClientInterface} from './services/group';
 import EventService, {EventApiClient, EventApiClientInterface} from './services/event';
+import LiveStreamService, {LiveStreamApiClient, LiveStreamApiClientInterface} from './services/live_stream';
 import OnBoardingService, {OnBoardingApiClient, OnBoardingApiClientInterface} from './services/onboarding';
+import CourseService, {CourseApiClient, CourseApiClientInterface} from './services/course';
+import PaymentService, {PaymentApiClient, PaymentApiClientInterface} from './services/payment';
+import CommunityService, {CommunityApiClient, CommunityApiClientInterface} from './services/community';
+import ContactUsService, {ContactUsApiClient, ContactUsApiClientInterface} from './services/contact_us';
 
 /**
  * Types
@@ -102,6 +107,7 @@ import {
   FeedObjGetParams,
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
+  ScheduledFeedObjParams,
   FeedParams,
   LegalPageFilterParams,
   FeatureParams,
@@ -116,8 +122,27 @@ import {
   EventCreateParams,
   EventFeedParams,
   EventSearchParams,
+  LiveStreamCreateParams,
+  LiveStreamSearchParams,
+  LiveStreamRemoveParticipantParams,
   StartStepParams,
-  OnBoardingStep
+  OnBoardingStep,
+  CourseCreateParams,
+  CourseSearchParams,
+  CourseInfoViewType,
+  CourseInfoParams,
+  CourseLessonCommentsParams,
+  CourseUserRoleParams,
+  CourseUsersParams,
+  CourseDashboardUsersParams,
+  PaymentContentStatusParams,
+  PaymentContentStatus,
+  PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams,
+  PaymentOrderParams,
+  ContactUsRequestParams
 } from './types';
 
 /**
@@ -268,6 +293,7 @@ export {
   FeedObjGetParams,
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
+  ScheduledFeedObjParams,
   FeedParams,
   LegalPageFilterParams,
   FeatureParams,
@@ -291,9 +317,43 @@ export {
   EventService,
   EventApiClient,
   EventApiClientInterface,
+  LiveStreamService,
+  LiveStreamApiClient,
+  LiveStreamApiClientInterface,
+  LiveStreamCreateParams,
+  LiveStreamSearchParams,
+  LiveStreamRemoveParticipantParams,
   OnBoardingService,
   OnBoardingApiClientInterface,
   OnBoardingApiClient,
   StartStepParams,
-  OnBoardingStep
+  OnBoardingStep,
+  CourseCreateParams,
+  CourseSearchParams,
+  CourseInfoParams,
+  CourseInfoViewType,
+  CourseService,
+  CourseApiClientInterface,
+  CourseApiClient,
+  CourseLessonCommentsParams,
+  CourseUserRoleParams,
+  CourseUsersParams,
+  CourseDashboardUsersParams,
+  PaymentService,
+  PaymentApiClientInterface,
+  PaymentApiClient,
+  CommunityService,
+  CommunityApiClient,
+  CommunityApiClientInterface,
+  PaymentContentStatusParams,
+  PaymentContentStatus,
+  PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams,
+  PaymentOrderParams,
+  ContactUsRequestParams,
+  ContactUsService,
+  ContactUsApiClient,
+  ContactUsApiClientInterface
 };

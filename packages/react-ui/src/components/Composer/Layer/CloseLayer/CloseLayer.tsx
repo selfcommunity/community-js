@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import { FormattedMessage } from 'react-intl';
+import React, {ReactElement} from 'react';
+import {FormattedMessage} from 'react-intl';
 import {
   Box,
   BoxProps,
@@ -10,13 +10,13 @@ import {
   ListItemButton,
   ListItemText,
   Typography,
+  styled,
+  Icon,
+  DialogContent
 } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { ComposerLayerProps } from '../../../../types/composer';
-import Icon from '@mui/material/Icon';
-import DialogContent from '@mui/material/DialogContent';
+import {ComposerLayerProps} from '../../../../types/composer';
 import classNames from 'classnames';
-import { PREFIX } from '../../constants';
+import {PREFIX} from '../../constants';
 
 const classes = {
   root: `${PREFIX}-layer-close-root`,
@@ -33,35 +33,37 @@ export interface CloseLayerProps extends Omit<BoxProps, 'defaultValue'>, Compose
 
 const CloseLayer = React.forwardRef((props: CloseLayerProps, ref: React.Ref<unknown>): ReactElement => {
   // Props
-  const {className, onClose, onSave, defaultValue= [], ...rest} = props;
+  const {className, onClose, onSave, defaultValue = [], ...rest} = props;
 
-  return <Root ref={ref} className={classNames(className, classes.root)} {...rest}>
-    <DialogTitle className={classes.title}>
-      <IconButton onClick={onClose}>
-        <Icon>arrow_back</Icon>
-      </IconButton>
-      <Typography>
-        <FormattedMessage id="ui.composer.layer.close.title" defaultMessage="ui.composer.layer.close.title" />
-      </Typography>
-    </DialogTitle>
-    <DialogContent className={classes.content}>
-      <Typography>
-        <FormattedMessage id="ui.composer.layer.close.text" defaultMessage="ui.composer.layer.close.text" />
-      </Typography>
-      <List>
-        <ListItem>
-          <ListItemButton onClick={onClose}>
-            <ListItemText primary={<FormattedMessage id="ui.composer.layer.close.no" defaultMessage="ui.composer.layer.close.no" />} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem>
-          <ListItemButton onClick={onSave}>
-            <ListItemText primary={<FormattedMessage id="ui.composer.layer.close.yes" defaultMessage="ui.composer.layer.close.yes" />} />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </DialogContent>
-  </Root>
+  return (
+    <Root ref={ref} className={classNames(className, classes.root)} {...rest}>
+      <DialogTitle className={classes.title}>
+        <IconButton onClick={onClose}>
+          <Icon>arrow_back</Icon>
+        </IconButton>
+        <Typography>
+          <FormattedMessage id="ui.composer.layer.close.title" defaultMessage="ui.composer.layer.close.title" />
+        </Typography>
+      </DialogTitle>
+      <DialogContent className={classes.content}>
+        <Typography>
+          <FormattedMessage id="ui.composer.layer.close.text" defaultMessage="ui.composer.layer.close.text" />
+        </Typography>
+        <List>
+          <ListItem>
+            <ListItemButton onClick={onClose}>
+              <ListItemText primary={<FormattedMessage id="ui.composer.layer.close.no" defaultMessage="ui.composer.layer.close.no" />} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton onClick={onSave}>
+              <ListItemText primary={<FormattedMessage id="ui.composer.layer.close.yes" defaultMessage="ui.composer.layer.close.yes" />} />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </DialogContent>
+    </Root>
+  );
 });
 
 export default CloseLayer;

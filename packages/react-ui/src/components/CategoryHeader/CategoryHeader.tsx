@@ -1,14 +1,15 @@
 import React, {useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Paper, Typography} from '@mui/material';
+import {Box, Paper, Typography, styled} from '@mui/material';
 import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
 import {FormattedMessage} from 'react-intl';
-import {useSCFetchCategory} from '@selfcommunity/react-core';
-import {SCCategoryType} from '@selfcommunity/types';
+import {SCPreferences, useSCFetchCategory, useSCPaymentsEnabled, useSCPreferenceEnabled} from '@selfcommunity/react-core';
+import {SCCategoryType, SCContentType, SCTagType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import CategoryFollowersButton, {CategoryFollowersButtonProps} from '../CategoryFollowersButton';
 import {PREFIX} from './constants';
+import BuyButton from '../BuyButton';
+import TagChip from '../../shared/TagChip';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -16,6 +17,7 @@ const classes = {
   name: `${PREFIX}-name`,
   slogan: `${PREFIX}-slogan`,
   info: `${PREFIX}-info`,
+  tags: `${PREFIX}-tags`,
   followedCounter: `${PREFIX}-followed-counter`,
   followed: `${PREFIX}-followed`,
   action: `${PREFIX}-action`
@@ -56,6 +58,12 @@ export interface CategoryHeaderProps {
   CategoryFollowersButtonProps?: Pick<CategoryFollowersButtonProps, Exclude<keyof CategoryFollowersButtonProps, 'category' | 'categoryId'>>;
 
   /**
+   * shows category tags
+   * @default false
+   */
+  showTags?: boolean;
+
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -85,6 +93,7 @@ export interface CategoryHeaderProps {
  |name|.SCCategoryHeader-name|Styles applied to the name element.|
  |slogan|.SCCategoryHeader-slogan|Styles applied to the slogan element.|
  |info|.SCCategoryHeader-info|Styles applied to the info element.|
+ |tags|.SCCategoryHeader-tags|Styles applied to the tags elements.|
  |followedCounter|.SCCategoryHeader-followed-by-counter|Styles applied to the followers counter element.|
  |followed|.SCCategoryHeader-followed|Styles applied to the followers avatars section.|
  |action|.SCCategoryHeader-action|Styles applied to the action section.|
@@ -97,11 +106,13 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
     props: inProps,
     name: PREFIX
   });
-  const {className, categoryId, category, CategoryFollowButtonProps = {}, CategoryFollowersButtonProps = {}, ...rest} = props;
+  const {className, categoryId, category, CategoryFollowButtonProps = {}, CategoryFollowersButtonProps = {}, showTags = false, ...rest} = props;
 
   // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
-
+  const categoryFollowEnabled = useSCPreferenceEnabled(SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED);
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
   /**
    * Handles callback follow/unfollow category
    */
@@ -133,17 +144,29 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
             {scCategory.slogan}
           </Typography>
         )}
-        <Box className={classes.followed}>
-          <Typography className={classes.followedCounter} component="div">
-            <FormattedMessage
-              id="ui.categoryHeader.followedBy"
-              defaultMessage="ui.categoryHeader.followedBy"
-              values={{total: scCategory.followers_counter}}
-            />
-          </Typography>
-          <CategoryFollowersButton category={scCategory} categoryId={scCategory?.id} {...CategoryFollowersButtonProps} />
-        </Box>
+        {showTags && scCategory.tags?.length > 0 && (
+          <Box className={classes.tags}>
+            {scCategory.tags.map((t: SCTagType) => (
+              <TagChip key={t.id} tag={t} disposable={false} clickable={false} />
+            ))}
+          </Box>
+        )}
+        {categoryFollowEnabled && (
+          <Box className={classes.followed}>
+            <Typography className={classes.followedCounter} component="div">
+              <FormattedMessage
+                id="ui.categoryHeader.followedBy"
+                defaultMessage="ui.categoryHeader.followedBy"
+                values={{total: scCategory.followers_counter}}
+              />
+            </Typography>
+            <CategoryFollowersButton category={scCategory} categoryId={scCategory?.id} {...CategoryFollowersButtonProps} />
+          </Box>
+        )}
         <Box className={classes.action}>
+          {isPaymentsEnabled && scCategory.paywalls?.length > 0 && scCategory.payment_order && (
+            <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} />
+          )}
           <CategoryFollowButton category={scCategory} onFollow={handleFollow} {...CategoryFollowButtonProps} />
         </Box>
       </Box>

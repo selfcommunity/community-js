@@ -1,12 +1,12 @@
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
-import {SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {PREFIX} from './constants';
 import EventForm, {EventFormProps} from '../EventForm';
 import {useCallback} from 'react';
+import {SCEventType} from '@selfcommunity/types';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -83,12 +83,20 @@ export default function EventFormDialog(inProps: EventFormDialogProps): JSX.Elem
     [onClose, EventFormComponentProps]
   );
 
+  const handleClose = (_event: any, reason: string) => {
+    if (reason === 'backdropClick' || reason === 'escapeKeyDown') {
+      return;
+    }
+    onClose?.();
+  };
+
   /**
    * Renders root object
    */
   return (
     <Root
       DialogContentProps={{dividers: false}}
+      disableEscapeKeyDown={true}
       title={
         EventFormComponentProps?.event ? (
           <FormattedMessage id="ui.eventForm.title.edit" defaultMessage="ui.eventForm.title.edit" />
@@ -97,7 +105,7 @@ export default function EventFormDialog(inProps: EventFormDialogProps): JSX.Elem
         )
       }
       open={open}
-      onClose={onClose}
+      onClose={handleClose}
       className={classNames(classes.root, className)}
       {...rest}>
       <EventForm {...EventFormComponentProps} onSuccess={handleSuccess} />

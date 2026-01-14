@@ -1,0 +1,41 @@
+# Unified workflow for feature, prerelease, and release branches
+# This workflow will run tests using node and then publish all packages to npm when a release is created
+# Important: the workflow automatically works thanks a trust relationship between npm and Github CI/CD provider using OIDC
+
+name: Publish
+
+on:
+  push:
+    branches:
+      - 'feature-*'
+      - prerelease
+      - main
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  call-feature:
+    if: startsWith(github.ref, 'refs/heads/feature-')
+    uses: ./.github/workflows/feature.yml
+    secrets: inherit
+    permissions:
+      id-token: write
+      contents: read
+
+  call-prerelease:
+    if: github.ref == 'refs/heads/prerelease'
+    uses: ./.github/workflows/prerelease.yml
+    secrets: inherit
+    permissions:
+      id-token: write
+      contents: read
+
+  call-release:
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/release.yml
+    secrets: inherit
+    permissions:
+      id-token: write
+      contents: read

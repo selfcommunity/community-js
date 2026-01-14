@@ -1,5 +1,5 @@
-import React, {useContext, useRef} from 'react';
-import {styled} from '@mui/material/styles';
+import {useContext, useMemo, useRef} from 'react';
+import {styled} from '@mui/material';
 import {
   CategoriesSuggestionWidget,
   Feed,
@@ -15,10 +15,11 @@ import {
   PlatformWidget,
   SCFeedWidgetType,
   FeedRef,
-  OnBoardingWidget
+  OnBoardingWidget,
+  CustomAdv
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
+import {SCPreferences, SCUserContext, SCUserContextType, UserUtils, useSCPreferenceEnabled} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {SCCustomAdvPosition} from '@selfcommunity/types';
@@ -143,10 +144,25 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
 
   //CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const isAdvertisingCustomAdvEnabled = useSCPreferenceEnabled(SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED);
+  const isAdvertisingCustomAdvOnlyForAnonUsersEnabled = useSCPreferenceEnabled(SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED);
   const {enqueueSnackbar} = useSnackbar();
 
   // REF
   const feedRef = useRef<FeedRef>();
+
+  /**
+   * Render advertising above the feed
+   */
+  function renderAdvertising() {
+    if (
+      isAdvertisingCustomAdvEnabled &&
+      ((isAdvertisingCustomAdvOnlyForAnonUsersEnabled && scUserContext.user === null) || !isAdvertisingCustomAdvOnlyForAnonUsersEnabled)
+    ) {
+      return <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FEED} />;
+    }
+    return null;
+  }
 
   // Ckeck user is authenticated
   if (!scUserContext.user) {
@@ -155,7 +171,8 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
-    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+    const messageId = feedObject.scheduled_at ? 'ui.composer.scheduled.success' : 'ui.inlineComposerWidget.success';
+    enqueueSnackbar(<FormattedMessage id={messageId} defaultMessage={messageId} />, {
       variant: 'success',
       autoHideDuration: 3000
     });
@@ -163,10 +180,10 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
     const feedUnit = {
       type: feedObject.type,
       [feedObject.type]: feedObject,
-      seen_by_id: [],
+      seen: false,
       has_boost: false
     };
-    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+    !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   const handleAddGenerationContent = (feedObjects) => {
@@ -177,7 +194,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
           const feedUnit = {
             type: feedObject.type,
             [feedObject.type]: feedObject,
-            seen_by_id: [],
+            seen: false,
             has_boost: false
           };
           feedRef.current.addFeedData(feedUnit, true);
@@ -198,7 +215,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null,
-        markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
+        markRead: scUser ? !item.seen : null
       })}
       itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}
@@ -211,6 +228,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
         <>
           <InlineComposerWidget onSuccess={handleComposerSuccess} />
           {UserUtils.isAdmin(scUserContext.user) && <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />}
+					{renderAdvertising()}
         </>
       }
       requireAuthentication={true}

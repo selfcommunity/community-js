@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Chip,
+  Divider,
   FormControl,
   Grid,
   GridProps,
@@ -38,17 +39,20 @@ import {FormattedMessage} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
-import CreateEventButton from '../CreateEventButton';
+import CreateEventButton, {CreateEventButtonProps} from '../CreateEventButton';
 import Event, {EventProps, EventSkeleton, EventSkeletonProps} from '../Event';
 import Skeleton, {EventsSkeletonProps} from '../Events/Skeleton';
 import {PREFIX} from './constants';
 import LocationEventsFilter from './LocationEventsFilter';
 import PastEventsFilter from './PastEventsFilter';
+import OngoingEventsFilter from './OngoingEventsFilter';
 
 const classes = {
   root: `${PREFIX}-root`,
   filters: `${PREFIX}-filters`,
   events: `${PREFIX}-events`,
+  sectionTitle: `${PREFIX}-section-title`,
+  divider: `${PREFIX}-divider`,
   item: `${PREFIX}-item`,
   itemSkeleton: `${PREFIX}-item-skeleton`,
   noResults: `${PREFIX}-no-results`,
@@ -57,7 +61,7 @@ const classes = {
 };
 
 const options = [
-  {value: SCEventDateFilterType.ANY, label: <FormattedMessage id="ui.events.select.any" defaultMessage="ui.events.select.any" />},
+  {value: SCEventDateFilterType.ALL, label: <FormattedMessage id="ui.events.select.any" defaultMessage="ui.events.select.any" />},
   {value: SCEventDateFilterType.TODAY, label: <FormattedMessage id="ui.events.select.today" defaultMessage="ui.events.select.today" />},
   {value: SCEventDateFilterType.TOMORROW, label: <FormattedMessage id="ui.events.select.tomorrow" defaultMessage="ui.events.select.tomorrow" />},
   {value: SCEventDateFilterType.THIS_WEEK, label: <FormattedMessage id="ui.events.select.thisWeek" defaultMessage="ui.events.select.thisWeek" />},
@@ -73,7 +77,7 @@ const Root = styled(Box, {
 export const EventsChipRoot = styled(Chip, {
   name: PREFIX,
   slot: 'EventsChipRoot',
-  shouldForwardProp: (prop) => prop !== 'showFollowed' && prop !== 'showPastEvents'
+  shouldForwardProp: (prop) => prop !== 'showFollowed' && prop !== 'showPastEvents' && prop !== 'showOngoingEvents'
 })(() => ({}));
 
 export interface EventsProps {
@@ -125,10 +129,22 @@ export interface EventsProps {
   GridItemComponentProps?: Pick<GridProps, Exclude<keyof GridProps, 'container' | 'component' | 'children' | 'item' | 'classes'>>;
 
   /**
+   * Props to spread to CreateEvent component
+   * @default empty object
+   */
+  CreateEventButtonProps?: CreateEventButtonProps;
+
+  /**
    * Show/Hide filters
    * @default true
    */
   showFilters?: boolean;
+
+  /**
+   * Hides my events title
+   * @default false
+   */
+  hideTitle?: boolean;
 
   /**
    * Filters component
@@ -190,9 +206,11 @@ export default function Events(inProps: EventsProps): JSX.Element {
     EventSkeletonComponentProps = {elevation: 0, square: true},
     GridContainerComponentProps = {},
     GridItemComponentProps = {},
+    CreateEventButtonProps = {},
     showFilters = false,
     filters,
     general = true,
+    hideTitle = false,
     ...rest
   } = props;
 
@@ -205,7 +223,10 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const [location, setLocation] = useState<SCEventLocationFilterType>(SCEventLocationFilterType.ANY);
   const [showFollowed, setShowFollowed] = useState<boolean>(false);
   const [showPastEvents, setShowPastEvents] = useState<boolean>(false);
+  const [showOngoingEvents, setShowOngoingEvents] = useState<boolean>(false);
   const [showMyEvents, setShowMyEvents] = useState<boolean>(false);
+  const showUserEvents =
+    !general && (events.length || (!events.length && (showPastEvents || showMyEvents || location !== SCEventLocationFilterType.ANY)));
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
@@ -245,6 +266,13 @@ export default function Events(inProps: EventsProps): JSX.Element {
     setShowPastEvents(false);
   };
 
+  const handleChipOngoingClick = () => {
+    setShowOngoingEvents(!showOngoingEvents);
+  };
+  const handleDeleteOngoingClick = () => {
+    setShowOngoingEvents(false);
+  };
+
   /**
    * Fetches events list
    */
@@ -259,10 +287,10 @@ export default function Events(inProps: EventsProps): JSX.Element {
           ...(general
             ? {
                 ...(query && {search: query}),
-                ...(dateSearch !== SCEventDateFilterType.ANY && {date_filter: dateSearch}),
+                ...(dateSearch !== SCEventDateFilterType.ALL && {date_filter: dateSearch}),
                 ...(location !== SCEventLocationFilterType.ANY && {location}),
                 ...(showFollowed && {follows: showFollowed}),
-                ...(showPastEvents && {date_filter: SCEventDateFilterType.PAST})
+                ...(showOngoingEvents && {date_filter: SCEventDateFilterType.NOT_PAST})
               }
             : {
                 subscription_status: SCEventSubscriptionStatusType.GOING,
@@ -291,7 +319,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
     } else {
       fetchEvents();
     }
-  }, [contentAvailability, authUserId, dateSearch, location, showFollowed, showPastEvents, showMyEvents]);
+  }, [contentAvailability, authUserId, dateSearch, location, showFollowed, showPastEvents, showMyEvents, showOngoingEvents]);
 
   /**
    * Subscriber for pubsub callback
@@ -367,13 +395,13 @@ export default function Events(inProps: EventsProps): JSX.Element {
   /**
    * Renders events list
    */
-  const c = (
+  const content = (
     <>
       {showFilters && (
         <Grid container className={classes.filters} gap={2}>
           {filters ? (
             filters
-          ) : !general ? (
+          ) : showUserEvents ? (
             <>
               <Grid item>
                 <EventsChipRoot
@@ -400,7 +428,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
               </Grid>
             </>
-          ) : (
+          ) : general ? (
             <>
               <Grid item xs={12} md={3}>
                 <TextField
@@ -446,7 +474,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     <FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />
                   </InputLabel>
                   <Select
-                    disabled={showPastEvents || loading}
+                    disabled={showOngoingEvents || loading}
                     size={'small'}
                     label={<FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />}
                     value={dateSearch as any}
@@ -485,15 +513,15 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 </Grid>
               )}
               <Grid item>
-                <PastEventsFilter
-                  showPastEvents={showPastEvents}
-                  handleClick={handleChipPastClick}
-                  handleDeleteClick={handleDeletePastClick}
-                  disabled={dateSearch !== SCEventDateFilterType.ANY || loading}
+                <OngoingEventsFilter
+                  showOngoingEvents={showOngoingEvents}
+                  handleClick={handleChipOngoingClick}
+                  handleDeleteClick={handleDeleteOngoingClick}
+                  disabled={dateSearch !== SCEventDateFilterType.ALL || loading}
                 />
               </Grid>
             </>
-          )}
+          ) : null}
         </Grid>
       )}
       <>
@@ -508,24 +536,23 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     <EventSkeleton
                       {...EventSkeletonComponentProps}
                       skeletonsAnimation={false}
-                      actions={(onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? <CreateEventButton /> : null}
+                      actions={
+                        (onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? (
+                          <CreateEventButton {...CreateEventButtonProps} />
+                        ) : null
+                      }
                     />
                     <Typography variant="body1">
                       <FormattedMessage id="ui.events.noEvents.title" defaultMessage="ui.events.noEvents.title" />
                     </Typography>
                   </>
-                ) : (
+                ) : showUserEvents ? (
                   <>
-                    <EventSkeleton
-                      {...EventSkeletonComponentProps}
-                      skeletonsAnimation={false}
-                      actions={(onlyStaffEnabled && UserUtils.isStaff(scUserContext.user)) || !onlyStaffEnabled ? <CreateEventButton /> : null}
-                    />
                     <Typography variant="body1">
                       <FormattedMessage id="ui.events.noEvents.title.personal" defaultMessage="ui.events.noEvents.title.personal" />
                     </Typography>
                   </>
-                )}
+                ) : null}
               </Box>
             ) : (
               <>
@@ -542,7 +569,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                           {...EventSkeletonComponentProps}
                           skeletonsAnimation={false}
                           actions={
-                            <CreateEventButton variant="outlined" color="primary" size="small">
+                            <CreateEventButton variant="outlined" color="primary" size="small" {...CreateEventButtonProps}>
                               <FormattedMessage id="ui.events.skeleton.action.add" defaultMessage="ui.events.skeleton.action.add" />
                             </CreateEventButton>
                           }
@@ -573,7 +600,24 @@ export default function Events(inProps: EventsProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      {c}
+      <>
+        {showUserEvents && !hideTitle ? (
+          <>
+            <Typography variant="h4" className={classes.sectionTitle}>
+              <FormattedMessage id="ui.events.myEvents.title" defaultMessage="ui.events.myEvents.title" />
+            </Typography>
+            <Divider className={classes.divider} />
+          </>
+        ) : general ? (
+          <>
+            <Typography variant="h4" className={classes.sectionTitle}>
+              <FormattedMessage id="ui.events.allEvents.title" defaultMessage="ui.events.allEvents.title" />
+            </Typography>
+            <Divider className={classes.divider} />
+          </>
+        ) : null}
+      </>
+      {content}
     </Root>
   );
 }

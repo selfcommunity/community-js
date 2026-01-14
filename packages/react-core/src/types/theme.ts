@@ -1,4 +1,4 @@
-import {Theme as MuiTheme} from '@mui/material/styles/createTheme';
+import {Theme as MuiTheme} from '@mui/material';
 
 /**
  * Interface SCThemeAvatarVariableType
@@ -61,6 +61,34 @@ export interface SCThemeCategoryIconVariableType {
 }
 
 /**
+ * Interface SCThemeContentProductIconVariableType
+ */
+export interface SCThemeContentProductIconVariableType {
+  /**
+   * ContentProduct size small
+   */
+  sizeSmall: number;
+  /**
+   * ContentProduct size medium
+   */
+  sizeMedium: number;
+}
+
+/**
+ * Interface SCThemeContentProductPriceIconVariableType
+ */
+export interface SCThemeContentProductPriceIconVariableType {
+  /**
+   * ContentProductPrice size small
+   */
+  sizeSmall: number;
+  /**
+   * ContentProductPrice size medium
+   */
+  sizeMedium: number;
+}
+
+/**
  * Interface SCThemeCategoryVariableType
  */
 export interface SCThemeCategoryVariableType {
@@ -68,6 +96,26 @@ export interface SCThemeCategoryVariableType {
    * Category icon size
    */
   icon: SCThemeCategoryIconVariableType;
+}
+
+/**
+ * Interface SCThemeContentProductVariableType
+ */
+export interface SCThemeContentProductVariableType {
+  /**
+   * ContentProduct icon size
+   */
+  icon: SCThemeContentProductIconVariableType;
+}
+
+/**
+ * Interface SCThemeContentProductPriceVariableType
+ */
+export interface SCThemeContentProductPriceVariableType {
+  /**
+   * ContentProductPrice icon size
+   */
+  icon: SCThemeContentProductPriceIconVariableType;
 }
 
 /**
@@ -86,6 +134,14 @@ export interface SCThemeVariablesType {
    * Group
    */
   group: SCThemeGroupVariableType;
+  /**
+   * ContentProduct
+   */
+  contentProduct: SCThemeContentProductVariableType;
+  /**
+   * ContentProductPrice
+   */
+  contentProductPrice: SCThemeContentProductPriceVariableType;
 }
 
 export interface SCThemeType extends MuiTheme {

@@ -1,8 +1,15 @@
 import React, {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Button, CardContent, List, ListItem, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
 import {Endpoints, http, SCPaginatedResponse, SuggestionService} from '@selfcommunity/api-services';
-import {SCCache, SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {
+  SCCache,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCThemeType,
+  SCUserContextType,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import Skeleton from './Skeleton';
 import Category, {CategoryProps, CategorySkeleton} from '../Category';
@@ -143,9 +150,16 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
 
   // REFS
   const updatesSubscription = useRef(null);
+
+  const categoryFollowEnabled = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED in preferences && preferences[SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED].value,
+    [preferences]
+  );
 
   /**
    * Initialize component
@@ -194,13 +208,13 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (scUserContext.user) {
+    if (scUserContext.user && categoryFollowEnabled) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
       };
     }
-  }, [scUserContext.user]);
+  }, [scUserContext.user, categoryFollowEnabled]);
 
   useEffect(() => {
     if (openDialog && state.next && state.results.length <= limit && state.initialized) {
@@ -277,7 +291,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
   };
 
   // RENDER
-  if ((autoHide && !state.count && state.initialized) || !scUserContext.user) {
+  if ((autoHide && !state.count && state.initialized) || !scUserContext.user || !categoryFollowEnabled) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {

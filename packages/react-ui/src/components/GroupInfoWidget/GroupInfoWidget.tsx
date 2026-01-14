@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
-import {styled} from '@mui/material/styles';
-import {CardContent, Icon, Typography} from '@mui/material';
+import {CardContent, Icon, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';

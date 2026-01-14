@@ -3,6 +3,242 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.11...@selfcommunity/types@0.8.0-alpha.12) (2025-10-07)
+
+
+### Features
+
+* added new adv position for category feed. Linear issue: https://linear.app/quentral/issue/QUE-2123/differenziare-la-nuova-posizione-sopra-il-feed-categorie-da-sopra-il ([57a351e](https://github.com/selfcommunity/community-js/commit/57a351eaee906645e76537631fec6ac67d6ec6f6))
+
+
+
+
+
+# [0.8.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.10...@selfcommunity/types@0.8.0-alpha.11) (2025-10-01)
+
+
+### Bug Fixes
+
+* added forced_username to SCInviteType ([434bdfc](https://github.com/selfcommunity/community-js/commit/434bdfc98f59a4234c4e74a1d73f8a54cd2d8be2))
+
+
+
+
+
+# [0.8.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.9...@selfcommunity/types@0.8.0-alpha.10) (2025-09-25)
+
+
+### Features
+
+* added new ddp; updated media object types. Linear: https://linear.app/quentral/issue/QUE-2001/frontend-sistemare-i-due-controlli-per-usare-la-nuova-dynamic-per-i ([d2947ae](https://github.com/selfcommunity/community-js/commit/d2947ae1678cdf68d848b59f430c174abb7e43dc))
+
+
+
+
+
+# [0.8.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.8...@selfcommunity/types@0.8.0-alpha.9) (2025-09-22)
+
+
+### Bug Fixes
+
+* https://linear.app/quentral/issue/QUE-2006/frontend-aggiungere-widget-nel-feed-come-da-configurazione ([e20326e](https://github.com/selfcommunity/community-js/commit/e20326e131a92f5dc2ec1ab586c183390dd7a214))
+
+
+
+
+
+# [0.8.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.7...@selfcommunity/types@0.8.0-alpha.8) (2025-09-18)
+
+
+### Bug Fixes
+
+* add contact_api_enabled preferences ([7b959c2](https://github.com/selfcommunity/community-js/commit/7b959c2d82d0548ff1610d76cd3296ace761994d))
+
+
+
+
+
+# [0.8.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.6...@selfcommunity/types@0.8.0-alpha.7) (2025-09-18)
+
+
+### Bug Fixes
+
+* callback home navigation toolbar ([a7e19b5](https://github.com/selfcommunity/community-js/commit/a7e19b5394664463cdab6be4ef56a50bdfadbd9c))
+* fixed user tagging, added new api ([6fc5726](https://github.com/selfcommunity/community-js/commit/6fc5726b2b486d69da2f955e1ae1cda518e76db7))
+
+
+
+
+
+# [0.8.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.5...@selfcommunity/types@0.8.0-alpha.6) (2025-09-17)
+
+
+### Bug Fixes
+
+* contact-us api service, callback home navigation toolbar ([1315a38](https://github.com/selfcommunity/community-js/commit/1315a38aaa8d14ad75080f512d108c9950a55473))
+
+
+
+
+
+# [0.8.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.4...@selfcommunity/types@0.8.0-alpha.5) (2025-09-17)
+
+
+### Bug Fixes
+
+* contact-us api service ([5059a41](https://github.com/selfcommunity/community-js/commit/5059a411b39cba4f11ee8cc6082ce739ae9dbf4f))
+* contact-us api service ([62d82be](https://github.com/selfcommunity/community-js/commit/62d82be8d0c3c5aaef37a7f20f5d0936b4ee4a32))
+* contact-us api service ([b75dbc2](https://github.com/selfcommunity/community-js/commit/b75dbc2c998498f57d836d2580299cdd725c95d3))
+
+
+
+
+
+# [0.8.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.3...@selfcommunity/types@0.8.0-alpha.4) (2025-09-15)
+
+
+### Bug Fixes
+
+* replaced seen_by_id with seen. ([1743121](https://github.com/selfcommunity/community-js/commit/1743121f9c14123ffee6c62d2bf28c81d3d1de0f))
+
+
+
+
+
+# [0.8.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.2...@selfcommunity/types@0.8.0-alpha.3) (2025-09-15)
+
+
+### Features
+
+* added user tagging in composer. Linear issue: https://linear.app/quentral/issue/QUE-1842/frontend-aggiungere-tab-utenti-con-textarea-chip-interni-per-ogni ([b7a7b17](https://github.com/selfcommunity/community-js/commit/b7a7b1738bb852890ed47cb964d9341bcc53214b))
+
+
+
+
+
+# [0.8.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.1...@selfcommunity/types@0.8.0-alpha.2) (2025-09-11)
+
+
+### Bug Fixes
+
+* add pref video_play_tracking_delay_seconds ([d6eecb7](https://github.com/selfcommunity/community-js/commit/d6eecb759ab6718aa5a843dab912f5e2a90624d3))
+
+
+
+
+
+# [0.8.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.0...@selfcommunity/types@0.8.0-alpha.1) (2025-09-04)
+
+
+### Bug Fixes
+
+* added new ddp connection_enabled and adapted follow/connection logic. Linear issue: https://linear.app/quentral/issue/QUE-1837/frontend-considerare-nuova-ddp-connection-enabled ([ec1cde5](https://github.com/selfcommunity/community-js/commit/ec1cde5d142724373523be830ba531827a6122aa))
+* fixed private messages ddp. Linear issue: https://linear.app/quentral/issue/QUE-1830/frontend-gestire-ddp-per-attivazione-e-disattivazione-messaggi-privati ([b4bdd1b](https://github.com/selfcommunity/community-js/commit/b4bdd1b0cd7a1814eddc5eaf6e95bfe5276d0ba2))
+* payment_waiting group/course ([997106e](https://github.com/selfcommunity/community-js/commit/997106ef7cba0d335c0081c5ce12ad3faab980cd))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([16425dc](https://github.com/selfcommunity/community-js/commit/16425dc65cce1a0ae38053ee7f9f541102698288))
+* payments ([c379e8f](https://github.com/selfcommunity/community-js/commit/c379e8f245a5a753eb9cbbaafe90550f23d54f41))
+* payments ([b85a180](https://github.com/selfcommunity/community-js/commit/b85a180cacbe50b580e9a729ef4b8681a0a9ed64))
+* payments ([370983c](https://github.com/selfcommunity/community-js/commit/370983c46e142fca9c0e83a92072afe8f6c1ec0b))
+* payments ([a15eeb8](https://github.com/selfcommunity/community-js/commit/a15eeb8549d8064acfcd1ff2cdcf2ec4864b4f5e))
+* payments ([ec6d32e](https://github.com/selfcommunity/community-js/commit/ec6d32e82b4c778c265804c05d3002ac48faa4bb))
+* payments ([21e9a56](https://github.com/selfcommunity/community-js/commit/21e9a561872b29e616cdc6b0e820ac11eb396712))
+* payments ([233f5eb](https://github.com/selfcommunity/community-js/commit/233f5eb248e41f67ce2139955fde0261e54f071d))
+* payments ([720e295](https://github.com/selfcommunity/community-js/commit/720e2951048faa5fdedcf4874f6bf7211cf64804))
+* payments ([8ebe701](https://github.com/selfcommunity/community-js/commit/8ebe701424cf269df90cb524919cab946b8f1dbe))
+* payments ([ea3f7c2](https://github.com/selfcommunity/community-js/commit/ea3f7c267cf169442834fa50d6335a0cd15c30f0))
+* payments ([979fe35](https://github.com/selfcommunity/community-js/commit/979fe354140b5b1a88fbe36a5c532e33a1d5c22e))
+* payments and other features ([a0bd0eb](https://github.com/selfcommunity/community-js/commit/a0bd0eb3aea472a65033fd1e4160ddf55a3c05a0))
+* payments category, group, event ([d0e2b24](https://github.com/selfcommunity/community-js/commit/d0e2b248fe14b667031529fe772f745129811f84))
+* paywall ([a6372be](https://github.com/selfcommunity/community-js/commit/a6372befda9a0b749c2d994c9be9ac90ec95b968))
+* paywall ([62d9ee1](https://github.com/selfcommunity/community-js/commit/62d9ee1fe4c60b5d801f708eac65c3462e0aafc3))
+* paywall ([46e72c4](https://github.com/selfcommunity/community-js/commit/46e72c40e0fc88db92da5b74f70c66fbf5f209a2))
+* paywall ([7913a21](https://github.com/selfcommunity/community-js/commit/7913a21732d4b2baf965ed016751c688e9a22ec3))
+* paywall ([e24ad25](https://github.com/selfcommunity/community-js/commit/e24ad25edc5fef5c27a8b3dbefe5ce95da3d7295))
+* peerDependencies ([97c38fe](https://github.com/selfcommunity/community-js/commit/97c38fe2c7294c95c489f503117f09f6053d929d))
+
+
+### Features
+
+* added composer controls for new ddp post_category_required_enabled and post_addressing_required_enabled. Linear issue: https://linear.app/quentral/issue/QUE-1914/frontend-nella-form-post-se-abilitata-post-category-required-enabled-e ([d69994e](https://github.com/selfcommunity/community-js/commit/d69994ef5455d9dd4037e7087e986f46eb5c9566))
+* added ddp for category_follow_enabled and managed CategoriesSuggestionWidget, UserFollowedCategoriesWidget, CategoryFollowButton visibility. ([0a33908](https://github.com/selfcommunity/community-js/commit/0a3390861bdffebb33112d9773ce774bd9bc9495))
+* added ddp to manage autoplay on videos. Linaer: https://linear.app/quentral/issue/QUE-1796/frontend-togliere-dappertutto-autoplay-youtube-deve-essere-tutto-con ([e5c9c30](https://github.com/selfcommunity/community-js/commit/e5c9c306661dd4bf53f5ad67b98919b76a472f37))
+* added endpoints/services actions to manage scheduled posts. Linear issue: https://linear.app/quentral/issue/QUE-1793/frontend-creazione-e-gestione-dei-post-programmati ([eb8cfd2](https://github.com/selfcommunity/community-js/commit/eb8cfd23fe6d01f44e74c19edc095d8abd385c99))
+* added scheduled post in the composer. Linear issue: https://linear.app/quentral/issue/QUE-1863/frontend-gestire-ddp-se-post-programmati ([78b31ce](https://github.com/selfcommunity/community-js/commit/78b31ce29badbc05a141631e6037365761ee5f47))
+* gestione del tasto destro sul frontend. Linear: https://linear.app/quentral/issue/QUE-1827/frontend-gestire-la-ddp-che-se-attiva-disabilita-il-tatso-destro-nel ([de63fe7](https://github.com/selfcommunity/community-js/commit/de63fe7ffcb286d8991e66beb0a2cf5c6b99f2c7))
+* managed categories preferencies. Linear: https://linear.app/quentral/issue/QUE-1840/frontend-gestione-ddp-per-definire-se-il-menu-visualizza-tutte-le ([b526431](https://github.com/selfcommunity/community-js/commit/b5264312e818e42fea5060d425dfd2c994c57994))
+* managed ddp to hide comments and share; updated reaction layout. Linear: https://linear.app/quentral/issue/QUE-1856/frontend-in-base-alle-due-ddp-togliere-la-parte-di-post-per-fare-i ([fc94144](https://github.com/selfcommunity/community-js/commit/fc941444d6653cc040bd589963ce611a5e084f70))
+* restyled pdf preview and display. Linear: https://linear.app/quentral/issue/QUE-1797/frontend-sistemare-grafica-del-post-anche-in-stream-con-youtube-video ([1debc9f](https://github.com/selfcommunity/community-js/commit/1debc9fb07f4061a80d88676e012561a04c0d95f))
+
+
+### Performance Improvements
+
+* added filters to payment orders table. Linear issue: https://linear.app/quentral/issue/QUE-1295/inserire-nel-componente-paymentorders-i-filtri-in-testa-alla-tabella ([5ed71b0](https://github.com/selfcommunity/community-js/commit/5ed71b0186c39e69a3e27b8cda49c3c8d5338b9d))
+* refactored checkout return dialog ([a84bf0b](https://github.com/selfcommunity/community-js/commit/a84bf0bb91e32fc9ad15182edb137aeffb3767a8))
+
+
+
+
+
+## [0.7.7-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.7.7-alpha.2...@selfcommunity/types@0.7.7-alpha.3) (2025-02-26)
+
+
+### Bug Fixes
+
+* category can_create_only_staff ([a9ebbf3](https://github.com/selfcommunity/community-js/commit/a9ebbf3c483bd428f63f7567227c96dcead9638f))
+
+
+
+
+
+## [0.7.7-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.7.7-alpha.1...@selfcommunity/types@0.7.7-alpha.2) (2025-02-25)
+
+
+### Bug Fixes
+
+* live stream video conference ([0e38f00](https://github.com/selfcommunity/community-js/commit/0e38f00be0a988502c67926ee3d91d5043b4bec7))
+
+
+
+
+
+## [0.7.7-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.7.7-alpha.0...@selfcommunity/types@0.7.7-alpha.1) (2025-01-08)
+
+
+### Bug Fixes
+
+* dependencies ([bfb228f](https://github.com/selfcommunity/community-js/commit/bfb228fe482d247b87605a57e7de34faf7087214))
+* livestream ([89c9e54](https://github.com/selfcommunity/community-js/commit/89c9e546bdab64e18d2897f2d785e924faec64c9))
+* livestream ([50f493b](https://github.com/selfcommunity/community-js/commit/50f493b7b374215a995f1cd2879600fa4103e8ed))
+* livestream ([b4f0ebd](https://github.com/selfcommunity/community-js/commit/b4f0ebd98a2318650727677e1a08bc439ee6546f))
+* livestream ([71d006b](https://github.com/selfcommunity/community-js/commit/71d006b642183eeda860f21772789a3cdf0bd3d7))
+* livestream ([f5535c1](https://github.com/selfcommunity/community-js/commit/f5535c161bfe9e634337e41ef22ed72389583557))
+* livestream ([ef2116f](https://github.com/selfcommunity/community-js/commit/ef2116fdbb4bc02009993809eb41072252903e8d))
+* livestream ([37d2561](https://github.com/selfcommunity/community-js/commit/37d2561218ed54bcbfc7e8725dd39ef7196e78d8))
+* livestream ([1377ebf](https://github.com/selfcommunity/community-js/commit/1377ebf0d7cf56fae914c2af5ae96d8161350d51))
+* livestream ([619ae76](https://github.com/selfcommunity/community-js/commit/619ae76fd237be7bad9bbec0afdc3052bf662d31))
+* livestream ([44ad31b](https://github.com/selfcommunity/community-js/commit/44ad31b8ba204773f6451975523f8277fe265538))
+* livestream ([a5b9329](https://github.com/selfcommunity/community-js/commit/a5b9329f7b8b578f583653c6aa8e4478d422d9fa))
+* livestream ([9e7d4f2](https://github.com/selfcommunity/community-js/commit/9e7d4f293b64190ed520194ab1ff4d381d9a443e))
+* livestream ([9e5f413](https://github.com/selfcommunity/community-js/commit/9e5f413f97ef3a471b3368b0dc79f450d0d0d163))
+* livestream ([b2ff2f5](https://github.com/selfcommunity/community-js/commit/b2ff2f50c0cde06b2974528013d62a317f7494c1))
+* livestream ([d6c209b](https://github.com/selfcommunity/community-js/commit/d6c209b1ff2f23f4bb3176b6c4d33703c6fedd77))
+* livestream assets, resolution ([b7c31d2](https://github.com/selfcommunity/community-js/commit/b7c31d2bf6941f7f7f84a64dc9893b8a779080c7))
+* livestream ban user ([d7d971b](https://github.com/selfcommunity/community-js/commit/d7d971b3f9df43638c8822158a3fa609b3ee4204))
+* livestream in progress - fix deps - remove webpack-atoms (use fiber) and conflict with livekit deps ([68ed5ba](https://github.com/selfcommunity/community-js/commit/68ed5ba4394740787bfd89b1e7d195f9ad2954d4))
+
+
+
+
+
+## [0.7.7-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.7.6...@selfcommunity/types@0.7.7-alpha.0) (2024-12-19)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
 ## [0.7.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.7.6-alpha.1...@selfcommunity/types@0.7.6) (2024-12-17)
 
 **Note:** Version bump only for package @selfcommunity/types

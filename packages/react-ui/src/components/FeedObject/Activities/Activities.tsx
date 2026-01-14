@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
+import {Box, styled} from '@mui/material';
 import {SCCommentsOrderBy} from '../../../types/comments';
 import classNames from 'classnames';
 import CommentsObject, {CommentsObjectProps} from '../../CommentsObject';
@@ -27,7 +26,7 @@ const Root = styled(Box, {
 export interface ActivitiesProps {
   /**
    * Id of the FeedObjectActivities
-   * @default `feed_object_activities_<feedObjectId | feedObject.id>`
+   * @default `feed_object_activities_feedObjectId`
    */
   id?: string;
 
@@ -130,7 +129,7 @@ export default function Activities(props: ActivitiesProps): JSX.Element {
     feedObject,
     feedObjectType,
     cacheStrategy,
-    pageSize: 2,
+    pageSize: 1,
     orderBy:
       selectedActivities === SCFeedObjectActivitiesType.CONNECTIONS_COMMENTS
         ? SCCommentsOrderBy.CONNECTION_DESC
@@ -140,7 +139,7 @@ export default function Activities(props: ActivitiesProps): JSX.Element {
   });
 
   const objId = commentsObject.feedObject ? commentsObject.feedObject.id : null;
-  const skeletonsCount = Math.min(3, commentsObject.feedObject ? commentsObject.feedObject.comment_count : 2);
+  const skeletonsCount = Math.min(2, commentsObject.feedObject ? commentsObject.feedObject.comment_count : 2);
   const existFeedObjectActivities = feedObjectActivities && feedObjectActivities.length > 0;
 
   /**
@@ -227,7 +226,7 @@ export default function Activities(props: ActivitiesProps): JSX.Element {
         (feedObject && feedObject.comment_count > 0)) ? (
         <Box
           className={classes.activities}
-          {...(existFeedObjectActivities ? {} : {style: {minHeight: `${Math.min(skeletonsCount, feedObject.comment_count) * 80}px`}})}>
+          {...(existFeedObjectActivities ? {} : {style: {minHeight: `${Math.min(skeletonsCount, feedObject?.comment_count) * 80}px`}})}>
           <ActivitiesMenu
             selectedActivities={selectedActivities}
             hideRelevantActivitiesItem={!existFeedObjectActivities}

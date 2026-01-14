@@ -1,13 +1,20 @@
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Icon, Paper, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
+import {Avatar, Box, Icon, Paper, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
+import {
+  SCContentType,
+  SCEventPrivacyType,
+  SCEventSubscriptionStatusType,
+  SCGroupPrivacyType,
+  SCGroupSubscriptionStatusType,
+  SCGroupType
+} from '@selfcommunity/types';
 import {
   SCPreferences,
   SCPreferencesContextType,
   SCThemeType,
   SCUserContextType,
   useSCFetchGroup,
+  useSCPaymentsEnabled,
   useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
@@ -26,6 +33,7 @@ import GroupInviteButton from '../GroupInviteButton';
 import {SCGroupEventType, SCGroupMembersEventType, SCTopicType} from '../../constants/PubSub';
 import PubSub from 'pubsub-js';
 import GroupActionsMenu, {GroupActionsMenuProps} from '../GroupActionsMenu';
+import BuyButton from '../BuyButton';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -172,6 +180,9 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
   // REFS
   const updatesSubscription = useRef(null);
 
@@ -308,6 +319,21 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
                 )}
               </>
             )}
+            {isPaymentsEnabled &&
+              scGroup.paywalls?.length > 0 &&
+              (scGroup.privacy === SCGroupPrivacyType.PUBLIC ||
+                (scGroup.privacy === SCGroupPrivacyType.PRIVATE &&
+                  scGroup.subscription_status &&
+                  scGroup.subscription_status !== SCGroupSubscriptionStatusType.REQUESTED)) && (
+                <BuyButton
+                  size="md"
+                  variant="text"
+                  startIcon={<Icon>dredit-card</Icon>}
+                  contentType={SCContentType.GROUP}
+                  content={scGroup}
+                  label={<FormattedMessage id="ui.groupHeader.paid" defaultMessage="ui.groupHeader.paid" />}
+                />
+              )}
           </Box>
         )}
         <>

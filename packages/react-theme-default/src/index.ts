@@ -17,11 +17,13 @@ import MuiOutlinedInput from './components/MuiOutlinedInput';
 import MuiPopover from './components/MuiPopover';
 import MuiSelect from './components/MuiSelect';
 import MuiTooltip from './components/MuiTooltip';
+import SCAccordionLessons from './components/SCAccordionLessons';
 import SCAccountChangeMailValidation from './components/SCAccountChangeMailValidation';
 import SCAccountDataPortability from './components/SCAccountDataPortability';
 import SCAccountDelete from './components/SCAccountDelete';
 import SCAccountReset from './components/SCAccountReset';
 import SCAccountVerify from './components/SCAccountVerify';
+import SCAddUsersButton from './components/SCAddUsersButton';
 import SCBaseDialog from './components/SCBaseDialog';
 import SCBaseItem from './components/SCBaseItem';
 import SCBaseItemButton from './components/SCBaseItemButton';
@@ -36,10 +38,13 @@ import SCCategory from './components/SCCategory';
 import SCCategoryAutocomplete from './components/SCCategoryAutocomplete';
 import SCCategoryFeedTemplate from './components/SCCategoryFeedTemplate';
 import SCCategoryFollowersButton from './components/SCCategoryFollowersButton';
+import SCCategoryFollowButton from './components/SCCategoryFollowButton';
 import SCCategoryHeader from './components/SCCategoryHeader';
 import SCCategoryTemplate from './components/SCCategoryTemplate';
 import SCCategoryTrendingFeedWidget from './components/SCCategoryTrendingFeedWidget';
 import SCCategoryTrendingUsersWidget from './components/SCCategoryTrendingUsersWidget';
+import SCCourseTypePopover from './components/SCCourseTypePopover';
+import SCCourseUsersTable from './components/SCCourseUsersTable';
 import SCChangeCoverButton from './components/SCChangeCoverButton';
 import SCChangeGroupCoverButton from './components/SCChangeGroupCoverButton';
 import SCChangeGroupPictureButton from './components/SCChangeGroupPictureButton';
@@ -52,6 +57,15 @@ import SCCommentsObject from './components/SCCommentsObject';
 import SCComposer from './components/SCComposer';
 import SCConsentSolution from './components/SCConsentSolution';
 import SCContributionActionsMenu from './components/SCContributionActionsMenu';
+import SCCourse from './components/SCCourse';
+import SCCourseContentMenu from './components/SCCourseContentMenu';
+import SCCourseDashboard from './components/SCCourseDashboard';
+import SCCourses from './components/SCCourses';
+import SCCourseForm from './components/SCCourseForm';
+import SCCourseFormDialog from './components/SCCourseFormDialog';
+import SCCourseInfoDetails from './components/SCCourseInfoDetails';
+import SCCourseParticipantsButton from './components/SCCourseParticipantsButton';
+import SCCreateCourseButton from './components/SCCreateCourseButton';
 import SCCreateEventButton from './components/SCCreateEventButton';
 import SCCreateEventWidget from './components/SCCreateEventWidget';
 import SCCreateGroupButton from './components/SCCreateGroupButton';
@@ -62,7 +76,9 @@ import SCDefaultHeaderContent from './components/SCDefaultHeaderContent';
 import SCDefaultDrawerContent from './components/SCDefaultDrawerContent';
 import SCEditGroupButton from './components/SCEditGroupButton';
 import SCEditor from './components/SCEditor';
+import SCEditCourse from './components/SCEditCourse';
 import SCEmojiPicker from './components/SCEmojiPicker';
+import SCEmptyStatus from './components/SCEmptyStatus';
 import SCEvent from './components/SCEvent';
 import SCEventActionsMenu from './components/SCEventActionsMenu';
 import SCEventForm from './components/SCEventForm';
@@ -98,6 +114,7 @@ import SCGroupMembersWidget from './components/SCGroupMembersWidget';
 import SCGroupRequestsWidget from './components/SCGroupRequestsWidget';
 import SCGroups from './components/SCGroups';
 import SCGroupSettingsIconButton from './components/SCGroupSettingsIconButton';
+import SCGroupSubscribeButton from './components/SCGroupSubscribeButton';
 import SCGroupTemplate from './components/SCGroupTemplate';
 import SCIncubator from './components/SCIncubator';
 import SCIncubatorDetail from './components/SCIncubatorDetail';
@@ -105,6 +122,17 @@ import SCIncubatorListWidget from './components/SCIncubatorListWidget';
 import SCIncubatorSuggestionWidget from './components/SCIncubatorSuggestionWidget';
 import SCInlineComposerWidget from './components/SCInlineComposerWidget';
 import SCLanguageSwitcher from './components/SCLanguageSwitcher';
+import SCLessonAppbar from './components/SCLessonAppbar';
+import SCLessonDrawer from './components/SCLessonDrawer';
+import SCLessonCommentActionsMenu from './components/SCLessonCommentActionsMenu';
+import SCLessonCommentObject from './components/SCLessonCommentObject';
+import SCLessonCommentObjects from './components/SCLessonCommentObjects';
+import SCCourseCompletedDialog from './components/SCCourseCompletedDialog';
+import SCLessonEditForm from './components/SCLessonEditForm';
+import SCLessonFilePreview from './components/SCLessonFilePreview';
+import SCLessonTemplate from './components/SCLessonTemplate';
+import SCLessonObject from './components/SCLessonObject';
+import SCLessonReleaseMenu from './components/SCLessonReleaseMenu';
 import SCLightbox from './components/SCLightbox';
 import SCLoyaltyProgramDetailTemplate from './components/SCLoyaltyProgramDetailTemplate';
 import SCLoyaltyProgramWidget from './components/SCLoyaltyProgramWidget';
@@ -141,15 +169,28 @@ import SCScrollContainer from './components/SCScrollContainer';
 import SCSearchAutocomplete from './components/SCSearchAutocomplete';
 import SCSnippetNotifications from './components/SCSnippetNotifications';
 import SCSuggestedEventsWidget from './components/SCSuggestedEventsWidget';
+import SCLiveStream from './components/SCLiveStream';
+import SCCreateLiveStreamButton from './components/SCCreateLiveStreamButton';
+import SCCreateLiveStreamDialog from './components/SCLiveStreamDialog';
+import SCLiveStreamSelector from './components/SCLiveStreamSelector';
+import SCLiveStreamForm from './components/SCLiveStreamForm';
+import SCLiveStreamFormSettings from './components/SCLiveStreamFormSettings';
+import SCLiveStreamRoom from './components/SCLiveStreamRoom';
+import SCLiveStreamVideoConference from './components/SCLiveStreamVideoConference';
+import SCLiveStreamInfoDetails from './components/SCLiveStreamInfoDetails';
+import SCUpScalingTierBadge from './components/SCUpScalingTierBadge';
+import SCUserLiveStreamWidget from './components/SCUserLiveStreamWidget';
 import SCToastNotifications from './components/SCToastNotifications';
 import SCUser from './components/SCUser';
 import SCUserActionIconButton from './components/SCUserActionIconButton';
 import SCUserAvatar from './components/SCUserAvatar';
+import SCUserAutocomplete from './components/SCUserAutocomplete';
 import SCUserCategoriesFollowedWidget from './components/SCUserCategoriesFollowedWidget';
 import SCUserConnectionsRequestsSentWidget from './components/SCUserConnectionsRequestsSentWidget';
 import SCUserConnectionsRequestsWidget from './components/SCUserConnectionsRequestsWidget';
 import SCUserConnectionsWidget from './components/SCUserConnectionsWidget';
 import SCUserCounters from './components/SCUserCounters';
+import SCUserCreatedCoursesWidget from './components/SCUserCreatedCoursesWidget';
 import SCUserFeedTemplate from './components/SCUserFeedTemplate';
 import SCUserFollowedUsersWidget from './components/SCUserFollowedUsersWidget';
 import SCUserFollowersWidget from './components/SCUserFollowersWidget';
@@ -164,6 +205,21 @@ import SCTagAutocomplete from './components/SCTagAutocomplete';
 import SCVoteAudienceButton from './components/SCVoteAudienceButton';
 import SCVoteButton from './components/SCVoteButton';
 import SCWidget from './components/SCWidget';
+import SCBuyButton from './components/SCBuyButton';
+import SCPaymentProducts from './components/SCPaymentProducts';
+import SCPaymentProduct from './components/SCPaymentProduct';
+import SCPaymentOrder from './components/SCPaymentOrder';
+import SCPaymentOrderPdfButton from './components/SCPaymentOrderPdfButton';
+import SCPaymentProductPrice from './components/SCPaymentProductPrice';
+import SCCheckout from './components/SCCheckout';
+import SCCheckoutReturnDialog from './components/SCCheckoutReturnDialog';
+import SCHiddenPurchasableContent from './components/SCHiddenPurchasableContent';
+import SCPaywalls from './components/SCPaywalls';
+import SCPaywallsConfigurator from './components/SCPaywallsConfigurator';
+import SCPdfPreview from './components/SCPdfPreview';
+import SCPaymentOrders from './components/SCPaymentOrders';
+import SCCheckoutHeaderInfoWidget from './components/SCCheckoutHeaderInfoWidget';
+import SCFooterWidget from './components/SCFooterWidget';
 /**
  * Style fragments - Imports - End
  */
@@ -261,11 +317,13 @@ const theme = {
     MuiPopover,
     MuiSelect,
     MuiTooltip,
+    SCAccordionLessons,
     SCAccountChangeMailValidation,
     SCAccountDataPortability,
     SCAccountDelete,
     SCAccountReset,
     SCAccountVerify,
+    SCAddUsersButton,
     SCBaseDialog,
     SCBaseItem,
     SCBaseItemButton,
@@ -279,6 +337,7 @@ const theme = {
     SCCategoryAutocomplete,
     SCCategoryFeedTemplate,
     SCCategoryFollowersButton,
+    SCCategoryFollowButton,
     SCCategoryHeader,
     SCCategoryTemplate,
     SCCategoryTrendingFeedWidget,
@@ -295,6 +354,16 @@ const theme = {
     SCComposer,
     SCConsentSolution,
     SCContributionActionsMenu,
+    SCCourse,
+    SCCourseContentMenu,
+    SCCourseDashboard,
+    SCCourses,
+    SCCourseForm,
+    SCCourseFormDialog,
+    SCCourseParticipantsButton,
+    SCCourseInfoDetails,
+    SCCourseTypePopover,
+    SCCourseUsersTable,
     SCCreateGroupButton,
     SCCustomAdv,
     SCCustomSnackMessage,
@@ -303,6 +372,7 @@ const theme = {
     SCDefaultDrawerContent,
     SCEditGroupButton,
     SCEditor,
+    SCEditCourse,
     SCEmojiPicker,
     SCExploreFeedTemplate,
     SCFeed,
@@ -324,6 +394,7 @@ const theme = {
     SCGroupMembersWidget,
     SCGroupRequestsWidget,
     SCGroupSettingsIconButton,
+    SCGroupSubscribeButton,
     SCGroupTemplate,
     SCGroups,
     SCIncubator,
@@ -332,6 +403,17 @@ const theme = {
     SCIncubatorSuggestionWidget,
     SCInlineComposerWidget,
     SCLanguageSwitcher,
+    SCLessonAppbar,
+    SCLessonDrawer,
+    SCLessonCommentActionsMenu,
+    SCLessonCommentObject,
+    SCLessonCommentObjects,
+    SCCourseCompletedDialog,
+    SCLessonEditForm,
+    SCLessonFilePreview,
+    SCLessonTemplate,
+    SCLessonObject,
+    SCLessonReleaseMenu,
     SCLightbox,
     SCLoyaltyProgramDetailTemplate,
     SCLoyaltyProgramWidget,
@@ -369,11 +451,13 @@ const theme = {
     SCUser,
     SCUserActionIconButton,
     SCUserAvatar,
+    SCUserAutocomplete,
     SCUserCategoriesFollowedWidget,
     SCUserConnectionsRequestsSentWidget,
     SCUserConnectionsRequestsWidget,
     SCUserConnectionsWidget,
     SCUserCounters,
+    SCUserCreatedCoursesWidget,
     SCUserFeedTemplate,
     SCUserFollowedUsersWidget,
     SCUserFollowersWidget,
@@ -387,6 +471,7 @@ const theme = {
     SCTagAutocomplete,
     SCEventForm,
     SCEventFormDialog,
+    SCCreateCourseButton,
     SCCreateEventButton,
     SCEventLocationWidget,
     SCEvent,
@@ -407,7 +492,34 @@ const theme = {
     SCVoteAudienceButton,
     SCVoteButton,
     SCWidget,
-    SCEventMediaWidget
+    SCEventMediaWidget,
+    SCEmptyStatus,
+    SCLiveStream,
+    SCLiveStreamInfoDetails,
+    SCUpScalingTierBadge,
+    SCUserLiveStreamWidget,
+    SCCreateLiveStreamButton,
+    SCCreateLiveStreamDialog,
+    SCLiveStreamSelector,
+    SCLiveStreamForm,
+    SCLiveStreamFormSettings,
+    SCLiveStreamRoom,
+    SCLiveStreamVideoConference,
+    SCBuyButton,
+    SCPaymentProducts,
+    SCPaymentProduct,
+    SCPaymentOrder,
+    SCPaymentOrderPdfButton,
+    SCPaymentProductPrice,
+    SCCheckout,
+    SCCheckoutReturnDialog,
+    SCHiddenPurchasableContent,
+    SCPaywalls,
+    SCPaywallsConfigurator,
+    SCPdfPreview,
+    SCPaymentOrders,
+    SCCheckoutHeaderInfoWidget,
+    SCFooterWidget
   },
   selfcommunity: {
     user: {
@@ -431,6 +543,20 @@ const theme = {
         sizeMedium: 60,
         sizeLarge: 90,
         sizeXLarge: 205
+      }
+    },
+    contentProduct: {
+      icon: {
+        sizeSmall: 24,
+        sizeMedium: 40,
+        sizeLarge: 50
+      }
+    },
+    contentProductPrice: {
+      icon: {
+        sizeSmall: 24,
+        sizeMedium: 40,
+        sizeLarge: 50
       }
     }
   }

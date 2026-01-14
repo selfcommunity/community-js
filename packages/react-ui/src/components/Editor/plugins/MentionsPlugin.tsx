@@ -19,9 +19,7 @@ import {createMentionNode, MentionNode} from '../nodes/MentionNode';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCUserType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import {Avatar, Portal} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
+import {Avatar, Portal, styled, ClickAwayListener} from '@mui/material';
 import {PREFIX} from '../constants';
 
 type MentionMatch = {

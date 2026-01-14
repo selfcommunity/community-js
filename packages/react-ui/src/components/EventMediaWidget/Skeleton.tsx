@@ -1,8 +1,6 @@
-import { Box, CardContent, CardHeader, Divider } from '@mui/material';
-import Skeleton from '@mui/material/Skeleton';
-import { styled } from '@mui/material/styles';
+import {Box, CardContent, CardHeader, Divider, styled, Skeleton} from '@mui/material';
 import Widget from '../Widget';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,

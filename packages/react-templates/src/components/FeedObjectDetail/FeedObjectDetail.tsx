@@ -1,6 +1,5 @@
-import React, {useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Grid, Hidden} from '@mui/material';
+import {useMemo, useState} from 'react';
+import {Box, Grid, Hidden, styled} from '@mui/material';
 import {
   CommentsFeedObject,
   CommentsFeedObjectProps,
@@ -144,8 +143,12 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
   const scPreferences: SCPreferencesContextType = useSCPreferences();
 
   // RETRIVE OBJECTS
-  const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const {obj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
   const [comments, setComments] = useState<SCCommentType[]>([]);
+
+  const commentsEnabled =
+    SCPreferences.CONFIGURATIONS_COMMENTS_ENABLED in scPreferences.preferences &&
+    scPreferences.preferences[SCPreferences.CONFIGURATIONS_COMMENTS_ENABLED].value;
 
   /**
    * Compute preferences
@@ -206,7 +209,9 @@ export default function FeedObjectDetail(inProps: FeedObjectDetailProps): JSX.El
         <Grid item xs={12} md={7}>
           <FeedObject {...FeedObjectProps} feedObject={obj} template={SCFeedObjectTemplateType.DETAIL} onReply={handleReply} />
           {renderAdvertising()}
-          <CommentsFeedObject key={`comments_${obj.id}`} showTitle feedObject={obj} comments={comments} {...CommentsFeedObjectProps} />
+          {commentsEnabled && (
+            <CommentsFeedObject key={`comments_${obj.id}`} showTitle feedObject={obj} comments={comments} {...CommentsFeedObjectProps} />
+          )}
         </Grid>
         <Grid item xs={12} md={5}>
           <Hidden mdDown>

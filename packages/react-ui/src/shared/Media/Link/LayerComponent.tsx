@@ -1,13 +1,10 @@
-import React, { ReactElement, useCallback, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Box, BoxProps, Button, DialogTitle, IconButton, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { SCMediaType } from '@selfcommunity/types/src/index';
-import Icon from '@mui/material/Icon';
-import DialogContent from '@mui/material/DialogContent';
+import React, {ReactElement, useCallback, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
+import {Box, BoxProps, Button, DialogTitle, IconButton, Typography, Icon, styled, DialogContent} from '@mui/material';
+import {SCMediaType} from '@selfcommunity/types/src/index';
 import classNames from 'classnames';
-import { ComposerLayerProps } from '../../../types/composer';
-import { PREFIX } from './constants';
+import {ComposerLayerProps} from '../../../types/composer';
+import {PREFIX} from './constants';
 import PreviewComponent from './PreviewComponent';
 import UrlTextField from './UrlTextField';
 
@@ -30,7 +27,7 @@ export interface LayerComponentProps extends Omit<BoxProps, 'defaultValue'>, Com
 
 const LayerComponent = React.forwardRef((props: LayerComponentProps, ref: React.Ref<unknown>): ReactElement => {
   // PROPS
-  const {className, onClose, onSave, defaultValue= [], ...rest} = props;
+  const {className, onClose, onSave, defaultValue = [], ...rest} = props;
 
   // STATE
   const [value, setValue] = useState<SCMediaType[]>(defaultValue);
@@ -40,31 +37,33 @@ const LayerComponent = React.forwardRef((props: LayerComponentProps, ref: React.
   const handleAdd = useCallback((media: SCMediaType) => setValue([...value, media]), [value]);
   const handleChange = useCallback((medias: SCMediaType[]) => setValue(medias), []);
 
-  return <Root ref={ref} className={classNames(className, classes.layerRoot)} {...rest}>
-    <DialogTitle className={classes.title}>
-      <IconButton onClick={onClose}>
-        <Icon>arrow_back</Icon>
-      </IconButton>
-      <Typography>
-        <FormattedMessage id="ui.composer.media.link.layer.title" defaultMessage="ui.composer.media.link.layer.title" />
-      </Typography>
-      <Button size="small" color="secondary" variant="contained" onClick={handleSave}>
-        <FormattedMessage id="ui.composer.layer.save" defaultMessage="ui.composer.layer.save" />
-      </Button>
-    </DialogTitle>
-    <DialogContent className={classes.content}>
-      <UrlTextField
-        id="page"
-        name="page"
-        label={<FormattedMessage id="ui.composer.media.link.add.label" defaultMessage="ui.composer.media.link.add.label" />}
-        fullWidth
-        variant="outlined"
-        placeholder="https://"
-        onSuccess={handleAdd}
-      />
-      <PreviewComponent onChange={handleChange} value={value} />
-    </DialogContent>
-  </Root>
+  return (
+    <Root ref={ref} className={classNames(className, classes.layerRoot)} {...rest}>
+      <DialogTitle className={classes.title}>
+        <IconButton onClick={onClose}>
+          <Icon>arrow_back</Icon>
+        </IconButton>
+        <Typography>
+          <FormattedMessage id="ui.composer.media.link.layer.title" defaultMessage="ui.composer.media.link.layer.title" />
+        </Typography>
+        <Button size="small" color="secondary" variant="contained" onClick={handleSave}>
+          <FormattedMessage id="ui.composer.layer.save" defaultMessage="ui.composer.layer.save" />
+        </Button>
+      </DialogTitle>
+      <DialogContent className={classes.content}>
+        <UrlTextField
+          id="page"
+          name="page"
+          label={<FormattedMessage id="ui.composer.media.link.add.label" defaultMessage="ui.composer.media.link.add.label" />}
+          fullWidth
+          variant="outlined"
+          placeholder="https://"
+          onSuccess={handleAdd}
+        />
+        <PreviewComponent onChange={handleChange} value={value} />
+      </DialogContent>
+    </Root>
+  );
 });
 
 export default LayerComponent;

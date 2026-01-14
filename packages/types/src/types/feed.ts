@@ -1,4 +1,4 @@
-import {SCUserType} from './user';
+import {SCUserAutocompleteType, SCUserType} from './user';
 import {SCCategoryType} from './category';
 import {SCContributionLocation} from './location';
 import {SCPollType} from './poll';
@@ -17,7 +17,7 @@ export enum SCFeedTypologyType {
   EXPLORE = 'explore',
   CATEGORY = 'category',
   GROUP = 'group',
-	EVENT = 'event',
+  EVENT = 'event'
 }
 
 /**
@@ -48,7 +48,7 @@ export interface SCFeedUnitType {
   /**
    * Id of User that have seen this object
    */
-  seen_by_id?: number[];
+  seen?: boolean;
 
   /**
    * True if this object has the visibility boost
@@ -96,7 +96,7 @@ export interface SCFeedUnitActivityType {
   /**
    * Id of Users that have seen this activity
    */
-  seen_by_id?: number[];
+  seen?: boolean;
 }
 
 /**
@@ -145,9 +145,19 @@ export interface SCFeedObjectType {
   last_activity_at: Date;
 
   /**
+   * Last edited at
+   */
+  last_edited_at: Date;
+
+  /**
    * Added at
    */
   added_at: Date;
+
+  /**
+   * Scheduled at
+   */
+  scheduled_at?: Date;
 
   /**
    * Slug
@@ -230,7 +240,7 @@ export interface SCFeedObjectType {
   flag_count: number;
 
   /**
-   * Tags adderssing
+   * Tags addressing
    */
   addressing: SCTagType[];
 
@@ -243,6 +253,14 @@ export interface SCFeedObjectType {
    * Suspended notification
    */
   suspended?: boolean;
+  /**
+   * True if scheduled_posts ddp is enabled and if the feed object is not published yet
+   */
+  draft?: boolean;
+  /**
+   * Users addressing
+   */
+  recipients?: SCUserAutocompleteType[];
 }
 
 /**

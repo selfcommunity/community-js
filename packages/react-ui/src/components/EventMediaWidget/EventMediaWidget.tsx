@@ -1,6 +1,18 @@
 import {LoadingButton} from '@mui/lab';
-import {Button, CardActions, CardContent, CardHeader, Divider, Icon, Stack, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {
+  Button,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Divider,
+  Icon,
+  Stack,
+  Tooltip,
+  Typography,
+  useMediaQuery,
+  useTheme,
+  styled
+} from '@mui/material';
 import {Box, useThemeProps} from '@mui/system';
 import {Endpoints, EventService, http, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCCache, SCThemeType, SCUserContextType, useSCFetchEvent, useSCUser} from '@selfcommunity/react-core';
@@ -410,7 +422,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
           className={classes.dialogRoot}
           title={intl.formatMessage(messages.title, {user: scEvent.managed_by.username})}
           onClose={handleToggleDialogOpen}
-          open={openDialog}
+          open
           {...dialogProps}>
           <InfiniteScroll
             dataLength={medias.length}
@@ -453,7 +465,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
 
       {openDialogConfirm && (
         <ConfirmDialog
-          open={openDialogConfirm}
+          open
           title={<FormattedMessage id="ui.eventMediaWidget.dialog.title" defaultMessage="ui.eventMediaWidget.dialog.title" />}
           content={<FormattedMessage id="ui.eventMediaWidget.dialog.msg" defaultMessage="ui.eventMediaWidget.dialog.msg" />}
           btnConfirm={<FormattedMessage id="ui.eventMediaWidget.dialog.confirm" defaultMessage="ui.eventMediaWidget.dialog.confirm" />}

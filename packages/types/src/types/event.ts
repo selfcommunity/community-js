@@ -3,6 +3,8 @@
  * Event Schema.
  */
 import {SCUserType} from './user';
+import {SCLiveStreamType} from './liveStream';
+import {SCPurchasableContent} from './payment';
 
 /**
  * SCEventPrivacyType enum
@@ -28,7 +30,8 @@ export enum SCEventSubscriptionStatusType {
  */
 export enum SCEventLocationType {
   PERSON = 'in person',
-  ONLINE = 'virtual'
+  ONLINE = 'virtual',
+  LIVESTREAM = 'live_stream'
 }
 
 /**
@@ -36,8 +39,8 @@ export enum SCEventLocationType {
  */
 export enum SCEventLocationFilterType {
   ANY = 'any',
-	PERSON = 'in person',
-	ONLINE = 'virtual'
+  PERSON = 'in person',
+  ONLINE = 'virtual'
 }
 
 /**
@@ -54,16 +57,17 @@ export enum SCEventRecurrenceType {
  * SCEventRecurrenceType enum
  */
 export enum SCEventDateFilterType {
-  ANY = 'any',
+  ALL = 'all',
   TODAY = 'today',
   TOMORROW = 'tomorrow',
   THIS_WEEK = 'this_week',
   NEXT_WEEK = 'next_week',
   THIS_MONTH = 'this_month',
+  NOT_PAST = 'not_past',
   PAST = 'past'
 }
 
-export interface SCEventType {
+export interface SCEventType extends SCPurchasableContent {
   /**
    * The ID of the event.
    */
@@ -188,6 +192,11 @@ export interface SCEventType {
    * The event location (in person, online)
    */
   location: SCEventLocationType;
+
+  /**
+   * The event live stream if exist
+   */
+  live_stream?: SCLiveStreamType;
 
   /**
    * The event place

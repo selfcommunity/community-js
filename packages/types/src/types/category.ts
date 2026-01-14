@@ -1,10 +1,11 @@
 import {SCTagType} from './tag';
+import {SCPurchasableContent} from './payment';
 
 /**
  * Interface SCCategoryType.
  * Category Schema.
  */
-export interface SCCategoryType {
+export interface SCCategoryType extends SCPurchasableContent {
   /**
    * The ID of the category.
    */
@@ -124,6 +125,11 @@ export interface SCCategoryType {
    * If the category is followed by the authenticated user
    */
   followed?: boolean;
+
+  /**
+   * Indicates who has permission to post content
+   */
+  content_only_staff?: boolean;
 }
 
 export interface SCCategoryAudienceType {

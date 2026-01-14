@@ -1,14 +1,21 @@
 import React, {useState} from 'react';
 import {CONTROLLED_TEXT_INSERTION_COMMAND, LexicalEditor} from 'lexical';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import {Fade, Icon, IconButton, Popover, useMediaQuery, useTheme} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Fade, Icon, IconButton, Popover, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCThemeType} from '@selfcommunity/react-core';
 import {EmojiClickData} from 'emoji-picker-react';
 import EmojiPicker from '../../../shared/EmojiPicker';
 import {PREFIX} from '../constants';
 
-function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: string}): JSX.Element {
+function Emoji({
+  editor,
+  className = '',
+  isLessonCommentEditor = false
+}: {
+  editor: LexicalEditor;
+  className?: string;
+  isLessonCommentEditor?: boolean;
+}): JSX.Element {
   // STATE
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -38,14 +45,8 @@ function Emoji({editor, className = ''}: {editor: LexicalEditor; className?: str
         anchorEl={emojiAnchorEl}
         onClose={() => setEmojiAnchorEl(null)}
         TransitionComponent={Fade}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-        transformOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left'
-        }}
+        anchorOrigin={isLessonCommentEditor ? {vertical: 'bottom', horizontal: 'left'} : {vertical: 'top', horizontal: 'right'}}
+        transformOrigin={isLessonCommentEditor ? {vertical: 'top', horizontal: 'right'} : {vertical: 'bottom', horizontal: 'left'}}
         sx={(theme) => {
           return {zIndex: theme.zIndex.tooltip};
         }}>
@@ -64,7 +65,7 @@ const Root = styled(Emoji, {
   slot: 'EmojiPluginRoot'
 })(() => ({}));
 
-export default function EmojiPlugin(): JSX.Element {
+export default function EmojiPlugin({isLessonCommentEditor = false}: {isLessonCommentEditor?: boolean}): JSX.Element {
   const [editor] = useLexicalComposerContext();
-  return <Root editor={editor} className={classes.root} />;
+  return <Root editor={editor} className={classes.root} isLessonCommentEditor={isLessonCommentEditor} />;
 }

@@ -9,9 +9,12 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
-  useMediaQuery,
-  useTheme,
-  Zoom
+  Zoom,
+  styled,
+  AccordionDetails,
+  Accordion,
+  AccordionSummary,
+  Avatar
 } from '@mui/material';
 import {
   Link,
@@ -19,23 +22,23 @@ import {
   SCPreferencesContextType,
   SCRoutes,
   SCRoutingContextType,
-  SCThemeType,
   SCUserContextType,
   useSCFetchCategories,
   useSCPreferences,
   useSCRouting,
   useSCUser
 } from '@selfcommunity/react-core';
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import Category, {CategoryProps} from '../Category';
 import {FormattedMessage} from 'react-intl';
 import {sortByAttr} from '@selfcommunity/utils';
 import {SCCategoryType, SCFeatureName} from '@selfcommunity/types';
-import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import CategorySkeleton from '../Category/Skeleton';
-import DefaultDrawerSkeleton from './DefaultDrawerSkeleton';
+import BaseItem from '../../shared/BaseItem';
+import FormazionePlaceholder from '../../assets/custom/formazione';
+import {DefaultCategoryTagName} from '../../constants/DefaultDrawerContent';
+import {scroll} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCDefaultDrawerContent';
 
@@ -54,6 +57,9 @@ const Root = styled(Box, {
 
 export interface DefaultDrawerContentProps extends BoxProps {
   CategoryItemProps?: CategoryProps;
+  tagImage?: string;
+  onClose?: () => void;
+  onClickHome?: () => void;
 }
 export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps) {
   const props: DefaultDrawerContentProps = useThemeProps({
@@ -61,10 +67,10 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
     name: PREFIX
   });
 
-  const {className, CategoryItemProps = {showTooltip: true}, ...rest} = props;
+  const {className, CategoryItemProps = {showTooltip: true}, tagImage = '/', onClose, onClickHome, ...rest} = props;
 
   // HOOKS
-  const {categories, isLoading} = useSCFetchCategories();
+  const {categories} = useSCFetchCategories();
   const [categoriesOrdered, setCategoriesOrdered] = useState<SCCategoryType[]>([]);
 
   // ROUTING
@@ -72,14 +78,13 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // PREFERENCES
   const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   //STATE
   const [isHovered, setIsHovered] = useState({});
+  const [expanded, setExpanded] = useState<string | false>(false);
 
   // MEMO
   const groupsEnabled = useMemo(
@@ -101,8 +106,24 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
       preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
     [preferences, features]
   );
+  const coursesEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.COURSE) &&
+      SCPreferences.CONFIGURATIONS_COURSES_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_COURSES_ENABLED].value,
+    [preferences, features]
+  );
   const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
   const contentAvailable = preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
+
+  const showAllCategories = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_SIDEBAR_SHOW_ALL_CATEGORIES_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_SIDEBAR_SHOW_ALL_CATEGORIES_ENABLED].value,
+    [preferences]
+  );
 
   // HANDLERS
   const handleMouseEnter = (index: number) => {
@@ -117,10 +138,34 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
     });
   };
 
+  const handleChange = (tagName: string) => (_event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpanded(isExpanded ? tagName : false);
+  };
+
+  const handleClickHome = useCallback(() => {
+    if (onClickHome) {
+      onClickHome();
+    } else {
+      const pathName = window.location.pathname;
+      if (pathName && (pathName === '/' || pathName === scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))) {
+        scroll(window, {top: 0, behavior: 'smooth'});
+      }
+    }
+  }, [onClickHome]);
+
   // Order categories
   useEffect(() => {
-    setCategoriesOrdered(sortByAttr(categories, 'order'));
-  }, [categories]);
+    if (!scUserContext.user || (scUserContext.user && showAllCategories)) {
+      setCategoriesOrdered(sortByAttr(categories, 'order'));
+    } else {
+      setCategoriesOrdered(
+        sortByAttr(
+          categories.filter((cat) => cat.followed),
+          'order'
+        )
+      );
+    }
+  }, [scUserContext.user, showAllCategories, categories]);
 
   const getMouseEvents = (mouseEnter: () => void, mouseLeave: () => void) => ({
     onMouseEnter: mouseEnter,
@@ -129,119 +174,197 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
     onTouchMove: mouseLeave
   });
 
+  const taggedCategories: Record<string, SCCategoryType[]> = {};
+  const untaggedCategories: SCCategoryType[] = [];
+
+  categoriesOrdered.forEach((c) => {
+    const visibleTags = (c.tags ?? []).filter((tag) => tag.visible);
+
+    if (visibleTags.length > 0) {
+      visibleTags.forEach((tag) => {
+        if (!taggedCategories[tag.name]) taggedCategories[tag.name] = [];
+        taggedCategories[tag.name].push(c);
+      });
+    } else {
+      untaggedCategories.push(c);
+    }
+  });
+
   //order
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
-      {isMobile && (
-        <>
-          <List className={classes.navigation}>
-            <ListItem disablePadding>
-              <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}>
-                <ListItemIcon>
-                  <Icon>home</Icon>
-                </ListItemIcon>
-                <ListItemText
-                  primary={
-                    <FormattedMessage
-                      id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
-                      defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
-                    />
-                  }
-                />
-              </ListItemButton>
-            </ListItem>
-            {groupsEnabled && scUserContext.user && (
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}>
-                  <ListItemIcon>
-                    <Icon>groups</Icon>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <FormattedMessage
-                        id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.groups"
-                        defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.groups"
-                      />
-                    }
+      <List className={classes.navigation}>
+        {scUserContext.user && (
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} onClick={handleClickHome}>
+              <ListItemIcon>
+                <Icon>home</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
+                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.home"
                   />
-                </ListItemButton>
-              </ListItem>
-            )}
-            {eventsEnabled && (scUserContext.user || contentAvailable) && (
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}>
-                  <ListItemIcon>
-                    <Icon>CalendarIcon</Icon>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <FormattedMessage
-                        id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.events"
-                        defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.events"
-                      />
-                    }
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {coursesEnabled && (scUserContext.user || contentAvailable) && (
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}>
+              <ListItemIcon>
+                <Icon>courses</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.courses"
+                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.courses"
                   />
-                </ListItemButton>
-              </ListItem>
-            )}
-            {exploreStreamEnabled && (contentAvailable || scUserContext.user) && (
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}>
-                  <ListItemIcon>
-                    <Icon>explore</Icon>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <FormattedMessage
-                        id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.explore"
-                        defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.explore"
-                      />
-                    }
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {groupsEnabled && scUserContext.user && (
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}>
+              <ListItemIcon>
+                <Icon>groups</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.groups"
+                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.groups"
                   />
-                </ListItemButton>
-              </ListItem>
-            )}
-          </List>
-          <Divider />
-        </>
-      )}
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {eventsEnabled && (scUserContext.user || contentAvailable) && (
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}>
+              <ListItemIcon>
+                <Icon>CalendarIcon</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.events"
+                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.events"
+                  />
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+        {exploreStreamEnabled && (contentAvailable || scUserContext.user) && (
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}>
+              <ListItemIcon>
+                <Icon>explore</Icon>
+              </ListItemIcon>
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.navigationMenuIconButton.defaultDrawerContent.navigation.explore"
+                    defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.navigation.explore"
+                  />
+                }
+              />
+            </ListItemButton>
+          </ListItem>
+        )}
+      </List>
+      <Divider />
       <Typography variant="subtitle1" className={classes.title}>
         <FormattedMessage
           id="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
           defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
         />
       </Typography>
-      {isLoading ? (
-        <DefaultDrawerSkeleton />
-      ) : (
-        <>
-          {!categoriesOrdered.length && (
-            <Typography variant="body1" className={classes.noResults}>
-              <FormattedMessage
-                id="ui.navigationMenuIconButton.defaultDrawerContent.category.noResults"
-                defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.noResults"
-              />
-            </Typography>
-          )}
-          {categoriesOrdered.map((c: SCCategoryType, index: number) => (
-            <Zoom in={true} style={{transform: isHovered[c.id] && 'scale(1.05)'}} key={index}>
-              <ListItem key={c.id}>
-                <Category
-                  ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)}}
-                  elevation={0}
-                  category={c}
-                  actions={null}
-                  {...CategoryItemProps}
-                  {...getMouseEvents(
-                    () => handleMouseEnter(c.id),
-                    () => handleMouseLeave(c.id)
-                  )}
-                />
-              </ListItem>
-            </Zoom>
-          ))}
-        </>
+      {!categoriesOrdered.length && (
+        <Typography variant="body1" className={classes.noResults}>
+          <FormattedMessage
+            id="ui.navigationMenuIconButton.defaultDrawerContent.category.noResults"
+            defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.noResults"
+          />
+        </Typography>
       )}
+      <>
+        {Object.entries(taggedCategories).map(([tagName, categories]) => {
+          if (!categories.length || !categories[0].tags?.length) return null;
+          return (
+            <Accordion
+              key={tagName}
+              expanded={expanded === tagName}
+              onChange={handleChange(tagName)}
+              elevation={0}
+              onFocus={(e) => e.stopPropagation()}>
+              <AccordionSummary expandIcon={<Icon>expand_more</Icon>}>
+                <BaseItem
+                  elevation={0}
+                  image={<Avatar alt={tagName} src={tagName === DefaultCategoryTagName ? FormazionePlaceholder : tagImage} variant="square" />}
+                  primary={tagName}
+                  disableTypography={false}
+                />
+              </AccordionSummary>
+
+              <AccordionDetails>
+                <List>
+                  {categories.map((c) => (
+                    <Zoom in={true} key={c.id}>
+                      <ListItem>
+                        <Category
+                          ButtonBaseProps={{
+                            component: Link,
+                            to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)
+                          }}
+                          elevation={0}
+                          category={c}
+                          actions={null}
+                          {...CategoryItemProps}
+                          {...getMouseEvents(
+                            () => handleMouseEnter(c.id),
+                            () => handleMouseLeave(c.id)
+                          )}
+                          onClick={onClose}
+                        />
+                      </ListItem>
+                    </Zoom>
+                  ))}
+                </List>
+              </AccordionDetails>
+            </Accordion>
+          );
+        })}
+        {untaggedCategories.length > 0 && (
+          <>
+            {untaggedCategories.map((c: SCCategoryType, index: number) => (
+              <Zoom in={true} style={{transform: isHovered[c.id] && 'scale(1.05)'}} key={index}>
+                <ListItem key={c.id}>
+                  <Category
+                    ButtonBaseProps={{component: Link, to: scRoutingContext.url(SCRoutes.CATEGORY_ROUTE_NAME, c)}}
+                    elevation={0}
+                    category={c}
+                    actions={null}
+                    {...CategoryItemProps}
+                    {...getMouseEvents(
+                      () => handleMouseEnter(c.id),
+                      () => handleMouseLeave(c.id)
+                    )}
+                    onClick={onClose}
+                  />
+                </ListItem>
+              </Zoom>
+            ))}
+          </>
+        )}
+      </>
     </Root>
   );
 }

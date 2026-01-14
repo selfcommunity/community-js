@@ -1,8 +1,7 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
 import UserSkeleton from '../User/Skeleton';
 import Widget from '../Widget';
-import {List, CardContent, ListItem} from '@mui/material';
+import {List, CardContent, ListItem, styled} from '@mui/material';
 import {PREFIX} from './constants';
 
 const classes = {

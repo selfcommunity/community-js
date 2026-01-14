@@ -11,6 +11,8 @@ import Group, {GroupProps, GroupSkeleton} from './components/Group';
 import GroupFeed, {GroupFeedProps, GroupFeedSkeleton} from './components/GroupFeed';
 import Event, {EventProps, EventSkeleton} from './components/Event';
 import EventFeed, {EventFeedProps, EventFeedSkeleton} from './components/EventFeed';
+import Lesson, {LessonProps} from './components/Lesson';
+import Course, {CourseProps, TeacherSkeleton, StudentSkeleton} from './components/Course';
 
 export {
   Category,
@@ -19,6 +21,10 @@ export {
   CategoryFeed,
   CategoryFeedProps,
   CategoryFeedSkeleton,
+  Course,
+  CourseProps,
+  TeacherSkeleton,
+  StudentSkeleton,
   ExploreFeed,
   ExploreFeedProps,
   ExploreFeedSkeleton,
@@ -51,5 +57,7 @@ export {
   EventSkeleton,
   EventFeed,
   EventFeedProps,
-  EventFeedSkeleton
+  EventFeedSkeleton,
+  Lesson,
+  LessonProps
 };

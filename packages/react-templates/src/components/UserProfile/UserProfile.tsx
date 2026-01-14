@@ -1,6 +1,5 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Button, Icon, Stack, Typography} from '@mui/material';
+import {Box, Button, Icon, Stack, Typography, styled} from '@mui/material';
 import {
   ConnectionUserButton,
   FeedObjectProps,
@@ -13,12 +12,15 @@ import {
   UserConnectionsRequestsWidget,
   UserConnectionsWidget,
   UserCounters,
+  UserCreatedCoursesWidget,
   UserFollowedCategoriesWidget,
   UserFollowedUsersWidget,
   UserFollowersWidget,
+  UserLiveStreamWidget,
   UserProfileBlocked,
   UserProfileHeader,
-  UserProfileHeaderProps, UserSubscribedGroupsWidget,
+  UserProfileHeaderProps,
+  UserSubscribedGroupsWidget
 } from '@selfcommunity/react-ui';
 import UserFeed, {UserFeedProps} from '../UserFeed';
 import {
@@ -150,31 +152,45 @@ export interface UserProfileProps {
 const WIDGETS_FOLLOWERS = [
   {
     type: 'widget',
-    component: UserFollowedCategoriesWidget,
+    component: UserLiveStreamWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: UserFollowedUsersWidget,
+    component: UserFollowedCategoriesWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: UserFollowersWidget,
+    component: UserFollowedUsersWidget,
     componentProps: {},
     column: 'right',
     position: 2
   },
   {
     type: 'widget',
-    component: UserSubscribedGroupsWidget,
+    component: UserFollowersWidget,
     componentProps: {},
     column: 'right',
     position: 3
+  },
+  {
+    type: 'widget',
+    component: UserSubscribedGroupsWidget,
+    componentProps: {},
+    column: 'right',
+    position: 4
+  },
+  {
+    type: 'widget',
+    component: UserCreatedCoursesWidget,
+    componentProps: {},
+    column: 'right',
+    position: 5
   }
 ];
 
@@ -191,24 +207,31 @@ const WIDGETS_FOLLOWERS_MY_PROFILE = [
 const WIDGETS_CONNECTIONS = [
   {
     type: 'widget',
-    component: UserFollowedCategoriesWidget,
+    component: UserLiveStreamWidget,
     componentProps: {},
     column: 'right',
     position: 0
   },
   {
     type: 'widget',
-    component: UserConnectionsWidget,
+    component: UserFollowedCategoriesWidget,
     componentProps: {},
     column: 'right',
     position: 1
   },
   {
     type: 'widget',
-    component: UserSubscribedGroupsWidget,
+    component: UserConnectionsWidget,
     componentProps: {},
     column: 'right',
     position: 2
+  },
+  {
+    type: 'widget',
+    component: UserSubscribedGroupsWidget,
+    componentProps: {},
+    column: 'right',
+    position: 3
   }
 ];
 
@@ -314,13 +337,21 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
       scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value,
     [scPreferencesContext.preferences]
   );
-  const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
+  const connectionEnabled =
+    SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferencesContext.preferences &&
+    scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value;
+  const privateMessagingEnabled = useMemo(
+    () =>
+      SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
+    [scPreferencesContext.preferences]
+  );
 
   const _widgets = useMemo(() => {
     if (widgets !== null) {
       return widgets;
     }
-    if (!scUser) {
+    if (!scUser || (!followEnabled && !connectionEnabled)) {
       return [];
     }
     let _widgets = [];
@@ -435,7 +466,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
                       {scUser.tags
                         .filter((t) => t.visible)
                         .map((tag) => (
-                          <TagChip key={tag.id} tag={tag} clickable={false} disposable={false} />
+                          <TagChip key={tag.id} tag={tag} clickable={false} disposable={false} showDescription />
                         ))}
                     </Stack>
                   )}

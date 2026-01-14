@@ -1,5 +1,5 @@
-import {useMemo, useRef} from 'react';
-import {styled} from '@mui/material/styles';
+import {useEffect, useMemo, useRef, useState} from 'react';
+import {styled, Box} from '@mui/material';
 import {
   ContributionUtils,
   EventInfoWidget,
@@ -19,7 +19,16 @@ import {
   SCFeedWidgetType
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCFetchEvent, useSCRouting, useSCUser} from '@selfcommunity/react-core';
+import {
+  Link,
+  SCRoutes,
+  SCRoutingContextType,
+  SCSubscribedEventsManagerType,
+  SCUserContextType,
+  useSCFetchEvent,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {SCCustomAdvPosition, SCEventPrivacyType, SCEventSubscriptionStatusType, SCEventType, SCFeedTypologyType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -27,7 +36,6 @@ import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
 import EventFeedSkeleton from './Skeleton';
-import {Box} from '@mui/material';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -155,20 +163,36 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
   });
   const {id = 'event_feed', className, event, eventId, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
+  // STATUS
+  const [status, setStatus] = useState<string | null | undefined>(undefined);
+
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
+  const scEventsManager: SCSubscribedEventsManagerType = scUserContext.managers.events;
   const {enqueueSnackbar} = useSnackbar();
+  const {scEvent} = useSCFetchEvent({id: eventId, event});
 
   // REF
   const feedRef = useRef<FeedRef>();
 
-  // Hooks
-  const {scEvent} = useSCFetchEvent({id: eventId, event});
+  // CONST
+  const authUserId = scUserContext.user ? scUserContext.user.id : null;
+
+  useEffect(() => {
+    /**
+     * Call scEventsManager.subscriptionStatus inside an effect
+     * to avoid warning rendering child during update parent state
+     */
+    if (authUserId) {
+      setStatus(scEventsManager?.subscriptionStatus?.(scEvent));
+    }
+  }, [authUserId, scEventsManager?.subscriptionStatus, scEvent]);
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
-    enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
+    const messageId = feedObject.scheduled_at ? 'ui.composer.scheduled.success' : 'ui.composerIconButton.composer.success';
+    enqueueSnackbar(<FormattedMessage id={messageId} defaultMessage={messageId} />, {
       action: () => (
         <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], ContributionUtils.getRouteData(feedObject))}>
           <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
@@ -182,10 +206,10 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
       const feedUnit = {
         type: feedObject.type,
         [feedObject.type]: feedObject,
-        seen_by_id: [],
+        seen: false,
         has_boost: false
       };
-      feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+      !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
     }
   };
 
@@ -203,18 +227,18 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
 
   if (
     scUserContext.user === undefined ||
+    (scUserContext.user && status === undefined) ||
     !scEvent ||
-    (scUserContext.user &&
-      ((scEvent.privacy === SCEventPrivacyType.PUBLIC && !scEvent.subscription_status) ||
-        scEvent.subscription_status === SCEventSubscriptionStatusType.INVITED)) ||
+    (scUserContext.user && scEvent.privacy === SCEventPrivacyType.PUBLIC && !status) ||
     (scEvent && ((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id)))
   ) {
     return <EventFeedSkeleton />;
   } else if (
     scEvent.privacy === SCEventPrivacyType.PRIVATE &&
-    scEvent.subscription_status !== SCEventSubscriptionStatusType.SUBSCRIBED &&
-    scEvent.subscription_status !== SCEventSubscriptionStatusType.GOING &&
-    scEvent.subscription_status !== SCEventSubscriptionStatusType.NOT_GOING
+    (status === SCEventSubscriptionStatusType.INVITED ||
+      (status !== SCEventSubscriptionStatusType.SUBSCRIBED &&
+        status !== SCEventSubscriptionStatusType.GOING &&
+        status !== SCEventSubscriptionStatusType.NOT_GOING))
   ) {
     return (
       <Box mt={2}>
@@ -238,7 +262,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null,
-        markRead: scUser ? !item?.seen_by_id?.includes(scUser.id) : null
+        markRead: scUser ? !item?.seen : null
       })}
       itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}
@@ -254,9 +278,9 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
             scEvent &&
               ((!scUserContext.user && scEvent.privacy === SCEventPrivacyType.PUBLIC) ||
                 (scUserContext.user &&
-                  (scEvent.subscription_status === SCEventSubscriptionStatusType.SUBSCRIBED ||
-                    scEvent.subscription_status === SCEventSubscriptionStatusType.GOING ||
-                    scEvent.subscription_status === SCEventSubscriptionStatusType.NOT_GOING)))
+                  (status === SCEventSubscriptionStatusType.SUBSCRIBED ||
+                    status === SCEventSubscriptionStatusType.GOING ||
+                    status === SCEventSubscriptionStatusType.NOT_GOING)))
           ) && (
             <InlineComposerWidget
               onSuccess={handleComposerSuccess}

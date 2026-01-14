@@ -1,14 +1,15 @@
-import {Box, Grid, IconButton, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
-import {styled} from '@mui/material/styles';
-import {Link} from '@selfcommunity/react-core';
+import {styled, Grid, Typography, Icon, Stack} from '@mui/material';
 import classNames from 'classnames';
-import {MEDIA_TYPE_DOCUMENT} from '../../../constants/Media';
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import {Fragment, useCallback, useMemo, useState} from 'react';
 import {useInView} from 'react-intersection-observer';
 import {Lightbox} from '../../Lightbox';
 import {PREFIX} from './constants';
-import filter from './filter';
+import DocComponent from './DocComponent';
+import {filteredDocs, filteredImages} from './filter';
+import {SCMediaType} from '@selfcommunity/types';
+import {http, HttpResponse} from '@selfcommunity/api-services';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../../constants/Errors';
 
 const classes = {
   displayRoot: `${PREFIX}-display-root`,
@@ -24,13 +25,14 @@ const classes = {
   border: `${PREFIX}-border`,
   gallery: `${PREFIX}-gallery`,
   title: `${PREFIX}-title`,
-  iconFile: `${PREFIX}-icon-file`
+  iconFile: `${PREFIX}-icon-file`,
+  docsWrapper: `${PREFIX}-docs-wrapper`
 };
 
-const Root = styled(Box, {
+const Root = styled(Stack, {
   name: PREFIX,
   slot: 'DisplayRoot'
-})(({}) => ({}));
+})(() => ({}));
 
 export interface ImagePreviewComponentProps {
   /**
@@ -42,7 +44,7 @@ export interface ImagePreviewComponentProps {
    * Medias objs
    * @default []
    */
-  medias: Array<any>;
+  medias: SCMediaType[];
   /**
    * Maximum number of visible media
    * @default 5
@@ -68,7 +70,8 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   const {ref, inView} = useInView({triggerOnce: false});
 
   // MEMO
-  const _medias = useMemo(() => medias.filter(filter), [medias]);
+  const images = useMemo(() => medias.filter(filteredImages), [medias]);
+  const docs = useMemo(() => medias.filter(filteredDocs), [medias]);
 
   // HANDLERS
   const handleClose = () => {
@@ -93,10 +96,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       }
 
       setPreview(index);
-
-      onMediaClick(_medias[index]);
+      onMediaClick(images[index]);
     },
-    [_medias]
+    [gallery, setPreview, images, onMediaClick]
   );
 
   // RENDERING
@@ -117,7 +119,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       }
     }
     return (
-      <React.Fragment>
+      <Fragment>
         {o.title && (
           <div className={classes.title}>
             <Typography variant="subtitle2">
@@ -125,19 +127,19 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
             </Typography>
           </div>
         )}
-      </React.Fragment>
+      </Fragment>
     );
   };
 
   const renderOne = () => {
-    const overlay = _medias.length > maxVisible && maxVisible == 1 ? renderCountOverlay(true) : renderOverlay(0);
-    const isGif = _medias[0].image_mimetype ? _medias[0].image_mimetype.includes('image/gif') : false;
-    const isLandscape = _medias[0].image_height < _medias[0].image_width;
+    const overlay = images.length > maxVisible && maxVisible == 1 ? renderCountOverlay(true) : renderOverlay(0);
+    const isGif = images[0]['image_mimetype'] ? images[0]['image_mimetype'].includes('image/gif') : false;
+    const isLandscape = images[0].image_height < images[0].image_width;
     return (
       <Grid
         container
         style={{
-          ...(_medias[0].image_thumbnail && _medias[0].image_thumbnail.color ? {backgroundColor: _medias[0].image_thumbnail.color} : {})
+          ...(images[0].image_thumbnail && images[0].image_thumbnail.color ? {backgroundColor: images[0].image_thumbnail.color} : {})
         }}>
         <Grid
           item
@@ -147,24 +149,24 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
             root: classNames(classes.border, classes.heightOne, {
               ...(isGif || isLandscape ? {[classes.background]: true} : {[classes.backgroundPortrait]: true}),
               [classes.gallery]: gallery,
-              [classes.heightHalfOne]: _medias.length > 1
+              [classes.heightHalfOne]: images.length > 1
             })
           }}
           onClick={() => openPreviewImage(0)}
           style={{
-            background: `url(${getImageUrl(_medias[0], inView && isGif)})`,
-            ...(isLandscape ? {paddingTop: `${(100 * _medias[0].image_height) / _medias[0].image_width}%`} : {})
+            background: `url(${getImageUrl(images[0], inView && isGif)})`,
+            ...(isLandscape ? {paddingTop: `${(100 * images[0].image_height) / images[0].image_width}%`} : {})
           }}>
           {overlay}
-          {renderTitle(_medias[0])}
+          {renderTitle(images[0])}
         </Grid>
       </Grid>
     );
   };
 
   const renderTwo = () => {
-    const overlay = _medias.length > maxVisible && [2, 3].includes(+maxVisible) ? renderCountOverlay(true) : renderOverlay(1);
-    const conditionalRender = [3, 4].includes(_medias.length) || (_medias.length > +maxVisible && [3, 4].includes(+maxVisible));
+    const overlay = images.length > maxVisible && [2, 3].includes(+maxVisible) ? renderCountOverlay(true) : renderOverlay(1);
+    const conditionalRender = [3, 4].includes(images.length) || (images.length > +maxVisible && [3, 4].includes(+maxVisible));
     return (
       <Grid container>
         <Grid
@@ -172,27 +174,27 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           xs={6}
           classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 0)}
-          style={{background: `url(${getImageUrl(conditionalRender ? _medias[1] : _medias[0])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? images[1] : images[0])})`}}>
           {renderOverlay(conditionalRender ? 1 : 0)}
-          {renderTitle(_medias[0])}
+          {renderTitle(images[0])}
         </Grid>
         <Grid
           item
           xs={6}
           classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 2 : 1)}
-          style={{background: `url(${getImageUrl(conditionalRender ? _medias[2] : _medias[1])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? images[2] : images[1])})`}}>
           {overlay}
-          {renderTitle(_medias[1])}
+          {renderTitle(images[1])}
         </Grid>
       </Grid>
     );
   };
 
   const renderThree = () => {
-    const conditionalRender = _medias.length == 4 || (_medias.length > +maxVisible && +maxVisible == 4);
+    const conditionalRender = images.length == 4 || (images.length > +maxVisible && +maxVisible == 4);
     const overlay =
-      !maxVisible || maxVisible > 5 || (_medias.length > maxVisible && [4, 5].includes(+maxVisible))
+      !maxVisible || maxVisible > 5 || (images.length > maxVisible && [4, 5].includes(+maxVisible))
         ? renderCountOverlay(true)
         : renderOverlay(conditionalRender ? 3 : 4);
     return (
@@ -203,9 +205,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 2)}
-          style={{background: `url(${getImageUrl(conditionalRender ? _medias[1] : _medias[2])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? images[1] : images[2])})`}}>
           {renderOverlay(conditionalRender ? 1 : 2)}
-          {renderTitle(_medias[1])}
+          {renderTitle(images[1])}
         </Grid>
         <Grid
           item
@@ -213,9 +215,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 2 : 3)}
-          style={{background: `url(${getImageUrl(conditionalRender ? _medias[2] : _medias[3])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? images[2] : images[3])})`}}>
           {renderOverlay(conditionalRender ? 2 : 3)}
-          {renderTitle(_medias[2])}
+          {renderTitle(images[2])}
         </Grid>
         <Grid
           item
@@ -223,9 +225,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           md={4}
           classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
           onClick={() => openPreviewImage(conditionalRender ? 3 : 4)}
-          style={{background: `url(${getImageUrl(conditionalRender ? _medias[3] : _medias[4])})`}}>
+          style={{background: `url(${getImageUrl(conditionalRender ? images[3] : images[4])})`}}>
           {overlay}
-          {renderTitle(_medias[3])}
+          {renderTitle(images[3])}
         </Grid>
       </Grid>
     );
@@ -244,7 +246,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   const renderCountOverlay = (more: boolean) => {
-    const extra = _medias.length - (maxVisible && maxVisible > 5 ? 5 : maxVisible);
+    const extra = images.length - (maxVisible && maxVisible > 5 ? 5 : maxVisible);
 
     return [
       more && <div key="count" className={classes.cover}></div>,
@@ -256,45 +258,49 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     ];
   };
 
-  const handleIndexChange = useCallback(
-    (index: number) => {
-      if (_medias[index].type === MEDIA_TYPE_DOCUMENT) {
-        setToolbarButtons(
-          <IconButton component={Link} to={medias[index].url} target="_blank" color="inherit">
-            <Icon>download</Icon>
-          </IconButton>
-        );
-      } else {
-        setToolbarButtons(undefined);
+  const handleDownload = useCallback(
+    async (index: number) => {
+      try {
+        const response: HttpResponse<Blob> = await http.request({url: docs[index].url, responseType: 'blob'});
+        const blob = new Blob([response.data], {type: 'application/pdf'});
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = docs[index].title;
+        link.click();
+        // Cleanup
+        window.URL.revokeObjectURL(url);
+
+        onMediaClick?.(docs[index]);
+      } catch (error) {
+        Logger.error(SCOPE_SC_UI, error);
       }
     },
-    [_medias, setToolbarButtons]
+    [onMediaClick]
   );
 
-  useEffect(() => {
-    if (preview !== -1) {
-      handleIndexChange(preview);
-    }
-  }, [preview]);
-
-  const imagesToShow = [..._medias];
-  if (maxVisible && _medias.length > maxVisible) {
+  const imagesToShow = [...images];
+  if (maxVisible && images.length > maxVisible) {
     imagesToShow.length = maxVisible;
   }
 
-  if (_medias.length === 0) {
+  if (medias.length === 0) {
     return null;
   }
 
   return (
     <Root className={classNames(classes.displayRoot, className)}>
       {[1, 3, 4].includes(imagesToShow.length) && renderOne()}
-      {imagesToShow.length >= 2 && imagesToShow.length != 4 && renderTwo()}
+      {imagesToShow.length >= 2 && imagesToShow.length < 4 && renderTwo()}
       {imagesToShow.length >= 4 && renderThree()}
 
-      {preview !== -1 && (
-        <Lightbox onClose={handleClose} index={preview} medias={_medias} toolbarButtons={toolbarButtons} onIndexChange={handleIndexChange} />
-      )}
+      {preview !== -1 && <Lightbox onClose={handleClose} index={preview} medias={images} toolbarButtons={toolbarButtons} />}
+
+      <Stack className={classes.docsWrapper}>
+        {docs.map((doc, i) => (
+          <DocComponent key={doc.id} document={doc} index={i} handleDownload={handleDownload} onMediaClick={onMediaClick} />
+        ))}
+      </Stack>
     </Root>
   );
 };

@@ -3,6 +3,41 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.2.64-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.64-alpha.1...@selfcommunity/utils@0.2.64-alpha.2) (2025-09-04)
+
+
+### Bug Fixes
+
+* payment_waiting ([07a2235](https://github.com/selfcommunity/community-js/commit/07a2235b2b7532aef3613d7d5e942b205f6598d6))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([370983c](https://github.com/selfcommunity/community-js/commit/370983c46e142fca9c0e83a92072afe8f6c1ec0b))
+* payments and other features ([a0bd0eb](https://github.com/selfcommunity/community-js/commit/a0bd0eb3aea472a65033fd1e4160ddf55a3c05a0))
+* peerDependencies ([97c38fe](https://github.com/selfcommunity/community-js/commit/97c38fe2c7294c95c489f503117f09f6053d929d))
+
+
+
+
+
+## [0.2.64-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.64-alpha.0...@selfcommunity/utils@0.2.64-alpha.1) (2025-01-08)
+
+
+### Bug Fixes
+
+* dependencies ([bfb228f](https://github.com/selfcommunity/community-js/commit/bfb228fe482d247b87605a57e7de34faf7087214))
+* livestream in progress - fix deps - remove webpack-atoms (use fiber) and conflict with livekit deps ([68ed5ba](https://github.com/selfcommunity/community-js/commit/68ed5ba4394740787bfd89b1e7d195f9ad2954d4))
+
+
+
+
+
+## [0.2.64-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.63...@selfcommunity/utils@0.2.64-alpha.0) (2024-12-19)
+
+**Note:** Version bump only for package @selfcommunity/utils
+
+
+
+
+
 ## [0.2.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.63-alpha.1...@selfcommunity/utils@0.2.63) (2024-12-17)
 
 **Note:** Version bump only for package @selfcommunity/utils

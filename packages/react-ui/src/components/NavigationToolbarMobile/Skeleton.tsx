@@ -1,8 +1,6 @@
 import React from 'react';
-import {Toolbar} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import Skeleton from '@mui/material/Skeleton';
-import { PREFIX } from './constants';
+import {Toolbar, styled, Skeleton} from '@mui/material';
+import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-skeleton-root`,

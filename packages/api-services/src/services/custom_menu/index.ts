@@ -8,7 +8,6 @@ import {urlParams} from '../../utils/url';
 export interface CustomMenuApiClientInterface {
   getASpecificCustomMenu(id: number | string, config?: AxiosRequestConfig): Promise<SCCustomMenuType>;
   getAllCustomMenus(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomMenuType>>;
-  getBaseCustomMenu(config?: AxiosRequestConfig): Promise<SCCustomMenuType>;
   searchCustomMenus(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomMenuType>>;
 }
 /**
@@ -33,14 +32,6 @@ export class CustomMenuApiClient {
   static getAllCustomMenus(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomMenuType>> {
     const p = urlParams(params);
     return apiRequest({...config, url: `${Endpoints.GetCustomMenus.url({})}?${p.toString()}`, method: Endpoints.GetCustomMenus.method});
-  }
-
-  /**
-   * This endpoint retrieves the base custom menu.
-   * @param config
-   */
-  static getBaseCustomMenu(config?: AxiosRequestConfig): Promise<SCCustomMenuType> {
-    return apiRequest({...config, url: Endpoints.CustomMenu.url({id: 'base'}), method: Endpoints.CustomMenu.method});
   }
 
   /**
@@ -95,9 +86,6 @@ export default class CustomMenuService {
   }
   static async getAllCustomMenus(params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomMenuType>> {
     return CustomMenuApiClient.getAllCustomMenus(params, config);
-  }
-  static async getBaseCustomMenu(config?: AxiosRequestConfig): Promise<SCCustomMenuType> {
-    return CustomMenuApiClient.getBaseCustomMenu(config);
   }
   static async searchCustomMenus(params?: BaseSearchParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCCustomMenuType>> {
     return CustomMenuApiClient.searchCustomMenus(params, config);

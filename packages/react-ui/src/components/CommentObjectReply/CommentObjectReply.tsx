@@ -1,25 +1,28 @@
 import React, {RefObject, useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, Stack, useMediaQuery, useTheme} from '@mui/material';
+import {Avatar, Icon, IconButton, Stack, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCThemeType, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import Editor, {EditorRef} from '../Editor';
+import Editor, {EditorRef, EditorProps} from '../Editor';
 import classNames from 'classnames';
 import {LoadingButton} from '@mui/lab';
 import BaseItem from '../../shared/BaseItem';
 import UserAvatar from '../../shared/UserAvatar';
 import {useThemeProps} from '@mui/system';
+import {SCMediaType} from '@selfcommunity/types';
+import PreviewComponent from '../../shared/Media/File/PreviewComponent';
 
 const PREFIX = 'SCCommentObjectReply';
 
 const classes = {
   root: `${PREFIX}-root`,
   comment: `${PREFIX}-comment`,
+  media: `${PREFIX}-media`,
   hasValue: `${PREFIX}-has-value`,
   avatar: `${PREFIX}-avatar`,
   actions: `${PREFIX}-actions`,
   buttonReply: `${PREFIX}-button-reply`,
+  iconReply: `${PREFIX}-icon-reply`,
   buttonSave: `${PREFIX}-button-save`,
   buttonCancel: `${PREFIX}-button-cancel`
 };
@@ -40,13 +43,13 @@ export interface CommentObjectReplyProps extends WidgetProps {
    * Callback invoked after reply
    * @param comment
    */
-  onReply?: (comment) => void;
+  onReply?: (comment, medias?) => void;
 
   /**
    * Callback invoked after save/edit
    * @param comment
    */
-  onSave?: (comment) => void;
+  onSave?: (comment, medias?) => void;
 
   /**
    * Callback invoked after disccard save/edit
@@ -67,11 +70,34 @@ export interface CommentObjectReplyProps extends WidgetProps {
   text?: string;
 
   /**
+   * Initial media content
+   * @default ''
+   */
+  medias?: SCMediaType[];
+
+  /**
    * Initial content
    * @default {variant: 'outlined'}
    */
   WidgetProps?: WidgetProps;
 
+  /**
+   * Initial content
+   * @default {}
+   */
+  EditorProps?: EditorProps;
+
+  /**
+   * Prop to show user avatar
+   * @default true
+   */
+  showAvatar?: boolean;
+
+  /**
+   * Prop to show a reply icon instead of the button
+   * @default false
+   */
+  replyIcon?: boolean;
   /**
    * Other props
    */
@@ -123,7 +149,11 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
     onCancel,
     editable = true,
     text = '',
+    medias = [],
     WidgetProps = {variant: 'outlined'},
+    EditorProps = {},
+    showAvatar = true,
+    replyIcon = false,
     ...rest
   } = props;
 
@@ -132,6 +162,8 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
 
   // RETRIEVE OBJECTS
   const [html, setHtml] = useState(text);
+  const [media, setMedia] = useState(medias ?? []);
+  const [uploadingMedia, setUploadingMedia] = useState(false);
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
@@ -161,14 +193,14 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
    * Handle Replay
    */
   const handleReply = (): void => {
-    onReply && onReply(html);
+    onReply && onReply(html, media && media.length > 0 ? media : null);
   };
 
   /**
    * Handle Save
    */
   const handleSave = (): void => {
-    onSave && onSave(html);
+    onSave && onSave(html, media && media.length > 0 ? media : null);
   };
 
   /**
@@ -183,6 +215,14 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
    */
   const handleChangeText = (value: string): void => {
     setHtml(value);
+  };
+
+  const handleChangeMedia = (value: SCMediaType): void => {
+    setMedia((prev) => [...prev, value]);
+  };
+
+  const handleChangeMedias = (value: SCMediaType[] | null): void => {
+    setMedia([...value]);
   };
 
   /**
@@ -203,20 +243,38 @@ export default function CommentObjectReply(inProps: CommentObjectReplyProps): JS
       elevation={elevation}
       className={classNames(classes.root, className)}
       image={
-        !scUserContext.user ? (
+        showAvatar &&
+        (!scUserContext.user ? (
           <Avatar variant="circular" className={classes.avatar} />
         ) : (
           <UserAvatar hide={!scUserContext.user.community_badge}>
             <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} classes={{root: classes.avatar}} />
           </UserAvatar>
-        )
+        ))
       }
       secondary={
         <Widget className={classNames(classes.comment, {[classes.hasValue]: !isEditorEmpty})} {...WidgetProps}>
-          <Editor ref={editor} onChange={handleChangeText} defaultValue={html} editable={editable} uploadImage />
+          {media && media.length > 0 && <PreviewComponent value={media} onChange={handleChangeMedias} className={classes.media} />}
+          <Editor
+            ref={editor}
+            onChange={handleChangeText}
+            defaultValue={html}
+            editable={editable}
+            uploadImage
+            action={
+              replyIcon &&
+              onReply && (
+                <IconButton onClick={handleReply} className={classes.iconReply} disabled={uploadingMedia}>
+                  <Icon>send</Icon>
+                </IconButton>
+              )
+            }
+            {...EditorProps}
+            MediaPluginProps={{isUploading: setUploadingMedia, onMediaAdd: handleChangeMedia}}
+          />
           {!isEditorEmpty && (
             <Stack direction="row" spacing={2} className={classes.actions}>
-              {onReply && (
+              {onReply && !replyIcon && (
                 <LoadingButton variant="outlined" size="small" onClick={handleReply} loading={!editable} className={classes.buttonReply}>
                   <FormattedMessage id="ui.commentObject.replyComment.reply" defaultMessage="ui.commentObject.replyComment.reply" />
                 </LoadingButton>

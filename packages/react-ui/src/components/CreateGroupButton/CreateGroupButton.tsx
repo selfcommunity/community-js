@@ -1,10 +1,8 @@
 import React, {useContext, useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
-import {Button, Icon} from '@mui/material';
+import {Button, Icon, styled, ButtonProps} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, UserUtils, useSCPreferences} from '@selfcommunity/react-core';
-import {ButtonProps} from '@mui/material/Button/Button';
+import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import GroupForm, {GroupFormProps} from '../GroupForm';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';

@@ -3,6 +3,357 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.21...@selfcommunity/react-i18n@0.8.0-alpha.22) (2025-09-25)
+
+
+### Features
+
+* added new ddp; updated media object types. Linear: https://linear.app/quentral/issue/QUE-2001/frontend-sistemare-i-due-controlli-per-usare-la-nuova-dynamic-per-i ([d2947ae](https://github.com/selfcommunity/community-js/commit/d2947ae1678cdf68d848b59f430c174abb7e43dc))
+
+
+
+
+
+# [0.8.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.20...@selfcommunity/react-i18n@0.8.0-alpha.21) (2025-09-17)
+
+
+### Bug Fixes
+
+* fixed user autocomplete and feedObj chip ([f036919](https://github.com/selfcommunity/community-js/commit/f03691900f451b74528d1e6c96307e5082c2bcd3))
+
+
+
+
+
+# [0.8.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.19...@selfcommunity/react-i18n@0.8.0-alpha.20) (2025-09-16)
+
+
+### Features
+
+* added new api to dowload csv. Linear: https://linear.app/quentral/issue/QUE-1985/frontend-nel-caso-in-cui-lutente-loggato-sia-lautore-di-un-contenuto-e ([28529af](https://github.com/selfcommunity/community-js/commit/28529af9e8a159990a052b2e5f58b2519fefaf0c))
+
+
+
+
+
+# [0.8.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.18...@selfcommunity/react-i18n@0.8.0-alpha.19) (2025-09-16)
+
+
+### Performance Improvements
+
+* distinguished addressing error when user tagging is not enabled. ([e1d13d7](https://github.com/selfcommunity/community-js/commit/e1d13d7f7988c87599d7951c2b8203a1de4288eb))
+
+
+
+
+
+# [0.8.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.17...@selfcommunity/react-i18n@0.8.0-alpha.18) (2025-09-15)
+
+
+### Performance Improvements
+
+* fixed feedObj visibility icon when recipients are tagged ([fafcbf2](https://github.com/selfcommunity/community-js/commit/fafcbf2915eb0610bb4d5e847c77c658de89d796))
+
+
+
+
+
+# [0.8.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.16...@selfcommunity/react-i18n@0.8.0-alpha.17) (2025-09-15)
+
+
+### Features
+
+* added user tagging in composer. Linear issue: https://linear.app/quentral/issue/QUE-1842/frontend-aggiungere-tab-utenti-con-textarea-chip-interni-per-ogni ([b7a7b17](https://github.com/selfcommunity/community-js/commit/b7a7b1738bb852890ed47cb964d9341bcc53214b))
+
+
+
+
+
+# [0.8.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.15...@selfcommunity/react-i18n@0.8.0-alpha.16) (2025-09-08)
+
+
+### Features
+
+* updated some labels. Linear: https://linear.app/quentral/issue/QUE-1954/modifica-del-termine-segui-con-salva-nei-vari-punti-da-front-end ([927a6b1](https://github.com/selfcommunity/community-js/commit/927a6b1a7ecaff50161120ac6302189983336c0b))
+
+
+
+
+
+# [0.8.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.14...@selfcommunity/react-i18n@0.8.0-alpha.15) (2025-09-04)
+
+
+### Bug Fixes
+
+* added paid button to course/group header ([a41bd0c](https://github.com/selfcommunity/community-js/commit/a41bd0c42a52c7acb1842f1bd7148fb37e7ed4f7))
+* checkout ([eabfc62](https://github.com/selfcommunity/community-js/commit/eabfc62c38eefb6838ba830c885ce2d59fd95557))
+* contentProducts ([66d3047](https://github.com/selfcommunity/community-js/commit/66d304700e5624fdae9ceb74fb381575838ce89f))
+* course ([e28c00a](https://github.com/selfcommunity/community-js/commit/e28c00aea5d7e099c61f98ed078dd6262cd85ec4))
+* event and group managers ([e768f5a](https://github.com/selfcommunity/community-js/commit/e768f5a0d8efd9cd7e3a57730e01e70740a70f2d))
+* fixed missing translation for payments ([6dda120](https://github.com/selfcommunity/community-js/commit/6dda1209c5119a096b954d094b173a51b61acb93))
+* payment_waiting ([07a2235](https://github.com/selfcommunity/community-js/commit/07a2235b2b7532aef3613d7d5e942b205f6598d6))
+* PaymentOrders missing translations. Linear issue: https://linear.app/quentral/issue/QUE-1548/mancano-alcune-traduzioni-nella-pagina-i-miei-pagamenti-e-titolo ([573e63f](https://github.com/selfcommunity/community-js/commit/573e63f7b587f42ef94d280af70d9b5fec0e5bc8))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([16425dc](https://github.com/selfcommunity/community-js/commit/16425dc65cce1a0ae38053ee7f9f541102698288))
+* payments ([c379e8f](https://github.com/selfcommunity/community-js/commit/c379e8f245a5a753eb9cbbaafe90550f23d54f41))
+* payments ([3b43007](https://github.com/selfcommunity/community-js/commit/3b43007cdac0eb45f011145ff8fe5caddacd248f))
+* payments ([b85a180](https://github.com/selfcommunity/community-js/commit/b85a180cacbe50b580e9a729ef4b8681a0a9ed64))
+* payments ([b0f3602](https://github.com/selfcommunity/community-js/commit/b0f3602061d4027883d01f0f3d59ecf6b1673fd1))
+* payments ([7487c8f](https://github.com/selfcommunity/community-js/commit/7487c8f072810dc8e2d3012620b3d1480aa25e49))
+* payments ([370983c](https://github.com/selfcommunity/community-js/commit/370983c46e142fca9c0e83a92072afe8f6c1ec0b))
+* payments ([08b1b20](https://github.com/selfcommunity/community-js/commit/08b1b2021c998f1ab231790fd1ab6f3856dabcdb))
+* payments ([2989dd1](https://github.com/selfcommunity/community-js/commit/2989dd1ec555ecd3f1d6c8686ba9b416d243280c))
+* payments ([21e9a56](https://github.com/selfcommunity/community-js/commit/21e9a561872b29e616cdc6b0e820ac11eb396712))
+* payments ([aed15e7](https://github.com/selfcommunity/community-js/commit/aed15e7f36b51ca0c022ed3564b087cc672a5822))
+* payments ([cc09416](https://github.com/selfcommunity/community-js/commit/cc09416018fe4f25407e188d0f4d259ed74f2cc7))
+* payments ([8ebe701](https://github.com/selfcommunity/community-js/commit/8ebe701424cf269df90cb524919cab946b8f1dbe))
+* payments ([5afc030](https://github.com/selfcommunity/community-js/commit/5afc030308911daffd4672ef44fcb47e4b064873))
+* payments ([ea3f7c2](https://github.com/selfcommunity/community-js/commit/ea3f7c267cf169442834fa50d6335a0cd15c30f0))
+* payments ([34467bd](https://github.com/selfcommunity/community-js/commit/34467bd9ef03dc0988d0a4ccd3747adbecedc85e))
+* payments and other features ([a0bd0eb](https://github.com/selfcommunity/community-js/commit/a0bd0eb3aea472a65033fd1e4160ddf55a3c05a0))
+* payments category, group, event ([d0e2b24](https://github.com/selfcommunity/community-js/commit/d0e2b248fe14b667031529fe772f745129811f84))
+* paywall ([a6372be](https://github.com/selfcommunity/community-js/commit/a6372befda9a0b749c2d994c9be9ac90ec95b968))
+* paywall ([62d9ee1](https://github.com/selfcommunity/community-js/commit/62d9ee1fe4c60b5d801f708eac65c3462e0aafc3))
+* paywall ([46e72c4](https://github.com/selfcommunity/community-js/commit/46e72c40e0fc88db92da5b74f70c66fbf5f209a2))
+* paywall ([7913a21](https://github.com/selfcommunity/community-js/commit/7913a21732d4b2baf965ed016751c688e9a22ec3))
+* peerDependencies ([97c38fe](https://github.com/selfcommunity/community-js/commit/97c38fe2c7294c95c489f503117f09f6053d929d))
+
+
+### Features
+
+* added composer controls for new ddp post_category_required_enabled and post_addressing_required_enabled. Linear issue: https://linear.app/quentral/issue/QUE-1914/frontend-nella-form-post-se-abilitata-post-category-required-enabled-e ([d69994e](https://github.com/selfcommunity/community-js/commit/d69994ef5455d9dd4037e7087e986f46eb5c9566))
+* added endpoints/services actions to manage scheduled posts. Linear issue: https://linear.app/quentral/issue/QUE-1793/frontend-creazione-e-gestione-dei-post-programmati ([eb8cfd2](https://github.com/selfcommunity/community-js/commit/eb8cfd23fe6d01f44e74c19edc095d8abd385c99))
+* added scheduled post in the composer. Linear issue: https://linear.app/quentral/issue/QUE-1863/frontend-gestire-ddp-se-post-programmati ([78b31ce](https://github.com/selfcommunity/community-js/commit/78b31ce29badbc05a141631e6037365761ee5f47))
+* restyled pdf preview and display. Linear: https://linear.app/quentral/issue/QUE-1797/frontend-sistemare-grafica-del-post-anche-in-stream-con-youtube-video ([1debc9f](https://github.com/selfcommunity/community-js/commit/1debc9fb07f4061a80d88676e012561a04c0d95f))
+
+
+### Performance Improvements
+
+* added filters to payment orders table. Linear issue: https://linear.app/quentral/issue/QUE-1295/inserire-nel-componente-paymentorders-i-filtri-in-testa-alla-tabella ([5ed71b0](https://github.com/selfcommunity/community-js/commit/5ed71b0186c39e69a3e27b8cda49c3c8d5338b9d))
+* added paid event link button event header ([e53d320](https://github.com/selfcommunity/community-js/commit/e53d3202982b23e6ce67b1affcdf4dcf97ddc6bf))
+* refactored checkout header, added info card ([9b2515b](https://github.com/selfcommunity/community-js/commit/9b2515ba0a06ae4f92b5337e2f241e04746ad641))
+* refactored checkout return dialog ([a84bf0b](https://github.com/selfcommunity/community-js/commit/a84bf0bb91e32fc9ad15182edb137aeffb3767a8))
+* updated payment product/products layout. Linear issue: https://linear.app/quentral/issue/QUE-1789/pwa-pagamenti ([df75e57](https://github.com/selfcommunity/community-js/commit/df75e57eec8691177c8c32f52255ffc40083a1f2))
+
+
+
+
+
+# [0.8.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.9...@selfcommunity/react-i18n@0.8.0-alpha.10) (2025-03-14)
+
+
+### Bug Fixes
+
+* fixed typos in translations ([90a3cc2](https://github.com/selfcommunity/community-js/commit/90a3cc267fb411bbe7b823fac2b74b52243f0dd7))
+
+
+
+
+
+# [0.8.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.8...@selfcommunity/react-i18n@0.8.0-alpha.9) (2025-03-14)
+
+
+### Bug Fixes
+
+* fixed typos in translations ([d6224e6](https://github.com/selfcommunity/community-js/commit/d6224e6db15e077af424feb4512dc522a5346d6e))
+
+
+
+
+
+# [0.8.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.7...@selfcommunity/react-i18n@0.8.0-alpha.8) (2025-03-12)
+
+
+### Bug Fixes
+
+* added missing translation string. Linear issue: https://linear.app/quentral/issue/QUE-1254/manca-la-stringa-dellerrore-del-composer-link ([6660c95](https://github.com/selfcommunity/community-js/commit/6660c9559df666ecc8a76781ce6272c07e965e43))
+
+
+
+
+
+# [0.8.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.6...@selfcommunity/react-i18n@0.8.0-alpha.7) (2025-02-27)
+
+
+### Bug Fixes
+
+* live stream video processor (safari/iOS) ([3fc316f](https://github.com/selfcommunity/community-js/commit/3fc316f236bfe3931bdae2071ae131ce404e22c4))
+
+
+
+
+
+# [0.8.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.5...@selfcommunity/react-i18n@0.8.0-alpha.6) (2025-02-27)
+
+
+### Bug Fixes
+
+* category can_create_only_staff ([2835897](https://github.com/selfcommunity/community-js/commit/28358975dd7fd42d052509e89587f3ac260e58ed))
+
+
+
+
+
+# [0.8.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.4...@selfcommunity/react-i18n@0.8.0-alpha.5) (2025-02-26)
+
+
+### Bug Fixes
+
+* live stream video processor ([e193ca4](https://github.com/selfcommunity/community-js/commit/e193ca4c9e218bb18e57eb8579cf378d67df5a62))
+* live stream warning ([763aada](https://github.com/selfcommunity/community-js/commit/763aadac181871190b330c1c354cd0b6ad2cd09a))
+
+
+
+
+
+# [0.8.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.3...@selfcommunity/react-i18n@0.8.0-alpha.4) (2025-02-24)
+
+
+### Bug Fixes
+
+* live stream no participants ([6378470](https://github.com/selfcommunity/community-js/commit/6378470c881af9a3f7f02ecf17293e1ba821ea5a))
+
+
+
+
+
+# [0.8.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.2...@selfcommunity/react-i18n@0.8.0-alpha.3) (2025-02-11)
+
+
+### Bug Fixes
+
+* live stream ([48bac91](https://github.com/selfcommunity/community-js/commit/48bac911f55dd95158b2ae438f18a8c9746161ac))
+
+
+
+
+
+# [0.8.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.1...@selfcommunity/react-i18n@0.8.0-alpha.2) (2025-01-21)
+
+
+### Bug Fixes
+
+* updated some locale string ([ae36e33](https://github.com/selfcommunity/community-js/commit/ae36e3364c3525e272e6883b758f9492feb48926))
+
+
+
+
+
+# [0.8.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.0...@selfcommunity/react-i18n@0.8.0-alpha.1) (2025-01-15)
+
+
+### Bug Fixes
+
+* liveStream dialog copy ([3b8accc](https://github.com/selfcommunity/community-js/commit/3b8accc926af1021da37699ab8b4837bcb7775a1))
+
+
+
+
+
+# [0.8.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.7-alpha.5...@selfcommunity/react-i18n@0.8.0-alpha.0) (2025-01-13)
+
+
+### Features
+
+* modified ComposerIconButton to accept Menu ([96189ba](https://github.com/selfcommunity/community-js/commit/96189ba88f517868e1895e9aa2f18a81e35935ba))
+
+
+
+
+
+## [0.7.7-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.7-alpha.4...@selfcommunity/react-i18n@0.7.7-alpha.5) (2025-01-10)
+
+
+### Bug Fixes
+
+* liveStream errors ([b399573](https://github.com/selfcommunity/community-js/commit/b3995738bda178ce82eace90f78b5d2b1f45b6c0))
+
+
+
+
+
+## [0.7.7-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.7-alpha.3...@selfcommunity/react-i18n@0.7.7-alpha.4) (2025-01-09)
+
+
+### Bug Fixes
+
+* i18n ([b862198](https://github.com/selfcommunity/community-js/commit/b862198d9a9b14177ba2bff39c47b74a98e0a437))
+
+
+
+
+
+## [0.7.7-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.7-alpha.2...@selfcommunity/react-i18n@0.7.7-alpha.3) (2025-01-09)
+
+
+### Bug Fixes
+
+* chip post group, event live stream ([bbdf085](https://github.com/selfcommunity/community-js/commit/bbdf08546e4811bdd27ad3398a2a8fca1d1cde94))
+* chip post group, event live stream ([18777f9](https://github.com/selfcommunity/community-js/commit/18777f926561ea35b086d42b33ff30be6389d560))
+
+
+
+
+
+## [0.7.7-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.7-alpha.1...@selfcommunity/react-i18n@0.7.7-alpha.2) (2025-01-08)
+
+
+### Bug Fixes
+
+* dependencies ([bfb228f](https://github.com/selfcommunity/community-js/commit/bfb228fe482d247b87605a57e7de34faf7087214))
+* i18n ([284d5aa](https://github.com/selfcommunity/community-js/commit/284d5aac16ba7e52301a2cbf746a2389fedfbc47))
+* initial livestream ([d81f1b7](https://github.com/selfcommunity/community-js/commit/d81f1b7640e34f1fd85ab2720b364f612cb4a505))
+* livestream ([89c9e54](https://github.com/selfcommunity/community-js/commit/89c9e546bdab64e18d2897f2d785e924faec64c9))
+* livestream ([6bad845](https://github.com/selfcommunity/community-js/commit/6bad845bb3e4e8d7a774600bb7ac97ca0da372e1))
+* livestream ([a5cf702](https://github.com/selfcommunity/community-js/commit/a5cf702e447842e9a9abdf461b066dbe309c6801))
+* livestream ([076ec99](https://github.com/selfcommunity/community-js/commit/076ec99204333cc7a42359e288773a46010dc99e))
+* livestream ([eafaa82](https://github.com/selfcommunity/community-js/commit/eafaa824d1092cfd97a73b68382c36cf8d667b1e))
+* livestream ([18ef561](https://github.com/selfcommunity/community-js/commit/18ef561c17ef54f424602baf8e2b82e6ba8fa417))
+* livestream ([cbdcb56](https://github.com/selfcommunity/community-js/commit/cbdcb5626d10135c61798630912a51b2559075b7))
+* livestream ([b377001](https://github.com/selfcommunity/community-js/commit/b37700156ff3d2effee800d85fd97ee72bde8ef1))
+* livestream ([50f493b](https://github.com/selfcommunity/community-js/commit/50f493b7b374215a995f1cd2879600fa4103e8ed))
+* livestream ([9139df7](https://github.com/selfcommunity/community-js/commit/9139df75d054dfcb1a6664f39fb146a16e69e77f))
+* livestream ([b3df735](https://github.com/selfcommunity/community-js/commit/b3df7359d334426f09c6619630f1ade4a8ca462a))
+* livestream ([71d006b](https://github.com/selfcommunity/community-js/commit/71d006b642183eeda860f21772789a3cdf0bd3d7))
+* livestream ([37d2561](https://github.com/selfcommunity/community-js/commit/37d2561218ed54bcbfc7e8725dd39ef7196e78d8))
+* livestream ([1377ebf](https://github.com/selfcommunity/community-js/commit/1377ebf0d7cf56fae914c2af5ae96d8161350d51))
+* livestream ([619ae76](https://github.com/selfcommunity/community-js/commit/619ae76fd237be7bad9bbec0afdc3052bf662d31))
+* livestream ([594e1c3](https://github.com/selfcommunity/community-js/commit/594e1c3659025a7d587edc55108ba527ca1f753d))
+* livestream ([a5b9329](https://github.com/selfcommunity/community-js/commit/a5b9329f7b8b578f583653c6aa8e4478d422d9fa))
+* livestream ([9e7d4f2](https://github.com/selfcommunity/community-js/commit/9e7d4f293b64190ed520194ab1ff4d381d9a443e))
+* livestream ([621d293](https://github.com/selfcommunity/community-js/commit/621d29305b2c13b28bf1dc777794168f5b55341e))
+* livestream ([8da590e](https://github.com/selfcommunity/community-js/commit/8da590ef46d1063cc016fc6ba53eac91e0946f67))
+* livestream ([d6c209b](https://github.com/selfcommunity/community-js/commit/d6c209b1ff2f23f4bb3176b6c4d33703c6fedd77))
+* livestream assets, resolution ([b7c31d2](https://github.com/selfcommunity/community-js/commit/b7c31d2bf6941f7f7f84a64dc9893b8a779080c7))
+* livestream ban user ([d7d971b](https://github.com/selfcommunity/community-js/commit/d7d971b3f9df43638c8822158a3fa609b3ee4204))
+* livestream copy link ([42a8b35](https://github.com/selfcommunity/community-js/commit/42a8b35a9b4d67d683f7f31a7b73f171f7b2ac74))
+* livestream in progress - fix deps - remove webpack-atoms (use fiber) and conflict with livekit deps ([68ed5ba](https://github.com/selfcommunity/community-js/commit/68ed5ba4394740787bfd89b1e7d195f9ad2954d4))
+* livestream slug ([10c97ee](https://github.com/selfcommunity/community-js/commit/10c97eed1af6388c97e7b97fb5760e3e9d42f7d2))
+* update react-ui deps -> react-lazyload ([d492ec9](https://github.com/selfcommunity/community-js/commit/d492ec98f5ba4dd5b7272578012d96f25d6f62fd))
+
+
+
+
+
+## [0.7.7-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.7-alpha.0...@selfcommunity/react-i18n@0.7.7-alpha.1) (2024-12-19)
+
+
+### Performance Improvements
+
+* added it translation for cancel action in event form datetime pickers ([d7507bc](https://github.com/selfcommunity/community-js/commit/d7507bcd69f89296a67ce4f9d62859d93ea9e85b))
+
+
+
+
+
+## [0.7.7-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.6...@selfcommunity/react-i18n@0.7.7-alpha.0) (2024-12-19)
+
+**Note:** Version bump only for package @selfcommunity/react-i18n
+
+
+
+
+
 ## [0.7.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.7.6-alpha.2...@selfcommunity/react-i18n@0.7.6) (2024-12-17)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

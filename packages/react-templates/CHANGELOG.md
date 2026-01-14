@@ -3,6 +3,1286 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.57...@selfcommunity/react-templates@0.5.0-alpha.58) (2025-10-07)
+
+
+### Features
+
+* added new adv position for category feed. Linear issue: https://linear.app/quentral/issue/QUE-2123/differenziare-la-nuova-posizione-sopra-il-feed-categorie-da-sopra-il ([57a351e](https://github.com/selfcommunity/community-js/commit/57a351eaee906645e76537631fec6ac67d6ec6f6))
+
+
+
+
+
+# [0.5.0-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.56...@selfcommunity/react-templates@0.5.0-alpha.57) (2025-10-01)
+
+
+### Performance Improvements
+
+* added description to tags ([2d1756c](https://github.com/selfcommunity/community-js/commit/2d1756ce1d3dfb7165b147a275279f848bdb80f8))
+
+
+
+
+
+# [0.5.0-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.55...@selfcommunity/react-templates@0.5.0-alpha.56) (2025-10-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.54...@selfcommunity/react-templates@0.5.0-alpha.55) (2025-10-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.53...@selfcommunity/react-templates@0.5.0-alpha.54) (2025-10-01)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.52...@selfcommunity/react-templates@0.5.0-alpha.53) (2025-09-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.51...@selfcommunity/react-templates@0.5.0-alpha.52) (2025-09-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.50...@selfcommunity/react-templates@0.5.0-alpha.51) (2025-09-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.49...@selfcommunity/react-templates@0.5.0-alpha.50) (2025-09-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.48...@selfcommunity/react-templates@0.5.0-alpha.49) (2025-09-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.47...@selfcommunity/react-templates@0.5.0-alpha.48) (2025-09-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.46...@selfcommunity/react-templates@0.5.0-alpha.47) (2025-09-29)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.45...@selfcommunity/react-templates@0.5.0-alpha.46) (2025-09-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.44...@selfcommunity/react-templates@0.5.0-alpha.45) (2025-09-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.43...@selfcommunity/react-templates@0.5.0-alpha.44) (2025-09-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.42...@selfcommunity/react-templates@0.5.0-alpha.43) (2025-09-22)
+
+
+### Bug Fixes
+
+* https://linear.app/quentral/issue/QUE-2006/frontend-aggiungere-widget-nel-feed-come-da-configurazione ([e20326e](https://github.com/selfcommunity/community-js/commit/e20326e131a92f5dc2ec1ab586c183390dd7a214))
+
+
+
+
+
+# [0.5.0-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.41...@selfcommunity/react-templates@0.5.0-alpha.42) (2025-09-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.40...@selfcommunity/react-templates@0.5.0-alpha.41) (2025-09-19)
+
+
+### Bug Fixes
+
+* fixed tagging in composer ([ad503d4](https://github.com/selfcommunity/community-js/commit/ad503d4bb5881dcded7da70cef57d31516e6e237))
+
+
+
+
+
+# [0.5.0-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.39...@selfcommunity/react-templates@0.5.0-alpha.40) (2025-09-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.38...@selfcommunity/react-templates@0.5.0-alpha.39) (2025-09-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.37...@selfcommunity/react-templates@0.5.0-alpha.38) (2025-09-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.36...@selfcommunity/react-templates@0.5.0-alpha.37) (2025-09-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.35...@selfcommunity/react-templates@0.5.0-alpha.36) (2025-09-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.34...@selfcommunity/react-templates@0.5.0-alpha.35) (2025-09-18)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.33...@selfcommunity/react-templates@0.5.0-alpha.34) (2025-09-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.32...@selfcommunity/react-templates@0.5.0-alpha.33) (2025-09-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.31...@selfcommunity/react-templates@0.5.0-alpha.32) (2025-09-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.30...@selfcommunity/react-templates@0.5.0-alpha.31) (2025-09-17)
+
+
+### Bug Fixes
+
+* updated components to insert FooterWidget. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([502dd36](https://github.com/selfcommunity/community-js/commit/502dd36d16022195d9295e382c6299e5bd36556a))
+
+
+
+
+
+# [0.5.0-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.29...@selfcommunity/react-templates@0.5.0-alpha.30) (2025-09-17)
+
+
+### Bug Fixes
+
+* hidden categories followers if ddp is disabled. Linear issue: https://linear.app/quentral/issue/QUE-1997/se-category-follow-enabled-=-false-rimuovere-seguito-da-e-gli-avatar ([54871e4](https://github.com/selfcommunity/community-js/commit/54871e4fe097bbf31714758c6b575a2713161cf3))
+
+
+
+
+
+# [0.5.0-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.28...@selfcommunity/react-templates@0.5.0-alpha.29) (2025-09-17)
+
+
+### Features
+
+* added new footer widget into all feed components. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([06dd21d](https://github.com/selfcommunity/community-js/commit/06dd21d132b159a7f49c3fa488ac01cc487229ea))
+
+
+
+
+
+# [0.5.0-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.27...@selfcommunity/react-templates@0.5.0-alpha.28) (2025-09-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.26...@selfcommunity/react-templates@0.5.0-alpha.27) (2025-09-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.25...@selfcommunity/react-templates@0.5.0-alpha.26) (2025-09-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.24...@selfcommunity/react-templates@0.5.0-alpha.25) (2025-09-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.23...@selfcommunity/react-templates@0.5.0-alpha.24) (2025-09-16)
+
+
+### Bug Fixes
+
+* added missing prop. Linear: https://linear.app/quentral/issue/QUE-1987/cliccando-da-dentro-un-contenuto-per-vedere-la-lista-di-reaction ([2ce1b34](https://github.com/selfcommunity/community-js/commit/2ce1b3476cca27114f870dd6e777efd544da7508))
+
+
+
+
+
+# [0.5.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.22...@selfcommunity/react-templates@0.5.0-alpha.23) (2025-09-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.21...@selfcommunity/react-templates@0.5.0-alpha.22) (2025-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.20...@selfcommunity/react-templates@0.5.0-alpha.21) (2025-09-15)
+
+
+### Bug Fixes
+
+* replaced seen_by_id with seen. ([1743121](https://github.com/selfcommunity/community-js/commit/1743121f9c14123ffee6c62d2bf28c81d3d1de0f))
+
+
+
+
+
+# [0.5.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.19...@selfcommunity/react-templates@0.5.0-alpha.20) (2025-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.18...@selfcommunity/react-templates@0.5.0-alpha.19) (2025-09-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.17...@selfcommunity/react-templates@0.5.0-alpha.18) (2025-09-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.16...@selfcommunity/react-templates@0.5.0-alpha.17) (2025-09-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.15...@selfcommunity/react-templates@0.5.0-alpha.16) (2025-09-10)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.14...@selfcommunity/react-templates@0.5.0-alpha.15) (2025-09-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.13...@selfcommunity/react-templates@0.5.0-alpha.14) (2025-09-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.12...@selfcommunity/react-templates@0.5.0-alpha.13) (2025-09-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.11...@selfcommunity/react-templates@0.5.0-alpha.12) (2025-09-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.10...@selfcommunity/react-templates@0.5.0-alpha.11) (2025-09-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.9...@selfcommunity/react-templates@0.5.0-alpha.10) (2025-09-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.8...@selfcommunity/react-templates@0.5.0-alpha.9) (2025-09-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.7...@selfcommunity/react-templates@0.5.0-alpha.8) (2025-09-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.6...@selfcommunity/react-templates@0.5.0-alpha.7) (2025-09-04)
+
+
+### Bug Fixes
+
+* added new ddp connection_enabled and adapted follow/connection logic. Linear issue: https://linear.app/quentral/issue/QUE-1837/frontend-considerare-nuova-ddp-connection-enabled ([ec1cde5](https://github.com/selfcommunity/community-js/commit/ec1cde5d142724373523be830ba531827a6122aa))
+* added paid button to course/group header ([a41bd0c](https://github.com/selfcommunity/community-js/commit/a41bd0c42a52c7acb1842f1bd7148fb37e7ed4f7))
+* blocked feed update if content is scheduled ([845bbe5](https://github.com/selfcommunity/community-js/commit/845bbe5c7e6355c2e438e933a372c0d4cdeeb780))
+* CommunityPaywalls ([de3b05d](https://github.com/selfcommunity/community-js/commit/de3b05d1051f7cabdc8d49ecabf2e695e66e5af6))
+* CommunityPaywalls ([fc68906](https://github.com/selfcommunity/community-js/commit/fc68906badf912a8b90730ff7934edf791546b9d))
+* CommunityPaywalls ([68c6e14](https://github.com/selfcommunity/community-js/commit/68c6e142a09cdae50303c7672bb66640bc5881e1))
+* course ([e28c00a](https://github.com/selfcommunity/community-js/commit/e28c00aea5d7e099c61f98ed078dd6262cd85ec4))
+* course manager ([8307619](https://github.com/selfcommunity/community-js/commit/83076194b0928d0084c08db3aa3de73ca3288b9b))
+* event and group managers ([e768f5a](https://github.com/selfcommunity/community-js/commit/e768f5a0d8efd9cd7e3a57730e01e70740a70f2d))
+* event stories ([98e89c6](https://github.com/selfcommunity/community-js/commit/98e89c60fed33611fe70bedb857f8b0a5c99d071))
+* events subscription ([56716de](https://github.com/selfcommunity/community-js/commit/56716de98ebefd2b16e86c5820ae8ae5a3f6c40c))
+* fixed how to show comments. Linear: https://linear.app/quentral/issue/QUE-1905/frontend-pur-avendo-disabilitato-i-commenti-appare-sulla-destra-un ([87ab5fc](https://github.com/selfcommunity/community-js/commit/87ab5fc31d8cb2c2b56f3a8609aa810d88fbd913))
+* fixed private messages ddp. Linear issue: https://linear.app/quentral/issue/QUE-1830/frontend-gestire-ddp-per-attivazione-e-disattivazione-messaggi-privati ([b4bdd1b](https://github.com/selfcommunity/community-js/commit/b4bdd1b0cd7a1814eddc5eaf6e95bfe5276d0ba2))
+* payment_waiting ([b756d66](https://github.com/selfcommunity/community-js/commit/b756d66c16ba8487bb69b7974eeee231161fa93d))
+* payment_waiting ([9ee5db4](https://github.com/selfcommunity/community-js/commit/9ee5db4d56c842572caf603b75d5c15efe192ae4))
+* payment_waiting ([07a2235](https://github.com/selfcommunity/community-js/commit/07a2235b2b7532aef3613d7d5e942b205f6598d6))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([16425dc](https://github.com/selfcommunity/community-js/commit/16425dc65cce1a0ae38053ee7f9f541102698288))
+* payments ([d4f8849](https://github.com/selfcommunity/community-js/commit/d4f8849f605ddfa0a45cab734d85fb4c8a762ecf))
+* payments ([c379e8f](https://github.com/selfcommunity/community-js/commit/c379e8f245a5a753eb9cbbaafe90550f23d54f41))
+* payments ([3c82e7a](https://github.com/selfcommunity/community-js/commit/3c82e7a0bcd4d61e58479007f03b74c8e4ea0e6f))
+* payments ([370983c](https://github.com/selfcommunity/community-js/commit/370983c46e142fca9c0e83a92072afe8f6c1ec0b))
+* payments ([08b1b20](https://github.com/selfcommunity/community-js/commit/08b1b2021c998f1ab231790fd1ab6f3856dabcdb))
+* payments ([aed15e7](https://github.com/selfcommunity/community-js/commit/aed15e7f36b51ca0c022ed3564b087cc672a5822))
+* payments ([cc09416](https://github.com/selfcommunity/community-js/commit/cc09416018fe4f25407e188d0f4d259ed74f2cc7))
+* payments ([5afc030](https://github.com/selfcommunity/community-js/commit/5afc030308911daffd4672ef44fcb47e4b064873))
+* payments and other features ([a0bd0eb](https://github.com/selfcommunity/community-js/commit/a0bd0eb3aea472a65033fd1e4160ddf55a3c05a0))
+* payments category, group, event ([d0e2b24](https://github.com/selfcommunity/community-js/commit/d0e2b248fe14b667031529fe772f745129811f84))
+* paywall ([62d9ee1](https://github.com/selfcommunity/community-js/commit/62d9ee1fe4c60b5d801f708eac65c3462e0aafc3))
+* removed unnecessary function ([eb92e6a](https://github.com/selfcommunity/community-js/commit/eb92e6acd5e2a38514ea0eed06c2ecef8ddf4338))
+
+
+### Features
+
+* added composer controls for new ddp post_category_required_enabled and post_addressing_required_enabled. Linear issue: https://linear.app/quentral/issue/QUE-1914/frontend-nella-form-post-se-abilitata-post-category-required-enabled-e ([d69994e](https://github.com/selfcommunity/community-js/commit/d69994ef5455d9dd4037e7087e986f46eb5c9566))
+* added endpoints/services actions to manage scheduled posts. Linear issue: https://linear.app/quentral/issue/QUE-1793/frontend-creazione-e-gestione-dei-post-programmati ([eb8cfd2](https://github.com/selfcommunity/community-js/commit/eb8cfd23fe6d01f44e74c19edc095d8abd385c99))
+
+
+### Performance Improvements
+
+* updated payment product/products layout. Linear issue: https://linear.app/quentral/issue/QUE-1789/pwa-pagamenti ([df75e57](https://github.com/selfcommunity/community-js/commit/df75e57eec8691177c8c32f52255ffc40083a1f2))
+
+
+
+
+
+# [0.5.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.5...@selfcommunity/react-templates@0.5.0-alpha.6) (2025-04-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.4...@selfcommunity/react-templates@0.5.0-alpha.5) (2025-04-18)
+
+
+### Bug Fixes
+
+* fixes imports for doc ([7c7292b](https://github.com/selfcommunity/community-js/commit/7c7292bfb050ffc73a0985eaa307326ec48ca65c))
+
+
+
+
+
+# [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.3...@selfcommunity/react-templates@0.5.0-alpha.4) (2025-04-17)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.2...@selfcommunity/react-templates@0.5.0-alpha.3) (2025-04-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.1...@selfcommunity/react-templates@0.5.0-alpha.2) (2025-04-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.0...@selfcommunity/react-templates@0.5.0-alpha.1) (2025-04-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [0.5.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.78...@selfcommunity/react-templates@0.5.0-alpha.0) (2025-04-14)
+
+
+### Bug Fixes
+
+* added media in course lesson comment and edit, added props to editor. ([4acd38f](https://github.com/selfcommunity/community-js/commit/4acd38f3fd1ea1c6515ae2945c7da182f97864e1))
+* added prop to lesson component to check drawer state ([3f1c692](https://github.com/selfcommunity/community-js/commit/3f1c6924cc3f279f1a3bbf8a683a6c6eb7250939))
+* edit event ([920bc1f](https://github.com/selfcommunity/community-js/commit/920bc1fb6bc1ff4842cc6ac6a80169b41454570b))
+* export teacher and student skeletons ([bd5294f](https://github.com/selfcommunity/community-js/commit/bd5294f3ff6562123529cb75e5d0492ae465d501))
+* fixed comments not appearing. Linear issue: https://linear.app/quentral/issue/QUE-1292/i-commenti-non-vengono-visualizzati ([a6b5f6d](https://github.com/selfcommunity/community-js/commit/a6b5f6de3dc61773523982eccd2de7288039062f))
+* fixed condition to show CourseCompletedDialog ([6e38a54](https://github.com/selfcommunity/community-js/commit/6e38a54cf43d76e81bbf76536ef57289e9a52b2a))
+* fixed course refresh on toggle complete/uncomplete. Linear issue: https://linear.app/quentral/issue/QUE-1313/le-lezioni-successive-non-si-sbloccano ([71eb6ed](https://github.com/selfcommunity/community-js/commit/71eb6ed5354f5129ddfbce9821d453fb08635c93))
+* fixed fetch lesson hook deps. Linear issue: https://linear.app/quentral/issue/QUE-1222/bug-navigazione-lezioni ([3beb6ec](https://github.com/selfcommunity/community-js/commit/3beb6ecac61462e92a924e1ebe67d7b0e6f9f778))
+* fixed lesson ([a82e0c2](https://github.com/selfcommunity/community-js/commit/a82e0c25e92eb64157c60b289facfe58b76e7b87))
+* fixed lesson edit mode flag ([9a5a44d](https://github.com/selfcommunity/community-js/commit/9a5a44df8d0a6d9322f4487520c062ad418e4447))
+* fixed lesson editor ([2dca1c9](https://github.com/selfcommunity/community-js/commit/2dca1c9f63bd4ce9e413349dd317e45abe70b410))
+* fixed lesson next ([a782cb7](https://github.com/selfcommunity/community-js/commit/a782cb7a48cbad508a5acee929060ce8f2ce67bd))
+* fixed mobile edit mode for lesson/ updated icon font ([891463d](https://github.com/selfcommunity/community-js/commit/891463d609795da35e45de70c3997ea7290f6085))
+* fixed some codes ([4f46aa9](https://github.com/selfcommunity/community-js/commit/4f46aa97910ded44af192b1fd50d1b6114601657))
+* fixed some codes ([267adb5](https://github.com/selfcommunity/community-js/commit/267adb5419911e40285b419fee0dbfedc8a2f264))
+* fixed some codes; wip edit mode ([5655d21](https://github.com/selfcommunity/community-js/commit/5655d21f331874416113562a1ae61c61c0656bbb))
+* fixed some errors ([1a948e8](https://github.com/selfcommunity/community-js/commit/1a948e863bf4dfac52c4558098f941a3b5e53cc2))
+* fixed toggle lesson complete button appearance for course manager ([4f5f85f](https://github.com/selfcommunity/community-js/commit/4f5f85ff0199926da0f36d2b10ee068a4623890d))
+* fixed toggle lesson complete button appearance for course manager ([618a68b](https://github.com/selfcommunity/community-js/commit/618a68b8ddde1862743899ef28fc97e70e4a7cbb))
+* fixes ([47920c9](https://github.com/selfcommunity/community-js/commit/47920c9108ce1ae54f083031ccf47af98ca4a2c9))
+* fixes ([172533c](https://github.com/selfcommunity/community-js/commit/172533c774f41b928c37e609e799a5e7f41ce41e))
+* fixes ([b9f6385](https://github.com/selfcommunity/community-js/commit/b9f6385c26ed684de1ec83ee8ad253b465d184b6))
+* fixes ([04e7c90](https://github.com/selfcommunity/community-js/commit/04e7c9053574a57f2646c2a8dd015be275559906))
+* increased lesson comment obj page size ([d8dfbf9](https://github.com/selfcommunity/community-js/commit/d8dfbf9fd27208b634dd75c21fe553999b08b93c))
+* lesson completion status update ([f4736ef](https://github.com/selfcommunity/community-js/commit/f4736efba637e34cf021d9646ac139f1279ea423))
+* lesson component ([b8c5e3d](https://github.com/selfcommunity/community-js/commit/b8c5e3df391b68e106f5c5558a57ad2e65b6205a))
+* lesson component ([d935547](https://github.com/selfcommunity/community-js/commit/d9355478ae6810e0309dcdb39dbb30640099bb2b))
+* lesson template fixes ([88ba1aa](https://github.com/selfcommunity/community-js/commit/88ba1aa91e2b4c052f91df4f2dd5312cff61894f))
+* moved components from lesson template to ui ([a98ca04](https://github.com/selfcommunity/community-js/commit/a98ca04412c50a154c3eaa6d7ae9199f3843ad66))
+* moved logic from lesson template to ui components ([159484e](https://github.com/selfcommunity/community-js/commit/159484eb9bb26f90d79a14ca362b26efc4c33081))
+* refactored dashboard skeletons; fixed some codes ([60adba9](https://github.com/selfcommunity/community-js/commit/60adba95ee0e6ff1b498ce3f6b6eed4f898f3148))
+* refactored ed exported many templates ([7479a13](https://github.com/selfcommunity/community-js/commit/7479a13cb5f6f924ce2802cfd80b6c415ee31d8b))
+* refactored getUrlLesson function; fixed other comments link ([3b2b3c0](https://github.com/selfcommunity/community-js/commit/3b2b3c0b676ebf15bfa21780ffd84ce81ca75f06))
+* refactored lesson media uploading/rendering for media files. Fixed also linear issues: https://linear.app/quentral/issue/QUE-1240/componente-video-incastonato-con-preview-ebeddata and  https://linear.app/quentral/issue/QUE-1269/a-volte-aggiungendo-un-pdf-ad-una-lezione-non-appare-la-preview ([2259b28](https://github.com/selfcommunity/community-js/commit/2259b28ad86f1798ca56c31b132e4efacd1b6a0b))
+* removed is editor ([4a6a08f](https://github.com/selfcommunity/community-js/commit/4a6a08f694d1c414e564934fe3bd0fed61cdcd22))
+* removed manager role from course join button, fixed course button. ([e0358b4](https://github.com/selfcommunity/community-js/commit/e0358b4da9ff806fab822d1428709faa4914fc0d))
+* toggle complete lesson, lesson component props ([f374be0](https://github.com/selfcommunity/community-js/commit/f374be00d035b37ae2b447ebfcc1f11b8d30a8d6))
+* update classnames and pubsub-js libs ([d566302](https://github.com/selfcommunity/community-js/commit/d56630291b8871fad03a2e23a53b15735d25cfa2))
+* updated lesson template component(still in progress) ([1aaedc5](https://github.com/selfcommunity/community-js/commit/1aaedc5e0c9033d65f387c953c152ab929f0dbd1))
+
+
+### Features
+
+* added api on student's dashboard; fixed some codes into teacher's dashboard ([eaa28f9](https://github.com/selfcommunity/community-js/commit/eaa28f9afa0113ee47f2b03173fcbacdb2a493dd))
+* added callback on Lesson template to try to fix cache problems ([3deae37](https://github.com/selfcommunity/community-js/commit/3deae3743f41b74da90965f859b7a34e0ef17d6c))
+* added CourseDashboard template ([f0f01c9](https://github.com/selfcommunity/community-js/commit/f0f01c9be743ffcfb4eaffe5585944d32704fc93))
+* added Courses template ([2bbc77e](https://github.com/selfcommunity/community-js/commit/2bbc77edfce0f720160a2546edde917cb68e1556))
+* added EditCourse template ([f792ca0](https://github.com/selfcommunity/community-js/commit/f792ca0b4a02a529da862aff7dd76433200e7fc3))
+* wip dashboard and edit ([fcffd42](https://github.com/selfcommunity/community-js/commit/fcffd426571d270688f87eb76d92eabea8a3ddfd))
+* wip edit tab lessons api ([1175b09](https://github.com/selfcommunity/community-js/commit/1175b09450c568082db6be6982c1d65d9f1f6d7d))
+* wip from mock to api ([4c646b0](https://github.com/selfcommunity/community-js/commit/4c646b02aa38f028db48d8b101202e9a5c313525))
+
+
+### Performance Improvements
+
+* added CourseJoinButton, fixed some errors ([7d74837](https://github.com/selfcommunity/community-js/commit/7d74837e5c4fe78ee02388b10024e9ca8f68b835))
+* added lesson comments route ([765bf79](https://github.com/selfcommunity/community-js/commit/765bf79b3ad59905a67286e297b5c9a3f60a738a))
+* added lesson save snackbar. Linear issue: https://linear.app/quentral/issue/QUE-1264/messaggio-salvataggio-lezione-avvenuto-correttamente ([46eb272](https://github.com/selfcommunity/community-js/commit/46eb272a383461d7e1cb4d7ce12ddb43a66fa620))
+* added mark complete/incomplete a lesson, fixed lesson template component ([579aade](https://github.com/selfcommunity/community-js/commit/579aade220cdec86991e32b1f79e0e4547f0c42a))
+* added preview mode ([e9a11c5](https://github.com/selfcommunity/community-js/commit/e9a11c585ae515b400befc7e4fc62366a1ce0a2e))
+* added UserCreatedCoursesWidget to UserProfile ([3a7236d](https://github.com/selfcommunity/community-js/commit/3a7236d5b02d004fa2678b8f8beab5306e5ad161))
+* check between all lessons(even locked ones) for navigation counter. Linear issue: https://linear.app/quentral/issue/QUE-1410/il-contatore-delle-lezioni-totali-e-errato-se-le-lezioni-vanno ([281fc48](https://github.com/selfcommunity/community-js/commit/281fc4830c88cf27f1c23f00a9746c87fcaa6408))
+* moved lesson component to templates.(still in progress) ([a5ea48f](https://github.com/selfcommunity/community-js/commit/a5ea48f1122f1225e226492fd5785837ab86d58d))
+
+
+
+
+
+## [0.4.8-alpha.78](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.77...@selfcommunity/react-templates@0.4.8-alpha.78) (2025-04-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.77](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.76...@selfcommunity/react-templates@0.4.8-alpha.77) (2025-04-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.76](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.75...@selfcommunity/react-templates@0.4.8-alpha.76) (2025-04-10)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.75](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.74...@selfcommunity/react-templates@0.4.8-alpha.75) (2025-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.74](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.73...@selfcommunity/react-templates@0.4.8-alpha.74) (2025-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.73](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.72...@selfcommunity/react-templates@0.4.8-alpha.73) (2025-04-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.72](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.71...@selfcommunity/react-templates@0.4.8-alpha.72) (2025-04-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.71](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.70...@selfcommunity/react-templates@0.4.8-alpha.71) (2025-04-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.70](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.69...@selfcommunity/react-templates@0.4.8-alpha.70) (2025-04-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.69](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.68...@selfcommunity/react-templates@0.4.8-alpha.69) (2025-04-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.68](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.67...@selfcommunity/react-templates@0.4.8-alpha.68) (2025-04-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.67](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.66...@selfcommunity/react-templates@0.4.8-alpha.67) (2025-04-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.66](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.65...@selfcommunity/react-templates@0.4.8-alpha.66) (2025-04-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.65](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.64...@selfcommunity/react-templates@0.4.8-alpha.65) (2025-04-07)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.64](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.63...@selfcommunity/react-templates@0.4.8-alpha.64) (2025-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.63](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.62...@selfcommunity/react-templates@0.4.8-alpha.63) (2025-04-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.62](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.61...@selfcommunity/react-templates@0.4.8-alpha.62) (2025-04-02)
+
+
+### Bug Fixes
+
+* edit event ([c71d07f](https://github.com/selfcommunity/community-js/commit/c71d07fa3b32d20c30166260e09df6fe57e39a72))
+
+
+
+
+
+## [0.4.8-alpha.61](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.60...@selfcommunity/react-templates@0.4.8-alpha.61) (2025-04-02)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.60](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.59...@selfcommunity/react-templates@0.4.8-alpha.60) (2025-03-31)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.58...@selfcommunity/react-templates@0.4.8-alpha.59) (2025-03-31)
+
+
+### Bug Fixes
+
+* classnames ([3eaa996](https://github.com/selfcommunity/community-js/commit/3eaa9961d9c6d254e8e965b06fd40aa66595065a))
+
+
+
+
+
+## [0.4.8-alpha.58](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.57...@selfcommunity/react-templates@0.4.8-alpha.58) (2025-03-31)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.57](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.56...@selfcommunity/react-templates@0.4.8-alpha.57) (2025-03-28)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.56](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.55...@selfcommunity/react-templates@0.4.8-alpha.56) (2025-03-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.55](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.54...@selfcommunity/react-templates@0.4.8-alpha.55) (2025-03-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.54](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.53...@selfcommunity/react-templates@0.4.8-alpha.54) (2025-03-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.53](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.52...@selfcommunity/react-templates@0.4.8-alpha.53) (2025-03-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.52](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.51...@selfcommunity/react-templates@0.4.8-alpha.52) (2025-03-23)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.51](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.50...@selfcommunity/react-templates@0.4.8-alpha.51) (2025-03-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.50](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.49...@selfcommunity/react-templates@0.4.8-alpha.50) (2025-03-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.49](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.48...@selfcommunity/react-templates@0.4.8-alpha.49) (2025-03-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.48](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.47...@selfcommunity/react-templates@0.4.8-alpha.48) (2025-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.47](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.46...@selfcommunity/react-templates@0.4.8-alpha.47) (2025-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.46](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.45...@selfcommunity/react-templates@0.4.8-alpha.46) (2025-02-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.45](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.44...@selfcommunity/react-templates@0.4.8-alpha.45) (2025-02-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.44](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.43...@selfcommunity/react-templates@0.4.8-alpha.44) (2025-02-26)
+
+
+### Bug Fixes
+
+* category can_create_only_staff ([a9ebbf3](https://github.com/selfcommunity/community-js/commit/a9ebbf3c483bd428f63f7567227c96dcead9638f))
+
+
+
+
+
+## [0.4.8-alpha.43](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.42...@selfcommunity/react-templates@0.4.8-alpha.43) (2025-02-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.42](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.41...@selfcommunity/react-templates@0.4.8-alpha.42) (2025-02-26)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.41](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.40...@selfcommunity/react-templates@0.4.8-alpha.41) (2025-02-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.40](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.39...@selfcommunity/react-templates@0.4.8-alpha.40) (2025-02-25)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.39](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.38...@selfcommunity/react-templates@0.4.8-alpha.39) (2025-02-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.38](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.37...@selfcommunity/react-templates@0.4.8-alpha.38) (2025-02-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.37](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.36...@selfcommunity/react-templates@0.4.8-alpha.37) (2025-02-24)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.36](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.35...@selfcommunity/react-templates@0.4.8-alpha.36) (2025-02-12)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.35](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.34...@selfcommunity/react-templates@0.4.8-alpha.35) (2025-02-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.34](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.33...@selfcommunity/react-templates@0.4.8-alpha.34) (2025-02-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.33](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.32...@selfcommunity/react-templates@0.4.8-alpha.33) (2025-01-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.32](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.31...@selfcommunity/react-templates@0.4.8-alpha.32) (2025-01-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.31](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.30...@selfcommunity/react-templates@0.4.8-alpha.31) (2025-01-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.30](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.29...@selfcommunity/react-templates@0.4.8-alpha.30) (2025-01-30)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.29](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.28...@selfcommunity/react-templates@0.4.8-alpha.29) (2025-01-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.28](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.27...@selfcommunity/react-templates@0.4.8-alpha.28) (2025-01-22)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.27](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.26...@selfcommunity/react-templates@0.4.8-alpha.27) (2025-01-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.26](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.25...@selfcommunity/react-templates@0.4.8-alpha.26) (2025-01-21)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.24...@selfcommunity/react-templates@0.4.8-alpha.25) (2025-01-16)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.23...@selfcommunity/react-templates@0.4.8-alpha.24) (2025-01-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.22...@selfcommunity/react-templates@0.4.8-alpha.23) (2025-01-15)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.21...@selfcommunity/react-templates@0.4.8-alpha.22) (2025-01-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.20...@selfcommunity/react-templates@0.4.8-alpha.21) (2025-01-14)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.19...@selfcommunity/react-templates@0.4.8-alpha.20) (2025-01-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.18...@selfcommunity/react-templates@0.4.8-alpha.19) (2025-01-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.17...@selfcommunity/react-templates@0.4.8-alpha.18) (2025-01-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.16...@selfcommunity/react-templates@0.4.8-alpha.17) (2025-01-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.15...@selfcommunity/react-templates@0.4.8-alpha.16) (2025-01-13)
+
+
+### Bug Fixes
+
+* style feddObjectDetail ([53de310](https://github.com/selfcommunity/community-js/commit/53de310346e27f9827ab369598edbf3f6a97e96c))
+
+
+
+
+
+## [0.4.8-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.14...@selfcommunity/react-templates@0.4.8-alpha.15) (2025-01-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.13...@selfcommunity/react-templates@0.4.8-alpha.14) (2025-01-13)
+
+
+### Bug Fixes
+
+* livestream ([b891f46](https://github.com/selfcommunity/community-js/commit/b891f46d612f6a3ca55a35821c967cbf7679e7a3))
+
+
+
+
+
+## [0.4.8-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.12...@selfcommunity/react-templates@0.4.8-alpha.13) (2025-01-10)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.11...@selfcommunity/react-templates@0.4.8-alpha.12) (2025-01-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.10...@selfcommunity/react-templates@0.4.8-alpha.11) (2025-01-09)
+
+
+### Bug Fixes
+
+* event id error on partecipate live ([325a53f](https://github.com/selfcommunity/community-js/commit/325a53f571410ecb009fa46b9cf0171b628f64f7))
+
+
+
+
+
+## [0.4.8-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.9...@selfcommunity/react-templates@0.4.8-alpha.10) (2025-01-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.8...@selfcommunity/react-templates@0.4.8-alpha.9) (2025-01-09)
+
+
+### Bug Fixes
+
+* event form ([2b12782](https://github.com/selfcommunity/community-js/commit/2b12782cc0d83d843f2c8f468b3a42091c854933))
+
+
+
+
+
+## [0.4.8-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.7...@selfcommunity/react-templates@0.4.8-alpha.8) (2025-01-09)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.6...@selfcommunity/react-templates@0.4.8-alpha.7) (2025-01-09)
+
+
+### Bug Fixes
+
+* event form live stream ([5a53805](https://github.com/selfcommunity/community-js/commit/5a538058c97df59586789fa47c61703dc10e0f77))
+
+
+
+
+
+## [0.4.8-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.5...@selfcommunity/react-templates@0.4.8-alpha.6) (2025-01-09)
+
+
+### Bug Fixes
+
+* chip post group, event live stream ([18777f9](https://github.com/selfcommunity/community-js/commit/18777f926561ea35b086d42b33ff30be6389d560))
+
+
+
+
+
+## [0.4.8-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.4...@selfcommunity/react-templates@0.4.8-alpha.5) (2025-01-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.3...@selfcommunity/react-templates@0.4.8-alpha.4) (2025-01-08)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.2...@selfcommunity/react-templates@0.4.8-alpha.3) (2025-01-08)
+
+
+### Bug Fixes
+
+* dependencies ([bfb228f](https://github.com/selfcommunity/community-js/commit/bfb228fe482d247b87605a57e7de34faf7087214))
+* livestream ([9139df7](https://github.com/selfcommunity/community-js/commit/9139df75d054dfcb1a6664f39fb146a16e69e77f))
+* livestream ([6f16326](https://github.com/selfcommunity/community-js/commit/6f1632698e7c00d3f3019cec12292d6044f95412))
+* livestream ([9e5f413](https://github.com/selfcommunity/community-js/commit/9e5f413f97ef3a471b3368b0dc79f450d0d0d163))
+* livestream ([d6c209b](https://github.com/selfcommunity/community-js/commit/d6c209b1ff2f23f4bb3176b6c4d33703c6fedd77))
+* livestream in progress - fix deps - remove webpack-atoms (use fiber) and conflict with livekit deps ([68ed5ba](https://github.com/selfcommunity/community-js/commit/68ed5ba4394740787bfd89b1e7d195f9ad2954d4))
+
+
+
+
+
+## [0.4.8-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.1...@selfcommunity/react-templates@0.4.8-alpha.2) (2024-12-30)
+
+
+### Bug Fixes
+
+* load video (problem with lazy load in the pwa preview container) ([19534d5](https://github.com/selfcommunity/community-js/commit/19534d55131093f9c9967951636f260b6fde93c9))
+
+
+
+
+
+## [0.4.8-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.8-alpha.0...@selfcommunity/react-templates@0.4.8-alpha.1) (2024-12-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [0.4.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.7...@selfcommunity/react-templates@0.4.8-alpha.0) (2024-12-19)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 ## [0.4.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.4.7-alpha.17...@selfcommunity/react-templates@0.4.7) (2024-12-17)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

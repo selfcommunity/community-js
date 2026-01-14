@@ -17,7 +17,7 @@ describe('Tag Service Test', () => {
     });
   });
   test('Search a tag', () => {
-    return TagService.searchTag().then((data) => {
+    return TagService.searchUserTags().then((data) => {
       expect(data.results).toBeInstanceOf(Array);
     });
   });

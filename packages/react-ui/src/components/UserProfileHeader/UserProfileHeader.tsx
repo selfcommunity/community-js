@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Paper, Typography} from '@mui/material';
+import {Box, Paper, Typography, styled} from '@mui/material';
 import ChangeCover, {ChangeCoverProps} from '../ChangeCover';
 import ChangePicture, {ChangePictureProps} from '../ChangePicture';
 import {SCUserType} from '@selfcommunity/types';
@@ -209,7 +208,7 @@ export default function UserProfileHeader(inProps: UserProfileHeaderProps): JSX.
             </Typography>
           )}
           {scUser.website && (
-            <Link className={classes.website} target="blank" to={scUser.website}>
+            <Link className={classes.website} target="_blank" to={scUser.website}>
               <Typography variant="body2">{scUser.website}</Typography>
             </Link>
           )}

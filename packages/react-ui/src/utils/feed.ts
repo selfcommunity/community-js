@@ -1,4 +1,4 @@
-import {SCNotificationAggregatedType, SCNotificationType} from '@selfcommunity/types';
+import {SCFeedObjectType, SCNotificationAggregatedType, SCNotificationType} from '@selfcommunity/types';
 
 /**
  * Compare widget priority

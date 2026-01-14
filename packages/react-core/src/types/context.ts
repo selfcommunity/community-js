@@ -8,6 +8,7 @@ import {
   SCReactionType,
   SCGroupType,
   SCEventType,
+  SCCourseType,
 } from '@selfcommunity/types';
 import {SCThemeType} from './theme';
 
@@ -184,6 +185,7 @@ export interface SCUserContextType {
     blockedUsers?: SCBlockedUsersManagerType;
     groups?: SCSubscribedGroupsManagerType;
     events?: SCSubscribedEventsManagerType;
+    courses?: SCJoinedCoursesManagerType;
   };
 }
 
@@ -311,6 +313,47 @@ export interface SCFollowedCategoriesManagerType {
 
   /**
    * Empty cache to revalidate all categories
+   */
+  emptyCache?: () => void;
+}
+
+export interface SCJoinedCoursesManagerType {
+  /**
+   * List of all courses ids followed by the authenticated user
+   */
+  courses: number[];
+
+  /**
+   * List of all courses in loading state
+   */
+  loading: number[];
+
+  /**
+   * List of current courses in loading state
+   */
+  isLoading: (course: SCCourseType) => boolean;
+
+  /**
+   * Handle user joining a course
+   */
+  join?: (course: SCCourseType, userId?: number) => Promise<any>;
+  /**
+   * Handle user leaving a course
+   */
+  leave?: (course: SCCourseType) => Promise<any>;
+
+  /**
+   * Handles a user join status to a course, caching data
+   */
+  joinStatus?: (course: SCCourseType) => string;
+
+  /**
+   * Refresh courses
+   */
+  refresh?: () => void;
+
+  /**
+   * Empty cache to revalidate all courses
    */
   emptyCache?: () => void;
 }

@@ -1,5 +1,4 @@
-import {CircularProgress} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {styled, CircularProgress} from '@mui/material';
 import {MouseEvent, TouchEvent, useCallback, useState} from 'react';
 import {PhotoSlider} from 'react-photo-view';
 import {PhotoProviderBase} from 'react-photo-view/dist/types';

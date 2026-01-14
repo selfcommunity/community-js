@@ -1,8 +1,16 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
-import {SCContextType, SCSubscribedGroupsManagerType, SCUserContextType, useSCContext, useSCFetchGroup, useSCUser} from '@selfcommunity/react-core';
-import {SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType, SCUserType} from '@selfcommunity/types';
+import {
+  SCContextType,
+  SCSubscribedGroupsManagerType,
+  SCUserContextType,
+  useSCContext,
+  useSCFetchGroup,
+  useSCPaymentsEnabled,
+  useSCUser
+} from '@selfcommunity/react-core';
+import {SCContentType, SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType, SCUserType} from '@selfcommunity/types';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -10,6 +18,7 @@ import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import PubSub from 'pubsub-js';
+import BuyButton from '../BuyButton';
 
 const PREFIX = 'SCGroupSubscribeButton';
 
@@ -22,6 +31,13 @@ const Root = styled(LoadingButton, {
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
 })(({theme}) => ({}));
+
+const BuyButtonRoot = styled(BuyButton, {
+  name: PREFIX,
+  slot: 'BuyButtonRoot'
+})(({theme}) => ({
+  marginTop: theme.spacing()
+}));
 
 export interface GroupSubscribeButtonProps {
   /**
@@ -42,15 +58,9 @@ export interface GroupSubscribeButtonProps {
   groupId?: number;
 
   /**
-   * The user to be accepted into the group
-   * @default null
-   */
-  user?: SCUserType;
-
-  /**
    * onSubscribe callback
-   * @param user
-   * @param joined
+   * @param group
+   * @param status
    */
   onSubscribe?: (group: SCGroupType, status: string | null) => any;
 
@@ -89,7 +99,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     name: PREFIX
   });
 
-  const {className, groupId, group, user, onSubscribe, ...rest} = props;
+  const {className, groupId, group, onSubscribe, ...rest} = props;
 
   // STATE
   const [status, setStatus] = useState<string>(null);
@@ -98,6 +108,9 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
   const scContext: SCContextType = useSCContext();
   const scUserContext: SCUserContextType = useSCUser();
   const scGroupsManager: SCSubscribedGroupsManagerType = scUserContext.managers.groups;
+
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
@@ -124,6 +137,16 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
   }, [authUserId, scGroupsManager.subscriptionStatus, scGroup]);
 
   /**
+   * Define if the buyButton is visible
+   */
+  const showBuyButton =
+    !isGroupAdmin &&
+    isPaymentsEnabled &&
+    scGroup.paywalls?.length > 0 &&
+    (scGroup.privacy === SCGroupPrivacyType.PUBLIC ||
+      (scGroup.privacy === SCGroupPrivacyType.PRIVATE && status && status !== SCGroupSubscriptionStatusType.REQUESTED));
+
+  /**
    * Notify UI when a member is added to a group
    * @param group
    * @param user
@@ -134,15 +157,17 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     }
   }
 
-  const subscribe = (user?: SCUserType) => {
+  const subscribe = () => {
     scGroupsManager
-      .subscribe(scGroup, user?.id)
+      .subscribe(scGroup)
       .then(() => {
         const _status =
           scGroup.privacy === SCGroupPrivacyType.PRIVATE && scGroup.subscription_status !== SCGroupSubscriptionStatusType.INVITED
             ? SCGroupSubscriptionStatusType.REQUESTED
             : SCGroupSubscriptionStatusType.SUBSCRIBED;
-        notifyChanges(scGroup, user);
+        if (_status === SCGroupSubscriptionStatusType.SUBSCRIBED) {
+          notifyChanges(scGroup, scUserContext.user);
+        }
         onSubscribe && onSubscribe(scGroup, _status);
       })
       .catch((e) => {
@@ -165,7 +190,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     if (!scUserContext.user) {
       scContext.settings.handleAnonymousAction();
     } else {
-      status === SCGroupSubscriptionStatusType.SUBSCRIBED && !user?.id ? unsubscribe() : user?.id ? subscribe(user) : subscribe();
+      status === SCGroupSubscriptionStatusType.SUBSCRIBED ? unsubscribe() : subscribe();
     }
   };
 
@@ -193,8 +218,12 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     return _status;
   }, [status, scGroup]);
 
-  if (!scGroup || (isGroupAdmin && user?.id === scUserContext.user.id) || (isGroupAdmin && !user?.id)) {
+  if (!scGroup || isGroupAdmin) {
     return null;
+  }
+
+  if (showBuyButton) {
+    return <BuyButtonRoot contentType={SCContentType.GROUP} content={scGroup} />;
   }
 
   return (
@@ -206,7 +235,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
       disabled={status === SCGroupSubscriptionStatusType.REQUESTED}
       className={classNames(classes.root, className)}
       {...rest}>
-      {isGroupAdmin ? <FormattedMessage defaultMessage="ui.groupSubscribeButton.accept" id="ui.groupSubscribeButton.accept" /> : getStatus}
+      {getStatus}
     </Root>
   );
 }

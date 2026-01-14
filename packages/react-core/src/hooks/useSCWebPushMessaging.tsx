@@ -4,7 +4,7 @@ import {SCTagType} from '@selfcommunity/types';
 import {useSCContext} from '../components/provider/SCContextProvider';
 import {useSCUser} from '../components/provider/SCUserProvider';
 import {Logger} from '@selfcommunity/utils';
-import Button from '@mui/material/Button';
+import {Button} from '@mui/material';
 import {loadVersionBrowser, urlB64ToUint8Array} from '@selfcommunity/utils';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';

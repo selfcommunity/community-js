@@ -1,18 +1,16 @@
-import { LoadingButton, LoadingButtonProps } from '@mui/lab';
-import { Stack, StackProps, Typography } from '@mui/material';
-import Icon from '@mui/material/Icon';
-import { styled } from '@mui/material/styles';
+import {LoadingButton, LoadingButtonProps} from '@mui/lab';
+import {Stack, StackProps, Typography, Icon, styled} from '@mui/material';
 import ChunkedUploady from '@rpldy/chunked-uploady';
-import { Endpoints } from '@selfcommunity/api-services';
-import { SCMediaType } from '@selfcommunity/types';
+import {Endpoints} from '@selfcommunity/api-services';
+import {SCMediaType} from '@selfcommunity/types';
 import classNames from 'classnames';
-import { useSnackbar } from 'notistack';
-import { ForwardedRef, forwardRef, useCallback, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import {useSnackbar} from 'notistack';
+import {ForwardedRef, forwardRef, useCallback, useState} from 'react';
+import {FormattedMessage} from 'react-intl';
 import MediaChunkUploader from '../../shared/MediaChunkUploader';
-import { SCMediaChunkType } from '../../types';
+import {SCMediaChunkType} from '../../types';
 import asUploadButton from './asUploadButton';
-import { PREFIX } from './constants';
+import {PREFIX} from './constants';
 
 const classes = {
   triggerRoot: `${PREFIX}-trigger-root`,
@@ -29,7 +27,7 @@ const Root = styled(LoadingButton, {
 
 const GalleryUploadStack = asUploadButton(
   forwardRef((props: StackProps, ref: ForwardedRef<HTMLDivElement>) => <Stack {...props} aria-label="upload" ref={ref} />),
-  { accept: 'image/*' }
+  {accept: 'image/*'}
 );
 
 export interface TriggerIconButtonProps extends LoadingButtonProps {
@@ -48,13 +46,13 @@ export interface TriggerIconButtonProps extends LoadingButtonProps {
 
 function TriggerButton(props: TriggerIconButtonProps, ref: ForwardedRef<HTMLButtonElement>) {
   // PROPS
-  const { className, onAdd = null, isSquare = false, ...rest } = props;
+  const {className, onAdd = null, isSquare = false, ...rest} = props;
 
   // STATE
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   // HOOKS
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
 
   const handleFilterByMime = useCallback((file: File) => {
     return file.type.startsWith('image/');
@@ -72,7 +70,7 @@ function TriggerButton(props: TriggerIconButtonProps, ref: ForwardedRef<HTMLButt
     (chunk: SCMediaChunkType, error: string) => {
       const _snackBar = enqueueSnackbar(`${chunk.name}: ${error}`, {
         variant: 'error',
-        anchorOrigin: { horizontal: 'center', vertical: 'top' },
+        anchorOrigin: {horizontal: 'center', vertical: 'top'},
         autoHideDuration: 2000,
         SnackbarProps: {
           onClick: () => {

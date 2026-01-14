@@ -1,5 +1,4 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import CommentNotification from '../Notification/Comment';
 import UserFollowNotification from '../Notification/UserFollow';
 import UndeletedForNotification from '../Notification/UndeletedFor';
@@ -15,7 +14,7 @@ import VoteUpNotification from '../Notification/VoteUp';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import PubSub from 'pubsub-js';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
-import {Avatar, Box, CardProps, MenuItem, MenuList, Typography} from '@mui/material';
+import {Avatar, Box, CardProps, MenuItem, MenuList, Typography, styled} from '@mui/material';
 import IncubatorApprovedNotification from '../Notification/IncubatorApproved';
 import classNames from 'classnames';
 import Skeleton from './Skeleton';
@@ -43,6 +42,8 @@ import NotificationItem from '../../shared/NotificationItem';
 import {PREFIX} from './constants';
 import GroupNotification from '../Notification/Group';
 import EventNotification from '../Notification/Event/Event';
+import LiveStreamNotification from '../Notification/LiveStream';
+import CourseNotification from '../Notification/Course';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -61,7 +62,7 @@ const Root = styled(Box, {
 export interface SnippetNotificationsProps extends CardProps {
   /**
    * Id of the UserNotification
-   * @default `notification_<notificationObject.sid>`
+   * @default `notification_notificationObject.sid`
    */
   id?: string;
 
@@ -365,6 +366,17 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
       n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT
     ) {
       return <EventNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (
+      n.type === SCNotificationTypologyType.USER_ADDED_TO_COURSE ||
+      n.type === SCNotificationTypologyType.MANAGER_ADDED_TO_COURSE ||
+      n.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON ||
+      n.type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE ||
+      n.type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE ||
+      n.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE
+    ) {
+      return <CourseNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
+    } else if (type === SCNotificationTypologyType.LIVE_STREAM_STARTED) {
+      content = <LiveStreamNotification notificationObject={n} key={i} template={SCNotificationObjectTemplateType.SNIPPET} />;
     }
     if (type && handleNotification) {
       /** Override content */

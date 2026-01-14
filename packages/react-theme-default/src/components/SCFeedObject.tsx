@@ -64,6 +64,7 @@ const Component = {
           }
         },
         '& .SCFeedObject-group, & .SCFeedObject-event': {
+          height: 20,
           [theme.breakpoints.up('sm')]: {
             marginRight: `${theme.spacing(1)} !important`
           }
@@ -71,12 +72,11 @@ const Component = {
       },
       '& .SCFeedObject-group, & .SCFeedObject-event': {
         justifyContent: 'flex-start',
-        padding: theme.spacing(0.2, 0.5),
-        height: 20,
         '& a': {
           padding: theme.spacing(0.5),
-          marginBottom: theme.spacing(0.5),
+          margin: theme.spacing(0.5),
           color: theme.palette.common.white,
+          maxHeight: 20,
           '&:hover': {
             backgroundColor: theme.palette.common.black
           },
@@ -86,7 +86,7 @@ const Component = {
           }
         },
         borderBottom: '1px solid rgba(221, 221, 221, 1)',
-        margin: theme.spacing(1, 2, 0, 2)
+        margin: theme.spacing(0.5, 2, 0, 2)
       },
       '& .SCFeedObject-content': {
         padding: theme.spacing(1, 0, 0, 0),
@@ -125,7 +125,14 @@ const Component = {
         padding: theme.spacing(0.2, 2)
       },
       '& .SCFeedObject-info-section': {
-        padding: theme.spacing(0, 2)
+        padding: theme.spacing(0, 2),
+        '& .SCFeedObject-vote': {
+          width: '100%',
+          justifyContent: 'space-between',
+          '& > button:first-of-type': {
+            margin: 'auto'
+          }
+        }
       },
       '& .SCFeedObject-activity-at': {
         textDecoration: 'none',
@@ -137,6 +144,15 @@ const Component = {
         '&:hover': {
           opacity: 1
         }
+      },
+      '& .SCFeedObject-new': {
+        color: theme.palette.common.white,
+        backgroundColor: '#fa0501',
+        padding: '0 3px',
+        borderRadius: '3px',
+        marginRight: '3px',
+        fontSize: '10px',
+        fontWeight: 600
       },
       '&.SCFeedObject-preview, &.SCFeedObject-detail, &.SCFeedObject-search, &.SCFeedObject-share': {
         border: `0 none`,
@@ -308,12 +324,29 @@ const Component = {
             '& li': {
               margin: '0 32px'
             },
-            '& span span': {
-              display: 'inline-block',
-              width: '100%'
+            '& span': {
+              '& span': {
+                display: 'inline'
+              },
+              '& span:not(:has(+ a))': {
+                width: '100%'
+              },
+              '& a': {
+                display: 'inline-block',
+                margin: theme.spacing(0, 0.3)
+              },
+              '& a:hover': {
+                '& span': {
+                  textDecoration: 'underline'
+                }
+              },
+              '& :last-child': {
+                display: 'inline'
+              }
             }
           },
           '& .SCFeedObject-medias-section': {
+            padding: theme.spacing(1, 0),
             '& .SCFeedObjectMediaPreview-root': {
               margin: theme.spacing(0, 1)
             }
@@ -322,6 +355,7 @@ const Component = {
             fontSize: theme.typography.fontSize,
             fontWeight: theme.typography.fontWeightBold,
             padding: theme.spacing(0.25),
+            marginTop: -2,
             justifyContent: 'start',
             '&:hover': {backgroundColor: 'transparent'}
           }
@@ -489,14 +523,14 @@ const Component = {
         paddingRight: 0
       }
     }),
-    actionsRoot: ({theme}: any) => ({
+    actionsRoot: () => ({
       margin: '0px 0px',
       color: '#3A3A3A',
       '& .SCFeedObject-actions-action': {
         textAlign: 'center'
       }
     }),
-    actionCommentRoot: ({theme}: any) => ({
+    actionCommentRoot: () => ({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -523,7 +557,7 @@ const Component = {
         }
       }
     }),
-    actionShareRoot: ({theme}: any) => ({
+    actionShareRoot: () => ({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -539,7 +573,7 @@ const Component = {
         whiteSpace: 'nowrap'
       }
     }),
-    actionVoteRoot: ({theme}: any) => ({
+    actionVoteRoot: () => ({
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -552,7 +586,7 @@ const Component = {
         borderBottom: 0
       }
     }),
-    activitiesRoot: ({theme}: any) => ({
+    activitiesRoot: () => ({
       width: '100%'
     }),
     activitiesMenuRoot: ({theme}: any) => ({
@@ -592,7 +626,7 @@ const Component = {
         lineHeight: '24px'
       }
     }),
-    contributorsSkeletonRoot: ({theme}: any) => ({
+    contributorsSkeletonRoot: () => ({
       // [`& .${classes.btnParticipants}`]: {
       //   marginLeft: -10
       // }
@@ -737,10 +771,10 @@ const Component = {
           }
       }
     }),
-    activityCommentRoot: ({theme}: any) => ({}),
-    activityFollowRoot: ({theme}: any) => ({}),
-    activityPollVoteRoot: ({theme}: any) => ({}),
-    activityVoteUpRoot: ({theme}: any) => ({})
+    activityCommentRoot: () => ({}),
+    activityFollowRoot: () => ({}),
+    activityPollVoteRoot: () => ({}),
+    activityVoteUpRoot: () => ({})
   }
 };
 

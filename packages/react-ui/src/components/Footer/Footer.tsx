@@ -1,15 +1,20 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
-import {Box, Button, Typography} from '@mui/material';
+import {Box, Button, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
-import {CustomMenuService} from '@selfcommunity/api-services';
-import {SCCustomMenuItemType, SCCustomMenuType} from '@selfcommunity/types';
-import { Logger, sortByAttr } from '@selfcommunity/utils';
-import {Link, SCPreferences, SCPreferencesContextType, useSCPreferences} from '@selfcommunity/react-core';
-import {SCOPE_SC_UI} from '../../constants/Errors';
+import {SCCustomMenu, SCCustomMenuItemType, SCCustomMenuType} from '@selfcommunity/types';
+import {sortByAttr} from '@selfcommunity/utils';
+import {
+  Link,
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContextType,
+  useFetchMenuFooter,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import FooterSkeleton from './Skeleton';
-import {PREFIX} from './constants';
+import {PREFIX, EXPLORE_MENU_ITEM} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -21,7 +26,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface FooterProps {
   /**
@@ -88,42 +93,20 @@ export default function Footer(inProps: FooterProps): JSX.Element {
   });
   const {className, menu = null, startActions = null, endActions = null, ...rest} = props;
 
+  // CONTEXT
+  const scUserContext: SCUserContextType = useSCUser();
+
+  // HOOKS
+  const {_menu, loading} = useFetchMenuFooter(scUserContext.user ? SCCustomMenu.BASE : SCCustomMenu.NOT_LOGGED, menu);
+
   // PREFERENCES
-  const scPreferences: SCPreferencesContextType = useSCPreferences();
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
   const copyright = useMemo(() => {
-    return scPreferences.preferences && SCPreferences.TEXT_APPLICATION_COPYRIGHT in scPreferences.preferences
-      ? scPreferences.preferences[SCPreferences.TEXT_APPLICATION_COPYRIGHT].value.replace('$year', new Date().getFullYear())
+    return preferences && SCPreferences.TEXT_APPLICATION_COPYRIGHT in preferences
+      ? preferences[SCPreferences.TEXT_APPLICATION_COPYRIGHT].value.replace('$year', new Date().getFullYear())
       : null;
-  }, [scPreferences.preferences]);
-
-  // STATE
-  const [_menu, setMenu] = useState<SCCustomMenuType>(menu);
-  const [loading, setLoading] = useState<boolean>(!menu);
-
-  /**
-   * Fetches custom pages
-   */
-  function fetchMenu() {
-    setLoading(true);
-    CustomMenuService.getBaseCustomMenu()
-      .then((menu: SCCustomMenuType) => {
-        setMenu(menu);
-      })
-      .catch((error) => {
-        Logger.error(SCOPE_SC_UI, error);
-      })
-      .then(() => setLoading(false));
-  }
-
-  /**
-   * On mount, fetches legal and custom pages
-   */
-  useEffect(() => {
-    if (_menu) {
-      return;
-    }
-    fetchMenu();
-  }, []);
+  }, [preferences]);
+  const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
 
   /**
    * Renders root object
@@ -135,11 +118,13 @@ export default function Footer(inProps: FooterProps): JSX.Element {
     <Root {...rest} className={classNames(classes.root, className)}>
       {startActions}
       <Box className={classes.itemList}>
-        {sortByAttr(_menu.items, 'order').map((item: SCCustomMenuItemType, index) => (
-          <Button component={Link} key={item.id} className={classes.item} to={item.url} variant="text">
-            {item.label}
-          </Button>
-        ))}
+        {sortByAttr(_menu.items, 'order')
+          .filter((item: SCCustomMenuItemType) => exploreStreamEnabled || item.url !== EXPLORE_MENU_ITEM)
+          .map((item: SCCustomMenuItemType) => (
+            <Button component={Link} key={item.id} className={classes.item} to={item.url} variant="text">
+              {item.label}
+            </Button>
+          ))}
       </Box>
       {endActions}
       <Typography textAlign="center" className={classes.copyright} variant="body2" dangerouslySetInnerHTML={{__html: copyright}} />

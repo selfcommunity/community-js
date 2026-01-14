@@ -1,21 +1,25 @@
-import React, {useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
+import React, {useEffect, useMemo, useState} from 'react';
+import {styled} from '@mui/material';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
   SCFollowedCategoriesManagerType,
+  SCPreferences,
+  SCPreferencesContextType,
   SCUserContextType,
   useSCContext,
   useSCFetchCategory,
+  useSCPaymentsEnabled,
+  useSCPreferences,
   useSCUser
 } from '@selfcommunity/react-core';
-import {SCCategoryType} from '@selfcommunity/types';
+import {SCCategoryAutoFollowType, SCCategoryType, SCContentType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {SCCategoryAutoFollowType} from '@selfcommunity/types';
+import BuyButton from '../BuyButton';
 
 const PREFIX = 'SCCategoryFollowButton';
 
@@ -23,7 +27,7 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const FollowButton = styled(LoadingButton, {
+const Root = styled(LoadingButton, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root
@@ -53,6 +57,11 @@ export interface CategoryFollowButtonProps {
    * @param followed
    */
   onFollow?: (category: SCCategoryType, followed: boolean) => any;
+
+  /**
+   * Disable action if feature payments is enabled and the content is paid item
+   */
+  disableBuyContentIfPaidContent?: boolean;
 
   /**
    * Others properties
@@ -89,7 +98,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     name: PREFIX
   });
 
-  const {className, categoryId, category, onFollow, ...rest} = props;
+  const {className, categoryId, category, onFollow, disableBuyContentIfPaidContent, disabled, ...rest} = props;
 
   // CONTEXT
   const scContext: SCContextType = useSCContext();
@@ -98,13 +107,33 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
+  const {preferences}: SCPreferencesContextType = useSCPreferences();
 
-  const {scCategory, setSCCategory} = useSCFetchCategory({
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
+  const {scCategory} = useSCFetchCategory({
     id: categoryId,
     category,
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
   });
   const [followed, setFollowed] = useState<boolean>(null);
+
+  /**
+   * Check the button if is disabled
+   * Disable action follow/unfollow only if payments feature is active
+   * and the category is a paid content and the category isn't paid
+   */
+  const isActionFollowDisabled = useMemo(
+    () => disabled || (scCategory && scUserContext.user && isPaymentsEnabled && scCategory.paywalls?.length > 0 && !scCategory.payment_order),
+    [disabled, scCategory, scUserContext.user, isPaymentsEnabled]
+  );
+
+  const categoryFollowEnabled = useMemo(
+    () =>
+      SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED in preferences && preferences[SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED].value,
+    [preferences]
+  );
 
   useEffect(() => {
     /**
@@ -135,23 +164,46 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
     }
   };
 
-  if (!scCategory || (scCategory && followed && scCategory.auto_follow === SCCategoryAutoFollowType.FORCED)) {
+  if (!scCategory || !categoryFollowEnabled || (scCategory && followed && scCategory.auto_follow === SCCategoryAutoFollowType.FORCED)) {
     return null;
   }
 
+  if (scUserContext.user && (scCategoriesManager.isLoading(scCategory) || followed === null)) {
+    return (
+      <Root size="small" variant="outlined" loading className={classNames(classes.root, className)}>
+        <FormattedMessage defaultMessage="ui.categoryFollowButton.follow" id="ui.categoryFollowButton.follow" />
+      </Root>
+    );
+  }
+
+  /**
+   * if the category is a paid content and it isn't followed show the Buy button
+   */
+  if (
+    scCategory &&
+    scUserContext.user &&
+    isPaymentsEnabled &&
+    scCategory.paywalls?.length > 0 &&
+    !scCategory.payment_order &&
+    (!followed || scCategoriesManager.isLoading(scCategory))
+  ) {
+    return <BuyButton contentType={SCContentType.CATEGORY} content={scCategory} disabled={disableBuyContentIfPaidContent} />;
+  }
+
   return (
-    <FollowButton
+    <Root
       size="small"
       variant="outlined"
       onClick={handleFollowAction}
-      loading={scUserContext.user ? followed === null || scCategoriesManager.isLoading(scCategory) : null}
+      loading={scUserContext.user ? scCategoriesManager.isLoading(scCategory) : null}
       className={classNames(classes.root, className)}
+      disabled={isActionFollowDisabled}
       {...rest}>
       {followed && scUserContext.user ? (
         <FormattedMessage defaultMessage="ui.categoryFollowButton.unfollow" id="ui.categoryFollowButton.unfollow" />
       ) : (
         <FormattedMessage defaultMessage="ui.categoryFollowButton.follow" id="ui.categoryFollowButton.follow" />
       )}
-    </FollowButton>
+    </Root>
   );
 }

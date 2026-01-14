@@ -43,9 +43,17 @@ const Component = {
           fontWeight: theme.typography.fontWeightMedium,
           marginBottom: `${theme.spacing(0)} !important`
         },
+        '& .SCCategoryHeader-tags': {
+          display: 'flex',
+          justifyContent: 'center'
+        },
         '& .SCCategoryHeader-followed, & .SCCategoryHeader-action': {
           textAlign: 'center',
-          marginBottom: theme.spacing(2)
+          marginBottom: theme.spacing(2),
+          '& button': {
+            marginLeft: theme.spacing(0.5),
+            marginRight: theme.spacing(0.5)
+          }
         },
         '& .SCCategoryHeader-followed': {
           marginBottom: `${theme.spacing(0)} !important`,

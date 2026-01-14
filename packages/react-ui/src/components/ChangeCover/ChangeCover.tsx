@@ -1,5 +1,4 @@
 import React, {useContext, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {
   Alert,
   Box,
@@ -12,16 +11,17 @@ import {
   SwipeableDrawer,
   Typography,
   useMediaQuery,
-  useTheme
+  useTheme,
+  Icon,
+  CircularProgress,
+  styled
 } from '@mui/material';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCUserType} from '@selfcommunity/types';
-import Icon from '@mui/material/Icon';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import classNames from 'classnames';
-import CircularProgress from '@mui/material/CircularProgress';
 import {useThemeProps} from '@mui/system';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
@@ -249,17 +249,19 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
       <Button size="small" variant="contained" disabled={loading} onClick={handleOpen} {...rest}>
         <Icon>photo_camera</Icon>
       </Button>
-      <>
-        {isMobile ? (
-          <SwipeableDrawer open={open} onClose={handleClose} onOpen={handleOpen} anchor="bottom" disableSwipeToOpen>
-            {renderMenuItems()}
-          </SwipeableDrawer>
-        ) : (
-          <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-            {renderMenuItems()}
-          </Menu>
-        )}
-      </>
+      {open && (
+        <>
+          {isMobile ? (
+            <SwipeableDrawer open onClose={handleClose} onOpen={handleOpen} anchor="bottom" disableSwipeToOpen>
+              {renderMenuItems()}
+            </SwipeableDrawer>
+          ) : (
+            <Menu anchorEl={anchorEl} open onClose={handleClose}>
+              {renderMenuItems()}
+            </Menu>
+          )}
+        </>
+      )}
       {!isMobile && (
         <>
           <Button className={classes.helpPopover} variant="contained" onClick={handleClickHelpButton}>

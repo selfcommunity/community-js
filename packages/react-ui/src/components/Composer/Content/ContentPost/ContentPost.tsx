@@ -1,6 +1,5 @@
 import React, {useCallback, useEffect, useRef} from 'react';
-import {Box, BoxProps, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Box, BoxProps, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
 import Editor, {EditorProps} from '../../../Editor';
 import {ComposerContentType} from '../../../../types/composer';
@@ -27,6 +26,7 @@ const DEFAULT_POST: ComposerContentType = {
   medias: [],
   html: '',
   addressing: [],
+  recipients: [],
   event: null,
   group: null
 };
@@ -66,7 +66,7 @@ export interface ContentPostProps extends Omit<BoxProps, 'value' | 'onChange'> {
 export default (props: ContentPostProps): JSX.Element => {
   // PROPS
   const {className = null, value = {...DEFAULT_POST}, error = {}, disabled = false, onChange, EditorProps = {}} = props;
-  const {error: generalError = null} = {...error};
+  const {categoriesError = null, addressingError = null, error: generalError = null} = {...error};
 
   // REF
   const editorRef = useRef<any>();
@@ -88,9 +88,12 @@ export default (props: ContentPostProps): JSX.Element => {
 
   return (
     <Root className={classNames(classes.root, className)}>
-      {generalError && (
+      {(generalError || categoriesError || addressingError) && (
         <Typography className={classes.generalError}>
-          <FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} />
+          {generalError && <FormattedMessage id={`ui.composer.error.${generalError}`} defaultMessage={`ui.composer.error.${generalError}`} />}
+          {categoriesError && categoriesError}
+          <br />
+          {addressingError && addressingError}
         </Typography>
       )}
       <Editor

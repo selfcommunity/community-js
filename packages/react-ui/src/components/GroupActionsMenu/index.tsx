@@ -1,8 +1,19 @@
 import React, {useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Divider, IconButton, IconButtonProps, List, ListItemIcon, Menu, MenuItem, SwipeableDrawer, useMediaQuery, useTheme} from '@mui/material';
+import {
+  Divider,
+  IconButton,
+  IconButtonProps,
+  List,
+  ListItemIcon,
+  Menu,
+  MenuItem,
+  SwipeableDrawer,
+  useMediaQuery,
+  useTheme,
+  styled,
+  Icon
+} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCRoutes, SCRoutingContextType, SCThemeType, SCUserContextType, useSCFetchGroup, useSCRouting, useSCUser} from '@selfcommunity/react-core';
@@ -219,26 +230,25 @@ export default function GroupActionsMenu(inProps: GroupActionsMenuProps): JSX.El
       <Root className={classNames(classes.root, className)} {...rest} onClick={handleOpen}>
         <Icon>more_vert</Icon>
       </Root>
-      {isMobile ? (
-        <SwipeableDrawerRoot
-          className={classes.drawerRoot}
-          anchor="bottom"
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          PaperProps={{className: classes.paper}}
-          disableSwipeToOpen>
-          <List>{renderList()}</List>
-        </SwipeableDrawerRoot>
-      ) : (
-        <MenuRoot
-          className={classes.menuRoot}
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={handleClose}
-          PaperProps={{className: classes.paper}}>
-          {renderList()}
-        </MenuRoot>
+      {Boolean(anchorEl) && (
+        <>
+          {isMobile ? (
+            <SwipeableDrawerRoot
+              className={classes.drawerRoot}
+              anchor="bottom"
+              open
+              onClose={handleClose}
+              onOpen={handleOpen}
+              PaperProps={{className: classes.paper}}
+              disableSwipeToOpen>
+              <List>{renderList()}</List>
+            </SwipeableDrawerRoot>
+          ) : (
+            <MenuRoot className={classes.menuRoot} anchorEl={anchorEl} open onClose={handleClose} PaperProps={{className: classes.paper}}>
+              {renderList()}
+            </MenuRoot>
+          )}
+        </>
       )}
       {openConfirmDialog && (
         <ConfirmDialog

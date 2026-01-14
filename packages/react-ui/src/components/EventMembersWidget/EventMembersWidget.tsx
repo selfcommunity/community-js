@@ -17,7 +17,7 @@ import Widget, {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
 import Skeleton from './Skeleton';
 import TabContentComponent from './TabContentComponent';
-import {TabContentEnum, TabContentType} from './types';
+import {TabContentType} from './types';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 
 const classes = {
@@ -95,7 +95,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     eventId,
     userProps = {},
     endpointQueryParams = {limit: 5, offset: DEFAULT_PAGINATION_OFFSET},
-    cacheStrategy,
+    cacheStrategy = CacheStrategies.NETWORK_ONLY,
     dialogProps,
     limit = 5,
     ...rest
@@ -139,7 +139,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   const [invitedCount, setInvitedCount] = useState(invited.count);
   const [requestsCount, setRequestsCount] = useState(requests.count);
   const [requestsUsers, setRequestsUsers] = useState<SCUserType[]>(requests.results);
-  const [tabValue, setTabValue] = useState<TabContentType>(TabContentEnum.PARTICIPANTS);
+  const [tabValue, setTabValue] = useState<TabContentType>(TabContentType.PARTICIPANTS);
   const [refresh, setRefresh] = useState<TabContentType | null>(null);
 
   // CONTEXT
@@ -152,11 +152,11 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   const hasAllow = useMemo(() => scUserContext.user?.id === scEvent?.managed_by.id, [scUserContext, scEvent]);
   const title = useMemo(() => {
     switch (tabValue) {
-      case TabContentEnum.REQUESTS:
+      case TabContentType.REQUESTS:
         return 'ui.eventMembersWidget.requests';
-      case TabContentEnum.INVITED:
+      case TabContentType.INVITED:
         return 'ui.eventMembersWidget.invited';
-      case TabContentEnum.PARTICIPANTS:
+      case TabContentType.PARTICIPANTS:
       default:
         return 'ui.eventMembersWidget.participants';
     }
@@ -217,11 +217,14 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     let _t: NodeJS.Timeout;
     if (scUserContext.user && scEvent) {
       _t = setTimeout(() => {
-        if (refresh === TabContentEnum.PARTICIPANTS) {
+        if (refresh === TabContentType.PARTICIPANTS) {
           _initParticipants();
           setRefresh(null);
-        } else if (refresh === TabContentEnum.INVITED) {
+        } else if (refresh === TabContentType.INVITED) {
           _initInvited();
+          setRefresh(null);
+        } else if (refresh === TabContentType.REQUESTS) {
+          _initRequests();
           setRefresh(null);
         } else {
           _initParticipants();
@@ -253,15 +256,17 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
 
   const handleRefresh = useCallback(
     (_tabValue: TabContentType) => {
-      if (_tabValue === TabContentEnum.PARTICIPANTS) {
+      if (_tabValue === TabContentType.PARTICIPANTS) {
         dispatchParticipants({type: actionWidgetTypes.RESET});
-      } else if (_tabValue === TabContentEnum.INVITED) {
+      } else if (_tabValue === TabContentType.INVITED) {
         dispatchInvited({type: actionWidgetTypes.RESET});
+      } else if (_tabValue === TabContentType.REQUESTS) {
+        dispatchRequests({type: actionWidgetTypes.RESET});
       }
 
       setRefresh(_tabValue);
     },
-    [dispatchParticipants, dispatchInvited, setRefresh]
+    [dispatchParticipants, dispatchInvited, dispatchRequests, setRefresh]
   );
 
   if (!scUserContext.user) {
@@ -272,7 +277,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
     !scEvent ||
     !participants.initialized ||
     (scEvent && ((eventId !== undefined && scEvent.id !== eventId) || (event && scEvent.id !== event.id))) ||
-    (tabValue === TabContentEnum.PARTICIPANTS && participants.isLoadingNext && !participants.initialized)
+    (tabValue === TabContentType.PARTICIPANTS && participants.isLoadingNext && !participants.initialized)
   ) {
     return <Skeleton />;
   }
@@ -295,7 +300,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
                   </Typography>
                 </Stack>
               }
-              value={TabContentEnum.PARTICIPANTS}
+              value={TabContentType.PARTICIPANTS}
             />
             {hasAllow && (
               <Tab
@@ -307,7 +312,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
                     </Typography>
                   </Stack>
                 }
-                value={TabContentEnum.INVITED}
+                value={TabContentType.INVITED}
               />
             )}
             {hasAllow && (
@@ -320,24 +325,27 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
                     </Typography>
                   </Stack>
                 }
-                value={TabContentEnum.REQUESTS}
+                value={TabContentType.REQUESTS}
               />
             )}
           </TabList>
-          <TabPanel value={TabContentEnum.PARTICIPANTS} className={classes.tabPanel}>
+          <TabPanel value={TabContentType.PARTICIPANTS} className={classes.tabPanel}>
             <TabContentComponent
-              tabValue={TabContentEnum.PARTICIPANTS}
+              tabValue={TabContentType.PARTICIPANTS}
               state={participants}
               dispatch={dispatchParticipants}
               userProps={userProps}
               dialogProps={dialogProps}
+              actionProps={{
+                scEvent
+              }}
               handleRefresh={handleRefresh}
             />
           </TabPanel>
           {hasAllow && (
-            <TabPanel value={TabContentEnum.INVITED} className={classes.tabPanel}>
+            <TabPanel value={TabContentType.INVITED} className={classes.tabPanel}>
               <TabContentComponent
-                tabValue={TabContentEnum.INVITED}
+                tabValue={TabContentType.INVITED}
                 state={invited}
                 dispatch={dispatchInvited}
                 userProps={userProps}
@@ -351,9 +359,9 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
             </TabPanel>
           )}
           {hasAllow && (
-            <TabPanel value={TabContentEnum.REQUESTS} className={classes.tabPanel}>
+            <TabPanel value={TabContentType.REQUESTS} className={classes.tabPanel}>
               <TabContentComponent
-                tabValue={TabContentEnum.REQUESTS}
+                tabValue={TabContentType.REQUESTS}
                 state={requests}
                 dispatch={dispatchRequests}
                 userProps={userProps}

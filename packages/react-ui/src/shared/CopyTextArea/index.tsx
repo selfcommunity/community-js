@@ -1,10 +1,8 @@
 import React, {useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Icon, IconButton, InputAdornment, TextField, Tooltip} from '@mui/material';
+import {styled, Icon, IconButton, InputAdornment, TextField, BaseTextFieldProps, Tooltip} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
-import {BaseTextFieldProps} from '@mui/material/TextField/TextField';
 
 const PREFIX = 'SCCopyTextField';
 
@@ -20,6 +18,12 @@ const Root = styled(TextField, {
 })(({theme}) => ({
   [`& .${classes.btnCopy}`]: {
     color: theme.palette.secondary.main
+  },
+  [`& .Mui-disabled`]: {
+    color: `${theme.palette.primary.main} !important`,
+    [`& .MuiOutlinedInput-notchedOutline`]: {
+      borderColor: `${theme.palette.primary.main} !important`
+    }
   }
 }));
 
@@ -27,8 +31,8 @@ const Root = styled(TextField, {
 // @ts-ignore
 export interface CopyTextFieldProps extends BaseTextFieldProps {
   className?: string;
-  onChange: (value: string) => void;
-  onCopy: (value: string) => void;
+  onChange?: (value: string) => void;
+  onCopy?: (value: string) => void;
   value: string;
   label?: string | React.ReactElement;
 }
@@ -39,10 +43,10 @@ export default function CopyTextField(inProps: CopyTextFieldProps): JSX.Element 
     props: inProps,
     name: PREFIX
   });
-  const {className, label, onCopy, onChange, ...rest} = props;
+  const {className, label, value: _value, onCopy, onChange, ...rest} = props;
 
   // STATE
-  const [value, setValue] = useState<string>('https://www.google.com');
+  const [value, setValue] = useState<string>(_value);
   const [openConfirm, setOpenConfirm] = useState<boolean>(false);
 
   // REF

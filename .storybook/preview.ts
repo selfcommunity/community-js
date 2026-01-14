@@ -61,7 +61,7 @@ export const globalTypes = {
     name: 'Geocoding ApiKey',
     description: 'Enable geocoding integration by passing api key ',
     defaultValue: process.env.STORYBOOK_PLATFORM_GOOGLE_API_KEY
-  },
+  }
 };
 
 /** @type { import('@storybook/react').Preview } */

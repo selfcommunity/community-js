@@ -1,8 +1,7 @@
 import React, {useContext, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, Box, Button, CardContent, CardProps, Chip, Icon, IconButton, Typography} from '@mui/material';
+import {Avatar, Box, Button, CardContent, CardProps, Chip, Icon, IconButton, Typography, styled} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -187,6 +186,12 @@ export interface CommentObjectProps {
   cacheStrategy?: CacheStrategies;
 
   /**
+   * Prop to show comment actions section (below text)
+   * @default true
+   */
+  showActions?: boolean;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -258,6 +263,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     linkableCommentDateTime = true,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     CommentsObjectComponentProps = {},
+    showActions = true,
     ...rest
   } = props;
 
@@ -584,27 +590,29 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                     </Box>
                   )}
                 </Widget>
-                <Box component="span" className={classes.contentSubSection}>
-                  {renderTimeAgo(comment)}
-                  <Bullet />
-                  <VoteButton
-                    size="small"
-                    className={classes.vote}
-                    contributionId={comment.id}
-                    contributionType={SCContributionType.COMMENT}
-                    contribution={comment}
-                    onVote={handleVoteSuccess}
-                  />
-                  <Bullet />
-                  {renderActionReply(comment)}
-                  <VoteAudienceButton
-                    size="small"
-                    className={classes.voteAudience}
-                    contributionId={comment.id}
-                    contributionType={SCContributionType.COMMENT}
-                    contribution={comment}
-                  />
-                </Box>
+                {showActions && (
+                  <Box component="span" className={classes.contentSubSection}>
+                    {renderTimeAgo(comment)}
+                    <Bullet />
+                    <VoteButton
+                      size="small"
+                      className={classes.vote}
+                      contributionId={comment.id}
+                      contributionType={SCContributionType.COMMENT}
+                      contribution={comment}
+                      onVote={handleVoteSuccess}
+                    />
+                    <Bullet />
+                    {renderActionReply(comment)}
+                    <VoteAudienceButton
+                      size="small"
+                      className={classes.voteAudience}
+                      contributionId={comment.id}
+                      contributionType={SCContributionType.COMMENT}
+                      contribution={comment}
+                    />
+                  </Box>
+                )}
               </>
             }
           />

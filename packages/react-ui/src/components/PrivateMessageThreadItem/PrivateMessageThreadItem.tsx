@@ -1,14 +1,11 @@
-import React, {useContext, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {ListItem, Typography, IconButton, Box, useTheme, Button} from '@mui/material';
+import {useContext, useState} from 'react';
+import {ListItem, Typography, IconButton, Box, useTheme, Button, styled, Icon, useMediaQuery} from '@mui/material';
 import PrivateMessageThreadItemSkeleton from './Skeleton';
 import {useIntl} from 'react-intl';
 import {SCPrivateMessageThreadType, SCMessageFileType, SCPrivateMessageStatusType} from '@selfcommunity/types';
-import Icon from '@mui/material/Icon';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import PrivateMessageSettingsIconButton from '../PrivateMessageSettingsIconButton';
 import {bytesToSize} from '../../utils/sizeCoverter';
 import BaseDialog from '../../shared/BaseDialog';
@@ -186,7 +183,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
         case type.startsWith(SCMessageFileType.IMAGE):
           section = (
             <Box className={classes.img}>
-              <img src={m.file.thumbnail} loading="lazy" alt={'img'} onClick={() => setOpenDialog(true)} />
+              <img src={m.file.thumbnail} loading="lazy" alt="img" onClick={() => setOpenDialog(true)} />
             </Box>
           );
           break;
@@ -196,7 +193,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
           } else {
             section = (
               <Box className={classNames(classes.img, classes.video)}>
-                <img src={m.file.thumbnail} loading="lazy" alt={'img'} />
+                <img src={m.file.thumbnail} loading="lazy" alt="img" />
                 <IconButton onClick={() => setOpenDialog(true)}>
                   <Icon>play_circle_outline</Icon>
                 </IconButton>
@@ -207,7 +204,7 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
         case type.startsWith(SCMessageFileType.DOCUMENT):
           section = (
             <Box className={m.file.filename.endsWith('.pdf') ? classes.document : classes.other}>
-              {m.file.filename.endsWith('.pdf') && <img src={m.file.thumbnail} loading="lazy" alt={'img'} />}
+              {m.file.filename.endsWith('.pdf') && <img src={m.file.thumbnail} loading="lazy" alt="img" />}
               <Button onClick={() => handleDownload(m.file)} startIcon={<Icon>download</Icon>}>
                 <Typography>{m.file.filename}</Typography>
                 <Typography>{bytesToSize(m.file.filesize)}</Typography>
@@ -262,14 +259,14 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
         <>
           {message?.file.mimetype.startsWith(SCMessageFileType.VIDEO) ? (
             <DialogRoot open={openDialog} onClose={() => setOpenDialog(false)} className={classes.dialogRoot}>
-              <AutoPlayer url={message?.file.url} width={'100%'} enableAutoplay={false} />
+              <AutoPlayer url={message?.file.url} width="100%" />
             </DialogRoot>
           ) : (
             <LightBox
               images={[{src: message?.file.url, key: message.file.uuid}]}
               onClose={() => setOpenDialog(false)}
               toolbarButtons={
-                <IconButton key={'download'} onClick={() => handleDownload(message?.file)} className={classes.downloadButton}>
+                <IconButton key="download" onClick={() => handleDownload(message?.file)} className={classes.downloadButton}>
                   <Icon>download</Icon>
                 </IconButton>
               }

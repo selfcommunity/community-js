@@ -4,6 +4,8 @@ import {
   SCAvatarType,
   SCCategoryType,
   SCFeedUnitType,
+  SCLiveStreamType,
+  SCPaymentOrder,
   SCPlatformType,
   SCTagType,
   SCUserAutocompleteType,
@@ -96,6 +98,10 @@ export interface UserApiClientInterface {
   getProviderAssociations(userId: string | number, config?: AxiosRequestConfig): Promise<SCUserProviderAssociationType[]>;
   createProviderAssociation(data: SCUserProviderAssociationType, config?: AxiosRequestConfig): Promise<SCUserProviderAssociationType>;
   deleteProviderAssociation(data: DeleteProviderAssociation, config?: AxiosRequestConfig): Promise<any>;
+  getUserLiveStream(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>>;
+  getOrderHistory(id: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder[]>;
+  getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder>;
+  matchUsernames(usernames: string[], config?: AxiosRequestConfig): Promise<SCUserAutocompleteType[]>;
 }
 
 /**
@@ -643,6 +649,52 @@ export class UserApiClient {
       method: Endpoints.DeleteProviderAssociation.method
     });
   }
+
+  /**
+   * This endpoint retrieves the list of live stream currently started by user identified by ID.
+   * @param id
+   * @param params
+   * @param config
+   */
+  static getUserLiveStream(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCLiveStreamType>> {
+    return apiRequest({...config, url: Endpoints.GetLiveStream.url({id}), method: Endpoints.UserFeed.method, params});
+  }
+
+  /**
+   * This endpoint retrieve all order history of authenticated user
+   *
+   * @param id
+   * @param params
+   * @param config
+   */
+  static getOrderHistory(id: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.GetOrderHistory.url({id}),
+      method: Endpoints.GetOrderHistory.method,
+      params
+    });
+  }
+
+  /**
+   * This endpoint retrieve detail of an order
+   * @param id
+   * @param order
+   * @param params
+   * @param config
+   */
+  static getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder> {
+    return apiRequest({...config, url: Endpoints.GetOrderDetail.url({id, order}), method: Endpoints.GetOrderDetail.method, params});
+  }
+
+  /**
+   * This endpoint retrieve the users corresponding to the sent usernames
+   * @param usernames
+   * @param config
+   */
+  static matchUsernames(usernames: string[], config?: AxiosRequestConfig): Promise<SCUserAutocompleteType[]> {
+    return apiRequest({...config, url: Endpoints.UserMatchUsernames.url(), method: Endpoints.UserMatchUsernames.method, data: usernames});
+  }
 }
 
 /**
@@ -851,5 +903,21 @@ export default class UserService {
   }
   static async deleteProviderAssociation(data: DeleteProviderAssociation, config?: AxiosRequestConfig): Promise<any> {
     return UserApiClient.deleteProviderAssociation(data, config);
+  }
+  static async getUserLiveStream(
+    id: number | string,
+    params?: BaseGetParams,
+    config?: AxiosRequestConfig
+  ): Promise<SCPaginatedResponse<SCLiveStreamType>> {
+    return UserApiClient.getUserLiveStream(id, params, config);
+  }
+  static async getOrderHistory(id: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCPaymentOrder>> {
+    return UserApiClient.getOrderHistory(id, params, config);
+  }
+  static async getOrderDetail(id: number, order: number, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaymentOrder> {
+    return UserApiClient.getOrderDetail(id, order, params, config);
+  }
+  static async matchUsernames(usernames: string[], config?: AxiosRequestConfig): Promise<SCUserAutocompleteType[]> {
+    return UserApiClient.matchUsernames(usernames, config);
   }
 }

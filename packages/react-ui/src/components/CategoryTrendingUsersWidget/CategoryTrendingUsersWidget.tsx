@@ -1,7 +1,5 @@
 import React, {useEffect, useMemo, useReducer, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import List from '@mui/material/List';
-import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Button, CardContent, ListItem, Typography, useMediaQuery, useTheme, styled, List} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
 import {http, Endpoints, CategoryService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {
@@ -163,6 +161,14 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
       scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
     [scPreferencesContext]
   );
+  const followOrConnectionEnabled = useMemo(
+    () =>
+      (SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED in scPreferencesContext.preferences &&
+        scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_FOLLOW_ENABLED].value) ||
+      (SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED in scPreferencesContext.preferences &&
+        scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONNECTION_ENABLED].value),
+    [scPreferencesContext.preferences]
+  );
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
@@ -194,7 +200,12 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
   // EFFECTS
   useEffect(() => {
     let _t;
-    if (scUserContext.user !== undefined && catId && (contentAvailability || (!contentAvailability && scUserContext.user?.id))) {
+    if (
+      scUserContext.user !== undefined &&
+      catId &&
+      (contentAvailability || (!contentAvailability && scUserContext.user?.id)) &&
+      followOrConnectionEnabled
+    ) {
       _t = setTimeout(_initComponent);
       return (): void => {
         _t && clearTimeout(_t);
@@ -255,7 +266,7 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
   };
 
   // RENDER
-  if ((!contentAvailability && !scUserContext.user) || (autoHide && !state.count && state.initialized)) {
+  if (!followOrConnectionEnabled || (!contentAvailability && !scUserContext.user) || (autoHide && !state.count && state.initialized)) {
     return <HiddenPlaceholder />;
   }
   if (!state.initialized) {

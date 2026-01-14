@@ -1,5 +1,5 @@
-import React, {useContext, useMemo, useRef} from 'react';
-import {styled} from '@mui/material/styles';
+import {useContext, useMemo, useRef} from 'react';
+import {styled} from '@mui/material';
 import {
   CategoriesPopularWidget,
   Feed,
@@ -15,7 +15,8 @@ import {
   UserSuggestionWidget,
   PlatformWidget,
   SCFeedWidgetType,
-  OnBoardingWidget
+  OnBoardingWidget,
+  CustomAdv
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
@@ -24,7 +25,7 @@ import {SCCustomAdvPosition} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
-import {SCUserContext, SCUserContextType, UserUtils} from '@selfcommunity/react-core';
+import {SCPreferences, SCUserContext, SCUserContextType, UserUtils, useSCPreferenceEnabled} from '@selfcommunity/react-core';
 
 const classes = {
   root: `${PREFIX}-root`
@@ -142,15 +143,31 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
   const {id = 'explore_feed', className, widgets = WIDGETS, FeedObjectProps = {}, FeedSidebarProps = null, FeedProps = {}} = props;
 
   // CONTEXT
-  const {enqueueSnackbar} = useSnackbar();
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const isAdvertisingCustomAdvEnabled = useSCPreferenceEnabled(SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED);
+  const isAdvertisingCustomAdvOnlyForAnonUsersEnabled = useSCPreferenceEnabled(SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED);
+  const {enqueueSnackbar} = useSnackbar();
 
   // REF
   const feedRef = useRef<FeedRef>();
 
+  /**
+   * Render advertising above the feed
+   */
+  function renderAdvertising() {
+    if (
+      isAdvertisingCustomAdvEnabled &&
+      ((isAdvertisingCustomAdvOnlyForAnonUsersEnabled && scUserContext.user === null) || !isAdvertisingCustomAdvOnlyForAnonUsersEnabled)
+    ) {
+      return <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FEED} />;
+    }
+    return null;
+  }
+
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
-    enqueueSnackbar(<FormattedMessage id="ui.inlineComposerWidget.success" defaultMessage="ui.inlineComposerWidget.success" />, {
+    const messageId = feedObject.scheduled_at ? 'ui.composer.scheduled.success' : 'ui.inlineComposerWidget.success';
+    enqueueSnackbar(<FormattedMessage id={messageId} defaultMessage={messageId} />, {
       variant: 'success',
       autoHideDuration: 3000
     });
@@ -158,10 +175,10 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
     const feedUnit = {
       type: feedObject.type,
       [feedObject.type]: feedObject,
-      seen_by_id: [],
+      seen: false,
       has_boost: false
     };
-    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+    !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   const handleAddGenerationContent = (feedObjects) => {
@@ -172,7 +189,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
           const feedUnit = {
             type: feedObject.type,
             [feedObject.type]: feedObject,
-            seen_by_id: [],
+            seen: false,
             has_boost: false
           };
           feedRef.current.addFeedData(feedUnit, true);
@@ -202,7 +219,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null,
-        markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
+        markRead: scUser ? !item.seen : null
       })}
       itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}
@@ -214,6 +231,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
         <>
           <InlineComposerWidget onSuccess={handleComposerSuccess} />
           {UserUtils.isAdmin(scUserContext.user) && <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />}
+          {renderAdvertising()}
         </>
       }
       FeedSidebarProps={FeedSidebarProps}

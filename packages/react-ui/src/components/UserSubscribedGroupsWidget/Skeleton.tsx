@@ -1,8 +1,6 @@
 import React from 'react';
 import Widget from '../Widget';
-import {styled} from '@mui/material/styles';
-import {CardContent, ListItem} from '@mui/material';
-import List from '@mui/material/List';
+import {CardContent, ListItem, styled, List} from '@mui/material';
 import GroupSkeleton from '../Group/Skeleton';
 
 const PREFIX = 'SCUserSubscribedGroupsWidgetSkeleton';

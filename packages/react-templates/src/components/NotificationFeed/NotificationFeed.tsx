@@ -1,5 +1,5 @@
-import React, {useContext} from 'react';
-import {styled} from '@mui/material/styles';
+import {useContext} from 'react';
+import {styled} from '@mui/material';
 import {
   BroadcastMessages,
   CategoriesSuggestionWidget,

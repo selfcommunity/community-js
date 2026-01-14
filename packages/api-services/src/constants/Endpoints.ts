@@ -1,5 +1,5 @@
-import { urlReplacer } from '@selfcommunity/utils';
-import { HttpMethod } from '../client';
+import {urlReplacer} from '@selfcommunity/utils';
+import {HttpMethod} from '../client';
 
 export interface EndpointType {
   url: (params?: any) => string;
@@ -159,6 +159,22 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/$(type)/$(id)/flag/'),
     method: 'POST'
   },
+  GetScheduledFeedObjects: {
+    url: urlReplacer('/api/v2/$(type)/scheduled/'),
+    method: 'GET'
+  },
+  PublishFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/publish/'),
+    method: 'POST'
+  },
+  GetDraftedFeedObjects: {
+    url: urlReplacer('/api/v2/$(type)/drafted/'),
+    method: 'GET'
+  },
+  GetDownloadCSV: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/export/'),
+    method: 'GET'
+  },
   /**
    * Comments
    */
@@ -295,8 +311,8 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/tag/'),
     method: 'POST'
   },
-  SearchTag: {
-    url: urlReplacer('/api/v2/tag/'),
+  SearchUserTags: {
+    url: urlReplacer('/api/v2/tag/user/search/'),
     method: 'GET'
   },
   Tag: {
@@ -321,6 +337,10 @@ const Endpoints: {[key: string]: EndpointType} = {
   UserList: {
     url: urlReplacer('/api/v2/user/'),
     method: 'GET'
+  },
+  UserMatchUsernames: {
+    url: urlReplacer('/api/v2/user/match/'),
+    method: 'POST'
   },
   ListHiddenUsers: {
     url: urlReplacer('/api/v2/user/hidden_users/'),
@@ -522,6 +542,18 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/provider/'),
     method: 'DELETE'
   },
+  GetLiveStream: {
+    url: urlReplacer('/api/v2/user/$(id)/live_stream/'),
+    method: 'GET'
+  },
+  GetOrderHistory: {
+    url: urlReplacer('/api/v2/user/$(id)/order/'),
+    method: 'GET'
+  },
+  GetOrderDetail: {
+    url: urlReplacer('/api/v2/user/$(id)/order/$(order)/'),
+    method: 'GET'
+  },
   /**
    * Broadcast Messages
    */
@@ -582,6 +614,10 @@ const Endpoints: {[key: string]: EndpointType} = {
    */
   CategoriesSuggestion: {
     url: urlReplacer('/api/v2/suggestion/category/'),
+    method: 'GET'
+  },
+  CourseSuggestion: {
+    url: urlReplacer('/api/v2/suggestion/course/'),
     method: 'GET'
   },
   GetIncubatorSuggestion: {
@@ -1358,6 +1394,49 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'DELETE'
   },
   /**
+   * LiveStream
+   */
+  GetLiveStreamInfo: {
+    url: urlReplacer('/api/v2/live_stream/$(id)/'),
+    method: 'GET'
+  },
+  SearchLiveStream: {
+    url: urlReplacer('/api/v2/live_stream/search/'),
+    method: 'GET'
+  },
+  CreateLiveStream: {
+    url: urlReplacer('/api/v2/live_stream/'),
+    method: 'POST'
+  },
+  UpdateLiveStream: {
+    url: urlReplacer('/api/v2/live_stream/$(id)/'),
+    method: 'PUT'
+  },
+  DeleteLiveStream: {
+    url: urlReplacer('/api/v2/live_stream/$(id)/'),
+    method: 'DELETE'
+  },
+  PatchLiveStream: {
+    url: urlReplacer('/api/v2/live_stream/$(id)/'),
+    method: 'PATCH'
+  },
+  CloseLiveStream: {
+    url: urlReplacer('/api/v2/live_stream/$(id)/close/'),
+    method: 'POST'
+  },
+  JoinLiveStream: {
+    url: urlReplacer('/api/v2/live_stream/$(id)/join/'),
+    method: 'POST'
+  },
+  RemoveParticipant: {
+    url: urlReplacer('/api/v2/live_stream/$(id)/remove_participant/'),
+    method: 'POST'
+  },
+  GetLiveStreamMonthlyDuration: {
+    url: urlReplacer('/api/v2/live_stream/monthly_duration/'),
+    method: 'GET'
+  },
+  /**
    * OnBoarding
    */
   GetAllSteps: {
@@ -1374,6 +1453,246 @@ const Endpoints: {[key: string]: EndpointType} = {
   },
   CompleteAStep: {
     url: urlReplacer('/api/v2/onboarding/$(step)/complete/'),
+    method: 'POST'
+  },
+  /**
+   * Courses
+   */
+  ChangeCourseUserRole: {
+    url: urlReplacer('/api/v2/course/$(id)/role/'),
+    method: 'POST'
+  },
+  CreateCourse: {
+    url: urlReplacer('/api/v2/course/'),
+    method: 'POST'
+  },
+  CreateCourseComment: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/'),
+    method: 'POST'
+  },
+  CreateCourseLesson: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/'),
+    method: 'POST'
+  },
+  CreateCourseSection: {
+    url: urlReplacer('/api/v2/course/$(id)/section/'),
+    method: 'POST'
+  },
+  DeleteCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/'),
+    method: 'DELETE'
+  },
+  DeleteCourseComment: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/$(comment_id)/'),
+    method: 'DELETE'
+  },
+  DeleteCourseLesson: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/'),
+    method: 'DELETE'
+  },
+  DeleteCourseSection: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/'),
+    method: 'DELETE'
+  },
+  GetCourseComments: {
+    url: urlReplacer('/api/v2/course/$(id)/comment/'),
+    method: 'GET'
+  },
+  GetCourseDashboardUsers: {
+    url: urlReplacer('/api/v2/course/$(id)/users/'),
+    method: 'GET'
+  },
+  GetCourseInfo: {
+    url: urlReplacer('/api/v2/course/$(id)/'),
+    method: 'GET'
+  },
+  GetCourseInvitedUsers: {
+    url: urlReplacer('/api/v2/course/$(id)/invite/'),
+    method: 'GET'
+  },
+  GetCourseJoinedUsers: {
+    url: urlReplacer('/api/v2/course/$(id)/join/'),
+    method: 'GET'
+  },
+  GetCourseLesson: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/'),
+    method: 'GET'
+  },
+  GetCourseLessonComment: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/$(comment_id)/'),
+    method: 'GET'
+  },
+  GetCourseLessonComments: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/'),
+    method: 'GET'
+  },
+  GetCourseLessons: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/'),
+    method: 'GET'
+  },
+  GetCourseSection: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/'),
+    method: 'GET'
+  },
+  GetCourseSections: {
+    url: urlReplacer('/api/v2/course/$(id)/section/'),
+    method: 'GET'
+  },
+  GetCourseStatus: {
+    url: urlReplacer('/api/v2/course/$(id)/status/'),
+    method: 'GET'
+  },
+  GetCourseWaitingApproval: {
+    url: urlReplacer('/api/v2/course/$(id)/request_join/'),
+    method: 'GET'
+  },
+  GetJoinedCourses: {
+    url: urlReplacer('/api/v2/course/'),
+    method: 'GET'
+  },
+  InviteOrAcceptUsersToCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/invite/'),
+    method: 'POST'
+  },
+  JoinOrAcceptInviteToCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/join/'),
+    method: 'POST'
+  },
+  LeaveOrRemoveCourseRequest: {
+    url: urlReplacer('/api/v2/course/$(id)/join/'),
+    method: 'DELETE'
+  },
+  MarkLessonComplete: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/complete/'),
+    method: 'POST'
+  },
+  MarkLessonIncomplete: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/incomplete/'),
+    method: 'POST'
+  },
+  PatchCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/'),
+    method: 'PATCH'
+  },
+  PatchCourseComment: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/$(comment_id)/'),
+    method: 'PATCH'
+  },
+  PatchCourseLesson: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/'),
+    method: 'PATCH'
+  },
+  PatchCourseSection: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/'),
+    method: 'PATCH'
+  },
+  RemoveInvitationToCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/invite/'),
+    method: 'DELETE'
+  },
+  SearchCourses: {
+    url: urlReplacer('/api/v2/course/search/'),
+    method: 'GET'
+  },
+  GetCourseSuggestedUsers: {
+    url: urlReplacer('/api/v2/course/$(id)/user/'),
+    method: 'GET'
+  },
+  UpdateCourse: {
+    url: urlReplacer('/api/v2/course/$(id)/'),
+    method: 'PUT'
+  },
+  UpdateCourseComment: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/comment/$(comment_id)/'),
+    method: 'PUT'
+  },
+  UpdateCourseLesson: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/lesson/$(lesson_id)/'),
+    method: 'PUT'
+  },
+  UpdateCourseSection: {
+    url: urlReplacer('/api/v2/course/$(id)/section/$(section_id)/'),
+    method: 'PUT'
+  },
+  GetUserJoinedCourses: {
+    url: urlReplacer('/api/v2/user/$(id)/courses/'),
+    method: 'GET'
+  },
+  /**
+   * Community
+   */
+  GetCommunities: {
+    url: urlReplacer('/api/v2/community/'),
+    method: 'GET'
+  },
+  GetCommunity: {
+    url: urlReplacer('/api/v2/community/$(id)/'),
+    method: 'GET'
+  },
+  /**
+   * Payments/Paywalls
+   */
+  GetPaymentContentStatus: {
+    url: urlReplacer('/api/v2/payments/content_status/'),
+    method: 'GET'
+  },
+  GetPaywalls: {
+    url: urlReplacer('/api/v2/payments/paywall/'),
+    method: 'GET'
+  },
+  GetPaywall: {
+    url: urlReplacer('/api/v2/payments/paywall/$(id)/'),
+    method: 'GET'
+  },
+  GetPaymentProducts: {
+    url: urlReplacer('/api/v2/payments/payment_product/'),
+    method: 'GET'
+  },
+  GetPaymentProduct: {
+    url: urlReplacer('/api/v2/payments/payment_product/$(id)/'),
+    method: 'GET'
+  },
+  GetPaymentProductPrices: {
+    url: urlReplacer('/api/v2/payments/payment_product/$(id)/'),
+    method: 'GET'
+  },
+  GetCheckoutSession: {
+    url: urlReplacer('/api/v2/payments/checkout_session/'),
+    method: 'GET'
+  },
+  CheckoutCreateSession: {
+    url: urlReplacer('/api/v2/payments/checkout_session/'),
+    method: 'POST'
+  },
+  CheckoutSessionComplete: {
+    url: urlReplacer('/api/v2/payments/checkout_session/complete/'),
+    method: 'POST'
+  },
+  GetPaymentOrders: {
+    url: urlReplacer('/api/v2/payments/payment_order/'),
+    method: 'GET'
+  },
+  GetPaymentOrder: {
+    url: urlReplacer('/api/v2/payments/payment_order/$(id)/'),
+    method: 'GET'
+  },
+  GetPaymentOrderPdf: {
+    url: urlReplacer('/api/v2/payments/payment_order/$(id)/pdf/'),
+    method: 'GET'
+  },
+  CreateCustomerPortalSession: {
+    url: urlReplacer('/api/v2/payments/customer_portal_session/'),
+    method: 'POST'
+  },
+  CreatePaymentProduct: {
+    url: urlReplacer('/api/v2/payments/payment_product/price/'),
+    method: 'POST'
+  },
+  /**
+   * Contact-us Endpoints
+   */
+  ContactRequest: {
+    url: urlReplacer('/api/v2/contact/request/'),
     method: 'POST'
   }
 };

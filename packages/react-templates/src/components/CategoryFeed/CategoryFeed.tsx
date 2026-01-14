@@ -1,5 +1,5 @@
-import React, {useMemo, useRef} from 'react';
-import {styled} from '@mui/material/styles';
+import {useMemo, useRef} from 'react';
+import {styled} from '@mui/material';
 import {
   CategoryTrendingFeedWidget,
   CategoryTrendingUsersWidget,
@@ -11,18 +11,32 @@ import {
   FeedProps,
   FeedRef,
   FeedSidebarProps,
+  HiddenPurchasableContent,
   InlineComposerWidget,
   SCFeedObjectTemplateType,
-  SCFeedWidgetType
+  SCFeedWidgetType,
+  CustomAdv
 } from '@selfcommunity/react-ui';
 import {Endpoints} from '@selfcommunity/api-services';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchCategory, useSCRouting} from '@selfcommunity/react-core';
-import {SCCategoryType, SCCustomAdvPosition, SCFeedTypologyType} from '@selfcommunity/types';
+import {
+  Link,
+  SCPreferences,
+  SCRoutes,
+  SCRoutingContextType,
+  SCUserContextType,
+  UserUtils,
+  useSCFetchCategory,
+  useSCPreferenceEnabled,
+  useSCPreferencesAndFeaturesEnabled,
+  useSCRouting,
+  useSCUser
+} from '@selfcommunity/react-core';
+import {SCCategoryType, SCCustomAdvPosition, SCFeatureName, SCFeedTypologyType} from '@selfcommunity/types';
 import {CategoryFeedSkeleton} from './index';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
-import {SnackbarKey, useSnackbar} from 'notistack';
+import {useSnackbar} from 'notistack';
 import {PREFIX} from './constants';
 
 const classes = {
@@ -149,6 +163,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+  const scUserContext: SCUserContextType = useSCUser();
   const {enqueueSnackbar} = useSnackbar();
 
   // REF
@@ -156,13 +171,30 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
 
   // Hooks
   const {scCategory} = useSCFetchCategory({id: categoryId, category});
+  const isAdvertisingCustomAdvEnabled = useSCPreferenceEnabled(SCPreferences.ADVERTISING_CUSTOM_ADV_ENABLED);
+  const isAdvertisingCustomAdvOnlyForAnonUsersEnabled = useSCPreferenceEnabled(SCPreferences.ADVERTISING_CUSTOM_ADV_ONLY_FOR_ANONYMOUS_USERS_ENABLED);
+  const isPaymentsEnabled = useSCPreferencesAndFeaturesEnabled([SCPreferences.CONFIGURATIONS_PAYMENTS_ENABLED], [SCFeatureName.PAYMENTS]);
+
+  /**
+   * Render advertising above the feed
+   */
+  function renderAdvertising() {
+    if (
+      isAdvertisingCustomAdvEnabled &&
+      ((isAdvertisingCustomAdvOnlyForAnonUsersEnabled && scUserContext.user === null) || !isAdvertisingCustomAdvOnlyForAnonUsersEnabled)
+    ) {
+      return <CustomAdv position={SCCustomAdvPosition.POSITION_ABOVE_FEED_CATEGORY} categoriesId={[scCategory.id]} />;
+    }
+    return null;
+  }
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {
     // Not insert if the category does not match
     if (feedObject.categories.findIndex((c) => c.id === scCategory.id) === -1) {
-      enqueueSnackbar(<FormattedMessage id="ui.composerIconButton.composer.success" defaultMessage="ui.composerIconButton.composer.success" />, {
-        action: (snackbarId: SnackbarKey) => (
+      const messageId = feedObject.scheduled_at ? 'ui.composer.scheduled.success' : 'ui.composerIconButton.composer.success';
+      enqueueSnackbar(<FormattedMessage id={messageId} defaultMessage={messageId} />, {
+        action: () => (
           <Link to={scRoutingContext.url(SCRoutes[`${feedObject.type.toUpperCase()}_ROUTE_NAME`], ContributionUtils.getRouteData(feedObject))}>
             <FormattedMessage id="ui.composerIconButton.composer.viewContribute" defaultMessage="ui.composerIconButton.composer.viewContribute" />
           </Link>
@@ -177,10 +209,10 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
     const feedUnit = {
       type: feedObject.type,
       [feedObject.type]: feedObject,
-      seen_by_id: [],
+      seen: false,
       has_boost: false
     };
-    feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
+    !feedObject.draft && feedRef && feedRef.current && feedRef.current.addFeedData(feedUnit, true);
   };
 
   // WIDGETS
@@ -197,6 +229,8 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
 
   if (!scCategory) {
     return <CategoryFeedSkeleton />;
+  } else if (scCategory && isPaymentsEnabled && !scCategory.followed && !scCategory.payment_order && scCategory.paywalls?.length > 0) {
+    return <HiddenPurchasableContent />;
   }
 
   return (
@@ -214,7 +248,7 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
         feedObject: item[item.type],
         feedObjectType: item.type,
         feedObjectActivities: item.activities ? item.activities : null,
-        markRead: scUser ? !item.seen_by_id.includes(scUser.id) : null
+        markRead: scUser ? !item.seen : null
       })}
       itemIdGenerator={(item) => item[item.type].id}
       ItemProps={FeedObjectProps}
@@ -224,7 +258,16 @@ export default function CategoryFeed(inProps: CategoryFeedProps): JSX.Element {
       }}
       FeedSidebarProps={FeedSidebarProps}
       HeaderComponent={
-        <InlineComposerWidget onSuccess={handleComposerSuccess} defaultValue={{categories: [scCategory]}} feedType={SCFeedTypologyType.CATEGORY} />
+        <>
+          {((scCategory.content_only_staff && UserUtils.isStaff(scUserContext.user)) || !scCategory.content_only_staff) && (
+            <InlineComposerWidget
+              onSuccess={handleComposerSuccess}
+              defaultValue={{categories: [scCategory]}}
+              feedType={SCFeedTypologyType.CATEGORY}
+            />
+          )}
+          {renderAdvertising()}
+        </>
       }
       CustomAdvProps={{categoriesId: [scCategory.id]}}
       enabledCustomAdvPositions={[

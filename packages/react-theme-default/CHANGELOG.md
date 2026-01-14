@@ -3,6 +3,564 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.22...@selfcommunity/react-theme-default@0.5.0-alpha.23) (2025-09-30)
+
+
+### Features
+
+* added description to tags chip. Linear issue: https://linear.app/quentral/issue/QUE-2103/aggiungere-il-mouse-overtap-sulle-tag-per-visualizzare-la-descrizione ([2088407](https://github.com/selfcommunity/community-js/commit/2088407018cdccc28648a35a4ea2699ca50a08c7))
+
+
+
+
+
+# [0.5.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.21...@selfcommunity/react-theme-default@0.5.0-alpha.22) (2025-09-26)
+
+
+### Bug Fixes
+
+* fixed display value on SCComposer-types. Linear: https://linear.app/quentral/issue/QUE-2091/sistemare-selettore-tipo-di-contenuto ([e2c766e](https://github.com/selfcommunity/community-js/commit/e2c766e9461b54ca637a9408db1b8863603f2027))
+
+
+
+
+
+# [0.5.0-alpha.21](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.20...@selfcommunity/react-theme-default@0.5.0-alpha.21) (2025-09-22)
+
+
+### Bug Fixes
+
+* padding for MediaObject ([737e7a3](https://github.com/selfcommunity/community-js/commit/737e7a339a7b968b6e540d494f74ad34478463b0))
+
+
+
+
+
+# [0.5.0-alpha.20](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.19...@selfcommunity/react-theme-default@0.5.0-alpha.20) (2025-09-19)
+
+
+### Bug Fixes
+
+* added margin into feed object medias section ([b5f3439](https://github.com/selfcommunity/community-js/commit/b5f3439292d7bd5aeac5985a5d97b1fafc3e96c7))
+
+
+
+
+
+# [0.5.0-alpha.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.18...@selfcommunity/react-theme-default@0.5.0-alpha.19) (2025-09-18)
+
+
+### Features
+
+* updated doc images. Linear: https://linear.app/quentral/issue/QUE-2002/frontend-usare-le-icone-rappresentative-per-i-documenti-allegati-e ([6200312](https://github.com/selfcommunity/community-js/commit/62003126652b1c0e9a47899b3a9b320dd9996fb5))
+
+
+
+
+
+# [0.5.0-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.17...@selfcommunity/react-theme-default@0.5.0-alpha.18) (2025-09-17)
+
+
+### Performance Improvements
+
+* added prop to CategoryHeader to show tag chip. Linear issue: https://linear.app/quentral/issue/QUE-2020/frontend-chip-tag-categorie ([99a45a3](https://github.com/selfcommunity/community-js/commit/99a45a31ca4061256f658d578d67cef338a75c64))
+
+
+
+
+
+# [0.5.0-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.16...@selfcommunity/react-theme-default@0.5.0-alpha.17) (2025-09-17)
+
+
+### Bug Fixes
+
+* item position on footer widget. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([7052883](https://github.com/selfcommunity/community-js/commit/70528835ff56654c6c79065722b7d8ddf7a92f39))
+
+
+
+
+
+# [0.5.0-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.15...@selfcommunity/react-theme-default@0.5.0-alpha.16) (2025-09-17)
+
+
+### Bug Fixes
+
+* tag mt in attributes feed obj ([0fe92a6](https://github.com/selfcommunity/community-js/commit/0fe92a64d8b756ba75a8fb5eea558fa9d6ee9381))
+
+
+### Features
+
+* added new footer widget into all feed components. Linear: https://linear.app/quentral/issue/QUE-1992/frontend-aggiungere-nella-barra-di-destra-un-box-sotto-lads-con-lo ([06dd21d](https://github.com/selfcommunity/community-js/commit/06dd21d132b159a7f49c3fa488ac01cc487229ea))
+
+
+
+
+
+# [0.5.0-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.14...@selfcommunity/react-theme-default@0.5.0-alpha.15) (2025-09-17)
+
+
+### Bug Fixes
+
+* fixed user autocomplete and feedObj chip ([f036919](https://github.com/selfcommunity/community-js/commit/f03691900f451b74528d1e6c96307e5082c2bcd3))
+
+
+
+
+
+# [0.5.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.13...@selfcommunity/react-theme-default@0.5.0-alpha.14) (2025-09-16)
+
+
+### Bug Fixes
+
+* fixed user tagging. Added search to fetch users hook ([9ead1e5](https://github.com/selfcommunity/community-js/commit/9ead1e5122af7c7a4f0b9e8373fa7bebbba1a015))
+
+
+
+
+
+# [0.5.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.12...@selfcommunity/react-theme-default@0.5.0-alpha.13) (2025-09-15)
+
+
+### Bug Fixes
+
+* moved and refactored signed label ([c92d9fe](https://github.com/selfcommunity/community-js/commit/c92d9fef0b05de6620fdd114de91c289c2a7a54a))
+
+
+
+
+
+# [0.5.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.11...@selfcommunity/react-theme-default@0.5.0-alpha.12) (2025-09-15)
+
+
+### Features
+
+* added user tagging in composer. Linear issue: https://linear.app/quentral/issue/QUE-1842/frontend-aggiungere-tab-utenti-con-textarea-chip-interni-per-ogni ([b7a7b17](https://github.com/selfcommunity/community-js/commit/b7a7b1738bb852890ed47cb964d9341bcc53214b))
+
+
+
+
+
+# [0.5.0-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.10...@selfcommunity/react-theme-default@0.5.0-alpha.11) (2025-09-12)
+
+
+### Bug Fixes
+
+* fixed badge pdf into DocComponent ([c2a1ea7](https://github.com/selfcommunity/community-js/commit/c2a1ea7e1f7ed0d84ff5bc49298627cd93bba7e8))
+
+
+### Features
+
+* added symbol to mark new post. Linear: https://linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new#comment-8227fe81 ([95067f7](https://github.com/selfcommunity/community-js/commit/95067f7b7d9f8f781af93f64a6f7ac93b9b025ea)), closes [/linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new#comment-8227fe81](https://github.com//linear.app/quentral/issue/QUE-1805/indicatori-di-contenuto-vistonon-visto-nel-feed-tipo-un-badge-new/issues/comment-8227fe81)
+
+
+
+
+
+# [0.5.0-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.9...@selfcommunity/react-theme-default@0.5.0-alpha.10) (2025-09-11)
+
+
+### Features
+
+* restyled preview pdf on DocCompoent. Linear: https://linear.app/quentral/issue/QUE-1973/label-pdf-in-overlay-thumbnail-immagine-preview-pdf-caricato-nel-post; https://linear.app/quentral/issue/QUE-1972/re-styling-miniatura-preview-pdf-aggiunta-bordo-e-icona ([92a0d2f](https://github.com/selfcommunity/community-js/commit/92a0d2fd5e233190cbaf1f1eb28251cb4a674039))
+
+
+
+
+
+# [0.5.0-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.8...@selfcommunity/react-theme-default@0.5.0-alpha.9) (2025-09-10)
+
+
+### Bug Fixes
+
+* fixed feed obj media gap in mobile view. Linear issue: https://linear.app/quentral/issue/QUE-1975/facendo-il-resize-a-formato-mobile-o-tablet-tra-il-testo-e-il-video-si ([0754469](https://github.com/selfcommunity/community-js/commit/0754469de2a83b1105048d86073088bffde4d974))
+
+
+
+
+
+# [0.5.0-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.7...@selfcommunity/react-theme-default@0.5.0-alpha.8) (2025-09-09)
+
+
+### Bug Fixes
+
+* reduced padding under grouped category cluster. ([426e885](https://github.com/selfcommunity/community-js/commit/426e8851033348480fcabac4dbdcd414ec32829d))
+
+
+
+
+
+# [0.5.0-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.6...@selfcommunity/react-theme-default@0.5.0-alpha.7) (2025-09-08)
+
+
+### Bug Fixes
+
+* revert some previous changes ([06a5045](https://github.com/selfcommunity/community-js/commit/06a5045c45771c10302c2aa7509c8ed2732e21df))
+
+
+
+
+
+# [0.5.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.5...@selfcommunity/react-theme-default@0.5.0-alpha.6) (2025-09-08)
+
+
+### Features
+
+* added currency icon into fee courses, events and groups. Linear: https://linear.app/quentral/issue/QUE-1955/icona-per-distinguere-dalle-liste-i-corsi-gruppi-ed-eventi-a-pagamento ([53708cb](https://github.com/selfcommunity/community-js/commit/53708cb6aaaba1e42eb2930722f66c5661ed136a))
+
+
+
+
+
+# [0.5.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.4...@selfcommunity/react-theme-default@0.5.0-alpha.5) (2025-09-08)
+
+
+### Features
+
+* updated reactions size; added tooltip on reactions. Linear: https://linear.app/quentral/issue/QUE-1947/dimensioni-da-correggere-per-iconografia-reactions-valida-per-tutte-le ([238ab2d](https://github.com/selfcommunity/community-js/commit/238ab2de7e45736aa55d8fd0eb0d4bfdb21db61b))
+* updated some icons and sizes into PaywallsConfigurator. Linear: https://linear.app/quentral/issue/QUE-1932/modifica-icone-modale-creazione-contenuto-a-pagamento ([0c8324b](https://github.com/selfcommunity/community-js/commit/0c8324bf11fedb59518f1d039a31cbfec3a63057))
+
+
+
+
+
+# [0.5.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.3...@selfcommunity/react-theme-default@0.5.0-alpha.4) (2025-09-05)
+
+
+### Bug Fixes
+
+* fixed composer icon when tag is selected, added icon for selected action. Linear issue: https://linear.app/quentral/issue/QUE-1952/nella-creazione-di-un-post-andrebbero-evidenziate-le-parti-gia ([1388004](https://github.com/selfcommunity/community-js/commit/1388004143501991f9bfc858d5ca97f9e686ad25))
+
+
+
+
+
+# [0.5.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.2...@selfcommunity/react-theme-default@0.5.0-alpha.3) (2025-09-04)
+
+
+### Bug Fixes
+
+* fixed pdf preview. Linear: https://linear.app/quentral/issue/QUE-1784/controllo-visualizzazione-pdf-biglietto-evento ([18900d4](https://github.com/selfcommunity/community-js/commit/18900d4e7bc642e3be03fc40ab3fb3bfc29496a6))
+
+
+
+
+
+# [0.5.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.1...@selfcommunity/react-theme-default@0.5.0-alpha.2) (2025-09-04)
+
+
+### Bug Fixes
+
+* added paid button to course/group header ([a41bd0c](https://github.com/selfcommunity/community-js/commit/a41bd0c42a52c7acb1842f1bd7148fb37e7ed4f7))
+* added style for buy button hover state ([7bfabeb](https://github.com/selfcommunity/community-js/commit/7bfabebb75d537e8edf654d5b7f0f0f341d56f03))
+* checkout ([eabfc62](https://github.com/selfcommunity/community-js/commit/eabfc62c38eefb6838ba830c885ce2d59fd95557))
+* CheckoutReturnDialog ([ebd420e](https://github.com/selfcommunity/community-js/commit/ebd420e5a22b6e1a63d56af0c6e33e793b50471c))
+* CommunityPaywalls ([68c6e14](https://github.com/selfcommunity/community-js/commit/68c6e142a09cdae50303c7672bb66640bc5881e1))
+* contentProducts ([66d3047](https://github.com/selfcommunity/community-js/commit/66d304700e5624fdae9ceb74fb381575838ce89f))
+* course ([0014377](https://github.com/selfcommunity/community-js/commit/0014377f8263e931fe87b3462c4f8facb2f9166f))
+* course snippet, orders ([c1d3ee5](https://github.com/selfcommunity/community-js/commit/c1d3ee5ccb72fe084497fa8acf1b66978185e68b))
+* event and group managers ([e768f5a](https://github.com/selfcommunity/community-js/commit/e768f5a0d8efd9cd7e3a57730e01e70740a70f2d))
+* fixed hidden box-shadow in courses ([3e55b80](https://github.com/selfcommunity/community-js/commit/3e55b80d416bbdeb2d139b6ab4ddc9c1256c7130))
+* payment_waiting ([b84eadd](https://github.com/selfcommunity/community-js/commit/b84eadd5f52327b3f91e5f7e3012c51394d45b3a))
+* payment_waiting ([9ee5db4](https://github.com/selfcommunity/community-js/commit/9ee5db4d56c842572caf603b75d5c15efe192ae4))
+* payment_waiting ([85af9fc](https://github.com/selfcommunity/community-js/commit/85af9fc96217e9f824a807b2d391bb34af154f65))
+* payment_waiting ([07a2235](https://github.com/selfcommunity/community-js/commit/07a2235b2b7532aef3613d7d5e942b205f6598d6))
+* paymentOrders ([dab464a](https://github.com/selfcommunity/community-js/commit/dab464af0fb3bb067ff5d1b7dfc15e904044bc6b))
+* paymentOrders ([12c2476](https://github.com/selfcommunity/community-js/commit/12c24769a44a3ab373e07abf0f81f3a7585fcc73))
+* payments ([f6d7bd1](https://github.com/selfcommunity/community-js/commit/f6d7bd1caa515e3451b6b4d9caf4c7af8d29b6d7))
+* payments ([16425dc](https://github.com/selfcommunity/community-js/commit/16425dc65cce1a0ae38053ee7f9f541102698288))
+* payments ([c379e8f](https://github.com/selfcommunity/community-js/commit/c379e8f245a5a753eb9cbbaafe90550f23d54f41))
+* payments ([3c82e7a](https://github.com/selfcommunity/community-js/commit/3c82e7a0bcd4d61e58479007f03b74c8e4ea0e6f))
+* payments ([b0f3602](https://github.com/selfcommunity/community-js/commit/b0f3602061d4027883d01f0f3d59ecf6b1673fd1))
+* payments ([f5817dd](https://github.com/selfcommunity/community-js/commit/f5817dd7c43efc6bb4f8a3daefc012ba04262997))
+* payments ([2989dd1](https://github.com/selfcommunity/community-js/commit/2989dd1ec555ecd3f1d6c8686ba9b416d243280c))
+* payments ([0d58a51](https://github.com/selfcommunity/community-js/commit/0d58a51a9645d4820df6a8f6db2f8a9193a99bc8))
+* payments ([21e9a56](https://github.com/selfcommunity/community-js/commit/21e9a561872b29e616cdc6b0e820ac11eb396712))
+* payments ([a41005d](https://github.com/selfcommunity/community-js/commit/a41005dc04b3410d9a20a2468aa76e1c5b938bbb))
+* payments ([720e295](https://github.com/selfcommunity/community-js/commit/720e2951048faa5fdedcf4874f6bf7211cf64804))
+* payments ([cc09416](https://github.com/selfcommunity/community-js/commit/cc09416018fe4f25407e188d0f4d259ed74f2cc7))
+* payments ([8ebe701](https://github.com/selfcommunity/community-js/commit/8ebe701424cf269df90cb524919cab946b8f1dbe))
+* payments ([ea3f7c2](https://github.com/selfcommunity/community-js/commit/ea3f7c267cf169442834fa50d6335a0cd15c30f0))
+* payments ([34467bd](https://github.com/selfcommunity/community-js/commit/34467bd9ef03dc0988d0a4ccd3747adbecedc85e))
+* payments and other features ([a0bd0eb](https://github.com/selfcommunity/community-js/commit/a0bd0eb3aea472a65033fd1e4160ddf55a3c05a0))
+* payments category, group, event ([d0e2b24](https://github.com/selfcommunity/community-js/commit/d0e2b248fe14b667031529fe772f745129811f84))
+* paywall ([62d9ee1](https://github.com/selfcommunity/community-js/commit/62d9ee1fe4c60b5d801f708eac65c3462e0aafc3))
+* paywall ([46e72c4](https://github.com/selfcommunity/community-js/commit/46e72c40e0fc88db92da5b74f70c66fbf5f209a2))
+* paywall ([7913a21](https://github.com/selfcommunity/community-js/commit/7913a21732d4b2baf965ed016751c688e9a22ec3))
+* paywalls configurator ([5ee1af0](https://github.com/selfcommunity/community-js/commit/5ee1af02465fa97a71136a9d6f80c943b5440610))
+* style ([0511ef7](https://github.com/selfcommunity/community-js/commit/0511ef795178a44c149d4a099d5a87439de21b5d))
+
+
+### Features
+
+* added margin between embeded video and medias. Linear: https://linear.app/quentral/issue/QUE-1917/frontend-nel-post-aggiungere-un-po-di-spazio-tra-gli-allegati-e-il ([65f3676](https://github.com/selfcommunity/community-js/commit/65f36762599ff938bc335e201327f9315fe0c09b))
+* added scheduled post in the composer. Linear issue: https://linear.app/quentral/issue/QUE-1863/frontend-gestire-ddp-se-post-programmati ([78b31ce](https://github.com/selfcommunity/community-js/commit/78b31ce29badbc05a141631e6037365761ee5f47))
+* managed ddp to hide comments and share; updated reaction layout. Linear: https://linear.app/quentral/issue/QUE-1856/frontend-in-base-alle-due-ddp-togliere-la-parte-di-post-per-fare-i ([fc94144](https://github.com/selfcommunity/community-js/commit/fc941444d6653cc040bd589963ce611a5e084f70))
+* restyled pdf preview and display. Linear: https://linear.app/quentral/issue/QUE-1797/frontend-sistemare-grafica-del-post-anche-in-stream-con-youtube-video ([1debc9f](https://github.com/selfcommunity/community-js/commit/1debc9fb07f4061a80d88676e012561a04c0d95f))
+
+
+### Performance Improvements
+
+* added filters to payment orders table. Linear issue: https://linear.app/quentral/issue/QUE-1295/inserire-nel-componente-paymentorders-i-filtri-in-testa-alla-tabella ([5ed71b0](https://github.com/selfcommunity/community-js/commit/5ed71b0186c39e69a3e27b8cda49c3c8d5338b9d))
+* added paid event link button event header ([18c8e72](https://github.com/selfcommunity/community-js/commit/18c8e7228ae019b2ccdcf90fbeba865b515678eb))
+* refactored checkout header, added info card ([9b2515b](https://github.com/selfcommunity/community-js/commit/9b2515ba0a06ae4f92b5337e2f241e04746ad641))
+* refactored checkout return dialog ([a84bf0b](https://github.com/selfcommunity/community-js/commit/a84bf0bb91e32fc9ad15182edb137aeffb3767a8))
+* updated payment product/products layout. Linear issue: https://linear.app/quentral/issue/QUE-1789/pwa-pagamenti ([df75e57](https://github.com/selfcommunity/community-js/commit/df75e57eec8691177c8c32f52255ffc40083a1f2))
+* updated theme fonts ([5bea34e](https://github.com/selfcommunity/community-js/commit/5bea34ec836e38d82c4287627bc86de64236c82c))
+
+
+
+
+
+## [0.4.5-alpha.18](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.17...@selfcommunity/react-theme-default@0.4.5-alpha.18) (2025-02-27)
+
+
+### Bug Fixes
+
+* category can_create_only_staff ([2835897](https://github.com/selfcommunity/community-js/commit/28358975dd7fd42d052509e89587f3ac260e58ed))
+
+
+
+
+
+## [0.4.5-alpha.17](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.16...@selfcommunity/react-theme-default@0.4.5-alpha.17) (2025-02-26)
+
+
+### Bug Fixes
+
+* live stream video processor ([e193ca4](https://github.com/selfcommunity/community-js/commit/e193ca4c9e218bb18e57eb8579cf378d67df5a62))
+* live stream warning ([763aada](https://github.com/selfcommunity/community-js/commit/763aadac181871190b330c1c354cd0b6ad2cd09a))
+
+
+
+
+
+## [0.4.5-alpha.16](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.15...@selfcommunity/react-theme-default@0.4.5-alpha.16) (2025-02-12)
+
+
+### Bug Fixes
+
+* live stream ([515ee10](https://github.com/selfcommunity/community-js/commit/515ee1072325dbec43f10a7081bb56c96fde0b42))
+* live stream dialog errors ([34b1f83](https://github.com/selfcommunity/community-js/commit/34b1f836d7d410722642eab77e6cd2e3261a8015))
+
+
+
+
+
+## [0.4.5-alpha.15](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.14...@selfcommunity/react-theme-default@0.4.5-alpha.15) (2025-02-06)
+
+
+### Bug Fixes
+
+* warning live stream form in a free trial community ([96fe99b](https://github.com/selfcommunity/community-js/commit/96fe99b443b74e9ce4660b097fb9d07ad7413eb7))
+* warning live stream form in a free trial community ([44a7667](https://github.com/selfcommunity/community-js/commit/44a766717ec7f5bf6b8c9f90a21c867f5a5649b0))
+
+
+
+
+
+## [0.4.5-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.13...@selfcommunity/react-theme-default@0.4.5-alpha.14) (2025-01-30)
+
+
+### Bug Fixes
+
+* composer scroll ([b5754cd](https://github.com/selfcommunity/community-js/commit/b5754cddbedec31e248cc256f1f9ea023898e960))
+
+
+
+
+
+## [0.4.5-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.12...@selfcommunity/react-theme-default@0.4.5-alpha.13) (2025-01-21)
+
+
+### Bug Fixes
+
+* fixed css on reply button into CommonObject ([0583270](https://github.com/selfcommunity/community-js/commit/0583270e1c28e3e3df0f9a9415d3dc839daccf88))
+
+
+
+
+
+## [0.4.5-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.11...@selfcommunity/react-theme-default@0.4.5-alpha.12) (2025-01-16)
+
+
+### Bug Fixes
+
+* fixed css on BaseItemButton ([b476a72](https://github.com/selfcommunity/community-js/commit/b476a726e12e82c80933082c454d8264af168045))
+* fixed some css reports ([e4a03bd](https://github.com/selfcommunity/community-js/commit/e4a03bdbe8df21dfa69b10938fc1632835f34d82))
+
+
+
+
+
+## [0.4.5-alpha.11](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.10...@selfcommunity/react-theme-default@0.4.5-alpha.11) (2025-01-15)
+
+
+### Bug Fixes
+
+* FeedObject format content ([52729f8](https://github.com/selfcommunity/community-js/commit/52729f83e4b0501b93d45adac1db02994516078d))
+
+
+
+
+
+## [0.4.5-alpha.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.9...@selfcommunity/react-theme-default@0.4.5-alpha.10) (2025-01-15)
+
+
+### Bug Fixes
+
+* FeedObject format content ([0eb9341](https://github.com/selfcommunity/community-js/commit/0eb934199f8b7524aa1e916db684b8a0cf9865d4))
+* ToolbarPlugin, PrivateMessage content style ([f0547e5](https://github.com/selfcommunity/community-js/commit/f0547e59e67c55b9e3afa8f48ec4d94df160b587))
+
+
+
+
+
+## [0.4.5-alpha.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.8...@selfcommunity/react-theme-default@0.4.5-alpha.9) (2025-01-14)
+
+
+### Bug Fixes
+
+* Composer with fixed toolbar editor when create discussion ([3cdc1a5](https://github.com/selfcommunity/community-js/commit/3cdc1a52e3b4d5667c6c1e030303bdc07b391c2b))
+
+
+
+
+
+## [0.4.5-alpha.8](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.7...@selfcommunity/react-theme-default@0.4.5-alpha.8) (2025-01-13)
+
+
+### Bug Fixes
+
+* style liveStream navigation ([fa19ef9](https://github.com/selfcommunity/community-js/commit/fa19ef9220037e00170598f316a006e2dad26091))
+
+
+
+
+
+## [0.4.5-alpha.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.6...@selfcommunity/react-theme-default@0.4.5-alpha.7) (2025-01-13)
+
+
+### Bug Fixes
+
+* style feddObjectDetail ([53de310](https://github.com/selfcommunity/community-js/commit/53de310346e27f9827ab369598edbf3f6a97e96c))
+* style liveStream card ([bb61645](https://github.com/selfcommunity/community-js/commit/bb6164577bae93cd692e342d9a5e8f0ce36c3023))
+* style liveStream navigation ([c315f47](https://github.com/selfcommunity/community-js/commit/c315f47d854b6739cee63d38bf82fc5aee0f4a14))
+
+
+
+
+
+## [0.4.5-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.5...@selfcommunity/react-theme-default@0.4.5-alpha.6) (2025-01-13)
+
+
+### Bug Fixes
+
+* icon CreateLiveStreamButton ([ec2d22f](https://github.com/selfcommunity/community-js/commit/ec2d22f15dc182a1f1f275fc82e33ec05ab71253))
+* icon CreateLiveStreamButton ([7d3b875](https://github.com/selfcommunity/community-js/commit/7d3b875baa23419126f12c83f1a17be1d30dc919))
+
+
+
+
+
+## [0.4.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.4...@selfcommunity/react-theme-default@0.4.5-alpha.5) (2025-01-10)
+
+
+### Bug Fixes
+
+* liveStream errors ([b399573](https://github.com/selfcommunity/community-js/commit/b3995738bda178ce82eace90f78b5d2b1f45b6c0))
+
+
+
+
+
+## [0.4.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.3...@selfcommunity/react-theme-default@0.4.5-alpha.4) (2025-01-09)
+
+
+### Bug Fixes
+
+* chip post group, event live stream ([bbdf085](https://github.com/selfcommunity/community-js/commit/bbdf08546e4811bdd27ad3398a2a8fca1d1cde94))
+* chip post group, event live stream ([18777f9](https://github.com/selfcommunity/community-js/commit/18777f926561ea35b086d42b33ff30be6389d560))
+
+
+
+
+
+## [0.4.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.2...@selfcommunity/react-theme-default@0.4.5-alpha.3) (2025-01-08)
+
+
+### Bug Fixes
+
+* chip post group ([d951b61](https://github.com/selfcommunity/community-js/commit/d951b613226732a91efb1540bd621aeca29ff051))
+
+
+
+
+
+## [0.4.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.1...@selfcommunity/react-theme-default@0.4.5-alpha.2) (2025-01-08)
+
+
+### Bug Fixes
+
+* dependencies ([bfb228f](https://github.com/selfcommunity/community-js/commit/bfb228fe482d247b87605a57e7de34faf7087214))
+* initial livestream ([d81f1b7](https://github.com/selfcommunity/community-js/commit/d81f1b7640e34f1fd85ab2720b364f612cb4a505))
+* livestream ([89c9e54](https://github.com/selfcommunity/community-js/commit/89c9e546bdab64e18d2897f2d785e924faec64c9))
+* livestream ([4aad356](https://github.com/selfcommunity/community-js/commit/4aad356dea12e1e770258172598ac85d6fc5767c))
+* livestream ([a5cf702](https://github.com/selfcommunity/community-js/commit/a5cf702e447842e9a9abdf461b066dbe309c6801))
+* livestream ([def85a6](https://github.com/selfcommunity/community-js/commit/def85a6afbf1bb50292fffbeaf416006d77bb2f4))
+* livestream ([3360995](https://github.com/selfcommunity/community-js/commit/336099543199d371000288c019fc2d2bacf855c4))
+* livestream ([eafaa82](https://github.com/selfcommunity/community-js/commit/eafaa824d1092cfd97a73b68382c36cf8d667b1e))
+* livestream ([ff1cbb8](https://github.com/selfcommunity/community-js/commit/ff1cbb873c51c864c4dc38bd5bc6a42924502105))
+* livestream ([1147934](https://github.com/selfcommunity/community-js/commit/11479345459d7fd0ac3f08c77b7379d795d779f0))
+* livestream ([b4f0ebd](https://github.com/selfcommunity/community-js/commit/b4f0ebd98a2318650727677e1a08bc439ee6546f))
+* livestream ([a15c02f](https://github.com/selfcommunity/community-js/commit/a15c02f7dbe96b5eaaab60a04384a1cb928ba9b5))
+* livestream ([9139df7](https://github.com/selfcommunity/community-js/commit/9139df75d054dfcb1a6664f39fb146a16e69e77f))
+* livestream ([b3df735](https://github.com/selfcommunity/community-js/commit/b3df7359d334426f09c6619630f1ade4a8ca462a))
+* livestream ([71d006b](https://github.com/selfcommunity/community-js/commit/71d006b642183eeda860f21772789a3cdf0bd3d7))
+* livestream ([37d2561](https://github.com/selfcommunity/community-js/commit/37d2561218ed54bcbfc7e8725dd39ef7196e78d8))
+* livestream ([a5b9329](https://github.com/selfcommunity/community-js/commit/a5b9329f7b8b578f583653c6aa8e4478d422d9fa))
+* livestream ([5edaa84](https://github.com/selfcommunity/community-js/commit/5edaa8489f5accf087793e060bc57fd58c1889c3))
+* livestream ([9e7d4f2](https://github.com/selfcommunity/community-js/commit/9e7d4f293b64190ed520194ab1ff4d381d9a443e))
+* livestream ([111eeae](https://github.com/selfcommunity/community-js/commit/111eeae0c2a9809edcc1b14ad8dbe0c8f34e2f08))
+* livestream ([621d293](https://github.com/selfcommunity/community-js/commit/621d29305b2c13b28bf1dc777794168f5b55341e))
+* livestream ([f1636e8](https://github.com/selfcommunity/community-js/commit/f1636e856c2e78e5040a868ea0bf161fc2dc9384))
+* livestream ([3cc5749](https://github.com/selfcommunity/community-js/commit/3cc5749afda55ae8185f98c8b7eb5174171720ef))
+* livestream ([646a4e6](https://github.com/selfcommunity/community-js/commit/646a4e671fa5ab5cd1253155eba1bc521a4a9172))
+* livestream ([c618a19](https://github.com/selfcommunity/community-js/commit/c618a19c29446456c4d300cde6303a16c825c8b2))
+* livestream ([6f16326](https://github.com/selfcommunity/community-js/commit/6f1632698e7c00d3f3019cec12292d6044f95412))
+* livestream ([9e5f413](https://github.com/selfcommunity/community-js/commit/9e5f413f97ef3a471b3368b0dc79f450d0d0d163))
+* livestream ([d6c209b](https://github.com/selfcommunity/community-js/commit/d6c209b1ff2f23f4bb3176b6c4d33703c6fedd77))
+* livestream ([d960f5f](https://github.com/selfcommunity/community-js/commit/d960f5f8c5ffab0b2597350f3c659ab5f71701c2))
+* livestream assets, resolution ([8f82747](https://github.com/selfcommunity/community-js/commit/8f8274764e086abf8c47a4307e21c0d93fbab1de))
+* livestream assets, resolution ([b9efade](https://github.com/selfcommunity/community-js/commit/b9efade9dfb276968fa11b829146ba2dc5479ea1))
+* livestream assets, resolution ([b7c31d2](https://github.com/selfcommunity/community-js/commit/b7c31d2bf6941f7f7f84a64dc9893b8a779080c7))
+* livestream copy link ([42a8b35](https://github.com/selfcommunity/community-js/commit/42a8b35a9b4d67d683f7f31a7b73f171f7b2ac74))
+* livestream in progress ([e7e0575](https://github.com/selfcommunity/community-js/commit/e7e0575714277f3ed0fd8829ad02cf37f2d8f60c))
+* livestream in progress - fix deps - remove webpack-atoms (use fiber) and conflict with livekit deps ([68ed5ba](https://github.com/selfcommunity/community-js/commit/68ed5ba4394740787bfd89b1e7d195f9ad2954d4))
+
+
+
+
+
+## [0.4.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.5-alpha.0...@selfcommunity/react-theme-default@0.4.5-alpha.1) (2024-12-30)
+
+
+### Bug Fixes
+
+* link in post target 'blank' and display inline ([2b7d90d](https://github.com/selfcommunity/community-js/commit/2b7d90d25d10bb607eb8140d2c7ce6b67ca195d5))
+* sort media in composer ([243fcfb](https://github.com/selfcommunity/community-js/commit/243fcfbfa752270ef78334a7b7fd7689983601bf))
+
+
+
+
+
+## [0.4.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4...@selfcommunity/react-theme-default@0.4.5-alpha.0) (2024-12-19)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
 ## [0.4.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.4.4-alpha.12...@selfcommunity/react-theme-default@0.4.4) (2024-12-17)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

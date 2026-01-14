@@ -7,7 +7,7 @@
  */
 import * as React from 'react';
 import {useLexicalComposerContext} from '@lexical/react/LexicalComposerContext';
-import useLexicalEditable from '@lexical/react/useLexicalEditable';
+import {useLexicalEditable} from '@lexical/react/useLexicalEditable';
 import {ErrorBoundaryType, useDecorators} from '../shared/useDecorators';
 import {useEditorFocus} from '../shared/useEditorFocus';
 import {useCanShowPlaceholder} from '../shared/useCanShowPlaceholder';
@@ -19,8 +19,8 @@ export function RichTextPlugin({
   ErrorBoundary
 }: {
   contentEditable: JSX.Element;
-  placeholder: ((isEditable: boolean) => null | JSX.Element) | null | JSX.Element;
-  ErrorBoundary: ErrorBoundaryType;
+  placeholder?: ((isEditable: boolean) => null | JSX.Element) | null | JSX.Element;
+  ErrorBoundary?: ErrorBoundaryType;
 }): JSX.Element {
   const [editor] = useLexicalComposerContext();
   const decorators = useDecorators(editor, ErrorBoundary);

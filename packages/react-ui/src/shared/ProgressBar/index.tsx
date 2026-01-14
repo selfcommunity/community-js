@@ -1,7 +1,5 @@
-import LinearProgress, {LinearProgressProps} from '@mui/material/LinearProgress';
-import {Box, Typography} from '@mui/material';
+import {Box, Typography, LinearProgress, LinearProgressProps, styled} from '@mui/material';
 import React from 'react';
-import {styled} from '@mui/material/styles';
 import classNames from 'classnames';
 
 const PREFIX = 'SCProgressBar';

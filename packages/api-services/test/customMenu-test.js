@@ -21,11 +21,6 @@ describe('Custom Menu Service Test', () => {
       test.skip;
     }
   });
-  test('Get base custom menu', () => {
-    return CustomMenuService.getBaseCustomMenu().then((data) => {
-      expect(data.name).toEqual('base');
-    });
-  });
   test('Search custom menu', () => {
     return CustomMenuService.searchCustomMenus().then((data) => {
       expect(data.results).toBeInstanceOf(Array);

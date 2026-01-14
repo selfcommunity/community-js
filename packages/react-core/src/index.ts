@@ -27,6 +27,7 @@ import {
   SCThemeType,
   SCSubscribedGroupsManagerType,
   SCSubscribedEventsManagerType,
+  SCJoinedCoursesManagerType,
 } from './types';
 
 /**
@@ -77,11 +78,14 @@ import * as SCCache from './constants/Cache';
  * Custom Hooks
  */
 import useSCFetchUser from './hooks/useSCFetchUser';
+import useSCFetchUsers from './hooks/useSCFetchUsers';
 import useSCFetchUserProviders from './hooks/useSCFetchUserProviders';
 import useSCFetchVote from './hooks/useSCFetchVote';
 import useSCFetchFeedObject from './hooks/useSCFetchFeedObject';
 import useSCFetchCommentObject from './hooks/useSCFetchCommentObject';
 import useSCFetchCommentObjects from './hooks/useSCFetchCommentObjects';
+import useSCFetchLessonCommentObject from './hooks/useSCFetchLessonCommentObject';
+import useSCFetchLessonCommentObjects from './hooks/useSCFetchLessonCommentObjects';
 import useSCFetchCustomAdv from './hooks/useSCFetchCustomAdv';
 import useSCFetchTag from './hooks/useSCFetchTag';
 import useSCFetchAddressingTagList from './hooks/useSCFetchAddressingTagList';
@@ -99,7 +103,18 @@ import useSCFetchGroup from './hooks/useSCFetchGroup';
 import useSCFetchGroups from './hooks/useSCFetchGroups';
 import useSCFetchEvent from './hooks/useSCFetchEvent';
 import useSCFetchEvents from './hooks/useSCFetchEvents';
+import useSCFetchLiveStream from './hooks/useSCFetchLiveStream';
 import useSCGoogleApiLoader from './hooks/useSCGoogleApiLoader';
+import useSCFetchCourse from './hooks/useSCFetchCourse';
+import useSCFetchCourses from './hooks/useSCFetchCourses';
+import useSCFetchLesson from './hooks/useSCFetchLesson';
+import useSCPaymentsEnabled from './hooks/useSCPaymentsEnabled';
+import useSCFetchPaymentProduct from './hooks/useSCFetchPaymentProduct';
+import useSCFetchPaymentOrder from './hooks/useSCFetchPaymentOrder';
+import useFetchMenuFooter from './hooks/useFetchMenuFooter';
+import useSCPreference, {useSCPreferenceEnabled, useSCPreferencesEnabled} from './hooks/useSCPreference';
+import {useSCFeatureEnabled, useSCFeaturesEnabled} from './hooks/useSCFeature';
+import useSCPreferencesAndFeaturesEnabled from './hooks/useSCPreferencesAndFeaturesEnabled';
 
 /**
  * Routing component
@@ -120,6 +135,7 @@ import {
   useEffectOnce,
   useNoInitialEffect,
   usePageVisibility,
+  useResizeObserver,
 } from './utils/hooks';
 import {getEventStatus} from './utils/event';
 /**
@@ -158,6 +174,7 @@ export {
   SCThemeType,
   SCSubscribedGroupsManagerType,
   SCSubscribedEventsManagerType,
+  SCJoinedCoursesManagerType,
   SCContext,
   SCUserContext,
   SCThemeContext,
@@ -196,11 +213,14 @@ export {
   Locale,
   Preferences,
   useSCFetchUser,
+  useSCFetchUsers,
   useSCFetchUserProviders,
   useSCFetchVote,
   useSCFetchFeedObject,
   useSCFetchCommentObject,
   useSCFetchCommentObjects,
+  useSCFetchLessonCommentObject,
+  useSCFetchLessonCommentObjects,
   useSCFetchCustomAdv,
   useSCFetchTag,
   useSCFetchAddressingTagList,
@@ -216,6 +236,7 @@ export {
   useEffectOnce,
   useNoInitialEffect,
   usePageVisibility,
+  useResizeObserver,
   useSCFetchPrivateMessageSnippets,
   useSCFetchBroadcastMessages,
   useSCFetchUserBlockedBy,
@@ -224,5 +245,19 @@ export {
   useSCFetchGroups,
   useSCFetchEvent,
   useSCFetchEvents,
+  useSCFetchLiveStream,
   useSCGoogleApiLoader,
+  useSCFetchCourse,
+  useSCFetchCourses,
+  useSCFetchLesson,
+  useSCPaymentsEnabled,
+  useSCFetchPaymentProduct,
+  useSCFetchPaymentOrder,
+  useFetchMenuFooter,
+  useSCPreference,
+  useSCPreferenceEnabled,
+  useSCPreferencesEnabled,
+  useSCFeatureEnabled,
+  useSCFeaturesEnabled,
+  useSCPreferencesAndFeaturesEnabled,
 };

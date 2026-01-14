@@ -1,12 +1,12 @@
 import React, {useEffect, useRef} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, BoxProps} from '@mui/material';
+import {Box, BoxProps, styled} from '@mui/material';
 import {SCContextType, SCNotification, SCUserContextType, useSCAlertMessages, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {SCNotificationTopicType, SCNotificationTypologyType} from '@selfcommunity/types';
 import PubSub from 'pubsub-js';
 import {BaseVariant, useSnackbar} from 'notistack';
-import CustomSnackMessage from '../../shared/CustomSnackMessage';
+import {PREFIX} from './constants';
 import {SCBroadcastMessageTemplateType, SCNotificationObjectTemplateType} from '../../types';
+import CustomSnackMessage from '../../shared/CustomSnackMessage';
 import CommentNotification from '../Notification/Comment';
 import ContributionFollowNotification from '../Notification/ContributionFollow';
 import UserFollowNotification from '../Notification/UserFollow';
@@ -20,9 +20,10 @@ import UserBlockedNotification from '../Notification/UserBlocked';
 import Message from '../BroadcastMessages/Message';
 import {useThemeProps} from '@mui/system';
 import ContributionNotification from '../Notification/Contribution';
-import {PREFIX} from './constants';
 import GroupNotification from '../Notification/Group';
 import EventNotification from '../Notification/Event/Event';
+import LiveStreamNotification from '../Notification/LiveStream';
+import CourseNotification from '../Notification/Course';
 
 const Root = styled(Box, {
   name: PREFIX,
@@ -136,6 +137,17 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
         type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT
       ) {
         content = <EventNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
+      } else if (
+        type === SCNotificationTypologyType.USER_ADDED_TO_COURSE ||
+        type === SCNotificationTypologyType.MANAGER_ADDED_TO_COURSE ||
+        type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON ||
+        type === SCNotificationTypologyType.USER_INVITED_TO_JOIN_COURSE ||
+        type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_COURSE ||
+        type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_COURSE
+      ) {
+        content = <CourseNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
+      } else if (type === SCNotificationTypologyType.LIVE_STREAM_STARTED) {
+        content = <LiveStreamNotification notificationObject={n.notification_obj} template={SCNotificationObjectTemplateType.TOAST} />;
       }
     }
     if (n.activity_type && n.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER) {
@@ -174,7 +186,8 @@ export default function UserToastNotifications(inProps: ToastNotificationsProps)
         preventDuplicate: true,
         key: messageKey,
         variant: 'notification' as BaseVariant,
-        persist: data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER ? true : false,
+        persist: data.data.activity_type === SCNotificationTypologyType.NOTIFICATION_BANNER,
+        ...(data.data.activity_type !== SCNotificationTypologyType.NOTIFICATION_BANNER && {autoHideDuration: 10000}),
         anchorOrigin: {horizontal: 'left', vertical: 'bottom'},
         action: null,
         SnackbarProps: {

@@ -1,6 +1,5 @@
-import {Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, Tooltip} from '@mui/material';
-import React, {useMemo} from 'react';
-import Icon from '@mui/material/Icon';
+import {Avatar, Badge, Box, Button, IconButton, styled, Toolbar, ToolbarProps, Tooltip, Icon} from '@mui/material';
+import React, {useCallback, useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import NavigationToolbarSkeleton from './Skeleton';
@@ -24,6 +23,7 @@ import {
 } from '@selfcommunity/react-core';
 import NavigationMenuIconButton, {NavigationMenuIconButtonProps} from '../NavigationMenuIconButton';
 import {PREFIX} from './constants';
+import {scroll} from 'seamless-scroll-polyfill';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -35,6 +35,7 @@ const classes = {
   explore: `${PREFIX}-explore`,
   events: `${PREFIX}-events`,
   groups: `${PREFIX}-groups`,
+  courses: `${PREFIX}-courses`,
   search: `${PREFIX}-search`,
   composer: `${PREFIX}-composer`,
   profile: `${PREFIX}-profile`,
@@ -62,7 +63,7 @@ export interface NavigationToolbarProps extends ToolbarProps {
   /**
    * Searchbar props
    */
-  SearchAutocompleteProps?: SearchAutocompleteProps;
+  SearchAutocompleteComponentProps?: SearchAutocompleteProps;
   /**
    * The navigation path
    */
@@ -97,6 +98,10 @@ export interface NavigationToolbarProps extends ToolbarProps {
    */
   onCloseNotificationMenu?: () => void;
   /**
+   * Callback on click home
+   */
+  onClickHome?: () => void;
+  /**
    * Props to spread to the NotificationsMenu
    * @default {}
    */
@@ -116,7 +121,8 @@ const PREFERENCES = [
   SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_ENABLED,
   SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_URL,
   SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_IMAGE,
-  SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_TEXT
+  SCPreferences.CONFIGURATIONS_CUSTOM_NAVBAR_ITEM_TEXT,
+  SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED
 ];
 
 /**
@@ -173,15 +179,16 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     className = '',
     disableSearch = false,
     disableComposer = false,
-    SearchAutocompleteProps = {},
+    SearchAutocompleteComponentProps = {},
     startActions = null,
     endActions = null,
     NavigationSettingsIconButtonComponent = NavigationSettingsIconButton,
-    NavigationMenuIconButtonComponentProps = {},
     NavigationMenuIconButtonComponent = NavigationMenuIconButton,
+    NavigationMenuIconButtonComponentProps = {},
     children = null,
     NotificationMenuProps = {},
     ComposerIconButtonProps = {},
+    onClickHome,
     onOpenNotificationMenu,
     onCloseNotificationMenu,
     ...rest
@@ -198,7 +205,13 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     PREFERENCES.map((p) => (_preferences[p] = p in scPreferences.preferences ? scPreferences.preferences[p].value : null));
     return _preferences;
   }, [scPreferences.preferences]);
-  const privateMessagingEnabled = useMemo(() => scPreferences.features.includes(SCFeatureName.PRIVATE_MESSAGING), [scPreferences.features]);
+  const privateMessagingEnabled = useMemo(
+    () =>
+      scPreferences.preferences &&
+      SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in scPreferences.preferences &&
+      scPreferences.preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
+    [scPreferences.preferences]
+  );
   const groupsEnabled = useMemo(
     () =>
       scPreferences.preferences &&
@@ -214,15 +227,27 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       scPreferences.preferences &&
       scPreferences.features &&
       scPreferences.features.includes(SCFeatureName.TAGGING) &&
+      scPreferences.features.includes(SCFeatureName.EVENT) &&
       SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in scPreferences.preferences &&
       scPreferences.preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+    [scPreferences.preferences, scPreferences.features]
+  );
+  const coursesEnabled = useMemo(
+    () =>
+      scPreferences.preferences &&
+      scPreferences.features &&
+      scPreferences.features.includes(SCFeatureName.COURSE) &&
+      SCPreferences.CONFIGURATIONS_COURSES_ENABLED in scPreferences.preferences &&
+      scPreferences.preferences[SCPreferences.CONFIGURATIONS_COURSES_ENABLED].value,
     [scPreferences.preferences, scPreferences.features]
   );
 
   const showComposer = useMemo(() => {
     return (
       !disableComposer &&
-      (!scPreferences.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value || UserUtils.isStaff(scUserContext.user))
+      (!scPreferences.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value ||
+        UserUtils.isStaff(scUserContext.user) ||
+        UserUtils.isPublisher(scUserContext.user))
     );
   }, [preferences, disableComposer, scUserContext.user]);
 
@@ -240,6 +265,17 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     onCloseNotificationMenu && onCloseNotificationMenu();
   };
 
+  const handleClickHome = useCallback(() => {
+    if (onClickHome) {
+      onClickHome();
+    } else {
+      const pathName = window.location.pathname;
+      if (pathName && (pathName === '/' || pathName === scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))) {
+				scroll(window, {top: 0, behavior: 'smooth'});
+      }
+    }
+  }, [onClickHome]);
+
   // RENDER
   if (scUserContext.loading) {
     return <NavigationToolbarSkeleton />;
@@ -252,20 +288,35 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           className={classNames(classes.home, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))})}
           aria-label="Home"
           to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
-          component={Link}>
+          component={Link}
+          onClick={handleClickHome}>
           <Icon>home</Icon>
         </IconButton>
       )}
       {preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED] &&
-        (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && (
+        (preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) &&
+        (!scUserContext.user || (!groupsEnabled && !coursesEnabled && !eventsEnabled)) && (
           <IconButton
-            className={classNames(classes.explore, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {}))})}
+            className={classNames(classes.explore, {
+              [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {}))
+            })}
             aria-label="Explore"
             to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
             component={Link}>
             <Icon>explore</Icon>
           </IconButton>
         )}
+      {coursesEnabled && (scUserContext.user || preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY]) && (
+        <IconButton
+          className={classNames(classes.courses, {
+            [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {}))
+          })}
+          aria-label="Courses"
+          to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}
+          component={Link}>
+          <Icon>courses</Icon>
+        </IconButton>
+      )}
       {groupsEnabled && scUserContext.user && (
         <IconButton
           className={classNames(classes.groups, {
@@ -296,7 +347,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
   return (
     <Root className={classNames(className, classes.root)} {...rest}>
       <NavigationMenuIconButtonComponent {...NavigationMenuIconButtonComponentProps} />
-      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
+      <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo} onClick={handleClickHome}>
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
       </Link>
       {!scUserContext.user && !preferences[SCPreferences.ADDONS_CLOSED_COMMUNITY] && (
@@ -321,7 +372,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       )}
       {_children}
       {(preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY] || scUserContext.user) && !disableSearch ? (
-        <SearchAutocomplete className={classes.search} blurOnSelect {...SearchAutocompleteProps} />
+        <SearchAutocomplete className={classes.search} blurOnSelect {...SearchAutocompleteComponentProps} />
       ) : (
         <Box className={classes.search} />
       )}

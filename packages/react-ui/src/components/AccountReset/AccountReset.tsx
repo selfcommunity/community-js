@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
-import {Alert, Box, Button, ButtonProps, CircularProgress, TextFieldProps, Typography} from '@mui/material';
+import {Alert, Box, Button, ButtonProps, CircularProgress, TextFieldProps, styled} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';

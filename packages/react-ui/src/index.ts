@@ -44,6 +44,17 @@ import ComposerIconButton, {ComposerIconButtonProps} from './components/Composer
 import ConnectionUserButton from './components/ConnectionUserButton';
 import ConsentSolution, {ConsentSolutionProps, ConsentSolutionSkeleton} from './components/ConsentSolution';
 import ConsentSolutionButton, {ConsentSolutionButtonProps} from './components/ConsentSolutionButton';
+import CourseContentMenu, {CourseContentMenuProps} from './components/CourseContentMenu';
+import CourseDashboard, {
+  TeacherCourseDashboardProps,
+  TeacherSkeleton,
+  StudentCourseDashboardProps,
+  StudentSkeleton
+} from './components/CourseDashboard';
+import Course, {CourseProps, CourseSkeleton, CourseSkeletonProps} from './components/Course';
+import CourseJoinButton, {CourseJoinButtonProps} from './components/CourseJoinButton';
+import Courses, {CoursesProps, CoursesSkeleton, CoursesSkeletonProps} from './components/Courses';
+import CreateCourseButton, {CreateCourseButtonProps} from './components/CreateCourseButton';
 import CreateEventButton, {CreateEventButtonProps} from './components/CreateEventButton';
 import CreateEventWidget, {CreateEventWidgetProps, CreateEventWidgetSkeleton} from './components/CreateEventWidget';
 import EventForm, {EventFormProps} from './components/EventForm';
@@ -53,6 +64,7 @@ import CustomAdv, {CustomAdvProps, CustomAdvSkeleton} from './components/CustomA
 import EditEventButton, {EditEventButtonProps} from './components/EditEventButton';
 import EditGroupButton, {EditGroupButtonProps} from './components/EditGroupButton';
 import Editor, {EditorProps, EditorSkeleton} from './components/Editor';
+import EditCourse, {EditCourseProps, EditCourseSkeleton} from './components/EditCourse';
 import Event, {EventProps, EventSkeleton, EventSkeletonProps} from './components/Event';
 import EventHeader, {EventHeaderProps, EventHeaderSkeleton} from './components/EventHeader';
 import EventInfoWidget, {EventInfoWidgetProps} from './components/EventInfoWidget';
@@ -70,6 +82,7 @@ import Footer, {FooterProps, FooterSkeleton} from './components/Footer';
 import FriendshipUserButton, {FriendshipButtonProps} from './components/FriendshipUserButton';
 import Group, {GroupProps, GroupSkeleton} from './components/Group';
 import GroupActionsMenu, {GroupActionsMenuProps} from './components/GroupActionsMenu';
+import CourseCompletedDialog, {CourseCompletedDialogProps} from './components/CourseCompletedDialog';
 import GroupForm, {GroupFormProps} from './components/GroupForm';
 import GroupHeader, {GroupHeaderProps, GroupHeaderSkeleton} from './components/GroupHeader';
 import GroupInfoWidget, {GroupInfoWidgetProps, GroupInfoWidgetSkeleton} from './components/GroupInfoWidget';
@@ -88,6 +101,10 @@ import IncubatorSubscribeButton, {IncubatorSubscribeButtonProps} from './compone
 import IncubatorSuggestionWidget, {IncubatorSuggestionWidgetProps} from './components/IncubatorSuggestionWidget';
 import InlineComposerWidget, {InlineComposerWidgetProps, InlineComposerWidgetSkeleton} from './components/InlineComposerWidget';
 import InviteUserEventButton, {InviteUserEventButtonProps} from './components/InviteUserEventButton';
+import LessonAppbar, {LessonAppbarProps} from './components/LessonAppbar';
+import LessonDrawer, {LessonDrawerProps} from './components/LessonDrawer';
+import LessonEditForm, {LessonEditFormProps} from './components/LessonEditForm';
+import LessonObject, {LessonObjectProps} from './components/LessonObject';
 import LocationAutocomplete, {LocationAutocompleteProps} from './components/LocationAutocomplete';
 import LoyaltyProgramWidget, {LoyaltyProgramWidgetProps, LoyaltyProgramWidgetSkeleton} from './components/LoyaltyProgramWidget';
 import MyEventsWidget, {MyEventsWidgetProps, MyEventsWidgetSkeleton} from './components/MyEventsWidget';
@@ -125,6 +142,7 @@ import SuggestedEventsWidget, {SuggestedEventsWidgetProps, SuggestedEventsWidget
 import TagAutocomplete, {TagAutocompleteProps} from './components/TagAutocomplete';
 import ToastNotifications, {ToastNotificationsProps, ToastNotificationsSkeleton} from './components/ToastNotifications';
 import User, {UserProps, UserSkeleton} from './components/User';
+import UserAutocomplete, {UserAutocompleteProps} from './components/UserAutocomplete';
 import UserActionIconButton, {UserActionIconButtonProps} from './components/UserActionIconButton';
 import UserConnectionsRequestsSentWidget, {
   UserConnectionsRequestsSentWidgetProps,
@@ -136,6 +154,7 @@ import UserConnectionsRequestsWidget, {
 } from './components/UserConnectionsRequestsWidget';
 import UserConnectionsWidget, {UserConnectionsWidgetProps, UserConnectionsWidgetSkeleton} from './components/UserConnectionsWidget';
 import UserCounters, {UserCountersProps} from './components/UserCounters';
+import UserCreatedCoursesWidget, {UserCreatedCoursesWidgetProps, UserCreatedCoursesWidgetSkeleton} from './components/UserCreatedCoursesWidget';
 import UserFollowedCategoriesWidget, {
   UserFollowedCategoriesWidgetProps,
   UserFollowedCategoriesWidgetSkeleton
@@ -162,7 +181,9 @@ import UserSubscribedGroupsWidget, {
   UserSubscribedGroupsWidgetSkeleton
 } from './components/UserSubscribedGroupsWidget';
 import UserSuggestionWidget, {UserSuggestionWidgetProps, UserSuggestionWidgetSkeleton} from './components/UserSuggestionWidget';
+import UserLiveStreamWidget, {UserLiveStreamWidgetProps, UserLiveStreamWidgetSkeleton} from './components/UserLiveStreamWidget';
 import Widget, {WidgetProps} from './components/Widget';
+import FooterWidget, {FooterWidgetProps} from './components/FooterWidget';
 import {
   MEDIA_EMBED_SC_LINK_TYPE,
   MEDIA_EMBED_SC_SHARED_EVENT,
@@ -176,10 +197,44 @@ import {
   MEDIA_TYPE_URL,
   MEDIA_TYPE_VIDEO
 } from './constants/Media';
+import {SCCourseFormStepType} from './constants/Course';
+import AccordionLessons, {AccordionLessonsProps, AccordionLessonsSkeleton} from './shared/AccordionLessons';
+import AddUsersButton, {AddUsersButtonProps} from './shared/AddUsersButton';
+import EmptyStatus, {EmptyStatusProps} from './shared/EmptyStatus';
+import LiveStream, {LiveStreamProps, LiveStreamSkeletonProps, LiveStreamSkeleton} from './components/LiveStream';
+import LiveStreamInfoDetails, {LiveStreamInfoDetailsProps} from './shared/LiveStreamInfoDetails';
+import UpScalingTierBadge, {UpScalingTierProps} from './shared/UpScalingTierBadge';
+import CreateLiveStreamDialog, {CreateLiveStreamDialogProps} from './components/CreateLiveStreamDialog';
+import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from './components/CreateLiveStreamButton';
+import LiveStreamForm, {LiveStreamFormProps} from './components/LiveStreamForm';
+import LiveStreamRoom, {LiveStreamRoomProps} from './components/LiveStreamRoom';
+import LiveStreamVideoConference, {LiveStreamVideoConferenceProps} from './components/LiveStreamRoom/LiveStreamVideoConference';
+import PaywallsConfigurator, {PaywallsConfiguratorProps, PaywallsConfiguratorSkeleton} from './components/PaywallsConfigurator';
+import PaywallsDialog, {PaywallsDialogProps} from './components/PaywallsDialog';
+import PaymentProducts, {PaymentProductsProps} from './components/PaymentProducts';
+import PaymentProduct, {PaymentProductProps} from './components/PaymentProduct';
+import PaymentOrder, {PaymentOrderProps} from './components/PaymentOrder';
+import PaymentOrderPdfButton, {PaymentOrderPdfButtonProps} from './components/PaymentOrderPdfButton';
+import PaymentDetailDialog, {PaymentDetailDialogProps} from './components/PaymentDetailDialog';
+import PaymentOrders, {PaymentOrdersProps} from './components/PaymentOrders';
+import PaymentProductPrice, {PaymentProductPriceProps} from './components/PaymentProductPrice';
+import UserPaymentMethodsPortal, {UserPaymentMethodsPortalProps, UserPaymentMethodsPortalSkeleton} from './components/UserPaymentMethodsPortal';
+import UserPaymentMethods, {UserPaymentMethodsProps, UserPaymentMethodsSkeleton} from './components/UserPaymentMethods';
+import UserAddPaymentMethodForm, {UserAddPaymentMethodFormProps} from './components/UserAddPaymentMethodForm';
+import UserAddPaymentMethodDialog, {UserAddPaymentMethodDialogProps} from './components/UserAddPaymentMethodDialog';
+import UserChangeAddressDialog, {UserChangeAddressDialogProps} from './components/UserChangeAddressDialog';
+import UserBillingInfo, {UserBillingInfoProps, UserBillingInfoSkeleton} from './components/UserBillingInfo';
+import Checkout, {CheckoutProps} from './components/Checkout';
+import CheckoutReturnDialog, {CheckoutReturnDialogProps} from './components/CheckoutReturnDialog';
+import CommunityPaywalls, {CommunityPaywallsProps, CommunityPaywallsSkeleton} from './components/CommunityPaywalls';
+import PdfPreviewDialog, {PdfPreviewDialogProps} from './components/PdfPreviewDialog';
+import PdfPreview, {PdfPreviewProps} from './components/PdfPreview';
 import BaseDialog, {BaseDialogProps} from './shared/BaseDialog';
 import BaseItem, {BaseItemProps} from './shared/BaseItem';
 import Calendar, {CalendarProps} from './shared/Calendar';
 import ConfirmDialog from './shared/ConfirmDialog/ConfirmDialog';
+import CourseUsersTable, {CourseUsersTableProps, CourseUsersTableSkeleton} from './shared/CourseUsersTable';
+import CourseTypePopover, {CourseTypePopoverProps} from './shared/CourseTypePopover';
 import EmailTextField from './shared/EmailTextField';
 import EventActionsMenu, {EventActionsMenuProps} from './shared/EventActionsMenu';
 import EventInfoDetails, {EventInfoDetailsProps} from './shared/EventInfoDetails';
@@ -197,6 +252,7 @@ import UrlTextField from './shared/UrlTextField';
 import UserAvatar, {UserAvatarProps} from './shared/UserAvatar';
 import UserDeletedSnackBar, {UserDeletedSnackBarProps} from './shared/UserDeletedSnackBar';
 import UsernameTextField from './shared/UsernameTextField';
+import HiddenPurchasableContent from './shared/HiddenPurchasableContent';
 import {
   PlatformWidgetActionType,
   SCBroadcastMessageTemplateType,
@@ -211,7 +267,11 @@ import {
   SCUserProfileFields,
   SCUserProfileSettings,
   SCUserSocialAssociations,
-  VirtualScrollerItemProps
+  VirtualScrollerItemProps,
+  SCCourseTemplateType,
+  SCLessonActionsType,
+  SCLessonModeType,
+  SCCourseEditTabType
 } from './types';
 /**
  * Constants
@@ -230,16 +290,21 @@ import {DEFAULT_FIELDS} from './constants/UserProfile';
 import FeedObjectMediaPreview, {FeedObjectMediaPreviewProps} from './components/FeedObjectMediaPreview';
 import CentralProgress from './shared/CentralProgress';
 import InfiniteScroll from './shared/InfiniteScroll';
+import ScrollContainer from './shared/ScrollContainer';
 import MetadataField, {MetadataFieldProps} from './shared/MetadataField';
 import * as ContributionUtils from './utils/contribution';
 import {getUnseenNotification, getUnseenNotificationCounter} from './utils/feed';
 import {getRelativeTime} from './utils/formatRelativeTime';
 import {bytesToSize} from './utils/sizeCoverter';
+import {generateRoomId, randomString, decodePassphrase, encodePassphrase} from './utils/liveStream';
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
+import {getDefaultLocale, getDefaultPaymentMethodConfiguration, getDefaultAppearanceStyle, getConvertedAmount} from './utils/payment';
+import {getUrlLesson} from './utils/course';
 /**
  * Import Assets
  */
 import LogoSelfCommunity from './assets/logo';
+import DefaultCoverSelfCommunity from './assets/deafultCover';
 /**
  * List all exports
  */
@@ -275,6 +340,10 @@ export {
   BroadcastMessagesProps,
   BroadcastMessagesSkeleton,
   bytesToSize,
+  generateRoomId,
+  randomString,
+  decodePassphrase,
+  encodePassphrase,
   Calendar,
   CalendarProps,
   Categories,
@@ -337,6 +406,28 @@ export {
   ConsentSolutionProps,
   ConsentSolutionSkeleton,
   ContributionUtils,
+  SCCourseEditTabType,
+  Course,
+  CourseProps,
+  CourseSkeleton,
+  CourseSkeletonProps,
+  CourseJoinButton,
+  CourseJoinButtonProps,
+  Courses,
+  CoursesProps,
+  CoursesSkeleton,
+  CoursesSkeletonProps,
+  CourseTypePopover,
+  CourseTypePopoverProps,
+  CreateCourseButton,
+  CreateCourseButtonProps,
+  CourseContentMenu,
+  CourseContentMenuProps,
+  CourseDashboard,
+  TeacherCourseDashboardProps,
+  TeacherSkeleton,
+  StudentCourseDashboardProps,
+  StudentSkeleton,
   CreateEventButton,
   CreateEventButtonProps,
   CreateEventWidget,
@@ -373,6 +464,9 @@ export {
   EditorProps,
   EditorSkeleton,
   EmailTextField,
+  EditCourse,
+  EditCourseProps,
+  EditCourseSkeleton,
   Event,
   EventActionsMenu,
   EventActionsMenuProps,
@@ -429,6 +523,7 @@ export {
   getRelativeTime,
   getUnseenNotification,
   getUnseenNotificationCounter,
+  getUrlLesson,
   Group,
   GroupActionsMenu,
   GroupActionsMenuProps,
@@ -463,6 +558,16 @@ export {
   GroupSubscribeButton,
   GroupSubscribeButtonProps,
   /* SC UI SHARED */
+  AccordionLessons,
+  AccordionLessonsProps,
+  AccordionLessonsSkeleton,
+  AddUsersButton,
+  AddUsersButtonProps,
+  CourseUsersTable,
+  CourseUsersTableProps,
+  CourseUsersTableSkeleton,
+  EmptyStatus,
+  EmptyStatusProps,
   HiddenPlaceholder,
   Incubator,
   IncubatorDetail,
@@ -475,13 +580,24 @@ export {
   IncubatorSuggestionWidget,
   IncubatorSuggestionWidgetProps,
   InfiniteScroll,
+  ScrollContainer,
   InlineComposerWidget,
   InlineComposerWidgetProps,
   InlineComposerWidgetSkeleton,
   InviteUserEventButton,
+  LessonAppbar,
+  LessonAppbarProps,
+  LessonDrawer,
+  LessonDrawerProps,
+  LessonEditForm,
+  LessonEditFormProps,
+  LessonObject,
+  LessonObjectProps,
   InviteUserEventButtonProps,
   LanguageSwitcher,
   LEGAL_POLICIES,
+  CourseCompletedDialog,
+  CourseCompletedDialogProps,
   Lightbox,
   LightboxProps,
   Link,
@@ -490,6 +606,7 @@ export {
   LocationAutocompleteProps,
   /* Assets */
   LogoSelfCommunity,
+  DefaultCoverSelfCommunity,
   LoyaltyProgramWidget,
   LoyaltyProgramWidgetProps,
   LoyaltyProgramWidgetSkeleton,
@@ -505,6 +622,7 @@ export {
   MEDIA_TYPE_SHARE,
   MEDIA_TYPE_URL,
   MEDIA_TYPE_VIDEO,
+  SCCourseFormStepType,
   MediaChunkUploader,
   MediaChunkUploaderProps,
   MessageUploaderUtils,
@@ -624,6 +742,9 @@ export {
   UserConnectionsWidgetSkeleton,
   UserCounters,
   UserCountersProps,
+  UserCreatedCoursesWidget,
+  UserCreatedCoursesWidgetProps,
+  UserCreatedCoursesWidgetSkeleton,
   UserDeletedSnackBar,
   UserDeletedSnackBarProps,
   UserFollowedCategoriesWidget,
@@ -655,6 +776,8 @@ export {
   UserProfileHeader,
   UserProfileHeaderProps,
   UserProfileHeaderSkeleton,
+  UserAutocomplete,
+  UserAutocompleteProps,
   UserProps,
   UserSkeleton,
   UserSocialAssociation,
@@ -665,12 +788,88 @@ export {
   UserSuggestionWidget,
   UserSuggestionWidgetProps,
   UserSuggestionWidgetSkeleton,
+  UserLiveStreamWidget,
+  UserLiveStreamWidgetProps,
+  UserLiveStreamWidgetSkeleton,
+  UserPaymentMethodsPortal,
+  UserPaymentMethodsPortalProps,
+  UserPaymentMethodsPortalSkeleton,
   useStickyBox,
   UseStickyBoxProps,
+  LiveStream,
+  LiveStreamProps,
+  LiveStreamSkeletonProps,
+  LiveStreamSkeleton,
+  LiveStreamInfoDetails,
+  LiveStreamInfoDetailsProps,
+  UpScalingTierBadge,
+  UpScalingTierProps,
+  CreateLiveStreamDialog,
+  CreateLiveStreamDialogProps,
+  CreateLiveStreamButton,
+  CreateLiveStreamButtonProps,
+  LiveStreamForm,
+  LiveStreamFormProps,
+  LiveStreamRoom,
+  LiveStreamRoomProps,
+  LiveStreamVideoConference,
+  LiveStreamVideoConferenceProps,
   VirtualScrollerItemProps,
+  SCCourseTemplateType,
+  SCLessonActionsType,
+  SCLessonModeType,
   Widget,
   WidgetProps,
   X_SHARE,
   PROVIDER_ICONS_CONTAINED,
-  PROVIDER_ICONS_OUTLINED
+  PROVIDER_ICONS_OUTLINED,
+  getDefaultLocale,
+  getDefaultPaymentMethodConfiguration,
+  getDefaultAppearanceStyle,
+  getConvertedAmount,
+  PaywallsDialog,
+  PaywallsDialogProps,
+  PaywallsConfigurator,
+  PaywallsConfiguratorProps,
+  PaywallsConfiguratorSkeleton,
+  PaymentProducts,
+  PaymentProductsProps,
+  PaymentProduct,
+  PaymentProductProps,
+  PaymentOrder,
+  PaymentOrderProps,
+  PaymentOrderPdfButton,
+  PaymentOrderPdfButtonProps,
+  PaymentDetailDialog,
+  PaymentDetailDialogProps,
+  PaymentOrders,
+  PaymentOrdersProps,
+  PaymentProductPrice,
+  PaymentProductPriceProps,
+  PdfPreviewDialog,
+  PdfPreviewDialogProps,
+  PdfPreview,
+  PdfPreviewProps,
+  UserPaymentMethods,
+  UserPaymentMethodsProps,
+  UserPaymentMethodsSkeleton,
+  UserAddPaymentMethodForm,
+  UserAddPaymentMethodFormProps,
+  UserAddPaymentMethodDialog,
+  UserAddPaymentMethodDialogProps,
+  UserChangeAddressDialog,
+  UserChangeAddressDialogProps,
+  UserBillingInfo,
+  UserBillingInfoProps,
+  UserBillingInfoSkeleton,
+  Checkout,
+  CheckoutProps,
+  CheckoutReturnDialog,
+  CheckoutReturnDialogProps,
+  HiddenPurchasableContent,
+  CommunityPaywalls,
+  CommunityPaywallsProps,
+  CommunityPaywallsSkeleton,
+  FooterWidget,
+  FooterWidgetProps
 };

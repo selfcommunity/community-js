@@ -31,6 +31,10 @@ const Component = {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         display: 'block'
+      },
+      '&.MuiPaper-outlined': {
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1)
       }
     }),
     skeletonRoot: ({theme}: any) => ({
@@ -45,7 +49,11 @@ const Component = {
       },
       '& .SCCategory-action': {
         margin: theme.spacing(0.5)
-      }
+      },
+			'&.MuiPaper-outlined': {
+				paddingLeft: theme.spacing(1),
+				paddingRight: theme.spacing(1)
+			}
     })
   }
 };

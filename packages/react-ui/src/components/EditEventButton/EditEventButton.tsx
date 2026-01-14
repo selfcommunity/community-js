@@ -1,5 +1,5 @@
 import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
+import {styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserContextType, useSCFetchEvent, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
@@ -71,6 +71,7 @@ export default function EditEventButton(inProps: EditEventButtonProps): JSX.Elem
   const scUserContext: SCUserContextType = useSCUser();
 
   const handleSuccess = (data: SCEventType) => {
+    console.log(data);
     setSCEvent(data);
     onEditSuccess && onEditSuccess(data);
   };

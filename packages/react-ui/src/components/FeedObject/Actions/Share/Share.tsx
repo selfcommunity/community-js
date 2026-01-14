@@ -1,17 +1,27 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import Icon from '@mui/material/Icon';
 import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
-import {styled} from '@mui/material/styles';
-import {Box, Button, Divider, ListItemText, Menu, SwipeableDrawer, Tooltip, useMediaQuery, useTheme} from '@mui/material';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
+import {
+  Box,
+  Button,
+  Divider,
+  ListItemText,
+  Menu,
+  SwipeableDrawer,
+  Tooltip,
+  useMediaQuery,
+  useTheme,
+  Icon,
+  MenuItem,
+  ListItemIcon,
+  styled,
+  Skeleton
+} from '@mui/material';
 import {MEDIA_EMBED_SC_SHARED_EVENT, MEDIA_TYPE_SHARE} from '../../../../constants/Media';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
-import Skeleton from '@mui/material/Skeleton';
 import {SCContributionType, SCFeedObjectType, SCGroupPrivacyType, SCMediaType} from '@selfcommunity/types';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {copyTextToClipboard, Logger} from '@selfcommunity/utils';
@@ -152,6 +162,9 @@ export default function Share(props: ShareProps): JSX.Element {
   const showShareAction = useMemo(() => {
     return !scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value || UserUtils.isStaff(scUserContext.user);
   }, [scPreferencesContext, scUserContext.user]);
+  const showSocialShareActions = useMemo(() => {
+    return scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
+  }, [scPreferencesContext]);
 
   // INTL
   const intl = useIntl();
@@ -308,30 +321,36 @@ export default function Share(props: ShareProps): JSX.Element {
                 <ListItemText primary={<FormattedMessage id="ui.feedObject.share.shareNow" defaultMessage="ui.feedObject.share.shareNow" />} />
               </MenuItem>
             )}
-            {facebookShareEnabled && (
-              <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
-                <ListItemIcon>
-                  <Icon>facebook</Icon>
-                </ListItemIcon>
-                <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
-              </MenuItem>
-            )}
-            {xShareEnabled && (
-              <MenuItem onClick={() => window.open(X_SHARE + url, 'x-share-dialog', 'width=626,height=436')}>
-                <ListItemIcon>
-                  <Icon>twitter</Icon>
-                </ListItemIcon>
-                <ListItemText primary={<FormattedMessage id="ui.feedObject.share.x" defaultMessage="ui.feedObject.share.x" />} />
-              </MenuItem>
-            )}
-            {linkedinShareEnabled && (
-              <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
-                <ListItemIcon>
-                  <Icon>linkedin</Icon>
-                </ListItemIcon>
-                <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
-              </MenuItem>
-            )}
+            <>
+              {showSocialShareActions && (
+                <>
+                  {facebookShareEnabled && (
+                    <MenuItem onClick={() => window.open(FACEBOOK_SHARE + url, 'facebook-share-dialog', 'width=626,height=436')}>
+                      <ListItemIcon>
+                        <Icon>facebook</Icon>
+                      </ListItemIcon>
+                      <ListItemText primary={<FormattedMessage id="ui.feedObject.share.facebook" defaultMessage="ui.feedObject.share.facebook" />} />
+                    </MenuItem>
+                  )}
+                  {xShareEnabled && (
+                    <MenuItem onClick={() => window.open(X_SHARE + url, 'x-share-dialog', 'width=626,height=436')}>
+                      <ListItemIcon>
+                        <Icon>twitter</Icon>
+                      </ListItemIcon>
+                      <ListItemText primary={<FormattedMessage id="ui.feedObject.share.x" defaultMessage="ui.feedObject.share.x" />} />
+                    </MenuItem>
+                  )}
+                  {linkedinShareEnabled && (
+                    <MenuItem onClick={() => window.open(LINKEDIN_SHARE + url, 'linkedin-share-dialog', 'width=626,height=436')}>
+                      <ListItemIcon>
+                        <Icon>linkedin</Icon>
+                      </ListItemIcon>
+                      <ListItemText primary={<FormattedMessage id="ui.feedObject.share.linkedin" defaultMessage="ui.feedObject.share.linkedin" />} />
+                    </MenuItem>
+                  )}
+                </>
+              )}
+            </>
           </>
         )}
         <MenuItem>

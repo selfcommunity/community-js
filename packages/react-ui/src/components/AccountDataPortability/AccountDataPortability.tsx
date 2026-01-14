@@ -1,9 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {useThemeProps} from '@mui/system';
-import {styled} from '@mui/material/styles';
-import {Box, BoxProps, Typography} from '@mui/material';
+import {Box, BoxProps, Typography, styled, Icon} from '@mui/material';
 import classNames from 'classnames';
-import Icon from '@mui/material/Icon';
 import {LoadingButton} from '@mui/lab';
 import {DataPortabilityService} from '@selfcommunity/api-services';
 import {SCDataPortabilityType} from '@selfcommunity/types';

@@ -8,7 +8,7 @@ export default {
 
 export const Base: StoryObj<typeof UserFeedTemplate> = {
   args: {
-    userId: 1
+    userId: 10
   },
   render: (args) => (
     <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>

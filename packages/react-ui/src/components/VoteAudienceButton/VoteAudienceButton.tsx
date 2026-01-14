@@ -1,11 +1,9 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {LoadingButton, LoadingButtonProps} from '@mui/lab';
 import classNames from 'classnames';
 import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
-import Icon from '@mui/material/Icon';
-import {Avatar, Box, List, ListItem, Tab, Tabs, Typography} from '@mui/material';
+import {Avatar, Box, List, ListItem, Tab, Tabs, Typography, Icon, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserContextType, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../shared/BaseDialog';
@@ -26,14 +24,14 @@ const classes = {
 const Root = styled(LoadingButton, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root, styles.voted]
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => [styles.root, styles.voted]
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.dialogRoot
+})(() => ({}));
 
 export interface VoteAudienceButtonProps extends Pick<LoadingButtonProps, Exclude<keyof LoadingButtonProps, 'onClick' | 'disabled' | 'loading'>> {
   /**
@@ -99,13 +97,13 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
   const scUserContext: SCUserContextType = useSCUser();
 
   // HANDLERS
-  const handleOpen = (event) => {
+  const handleOpen = (_event) => {
     setOpen(true);
   };
-  const handleClose = (event) => {
+  const handleClose = (_event) => {
     setOpen(false);
   };
-  const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChangeTab = (_event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
 
@@ -152,7 +150,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
       return (
         <Box className={classes.reactionList}>
           {contributionReactionsCount &&
-            contributionReactionsCount.slice(0, 3).map((count: any, i) => (
+            contributionReactionsCount.slice(0, 3).map((count: any, _i) => (
               <Icon key={count.reaction.id}>
                 <img alt={count.reaction.label} src={count.reaction.image} width="100%" height="100%" />
               </Icon>
@@ -174,7 +172,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
                 key={count.reaction.id}
                 label={
                   <>
-                    <Icon>
+                    <Icon fontSize="medium">
                       <img alt={count.reaction.label} src={count.reaction.image} width="100%" height="100%" />
                     </Icon>
                     {count.count}

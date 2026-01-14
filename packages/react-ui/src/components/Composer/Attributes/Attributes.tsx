@@ -1,8 +1,6 @@
 import React, {useCallback} from 'react';
-import {Box, BoxProps, Chip} from '@mui/material';
-import {styled} from '@mui/material/styles';
-import Icon from '@mui/material/Icon';
-import {SCCategoryType, SCTagType} from '@selfcommunity/types/src/index';
+import {Box, BoxProps, Chip, styled, Icon} from '@mui/material';
+import {SCCategoryType, SCTagType, SCUserAutocompleteType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import TagChip from '../../../shared/TagChip';
 import {ComposerContentType} from '../../../types/composer';
@@ -35,7 +33,7 @@ export interface AttributesProps extends Omit<BoxProps, 'value' | 'onChange' | '
    * @param value
    * @default empty object
    */
-  onClick?: (attribute: 'categories' | 'event' | 'group' | 'addressing' | 'location') => void;
+  onClick?: (attribute: 'categories' | 'event' | 'group' | 'addressing' | 'location' | 'recipients') => void;
 }
 
 export default (props: AttributesProps): JSX.Element => {
@@ -84,6 +82,22 @@ export default (props: AttributesProps): JSX.Element => {
   const handleClickLocation = useCallback(() => {
     onClick && onClick('location');
   }, [onClick]);
+  const handleDeleteRecipient = useCallback(
+    (identifier: number | string) => () => {
+      if (!value?.recipients) return;
+      onChange &&
+        onChange({
+          ...value,
+          recipients: value.recipients.filter((r: SCUserAutocompleteType | string) =>
+            typeof r === 'object' ? r.id !== identifier : r !== identifier
+          )
+        });
+    },
+    [value, onChange]
+  );
+  const handleClickRecipient = useCallback(() => {
+    onClick && onClick('recipients');
+  }, [onClick]);
 
   return (
     <Root className={classNames(classes.root, className)}>
@@ -113,8 +127,24 @@ export default (props: AttributesProps): JSX.Element => {
       )}
       {value?.addressing?.length > 0 &&
         value?.addressing.map((t: SCTagType) => (
-          <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<Icon>label</Icon>} onClick={handleClickTag} />
+          <TagChip key={t.id} tag={t} onDelete={handleDeleteTag(t.id)} icon={<Icon>label</Icon>} onClick={handleClickTag} showDescription />
         ))}
+      <>
+        {value?.recipients?.length > 0 && (
+          <>
+            {value.recipients.slice(0, 3).map((r: SCUserAutocompleteType) => (
+              <Chip
+                key={typeof r === 'object' ? r.id : r}
+                label={typeof r === 'object' ? r.username : r}
+                icon={<Icon>people_alt</Icon>}
+                onClick={handleClickRecipient}
+                onDelete={handleDeleteRecipient(typeof r === 'object' ? r.id : r)}
+              />
+            ))}
+            {value.recipients.length > 3 && <Chip label={`+${value.recipients.length - 3}`} onClick={handleClickRecipient} />}
+          </>
+        )}
+      </>
       {value?.location && (
         <Chip icon={<Icon>add_location_alt</Icon>} label={value?.location.location} onDelete={handleDeleteLocation} onClick={handleClickLocation} />
       )}

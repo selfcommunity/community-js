@@ -13,6 +13,14 @@ const Component = {
         marginTop: theme.spacing(),
         marginBottom: theme.spacing(2)
       },
+      '& .SCGroups-search': {
+        '& .MuiButtonBase-root': {
+          minWidth: '30px',
+          '& .MuiButton-endIcon': {
+            margin: 0
+          }
+        }
+      },
       '& .SCGroups-groups': {
         marginTop: theme.spacing(2),
         '& .SCGroups-item': {

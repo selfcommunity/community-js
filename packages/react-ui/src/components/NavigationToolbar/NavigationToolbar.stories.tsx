@@ -1,11 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import NavigationToolbar from './index';
-import {AppBar, Badge, Box, Grid, IconButton, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {AppBar, Box, Button, Grid, IconButton, Typography, Icon, Paper} from '@mui/material';
 import React, {useCallback, useState} from 'react';
 import {NavigationMenuDrawer} from '../NavigationMenuIconButton';
-import Paper from '@mui/material/Paper';
 
 export default {
   title: 'Design System/React UI/Navigation Toolbar ',
@@ -73,7 +71,7 @@ const templateContent = (args) => {
 export const Base: StoryObj<NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q)},
     value: '/',
     NotificationMenuProps: {
       SnippetNotificationsProps: {
@@ -81,7 +79,12 @@ export const Base: StoryObj<NavigationToolbar> = {
           console.log(data);
         }
       }
-    }
+    },
+		NavigationMenuIconButtonComponentProps: {
+			DrawerProps: {
+				drawerFooterContent: ({handleCloseMenuDrawer}) => <Button onClick={handleCloseMenuDrawer}>Close</Button>
+			}
+		}
   },
   render: template
 };
@@ -90,7 +93,7 @@ export const Base: StoryObj<NavigationToolbar> = {
 export const Custom: StoryObj<NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q)},
     value: '/',
     children: <Typography variant="h4" sx={{flexGrow: 1}}>TITLE</Typography>
   },
@@ -101,7 +104,7 @@ export const Custom: StoryObj<NavigationToolbar> = {
 export const Actions: StoryObj<NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
-    SearchAutocompleteProps: {onSearch: (q) => console.log(q)},
+		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q)},
     value: '/',
     startActions: <>
       <IconButton>

@@ -1,4 +1,4 @@
-import createTheme from '@mui/material/styles/createTheme';
+import {createTheme} from '@mui/material';
 import {mergeDeep} from '@selfcommunity/utils';
 import validateColor from 'validate-color';
 import {
@@ -57,6 +57,18 @@ const getTheme = (options, preferences): SCThemeType => {
         sizeMedium: 60,
         sizeLarge: 90,
         sizeXLarge: 120,
+      },
+    },
+    contentProduct: {
+      icon: {
+        sizeSmall: 24,
+        sizeMedium: 40,
+      },
+    },
+    contentProductPrice: {
+      icon: {
+        sizeSmall: 24,
+        sizeMedium: 40,
       },
     },
   };

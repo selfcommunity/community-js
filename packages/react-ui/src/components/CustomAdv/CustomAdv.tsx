@@ -1,6 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box} from '@mui/material';
+import {Box, styled} from '@mui/material';
 import {useIsComponentMountedRef, useSCFetchCustomAdv} from '@selfcommunity/react-core';
 import {SCCustomAdvPosition} from '@selfcommunity/types';
 import classNames from 'classnames';
@@ -208,7 +207,7 @@ export default function CustomAdv(inProps: CustomAdvProps): JSX.Element {
       ref={ref}
       style={{...(prefixedHeight ? {paddingBottom: prefixedHeight} : {width: '100%'})}}>
       {scCustomAdv.link ? (
-        <a href={scCustomAdv.link} title={scCustomAdv.title}>
+        <a href={scCustomAdv.link} title={scCustomAdv.title} target="_blank">
           {adv}
         </a>
       ) : (

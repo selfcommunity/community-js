@@ -12,7 +12,7 @@ const template = (args) => (
   </div>
 );
 
-export const Base: StoryObj<EditorSkeleton> = {
+export const Base: StoryObj<typeof EditorSkeleton> = {
   args: {
     contained: true
   },

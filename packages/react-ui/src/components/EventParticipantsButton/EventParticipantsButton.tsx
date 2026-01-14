@@ -1,6 +1,4 @@
-import {Avatar, AvatarGroup, Button, List, ListItem, Typography} from '@mui/material';
-import {ButtonProps} from '@mui/material/Button/Button';
-import {styled} from '@mui/material/styles';
+import {Avatar, AvatarGroup, Button, ButtonProps, styled, List, ListItem, Typography} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {Endpoints, EventService, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {useSCFetchEvent} from '@selfcommunity/react-core';
@@ -106,7 +104,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
   const [next, setNext] = useState<string | null>(null);
   const [offset, setOffset] = useState<number | null>(null);
   const [followers, setFollowers] = useState<SCUserType[]>([]);
-  const [open, setOpen] = useState<boolean>(false);
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
 
   // HOOKS
   const {scEvent} = useSCFetchEvent({id: eventId, event, autoSubscribe: false});
@@ -126,7 +124,7 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
 
   // FETCH FIRST FOLLOWERS
   useDeepCompareEffectNoCheck(() => {
-    if (!scEvent) {
+    if (!scEvent || !participantsAvailable) {
       return;
     }
 
@@ -179,8 +177,8 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
    * Opens dialog votes
    */
   const handleToggleDialogOpen = useCallback(() => {
-    setOpen((prev) => !prev);
-  }, [setOpen]);
+    setOpenDialog((prev) => !prev);
+  }, [setOpenDialog]);
 
   return (
     <>
@@ -208,18 +206,18 @@ export default function EventParticipantsButton(inProps: EventParticipantsButton
         )}
       </Root>
 
-      {open && (
+      {openDialog && (
         <DialogRoot
           className={classes.dialogRoot}
           title={
             <FormattedMessage
               defaultMessage="ui.eventParticipantsButton.dialogTitle"
               id="ui.eventParticipantsButton.dialogTitle"
-              values={{total: scEvent.goings_counter}}
+              values={{total: scEvent?.goings_counter || 0}}
             />
           }
           onClose={handleToggleDialogOpen}
-          open={open}
+          open
           {...DialogProps}>
           <InfiniteScroll
             dataLength={followers.length}

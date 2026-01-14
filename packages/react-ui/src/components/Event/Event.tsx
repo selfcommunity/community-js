@@ -1,8 +1,8 @@
-import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Divider, Typography} from '@mui/material';
-import {styled} from '@mui/material/styles';
+import {Avatar, Box, Button, CardActions, CardContent, CardMedia, Chip, Divider, Icon, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
-import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, useSCFetchEvent, useSCPaymentsEnabled, useSCRouting} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
+import {CacheStrategies} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -15,6 +15,7 @@ import User from '../User';
 import Widget, {WidgetProps} from '../Widget';
 import {PREFIX} from './constants';
 import EventSkeleton, {EventSkeletonProps} from './Skeleton';
+import {checkEventFinished} from '../../utils/events';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -43,7 +44,8 @@ const classes = {
   snippetInProgress: `${PREFIX}-snippet-in-progress`,
   snippetPrimary: `${PREFIX}-snippet-primary`,
   snippetSecondary: `${PREFIX}-snippet-secondary`,
-  snippetActions: `${PREFIX}-snippet-actions`
+  snippetActions: `${PREFIX}-snippet-actions`,
+  finishedChip: `${PREFIX}-finished-chip`
 };
 
 const Root = styled(Widget, {
@@ -117,6 +119,10 @@ export interface EventProps extends WidgetProps {
    */
   EventSkeletonComponentProps?: EventSkeletonProps;
   /**
+   * Override default cache strategy on fetch element
+   */
+  cacheStrategy?: CacheStrategies;
+  /**
    * Any other properties
    */
   [p: string]: any;
@@ -172,15 +178,20 @@ export default function Event(inProps: EventProps): JSX.Element {
     actions,
     EventParticipantsButtonComponentProps = {},
     EventSkeletonComponentProps = {},
+    cacheStrategy,
     ...rest
   } = props;
 
   // STATE
-  const {scEvent} = useSCFetchEvent({id: eventId, event, autoSubscribe: false});
+  const {scEvent} = useSCFetchEvent({id: eventId, event, autoSubscribe: false, ...(cacheStrategy && {cacheStrategy})});
   const inProgress = useMemo(() => scEvent && scEvent.active && scEvent.running, [scEvent]);
+  const isEventFinished = useMemo(() => checkEventFinished(scEvent), [scEvent]);
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
+
+  // PAYMENTS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
   // HOOKS
   const intl = useIntl();
@@ -268,6 +279,14 @@ export default function Event(inProps: EventProps): JSX.Element {
               className={classes.previewInProgress}
             />
           )}
+          {isEventFinished && (
+            <Chip
+              size="small"
+              component="div"
+              label={<FormattedMessage id="ui.event.finished" defaultMessage="ui.event.finished" />}
+              className={classes.finishedChip}
+            />
+          )}
         </Box>
         <CardContent className={classes.previewContent}>
           <EventInfoDetails
@@ -311,6 +330,14 @@ export default function Event(inProps: EventProps): JSX.Element {
                 className={classes.snippetInProgress}
               />
             )}
+            {isEventFinished && (
+              <Chip
+                size="small"
+                component="div"
+                label={<FormattedMessage id="ui.event.finished" defaultMessage="ui.event.finished" />}
+                className={classes.finishedChip}
+              />
+            )}
           </Box>
         }
         primary={
@@ -330,6 +357,12 @@ export default function Event(inProps: EventProps): JSX.Element {
               <FormattedMessage id={`ui.eventForm.address.live.label`} defaultMessage={`ui.eventForm.address.live.label`} />
             ) : (
               <FormattedMessage id={`ui.eventForm.address.online.label`} defaultMessage={`ui.eventForm.address.online.label`} />
+            )}
+            {isPaymentsEnabled && scEvent.paywalls?.length && (
+              <>
+                &nbsp;
+                <Icon>pagamenti</Icon>
+              </>
             )}
           </Typography>
         }

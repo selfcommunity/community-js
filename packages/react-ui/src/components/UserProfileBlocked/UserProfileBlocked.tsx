@@ -1,6 +1,5 @@
 import React, {useMemo} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, Divider, Typography} from '@mui/material';
+import {Box, Divider, Typography, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
 import {SCUserContextType, useSCFetchUser, useSCFetchUserBlockedBy, useSCUser} from '@selfcommunity/react-core';

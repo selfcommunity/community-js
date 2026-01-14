@@ -1,26 +1,35 @@
 import React, {ForwardedRef, forwardRef, ForwardRefRenderFunction, useCallback, useImperativeHandle, useMemo, useRef, useState} from 'react';
-import {styled} from '@mui/material/styles';
 import {FormattedMessage} from 'react-intl';
-import {Box, Stack} from '@mui/material';
+import {Box, Stack, styled} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import nodes from './nodes';
 import {InitialConfigType, LexicalComposer} from '@lexical/react/LexicalComposer';
 import {ContentEditable} from '@lexical/react/LexicalContentEditable';
-import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
-import {RichTextPlugin} from './plugins/LexicalRichTextPlugin';
-import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
-import {HorizontalRulePlugin} from '@lexical/react/LexicalHorizontalRulePlugin';
-import {AutoLinkPlugin, DefaultHtmlValuePlugin, EmojiPlugin, ImagePlugin, MentionsPlugin, OnChangePlugin} from './plugins';
-import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
-import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
 import {EditorThemeClasses, LexicalEditor} from 'lexical';
-import ToolbarPlugin from './plugins/ToolbarPlugin';
-import {ListPlugin} from '@lexical/react/LexicalListPlugin';
-import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
+import ToolbarPlugin, {ToolbarPluginProps} from './plugins/ToolbarPlugin';
+import {PREFIX} from './constants';
+import {HorizontalRulePlugin} from './plugins/HorizontalRulePlugin';
+import {RichTextPlugin} from './plugins/LexicalRichTextPlugin';
+import {
+  AutoLinkPlugin,
+  DefaultHtmlValuePlugin,
+  EmojiPlugin,
+  ImagePlugin,
+  MentionsPlugin,
+  OnChangePlugin,
+  MediaPlugin,
+  MediaPluginProps
+} from './plugins';
 import OnBlurPlugin from './plugins/OnBlurPlugin';
 import OnFocusPlugin from './plugins/OnFocusPlugin';
-import {PREFIX} from './constants';
+import {LexicalErrorBoundary} from '@lexical/react/LexicalErrorBoundary';
+import {LinkPlugin} from '@lexical/react/LexicalLinkPlugin';
+import FloatingLinkPlugin from './plugins/FloatingLinkPlugin';
+import ApiPlugin, {ApiRef} from './plugins/ApiPlugin';
+import {HistoryPlugin} from '@lexical/react/LexicalHistoryPlugin';
+import {ListPlugin} from '@lexical/react/LexicalListPlugin';
+import {SCMediaType} from '@selfcommunity/types';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -113,12 +122,35 @@ export interface EditorProps {
    * @default false
    */
   uploadImage?: boolean;
+  /**
+   * This editor can upload files
+   * @default false
+   */
+  uploadFile?: boolean;
 
   /**
    * Handler for change event of the editor
    * @default null
    * */
   onChange?: (value: string) => void;
+
+  /**
+   * Handler for change media in the editor
+   * @default null
+   * */
+  onMediaChange?: (media: SCMediaType) => void;
+
+  /**
+   * Props to spread to ToolBar.
+   * @default {}
+   */
+  ToolBarProps?: ToolbarPluginProps;
+
+  /**
+   * Props to spread to MediaPlugin.
+   * @default {}
+   */
+  MediaPluginProps?: MediaPluginProps;
 
   /**
    * Handler for blur event of the editor
@@ -131,6 +163,23 @@ export interface EditorProps {
    * @default null
    * */
   onFocus?: (event: FocusEvent) => void;
+
+  /**
+   * Action to add to actions
+   */
+  action?: React.ReactNode | null;
+
+  /**
+   * The text displayed when the editor is empty
+   * @default   <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
+   */
+  placeholder?: React.ReactNode;
+
+  /**
+   * Prop to customize emoji plugin position
+   * @default false
+   */
+  isLessonCommentEditor?: boolean;
 }
 
 /**
@@ -174,10 +223,17 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
     defaultValue = '',
     toolbar = false,
     uploadImage = false,
+    uploadFile = false,
     editable = true,
     onChange = null,
+    onMediaChange = null,
     onFocus = null,
-    onBlur = null
+    onBlur = null,
+    action = null,
+    ToolBarProps = {},
+    MediaPluginProps = {},
+    placeholder = <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />,
+    isLessonCommentEditor = false
   } = props;
   const apiRef = useRef<ApiRef>();
 
@@ -187,6 +243,10 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
   // HANDLERS
   const handleChange = (value) => {
     onChange && onChange(value);
+  };
+
+  const handleMediaChange = (media) => {
+    onMediaChange && onMediaChange(media);
   };
 
   const handleError = (error: Error, editor: LexicalEditor) => {
@@ -239,21 +299,23 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
       <LexicalComposer initialConfig={initialConfig}>
         {toolbar ? (
           <>
-            <ToolbarPlugin uploadImage={uploadImage} />
+            <ToolbarPlugin uploadImage={uploadImage} uploadFile={uploadFile} MediaPluginProps={{onMediaAdd: handleMediaChange}} {...ToolBarProps} />
             <ListPlugin />
             <HorizontalRulePlugin />
           </>
         ) : (
           <Stack className={classes.actions} direction="row">
             {uploadImage && <ImagePlugin />}
-            <EmojiPlugin />
+            <EmojiPlugin isLessonCommentEditor={isLessonCommentEditor} />
+            {uploadFile && <MediaPlugin {...MediaPluginProps} />}
+            {action && action}
           </Stack>
         )}
         <RichTextPlugin
           contentEditable={<ContentEditable className={classes.content} />}
           placeholder={
             <Box className={classes.placeholder} onClick={handleFocus}>
-              <FormattedMessage id="ui.editor.placeholder" defaultMessage="ui.editor.placeholder" />
+              {placeholder}
             </Box>
           }
           ErrorBoundary={LexicalErrorBoundary}

@@ -1,15 +1,14 @@
-import React, {SyntheticEvent, useEffect, useState} from 'react';
+import React, {Fragment, SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import Autocomplete from '@mui/material/Autocomplete';
-import TextField, {TextFieldProps} from '@mui/material/TextField';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {AutocompleteProps} from '@mui/material';
-import {useSCFetchAddressingTagList} from '@selfcommunity/react-core';
-import {styled} from '@mui/material/styles';
-import {SCTagType} from '@selfcommunity/types/src/index';
+import {Autocomplete, AutocompleteProps, TextField, TextFieldProps, styled, CircularProgress} from '@mui/material';
+import {SCTagType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import TagChip, {TagChipProps} from '../../shared/TagChip';
+import {TagService} from '@selfcommunity/api-services';
+import {SCOPE_SC_UI} from '../../constants/Errors';
+import {Logger} from '@selfcommunity/utils';
 
 const PREFIX = 'SCTagAutocomplete';
 
@@ -62,7 +61,7 @@ export interface TagAutocompleteProps
 const Root = styled(Autocomplete, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 /**
  * > API documentation for the Community-JS Tag Autocomplete component. Learn about the available props and the CSS API.
@@ -105,45 +104,84 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
   // State
   const [open, setOpen] = useState<boolean>(false);
   const [value, setValue] = useState<string | SCTagType | (string | SCTagType)[]>(typeof defaultValue === 'string' ? null : defaultValue);
+  const [tags, setTags] = useState<SCTagType[]>([]);
+  const [inputValue, setInputValue] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
-  // HOOKS
-  const {scAddressingTags} = useSCFetchAddressingTagList({fetch: open || defaultValue});
+  const fetchTags = async (query: string): Promise<SCTagType[]> => {
+    setLoading(true);
+    try {
+      const res = await TagService.searchUserTags({search: query || ''});
+      const results = res?.results || [];
+      setTags(results);
+      return results;
+    } catch (error) {
+      Logger.error(SCOPE_SC_UI, error);
+      setTags([]);
+      return [];
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (value === null) {
-      return;
+    if (open && inputValue.length >= 3) {
+      fetchTags(inputValue);
     }
-    onChange && onChange(value);
+  }, [open, inputValue]);
+
+  useEffect(() => {
+    onChange?.(value);
   }, [value]);
 
   useEffect(() => {
-    if (scAddressingTags?.length !== 0 && typeof defaultValue === 'string') {
-      setValue(scAddressingTags.find((t) => t.id === Number(defaultValue)));
-    }
-  }, [scAddressingTags, defaultValue]);
+    const loadDefault = async () => {
+      if (typeof defaultValue === 'string' && defaultValue.trim() !== '') {
+        try {
+          const res = await TagService.getSpecificTag(Number(defaultValue));
+          if (res) {
+            setValue(res);
+          }
+        } catch (e) {
+          Logger.error(SCOPE_SC_UI, e);
+        }
+      }
+    };
+    loadDefault();
+  }, [defaultValue]);
 
   // Handlers
 
   const handleOpen = () => {
-    setOpen(true);
+    if (inputValue.length >= 3) {
+      setOpen(true);
+    }
   };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleChange = (event: SyntheticEvent, newValue: SCTagType[]) => {
+  const handleClose = () => setOpen(false);
+  const handleChange = (_event: SyntheticEvent, newValue: SCTagType[]) => {
     setValue(newValue);
+    onChange?.(newValue);
   };
 
-  // Render
+  const filterOptions = useCallback((options: SCTagType[], state: {inputValue: string}) => {
+    const search = state.inputValue.toLowerCase();
+
+    return options.filter((option) => {
+      const nameMatch = option.name?.toLowerCase().includes(search);
+      const descMatch = option.description?.toLowerCase().includes(search);
+
+      return nameMatch || descMatch;
+    });
+  }, []);
+
   return (
     <Root
       className={classes.root}
       open={open}
       onOpen={handleOpen}
       onClose={handleClose}
-      options={scAddressingTags || []}
+      options={tags || []}
+      filterOptions={filterOptions}
       getOptionLabel={(option: SCTagType) => option.name || ''}
       value={value}
       selectOnFocus
@@ -153,16 +191,17 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
       noOptionsText={<FormattedMessage id="ui.composer.layer.audience.tags.empty" defaultMessage="ui.composer.layer.audience.tags.empty" />}
       onChange={handleChange}
       isOptionEqualToValue={(option: SCTagType, value: SCTagType) => value?.id === option?.id}
-      renderTags={(value, getTagProps) => {
-        return value.map((option: any, index) => <TagChip key={option.id} tag={option} {...getTagProps({index})} />);
-      }}
-      renderOption={(props, option: SCTagType, {selected, inputValue}) => {
+      inputValue={inputValue}
+      onInputChange={(_e, newInputValue) => setInputValue(newInputValue)}
+      renderOption={(props, option: SCTagType, {inputValue}) => {
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
         return (
           <li {...props}>
             <TagChip
+              showDescription={true}
               key={option.id}
+              disposable={false}
               tag={option}
               label={
                 <React.Fragment>
@@ -185,8 +224,14 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
             {...TextFieldProps}
             InputProps={{
               ...params.InputProps,
-              autoComplete: 'addressing', // disable autocomplete and autofill
-              endAdornment: <React.Fragment>{params.InputProps.endAdornment}</React.Fragment>
+              autoComplete: 'tags',
+              endAdornment:
+                value || tags.length > 0 ? (
+                  <Fragment>
+                    {loading && <CircularProgress color="inherit" size={20} />}
+                    {params.InputProps.endAdornment}
+                  </Fragment>
+                ) : null
             }}
           />
         );

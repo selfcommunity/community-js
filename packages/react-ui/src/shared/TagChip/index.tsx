@@ -1,13 +1,9 @@
 import React from 'react';
-import Chip from '@mui/material/Chip';
+import {styled, Chip, ChipClasses, Theme, ChipPropsSizeOverrides, ChipPropsVariantOverrides, Tooltip} from '@mui/material';
 import classNames from 'classnames';
-import {styled} from '@mui/material/styles';
 import {SCTagType} from '@selfcommunity/types';
-import {ChipClasses} from '@mui/material/Chip/chipClasses';
 import {OverridableStringUnion} from '@mui/types';
 import {SxProps} from '@mui/system';
-import {Theme} from '@mui/material';
-import {ChipPropsSizeOverrides, ChipPropsVariantOverrides} from '@mui/material/Chip/Chip';
 
 const PREFIX = 'SCTagChip';
 
@@ -98,6 +94,11 @@ export interface TagChipProps {
    * @default false
    */
   ellipsis?: boolean;
+  /**
+   * If `true`, shows the description of the tag on hover (desktop) or long press (mobile).
+   * @default false
+   */
+  showDescription?: boolean;
 }
 
 export default function TagChip(props: TagChipProps): JSX.Element {
@@ -111,6 +112,7 @@ export default function TagChip(props: TagChipProps): JSX.Element {
     onClick = null,
     onDelete = null,
     className = null,
+    showDescription = false,
     ...rest
   } = props;
 
@@ -122,10 +124,7 @@ export default function TagChip(props: TagChipProps): JSX.Element {
     onDelete && onDelete(tag.id);
   };
 
-  /**
-   * Renders root object
-   */
-  return (
+  const root = (
     <Root
       className={classNames(className, {[classes.ellipsis]: ellipsis})}
       sx={{backgroundColor: `${tag.color}`, color: (theme) => theme.palette.getContrastText(tag.color)}}
@@ -135,4 +134,17 @@ export default function TagChip(props: TagChipProps): JSX.Element {
       {...rest}
     />
   );
+
+  /**
+   * Renders root object
+   */
+  if (showDescription && tag.description) {
+    return (
+      <Tooltip title={tag.description} placement="right" arrow>
+        {root}
+      </Tooltip>
+    );
+  }
+
+  return root;
 }

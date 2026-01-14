@@ -6,7 +6,7 @@ import {
   Icon,
   styled
 } from '@mui/material';
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import {
   Link,
   SCPreferences,
@@ -24,6 +24,7 @@ import classNames from 'classnames';
 import {SCFeatureName} from '@selfcommunity/types';
 import {iOS} from '@selfcommunity/utils';
 import ComposerIconButton from '../ComposerIconButton';
+import {scroll} from 'seamless-scroll-polyfill';
 
 const PREFIX = 'SCBottomNavigation';
 
@@ -40,7 +41,12 @@ const Root = styled(MuiBottomNavigation, {
   overridesResolver: (props, styles) => styles.root
 })(() => ({}));
 
-export type BottomNavigationProps = MuiBottomNavigationProps;
+export interface BottomNavigationProps extends MuiBottomNavigationProps {
+  /**
+   * Callback on click home
+   */
+  onClickHome?: () => void;
+}
 
 /**
  * > API documentation for the Community-JS Bottom Navigation component. Learn about the available props and the CSS API.
@@ -75,7 +81,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
     props: inProps,
     name: PREFIX
   });
-  const {className, children = null, ...rest} = props;
+  const {className, children = null, onClickHome, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -85,7 +91,10 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
   const {preferences, features}: SCPreferencesContextType = useSCPreferences();
 
   // MEMO
-  const privateMessagingEnabled = useMemo(() => features.includes(SCFeatureName.PRIVATE_MESSAGING), [features]);
+  const privateMessagingEnabled = useMemo(
+    () => SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in preferences && preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
+    [preferences]
+  );
   const groupsEnabled = useMemo(
     () =>
       preferences &&
@@ -101,14 +110,35 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
       preferences &&
       features &&
       features.includes(SCFeatureName.TAGGING) &&
+      features.includes(SCFeatureName.EVENT) &&
       SCPreferences.CONFIGURATIONS_EVENTS_ENABLED in preferences &&
       preferences[SCPreferences.CONFIGURATIONS_EVENTS_ENABLED].value,
+    [preferences, features]
+  );
+  const coursesEnabled = useMemo(
+    () =>
+      preferences &&
+      features &&
+      features.includes(SCFeatureName.COURSE) &&
+      SCPreferences.CONFIGURATIONS_COURSES_ENABLED in preferences &&
+      preferences[SCPreferences.CONFIGURATIONS_COURSES_ENABLED].value,
     [preferences, features]
   );
   const exploreStreamEnabled = preferences[SCPreferences.CONFIGURATIONS_EXPLORE_STREAM_ENABLED].value;
   const postOnlyStaffEnabled = preferences[SCPreferences.CONFIGURATIONS_POST_ONLY_STAFF_ENABLED].value;
   const contentAvailable = preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
   const isIOS = useMemo(() => iOS(), []);
+
+  const handleClickHome = useCallback(() => {
+    if (onClickHome) {
+      onClickHome();
+    } else {
+      const pathName = window.location.pathname;
+      if (pathName && (pathName === '/' || pathName === scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))) {
+				scroll(window, {top: 0, behavior: 'smooth'});
+      }
+    }
+  }, [onClickHome]);
 
   // RENDER
   return (
@@ -123,18 +153,19 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
               to={scUserContext.user ? scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}) : '/'}
               value={scUserContext.user ? scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}) : '/'}
               icon={<Icon>home</Icon>}
+              onClick={handleClickHome}
             />,
-            (scUserContext.user || contentAvailable) && exploreStreamEnabled ? (
-              <BottomNavigationAction
-                key="explore"
-                className={classes.action}
-                component={Link}
-                to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
-                value={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
-                icon={<Icon>explore</Icon>}
-              />
-            ) : null,
-            (!postOnlyStaffEnabled || (UserUtils.isStaff(scUserContext.user) && postOnlyStaffEnabled)) &&
+            // (scUserContext.user || contentAvailable) && exploreStreamEnabled ? (
+            //   <BottomNavigationAction
+            //     key="explore"
+            //     className={classes.action}
+            //     component={Link}
+            //     to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
+            //     value={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
+            //     icon={<Icon>explore</Icon>}
+            //   />
+            // ) : null,
+            (!postOnlyStaffEnabled || UserUtils.isStaff(scUserContext.user) || UserUtils.isPublisher(scUserContext.user)) &&
             ((groupsEnabled && !eventsEnabled) || (!groupsEnabled && eventsEnabled)) &&
             !exploreStreamEnabled ? (
               <BottomNavigationAction
@@ -142,6 +173,16 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 className={classNames(classes.composer, classes.action)}
                 component={ComposerIconButton}
                 disableRipple
+              />
+            ) : null,
+            coursesEnabled && (scUserContext.user || contentAvailable) ? (
+              <BottomNavigationAction
+                key="courses"
+                className={classes.action}
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}
+                value={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}
+                icon={<Icon>courses</Icon>}
               />
             ) : null,
             groupsEnabled && scUserContext.user ? (
@@ -165,7 +206,7 @@ export default function BottomNavigation(inProps: BottomNavigationProps) {
                 disableRipple
               />
             ) : null,
-            eventsEnabled ? (
+            eventsEnabled && (scUserContext.user || contentAvailable) ? (
               <BottomNavigationAction
                 key="events"
                 className={classes.action}

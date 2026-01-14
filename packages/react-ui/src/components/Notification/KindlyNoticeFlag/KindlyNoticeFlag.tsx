@@ -1,7 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Avatar, Box, Typography} from '@mui/material';
-import Icon from '@mui/material/Icon';
+import {Avatar, Box, Typography, styled, Icon} from '@mui/material';
 import {Link, SCRoutingContextType, useSCRouting, SCRoutes} from '@selfcommunity/react-core';
 import {SCNotificationDeletedForType} from '@selfcommunity/types';
 import {camelCase} from '@selfcommunity/utils';

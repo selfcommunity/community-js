@@ -24,7 +24,7 @@ import {CustomAdvParams} from './customAdv';
 import {CustomPageParams, CustomPageSearchParams} from './customPage';
 import {EmbedUpdateParams, EmbedSearchParams} from './embed';
 import {BaseGetParams, BaseSearchParams} from './baseParams';
-import {FeedObjGetParams, FeedObjCreateParams, FeedObjectPollVotesSearch} from './feedObject';
+import {FeedObjGetParams, FeedObjCreateParams, FeedObjectPollVotesSearch, ScheduledFeedObjParams} from './feedObject';
 import {FeedParams} from './feed';
 import {LegalPageFilterParams} from './legalPage';
 import {FeatureParams} from './feature';
@@ -33,7 +33,28 @@ import {InsightCommonParams, InsightEmbedParams, InsightUserParams, InsightContr
 import {ReactionParams} from './reaction';
 import {GroupCreateParams, GroupFeedParams} from './group';
 import {EventCreateParams, EventFeedParams, EventRelatedParams, EventSearchParams} from './event';
+import {LiveStreamCreateParams, LiveStreamSearchParams, LiveStreamRemoveParticipantParams} from './liveStream';
 import {StartStepParams, OnBoardingStep} from './onBoarding';
+import {
+  CourseCreateParams,
+  CourseSearchParams,
+  CourseInfoViewType,
+  CourseInfoParams,
+  CourseLessonCommentsParams,
+  CourseUserRoleParams,
+  CourseUsersParams,
+  CourseDashboardUsersParams
+} from './course';
+import {
+  PaymentContentStatusParams,
+  PaymentContentStatus,
+  PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams,
+  PaymentOrderParams
+} from './payment';
+import {ContactUsRequestParams} from './contactUs';
 
 export {
   AccountCreateParams,
@@ -83,6 +104,7 @@ export {
   FeedObjGetParams,
   FeedObjCreateParams,
   FeedObjectPollVotesSearch,
+  ScheduledFeedObjParams,
   FeedParams,
   LegalPageFilterParams,
   FeatureParams,
@@ -98,6 +120,25 @@ export {
   EventFeedParams,
   EventRelatedParams,
   EventSearchParams,
+  LiveStreamCreateParams,
+  LiveStreamSearchParams,
+  LiveStreamRemoveParticipantParams,
   StartStepParams,
-  OnBoardingStep
+  OnBoardingStep,
+  CourseCreateParams,
+  CourseSearchParams,
+  CourseInfoViewType,
+  CourseInfoParams,
+  CourseLessonCommentsParams,
+  CourseUserRoleParams,
+  CourseUsersParams,
+  CourseDashboardUsersParams,
+  PaymentContentStatusParams,
+  PaymentContentStatus,
+  PaymentProductsParams,
+  CustomerPortalCreateSessionParams,
+  CheckoutSessionParams,
+  CheckoutCreateSessionParams,
+  PaymentOrderParams,
+	ContactUsRequestParams
 };

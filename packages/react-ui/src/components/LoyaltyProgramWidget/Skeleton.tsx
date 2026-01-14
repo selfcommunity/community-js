@@ -1,6 +1,5 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Button, CardActions, CardContent, Skeleton, Typography} from '@mui/material';
+import {Button, CardActions, CardContent, Skeleton, Typography, styled} from '@mui/material';
 import Widget from '../Widget';
 import {PREFIX} from './constants';
 

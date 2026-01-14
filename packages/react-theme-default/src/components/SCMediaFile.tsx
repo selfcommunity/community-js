@@ -5,9 +5,7 @@ const Component = {
       margin: 'auto',
       width: '100%',
       position: 'relative',
-      [theme.breakpoints.down('md')]: {
-        minHeight: 170
-      },
+      gap: theme.spacing(2),
       '& .SCMediaFile-background': {
         backgroundSize: 'cover !important',
         backgroundPosition: 'center !important',
@@ -90,21 +88,23 @@ const Component = {
         fontSize: 14,
         position: 'relative',
         top: 2
+      },
+      '& .SCMediaFile-docs-wrapper': {
+        gap: theme.spacing(2)
       }
     }),
-    lightboxRoot: ({theme}: any) => ({}),
+    lightboxRoot: () => ({}),
     previewRoot: ({theme}: any) => ({
-      '& > div': {
+      display: 'flex',
+      flexDirection: 'column',
+      gap: theme.spacing(2),
+      '& > div:not(.SCMediaFile-docs-wrapper)': {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'nowrap',
         maxWidth: '100%',
         overflow: 'auto',
-        'MsOverflowStyle': 'none',  /* IE and Edge */
-        scrollbarWidth: 'none',
-        '&::-webkit-scrollbar': {
-          display: 'none'
-        },
+        scrollbarWidth: 'thin',
         '& .SCMediaFile-media': {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
@@ -147,13 +147,59 @@ const Component = {
             maxWidth: 200
           }
         }
+      },
+      '& .SCMediaFile-docs-wrapper': {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: theme.spacing(2)
       }
     }),
-    triggerRoot: ({theme}: any) => ({}),
-    triggerDrawerRoot: ({theme}: any) => ({
+    triggerRoot: () => ({}),
+    triggerDrawerRoot: () => ({
       zIndex: 1300
     }),
-    triggerMenuRoot: ({theme}: any) => ({})
+    triggerMenuRoot: () => ({}),
+    docRoot: ({theme}) => ({
+      border: '1px solid #DDD',
+      borderRadius: '10px',
+      padding: theme.spacing(1),
+      flexDirection: 'row',
+      gap: '8px',
+      '& .SCMediaFile-image-wrapper': {
+        flexShrink: 0,
+        padding: 0,
+        '&:hover': {
+          backgroundColor: 'unset'
+        }
+      },
+      '& .SCMediaFile-text-wrapper': {
+        gap: '4px',
+        [theme.breakpoints.down('sm')]: {
+          maxWidth: '57%'
+        },
+        '& .SCMediaFile-title': {
+          textAlign: 'left',
+          display: '-webkit-box',
+          '-webkit-line-clamp': '1',
+          '-webkit-box-orient': 'vertical',
+          overflow: 'hidden'
+        },
+        '& .SCMediaFile-subtitle': {
+          textAlign: 'left',
+          color: theme.palette.grey['600']
+        }
+      },
+      '& .SCMediaFile-action-wrapper': {
+        flexDirection: 'row',
+        gap: '8px',
+        marginLeft: 'auto',
+        '& .SCMediaFile-action': {
+          '&:hover': {
+            backgroundColor: theme.palette.common.white
+          }
+        }
+      }
+    })
   }
 };
 

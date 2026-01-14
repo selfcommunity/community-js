@@ -1,7 +1,5 @@
 import React, {useEffect, useMemo, useReducer, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import List from '@mui/material/List';
-import {Button, CardActions, CardContent, ListItem, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Button, CardActions, CardContent, ListItem, Typography, useMediaQuery, useTheme, styled, List} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
 import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import {http, Endpoints, SCPaginatedResponse, GroupService} from '@selfcommunity/api-services';
@@ -186,6 +184,12 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
       scPreferencesContext.preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value,
     [scPreferencesContext.preferences]
   );
+  const privateMessagingEnabled = useMemo(
+    () =>
+      SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in scPreferencesContext.preferences &&
+      scPreferencesContext.preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
+    [scPreferencesContext.preferences]
+  );
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
@@ -319,7 +323,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                     actions={
                       isGroupAdmin ? (
                         <GroupSettingsIconButton group={scGroup} user={user} onRemoveSuccess={() => handleRefresh(user.id)} />
-                      ) : scUserContext?.user?.id !== user.id ? (
+                      ) : scUserContext?.user?.id !== user.id && privateMessagingEnabled ? (
                         <Button
                           size="small"
                           variant="outlined"

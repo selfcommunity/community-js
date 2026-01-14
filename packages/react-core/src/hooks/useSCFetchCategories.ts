@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {SCOPE_SC_CORE} from '../constants/Errors';
 import {SCCategoryType} from '@selfcommunity/types';
-import {CategoryService, Endpoints} from '@selfcommunity/api-services';
+import {CategoryParams, CategoryService, Endpoints} from '@selfcommunity/api-services';
 import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {getCategoriesObjectCacheKey, getCategoryObjectCacheKey} from '../constants/Cache';
 import {AxiosRequestConfig} from 'axios/index';
@@ -9,7 +9,7 @@ import {AxiosRequestConfig} from 'axios/index';
 const init = {categories: [], isLoading: true};
 
 // HYDRATE the cache
-const hydrate = (ids: number[]) => {
+const hydrate = (ids: number[], endpointQueryParams?: CategoryParams) => {
   if (!ids) {
     return null;
   }
@@ -21,6 +21,10 @@ const hydrate = (ids: number[]) => {
   if (categories.filter((c) => !c).length > 0) {
     // REVALIDATE CACHE
     return null;
+  }
+
+  if (endpointQueryParams?.can_create_content) {
+    return categories.filter((c) => !c.content_only_staff);
   }
 
   return categories;
@@ -38,22 +42,22 @@ const hydrate = (ids: number[]) => {
  :::
  * @param props
  */
-const useSCFetchCategories = (props?: {cacheStrategy?: CacheStrategies}) => {
+const useSCFetchCategories = (props?: {cacheStrategy?: CacheStrategies; endpointQueryParams?: CategoryParams}) => {
   // PROPS
-  const {cacheStrategy = CacheStrategies.CACHE_FIRST} = props || {};
+  const {cacheStrategy = CacheStrategies.CACHE_FIRST, endpointQueryParams = {}} = props || {};
 
   // CACHE
   const __categoriesCacheKey = getCategoriesObjectCacheKey();
 
   // STATE
-  const categories = cacheStrategy !== CacheStrategies.NETWORK_ONLY ? hydrate(LRUCache.get(__categoriesCacheKey, null)) : null;
+  const categories = cacheStrategy !== CacheStrategies.NETWORK_ONLY ? hydrate(LRUCache.get(__categoriesCacheKey, null), endpointQueryParams) : null;
   const [data, setData] = useState<{categories: SCCategoryType[]; isLoading: boolean}>(categories !== null ? {categories, isLoading: false} : init);
 
   /**
    * Fetch categories
    */
   const fetchCategories = async (next: string = Endpoints.CategoryList.url()): Promise<[]> => {
-    const data: any = await CategoryService.getAllCategories({active: true}, {url: next} as AxiosRequestConfig);
+    const data: any = await CategoryService.getAllCategories({active: true, ...endpointQueryParams}, {url: next} as AxiosRequestConfig);
     return data.next ? data.results.concat(await fetchCategories(data.next)) : data.results;
   };
 

@@ -1,8 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import {styled} from '@mui/material/styles';
-import {Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography} from '@mui/material';
+import {Box, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Typography, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {SCNotification, SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {SCNotification, SCPreferences, SCUserContextType, useSCPreferenceEnabled, useSCUser} from '@selfcommunity/react-core';
 import {SCUserSettingsType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import SettingsSkeleton from './SettingsSkeleton';
@@ -83,6 +82,7 @@ export default function Settings(props: SettingsProps): JSX.Element {
 
   // HOOKS
   const {enqueueSnackbar} = useSnackbar();
+  const privateMessagingEnabled = useSCPreferenceEnabled(SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED);
 
   // EFFECTS
   useEffect(() => {
@@ -235,6 +235,7 @@ export default function Settings(props: SettingsProps): JSX.Element {
           </React.Fragment>
         );
       case SCUserProfileSettings.PRIVATE_MESSAGE:
+        if (!privateMessagingEnabled) return null;
         return (
           <React.Fragment key={setting}>
             <Typography gutterBottom variant="body1">

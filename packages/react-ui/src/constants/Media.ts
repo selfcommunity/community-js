@@ -19,3 +19,8 @@ export const MEDIA_EMBED_SC_SHARED_EVENT = 'sc_shared_event';
  * MAX_GRID_IMAGES: max number of box rendered in feed preview
  */
 export const MAX_GRID_IMAGES = 5;
+
+/**
+ * Default delay tracking seconds (fallback if not in the preference)
+ */
+export const DEFAULT_VIDEO_PLAY_TRACKING_DELAY_SECONDS = 3;

@@ -36,19 +36,18 @@ const Component = {
           margin: '45px 0',
           padding: theme.spacing(1, 2),
           height: `calc(100% - 45px - 45px - ${theme.spacing(2)})`,
+          // [theme.breakpoints.up('md')]: {
+          //   overflowY: 'hidden'
+          // },
           '& .SCEditor-root': {
             padding: theme.spacing(1, 0),
+            marginBottom: theme.spacing(3),
+            position: 'relative',
             '& .SCEditor-placeholder': {
               left: 0,
-              top: theme.spacing(1),
               position: 'absolute'
             },
             '&.SCEditor-toolbar': {
-              position: 'static',
-              '& .SCEditor-placeholder': {
-                marginTop: -40,
-                position: 'static'
-              },
               '& .SCEditorToolbarPlugin-root': {
                 zIndex: 1,
                 position: 'absolute',
@@ -68,7 +67,8 @@ const Component = {
           bottom: theme.spacing(7),
           left: 0,
           right: 0,
-          justifyContent: 'center'
+          display: 'inline-table',
+          margin: 'auto'
         },
         '& .MuiDialogActions-root': {
           position: 'absolute',
@@ -81,7 +81,15 @@ const Component = {
           justifyContent: 'space-between',
           zIndex: 1,
           backgroundColor: theme.palette.background.paper,
-          borderTop: `1px solid ${theme.palette.grey[400]}`
+          borderTop: `1px solid ${theme.palette.grey[400]}`,
+          '& .SCComposer-selected-action': {
+            display: 'flex',
+            alignItems: 'center',
+            '& .SCComposer-action-selected-icon': {
+              marginLeft: theme.spacing(0.5),
+              fontSize: theme.spacing(1)
+            }
+          }
         },
         '& .SCComposer-general-error': {
           marginBottom: theme.spacing(2),
@@ -95,8 +103,7 @@ const Component = {
           },
           '& .MuiDialogContent-root': {
             minHeight: 300,
-            height: 'auto',
-            maxHeight: 600
+            height: 'auto'
           },
           '& .MuiDialogActions-root': {
             justifyContent: 'center'
@@ -104,16 +111,25 @@ const Component = {
         }
       }
     }),
-    attributesRoot: ({theme}: any) => ({}),
+    attributesRoot: ({theme}: any) => ({
+      '& .MuiChip-root': {
+        marginRight: theme.spacing(0.5),
+        marginTop: theme.spacing(0.5)
+      }
+    }),
     contentDiscussionRoot: ({theme}: any) => ({
       '& .SCComposer-content-discussion-title': {
-        paddingBottom: theme.spacing(2),
         '& .MuiInputBase-root': {
+          maxHeight: 160,
+          overflowY: 'auto',
           paddingLeft: 0,
           paddingRight: 0,
           paddingBottom: 0,
-          fontSize: '1.429rem',
+          fontSize: '1.3rem',
           fontWeight: theme.typography.fontWeightBold,
+          [theme.breakpoints.up('md')]: {
+            maxHeight: 110
+          },
           '& fieldset': {
             display: 'none'
           },
@@ -126,6 +142,19 @@ const Component = {
         },
         '& .MuiFormHelperText-root': {
           marginLeft: 0
+        }
+      },
+      '& .SCEditor-root': {
+        '& .SCEditor-placeholder': {
+          top: theme.spacing(7)
+        },
+        '& .SCEditor-content': {
+          overflowY: 'auto',
+          minHeight: 300,
+          maxHeight: `calc(100vh - 45px - 45px - 55px - 45px - ${theme.spacing(2)})`,
+          [theme.breakpoints.up('md')]: {
+            maxHeight: 380
+          }
         }
       }
     }),
@@ -142,7 +171,44 @@ const Component = {
         marginTop: theme.spacing(3)
       }
     }),
-    contentPostRoot: ({theme}: any) => ({}),
+    contentPostRoot: ({theme}: any) => ({
+      '& .SCEditor-root': {
+        '& .SCEditor-placeholder': {
+          top: theme.spacing()
+        },
+        '& .SCEditor-content': {
+          overflowY: 'auto',
+          minHeight: 300,
+          maxHeight: `calc(100vh - 45px - 45px - ${theme.spacing(3)})`,
+          [theme.breakpoints.up('md')]: {
+            maxHeight: 400
+          }
+        }
+      }
+    }),
+    contentLessonRoot: ({theme}: any) => ({
+      padding: theme.spacing(2),
+      '& .SCEditor-root': {
+        '& .SCEditor-content': {
+          paddingTop: theme.spacing(1.5)
+        }
+      },
+      '& .SCComposer-content-lesson-medias': {
+        '& .SCMediaFile-preview-root': {
+          marginBottom: theme.spacing(1),
+          '& .SCMediaFile-media': {
+            height: '60px !important',
+            maxWidth: 140,
+            '& .SCMediaFile-title': {
+              maxWidth: '50% !important'
+            }
+          }
+        },
+        '& .SCMediaLink-preview-root': {
+          marginBottom: theme.spacing(1)
+        }
+      }
+    }),
     layerTransitionRoot: ({theme}: any) => ({
       position: 'absolute',
       top: 0,
@@ -176,8 +242,8 @@ const Component = {
         marginBottom: theme.spacing(4)
       }
     }),
-    layerCategoryRoot: ({theme}: any) => ({}),
-    layerGroupRoot: ({theme}: any) => ({}),
+    layerCategoryRoot: () => ({}),
+    layerGroupRoot: () => ({}),
     layerCloseRoot: ({theme}: any) => ({
       '& .SCComposer-layer-content': {
         '& .MuiTypography-root': {
@@ -196,8 +262,24 @@ const Component = {
         }
       }
     }),
-    layerLocationRoot: ({theme}: any) => ({}),
-    skeletonRoot: ({theme}: any) => ({}),
+    layerLocationRoot: () => ({}),
+    layerScheduledRoot: ({theme}: any) => ({
+      '& .SCComposer-layer-scheduled-picker': {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        '& .MuiTypography-h4': {
+          color: theme.palette.primary.main
+        }
+      },
+      '& .SCComposer-layer-scheduled-message': {
+        textAlign: 'center',
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(1)
+      }
+    }),
+    skeletonRoot: () => ({}),
     typeSwitchButtonGroupRoot: ({theme}: any) => ({
       '& .MuiToggleButton-root': {
         backgroundColor: theme.palette.common.black,

@@ -3,11 +3,9 @@ import type { Meta, StoryObj } from '@storybook/react';
 import UserProfileTemplate from './index';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {UserProfileEdit} from '@selfcommunity/react-ui';
-import DialogContent from '@mui/material/DialogContent';
-import {Dialog, DialogTitle, IconButton} from '@mui/material';
-
+import {Dialog, DialogTitle, DialogContent, IconButton, Icon} from '@mui/material';
 import UserProfile from './Skeleton';
-import Icon from '@mui/material/Icon';
+
 
 export default {
   title: 'Design System/React TEMPLATES/User Profile',
@@ -21,7 +19,7 @@ export default {
  */
 export const Base: StoryObj<typeof UserProfile> = {
   args: {
-    userId: 557,
+    userId: 1,
     startActions: <>
       <IconButton>
         <Icon>card_membership</Icon>

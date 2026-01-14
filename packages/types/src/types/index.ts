@@ -1,7 +1,7 @@
 import {type SCAuthTokenType} from './auth';
 import {type SCBannerType, SCBroadcastMessageBannerType, type SCBroadcastMessageType} from './broadcastMessage';
 import {SCCustomAdvPosition, type SCCustomAdvType} from './customAdv';
-import {type SCCustomMenuItemType, type SCCustomMenuType} from './customMenu';
+import {SCCustomMenu, type SCCustomMenuItemType, type SCCustomMenuType} from './customMenu';
 import {SCLanguageType} from './locale';
 import {
   type SCUserAutocompleteType,
@@ -29,7 +29,7 @@ import {
 import {type SCTagType} from './tag';
 import {type SCCategoryAudienceType, type SCCategoryFollowedStatusType, type SCCategoryType, SCCategoryAutoFollowType} from './category';
 import {type SCEmbedType} from './embed';
-import {type SCChunkMediaType, type SCMediaType} from './media';
+import {type SCChunkMediaType, type SCMediaType, SCMimeTypes} from './media';
 import {SCMetadataTypeFieldType, type SCMetadataType} from './metadata';
 import {type SCContributionLocation, type SCLocalityType} from './location';
 import {type SCPollChoiceType, type SCPollType, type SCPollVoteType} from './poll';
@@ -87,7 +87,9 @@ import {
   type SCNotificationUserFollowType,
   type SCNotificationVoteUpType,
   type SCNotificationGroupActivityType,
-  SCNotificationEventActivityType
+  SCNotificationEventActivityType,
+  SCNotificationLiveStreamActivityType,
+  SCNotificationCourseActivityType
 } from './notification';
 import {type SCWebhookEndpointAttemptType, type SCWebhookEndpointSecretType, type SCWebhookEndpointType, type SCWebhookEventsType} from './webhook';
 import {type SCVoteType} from './vote';
@@ -132,7 +134,52 @@ import {
   SCEventLocationFilterType,
   SCEventSubscriptionStatusType
 } from './event';
+import {
+  type SCCourseType,
+  type SCCourseLessonType,
+  type SCCourseSectionType,
+  type SCCourseCommentType,
+  SCCoursePrivacyType,
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseLessonStatusType,
+  SCCourseTypologyType,
+  SCCourseLessonCompletionStatusType,
+  SCCourseOrderingUsersType
+} from './course';
+import {
+  type SCLiveStreamType,
+  SCLiveStreamViewType,
+  SCLiveStreamConnectionDetailsType,
+  SCLiveStreamSettingsType,
+  SCLiveStreamMonthlyDurationType,
+  SCLiveStreamConnectionDetailsResponseErrorType,
+  SCLiveStreamConnectionDetailsErrorType
+} from './liveStream';
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType, SCOnBoardingStepIdType} from './onboarding';
+import {SCCommunitySubscriptionTier} from './tier';
+import {SCCommunityEnvironment} from './environment';
+import {
+  type SCPaymentProduct,
+  type SCPaymentPrice,
+  SCPaymentPriceCurrencyType,
+  SCContentType,
+  type SCCheckoutSession,
+  type SCPurchasableContent,
+  SCCheckoutSessionStatus,
+  type SCCheckoutSessionDetail,
+  type SCCheckoutSessionComplete,
+  type SCPaymentOrder,
+  type SCPaymentsCustomerPortalSession,
+  SCPaymentProductTemplateType,
+  SCCheckoutSessionUIMode,
+  type SCPaywall,
+  SCPaymentRecurringInterval
+} from './payment';
+import {type SCCustomerBillingInfo, type SCCountryType} from './billing';
+import {type SCCommunityType} from './community';
+import {type SCContactUsRequestType} from './contactUs';
+
 /**
  * Exports all types
  */
@@ -172,11 +219,13 @@ export {
   type SCCategoryFollowedStatusType,
   SCCustomAdvPosition,
   type SCCustomAdvType,
+  SCCustomMenu,
   type SCCustomMenuItemType,
   type SCCustomMenuType,
   type SCEmbedType,
   type SCMediaType,
   type SCChunkMediaType,
+  SCMimeTypes,
   type SCContributionLocation,
   type SCLocalityType,
   type SCPollChoiceType,
@@ -236,6 +285,8 @@ export {
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
   type SCNotificationEventActivityType,
+  type SCNotificationCourseActivityType,
+  type SCNotificationLiveStreamActivityType,
   type SCPrizeType,
   type SCPrizeUserType,
   SCPrizeUserStatusType,
@@ -296,5 +347,44 @@ export {
   type SCStepType,
   SCOnBoardingStepType,
   SCOnBoardingStepStatusType,
-  SCOnBoardingStepIdType
+  SCOnBoardingStepIdType,
+  type SCCourseType,
+  type SCCourseCommentType,
+  type SCCourseSectionType,
+  type SCCourseLessonType,
+  SCCoursePrivacyType,
+  SCCourseJoinStatusType,
+  SCCourseLessonTypologyType,
+  SCCourseLessonStatusType,
+  SCCourseTypologyType,
+  SCCourseLessonCompletionStatusType,
+  SCCourseOrderingUsersType,
+  type SCLiveStreamType,
+  type SCLiveStreamConnectionDetailsType,
+  type SCLiveStreamSettingsType,
+  type SCLiveStreamConnectionDetailsResponseErrorType,
+  type SCLiveStreamMonthlyDurationType,
+  SCLiveStreamConnectionDetailsErrorType,
+  SCLiveStreamViewType,
+  SCCommunitySubscriptionTier,
+  SCCommunityEnvironment,
+  type SCPaywall,
+  type SCPaymentProduct,
+  type SCPaymentPrice,
+  SCPaymentPriceCurrencyType,
+  SCContentType,
+  type SCCheckoutSession,
+  type SCPurchasableContent,
+  SCCheckoutSessionStatus,
+  type SCCheckoutSessionDetail,
+  type SCCheckoutSessionComplete,
+  type SCPaymentOrder,
+  type SCPaymentsCustomerPortalSession,
+  SCPaymentProductTemplateType,
+  SCCheckoutSessionUIMode,
+  SCPaymentRecurringInterval,
+  type SCCommunityType,
+  type SCCustomerBillingInfo,
+  type SCCountryType,
+  type SCContactUsRequestType
 };
