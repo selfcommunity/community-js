@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Footer from './index';
 import LanguageSwitcher from '../../shared/LanguageSwitcher';
-import {Box} from '@mui/material';
+import {Stack} from '@mui/material';
 
 export default {
   title: 'Design System/React UI/Footer',
@@ -10,7 +10,7 @@ export default {
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     variant: {
       options: ['elevation', 'outlined'],
@@ -25,19 +25,19 @@ export default {
   }
 } as Meta<typeof Footer>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 1200}}>
     <Footer {...args} />
   </div>
 );
 
-export const Base: StoryObj<Footer> = {
+export const Base: StoryObj<typeof Footer> = {
   render: template
 };
 
-export const BaseWithLanguageSwitcher: StoryObj<Footer> = {
+export const BaseWithLanguageSwitcher: StoryObj<typeof Footer> = {
 	args: {
-		endActions: <Box align={'center'}><br /><LanguageSwitcher LabelComponentProps={{hidden: true}} /></Box>,
+		endActions: <Stack direction="column" alignItems="center"><br /><LanguageSwitcher LabelComponentProps={{hidden: true}} /></Stack>,
 	},
 	render: template
 };

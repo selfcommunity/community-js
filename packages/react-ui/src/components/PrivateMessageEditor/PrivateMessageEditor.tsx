@@ -135,7 +135,7 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
     setMessage(event.target.value);
   };
 
-  const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
+  const handleEmojiClick = (emojiData: EmojiClickData) => {
     const cursorPosition = ref.current.selectionEnd;
     const start = ref.current.value.substring(0, ref.current.selectionStart);
     const end = ref.current.value.substring(ref.current.selectionStart);
@@ -216,22 +216,24 @@ export default function PrivateMessageEditor(inProps: PrivateMessageEditorProps)
               onChange={handleMessageInput}
               maxRows={2}
               onSelect={() => setOpenEmojiSection(false)}
-              InputProps={{
-                startAdornment: (
-                  <>
-                    <IconButton disabled={openMediaSection} onClick={() => setOpenEmojiSection(!openEmojiSection)}>
-                      <Icon>sentiment_satisfied_alt</Icon>
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <>
+                      <IconButton disabled={openMediaSection} onClick={() => setOpenEmojiSection(!openEmojiSection)}>
+                        <Icon>sentiment_satisfied_alt</Icon>
+                      </IconButton>
+                      <IconButton disabled={message !== '' || openEmojiSection} onClick={() => setOpenMediaSection(true)}>
+                        <Icon>attach_file</Icon>
+                      </IconButton>
+                    </>
+                  ),
+                  endAdornment: (
+                    <IconButton disabled={(!message && !messageFiles.length) || uploading} onClick={handleMessageSend}>
+                      <Icon>send</Icon>
                     </IconButton>
-                    <IconButton disabled={message !== '' || openEmojiSection} onClick={() => setOpenMediaSection(true)}>
-                      <Icon>attach_file</Icon>
-                    </IconButton>
-                  </>
-                ),
-                endAdornment: (
-                  <IconButton disabled={(!message && !messageFiles.length) || uploading} onClick={handleMessageSend}>
-                    <Icon>send</Icon>
-                  </IconButton>
-                )
+                  )
+                }
               }}
             />
           </>

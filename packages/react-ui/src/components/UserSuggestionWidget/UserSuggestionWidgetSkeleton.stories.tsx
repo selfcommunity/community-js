@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import UserSuggestionWidgetSkeleton from './Skeleton';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: UserSuggestionWidgetSkeleton
 } as Meta<typeof UserSuggestionWidgetSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <UserSuggestionWidgetSkeleton {...args} />
   </div>

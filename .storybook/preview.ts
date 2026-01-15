@@ -64,7 +64,7 @@ export const globalTypes = {
   }
 };
 
-/** @type { import('@storybook/react').Preview } */
+/** @type { import('@storybook/react-webpack5').Preview } */
 const preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
@@ -75,17 +75,17 @@ const preview = {
     },
     viewMode: 'canvas',
     backgrounds: {
-      default: 'light_grey',
-      values: [
-        {
+      options: {
+        light_grey: {
           name: 'light_grey',
           value: '#F7F7F7',
         },
-        {
+
+        dark_grey: {
           name: 'dark_grey',
           value: '#565656',
-        },
-      ],
+        }
+      }
     },
     controls: {
       matchers: {
@@ -94,7 +94,14 @@ const preview = {
       },
     },
   },
+
   decorators: [withProvider, withServiceWorker],
+
+  initialGlobals: {
+    backgrounds: {
+      value: 'light_grey'
+    }
+  }
 };
 
 export default preview;

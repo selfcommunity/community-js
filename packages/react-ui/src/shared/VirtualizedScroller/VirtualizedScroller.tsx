@@ -37,7 +37,7 @@ export interface VirtualizedScrollerProps extends VirtualizedScrollerCommonProps
   /**
    * The initial state for VirtualScroller
    */
-  initialScrollerState?: object;
+  initialScrollerState?: Record<string, unknown>;
 
   /**
    * Callback when virtual scroller state change

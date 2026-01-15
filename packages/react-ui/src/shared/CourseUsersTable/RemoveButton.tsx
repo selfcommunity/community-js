@@ -1,5 +1,4 @@
-import {LoadingButton} from '@mui/lab';
-import {Icon} from '@mui/material';
+import {Button, Icon} from '@mui/material';
 import {CourseService} from '@selfcommunity/api-services';
 import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import {forwardRef, memo, Ref, useCallback, useImperativeHandle, useState} from 'react';
@@ -71,7 +70,7 @@ function RemoveButton(props: RemoveButtonProps, ref: Ref<SCCourseEditManageUserR
   );
 
   return (
-    <LoadingButton
+    <Button
       size="small"
       color="inherit"
       variant="outlined"
@@ -79,7 +78,7 @@ function RemoveButton(props: RemoveButtonProps, ref: Ref<SCCourseEditManageUserR
       loading={loading}
       disabled={loading}>
       <Icon>close</Icon>
-    </LoadingButton>
+    </Button>
   );
 }
 

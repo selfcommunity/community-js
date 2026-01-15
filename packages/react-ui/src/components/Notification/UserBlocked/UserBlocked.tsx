@@ -1,4 +1,3 @@
-import React from 'react';
 import {Avatar, Stack, Typography, styled, Icon} from '@mui/material';
 import {SCNotificationBlockedUserType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {defineMessages, useIntl} from 'react-intl';
@@ -88,8 +87,12 @@ export default function UserBlockedNotification(props: NotificationBlockedProps)
       primary={
         <Typography component="div" color="inherit" className={classes.blockedText}>
           {notificationObject.type === SCNotificationTypologyType.BLOCKED_USER
-            ? intl.formatMessage(messages.accountBlocked, {b: (...chunks) => <strong>{chunks}</strong>})
-            : intl.formatMessage(messages.accountReactivated, {b: (...chunks) => <strong>{chunks}</strong>})}
+            ? intl.formatMessage(messages.accountBlocked, {
+                b: (chunks) => <strong key="ui.notification.userBlocked.accountBlocked.b">{chunks}</strong>
+              })
+            : intl.formatMessage(messages.accountReactivated, {
+                b: (chunks) => <strong key="ui.notification.userBlocked.accountReactivated.b">{chunks}</strong>
+              })}
         </Typography>
       }
       secondary={

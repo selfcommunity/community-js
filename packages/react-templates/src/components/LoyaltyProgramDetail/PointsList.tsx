@@ -24,7 +24,7 @@ const classes = {
 export function PointElement({message, points}: {message: React.ReactNode; points: number}): JSX.Element {
   if (points > 0) {
     return (
-      <Grid item xs={12} sm={12} md={6}>
+      <Grid size={{xs: 12, md: 6}}>
         <Typography component="div" className={classes.element}>
           <Typography>{message}</Typography>
           <Typography>
@@ -73,7 +73,7 @@ export default function PointsList(props: PointsListProps): JSX.Element {
    */
 
   return (
-    <Root className={classNames(classes.root, className)} container spacing={2} {...rest}>
+    <Root className={classNames(classes.root, className)} container width="100%" spacing={2} {...rest}>
       {preferences[SCPreferences.CONFIGURATIONS_POST_TYPE_ENABLED].value && (
         <PointElement
           message={<FormattedMessage id="templates.loyaltyProgramDetail.points.post" defaultMessage="templates.loyaltyProgramDetail.points.post" />}

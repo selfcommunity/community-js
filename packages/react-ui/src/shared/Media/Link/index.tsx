@@ -9,8 +9,8 @@ const Link: SCMediaObjectType = {
   name: 'link',
   displayComponent: DisplayComponent,
   triggerButton: TriggerButton,
-  layerComponent: LayerComponent,
-  previewComponent: PreviewComponent,
+  layerComponent: LayerComponent as any,
+  previewComponent: PreviewComponent as any,
   filter
 };
 

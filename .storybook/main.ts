@@ -1,7 +1,16 @@
+// This file has been automatically migrated to valid ESM format by Storybook.
+import { fileURLToPath } from "node:url";
+import { createRequire } from "node:module";
 import { dirname, join } from "path";
-const path = require("path");
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const customRequire = createRequire(import.meta.url);
+const path = customRequire("path");
 const toPath = (filePath) => path.join(process.cwd(), filePath);
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const TsconfigPathsPlugin = customRequire('tsconfig-paths-webpack-plugin');
+const webpack = customRequire('webpack');
 
 /** @type { import('@storybook/react-webpack5').StorybookConfig } */
 const config = {
@@ -15,11 +24,12 @@ const config = {
     "../packages/react-ui/src/shared/**/*.stories.@(js|jsx|ts|tsx)",
     "../packages/react-templates/src/components/**/*.stories.@(js|jsx|ts|tsx)",
   ],
+
   addons: [
     getAbsolutePath("@storybook/addon-links"),
-    getAbsolutePath("@storybook/addon-essentials"),
-    getAbsolutePath("@storybook/addon-interactions"),
+    getAbsolutePath("@storybook/addon-docs")
   ],
+
   framework: {
     name: getAbsolutePath("@storybook/react-webpack5"),
     options: {
@@ -27,24 +37,92 @@ const config = {
       "fsCache": true
     },
   },
+
   features: {
     "postcss": false
   },
+
   core: {
     disableTelemetry: true, // Disables telemetry
   },
+
+  typescript: {
+    reactDocgen: 'react-docgen-typescript',
+    skipBabel: true,
+    check: false,
+  },
+
   "webpackFinal": async (config) => {
+    // Add TypeScript and JSX support
+    config.module.rules.push({
+      test: /\.(ts|tsx)$/,
+      use: [
+        {
+					loader: customRequire.resolve('babel-loader'),
+					options: {
+						presets: [
+							[
+								customRequire.resolve('@babel/preset-env'),
+								{ loose: false },
+							],
+							[
+								customRequire.resolve('@babel/preset-react'),
+								{ runtime: 'automatic' },
+							],
+							[
+								customRequire.resolve('@babel/preset-typescript'),
+								{
+									onlyRemoveTypeImports: true,
+									allowDeclareFields: true,
+									allowNamespaces: true
+								},
+							],
+						],
+						plugins: [
+							// Usa i transform moderni
+							['@babel/plugin-transform-class-properties', { loose: false }],
+							['@babel/plugin-transform-private-methods', { loose: false }],
+							['@babel/plugin-transform-private-property-in-object', { loose: false }],
+							'@babel/plugin-transform-object-rest-spread',
+							'@babel/plugin-transform-nullish-coalescing-operator',
+							'@babel/plugin-transform-optional-chaining',
+							// Fix for TypeScript type exports in Babel scope tracker
+							['@babel/plugin-transform-typescript', { allowNamespaces: true }],
+						],
+					},
+        }
+      ],
+      exclude: /node_modules/
+    });
+
+    // Make sure .tsx and .ts are included in the resolve extensions
+    if (config.resolve.extensions) {
+      config.resolve.extensions.push('.ts', '.tsx');
+    } else {
+      config.resolve.extensions = ['.js', '.jsx', '.ts', '.tsx'];
+    }
+
+		// Add TsconfigPathsPlugin
+		config.resolve.plugins = [
+			...(config.resolve.plugins || []),
+			new TsconfigPathsPlugin({
+				extensions: config.resolve.extensions,
+				configFile: path.resolve(__dirname, "../tsconfig.json"),
+			}),
+		];
+
+		config.plugins = [
+			...(config.plugins || []),
+			new webpack.DefinePlugin({
+				// 👇 se ti serve qualche env var personalizzata, mettila qui:
+				'process.env': JSON.stringify(process.env)
+			}),
+		];
+
     return {
       ...config,
       "resolve": {
         ...config.resolve,
-        "plugins": [
-          ...(config.resolve.plugins || []),
-          new TsconfigPathsPlugin({
-            extensions: config.resolve.extensions,
-            configFile: path.resolve(__dirname, "../tsconfig.json"),
-          }),
-        ],
         "alias": {
           ...config.resolve.alias,
           "@emotion/core": toPath("node_modules/@emotion/react"),
@@ -60,13 +138,10 @@ const config = {
         },
       },
     };
-  },
-  docs: {
-    autodocs: 'tags',
-  },
+  }
 };
 export default config;
 
 function getAbsolutePath(value: string): string {
-  return dirname(require.resolve(join(value, "package.json")));
+  return dirname(customRequire.resolve(join(value, "package.json")));
 }

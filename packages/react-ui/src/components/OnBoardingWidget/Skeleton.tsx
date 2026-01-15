@@ -1,4 +1,3 @@
-import React from 'react';
 import {Box, Chip, List, ListItem, ListItemButton, ListItemIcon, ListItemText, styled, Skeleton, useMediaQuery, useTheme} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCThemeType} from '@selfcommunity/react-core';
@@ -43,10 +42,10 @@ export default function OnBoardingWidgetSkeleton(): JSX.Element {
         )}
       </Box>
       <Box className={classes.content}>
-        <Skeleton variant="text" width={'20%'} height={40} />
-        <Skeleton variant="text" width={'80%'} height={20} />
-        <Skeleton variant="text" width={'70%'} height={20} />
-        <Skeleton variant="text" width={'60%'} height={20} />
+        <Skeleton variant="text" width="20%" height={40} />
+        <Skeleton variant="text" width="80%" height={20} />
+        <Skeleton variant="text" width="70%" height={20} />
+        <Skeleton variant="text" width="60%" height={20} />
         <Skeleton variant="rectangular" width={100} height={36} style={{borderRadius: '20px', alignSelf: 'center', marginTop: 24}} />
       </Box>
     </Root>

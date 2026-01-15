@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { UserLiveStreamWidgetSkeleton } from './index';
 
 export default {
@@ -6,9 +6,9 @@ export default {
   component: UserLiveStreamWidgetSkeleton,
 } as Meta<typeof UserLiveStreamWidgetSkeleton>;
 
-const template = (args) => (
+const template = () => (
 	<div style={{width: 400}}>
-		<UserLiveStreamWidgetSkeleton {...args} />
+		<UserLiveStreamWidgetSkeleton />
 	</div>
 );
 

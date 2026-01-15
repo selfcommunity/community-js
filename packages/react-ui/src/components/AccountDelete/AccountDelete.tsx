@@ -1,6 +1,6 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
-import {Box, BoxProps, TextField, Typography, styled} from '@mui/material';
+import {Box, BoxProps, Button, TextField, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
 import {UserService} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -8,7 +8,6 @@ import {SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPrefere
 import {SCUserType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage, useIntl} from 'react-intl';
-import LoadingButton from '@mui/lab/LoadingButton';
 
 const PREFIX = 'SCAccountDelete';
 
@@ -22,7 +21,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 export interface AccountDeleteProps extends BoxProps {
@@ -145,12 +144,8 @@ export default function AccountDelete(inProps: AccountDeleteProps): JSX.Element 
           defaultMessage="ui.accountDelete.message"
           values={{
             communityName,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            li: (chunks) => <li>{chunks}</li>,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            ul: (chunks) => <ul>{chunks}</ul>
+            li: (chunks) => <li key="ui.accountDelete.message.li">{chunks}</li>,
+            ul: (chunks) => <ul key="ui.accountDelete.message.ul">{chunks}</ul>
           }}
         />
       </Typography>
@@ -160,22 +155,20 @@ export default function AccountDelete(inProps: AccountDeleteProps): JSX.Element 
           defaultMessage="ui.accountDelete.confirmMessage"
           values={{
             username: scUserContext.user.username,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-            // @ts-ignore
-            b: (chunks) => <b>{chunks}</b>
+            b: (chunks) => <b key="ui.accountDelete.confirmMessage.b">{chunks}</b>
           }}
         />
         <TextField name="confirm" value={confirm} onChange={handleChange} autoComplete="off" size="small" />
       </Typography>
       {error && <Typography color="error">{error}</Typography>}
-      <LoadingButton
+      <Button
         className={classes.button}
         size="small"
         disabled={isDeleting || confirm !== scUserContext.user.username}
         variant="outlined"
         onClick={handleDelete}>
         <FormattedMessage id="ui.accountDelete.buttonLabel" defaultMessage="ui.accountDelete.buttonLabel" />
-      </LoadingButton>
+      </Button>
     </Root>
   );
 }

@@ -181,27 +181,29 @@ export default (props: UrlTextFieldProps): JSX.Element => {
         }
         disabled={isCreating}
         {...rest}
-        InputProps={{
-          ...rest.InputProps,
-          endAdornment: (
-            <>
-              {url === '' && rest.InputProps?.endAdornment ? (
-                rest.InputProps?.endAdornment
-              ) : (
-                <InputAdornment position="end">
-                  <Fade in={urlError === null && url !== ''}>
-                    <IconButton size="small" disabled={isCreating} type="submit">
-                      {isCreating ? (
-                        <CircularProgress color="primary" size={20} />
-                      ) : (
-                        <FormattedMessage id="ui.composer.media.link.add.submit" defaultMessage="ui.composer.media.link.add.submit" />
-                      )}
-                    </IconButton>
-                  </Fade>
-                </InputAdornment>
-              )}
-            </>
-          )
+        slotProps={{
+          input: {
+            ...rest.InputProps,
+            endAdornment: (
+              <>
+                {url === '' && rest.InputProps?.endAdornment ? (
+                  rest.InputProps?.endAdornment
+                ) : (
+                  <InputAdornment position="end">
+                    <Fade in={urlError === null && url !== ''}>
+                      <IconButton size="small" disabled={isCreating} type="submit">
+                        {isCreating ? (
+                          <CircularProgress color="primary" size={20} />
+                        ) : (
+                          <FormattedMessage id="ui.composer.media.link.add.submit" defaultMessage="ui.composer.media.link.add.submit" />
+                        )}
+                      </IconButton>
+                    </Fade>
+                  </InputAdornment>
+                )}
+              </>
+            )
+          }
         }}
       />
     </form>

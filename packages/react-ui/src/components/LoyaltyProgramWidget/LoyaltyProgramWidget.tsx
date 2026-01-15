@@ -1,11 +1,11 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import {useContext, useEffect, useMemo, useState} from 'react';
 import {Button, CardActions, Chip, Typography, styled, CardContent} from '@mui/material';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import {FormattedMessage} from 'react-intl';
 import {SCRoutingContextType, useSCRouting, Link, SCRoutes} from '@selfcommunity/react-core';
 import classNames from 'classnames';
-import Widget, { WidgetProps } from '../Widget';
+import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import Skeleton from './Skeleton';
@@ -121,7 +121,7 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
   /**
    * Rendering
    */
-  if (!loyaltyEnabled || !scUserContext.user || (userId  && userId !== scUserContext.user.id)) {
+  if (!loyaltyEnabled || !scUserContext.user || (userId && userId !== scUserContext.user.id)) {
     return <HiddenPlaceholder />;
   }
   if (loading) {
@@ -136,7 +136,7 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
       </CardContent>
       <CardActions className={classes.actions}>
         <Typography className={classes.points}>
-          <Chip size={'medium'} component="span" label={points} />
+          <Chip size="medium" component="span" label={points} />
           <FormattedMessage id="ui.loyaltyProgramWidget.points" defaultMessage="ui.loyaltyProgramWidget.points" />
         </Typography>
         <Button

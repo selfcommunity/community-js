@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Icon,
   IconButton,
   InputAdornment,
@@ -20,7 +21,6 @@ import {
 import {ChangeEvent, Dispatch, memo, useCallback, useEffect, useRef, useState} from 'react';
 import {FormattedDate, FormattedMessage, useIntl} from 'react-intl';
 import RowSkeleton from './RowSkeleton';
-import {LoadingButton} from '@mui/lab';
 import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
 import {PREFIX} from './constants';
 import EmptyStatus from '../EmptyStatus';
@@ -218,33 +218,35 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           id: 'ui.courseUsersTable.searchBar.placeholder',
           defaultMessage: 'ui.courseUsersTable.searchBar.placeholder'
         })}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Icon>search</Icon>
-            </InputAdornment>
-          ),
-          endAdornment:
-            value.length > 0 ? (
-              <Stack className={classes.endAdornmentWrapper}>
-                <InputAdornment position="start">
-                  <IconButton color="inherit" onClick={handleSearchClear}>
-                    <Icon>close</Icon>
-                  </IconButton>
-                </InputAdornment>
-                <InputAdornment position="end">
-                  <LoadingButton
-                    color="primary"
-                    variant="contained"
-                    onClick={handleSearchStart}
-                    loading={loadingSearch}
-                    disabled={loadingSearch}
-                    className={classes.searchButton}>
-                    <Icon>search</Icon>
-                  </LoadingButton>
-                </InputAdornment>
-              </Stack>
-            ) : undefined
+        slotProps={{
+          input: {
+            startAdornment: (
+              <InputAdornment position="start">
+                <Icon>search</Icon>
+              </InputAdornment>
+            ),
+            endAdornment:
+              value.length > 0 ? (
+                <Stack className={classes.endAdornmentWrapper}>
+                  <InputAdornment position="start">
+                    <IconButton color="inherit" onClick={handleSearchClear}>
+                      <Icon>close</Icon>
+                    </IconButton>
+                  </InputAdornment>
+                  <InputAdornment position="end">
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      onClick={handleSearchStart}
+                      loading={loadingSearch}
+                      disabled={loadingSearch}
+                      className={classes.searchButton}>
+                      <Icon>search</Icon>
+                    </Button>
+                  </InputAdornment>
+                </Stack>
+              ) : undefined
+          }
         }}
         value={value}
         onChange={handleChange}
@@ -343,7 +345,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
       </TableContainer>
 
       {users.length > 0 && (
-        <LoadingButton
+        <Button
           size="small"
           variant="outlined"
           color="inherit"
@@ -354,7 +356,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           <Typography variant="body2">
             <FormattedMessage id="ui.courseUsersTable.btn.label" defaultMessage="ui.courseUsersTable.btn.label" />
           </Typography>
-        </LoadingButton>
+        </Button>
       )}
 
       {users.length === 0 && (

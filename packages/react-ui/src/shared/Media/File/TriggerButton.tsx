@@ -242,7 +242,11 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
           open={Boolean(anchorEl)}
           onClose={handleClose}
           onOpen={handleOpen}
-          PaperProps={{className: classes.paper}}
+          slotProps={{
+            paper: {
+              className: classes.paper
+            }
+          }}
           disableSwipeToOpen>
           <List>{list}</List>
         </SwipeableDrawerRoot>
@@ -253,7 +257,11 @@ export default ({className, onAdd = null, ...rest}: TriggerIconButtonProps): Rea
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleClose}
-          PaperProps={{className: classes.paper}}>
+          slotProps={{
+            paper: {
+              className: classes.paper
+            }
+          }}>
           {list}
         </MenuRoot>
       )}

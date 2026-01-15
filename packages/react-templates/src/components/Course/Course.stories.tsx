@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Course from './index';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: Course,
   argTypes: {
     viewDashboard: {
-      control: 'string'
+      control: 'text'
     }
   },
   args: {

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import SuggestedEventsWidget from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import SuggestedEventsWidget, { SuggestedEventsWidgetProps } from './index';
 
 export default {
 	title: 'Design System/React UI/Suggested Events Widget',
@@ -8,7 +8,7 @@ export default {
 
 
 
-const template = (args) => (
+const template = (args: SuggestedEventsWidgetProps) => (
 	<div style={{ maxWidth: 400 }}>
 		<SuggestedEventsWidget {...args} />
 	</div>

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Composer, { ComposerProps } from './index';
 
 export default {
@@ -6,18 +6,17 @@ export default {
   component: Composer
 } as Meta<typeof Composer>;
 
-const template = (args) => (
+const template = (args: ComposerProps) => (
   <div style={{maxWidth: 400}}>
     <Composer {...args} />
   </div>
 );
 
-export const Base: StoryObj<ComposerProps> = {
+export const Base: StoryObj<typeof Composer> = {
   args: {
     /* the args you need here will depend on your component */
     maxWidth: 'sm',
     fullWidth: true,
-    scroll: 'body',
     open: false
   },
   render: template

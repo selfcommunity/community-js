@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import CustomAdvSkeleton from './Skeleton';
 
 export default {
@@ -6,13 +6,13 @@ export default {
   component: CustomAdvSkeleton
 } as Meta<typeof CustomAdvSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: 400}}>
-    <CustomAdvSkeleton {...args} />
+    <CustomAdvSkeleton />
   </div>
 );
 
-export const Base: StoryObj<CustomAdvSkeleton> = {
+export const Base: StoryObj<typeof CustomAdvSkeleton> = {
   args: {
     contained: true
   },

@@ -1,7 +1,6 @@
-import React from 'react';
 import {styled} from '@mui/material';
 import classNames from 'classnames';
-import {Scrollbars} from 'react-custom-scrollbars-2';
+import {Scrollbars} from 'react-custom-scrollbars-4';
 import {AUTO_HIDE, AUTO_HIDE_TIMEOUT} from '../../constants/ScrollContainer';
 
 const PREFIX = 'SCScrollContainer';

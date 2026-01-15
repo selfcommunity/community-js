@@ -1,4 +1,3 @@
-import React from 'react';
 import {PREFIX} from './constants';
 import Widget from '../Widget';
 import {Grid, styled, Skeleton} from '@mui/material';
@@ -39,16 +38,16 @@ const Root = styled(Widget, {
 export default function PlatformWidgetSkeleton(props): JSX.Element {
   return (
     <Root className={classes.root} {...props}>
-      <Grid container justifyContent="center" className={classes.content}>
-        <Grid item xs={12} className={classes.title}>
+      <Grid container width="100%" justifyContent="center" className={classes.content}>
+        <Grid size={12} className={classes.title}>
           <Skeleton animation="wave" height={25} width={170} />
         </Grid>
-        <Grid item xs={12} className={classes.actions}>
+        <Grid size={12} className={classes.actions}>
           <Skeleton animation="wave" height={35} width={110} />
           <Skeleton animation="wave" height={35} width={110} />
           <Skeleton animation="wave" height={35} width={110} />
         </Grid>
-        <Grid item xs={12} justifyContent="center" alignItems="center" className={classes.tutorial}>
+        <Grid size={12} justifyContent="center" alignItems="center" className={classes.tutorial}>
           <Skeleton animation="wave" variant="circular" width={25} height={25} />
         </Grid>
       </Grid>

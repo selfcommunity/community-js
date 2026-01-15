@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import UserProfileInfoSkeleton from './Skeleton';
 
 export default {
@@ -6,12 +6,12 @@ export default {
   component: UserProfileInfoSkeleton
 } as Meta<typeof UserProfileInfoSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: '100%'}}>
-    <UserProfileInfoSkeleton {...args} />
+    <UserProfileInfoSkeleton />
   </div>
 );
 
-export const Base: StoryObj<UserProfileInfoSkeleton> = {
+export const Base: StoryObj<typeof UserProfileInfoSkeleton> = {
   render: template
 };

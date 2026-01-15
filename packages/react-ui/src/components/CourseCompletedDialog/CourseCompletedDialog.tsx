@@ -76,7 +76,7 @@ function CourseCompletedDialog(inProps: CourseCompletedDialogProps) {
             {
               courseName: course.name,
               span: (chunks) => (
-                <Typography component="span" variant="inherit" color="primary">
+                <Typography key="ui.course.completedDialog.description.pt2.span" component="span" variant="inherit" color="primary">
                   {chunks}
                 </Typography>
               )

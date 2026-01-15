@@ -12,7 +12,8 @@ const classes = {
   media: `${PREFIX}-media`,
   delete: `${PREFIX}-delete`,
   title: `${PREFIX}-title`,
-  docsWrapper: `${PREFIX}-docs-wrapper`
+  docsWrapper: `${PREFIX}-docs-wrapper`,
+  doc: `${PREFIX}-doc`
 };
 
 const Root = styled(Box, {
@@ -71,10 +72,13 @@ const PreviewComponent = forwardRef((props: PreviewComponentProps, ref: Ref<unkn
       )),
     [images]
   );
-  const docElements = useMemo(() => docs.map((doc) => <DocComponent key={doc.id} document={doc} onDelete={handleDelete} />), [docs]);
+  const docElements = useMemo(
+    () => docs.map((doc) => <DocComponent key={doc.id} document={doc} onDelete={handleDelete} className={classes.doc} />),
+    [docs]
+  );
 
   return (
-    <Root ref={ref} className={classNames(className, classes.previewRoot)} {...rest}>
+    <Root ref={ref} className={classNames(classes.previewRoot, className)} {...rest}>
       {mediasLength > 0 && (
         <>
           <ReactSortable list={images} setList={handleSort} scroll animation={200} scrollSensitivity={50}>

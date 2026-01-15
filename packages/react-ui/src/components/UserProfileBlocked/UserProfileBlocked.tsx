@@ -1,11 +1,10 @@
-import React, {useMemo} from 'react';
-import {Box, Divider, Typography, styled} from '@mui/material';
+import {useMemo} from 'react';
+import {Box, Button, Divider, Typography, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
 import {SCUserContextType, useSCFetchUser, useSCFetchUserBlockedBy, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
@@ -139,14 +138,14 @@ export default function UserProfileBlocked(inProps: UserProfileBlockedProps): JS
           <Typography variant="body1" className={classes.info}>
             <FormattedMessage id="ui.userProfileBlocked.blockedUser" defaultMessage="ui.userProfileBlocked.blockedUser" />
           </Typography>
-          <LoadingButton
+          <Button
             variant="contained"
             className={classes.button}
             loading={scUserContext.managers.blockedUsers.loading}
             disabled={scUserContext.managers.blockedUsers.loading}
             onClick={handleBlock}>
             <FormattedMessage id="ui.userProfileBlocked.unBlockUser" defaultMessage="ui.userProfileBlocked.unBlockUser" />
-          </LoadingButton>
+          </Button>
         </>
       )}
     </Root>

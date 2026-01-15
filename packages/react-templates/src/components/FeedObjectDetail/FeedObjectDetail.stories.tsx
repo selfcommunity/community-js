@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import FeedObjectDetailTemplate from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import FeedObjectDetailTemplate, { FeedObjectDetailProps } from './index';
 import { CacheStrategies } from '@selfcommunity/utils';
 import { SCContributionType } from '@selfcommunity/types';
 
@@ -8,12 +8,12 @@ export default {
   component: FeedObjectDetailTemplate
 } as Meta<typeof FeedObjectDetailTemplate>;
 
-const template = (args) => (
+const template = (args: FeedObjectDetailProps) => (
   <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
     <FeedObjectDetailTemplate {...args} />
   </div>);
 
-const templateContainerFixed = (args) => (
+const templateContainerFixed = (args: FeedObjectDetailProps) => (
 	<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1, maxWidth: '1200px', height: '92vh', overflow: 'auto', paddingLeft: 20, paddingRight: 20}} id="scrollableDiv">
 		<FeedObjectDetailTemplate {...args} />
 	</div>);

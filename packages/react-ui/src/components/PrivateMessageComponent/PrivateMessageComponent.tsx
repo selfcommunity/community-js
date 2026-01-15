@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {Grid, useMediaQuery, useTheme, styled} from '@mui/material';
 import {SCPreferences, SCPreferencesContextType, SCThemeType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
@@ -199,7 +199,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function renderSnippets() {
     return (
-      <Grid item xs={12} md={5} className={classNames(classes.snippetsBox, {[classes.hide]: isMobile && mobileThreadView})}>
+      <Grid size={{xs: 12, md: 5}} className={classNames(classes.snippetsBox, {[classes.hide]: isMobile && mobileThreadView})}>
         <PrivateMessageSnippets
           snippetActions={{
             onSnippetClick: handleThreadOpening,
@@ -219,7 +219,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
    */
   function renderThread() {
     return (
-      <Grid item xs={12} md={7} className={classNames(classes.threadBox, {[classes.hide]: isMobile && mobileSnippetsView})}>
+      <Grid size={{xs: 12, md: 7}} className={classNames(classes.threadBox, {[classes.hide]: isMobile && mobileSnippetsView})}>
         <PrivateMessageThread
           threadObj={obj}
           type={_type}
@@ -240,7 +240,7 @@ export default function PrivateMessageComponent(inProps: PrivateMessageComponent
     return null;
   }
   return (
-    <Root container {...rest} className={classNames(classes.root, className)}>
+    <Root container width="100%" {...rest} className={classNames(classes.root, className)}>
       {renderSnippets()}
       {renderThread()}
     </Root>

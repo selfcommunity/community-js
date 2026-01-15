@@ -1,6 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import NavigationSettingsIconButton, { NavigationSettingsIconButtonProps } from './index';
-import React from 'react';
 
 export default {
   title: 'Design System/React UI/Navigation Settings Icon Button',
@@ -8,7 +7,7 @@ export default {
 } as Meta<typeof NavigationSettingsIconButton>;
 
 
-const template = (args) => (
+const template = (args: NavigationSettingsIconButtonProps) => (
   <div style={{width: '100%'}}>
     <NavigationSettingsIconButton {...args} />
   </div>

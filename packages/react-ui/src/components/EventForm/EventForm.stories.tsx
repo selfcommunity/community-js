@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import EventForm, { EventFormProps } from './index';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: EventForm,
 } as Meta<typeof EventForm>;
 
-const template = (args) => (
+const template = (args: EventFormProps) => (
   <div style={{width: 800}}>
     <EventForm {...args} />
   </div>

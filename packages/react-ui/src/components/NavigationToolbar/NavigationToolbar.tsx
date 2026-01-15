@@ -271,7 +271,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     } else {
       const pathName = window.location.pathname;
       if (pathName && (pathName === '/' || pathName === scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))) {
-				scroll(window, {top: 0, behavior: 'smooth'});
+        scroll(window, {top: 0, behavior: 'smooth'});
       }
     }
   }, [onClickHome]);

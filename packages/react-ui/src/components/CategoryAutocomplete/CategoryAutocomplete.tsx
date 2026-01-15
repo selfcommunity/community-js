@@ -205,15 +205,17 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
             {...params}
             {...TextFieldProps}
             margin="dense"
-            InputProps={{
-              ...params.InputProps,
-              autoComplete: 'categories', // disable autocomplete and autofill
-              endAdornment: (
-                <Fragment>
-                  {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </Fragment>
-              )
+            slotProps={{
+              input: {
+                ...params.InputProps,
+                autoComplete: 'categories', // disable autocomplete and autofill
+                endAdornment: (
+                  <>
+                    {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
+                    {params.InputProps.endAdornment}
+                  </>
+                )
+              }
             }}
           />
         );

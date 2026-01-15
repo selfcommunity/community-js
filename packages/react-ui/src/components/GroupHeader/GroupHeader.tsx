@@ -1,13 +1,6 @@
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import {useCallback, useEffect, useMemo, useRef} from 'react';
 import {Avatar, Box, Icon, Paper, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
-import {
-  SCContentType,
-  SCEventPrivacyType,
-  SCEventSubscriptionStatusType,
-  SCGroupPrivacyType,
-  SCGroupSubscriptionStatusType,
-  SCGroupType
-} from '@selfcommunity/types';
+import {SCContentType, SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType} from '@selfcommunity/types';
 import {
   SCPreferences,
   SCPreferencesContextType,

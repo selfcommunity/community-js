@@ -253,7 +253,7 @@ export default function UserSubscribedGroupsWidget(inProps: UserSubscribedGroups
           <List>
             {state.results.slice(0, limit).map((group: SCGroupType) => (
               <ListItem key={group.id}>
-                <Group elevation={0} group={group} groupSubscribeButtonProps={{onSubscribe: handleOnSubscribe}} {...GroupProps} />
+                <Group elevation={0} group={group} GroupSubscribeButtonComponentProps={{onSubscribe: handleOnSubscribe}} {...GroupProps} />
               </ListItem>
             ))}
           </List>

@@ -48,13 +48,13 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root'
-})(({theme}) => ({}));
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface LiveStreamVideoConferenceProps extends BoxProps {
   /**
@@ -314,7 +314,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
       ) : (
         <>
           {error ? (
-            <DialogRoot open maxWidth={'md'} fullWidth>
+            <DialogRoot open maxWidth="md" fullWidth>
               <DialogContent>
                 <Box className={classes.endConferenceWrap}>
                   <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
@@ -322,7 +322,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
                   </Link>
                   {startConferenceEndContent}
                   {error}
-                  <Button variant="contained" color="secondary" component={Link} to={'/'} className={classes.btnBackHome}>
+                  <Button variant="contained" color="secondary" component={Link} to="/" className={classes.btnBackHome}>
                     <FormattedMessage id="ui.liveStreamRoom.button.backHome" defaultMessage="ui.liveStreamRoom.button.backHome" />
                   </Button>
                   {endConferenceEndContent}
@@ -330,7 +330,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
               </DialogContent>
             </DialogRoot>
           ) : liveActive === false ? (
-            <DialogRoot open maxWidth={'md'} fullWidth>
+            <DialogRoot open maxWidth="md" fullWidth>
               <DialogContent>
                 <Box className={classes.endConferenceWrap}>
                   <Link to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})} className={classes.logo}>
@@ -340,7 +340,7 @@ export default function LiveStreamVideoConference(inProps: LiveStreamVideoConfer
                   <Typography variant="h5">
                     <FormattedMessage id="ui.liveStreamRoom.conference.end" defaultMessage="ui.liveStreamRoom.conference.end" />
                   </Typography>
-                  <Button variant="contained" color="secondary" component={Link} to={'/'} onClick={handleBackHome} className={classes.btnBackHome}>
+                  <Button variant="contained" color="secondary" component={Link} to="/" onClick={handleBackHome} className={classes.btnBackHome}>
                     <FormattedMessage id="ui.liveStreamRoom.button.backHome" defaultMessage="ui.liveStreamRoom.button.backHome" />
                   </Button>
                   {endConferenceEndContent}

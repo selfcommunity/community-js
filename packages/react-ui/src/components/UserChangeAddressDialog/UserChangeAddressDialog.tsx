@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {styled, useTheme} from '@mui/material/styles';
 import {Button} from '@mui/material';
 import {SCThemeType, SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
@@ -7,7 +7,6 @@ import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {FormattedMessage, useIntl} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
 import {AddressElement, Elements} from '@stripe/react-stripe-js';
 import {loadStripe, Stripe, StripeElementsOptions} from '@stripe/stripe-js';
 import {getDefaultAppearanceStyle, getDefaultLocale} from '../../utils/payment';
@@ -120,12 +119,12 @@ export default function UserChangeAddressDialog(inProps: UserChangeAddressDialog
       open={open}
       actions={
         <>
-          <Button variant={'outlined'} onClick={handleClose}>
+          <Button variant="outlined" onClick={handleClose}>
             <FormattedMessage defaultMessage="ui.userChangeAddressDialog.btnClose" id="component.userChangeAddressDialog.btnClose" />
           </Button>
-          <LoadingButton loading={loading} disabled={loading} variant={'contained'} onClick={handleSave}>
+          <Button loading={loading} disabled={loading} variant="contained" onClick={handleSave}>
             <FormattedMessage defaultMessage="ui.userChangeAddressDialog.btnSave" id="component.userChangeAddressDialog.btnSave" />
-          </LoadingButton>
+          </Button>
         </>
       }
       {...rest}>

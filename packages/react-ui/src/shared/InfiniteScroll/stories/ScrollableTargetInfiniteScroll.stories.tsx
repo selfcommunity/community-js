@@ -1,5 +1,5 @@
 import ScrollableTargetInfScroll from './ScrollableTargetInfScroll';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 const meta: Meta<typeof ScrollableTargetInfScroll> = {
   title: 'Design System/React UI Shared/InfiniteScroll/ScrollableTargetInfScroll',

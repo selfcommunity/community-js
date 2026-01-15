@@ -262,7 +262,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
             renderTags={(value, getTagProps) => {
               return value.map((option: any, index) => <TagChip key={option.id} tag={option} {...getTagProps({index})} showDescription />);
             }}
-            renderOption={(props, option: SCTagType, {selected, inputValue}) => {
+            renderOption={(props, option: SCTagType, {inputValue}) => {
               const matches = match(option.name, inputValue);
               const parts = parse(option.name, matches);
               return (
@@ -290,10 +290,12 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
                 <TextField
                   {...params}
                   {...TextFieldProps}
-                  InputProps={{
-                    ...params.InputProps,
-                    autoComplete: 'addressing', // disable autocomplete and autofill
-                    endAdornment: <React.Fragment>{params.InputProps.endAdornment}</React.Fragment>
+                  slotProps={{
+                    input: {
+                      ...params.InputProps,
+                      autoComplete: 'addressing', // disable autocomplete and autofill
+                      endAdornment: <>{params.InputProps.endAdornment}</>
+                    }
                   }}
                 />
               );

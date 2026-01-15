@@ -1,4 +1,3 @@
-import React from 'react';
 import {Avatar, Box, Typography, styled, Icon} from '@mui/material';
 import {Link, SCRoutingContextType, useSCRouting, SCRoutes} from '@selfcommunity/react-core';
 import {SCNotificationDeletedForType} from '@selfcommunity/types';
@@ -102,7 +101,9 @@ export default function KindlyNoticeFlagNotification(props: NotificationKindlyNo
             </Link>
           ) : (
             <Typography component="div" color="inherit" className={classes.flagText}>
-              {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
+              {intl.formatMessage(messages[camelCase(notificationObject.type)], {
+                b: (chunks) => <strong key={`${messages[camelCase(notificationObject.type)]}.b`}>{chunks}</strong>
+              })}
             </Typography>
           )}
         </>
@@ -115,13 +116,13 @@ export default function KindlyNoticeFlagNotification(props: NotificationKindlyNo
       footer={
         !isSnippetTemplate && (
           <Box className={classes.contributionWrap}>
-            <Typography variant={'body2'} color={'inherit'} component={'div'} classes={{root: classes.contributionYouWroteLabel}}>
+            <Typography variant="body2" color="inherit" component="div" classes={{root: classes.contributionYouWroteLabel}}>
               <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
             </Typography>
             <Link
               to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}
               className={classes.contributionText}>
-              <Typography component={'span'} variant="body2">
+              <Typography component="span" variant="body2">
                 {getContributionSnippet(notificationObject[contributionType])}
               </Typography>
             </Link>

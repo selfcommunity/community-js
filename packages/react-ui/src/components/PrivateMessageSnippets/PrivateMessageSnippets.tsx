@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import {useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {Button, Card, CardContent, CardProps, Icon, IconButton, List, TextField, useTheme, styled, useMediaQuery} from '@mui/material';
 import PubSub from 'pubsub-js';
 import {
@@ -239,7 +239,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   /**
    * Notification subscriber
    */
-  const subscriber = (msg, data) => {
+  const subscriber = (_msg, data) => {
     const res = data.data;
     updateSnippetsParams(res.thread_id, res.notification_obj.snippet.thread_status, res.notification_obj.snippet.headline);
   };
@@ -265,13 +265,13 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
    * Thread/ Private Message Component subscriptions handlers
    */
   useEffect(() => {
-    const threadSubscriber = PubSub.subscribe('snippetsChannel', (msg, data) => {
+    const threadSubscriber = PubSub.subscribe('snippetsChannel', (_msg, data) => {
       handleSnippetsUpdate(data);
     });
-    const snippetsSubscriber = PubSub.subscribe('snippetsChannelDelete', (msg, data) => {
+    const snippetsSubscriber = PubSub.subscribe('snippetsChannelDelete', (_msg, data) => {
       handleSnippetsUpdate(data, true, SCPrivateMessageType.USER);
     });
-    const snippetsGroupSubscriber = PubSub.subscribe('snippetsChannelDeleteGroup', (msg, data) => {
+    const snippetsGroupSubscriber = PubSub.subscribe('snippetsChannelDeleteGroup', (_msg, data) => {
       handleSnippetsUpdate(data, true, SCPrivateMessageType.GROUP);
     });
 
@@ -312,14 +312,16 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
               size="small"
               onChange={handleChange}
               value={search}
-              InputProps={{
-                className: classes.input,
-                startAdornment: <Icon className={classes.icon}>search</Icon>,
-                endAdornment: (
-                  <IconButton className={classes.clear} disabled={!search} onClick={handleClear} size="small">
-                    <Icon>close</Icon>
-                  </IconButton>
-                )
+              slotProps={{
+                input: {
+                  className: classes.input,
+                  startAdornment: <Icon className={classes.icon}>search</Icon>,
+                  endAdornment: (
+                    <IconButton className={classes.clear} disabled={!search} onClick={handleClear} size="small">
+                      <Icon>close</Icon>
+                    </IconButton>
+                  )
+                }
               }}
             />
             <List>

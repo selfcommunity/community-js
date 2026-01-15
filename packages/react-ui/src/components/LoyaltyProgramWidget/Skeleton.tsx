@@ -1,4 +1,3 @@
-import React from 'react';
 import {Button, CardActions, CardContent, Skeleton, Typography, styled} from '@mui/material';
 import Widget from '../Widget';
 import {PREFIX} from './constants';
@@ -54,7 +53,7 @@ export default function LoyaltyProgramWidgetSkeleton(): JSX.Element {
           <Skeleton animation="wave" variant="circular" width={60} height={30} className={classes.chip} />
           <Skeleton animation="wave" height={20} width={90} variant="rectangular" />
         </Typography>
-        <Button disabled variant={'outlined'} size={'small'}>
+        <Button disabled variant="outlined" size="small">
           <Skeleton animation="wave" height={20} width={70} variant="text" />
         </Button>
       </CardActions>

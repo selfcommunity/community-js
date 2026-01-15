@@ -57,11 +57,11 @@ const Root = styled(Widget, {
     display: 'flex',
     paddingBottom: 0,
     boxShadow: 'inset -1px -3px 7px -4px #CECECE',
-    '-webkit-overflow-scrolling': 'touch',
+    WebkitOverflowScrolling: 'touch',
     overflowX: 'auto',
     overflowY: 'hidden',
     scrollbarWidth: 'none' /* Firefox */,
-    '-ms-overflow-style': 'none' /* IE and Edge */,
+    MsOverflowStyle: 'none' /* IE and Edge */,
     '&::-webkit-scrollbar': {
       display: 'none'
     }
@@ -367,9 +367,9 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
    * Render tutorial
    */
   const tutorial = (
-    <Grid container spacing={isAdmin ? 1 : 3} justifyContent="center" className={classes.tutorial}>
+    <Grid container width="100%" spacing={isAdmin ? 1 : 3} justifyContent="center" className={classes.tutorial}>
       {!isTutorialOpen && (
-        <Grid item xs="auto" alignItems="center" justifyContent="center">
+        <Grid size="auto" alignItems="center" justifyContent="center">
           <IconButton size="medium" onClick={handleOpenTutorial}>
             <Icon>info</Icon>
           </IconButton>
@@ -377,17 +377,17 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
       )}
       <Collapse in={isTutorialOpen} className={classes.tutorialContent}>
         {isTutorialOpen && (
-          <Grid item xs="auto">
-            <Typography variant={'body2'} className={classes.tutorialTitle} component={'div'}>
+          <Grid size="auto">
+            <Typography variant="body2" className={classes.tutorialTitle} component="div">
               <Grow in timeout={1000}>
                 <span>{actions[tutorialIndex].title}</span>
               </Grow>
-              <IconButton size={'small'} className={classes.tutorialTitleClose} onClick={handleCloseTutorial}>
+              <IconButton size="small" className={classes.tutorialTitleClose} onClick={handleCloseTutorial}>
                 <Icon>close</Icon>
               </IconButton>
             </Typography>
             <Grow in timeout={1200}>
-              <Typography variant={'body2'} className={classes.tutorialDesc}>
+              <Typography variant="body2" className={classes.tutorialDesc}>
                 {actions[tutorialIndex].content}
               </Typography>
             </Grow>
@@ -400,7 +400,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
                   <FormattedMessage id="ui.platformWidget.tutorial.previous" defaultMessage="ui.platformWidget.tutorial.previous" />
                 )}
               </Button>
-              <Typography component={'div'}>
+              <Typography component="div">
                 {tutorialIndex + 1}/{actions.length}
               </Typography>
               <Button
@@ -426,8 +426,8 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
    * Renders platform card
    */
   const content = (
-    <Grid container spacing={isAdmin ? 1 : 3} justifyContent="center" className={classes.content}>
-      <Grid item xs={12}>
+    <Grid container width="100%" spacing={isAdmin ? 1 : 3} justifyContent="center" className={classes.content}>
+      <Grid size="grow">
         {title ? (
           title
         ) : (
@@ -440,16 +440,16 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
           </Box>
         )}
       </Grid>
-      <Grid item xs={12} className={classes.actions}>
-        <Grid item xs={1} className={classes.action}></Grid>
+      <Grid size={12} className={classes.actions}>
+        <Grid size={1} className={classes.action} />
         {actions.map((a: PlatformWidgetActionType, i: number) => {
           return (
-            <Grid key={i} item xs="auto" className={classNames(classes.action, {[classes.actionHighlighted]: tutorialIndex === i && isTutorialOpen})}>
+            <Grid key={i} size="auto" className={classNames(classes.action, {[classes.actionHighlighted]: tutorialIndex === i && isTutorialOpen})}>
               {a.render}
             </Grid>
           );
         })}
-        <Grid item xs={1} className={classes.action}></Grid>
+        <Grid size={1} className={classes.action} />
       </Grid>
     </Grid>
   );

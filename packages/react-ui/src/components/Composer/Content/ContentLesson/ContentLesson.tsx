@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import {Box, BoxProps, Icon, IconButton, InputAdornment, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
 import Editor, {EditorProps} from '../../../Editor';
@@ -21,7 +21,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'ContentLessonRoot'
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface ContentLessonProps extends Omit<BoxProps, 'value' | 'onChange'> {
   /**
@@ -66,8 +66,8 @@ export default (props: ContentLessonProps): JSX.Element => {
   const {error: generalError = null} = {...error};
   const mediaObjectTypes = [File, Link];
   const [medias, setMedias] = useState<SCMediaType[]>(value?.medias || []);
-  const [openLink, setOpenLink] = useState<boolean>();
-  const linkInputRef = useRef<HTMLInputElement>(null);
+  const [openLink, setOpenLink] = useState<boolean>(false);
+  const linkInputRef = useRef<HTMLInputElement | null>(null);
 
   // HANDLERS
 

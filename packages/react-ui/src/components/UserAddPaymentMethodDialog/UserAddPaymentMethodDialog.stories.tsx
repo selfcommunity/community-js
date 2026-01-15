@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import UserAddPaymentMethodDialog from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import UserAddPaymentMethodDialog, { UserAddPaymentMethodDialogProps } from './index';
 
 export default {
   title: 'Design System/React UI/Payments/UserAddPaymentMethodDialog',
@@ -8,12 +8,12 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 7}}
+      table: {defaultValue: {summary: '7'}}
     }
   }
 } as Meta<typeof UserAddPaymentMethodDialog>;
 
-const template = (args) => (
+const template = (args: UserAddPaymentMethodDialogProps) => (
   <div style={{width: '100%'}}>
     <UserAddPaymentMethodDialog {...args} />
   </div>

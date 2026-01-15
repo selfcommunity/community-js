@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import UserBillingInfo from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import UserBillingInfo, { UserBillingInfoProps } from './index';
 
 export default {
   title: 'Design System/React UI/Payments/UserBillingInfo',
@@ -8,12 +8,12 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 7}}
+      table: {defaultValue: {summary: '7'}}
     }
   }
 } as Meta<typeof UserBillingInfo>;
 
-const template = (args) => (
+const template = (args: UserBillingInfoProps) => (
   <div style={{width: '100%'}}>
     <UserBillingInfo {...args} />
   </div>

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import { SCEventTemplateType } from '../../types/event';
-import Event from './index';
+import Event, { EventProps } from './index';
 
 export default {
 	title: 'Design System/React UI/Event',
@@ -9,12 +9,12 @@ export default {
 		eventId: {
 			control: { type: 'number' },
 			description: 'Event Id',
-			table: { defaultValue: { summary: 1 } }
+			table: { defaultValue: { summary: '1' } }
 		},
 		elevation: {
 			control: { type: 'number' },
 			description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-			table: { defaultValue: { summary: 1 } }
+			table: { defaultValue: { summary: '1' } }
 		},
 		variant: {
 			options: ['elevation', 'outlined'],
@@ -25,7 +25,7 @@ export default {
 	}
 } as Meta<typeof Event>;
 
-const template = (args) => (
+const template = (args: EventProps) => (
 	<div style={{ maxWidth: 400 }}>
 		<Event {...args} />
 	</div>

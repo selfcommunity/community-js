@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import NotificationFeedSkeletonTemplate from './Skeleton';
 
 export default {
@@ -8,8 +8,9 @@ export default {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 export const Base: StoryObj<typeof NotificationFeedSkeletonTemplate> = {
-  render: (args) => (
+  render: () => (
     <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
-      <NotificationFeedSkeletonTemplate {...args} />
-    </div>)
+      <NotificationFeedSkeletonTemplate />
+    </div>
+    )
 };

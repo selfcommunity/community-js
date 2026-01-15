@@ -1,5 +1,5 @@
 import ScrolleableTop from './ScrolleableTop';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
 const meta: Meta<typeof ScrolleableTop> = {
   title: 'Design System/React UI Shared/InfiniteScroll/ScrolleableTop',

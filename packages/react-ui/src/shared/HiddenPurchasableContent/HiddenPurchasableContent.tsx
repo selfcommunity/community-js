@@ -1,9 +1,7 @@
 import React from 'react';
-import {styled} from '@mui/material/styles';
-import {Typography} from '@mui/material';
+import {styled, Typography} from '@mui/material';
 import Widget, {WidgetProps} from '../../components/Widget';
 import {useThemeProps} from '@mui/system';
-import {SCThemeType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 
@@ -17,8 +15,8 @@ const classes = {
 const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}: {theme: SCThemeType}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 export interface HiddenPurchasableContentProps extends Pick<WidgetProps, Exclude<keyof WidgetProps, 'id'>> {
   /**

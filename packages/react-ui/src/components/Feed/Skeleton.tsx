@@ -1,5 +1,5 @@
 import React from 'react';
-import {styled, Grid, Hidden} from '@mui/material';
+import {styled, Grid} from '@mui/material';
 import {GenericSkeleton} from '../Skeleton';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
@@ -71,15 +71,13 @@ export default function FeedSkeleton(props: FeedSkeletonProps): JSX.Element {
     className
   } = props;
   return (
-    <Root container spacing={2} className={classNames(classes.root, className)}>
-      <Grid item xs={12} md={7}>
+    <Root container width="100%" spacing={2} className={classNames(classes.root, className)}>
+      <Grid size={{xs: 12, md: 7}}>
         <div className={classes.left}>{children}</div>
       </Grid>
-      <Hidden smDown>
-        <Grid item xs={12} md={5}>
-          <div className={classes.right}>{sidebar}</div>
-        </Grid>
-      </Hidden>
+      <Grid sx={{display: {xs: 'none', sm: 'block'}}} size={{xs: 12, md: 5}}>
+        <div className={classes.right}>{sidebar}</div>
+      </Grid>
     </Root>
   );
 }

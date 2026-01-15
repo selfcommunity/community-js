@@ -1,18 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import EventLocationWidget from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import EventLocationWidget, { EventLocationWidgetProps } from './index';
 
 export default {
   title: 'Design System/React UI/Event Location Widget ',
   component: EventLocationWidget
 } as Meta<typeof EventLocationWidget>;
 
-const template = (args) => (
+const template = (args: EventLocationWidgetProps) => (
     <EventLocationWidget {...args} />
 );
 
-export const Base: StoryObj<EventLocationWidget> = {
+export const Base: StoryObj<typeof EventLocationWidget> = {
   args: {
-    eventId: 129
+    eventId: 2183
     // event: {
     //   geolocation_lng: 9.11638659245195,
     //   geolocation_lat: 39.216251400000004,

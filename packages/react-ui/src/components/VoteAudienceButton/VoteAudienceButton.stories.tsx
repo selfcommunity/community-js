@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import VoteAudienceButton from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import VoteAudienceButton, { VoteAudienceButtonProps } from './index';
+import { SCContributionType } from '@selfcommunity/types';
 
 
 export default {
@@ -8,16 +9,16 @@ export default {
 } as Meta<typeof VoteAudienceButton>;
 
 
-const template = (args) => (
+const template = (args: VoteAudienceButtonProps) => (
   <div style={{width: '100%'}}>
     <VoteAudienceButton {...args} />
   </div>
 );
 
-export const Base: StoryObj<VoteAudienceButton> =  {
+export const Base: StoryObj<typeof VoteAudienceButton> =  {
   args: {
     contributionId: 1171,
-    contributionType: 'post',
+    contributionType: SCContributionType.POST,
     size: 'medium'
   },
   render: template

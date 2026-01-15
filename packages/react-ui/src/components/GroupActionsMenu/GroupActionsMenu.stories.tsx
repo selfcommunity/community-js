@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import GroupActionsMenu from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import GroupActionsMenu, { GroupActionsMenuProps } from './index';
 
 export default {
   title: 'Design System/React UI/GroupActionsMenu',
@@ -8,7 +8,7 @@ export default {
     eventId: {
       control: {type: 'number'},
       description: 'event Id',
-      table: {defaultValue: {summary: 184}}
+      table: {defaultValue: {summary: '184'}}
     }
   },
   args: {
@@ -16,8 +16,8 @@ export default {
   }
 } as Meta<typeof GroupActionsMenu>;
 
-const template = (args) => <GroupActionsMenu {...args} />;
+const template = (args: GroupActionsMenuProps) => <GroupActionsMenu {...args} />;
 
-export const Base: StoryObj<GroupActionsMenu> = {
+export const Base: StoryObj<typeof GroupActionsMenu> = {
   render: template
 };

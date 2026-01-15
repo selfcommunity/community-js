@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import { INITIAL_VIEWPORTS } from 'storybook/viewport';
 import NavigationToolbar from './index';
 import {AppBar, Box, Button, Grid, IconButton, Typography, Icon, Paper} from '@mui/material';
-import React, {useCallback, useState} from 'react';
+import {useCallback, useState} from 'react';
 import {NavigationMenuDrawer} from '../NavigationMenuIconButton';
 
 export default {
@@ -17,13 +17,13 @@ export default {
   },
 } as Meta<typeof NavigationToolbar>;
 
-const template = (args) => (
+const template = (args: any) => (
   <AppBar position="relative" elevation={0}>
     <NavigationToolbar {...args} />
   </AppBar>
 );
 
-const templateContent = (args) => {
+const templateContent = (args: any) => {
 
 	const [open, setOpen] = useState<boolean>(true);
 	const handleIconClick = useCallback(() => {
@@ -35,7 +35,7 @@ const templateContent = (args) => {
 			<NavigationToolbar {...args} NavigationMenuIconButtonComponentProps={{showDrawer: false, onMenuIconClick: handleIconClick}} />
 		</AppBar>
 		<NavigationMenuDrawer
-			variant={'persistent'}
+			variant="persistent"
 			open={open}
 			showDrawerHeader={false}
 			drawerHeaderContent={null}
@@ -54,21 +54,20 @@ const templateContent = (args) => {
 			}}
 		/>
 		<Box sx={{flexGrow: 1, marginTop: '70px'}}>
-			<Grid container sx={{width: '100%'}}>
-				<Grid item xs={2}></Grid>
-				<Grid item xs={8}>
+			<Grid container width="100%" sx={{width: '100%'}}>
+				<Grid size={2}></Grid>
+				<Grid size={8}>
 					<Paper sx={{height: 200, width: '100%'}}>
 						Content
 					</Paper>
 				</Grid>
-				<Grid item xs={2}></Grid>
+				<Grid size={2}></Grid>
 			</Grid>
 		</Box>
 	</Box>
 };
 
-// @ts-ignore
-export const Base: StoryObj<NavigationToolbar> = {
+export const Base: StoryObj<typeof NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
 		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q)},
@@ -82,15 +81,14 @@ export const Base: StoryObj<NavigationToolbar> = {
     },
 		NavigationMenuIconButtonComponentProps: {
 			DrawerProps: {
-				drawerFooterContent: ({handleCloseMenuDrawer}) => <Button onClick={handleCloseMenuDrawer}>Close</Button>
+				drawerFooterContent: ({handleCloseMenuDrawer}) => <Button onClick={(event) => handleCloseMenuDrawer(event, 'backdropClick')}>Close</Button>
 			}
 		}
   },
   render: template
 };
 
-// @ts-ignore
-export const Custom: StoryObj<NavigationToolbar> = {
+export const Custom: StoryObj<typeof NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
 		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q)},
@@ -100,8 +98,7 @@ export const Custom: StoryObj<NavigationToolbar> = {
   render: template
 };
 
-// @ts-ignore
-export const Actions: StoryObj<NavigationToolbar> = {
+export const Actions: StoryObj<typeof NavigationToolbar> = {
   args: {
     /* the args you need here will depend on your component */
 		SearchAutocompleteComponentProps: {onSearch: (q) => console.log(q)},
@@ -129,8 +126,7 @@ export const Actions: StoryObj<NavigationToolbar> = {
   render: template
 };
 
-// @ts-ignore
-export const CustomContent: StoryObj<NavigationToolbar> = {
+export const CustomContent: StoryObj<typeof NavigationToolbar> = {
 	args: {
 		/* the args you need here will depend on your component */
 		NavigationMenuIconButtonComponentProps: {

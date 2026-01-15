@@ -42,11 +42,11 @@ import {
   useMediaQuery,
   Icon,
   styled,
-  useTheme
+  useTheme,
+  Button
 } from '@mui/material';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_TITLE_MAX_LENGTH, COMPOSER_TYPE_POLL} from '../../constants/Composer';
 import {MEDIA_TYPE_SHARE} from '../../constants/Media';
-import LoadingButton from '@mui/lab/LoadingButton';
 import AudienceLayer from './Layer/AudienceLayer';
 import {iOS, isClientSideRendering, random, stripHtml} from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -368,7 +368,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   const [loadError, setLoadError] = useState<boolean>(false);
 
   // REFS
-  const dialogRef = useRef<any>();
+  const dialogRef = useRef<any>(null);
   const unloadRef = useRef<boolean>(false);
   const pointerStartY = useRef(null);
 
@@ -576,7 +576,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     () =>
       handleAddLayer({
         name: 'category',
-        Component: CategoryLayer,
+        Component: CategoryLayer as (props: any) => React.ReactElement<unknown, string | React.JSXElementConstructor<any>>,
         ComponentProps: {
           onClose: handleRemoveLayer,
           onSave: handleChangeCategories,
@@ -636,7 +636,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
         : addressing;
     handleAddLayer({
       name: 'audience',
-      Component: AudienceLayer,
+      Component: AudienceLayer as (props: any) => React.ReactElement<unknown, string | React.JSXElementConstructor<any>>,
       ComponentProps: {
         onClose: handleRemoveLayer,
         onSave: handleChangeAudience,
@@ -654,7 +654,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     () =>
       handleAddLayer({
         name: 'location',
-        Component: LocationLayer,
+        Component: LocationLayer as (props: any) => React.ReactElement<unknown, string | React.JSXElementConstructor<any>>,
         ComponentProps: {
           onClose: handleRemoveLayer,
           onSave: handleChangeLocation,
@@ -673,7 +673,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
     () =>
       handleAddLayer({
         name: 'scheduled_at',
-        Component: ScheduledLayer,
+        Component: ScheduledLayer as (props: any) => React.ReactElement<unknown, string | React.JSXElementConstructor<any>>,
         ComponentProps: {
           onClose: handleRemoveLayer,
           onSave: handleChangeScheduled,
@@ -703,7 +703,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   }, []);
 
   const handleMediaTriggerClick = useCallback(
-    (mediaObjectType: SCMediaObjectType) => (e: React.MouseEvent<HTMLButtonElement>) => {
+    (mediaObjectType: SCMediaObjectType) => () => {
       if (mediaObjectType.layerComponent) {
         handleAddLayer({
           name: mediaObjectType.name,
@@ -878,7 +878,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       if (reason && canSubmit) {
         handleAddLayer({
           name: 'close',
-          Component: CloseLayer,
+          Component: CloseLayer as (props: any) => React.ReactElement<unknown, string | React.JSXElementConstructor<any>>,
           ComponentProps: {
             onClose: handleRemoveLayer,
             onSave: () => {
@@ -915,7 +915,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
       if (canSubmit) {
         handleAddLayer({
           name: 'close',
-          Component: CloseLayer,
+          Component: CloseLayer as (props: any) => React.ReactElement<unknown, string | React.JSXElementConstructor<any>>,
           ComponentProps: {
             onClose: handleRemoveLayer,
             onSave: handleClose
@@ -1016,8 +1016,7 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
   return (
     <Root
       ref={dialogRef}
-      TransitionComponent={DialogTransition}
-      slots={{backdrop: BackdropScrollDisabled}}
+      slots={{backdrop: BackdropScrollDisabled, transition: DialogTransition}}
       onClose={handleClose}
       {...rest}
       disableEscapeKeyDown
@@ -1030,13 +1029,13 @@ export default function Composer(inProps: ComposerProps): JSX.Element {
           <IconButton onClick={handleClosePrompt}>
             <Icon>close</Icon>
           </IconButton>
-          <LoadingButton size="small" type="submit" color="secondary" variant="contained" disabled={!canSubmit} loading={isSubmitting}>
+          <Button size="small" type="submit" color="secondary" variant="contained" disabled={!canSubmit} loading={isSubmitting}>
             {scheduledPostsEnabled && !scheduled_at ? (
               <FormattedMessage id="ui.composer.submit.now" defaultMessage="ui.composer.submit.now" />
             ) : (
               <FormattedMessage id="ui.composer.submit" defaultMessage="ui.composer.submit" />
             )}
-          </LoadingButton>
+          </Button>
         </DialogTitle>
         <DialogContent className={classes.content}>
           <Attributes

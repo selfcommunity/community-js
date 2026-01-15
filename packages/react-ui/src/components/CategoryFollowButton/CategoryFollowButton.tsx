@@ -1,5 +1,5 @@
-import React, {useEffect, useMemo, useState} from 'react';
-import {styled} from '@mui/material';
+import {useEffect, useMemo, useState} from 'react';
+import {Button, styled} from '@mui/material';
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {
   SCContextType,
@@ -15,7 +15,6 @@ import {
 } from '@selfcommunity/react-core';
 import {SCCategoryAutoFollowType, SCCategoryType, SCContentType} from '@selfcommunity/types';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -27,11 +26,11 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(LoadingButton, {
+const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 export interface CategoryFollowButtonProps {
   /**

@@ -7,7 +7,6 @@ import {FormattedMessage} from 'react-intl';
 import {LIVESTREAM_DEFAULT_SETTINGS} from './constants';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import UpScalingTierBadge from '../../shared/UpScalingTierBadge';
-import {CONFIGURATIONS_LIVE_VIDEO_CONFERENCE_ENABLED} from '@selfcommunity/react-core/src/constants/Preferences';
 
 export const PREFIX = 'SCLiveStreamFormSettings';
 

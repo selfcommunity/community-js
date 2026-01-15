@@ -1,9 +1,7 @@
-import React from 'react';
 import {SCContextType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {SCFeedObjectType, SCPollChoiceType} from '@selfcommunity/types';
-import {Box, Card, Typography, styled, Icon, LinearProgress, LinearProgressProps} from '@mui/material';
+import {Box, Card, Typography, styled, Icon, LinearProgress, LinearProgressProps, Button} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
 import classNames from 'classnames';
 import {PREFIX} from '../../constants';
 
@@ -95,7 +93,7 @@ export default function Choice(props: ChoiceProps): JSX.Element {
     <Root className={classNames(classes.root, className)} {...rest}>
       <Typography className={classes.label}>{choiceObj.choice}</Typography>
       <LinearProgressWithLabel className={classes.progress} value={renderVotes(choiceObj.vote_count, votes)} />
-      <LoadingButton
+      <Button
         loading={isVoting === choiceObj.id}
         variant={choiceObj.voted ? 'contained' : 'outlined'}
         size="small"
@@ -107,7 +105,7 @@ export default function Choice(props: ChoiceProps): JSX.Element {
         ) : (
           <FormattedMessage id="ui.feedObject.poll.choice.vote" defaultMessage="ui.feedObject.poll.choice.vote" />
         )}
-      </LoadingButton>
+      </Button>
     </Root>
   );
 }

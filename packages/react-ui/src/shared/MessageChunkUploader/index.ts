@@ -57,7 +57,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
 
   // STATE
   const [chunks, setChunks] = useState({});
-  const setChunk: Function = (chunk: SCMessageChunkType) => {
+  const setChunk = (chunk: SCMessageChunkType) => {
     const _chunks = {...chunkStateRef.current.chunks, [chunk.id]: {...chunkStateRef.current.chunks[chunk.id], ...chunk}};
     setChunks(_chunks);
     chunkStateRef.current.chunks = _chunks;
@@ -230,7 +230,7 @@ export default (props: MessageChunkUploaderProps): JSX.Element => {
     if (items.length == 0) {
       return Promise.resolve({options});
     } else if (isImageType(items[0].file.type)) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         Promise.all(
           items.map(async (item) => {
             return {...item, file: item.file.type === 'image/gif' ? item.file : await createThumbnail(item.file)};

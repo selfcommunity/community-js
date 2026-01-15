@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import {useState} from 'react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import UserProfileTemplate from './index';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import {UserProfileEdit} from '@selfcommunity/react-ui';
@@ -49,7 +49,11 @@ export const Base: StoryObj<typeof UserProfile> = {
       <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
         <UserProfileTemplate userId={_userId} {...rest} onEditClick={isMe ? () => setEdit(true) : null} />
         {isMe && (
-          <Dialog fullWidth open={edit} onClose={() => setEdit(false)} scroll="body" PaperProps={{sx: {mt: '90px', verticalAlign: 'top'}}}>
+          <Dialog fullWidth open={edit} onClose={() => setEdit(false)} scroll="body" slotProps={{
+            paper: {
+              sx: {mt: '90px', verticalAlign: 'top'}
+            }
+          }}>
             <DialogTitle>Edit Profile</DialogTitle>
             <DialogContent>
               <UserProfileEdit AccordionProps={{elevation: 0}} />

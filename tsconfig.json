@@ -18,5 +18,7 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "jsx": "react-jsx",
+    "module": "esnext",
+    "moduleResolution": "node"
   }
 }

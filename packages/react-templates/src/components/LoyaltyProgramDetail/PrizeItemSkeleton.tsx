@@ -1,4 +1,3 @@
-import React from 'react';
 import {Typography, CardContent, Skeleton, CardActions, CardMedia, Button, styled} from '@mui/material';
 import {Widget} from '@selfcommunity/react-ui';
 import {PREFIX} from './constants';
@@ -43,10 +42,10 @@ export default function PrizeItemSkeleton(): JSX.Element {
         </Typography>
       </CardContent>
       <CardActions className={classes.actions}>
-        <Button disabled variant={'outlined'} size={'small'}>
+        <Button disabled variant="outlined" size="small">
           <Skeleton animation="wave" height={10} width={50} variant="text" />
         </Button>
-        <Button disabled variant={'text'} size={'small'}>
+        <Button disabled variant="text" size="small">
           <Skeleton animation="wave" height={20} width={70} variant="text" />
         </Button>
       </CardActions>

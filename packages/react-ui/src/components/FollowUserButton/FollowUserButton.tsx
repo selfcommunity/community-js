@@ -1,7 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {styled} from '@mui/material';
+import {useContext, useEffect, useState} from 'react';
+import {Button, styled} from '@mui/material';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import classNames from 'classnames';
@@ -25,7 +24,7 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const FollowButton = styled(LoadingButton, {
+const FollowButton = styled(Button, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (props, styles) => styles.root

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import EditGroupButton, { EditGroupButtonProps } from './index';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: EditGroupButton,
 } as Meta<typeof EditGroupButton>;
 
-const template = (args) => (
+const template = (args: EditGroupButtonProps) => (
   <div style={{width: 800}}>
     <EditGroupButton {...args} />
   </div>

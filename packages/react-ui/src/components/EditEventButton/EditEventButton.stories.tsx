@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import EditEventButton, { EditEventButtonProps } from './index';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: EditEventButton,
 } as Meta<typeof EditEventButton>;
 
-const template = (args) => (
+const template = (args: EditEventButtonProps) => (
   <div style={{width: 800}}>
     <EditEventButton {...args} />
   </div>

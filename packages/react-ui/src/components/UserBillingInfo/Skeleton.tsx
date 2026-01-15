@@ -1,4 +1,3 @@
-import React from 'react';
 import {Box, Grid, Skeleton} from '@mui/material';
 import {UserBillingInfoMode} from '../../constants/Billing';
 
@@ -39,26 +38,26 @@ export default function UserBillingInfoSkeleton(props: UserSkeletonBillingInfoPr
     );
   }
   return (
-    <Grid container spacing={3}>
-      <Grid item xs={12} sm={6}>
+    <Grid container width="100%" spacing={3}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid size={{xs: 12, sm: 6}}>
         <Skeleton variant="rectangular" height={50} />
       </Grid>
-      <Grid item xs={12} sm={6} justifyContent={'center'}>
+      <Grid size={{xs: 12, sm: 6}} justifyContent="center">
         <Skeleton variant="rounded" height={30} width={100} />
       </Grid>
     </Grid>

@@ -1,10 +1,9 @@
-import React, {useContext, useRef, useState} from 'react';
-import {Alert, styled, Icon} from '@mui/material';
+import {useContext, useRef, useState} from 'react';
+import {Alert, styled, Icon, Button} from '@mui/material';
 import {SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
-import {LoadingButton} from '@mui/lab';
 import {defineMessages} from 'react-intl';
 
 const messages = defineMessages({
@@ -18,7 +17,7 @@ const classes = {
   root: `${PREFIX}-upload-course-cover-root`
 };
 
-const Root = styled(LoadingButton, {
+const Root = styled(Button, {
   name: PREFIX,
   slot: 'UploadCourseCoverRoot'
 })(() => ({}));

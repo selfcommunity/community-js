@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import IncubatorSkeleton from './Skeleton';
 
 export default {
@@ -6,13 +6,13 @@ export default {
   component: IncubatorSkeleton
 } as Meta<typeof IncubatorSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <IncubatorSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<IncubatorSkeleton> = {
+export const Base: StoryObj<typeof IncubatorSkeleton> = {
   args: {
     contained: true
   },

@@ -64,7 +64,7 @@ export interface GroupAutocompleteProps
 const Root = styled(Autocomplete, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 /**
  * > API documentation for the Community-JS Group Autocomplete component. Learn about the available props and the CSS API.
@@ -134,7 +134,7 @@ const GroupAutocomplete = (inProps: GroupAutocompleteProps): JSX.Element => {
     setOpen(false);
   };
 
-  const handleChange = (event: SyntheticEvent, value) => {
+  const handleChange = (_event: SyntheticEvent, value) => {
     setValue(value);
   };
 
@@ -184,15 +184,17 @@ const GroupAutocomplete = (inProps: GroupAutocompleteProps): JSX.Element => {
             {...params}
             {...TextFieldProps}
             margin="dense"
-            InputProps={{
-              ...params.InputProps,
-              autoComplete: 'groups', // disable autocomplete and autofill
-              endAdornment: (
-                <React.Fragment>
-                  {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              )
+            slotProps={{
+              input: {
+                ...params.InputProps,
+                autoComplete: 'groups', // disable autocomplete and autofill
+                endAdornment: (
+                  <>
+                    {isLoading && <CircularProgress color="inherit" size={20} />}
+                    {params.InputProps.endAdornment}
+                  </>
+                )
+              }
             }}
           />
         );

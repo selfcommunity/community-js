@@ -1,4 +1,3 @@
-import React from 'react';
 import {Box, DialogActions, DialogContent, DialogTitle, styled, Skeleton} from '@mui/material';
 import {PREFIX} from './constants';
 
@@ -65,7 +64,7 @@ export default function ConsentSolutionSkeleton(): JSX.Element {
       </DialogContent>
       <DialogContent className={classes.consent} dividers>
         <Skeleton height={64} className={classes.consentSwitch} />
-        <Skeleton animation="wave" height={20} width="50%" variant={'text'} className={classes.consentSwitchLabel}/>
+        <Skeleton animation="wave" height={20} width="50%" variant="text" className={classes.consentSwitchLabel} />
       </DialogContent>
       <DialogActions className={classes.actions}>
         <Skeleton animation="wave" height={40} width="20%" />

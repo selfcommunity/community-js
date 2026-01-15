@@ -157,6 +157,22 @@ To get everything setup and dependencies installed:
 
 - Follow the steps above
 - `yarn storybook` to start storybook
+- `yarn storybook-https` to start storybook with HTTPS
+
+### Running Storybook with HTTPS
+
+To run Storybook with HTTPS, you need to install mkcert first:
+
+- macOS: `brew install mkcert`
+- Linux: `apt install mkcert` or equivalent for your distribution
+- Windows: `choco install mkcert` or download from https://github.com/FiloSottile/mkcert/releases
+
+Then you can run:
+```sh
+yarn storybook-https
+```
+
+This will generate valid SSL certificates for localhost and start Storybook with HTTPS enabled.
 
 [npm-image]: https://img.shields.io/npm/v/Community-JS.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/Community-JS

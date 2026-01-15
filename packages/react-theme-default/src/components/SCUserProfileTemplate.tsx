@@ -8,7 +8,9 @@ const Component = {
       '& .SCUserProfileTemplate-tags': {
         marginTop: theme.spacing(2),
         marginLeft: theme.spacing(2),
-        justifyContent: 'start'
+        justifyContent: 'start',
+        flexWrap: 'wrap',
+        gap: theme.spacing(2)
       },
       '& .SCUserProfileTemplate-counters': {
         marginLeft: theme.spacing(1),

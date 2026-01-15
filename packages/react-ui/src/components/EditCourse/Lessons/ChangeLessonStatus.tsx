@@ -1,4 +1,4 @@
-import {Box, Icon, MenuItem, Select, SelectChangeEvent, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Box, Button, Icon, MenuItem, Select, SelectChangeEvent, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {Fragment, memo, MouseEvent, useCallback, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../constants';
@@ -6,7 +6,6 @@ import {SCThemeType} from '@selfcommunity/react-core';
 import MenuRow from '../MenuRow';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
 import {SCCourseLessonStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
@@ -128,7 +127,7 @@ function ChangeLessonStatus(props: ChangeLessonStatusProps) {
         <MenuRow buttonClassName={hasPublished ? classes.changeLessonStatusPublishedWrapper : undefined} icon={icon}>
           {OPTIONS.map((option, i) => (
             <MenuItem key={i}>
-              <LoadingButton
+              <Button
                 size="small"
                 color="inherit"
                 onClick={handleClick}
@@ -144,7 +143,7 @@ function ChangeLessonStatus(props: ChangeLessonStatusProps) {
                 <Typography variant="body1">
                   <FormattedMessage id={option.id} defaultMessage={option.id} />
                 </Typography>
-              </LoadingButton>
+              </Button>
             </MenuItem>
           ))}
         </MenuRow>
@@ -157,7 +156,7 @@ function ChangeLessonStatus(props: ChangeLessonStatusProps) {
           disabled={disabled}>
           {OPTIONS.map((option, i) => (
             <MenuItem key={i} value={option.value}>
-              <LoadingButton
+              <Button
                 size="small"
                 color="inherit"
                 loading={loading}
@@ -171,7 +170,7 @@ function ChangeLessonStatus(props: ChangeLessonStatusProps) {
                 <Typography variant="body1">
                   <FormattedMessage id={option.id} defaultMessage={option.id} />
                 </Typography>
-              </LoadingButton>
+              </Button>
             </MenuItem>
           ))}
         </Select>

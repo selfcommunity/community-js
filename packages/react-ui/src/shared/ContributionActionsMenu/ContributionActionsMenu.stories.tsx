@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import ContributionActionsMenu from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import ContributionActionsMenu, { ContributionActionsMenuProps } from './index';
 import {SCContributionType} from '@selfcommunity/types';
 
 export default {
@@ -9,7 +9,7 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 379}}
+      table: {defaultValue: {summary: '379'}}
     },
     feedObjectType: {
       options: [SCContributionType.POST, SCContributionType.DISCUSSION, SCContributionType.STATUS],
@@ -23,7 +23,7 @@ export default {
   }
 } as Meta<typeof ContributionActionsMenu>;
 
-const template = (args) => <ContributionActionsMenu {...args} />;
+const template = (args: ContributionActionsMenuProps) => <ContributionActionsMenu {...args} />;
 
 export const Base: StoryObj<typeof ContributionActionsMenu> = {
   render: template

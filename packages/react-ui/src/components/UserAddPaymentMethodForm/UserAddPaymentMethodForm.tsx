@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
-import {styled, useTheme} from '@mui/material/styles';
-import {SCThemeType, SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
+import {SCUserContextType, useSCPaymentsEnabled, useSCUser} from '@selfcommunity/react-core';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PaymentMethod as StripePaymentMethod} from '@stripe/stripe-js';
 import {loadStripe, Stripe} from '@stripe/stripe-js';
-import {Button, Paper, Stack, Typography} from '@mui/material';
+import {Button, Paper, Stack, styled, Typography} from '@mui/material';
 import {AddressElement, PaymentElement, useElements} from '@stripe/react-stripe-js';
 import {getDefaultLocale} from '../../utils/payment';
-import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
 
 const classes = {
@@ -75,7 +73,7 @@ export default function UserAddPaymentMethodForm(inProps: UserAddPaymentMethodFo
     props: inProps,
     name: PREFIX
   });
-  const {className = null, customer, collectBillingAddress = false, handleSuccess, handleClose, ...rest} = props;
+  const {className = null, customer, collectBillingAddress = false, handleSuccess, handleClose} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -171,16 +169,16 @@ export default function UserAddPaymentMethodForm(inProps: UserAddPaymentMethodFo
           <Paper variant="outlined" className={classes.address}>
             {Object.keys(addressState).length && !isEditingBillingAddress ? (
               <>
-                <Typography variant={'body1'}>{addressState.name}</Typography>
-                <Typography variant={'body1'}>
+                <Typography variant="body1">{addressState.name}</Typography>
+                <Typography variant="body1">
                   {addressState.address.line1}
                   <br />
                   {addressState.address.line2}
                 </Typography>
-                <Typography variant={'body1'}>
+                <Typography variant="body1">
                   {addressState.address.postal_code} - {addressState.address.city} - {addressState.address.country}
                 </Typography>
-                <Button sx={{mt: 1}} variant={'contained'} disabled={!elements} onClick={() => setIsEditingBillingAddress(!isEditingBillingAddress)}>
+                <Button sx={{mt: 1}} variant="contained" disabled={!elements} onClick={() => setIsEditingBillingAddress(!isEditingBillingAddress)}>
                   Change
                 </Button>
               </>
@@ -197,13 +195,10 @@ export default function UserAddPaymentMethodForm(inProps: UserAddPaymentMethodFo
                 />
                 <Button
                   sx={{mt: 1}}
-                  variant={'contained'}
+                  variant="contained"
                   disabled={!elements || loading || !ready}
                   onClick={() => setIsEditingBillingAddress(!isEditingBillingAddress)}>
-                  <FormattedMessage
-                    id={'ui.userAddPaymentMethodForm.useDefaultMethod'}
-                    defaultMessage={'ui.userAddPaymentMethodForm.useDefaultMethod'}
-                  />
+                  <FormattedMessage id="ui.userAddPaymentMethodForm.useDefaultMethod" defaultMessage="ui.userAddPaymentMethodForm.useDefaultMethod" />
                 </Button>
               </>
             )}
@@ -213,9 +208,9 @@ export default function UserAddPaymentMethodForm(inProps: UserAddPaymentMethodFo
           <Button onClick={onHandleClose} variant="outlined">
             <FormattedMessage id="ui.userAddPaymentMethodForm.cancelButton" defaultMessage="ui.userAddPaymentMethodForm.cancelButton" />
           </Button>
-          <LoadingButton disabled={!ready} loading={loading} type="submit" variant="contained">
+          <Button disabled={!ready} loading={loading} type="submit" variant="contained">
             <FormattedMessage id="ui.userAddPaymentMethodForm.addButton" defaultMessage="ui.userAddPaymentMethodForm.addButton" />
-          </LoadingButton>
+          </Button>
         </Stack>
         {/* Show error message to your customers */}
         {errorMessage && <div>{errorMessage}</div>}

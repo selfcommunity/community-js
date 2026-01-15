@@ -1,4 +1,3 @@
-import React from 'react';
 import {Avatar, Box, Stack, Typography, styled, Icon} from '@mui/material';
 import {camelCase} from '@selfcommunity/utils';
 import {Link, SCRoutingContextType, useSCRouting, SCRoutes} from '@selfcommunity/react-core';
@@ -118,7 +117,9 @@ export default function CollapsedForNotification(props: NotificationCollapsedFor
             </Link>
           ) : (
             <Typography component="div" color="inherit" className={classes.flagText}>
-              {intl.formatMessage(messages[camelCase(notificationObject.type)], {b: (...chunks) => <strong>{chunks}</strong>})}
+              {intl.formatMessage(messages[camelCase(notificationObject.type)], {
+                b: (chunks) => <strong key={`${messages[camelCase(notificationObject.type)]}.b`}>{chunks}</strong>
+              })}
             </Typography>
           )}
         </>
@@ -132,7 +133,7 @@ export default function CollapsedForNotification(props: NotificationCollapsedFor
         isSnippetTemplate ? null : (
           <>
             <Box className={classes.contributionWrap}>
-              <Typography variant={'body2'} color={'inherit'} component={'div'} classes={{root: classes.contributionYouWroteLabel}}>
+              <Typography variant="body2" color="inherit" component="div" classes={{root: classes.contributionYouWroteLabel}}>
                 <FormattedMessage id="ui.notification.collapsedFor.youWrote" defaultMessage="ui.notification.collapsedFor.youWrote" />
               </Typography>
               <Link
@@ -141,7 +142,7 @@ export default function CollapsedForNotification(props: NotificationCollapsedFor
                   getRouteData(notificationObject[contributionType])
                 )}
                 className={classes.contributionText}>
-                <Typography component={'span'} variant="body2" gutterBottom>
+                <Typography component="span" variant="body2" gutterBottom>
                   {getContributionSnippet(notificationObject[contributionType])}
                 </Typography>
               </Link>
@@ -149,13 +150,13 @@ export default function CollapsedForNotification(props: NotificationCollapsedFor
             {template === SCNotificationObjectTemplateType.TOAST && (
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 <DateTimeAgo date={notificationObject.active_at} />
-                <Typography color="primary" component={'div'}>
+                <Typography color="primary" component="div">
                   <Link
                     to={scRoutingContext.url(
                       SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
                       getRouteData(notificationObject[contributionType])
                     )}>
-                    <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                    <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage="ui.userToastNotifications.viewContribution" />
                   </Link>
                 </Typography>
               </Stack>

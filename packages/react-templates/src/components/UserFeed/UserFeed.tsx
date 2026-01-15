@@ -161,7 +161,7 @@ export default function UserFeed(inProps: UserFeedProps): JSX.Element {
   const {scUser} = useSCFetchUser({id: userId, user});
 
   // REF
-  const feedRef = useRef<FeedRef>();
+  const feedRef = useRef<FeedRef | null>(null);
 
   // HANDLERS
   const handleComposerSuccess = (feedObject) => {

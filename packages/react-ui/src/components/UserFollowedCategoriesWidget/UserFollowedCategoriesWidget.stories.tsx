@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import UserFollowedCategoriesWidget from './UserFollowedCategoriesWidget';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import UserFollowedCategoriesWidget, { UserFollowedCategoriesWidgetProps } from './UserFollowedCategoriesWidget';
 
 export default {
   title: 'Design System/React UI/User Followed Categories Widget',
@@ -14,7 +14,7 @@ export default {
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   },
   args: {
@@ -23,13 +23,13 @@ export default {
   }
 } as Meta<typeof UserFollowedCategoriesWidget>;
 
-const template = (args) => (
+const template = (args: UserFollowedCategoriesWidgetProps) => (
   <div style={{width: 400}}>
     <UserFollowedCategoriesWidget {...args} />
   </div>
 );
 
-export const Base: StoryObj<UserFollowedCategoriesWidget> = {
+export const Base: StoryObj<typeof UserFollowedCategoriesWidget> = {
   args: {
     userId: 9
   },

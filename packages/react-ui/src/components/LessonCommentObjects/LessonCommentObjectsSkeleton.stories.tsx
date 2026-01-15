@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import LessonCommentObjectsSkeleton from './Skeleton';
 
 export default {
@@ -22,7 +22,7 @@ export default {
   }
 } as Meta<typeof LessonCommentObjectsSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <LessonCommentObjectsSkeleton {...args} />
   </div>

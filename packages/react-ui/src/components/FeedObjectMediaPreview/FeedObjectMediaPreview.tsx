@@ -1,4 +1,3 @@
-import React from 'react';
 import {SCMediaObjectType} from '../../types/media';
 import {useSCMediaClick} from '@selfcommunity/react-core';
 import {Box, BoxProps, styled} from '@mui/material';
@@ -80,7 +79,7 @@ export default (inProps: FeedObjectMediaPreviewProps): JSX.Element => {
         const {displayProps = {}} = mediaObject;
         return (
           <div key={mediaObject.name}>
-            <mediaObject.displayComponent medias={medias} {...displayProps} onMediaClick={handleMediaClick} />
+            <mediaObject.displayComponent medias={medias} {...displayProps} {...(mediaObject.name !== 'share' && {onMediaClick: handleMediaClick})} />
           </div>
         );
       })}

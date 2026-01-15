@@ -1,5 +1,5 @@
 import React, {ChangeEvent, useMemo, useState} from 'react';
-import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField, useMediaQuery, useTheme, Icon, styled} from '@mui/material';
+import {Box, CircularProgress, IconButton, InputAdornment, MenuItem, TextField, Icon, styled, Button} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
 import {Endpoints, formatHttpErrorCode, http, HttpResponse} from '@selfcommunity/api-services';
@@ -8,7 +8,6 @@ import {
   SCContextType,
   SCPreferences,
   SCPreferencesContextType,
-  SCThemeType,
   SCUserContextType,
   useSCContext,
   useSCPreferences,
@@ -23,10 +22,9 @@ import {useDeepCompareEffectNoCheck} from 'use-deep-compare-effect';
 import {SCUserProfileFields} from '../../../types';
 import MetadataField from '../../../shared/MetadataField';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {format, isBefore, isValid, parseISO, startOfHour} from 'date-fns';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
-import {LoadingButton} from '@mui/lab';
+import {format, isBefore, isValid, startOfHour} from 'date-fns';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from '../constants';
 
@@ -137,9 +135,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
   }, [scPreferences.preferences]);
 
   // STATE
-  const theme = useTheme<SCThemeType>();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [user, setUser] = useState<SCUserType>();
+  const [user, setUser] = useState<SCUserType | null>(null);
   const [error, setError] = useState<any>({});
   const [editing, setEditing] = useState<SCUserProfileFields[]>([]);
   const [saving, setSaving] = useState<SCUserProfileFields[]>([]);
@@ -232,16 +228,13 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
         return null;
       case SCUserProfileFields.DATE_OF_BIRTH:
         return (
-          <LocalizationProvider
-            dateAdapter={AdapterDateFns}
-            key={field}
-            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}>
+          <LocalizationProvider dateAdapter={AdapterDateFns} key={field} adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}>
             <DatePicker
               label={intl.formatMessage({
                 id: `ui.userInfo.${camelCase(field)}`,
                 defaultMessage: `ui.userInfo.${field}`
               })}
-              defaultValue={user[field] ? parseISO(user[field]) : null}
+              defaultValue={user[field] ? new Date(user[field]) : null}
               minDate={DATEPICKER_MINDATE}
               onChange={(newValue) => {
                 const u = user;
@@ -267,18 +260,14 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
               }}
               disableFuture
               disabled={isSaving}
+              enableAccessibleFieldDOMStructure={false}
               slots={{
-                inputAdornment: (params) => {
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  const {children, ...rest} = params.children.props;
-                  return (
-                    <InputAdornment position={'end'}>
-                      <IconButton {...rest}>{children}</IconButton>
-                      {isSaving && <CircularProgress size={10} />}
-                    </InputAdornment>
-                  );
-                }
+                openPickerButton: (params) => (
+                  <IconButton {...params}>
+                    <Icon>CalendarIcon</Icon>
+                    {isSaving && <CircularProgress size={10} />}
+                  </IconButton>
+                )
               }}
               // onAccept={isMobile ? handleSave(SCUserProfileFields.DATE_OF_BIRTH) : null}
               slotProps={{
@@ -286,17 +275,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
                   className: classes.field,
                   fullWidth: true,
                   variant: 'outlined',
-                  helperText: _error || null,
-                  InputProps: {
-                    endAdornment: isMobile && (
-                      <>
-                        <IconButton disabled={!isEditing}>
-                          <Icon>CalendarIcon</Icon>
-                        </IconButton>
-                        {isSaving ? <CircularProgress size={10} /> : null}
-                      </>
-                    )
-                  }
+                  helperText: _error || null
                 }
               }}
             />
@@ -378,7 +357,7 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
       {_fields.map((field) => {
         return renderField(field);
       })}
-      <LoadingButton
+      <Button
         className={classes.btnSave}
         fullWidth
         variant="contained"
@@ -386,8 +365,8 @@ export default function PublicInfo(props: PublicInfoProps): JSX.Element {
         onClick={handleSave}
         loading={saving.length > 0}
         disabled={saving.length > 0 || !editing.length || Object.keys(error).length > 0}>
-        <FormattedMessage id={'ui.userInfo.button.save'} defaultMessage={'ui.userInfo.button.save'} />
-      </LoadingButton>
+        <FormattedMessage id="ui.userInfo.button.save" defaultMessage="ui.userInfo.button.save" />
+      </Button>
       {endActions}
     </Root>
   );

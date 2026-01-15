@@ -112,8 +112,8 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
               primary={<b>{intl.formatMessage(messages.relevantActivities)}</b>}
               secondary={
                 <FormattedMessage
-                  id={'ui.feedObject.activitiesMenu.relevantActivitiesDesc'}
-                  defaultMessage={'ui.feedObject.activitiesMenu.relevantActivitiesDesc'}
+                  id="ui.feedObject.activitiesMenu.relevantActivitiesDesc"
+                  defaultMessage="ui.feedObject.activitiesMenu.relevantActivitiesDesc"
                 />
               }
             />
@@ -126,8 +126,8 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
             primary={<b>{intl.formatMessage(messages.recentComments)}</b>}
             secondary={
               <FormattedMessage
-                id={'ui.feedObject.activitiesMenu.recentCommentsDesc'}
-                defaultMessage={'ui.feedObject.activitiesMenu.recentCommentsDesc'}
+                id="ui.feedObject.activitiesMenu.recentCommentsDesc"
+                defaultMessage="ui.feedObject.activitiesMenu.recentCommentsDesc"
               />
             }
           />
@@ -138,10 +138,7 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
           <ListItemText
             primary={<b>{intl.formatMessage(messages.firstComments)}</b>}
             secondary={
-              <FormattedMessage
-                id={'ui.feedObject.activitiesMenu.firstCommentsDesc'}
-                defaultMessage={'ui.feedObject.activitiesMenu.firstCommentsDesc'}
-              />
+              <FormattedMessage id="ui.feedObject.activitiesMenu.firstCommentsDesc" defaultMessage="ui.feedObject.activitiesMenu.firstCommentsDesc" />
             }
           />
         </ListItemButton>
@@ -155,13 +152,13 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
                 secondary={
                   followEnabled ? (
                     <FormattedMessage
-                      id={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
-                      defaultMessage={'ui.feedObject.activitiesMenu.followedCommentsDesc'}
+                      id="ui.feedObject.activitiesMenu.followedCommentsDesc"
+                      defaultMessage="ui.feedObject.activitiesMenu.followedCommentsDesc"
                     />
                   ) : (
                     <FormattedMessage
-                      id={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
-                      defaultMessage={'ui.feedObject.activitiesMenu.connectionsCommentsDesc'}
+                      id="ui.feedObject.activitiesMenu.connectionsCommentsDesc"
+                      defaultMessage="ui.feedObject.activitiesMenu.connectionsCommentsDesc"
                     />
                   )
                 }
@@ -201,23 +198,25 @@ export default function ActivitiesMenu(props: ActivitiesMenuProps) {
               open
               onClose={handleClose}
               onClick={handleClose}
-              PaperProps={{
-                elevation: 0,
-                sx: {
-                  overflow: 'visible',
-                  filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-                  mt: 1.5,
-                  '&:before': {
-                    content: '""',
-                    display: 'block',
-                    position: 'absolute',
-                    top: 0,
-                    right: 14,
-                    width: 10,
-                    height: 10,
-                    bgcolor: 'background.paper',
-                    transform: 'translateY(-50%) rotate(45deg)',
-                    zIndex: 0
+              slotProps={{
+                paper: {
+                  elevation: 0,
+                  sx: {
+                    overflow: 'visible',
+                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                    mt: 1.5,
+                    '&:before': {
+                      content: '""',
+                      display: 'block',
+                      position: 'absolute',
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: 'background.paper',
+                      transform: 'translateY(-50%) rotate(45deg)',
+                      zIndex: 0
+                    }
                   }
                 }
               }}

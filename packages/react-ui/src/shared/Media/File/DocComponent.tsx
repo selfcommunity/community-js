@@ -2,7 +2,8 @@ import {Box, Icon, IconButton, Stack, styled, Typography} from '@mui/material';
 import {PREFIX} from './constants';
 import {Link} from '@selfcommunity/react-core';
 import {SCMediaType, SCMimeTypes} from '@selfcommunity/types';
-import {useCallback} from 'react';
+import {HTMLAttributes, useCallback} from 'react';
+import classNames from 'classnames';
 import txt from '../../../assets/composer/txt';
 import pdf from '../../../assets/composer/pdf';
 import doc from '../../../assets/composer/doc';
@@ -43,10 +44,11 @@ interface DocComponentProps {
   onDelete?: (id: number) => void;
   handleDownload?: (id: number) => void;
   onMediaClick?: (media: SCMediaType) => void;
+  className?: HTMLAttributes<HTMLDivElement>['className'];
 }
 
 export default function DocComponent(props: DocComponentProps) {
-  const {document, index, onDelete, handleDownload, onMediaClick} = props;
+  const {document, index, onDelete, handleDownload, onMediaClick, className} = props;
 
   const getImage = useCallback(() => {
     switch (document.mimetype) {
@@ -84,7 +86,7 @@ export default function DocComponent(props: DocComponentProps) {
   }, [document.mimetype]);
 
   return (
-    <Root className={classes.docRoot}>
+    <Root className={classNames(classes.docRoot, className)}>
       <Box component="img" alt={document.title} src={getImage()} />
       <Stack className={classes.textWrapper}>
         <Typography className={classes.title}>{document.title}</Typography>

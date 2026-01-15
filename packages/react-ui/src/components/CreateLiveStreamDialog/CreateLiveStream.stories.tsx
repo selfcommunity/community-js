@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import CreateLiveStreamDialog from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import CreateLiveStreamDialog, { CreateLiveStreamDialogProps } from './index';
 
 export default {
   title: 'Design System/React UI/Livestream/CreateLiveStreamDialog ',
   component: CreateLiveStreamDialog,
 } as Meta<typeof CreateLiveStreamDialog>;
 
-const template = (args) => (
+const template = (args: CreateLiveStreamDialogProps) => (
   <div style={{width: 800}}>
     <CreateLiveStreamDialog{...args} />
   </div>

@@ -560,7 +560,11 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
               open
               onClose={handleClose}
               onOpen={handleOpen}
-              PaperProps={{className: classes.paper}}
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}
               disableSwipeToOpen>
               <List>{renderList()}</List>
             </SwipeableDrawerRoot>
@@ -571,7 +575,11 @@ export default function NavigationSettingsIconButton(inProps: NavigationSettings
               anchorEl={anchorEl}
               open
               onClose={handleClose}
-              PaperProps={{className: classes.paper}}>
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}>
               {renderList()}
             </MenuRoot>
           )}

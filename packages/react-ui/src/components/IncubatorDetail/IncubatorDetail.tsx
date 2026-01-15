@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import {useContext, useEffect, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {TextField, Typography, Box, Avatar, Button, CardContent, Alert, FormGroup, AvatarGroup, List, ListItem, styled, Icon} from '@mui/material';
 import {SCIncubatorType, SCUserType} from '@selfcommunity/types';
@@ -313,7 +313,7 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
             <Avatar className={classes.avatar} alt={scIncubator.user.avatar} src={scIncubator.user.avatar} />
             <Box>
               <Typography className={classes.title}>{`${intl.formatMessage(messages.intro, {name: scIncubator.name})}`} </Typography>
-              <Typography component={'span'}>
+              <Typography component="span">
                 <Link
                   {...(!scIncubator.user.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scIncubator.user)})}
                   onClick={scIncubator.user.deleted ? () => setOpenAlert(true) : null}>
@@ -400,10 +400,10 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
           )}
           <Widget elevation={1} className={classes.shareCard}>
             <CardContent>
-              <Typography variant={'h6'}>
+              <Typography variant="h6">
                 <FormattedMessage id="ui.incubatorDetail.shareSection.title" defaultMessage="ui.incubatorDetail.shareSection.title" />
               </Typography>
-              <Typography variant={'subtitle1'}>
+              <Typography variant="subtitle1">
                 <FormattedMessage id="ui.incubatorDetail.shareSection.share" defaultMessage="ui.incubatorDetail.shareSection.share" />
               </Typography>
               <FormGroup className={classes.copyUrlForm}>
@@ -418,7 +418,7 @@ export default function IncubatorDetail(inProps: IncubatorDetailProps): JSX.Elem
                 </Alert>
               )}
               {isSocialShareEnabled && (
-                <Typography variant={'subtitle2'}>
+                <Typography variant="subtitle2">
                   <FormattedMessage id="ui.incubatorDetail.shareSection.invite" defaultMessage="ui.incubatorDetail.shareSection.invite" />
                 </Typography>
               )}

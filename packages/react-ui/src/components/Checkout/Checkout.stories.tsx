@@ -1,5 +1,5 @@
-import type {Meta, StoryObj} from '@storybook/react';
-import Checkout from './index';
+import type {Meta, StoryObj} from '@storybook/react-webpack5';
+import Checkout, { CheckoutProps } from './index';
 import {SCContentType} from '@selfcommunity/types';
 
 export default {
@@ -7,7 +7,7 @@ export default {
   component: Checkout
 } as Meta<typeof Checkout>;
 
-const template = (args) => (
+const template = (args: CheckoutProps) => (
   <div style={{maxWidth: 1024}}>
     <Checkout {...args} />
   </div>

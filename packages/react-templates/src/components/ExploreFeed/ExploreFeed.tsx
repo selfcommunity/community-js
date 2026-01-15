@@ -149,7 +149,7 @@ export default function ExploreFeed(inProps: ExploreFeedProps): JSX.Element {
   const {enqueueSnackbar} = useSnackbar();
 
   // REF
-  const feedRef = useRef<FeedRef>();
+  const feedRef = useRef<FeedRef | null>(null);
 
   /**
    * Render advertising above the feed

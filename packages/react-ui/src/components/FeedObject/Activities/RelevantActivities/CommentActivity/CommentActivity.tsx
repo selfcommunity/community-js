@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Avatar, styled} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {defineMessages, useIntl} from 'react-intl';
@@ -73,7 +73,13 @@ export default function CommentRelevantActivity(props: ActionsRelevantActivityPr
                   {activityObject.author.username}
                 </Link>
               ),
-              link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(activityObject.comment))}>{chunks}</Link>
+              link: (chunks) => (
+                <Link
+                  key="ui.feedObject.relevantActivities.comment.link"
+                  to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(activityObject.comment))}>
+                  {chunks}
+                </Link>
+              )
               // comment: (
               //   <>
               //     <Typography variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />

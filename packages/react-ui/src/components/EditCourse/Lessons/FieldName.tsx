@@ -1,5 +1,4 @@
-import {LoadingButton} from '@mui/lab';
-import {debounce, Icon, IconButton, Stack, TextField, Typography} from '@mui/material';
+import {Button, debounce, Icon, IconButton, Stack, TextField, Typography} from '@mui/material';
 import {ChangeEvent, Fragment, memo, useCallback, useState} from 'react';
 import {PREFIX} from '../constants';
 import {Logger} from '@selfcommunity/utils';
@@ -108,7 +107,7 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
         <Stack className={classes.editModeWrapper}>
           <TextField type="text" variant="outlined" size="small" focused autoFocus defaultValue={row.name} onChange={handleChange} />
 
-          <LoadingButton
+          <Button
             size="small"
             color="primary"
             variant="outlined"
@@ -117,7 +116,7 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
             disabled={loading}
             className={classes.editModeSaveButton}>
             <Icon>check</Icon>
-          </LoadingButton>
+          </Button>
 
           <IconButton color="default" size="small" onClick={handleClose} className={classes.editModeCloseButton}>
             <Icon>close</Icon>

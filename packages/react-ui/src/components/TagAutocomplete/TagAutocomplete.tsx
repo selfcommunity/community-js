@@ -1,4 +1,4 @@
-import React, {Fragment, SyntheticEvent, useCallback, useEffect, useState} from 'react';
+import React, {SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
@@ -222,16 +222,18 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
           <TextField
             {...params}
             {...TextFieldProps}
-            InputProps={{
-              ...params.InputProps,
-              autoComplete: 'tags',
-              endAdornment:
-                value || tags.length > 0 ? (
-                  <Fragment>
-                    {loading && <CircularProgress color="inherit" size={20} />}
-                    {params.InputProps.endAdornment}
-                  </Fragment>
-                ) : null
+            slotProps={{
+              input: {
+                ...params.InputProps,
+                autoComplete: 'tags',
+                endAdornment:
+                  value || tags.length > 0 ? (
+                    <>
+                      {loading && <CircularProgress color="inherit" size={20} />}
+                      {params.InputProps.endAdornment}
+                    </>
+                  ) : null
+              }
             }}
           />
         );

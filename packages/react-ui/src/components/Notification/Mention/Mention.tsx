@@ -114,14 +114,14 @@ export default function MentionNotification(props: MentionNotificationProps): JS
               {notificationObject[objectType].author.username}
             </Link>{' '}
             {intl.formatMessage(messages.quotedYouOn, {
-              b: (...chunks) => <strong>{chunks}</strong>
+              b: (chunks) => <strong key="ui.notification.mention.quotedYou.b">{chunks}</strong>
             })}{' '}
           </Typography>
         }
         secondary={
           <React.Fragment>
             <Link to={scRoutingContext.url(SCRoutes[`${objectType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[objectType]))}>
-              <Typography component={'span'} variant="body2" className={classes.contributionText}>
+              <Typography component="span" variant="body2" className={classes.contributionText}>
                 {getContributionSnippet(notificationObject[objectType])}
               </Typography>
             </Link>
@@ -136,9 +136,9 @@ export default function MentionNotification(props: MentionNotificationProps): JS
           template === SCNotificationObjectTemplateType.TOAST && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <DateTimeAgo date={notificationObject.active_at} />
-              <Typography color="primary" component={'div'}>
+              <Typography color="primary" component="div">
                 <Link to={scRoutingContext.url(SCRoutes[`${contribution.type.toUpperCase()}_ROUTE_NAME`], getRouteData(contribution))}>
-                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage="ui.userToastNotifications.viewContribution" />
                 </Link>
               </Typography>
             </Stack>

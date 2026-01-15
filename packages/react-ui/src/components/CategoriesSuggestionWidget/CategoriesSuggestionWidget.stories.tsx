@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import CategoriesSuggestionWidget from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import CategoriesSuggestionWidget, { CategoriesSuggestionWidgetProps } from './index';
 
 export default {
   title: 'Design System/React UI/Categories Suggestion Widget',
@@ -8,7 +8,7 @@ export default {
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     variant: {
       options: ['elevation', 'outlined'],
@@ -24,12 +24,12 @@ export default {
 } as Meta<typeof CategoriesSuggestionWidget>;
 
 
-const template = (args) => (
+const template = (args: CategoriesSuggestionWidgetProps) => (
   <div style={{width: 400}}>
     <CategoriesSuggestionWidget {...args} />
   </div>
 );
 
-export const Base: StoryObj<CategoriesSuggestionWidget> = {
+export const Base: StoryObj<typeof CategoriesSuggestionWidget> = {
   render: template
 };

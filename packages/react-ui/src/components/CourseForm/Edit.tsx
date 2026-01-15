@@ -93,14 +93,14 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
                   <FormattedMessage
                     id="ui.courseForm.edit.access.info.access"
                     defaultMessage="ui.courseForm.edit.access.info.access"
-                    values={{icon: (...chunks: [parts: ReactNode[]]) => <Icon>{chunks}</Icon>}}
+                    values={{icon: (chunks: [parts: ReactNode[]]) => <Icon key="ui.courseForm.edit.access.info.access.icon">{chunks}</Icon>}}
                   />
                 </Typography>
                 <Typography variant="body1">
                   <FormattedMessage
                     id="ui.courseForm.edit.access.info.visibility"
                     defaultMessage="ui.courseForm.edit.access.info.visibility"
-                    values={{icon: (...chunks: [parts: ReactNode[]]) => <Icon>{chunks}</Icon>}}
+                    values={{icon: (chunks: [parts: ReactNode[]]) => <Icon key="ui.courseForm.edit.access.info.visibility.icon">{chunks}</Icon>}}
                   />
                 </Typography>
               </Box>
@@ -145,14 +145,22 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
                     <FormattedMessage
                       id={`ui.courseForm.edit.publication.option.${option}.access`}
                       defaultMessage={`ui.courseForm.edit.publication.option.${option}.access`}
-                      values={{icon: (...chunks: [parts: ReactNode[]]) => <Icon>{chunks}</Icon>}}
+                      values={{
+                        icon: (chunks: [parts: ReactNode[]]) => (
+                          <Icon key={`ui.courseForm.edit.publication.option.${option}.access.icon`}>{chunks}</Icon>
+                        )
+                      }}
                     />
                   </Typography>
                   <Typography variant="body1" className={classNames(classes.privacyItemInfo, {[classes.disabled]: notPublishable})}>
                     <FormattedMessage
                       id={`ui.courseForm.edit.publication.option.${option}.visibility`}
                       defaultMessage={`ui.courseForm.edit.publication.option.${option}.visibility`}
-                      values={{icon: (...chunks: [parts: ReactNode[]]) => <Icon>{chunks}</Icon>}}
+                      values={{
+                        icon: (chunks: [parts: ReactNode[]]) => (
+                          <Icon key={`ui.courseForm.edit.publication.option.${option}.visibility.icon`}>{chunks}</Icon>
+                        )
+                      }}
                     />
                   </Typography>
                 </>

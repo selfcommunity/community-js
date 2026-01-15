@@ -203,9 +203,12 @@ const Component = {
               }
             },
             '& .SCFeedObject-tag, & .SCFeedObject-location': {
-              '& .MuiIcon-root': {
-                fontSize: '1rem',
-                color: 'inherit'
+              '& .MuiBox-root': {
+                lineHeight: 1,
+                '& .MuiIcon-root': {
+                  fontSize: '1rem',
+                  color: 'inherit'
+                }
               }
             }
           }

@@ -262,7 +262,11 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
           open={Boolean(anchorEl)}
           onClose={handleClose}
           onOpen={handleOpen}
-          PaperProps={{className: classes.paper}}
+          slotProps={{
+            paper: {
+              className: classes.paper
+            }
+          }}
           disableSwipeToOpen>
           <List>{renderList()}</List>
         </SwipeableDrawerRoot>
@@ -272,7 +276,11 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleClose}
-          PaperProps={{className: classes.paper}}>
+          slotProps={{
+            paper: {
+              className: classes.paper
+            }
+          }}>
           {renderList()}
         </MenuRoot>
       )}

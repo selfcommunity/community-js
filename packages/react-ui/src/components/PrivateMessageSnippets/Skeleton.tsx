@@ -1,4 +1,3 @@
-import React from 'react';
 import PrivateMessageSnippetItemSkeleton from '../PrivateMessageSnippetItem/Skeleton';
 import {Button, Card, CardContent, Skeleton, Stack, List, styled} from '@mui/material';
 import {PREFIX} from './constants';
@@ -44,9 +43,9 @@ export default function PrivateMessageSnippetsSkeleton(props): JSX.Element {
       <CardContent>
         <Stack direction="column" justifyContent="center" spacing={1} alignItems="center">
           <Button variant="outlined" size="medium" disabled className={classes.button}>
-            <Skeleton height={20} width={100} variant={'rectangular'} />
+            <Skeleton height={20} width={100} variant="rectangular" />
           </Button>
-          <Skeleton height={25} width={'100%'} variant={'rounded'} className={classes.searchBar} />
+          <Skeleton height={25} width="100%" variant="rounded" className={classes.searchBar} />
         </Stack>
         <List className={classes.list}>
           {[...Array(6)].map((category, index) => (

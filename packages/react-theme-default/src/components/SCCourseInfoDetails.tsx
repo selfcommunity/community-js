@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({theme}) => ({
       gap: theme.spacing(0.5),
       '& .SCCourseInfoDetails-icon-text-wrapper': {
         flexDirection: 'row',
@@ -23,8 +23,8 @@ const Component = {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             display: '-webkit-box',
-            '-webkit-line-clamp': '1',
-            '-webkit-box-orient': 'vertical'
+            WebkitLineClamp: '1',
+            WebkitBoxOrient: 'vertical'
           }
         },
 

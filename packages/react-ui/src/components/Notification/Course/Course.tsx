@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Avatar, Box, Stack, Typography, styled} from '@mui/material';
+import {useState} from 'react';
+import {Avatar, Box, Button, Stack, Typography, styled} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCNotificationCourseActivityType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
@@ -7,7 +7,6 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCCourseTemplateType, SCNotificationObjectTemplateType} from '../../../types';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
-import {LoadingButton} from '@mui/lab';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
 import {PREFIX} from '../constants';
@@ -113,14 +112,13 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
               id={`ui.notification.course.${notificationObject.type}`}
               defaultMessage={`ui.notification.course.${notificationObject.type}`}
               values={{
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
                 name:
                   notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                     ? notificationObject.comment.lesson_name
                     : notificationObject.course.name,
-                link: (...chunks) => (
+                link: (chunks) => (
                   <Link
+                    key={`ui.notification.course.${notificationObject.type}.link`}
                     to={scRoutingContext.url(
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                         ? SCRoutes.COURSE_LESSON_ROUTE_NAME
@@ -187,14 +185,13 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
               id={`ui.notification.course.${notificationObject.type}`}
               defaultMessage={`ui.notification.course.${notificationObject.type}`}
               values={{
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
                 name:
                   notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                     ? notificationObject.comment.lesson_name
                     : notificationObject.course.name,
-                link: (...chunks) => (
+                link: (chunks) => (
                   <Link
+                    key={`ui.notification.course.${notificationObject.type}.link`}
                     to={scRoutingContext.url(
                       notificationObject.type === SCNotificationTypologyType.USER_COMMENTED_A_COURSE_LESSON
                         ? SCRoutes.COURSE_LESSON_ROUTE_NAME
@@ -218,15 +215,15 @@ export default function CourseNotification(props: NotificationCourseProps): JSX.
         actions={
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-            <LoadingButton
-              color={'primary'}
+            <Button
+              color="primary"
               variant="outlined"
               size="small"
               classes={{root: classes.seeButton}}
               component={Link}
               to={scRoutingContext.url(getRouteName(notificationObject), getRouteParams(notificationObject))}>
               <FormattedMessage id="ui.notification.course.button.see" defaultMessage="ui.notification.course.button.see" />
-            </LoadingButton>
+            </Button>
           </Stack>
         }
         {...rest}

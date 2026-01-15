@@ -26,7 +26,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'ContentDiscussionRoot'
-})(({theme}) => ({}));
+})(() => ({}));
 
 /**
  * Default post
@@ -195,8 +195,10 @@ export default (props: ContentDiscussionProps): JSX.Element => {
         onChange={handleChangeTitle}
         onKeyDown={handleKeyDownTitle}
         multiline
-        InputProps={{
-          endAdornment: <Typography variant="body2">{COMPOSER_TITLE_MAX_LENGTH - value.title.length}</Typography>
+        slotProps={{
+          input: {
+            endAdornment: <Typography variant="body2">{COMPOSER_TITLE_MAX_LENGTH - value.title.length}</Typography>
+          }
         }}
         error={Boolean(titleError)}
         helperText={titleError}

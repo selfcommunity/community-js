@@ -174,7 +174,7 @@ export default function EventFeed(inProps: EventFeedProps): JSX.Element {
   const {scEvent} = useSCFetchEvent({id: eventId, event});
 
   // REF
-  const feedRef = useRef<FeedRef>();
+  const feedRef = useRef<FeedRef | null>(null);
 
   // CONST
   const authUserId = scUserContext.user ? scUserContext.user.id : null;

@@ -1,5 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import CentralProgress from './index';
+import { CircularProgressProps } from '@mui/material';
 
 export default {
   title: 'Design System/React UI Shared/CentralProgress',
@@ -8,7 +9,7 @@ export default {
     size: {
       control: {type: 'number'},
       description: 'Size of the circular progress.',
-      table: {defaultValue: {summary: 30}}
+      table: {defaultValue: {summary: '30'}}
     }
   },
   args: {
@@ -16,9 +17,9 @@ export default {
   }
 } as Meta<typeof CentralProgress>;
 
-const template = (args) => <CentralProgress {...args} />;
+const template = (args: CircularProgressProps) => <CentralProgress {...args} />;
 
-export const Base: StoryObj<CentralProgress> = {
+export const Base: StoryObj<typeof CentralProgress> = {
   args: {
     size: 30
   },

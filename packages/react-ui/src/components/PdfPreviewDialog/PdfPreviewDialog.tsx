@@ -80,7 +80,9 @@ export default function PdfPreviewDialog(inProps: PdfPreviewDialogProps) {
       maxWidth="md"
       {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
       className={classNames(classes.root, className)}
-      TransitionComponent={Transition}
+      slots={{
+        transition: Transition
+      }}
       DialogContentProps={{sx: {overflow: 'hidden'}}}
       {...rest}>
       <AppBar sx={{position: 'fixed', top: 0}}>
@@ -98,8 +100,8 @@ export default function PdfPreviewDialog(inProps: PdfPreviewDialogProps) {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Grid container className={classes.content}>
-        <Grid item xs={12} justifyContent="center" alignContent="center">
+      <Grid container width="100%" className={classes.content}>
+        <Grid size={12} justifyContent="center" alignContent="center">
           <PdfPreview {...PdfPreviewComponentProps} pdfUrl={pdfUrl} />
         </Grid>
       </Grid>

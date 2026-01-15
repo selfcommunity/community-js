@@ -1,4 +1,3 @@
-import React from 'react';
 import {Avatar, Box, Stack, Typography, styled, Icon} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCNotificationUnDeletedForType} from '@selfcommunity/types';
@@ -105,7 +104,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
         isSnippetTemplate ? null : (
           <>
             <Box className={classes.contributionWrap}>
-              <Typography variant={'body2'} color={'inherit'} component={'div'} classes={{root: classes.contributionYouWroteLabel}}>
+              <Typography variant="body2" color="inherit" component="div" classes={{root: classes.contributionYouWroteLabel}}>
                 <FormattedMessage id="ui.notification.undeletedFor.youWrote" defaultMessage="ui.notification.undeletedFor.youWrote" />
               </Typography>
               <Link
@@ -114,7 +113,7 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
                   getRouteData(notificationObject[contributionType])
                 )}
                 className={classes.contributionText}>
-                <Typography component={'span'} variant="body2">
+                <Typography component="span" variant="body2">
                   {getContributionSnippet(notificationObject[contributionType])}
                 </Typography>
               </Link>
@@ -122,13 +121,13 @@ export default function UndeletedForNotification(props: NotificationUndeletedPro
             {template === SCNotificationObjectTemplateType.TOAST && (
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 <DateTimeAgo date={notificationObject.active_at} />
-                <Typography color="primary" component={'div'}>
+                <Typography color="primary" component="div">
                   <Link
                     to={scRoutingContext.url(
                       SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
                       getRouteData(notificationObject[contributionType])
                     )}>
-                    <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                    <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage="ui.userToastNotifications.viewContribution" />
                   </Link>
                 </Typography>
               </Stack>

@@ -1,4 +1,3 @@
-import {LoadingButton} from '@mui/lab';
 import {styled, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card} from '@mui/material';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
@@ -115,9 +114,9 @@ export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
           <Button onClick={handleClose}>
             {btnCancel || <FormattedMessage id="ui.confirmDialog.btnCancel" defaultMessage="ui.confirmDialog.btnCancel" />}
           </Button>
-          <LoadingButton onClick={handleConfirm} variant="contained" autoFocus loading={isUpdating}>
+          <Button onClick={handleConfirm} variant="contained" autoFocus loading={isUpdating}>
             {btnConfirm || <FormattedMessage id="ui.confirmDialog.btnConfirm" defaultMessage="ui.confirmDialog.btnConfirm" />}
-          </LoadingButton>
+          </Button>
         </DialogActions>
       </Dialog>
     </Root>

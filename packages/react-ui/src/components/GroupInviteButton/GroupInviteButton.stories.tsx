@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import GroupInviteButton, { GroupInviteButtonProps } from './index';
 
 export default {
@@ -9,7 +9,7 @@ export default {
   }
 } as Meta<typeof GroupInviteButton>;
 
-const template = (args) => (
+const template = (args: GroupInviteButtonProps) => (
   <div style={{width: 800}}>
     <GroupInviteButton {...args} />
   </div>

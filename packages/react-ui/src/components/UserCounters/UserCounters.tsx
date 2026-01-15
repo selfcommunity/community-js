@@ -1,4 +1,4 @@
-import React, {useContext, useMemo} from 'react';
+import {useContext, useMemo} from 'react';
 import {Box, Button, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {SCUserType} from '@selfcommunity/types';
@@ -30,7 +30,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 export interface UserCountersProps {
@@ -155,9 +155,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
                   defaultMessage="ui.userCounters.followings"
                   values={{
                     count: scUser?.followings_counter,
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
-                    b: (chunks) => <strong>{chunks}</strong>
+                    b: (chunks) => <strong key={Math.random()}>{chunks}</strong>
                   }}
                 />
               </Button>
@@ -172,9 +170,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
                   defaultMessage="ui.userCounters.followers"
                   values={{
                     count: scUser?.followers_counter,
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
-                    b: (chunks) => <strong>{chunks}</strong>
+                    b: (chunks) => <strong key={Math.random()}>{chunks}</strong>
                   }}
                 />
               </Button>
@@ -191,9 +187,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
                   defaultMessage="ui.userCounters.connections"
                   values={{
                     count: scUser?.connections_counter,
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
-                    b: (chunks) => <strong>{chunks}</strong>
+                    b: (chunks) => <strong key={Math.random()}>{chunks}</strong>
                   }}
                 />
               </Button>
@@ -212,9 +206,7 @@ export default function UserCounters(inProps: UserCountersProps): JSX.Element {
             defaultMessage="ui.userCounters.categories"
             values={{
               count: scUser?.categories_counter,
-              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // @ts-ignore
-              b: (chunks) => <strong>{chunks}</strong>
+              b: (chunks) => <strong key={Math.random()}>{chunks}</strong>
             }}
           />
         </Button>

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import ScrollContainer from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import ScrollContainer, { ScrollContainerProps } from './index';
 
 export default {
   title: 'Design System/React UI Shared/ScrollContainer',
@@ -7,7 +7,7 @@ export default {
 } as Meta<typeof ScrollContainer>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const template = (args) => (
+const template = (args: ScrollContainerProps) => (
   <div style={{height: 500, width: 300}}>
     <ScrollContainer {...args}>
       <p>

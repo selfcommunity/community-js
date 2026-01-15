@@ -1,4 +1,3 @@
-import {LoadingButton} from '@mui/lab';
 import {
   Button,
   CardActions,
@@ -444,7 +443,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
                   }}
                   className={classes.dialogMediaWrapper}>
                   <Stack className={classes.dialogButtonWrapper}>
-                    <LoadingButton
+                    <Button
                       className={classes.dialogLoadingButton}
                       loading={mediaId === media.id}
                       size="large"
@@ -453,7 +452,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
                         color: (theme) => (mediaId === media.id ? 'transparent' : theme.palette.common.white)
                       }}>
                       <Icon fontSize="inherit">delete</Icon>
-                    </LoadingButton>
+                    </Button>
                   </Stack>
                 </Box>
               ))}

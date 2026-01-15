@@ -1,5 +1,3 @@
-import {alpha} from '@mui/system';
-
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -51,7 +49,7 @@ const Component = {
         backgroundColor: theme.palette.background.paper,
         '& textarea': {
           color: theme.palette.text.primary,
-          '-webkit-text-fill-color': theme.palette.text.primary
+          WebkitTextFillColor: theme.palette.text.primary
         }
       },
       [`& .SCLiveStreamRoom-conference`]: {

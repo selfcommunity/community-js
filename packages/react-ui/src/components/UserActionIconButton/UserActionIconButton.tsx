@@ -17,7 +17,7 @@ import {
   styled
 } from '@mui/material';
 import {SCUserType} from '@selfcommunity/types';
-import {Link, SCContextType, SCThemeType, SCUserContextType, UserUtils, useSCContext, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
+import {Link, SCThemeType, SCUserContextType, UserUtils, useSCFetchUser, useSCUser} from '@selfcommunity/react-core';
 import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -38,20 +38,20 @@ const classes = {
 const Root = styled(IconButton, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 const SwipeableDrawerRoot = styled(SwipeableDrawer, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.drawerRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.drawerRoot
+})(() => ({}));
 
 const MenuRoot = styled(Menu, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.menuRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.menuRoot
+})(() => ({}));
 
 export interface UserActionIconButtonProps extends IconButtonProps {
   /**
@@ -110,7 +110,6 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
-  const scContext: SCContextType = useSCContext();
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -310,7 +309,9 @@ export default function UserActionIconButton(inProps: UserActionIconButtonProps)
         <ConfirmDialog
           open={openHideDialog}
           isUpdating={isHiddenLoading}
-          TransitionComponent={Transition}
+          slots={{
+            transition: Transition
+          }}
           keepMounted
           title={
             hidden ? (

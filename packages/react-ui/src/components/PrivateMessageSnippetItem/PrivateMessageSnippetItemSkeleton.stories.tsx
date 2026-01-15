@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import PrivateMessageSnippetItemSkeleton from './Skeleton';
 
 export default {
@@ -6,13 +6,13 @@ export default {
   component: PrivateMessageSnippetItemSkeleton
 } as Meta<typeof PrivateMessageSnippetItemSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <PrivateMessageSnippetItemSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<PrivateMessageSnippetItemSkeleton> = {
+export const Base: StoryObj<typeof PrivateMessageSnippetItemSkeleton> = {
   args: {
     contained: true
   },

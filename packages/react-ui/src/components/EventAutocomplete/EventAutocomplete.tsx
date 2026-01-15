@@ -64,7 +64,7 @@ export interface EventAutocompleteProps
 const Root = styled(Autocomplete, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 /**
  * > API documentation for the Community-JS Event Autocomplete component. Learn about the available props and the CSS API.
@@ -134,7 +134,7 @@ const EventAutocomplete = (inProps: EventAutocompleteProps): JSX.Element => {
     setOpen(false);
   };
 
-  const handleChange = (e: SyntheticEvent, value) => {
+  const handleChange = (_e: SyntheticEvent, value) => {
     setValue(value);
   };
 
@@ -184,15 +184,17 @@ const EventAutocomplete = (inProps: EventAutocompleteProps): JSX.Element => {
             {...params}
             {...TextFieldProps}
             margin="dense"
-            InputProps={{
-              ...params.InputProps,
-              autoComplete: 'events', // disable autocomplete and autofill
-              endAdornment: (
-                <React.Fragment>
-                  {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              )
+            slotProps={{
+              input: {
+                ...params.InputProps,
+                autoComplete: 'events', // disable autocomplete and autofill
+                endAdornment: (
+                  <>
+                    {isLoading && <CircularProgress color="inherit" size={20} />}
+                    {params.InputProps.endAdornment}
+                  </>
+                )
+              }
             }}
           />
         );

@@ -3,7 +3,7 @@ import {MEDIA_TYPE_VIDEO} from '../../../constants/Media';
 import AutoPlayer from '../../AutoPlayer';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
-import {styled, BoxProps, CircularProgress, Box} from '@mui/material';
+import {styled, BoxProps, Box} from '@mui/material';
 import {SCMediaType} from '@selfcommunity/types';
 import filter from './filter';
 
@@ -26,7 +26,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'DisplayRoot'
-})(({theme}) => ({}));
+})();
 
 export interface DisplayComponentProps extends BoxProps {
   /**
@@ -49,7 +49,7 @@ export default (props: DisplayComponentProps): ReactElement => {
 
   // HANDLERS
   const handleLinkClick = (link) => {
-    onMediaClick && onMediaClick(link);
+    onMediaClick?.(link);
   };
 
   // MEMO
@@ -85,29 +85,11 @@ export default (props: DisplayComponentProps): ReactElement => {
           <b className={classes.snippetTitle}>{media.embed.metadata.title}</b>
           <br />
           <p className={classes.snippetDescription}>{media.embed.metadata.description}</p>
-          <a href={media.embed.metadata.url} target={'_blank'} onClick={() => handleLinkClick(media)}>
+          <a href={media.embed.metadata.url} target="_blank" onClick={() => handleLinkClick(media)}>
             {domain}
           </a>
         </Box>
         <div style={{clear: 'both'}}></div>
-      </Box>
-    );
-  };
-
-  /**
-   * Render html embed
-   * @param media
-   * @param key
-   */
-  const renderHtml = (media: SCMediaType, key: number) => {
-    return (
-      <Box className={classes.displayHtmlWrap} key={key}>
-        <div dangerouslySetInnerHTML={{__html: media.embed.metadata.html}} className={classes.displayHtml} />
-        <div
-          className={classes.displayHtmlPlaceholder}
-          style={{paddingTop: `${(100 * media.embed.metadata.height) / media.embed.metadata.width}%`, maxHeight: media.embed.metadata.height}}>
-          <CircularProgress size={20} className={classes.displayHtmlLoading} />
-        </div>
       </Box>
     );
   };
@@ -122,7 +104,7 @@ export default (props: DisplayComponentProps): ReactElement => {
     <Root className={classNames(className, classes.displayRoot)} {...rest}>
       {_medias.map((l, i) => {
         if (l.embed.metadata && l.embed.metadata.type === MEDIA_TYPE_VIDEO) {
-          return <AutoPlayer url={l.url} width={'100%'} height={360} key={i} onVideoWatch={() => handleLinkClick(l)} />;
+          return <AutoPlayer url={l.url} width="100%" height={360} key={i} onVideoWatch={() => handleLinkClick(l)} />;
         }
         return <React.Fragment key={i}>{renderPreview(l, i)}</React.Fragment>;
       })}

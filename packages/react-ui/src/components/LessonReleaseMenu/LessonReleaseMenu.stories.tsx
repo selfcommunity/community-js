@@ -1,12 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import LessonReleaseMenu from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import LessonReleaseMenu, { LessonReleaseMenuProps } from './index';
+import { SCCourseJoinStatusType, SCCourseLessonStatusType, SCCourseLessonTypologyType, SCCoursePrivacyType, SCCourseTypologyType, SCLanguageType } from '@selfcommunity/types';
 
 export default {
   title: 'Design System/React UI/Lesson Release Menu',
   component: LessonReleaseMenu
 } as Meta<typeof LessonReleaseMenu>;
 
-const template = (args) => (
+const template = (args: LessonReleaseMenuProps) => (
   <div style={{width: 400}}>
     <LessonReleaseMenu {...args}></LessonReleaseMenu>
   </div>
@@ -19,8 +20,8 @@ export const Base: StoryObj<typeof LessonReleaseMenu> = {
       'name': 'Scopri il Potere dei Chakra',
       'slug': 'scopri-il-potere-dei-chakra',
       'description': 'Un viaggio attraverso i sette chakra per ritrovare armonia, benessere e connessione interiore. Sblocca l\'energia vitale e risveglia il tuo potenziale.',
-      'type': 'scheduled',
-      'privacy': '',
+      'type': SCCourseTypologyType.SCHEDULED,
+      'privacy': SCCoursePrivacyType.DRAFT,
       'enforce_lessons_order': false,
       'new_comment_notification_enabled': false,
       'hide_member_count': false,
@@ -28,13 +29,13 @@ export const Base: StoryObj<typeof LessonReleaseMenu> = {
       'meta_description': '',
       'og_title': '',
       'og_description': '',
-      'og_image': null,
+      'og_image': undefined,
       'sections_order': [8, 9, 10, 11, 12, 13, 14],
       'image_bigger': 'https://static-cache.quentrix.com/wioggmfc/upfiles/scheduleds/bigger/scopri-il-potere-dei-chakra_1259.jpg',
       'image_big': 'https://static-cache.quentrix.com/wioggmfc/upfiles/scheduleds/big/scopri-il-potere-dei-chakra_5978.jpg',
       'image_medium': 'https://static-cache.quentrix.com/wioggmfc/upfiles/scheduleds/medium/scopri-il-potere-dei-chakra_0702.jpg',
       'image_small': 'https://static-cache.quentrix.com/wioggmfc/upfiles/scheduleds/small/scopri-il-potere-dei-chakra_4462.jpg',
-      'join_status': 'manager',
+      'join_status': SCCourseJoinStatusType.MANAGER,
       'user_completion_rate': 0,
       'created_at': '2025-01-22T08:56:09.941314+01:00',
       'created_by': {
@@ -42,7 +43,7 @@ export const Base: StoryObj<typeof LessonReleaseMenu> = {
         'username': 'team',
         'real_name': '',
         'avatar': 'https://static-cache.quentrix.com/wioggmfc/upfiles/svg/T9.svg',
-        'ext_id': null,
+        'ext_id': undefined,
         'deleted': false,
         'followings_counter': 0,
         'followers_counter': 5,
@@ -50,19 +51,19 @@ export const Base: StoryObj<typeof LessonReleaseMenu> = {
         'discussions_counter': 4,
         'polls_counter': 4,
         'categories_counter': 2,
-        'date_joined': '2024-04-10T14:37:48.153981+02:00',
+        'date_joined': new Date('2024-04-10T14:37:48.153981+02:00'),
         'bio': '',
         'location': '',
-        'location_lat_lng': null,
-        'position_lat_lng': null,
-        'date_of_birth': null,
+        'location_lat_lng': undefined,
+        'position_lat_lng': undefined,
+        'date_of_birth': undefined,
         'description': '',
         'gender': 'Unspecified',
         'website': '',
-        'cover': null,
+        'cover': undefined,
         'tags': [],
         'reputation': 161,
-        'language': 'it',
+        'language': SCLanguageType.IT,
         'community_badge': true,
         'reg_approved': true,
         'job': 'Barbiere',
@@ -176,8 +177,8 @@ export const Base: StoryObj<typeof LessonReleaseMenu> = {
         {
           'id': 8,
           'name': 'Connettiti alla terra',
-          'type': 'lesson',
-          'status': 'draft',
+          'type': SCCourseLessonTypologyType.LESSON,
+          'status': SCCourseLessonStatusType.DRAFT,
           'comments_enabled': true,
         },
       ],

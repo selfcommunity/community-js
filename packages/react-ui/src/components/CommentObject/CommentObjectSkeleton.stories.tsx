@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import CommentObjectSkeleton from './Skeleton';
 
 export default {
@@ -8,7 +8,7 @@ export default {
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   },
   args: {
@@ -20,13 +20,13 @@ export default {
   }
 } as Meta<typeof CommentObjectSkeleton>;
 
-const template = (args) => (
+const template = (args: any) => (
   <div style={{width: 400}}>
     <CommentObjectSkeleton {...args} />
   </div>
 );
 
-export const Base: StoryObj<CommentObjectSkeleton> = {
+export const Base: StoryObj<typeof CommentObjectSkeleton> = {
   render: template
 };
 

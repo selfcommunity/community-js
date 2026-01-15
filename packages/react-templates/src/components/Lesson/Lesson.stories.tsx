@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import Lesson from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import Lesson, { LessonProps } from './index';
 
 export default {
   title: 'Design System/React TEMPLATES/Lesson',
   component: Lesson
 } as Meta<typeof Lesson>;
 
-const template = (args) => (
+const template = (args: LessonProps) => (
   <div style={{width: '100%'}}>
     <Lesson {...args}></Lesson>
   </div>

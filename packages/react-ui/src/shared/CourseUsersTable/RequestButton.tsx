@@ -1,5 +1,4 @@
-import {LoadingButton} from '@mui/lab';
-import {Icon, Stack} from '@mui/material';
+import {Button, Icon, Stack} from '@mui/material';
 import {CourseService} from '@selfcommunity/api-services';
 import {SCCourseType, SCUserType} from '@selfcommunity/types';
 import {forwardRef, memo, Ref, useCallback, useImperativeHandle, useState} from 'react';
@@ -114,11 +113,11 @@ function RequestButton(props: RequestButtonProps, ref: Ref<SCCourseEditManageUse
 
   return (
     <Stack className={classes.requestButtonWrapper}>
-      <LoadingButton size="small" color="primary" variant="outlined" onClick={handleAccept} loading={acceptLoading} disabled={acceptLoading}>
+      <Button size="small" color="primary" variant="outlined" onClick={handleAccept} loading={acceptLoading} disabled={acceptLoading}>
         <Icon>check</Icon>
-      </LoadingButton>
+      </Button>
 
-      <LoadingButton
+      <Button
         size="small"
         color="inherit"
         variant="outlined"
@@ -126,7 +125,7 @@ function RequestButton(props: RequestButtonProps, ref: Ref<SCCourseEditManageUse
         loading={rejectLoading}
         disabled={rejectLoading}>
         <Icon>close</Icon>
-      </LoadingButton>
+      </Button>
     </Stack>
   );
 }

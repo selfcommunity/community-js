@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import classNames from 'classnames';
 import {LegalPageService, UserService} from '@selfcommunity/api-services';
-import {SCDataPortabilityType, SCLegalPagePoliciesType, SCLegalPageType, SCUserType} from '@selfcommunity/types';
+import {SCLegalPagePoliciesType, SCLegalPageType, SCUserType} from '@selfcommunity/types';
 import {arraysEqual, capitalize, Logger} from '@selfcommunity/utils';
 import {SCPreferences, SCPreferencesContextType, SCUserContext, SCUserContextType, useSCPreferences} from '@selfcommunity/react-core';
 import ConsentSolutionSwitch from '../../shared/ConsentSolutionSwitch';
@@ -187,7 +187,6 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   const [loadingAck, setLoadingAck] = useState<boolean>(false);
   const [rejected, setRejected] = useState<boolean>(false);
 
-  const [dataPortability, setDataPortability] = useState<SCDataPortabilityType>(null);
   const [dataPortabilityChecked, setDataPortabilityChecked] = useState<boolean>(false);
 
   const [loadingDeleteAccount, setLoadingDeleteAccount] = useState<boolean>(false);
@@ -197,7 +196,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
   const doc = documents[currentDocument];
 
   // REFS
-  const contentDialog = useRef<HTMLHeadingElement>(null);
+  const contentDialog = useRef<HTMLHeadingElement | null>(null);
 
   // INTL
   const intl = useIntl();
@@ -378,11 +377,11 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
             </Button>
           )}
           {currentDocument < documents.length - 1 ? (
-            <Button size="small" variant={'outlined'} disabled={!isAccept} onClick={handleNext} className={classes.nextButton}>
+            <Button size="small" variant="outlined" disabled={!isAccept} onClick={handleNext} className={classes.nextButton}>
               <FormattedMessage id="ui.consentSolution.nextButton" defaultMessage="ui.consentSolution.nextButton" />
             </Button>
           ) : (
-            <Button size="small" variant={'outlined'} disabled={!isAccept} onClick={(e) => handleClose(e, null)} className={classes.closeButton}>
+            <Button size="small" variant="outlined" disabled={!isAccept} onClick={(e) => handleClose(e, null)} className={classes.closeButton}>
               <FormattedMessage id="ui.consentSolution.closeButton" defaultMessage="ui.consentSolution.closeButton" />
             </Button>
           )}
@@ -404,7 +403,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
         <DialogTitle className={classNames(classes.title, classes.titleBack)}>
           <Button
             size="small"
-            variant={'outlined'}
+            variant="outlined"
             onClick={() => setView(ACCEPT_VIEW)}
             className={classes.backButton}
             startIcon={<Icon>arrow_back</Icon>}>
@@ -420,7 +419,12 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
               values={{username: capitalize(scUserContext.user.username)}}
             />
           </Typography>
-          <ul>{intl.formatMessage(messages.deleteAccountDpSectionInfo, {communityName, li: (chunks) => <li>{chunks}</li>})}</ul>
+          <ul>
+            {intl.formatMessage(messages.deleteAccountDpSectionInfo, {
+              communityName,
+              li: (chunks) => <li key="ui.consentSolution.deleteAccountDpSectionInfo.li.1">{chunks}</li>
+            })}
+          </ul>
           <FormControlLabel
             control={
               <Checkbox
@@ -441,12 +445,12 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
             size="small"
             startIcon={<Icon>delete_outlined</Icon>}
             disabled={!dataPortabilityChecked}
-            variant={'contained'}
+            variant="contained"
             className={classes.confirmDeleteAccountButton}
             onClick={() => setView(CONFIRM_DELETE_ACCOUNT)}>
             <FormattedMessage id="ui.consentSolution.confirmDeleteAccountButton" defaultMessage="ui.consentSolution.confirmDeleteAccountButton" />
           </Button>
-          <Button size="small" variant={'outlined'} className={classes.logoutAccountButton} startIcon={<Icon>upload</Icon>} onClick={handleLogout}>
+          <Button size="small" variant="outlined" className={classes.logoutAccountButton} startIcon={<Icon>upload</Icon>} onClick={handleLogout}>
             <FormattedMessage id="ui.consentSolution.logoutImmediatelyButton" defaultMessage="ui.consentSolution.logoutImmediatelyButton" />
           </Button>
         </DialogContent>
@@ -464,7 +468,7 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
           <Button
             size="small"
             disabled={loadingDeleteAccount}
-            variant={'outlined'}
+            variant="outlined"
             onClick={() => setView(REJECTION_VIEW)}
             className={classes.backButton}
             startIcon={<Icon>arrow_back</Icon>}>
@@ -475,7 +479,12 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
           <Typography variant="body2">
             <FormattedMessage id="ui.consentSolution.removeAccountTitle" defaultMessage="ui.consentSolution.removeAccountTitle" />
           </Typography>
-          <ul>{intl.formatMessage(messages.deleteAccountDpSectionInfo, {communityName, li: (chunks) => <li>{chunks}</li>})}</ul>
+          <ul>
+            {intl.formatMessage(messages.deleteAccountDpSectionInfo, {
+              communityName,
+              li: (chunks) => <li key="ui.consentSolution.deleteAccountDpSectionInfo.li.2">{chunks}</li>
+            })}
+          </ul>
           <br />
           <Typography variant="body2">
             <b>
@@ -484,10 +493,10 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
           </Typography>
         </DialogContent>
         <DialogActions className={classes.actions}>
-          <Button size="small" disabled={loadingDeleteAccount} variant={'outlined'} onClick={() => setView(REJECTION_VIEW)}>
+          <Button size="small" disabled={loadingDeleteAccount} variant="outlined" onClick={() => setView(REJECTION_VIEW)}>
             <FormattedMessage id="ui.consentSolution.removeAccountCancelButton" defaultMessage="ui.consentSolution.removeAccountCancelButton" />
           </Button>
-          <Button size="small" disabled={loadingDeleteAccount} variant={'outlined'} onClick={handleConfirmDeleteAccount}>
+          <Button size="small" disabled={loadingDeleteAccount} variant="outlined" onClick={handleConfirmDeleteAccount}>
             <FormattedMessage id="ui.consentSolution.removeAccountConfirmButton" defaultMessage="ui.consentSolution.removeAccountConfirmButton" />
           </Button>
         </DialogActions>
@@ -534,13 +543,15 @@ export default function ConsentSolution(inProps: ConsentSolutionProps): JSX.Elem
         <Root
           aria-describedby="consent--solution-dialog"
           className={classNames(classes.root, className)}
-          TransitionComponent={DialogTransition}
-          maxWidth={'md'}
+          slots={{
+            transition: DialogTransition
+          }}
+          maxWidth="md"
           fullWidth
           open={ready}
           disableEscapeKeyDown
           onClose={handleClose}
-          scroll={'paper'}
+          scroll="paper"
           {...rest}>
           {content()}
         </Root>

@@ -1,4 +1,3 @@
-import React from 'react';
 import {styled, Box, Grid} from '@mui/material';
 import CategorySkeleton from '../Category/Skeleton';
 import classNames from 'classnames';
@@ -54,10 +53,10 @@ export default function CategoriesSkeleton(inProps: CategoriesSkeletonProps): JS
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Grid container spacing={{xs: 3}} className={classes.categories}>
-        {[...Array(15)].map((category, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <CategorySkeleton elevation={0} variant={'outlined'} {...CategorySkeletonProps} />
+      <Grid container width="100%" spacing={{xs: 3}} className={classes.categories}>
+        {[...Array(15)].map((_category, index) => (
+          <Grid size={{xs: 12, sm: 6, md: 4}} key={index}>
+            <CategorySkeleton elevation={0} variant="outlined" {...CategorySkeletonProps} />
           </Grid>
         ))}
       </Grid>

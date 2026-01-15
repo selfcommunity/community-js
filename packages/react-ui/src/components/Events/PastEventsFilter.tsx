@@ -1,7 +1,12 @@
-import { ChipProps, Icon, useThemeProps } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
-import { PREFIX } from './constants';
-import { EventsChipRoot } from './Events';
+import {Chip, ChipProps, Icon, styled, useThemeProps} from '@mui/material';
+import {FormattedMessage} from 'react-intl';
+import {PREFIX} from './constants';
+
+const EventsChipRoot = styled(Chip, {
+  name: PREFIX,
+  slot: 'EventsChipRoot',
+  shouldForwardProp: (prop) => prop !== 'showPastEvents'
+})(() => ({}));
 
 export interface PastEventsFilterProps extends ChipProps {
   autoHide?: boolean;
@@ -17,7 +22,7 @@ export default function PastEventsFilter(inProps: PastEventsFilterProps): JSX.El
     name: PREFIX
   });
 
-  const { autoHide = false, showPastEvents, handleClick, handleDeleteClick, ...rest } = props;
+  const {autoHide = false, showPastEvents, handleClick, handleDeleteClick, ...rest} = props;
 
   if (autoHide) {
     return null;

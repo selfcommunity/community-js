@@ -1,3 +1,4 @@
+import React from 'react';
 import {ReactElement, useCallback, useEffect, useState} from 'react';
 import {Box, styled, useMediaQuery, useTheme} from '@mui/material';
 import {useThemeProps} from '@mui/system';

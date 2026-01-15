@@ -1,4 +1,4 @@
-import React, {forwardRef, ForwardRefRenderFunction} from 'react';
+import {ForwardRefRenderFunction} from 'react';
 import {Box, TableCell, TableRow, Skeleton, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import {useThemeProps} from '@mui/system';
@@ -51,11 +51,9 @@ export type UserPaymentMethodsSkeletonRef = {};
  |root|.SCUserPaymentMethodsSkeleton-skeleton-root|Styles applied to the root element.|
  *
  * @param inProps
- * @param ref
  */
 const UserPaymentMethodsSkeleton: ForwardRefRenderFunction<UserPaymentMethodsSkeletonRef, UserPaymentMethodsSkeletonProps> = (
-  inProps: UserPaymentMethodsSkeletonProps,
-  ref: React.ForwardedRef<UserPaymentMethodsSkeletonRef>
+  inProps: UserPaymentMethodsSkeletonProps
 ): JSX.Element => {
   // PROPS
   const props: UserPaymentMethodsProps = useThemeProps({
@@ -92,4 +90,4 @@ const UserPaymentMethodsSkeleton: ForwardRefRenderFunction<UserPaymentMethodsSke
   );
 };
 
-export default forwardRef(UserPaymentMethodsSkeleton);
+export default UserPaymentMethodsSkeleton;

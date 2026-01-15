@@ -117,7 +117,7 @@ export default function Comment(props: CommentProps): JSX.Element {
   } = props;
 
   // STATE
-  const {obj, setObj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
+  const {obj} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType});
 
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -148,7 +148,7 @@ export default function Comment(props: CommentProps): JSX.Element {
             ) : (
               <>
                 {feedObjectTemplate === SCFeedObjectTemplateType.DETAIL ? (
-                  <Typography variant={'body2'}>{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
+                  <Typography variant="body2">{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
                 ) : (
                   <Button
                     variant="text"

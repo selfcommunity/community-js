@@ -36,11 +36,11 @@ const Component = {
         width: '100%',
         zIndex: 2000,
         ['& .PhotoView__Spinner']: {
-          '-webkit-animation': `${PhotoViewDelayIn} .4s linear both`,
+          WebkitAnimation: `${PhotoViewDelayIn} .4s linear both`,
           animation: `${PhotoViewDelayIn} .4s linear both`
         },
         ['& .PhotoView__Spinner svg']: {
-          '-webkit-animation': `${PhotoViewRotate} .6s linear infinite`,
+          WebkitAnimation: `${PhotoViewRotate} .6s linear infinite`,
           animation: `${PhotoViewRotate} .6s linear infinite`
         },
         ['& .PhotoView__Photo']: {
@@ -103,7 +103,7 @@ const Component = {
           zIndex: -1
         },
         ['& .PhotoView-Slider__fadeIn']: {
-          '-webkit-animation': `${PhotoViewFade} linear both`,
+          WebkitAnimation: `${PhotoViewFade} linear both`,
           animation: `${PhotoViewFade} linear both`,
           opacity: 0
         },

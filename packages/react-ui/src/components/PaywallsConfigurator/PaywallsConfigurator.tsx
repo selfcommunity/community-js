@@ -18,7 +18,9 @@ import {
   Typography,
   Zoom,
   styled,
-  CircularProgress
+  CircularProgress,
+  List,
+  Popper
 } from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -32,8 +34,6 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {getConvertedAmount} from '../../utils/payment';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Popper from '@mui/material/Popper';
-import List from '@mui/material/List';
 import CreatePaymentProductForm from '../CreatePaymentProductForm';
 
 const classes = {
@@ -497,7 +497,9 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                           setPendingValue(newValue);
                         }}
                         disableCloseOnSelect
-                        PopperComponent={PopperComponent}
+                        slots={{
+                          popper: PopperComponent
+                        }}
                         renderTags={() => null}
                         noOptionsText={
                           <FormattedMessage id="ui.paywallsConfigurator.noProducts" defaultMessage="ui.paywallsConfigurator.noProducts" />

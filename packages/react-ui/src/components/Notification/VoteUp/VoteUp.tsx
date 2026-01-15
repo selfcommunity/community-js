@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Avatar, Stack, Typography, styled} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCNotificationVoteUpType} from '@selfcommunity/types';
@@ -114,7 +114,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
             </Link>{' '}
             {intl.formatMessage(messages.appreciated, {
               username: notificationObject.user.username,
-              b: (...chunks) => <strong>{chunks}</strong>
+              b: (chunks) => <strong key="ui.notification.voteUp.appreciated.b">{chunks}</strong>
             })}
           </>
         }
@@ -122,7 +122,7 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
           <>
             <Link
               to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
-              <Typography variant="body2" className={classes.contributionText} component={'div'}>
+              <Typography variant="body2" className={classes.contributionText} component="div">
                 {getContributionSnippet(notificationObject[contributionType])}
               </Typography>
             </Link>
@@ -135,9 +135,9 @@ export default function VoteUpNotification(props: NotificationVoteUpProps): JSX.
           template === SCNotificationObjectTemplateType.TOAST && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <DateTimeAgo date={notificationObject.active_at} />
-              <Typography color="primary" component={'div'}>
+              <Typography color="primary" component="div">
                 <Link to={scRoutingContext.url(getContributionRouteName(contribution), getRouteData(contribution))}>
-                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage="ui.userToastNotifications.viewContribution" />
                 </Link>
               </Typography>
             </Stack>

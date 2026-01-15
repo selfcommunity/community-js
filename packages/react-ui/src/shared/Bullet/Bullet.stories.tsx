@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Bullet from './index';
 
 export default {
@@ -6,8 +6,8 @@ export default {
   component: Bullet
 } as Meta<typeof Bullet>;
 
-const template = (args) => <Bullet {...args} />;
+const template = (args: any) => <Bullet {...args} />;
 
-export const Base: StoryObj<Bullet> = {
+export const Base: StoryObj<typeof Bullet> = {
   render: template
 };

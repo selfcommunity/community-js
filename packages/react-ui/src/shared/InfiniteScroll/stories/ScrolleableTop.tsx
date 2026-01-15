@@ -35,7 +35,7 @@ export default function ScrolleableTop() {
           hasMorePrevious={true}
           loaderPrevious={<h4>Loading prev...</h4>}
           scrollableTarget="scrollableDiv"
-          scrollThreshold={'0px'}>
+          scrollThreshold="0px">
           {items.map((_, index) => (
             <div style={style} key={index}>
               div - #{index}

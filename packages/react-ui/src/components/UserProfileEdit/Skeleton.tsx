@@ -1,4 +1,3 @@
-import React from 'react';
 import {Box, Grid, styled, Skeleton} from '@mui/material';
 import {PREFIX} from './constants';
 
@@ -34,8 +33,8 @@ const Root = styled(Box, {
 export default function UserProfileEditSkeleton(): JSX.Element {
   return (
     <Root className={classes.root}>
-      <Grid container>
-        <Grid item md={12} sm={12}>
+      <Grid container width="100%">
+        <Grid size="grow">
           <Skeleton animation="wave" sx={{height: 20, width: '100%'}} />
           <Skeleton animation="wave" sx={{height: 20, width: '100%'}} />
         </Grid>

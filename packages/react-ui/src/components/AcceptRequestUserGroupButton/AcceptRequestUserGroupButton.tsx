@@ -1,5 +1,4 @@
-import {LoadingButton} from '@mui/lab';
-import {styled} from '@mui/material';
+import {Button, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {GroupService} from '@selfcommunity/api-services';
 import {useSCFetchGroup, useSCFetchUser} from '@selfcommunity/react-core';
@@ -20,7 +19,7 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const AcceptButton = styled(LoadingButton, {
+const AcceptButton = styled(Button, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root

@@ -659,7 +659,7 @@
   "ui.feedObject.contributors.noOtherContributors": "No other contributors.",
   "ui.feedObject.contributors.participants": "Participants",
   "ui.feedObject.contributors.title": "Contributors ({total})",
-  "ui.feedObject.error": "The content is not currently available",
+  "ui.feedObject.error": "This post is privately addressed and is not visible",
   "ui.feedObject.follow": "Save",
   "ui.feedObject.poll.choice.vote": "Vote",
   "ui.feedObject.poll.closed": "Closed",

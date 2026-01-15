@@ -11,7 +11,6 @@ import {formatColorLabel, formatLogoLabel} from '../../../../utils/onBoarding';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
-import {LoadingButton} from '@mui/lab';
 import ScrollContainer from '../../../../shared/ScrollContainer';
 
 const messages = defineMessages({
@@ -67,8 +66,8 @@ const Root = styled(Box, {
 const DrawerRoot = styled(Drawer, {
   name: PREFIX,
   slot: 'AppearanceDrawerRoot',
-  overridesResolver: (props, styles) => styles.appearanceDrawerRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.appearanceDrawerRoot
+})(() => ({}));
 
 export default function Appearance(inProps: AppearanceProps) {
   // PROPS
@@ -92,7 +91,7 @@ export default function Appearance(inProps: AppearanceProps) {
   const intl = useIntl();
 
   // HANDLERS
-  const handleTabChange = (event, newValue) => {
+  const handleTabChange = (_event, newValue) => {
     setTab(newValue);
     setData({});
   };
@@ -277,7 +276,7 @@ export default function Appearance(inProps: AppearanceProps) {
                       </Box>
                     </React.Fragment>
                   ))}
-                <LoadingButton
+                <Button
                   loading={loading || updating}
                   disabled={loading || updating || Object.keys(data).length === 0}
                   variant="outlined"
@@ -288,7 +287,7 @@ export default function Appearance(inProps: AppearanceProps) {
                     id="ui.onBoardingWidget.step.appearance.titleSlogan.button"
                     defaultMessage="ui.onBoardingWidget.step.appearance.titleSlogan.button"
                   />
-                </LoadingButton>
+                </Button>
               </Box>
             )}
 
@@ -302,13 +301,13 @@ export default function Appearance(inProps: AppearanceProps) {
                       <Box className={classes.logoContainer}>
                         <img src={logo.value} className={classes.logo} />
                         <input type="file" onChange={(event) => handleUpload(event, logo.name)} hidden accept=".gif,.png,.jpg,.jpeg" id={logo.name} />
-                        <LoadingButton
+                        <Button
                           className={classes.uploadButton}
                           onClick={() => document.getElementById(`${logo.name}`).click()}
                           loading={Boolean(loadingLogo) && Boolean(logo.name === loadingLogo)}
                           disabled={Boolean(loadingLogo) && Boolean(logo.name !== loadingLogo)}>
                           <Icon>upload</Icon>
-                        </LoadingButton>
+                        </Button>
                       </Box>
                     </React.Fragment>
                   ))}
@@ -324,14 +323,16 @@ export default function Appearance(inProps: AppearanceProps) {
                   value={preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value || ''}
                   name="application_slogan1"
                   onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <Typography variant="body2">
-                        {preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value?.length
-                          ? 50 - preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value.length
-                          : 50}
-                      </Typography>
-                    )
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <Typography variant="body2">
+                          {preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value?.length
+                            ? 50 - preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value.length
+                            : 50}
+                        </Typography>
+                      )
+                    }
                   }}
                   error={Boolean(preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan1')?.value?.length > 50)}
                 />
@@ -343,18 +344,20 @@ export default function Appearance(inProps: AppearanceProps) {
                   value={preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value || ''}
                   name="application_slogan2"
                   onChange={handleChange}
-                  InputProps={{
-                    endAdornment: (
-                      <Typography variant="body2">
-                        {preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value?.length
-                          ? 150 - preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value.length
-                          : 150}
-                      </Typography>
-                    )
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <Typography variant="body2">
+                          {preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value?.length
+                            ? 150 - preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value.length
+                            : 150}
+                        </Typography>
+                      )
+                    }
                   }}
                   error={Boolean(preferences?.find((item) => item.section === 'text' && item.name === 'application_slogan2')?.value?.length > 150)}
                 />
-                <LoadingButton
+                <Button
                   loading={updating}
                   disabled={updating || Object.keys(data).length === 0}
                   variant="outlined"
@@ -365,7 +368,7 @@ export default function Appearance(inProps: AppearanceProps) {
                     id="ui.onBoardingWidget.step.appearance.titleSlogan.button"
                     defaultMessage="ui.onBoardingWidget.step.appearance.titleSlogan.button"
                   />
-                </LoadingButton>
+                </Button>
               </Box>
             )}
           </Box>

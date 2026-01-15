@@ -164,7 +164,7 @@ export default function ContributionNotification(props: ContributionNotification
                   SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
                   getRouteData(notificationObject[contributionType])
                 )}>
-                <Typography variant="body2" className={classes.contributionText} component={'div'}>
+                <Typography variant="body2" className={classes.contributionText} component="div">
                   {getContributionSnippet(notificationObject[contributionType])}
                 </Typography>
               </Link>
@@ -193,13 +193,13 @@ export default function ContributionNotification(props: ContributionNotification
           template === SCNotificationObjectTemplateType.TOAST && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <DateTimeAgo date={notificationObject.active_at} />
-              <Typography color="primary" component={'div'}>
+              <Typography color="primary" component="div">
                 <Link
                   to={scRoutingContext.url(
                     SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
                     getRouteData(notificationObject[contributionType])
                   )}>
-                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage="ui.userToastNotifications.viewContribution" />
                 </Link>
               </Typography>
             </Stack>

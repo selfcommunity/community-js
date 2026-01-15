@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import ConsentSolutionSkeleton from './Skeleton';
 
 export default {
@@ -8,13 +8,13 @@ export default {
   args: {}
 } as Meta<typeof ConsentSolutionSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: 600}}>
-    <ConsentSolutionSkeleton {...args} />
+    <ConsentSolutionSkeleton />
   </div>
 );
 
-export const Base: StoryObj<ConsentSolutionSkeleton> = {
+export const Base: StoryObj<typeof ConsentSolutionSkeleton> = {
   args: {
     contained: true
   },

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import GroupFeedSkeletonTemplate from './Skeleton';
 
 export default {
@@ -7,9 +7,9 @@ export default {
 } as Meta<typeof GroupFeedSkeletonTemplate>;
 
 export const Base: StoryObj<typeof GroupFeedSkeletonTemplate> = {
-  render: (args) => (
+  render: () => (
     <div style={{maxWidth: '1200px', width: '100%', height: '500px'}}>
-      <GroupFeedSkeletonTemplate {...args} />
+      <GroupFeedSkeletonTemplate />
     </div>
   )
 };

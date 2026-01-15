@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import SnippetNotifications from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import SnippetNotifications, { SnippetNotificationsProps } from './index';
 
 export default {
   title: 'Design System/React UI/SnippetNotifications',
   component: SnippetNotifications
 } as Meta<typeof SnippetNotifications>;
 
-const template = (args) => (
+const template = (args: SnippetNotificationsProps) => (
   <div style={{width: 280}}>
     <SnippetNotifications {...args} />
   </div>
@@ -14,7 +14,7 @@ const template = (args) => (
 
 export const Base: StoryObj<typeof SnippetNotifications> = {
   args: {
-    onNotificationClick: (e, n) => {
+    onNotificationClick: (_e, _n) => {
       /**
        * Example of onNotificationClick callback
        * e.preventDefault();

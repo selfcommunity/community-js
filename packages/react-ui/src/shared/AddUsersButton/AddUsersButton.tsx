@@ -1,4 +1,3 @@
-import {LoadingButton} from '@mui/lab';
 import {
   Autocomplete,
   AutocompleteChangeReason,
@@ -240,11 +239,11 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
             </Typography>
           }
           actions={
-            <LoadingButton onClick={handleConfirm} size="medium" variant="contained" autoFocus disabled={!invited.length}>
+            <Button onClick={handleConfirm} size="medium" variant="contained" autoFocus disabled={!invited.length}>
               <Typography variant="body1">
                 <FormattedMessage id="ui.addUserButton.dialog.confirm" defaultMessage="ui.addUserButton.dialog.confirm" />
               </Typography>
-            </LoadingButton>
+            </Button>
           }
           className={classes.dialogRoot}>
           <Stack className={classes.dialogAutocompleteWrapper}>
@@ -278,8 +277,10 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
                   {...params}
                   variant="outlined"
                   placeholder={`${intl.formatMessage(messages.placeholder)}`}
-                  InputProps={{
-                    ...params.InputProps
+                  slotProps={{
+                    input: {
+                      ...params.InputProps
+                    }
                   }}
                 />
               )}

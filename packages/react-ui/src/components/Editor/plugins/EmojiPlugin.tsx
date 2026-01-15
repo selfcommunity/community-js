@@ -26,7 +26,7 @@ function Emoji({
     setEmojiAnchorEl(event.currentTarget);
   };
 
-  const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
+  const handleEmojiClick = (emojiData: EmojiClickData) => {
     editor.focus();
     editor.dispatchCommand(CONTROLLED_TEXT_INSERTION_COMMAND, emojiData.emoji);
   };
@@ -44,7 +44,9 @@ function Emoji({
         open={Boolean(emojiAnchorEl)}
         anchorEl={emojiAnchorEl}
         onClose={() => setEmojiAnchorEl(null)}
-        TransitionComponent={Fade}
+        slots={{
+          transition: Fade
+        }}
         anchorOrigin={isLessonCommentEditor ? {vertical: 'bottom', horizontal: 'left'} : {vertical: 'top', horizontal: 'right'}}
         transformOrigin={isLessonCommentEditor ? {vertical: 'top', horizontal: 'right'} : {vertical: 'bottom', horizontal: 'left'}}
         sx={(theme) => {

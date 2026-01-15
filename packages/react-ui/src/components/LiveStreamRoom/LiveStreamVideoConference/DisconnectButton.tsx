@@ -98,7 +98,17 @@ export const DisconnectButton: (props: DisconnectButtonProps & React.RefAttribut
                 <FormattedMessage id="ui.liveStreamRoom.live.terminate" defaultMessage="ui.liveStreamRoom.live.terminate" />
                 <FormGroup>
                   <FormControlLabel
-                    control={<Checkbox checked={closeLive} onChange={handleChangeCloseLive} inputProps={{'aria-label': 'controlled'}} />}
+                    control={
+                      <Checkbox
+                        checked={closeLive}
+                        onChange={handleChangeCloseLive}
+                        slotProps={{
+                          input: {
+                            'aria-label': 'controlled'
+                          }
+                        }}
+                      />
+                    }
                     label={
                       <FormattedMessage
                         id="ui.liveStreamRoom.live.terminatePermanently"

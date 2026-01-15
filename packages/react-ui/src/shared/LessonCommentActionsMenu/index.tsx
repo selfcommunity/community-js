@@ -305,8 +305,6 @@ export default function LessonCommentActionsMenu(props: LessonCommentActionsMenu
   return (
     <Root className={classNames(classes.root, className)}>
       <IconButton
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
         ref={(ref) => {
           popperRef.current = ref;
         }}
@@ -333,7 +331,7 @@ export default function LessonCommentActionsMenu(props: LessonCommentActionsMenu
               placement="bottom-end">
               {({TransitionProps, placement}) => (
                 <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
-                  <Paper variant={'outlined'} className={classes.paper}>
+                  <Paper variant="outlined" className={classes.paper}>
                     <ClickAwayListener onClickAway={handleClose}>{renderContent()}</ClickAwayListener>
                   </Paper>
                 </Grow>

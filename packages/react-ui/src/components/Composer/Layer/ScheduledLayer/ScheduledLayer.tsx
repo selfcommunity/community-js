@@ -1,10 +1,10 @@
 import React, {ReactElement, useCallback, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Box, BoxProps, Button, DialogTitle, IconButton, Typography, DialogContent, Icon, styled} from '@mui/material';
-import {LocalizationProvider, StaticDateTimePicker, DateTimePickerTabs, DatePickerToolbarProps} from '@mui/x-date-pickers';
+import {LocalizationProvider, StaticDateTimePicker, DateTimePickerTabs, usePickerContext} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import {useSCContext} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import {format, parseISO} from 'date-fns';
@@ -37,7 +37,7 @@ const ScheduledLayer = React.forwardRef((props: ScheduledLayerProps, ref: React.
 
   //CONTEXT
   const scContext = useSCContext();
-  const locale = scContext.settings.locale.default === 'it' ? itLocale : enLocale;
+  const locale = scContext.settings.locale.default === 'it' ? it : enUS;
 
   // STATE
   const [scheduledAt, setScheduledAt] = useState<Date | null>(
@@ -54,8 +54,8 @@ const ScheduledLayer = React.forwardRef((props: ScheduledLayerProps, ref: React.
     [onSave]
   );
 
-  const CustomToolbar = (props: DatePickerToolbarProps<Date>) => {
-    const {value} = props;
+  const CustomToolbar = () => {
+    const {value} = usePickerContext();
     if (!value) return null;
     const dayName = capitalize(format(value, 'EEEE', {locale}));
     const restOfDate = format(value, 'd MMMM yyyy • HH:mm', {locale});
@@ -86,7 +86,7 @@ const ScheduledLayer = React.forwardRef((props: ScheduledLayerProps, ref: React.
             className={classes.picker}
             disablePast
             value={scheduledAt}
-            onChange={(value) => setScheduledAt(value)}
+            onChange={setScheduledAt}
             onAccept={handleUpdate}
             slots={{
               toolbar: CustomToolbar,

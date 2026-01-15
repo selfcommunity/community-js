@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useRef, useState} from 'react';
+import {useContext, useMemo, useRef, useState} from 'react';
 import {styled, Icon, Popper} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';
@@ -17,7 +17,7 @@ import {
   useMediaQuery,
   useTheme
 } from '@mui/material';
-import {Endpoints, http, HttpResponse, LiveStreamApiClient} from '@selfcommunity/api-services';
+import {LiveStreamApiClient} from '@selfcommunity/api-services';
 import {SCContext, SCContextType, SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {BAN_ROOM_USER, REMOVE_ROOM_USER} from './constants';
 import ConfirmDialog from '../../../shared/ConfirmDialog/ConfirmDialog';
@@ -336,7 +336,7 @@ export default function ContributionActionsMenu(props: ParticipantTileActionsMen
               placement="right">
               {({TransitionProps, placement}) => (
                 <Grow {...TransitionProps} style={{transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom'}}>
-                  <Paper variant={'outlined'} className={classes.paper}>
+                  <Paper variant="outlined" className={classes.paper}>
                     <ClickAwayListener onClickAway={handleClose}>{renderContent()}</ClickAwayListener>
                   </Paper>
                 </Grow>

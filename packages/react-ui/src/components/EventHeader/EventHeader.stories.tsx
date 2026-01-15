@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 
-import EventHeader from './index';
+import EventHeader, { EventHeaderProps } from './index';
 
 export default {
   title: 'Design System/React UI/Event Header',
@@ -13,7 +13,7 @@ export default {
   },
 } as Meta<typeof EventHeader>;
 
-const BaseTemplate = (args) => (
+const BaseTemplate = (args: EventHeaderProps) => (
   <div style={{width: '100%'}}>
     <EventHeader {...args} />
   </div>

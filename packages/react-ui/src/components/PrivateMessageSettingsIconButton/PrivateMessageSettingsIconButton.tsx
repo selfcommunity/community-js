@@ -1,5 +1,18 @@
 import React, {useState} from 'react';
-import {SwipeableDrawer, MenuItem, ListItemIcon, IconButtonProps, IconButton, Menu, useTheme, useMediaQuery, List, ListItem, styled, Icon} from '@mui/material';
+import {
+  SwipeableDrawer,
+  MenuItem,
+  ListItemIcon,
+  IconButtonProps,
+  IconButton,
+  Menu,
+  useTheme,
+  useMediaQuery,
+  List,
+  ListItem,
+  styled,
+  Icon
+} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -228,12 +241,25 @@ export default function PrivateMessageSettingsIconButton(inProps: PrivateMessage
               open
               onClose={handleClose}
               onOpen={handleOpen}
-              PaperProps={{className: classes.paper}}
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}
               disableSwipeToOpen>
               <List>{renderList()}</List>
             </SwipeableDrawerRoot>
           ) : (
-            <MenuRoot className={classes.menuRoot} anchorEl={anchorEl} open onClose={handleClose} PaperProps={{className: classes.paper}}>
+            <MenuRoot
+              className={classes.menuRoot}
+              anchorEl={anchorEl}
+              open
+              onClose={handleClose}
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}>
               {renderList()}
             </MenuRoot>
           )}

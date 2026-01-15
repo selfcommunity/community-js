@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef} from 'react';
+import {useCallback, useEffect, useMemo, useRef} from 'react';
 import {CardContent, Icon, Typography, styled} from '@mui/material';
 import classNames from 'classnames';
 import Widget from '../Widget';
@@ -161,9 +161,7 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
                     id="ui.groupInfoWidget.privacy.public.info"
                     defaultMessage="ui.groupInfoWidget.privacy.public.info"
                     values={{
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
-                      b: (chunks) => <strong>{chunks}</strong>
+                      b: (chunks) => <strong key="ui.groupInfoWidget.privacy.public.info.b">{chunks}</strong>
                     }}
                   />
                 </Typography>
@@ -179,9 +177,7 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
                     id="ui.groupInfoWidget.privacy.private.info"
                     defaultMessage="ui.groupInfoWidget.private.public.info"
                     values={{
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
-                      b: (chunks) => <strong>{chunks}</strong>
+                      b: (chunks) => <strong key="ui.groupInfoWidget.private.public.info.b">{chunks}</strong>
                     }}
                   />
                 </Typography>
@@ -204,9 +200,7 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
                         id="ui.groupForm.visibility.visible.info"
                         defaultMessage="ui.groupForm.visibility.visible.info"
                         values={{
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                          // @ts-ignore
-                          b: (chunks) => <strong>{chunks}</strong>
+                          b: (chunks) => <strong key="ui.groupInfoWidget.private.public.info.b">{chunks}</strong>
                         }}
                       />
                     </Typography>
@@ -222,9 +216,7 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
                         id="ui.groupForm.visibility.hidden.info"
                         defaultMessage="ui.groupForm.visibility.hidden.info"
                         values={{
-                          // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                          // @ts-ignore
-                          b: (chunks) => <strong>{chunks}</strong>
+                          b: (chunks) => <strong key="ui.groupForm.visibility.hidden.info.b">{chunks}</strong>
                         }}
                       />
                     </Typography>
@@ -246,9 +238,7 @@ export default function GroupInfoWidget(inProps: GroupInfoWidgetProps): JSX.Elem
             id="ui.groupInfoWidget.admin"
             defaultMessage="ui.groupInfoWidget.admin"
             values={{
-              // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-              // @ts-ignore
-              b: (chunks) => <strong>{chunks}</strong>
+              b: (chunks) => <strong key="ui.groupInfoWidget.admin.b">{chunks}</strong>
             }}
           />
           <User userId={scGroup?.managed_by?.id} elevation={0} actions={<></>} />

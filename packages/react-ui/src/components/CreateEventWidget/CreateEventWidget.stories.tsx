@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import CreateEventWidget from './index';
 
 export default {
@@ -10,4 +10,4 @@ export default {
 } as Meta<typeof CreateEventWidget>;
 
 
-export const Base: StoryObj<CreateEventWidget> = {};
+export const Base: StoryObj<typeof CreateEventWidget> = {};

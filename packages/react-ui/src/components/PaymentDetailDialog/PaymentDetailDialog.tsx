@@ -16,15 +16,15 @@ const classes = {
 const Root = styled(BaseDialog, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({}));
+})(() => ({}));
 
 const Transition = React.forwardRef(function Transition(props: TransitionProps & {children: React.ReactElement}, ref: React.Ref<unknown>) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const NoTransition = React.forwardRef(function NoTransition(props: {children: React.ReactElement}, ref) {
-  return <React.Fragment> {props.children} </React.Fragment>;
-});
+const NoTransition = function NoTransition(props: {children: React.ReactElement}) {
+  return <React.Fragment>{props.children}</React.Fragment>;
+};
 
 export interface PaymentDetailDialogProps extends BaseDialogProps {
   className?: string;
@@ -39,25 +39,27 @@ export default function PaymentDetailDialog(inProps: PaymentDetailDialogProps) {
   });
   const {className, disableInitialTransition = false, ...rest} = props;
 
-	// HOOKS
-	const {isPaymentsEnabled} = useSCPaymentsEnabled();
+  // HOOKS
+  const {isPaymentsEnabled} = useSCPaymentsEnabled();
 
-	if (!isPaymentsEnabled) {
-		return null;
-	}
+  if (!isPaymentsEnabled) {
+    return null;
+  }
 
   return (
     <Root
-      maxWidth={'sm'}
+      maxWidth="sm"
       fullWidth
       title={<FormattedMessage id="ui.paymentDetailDialog.title" defaultMessage="ui.paymentDetailDialog.title" />}
-      scroll={'paper'}
+      scroll="paper"
       open
       {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
       className={classNames(classes.root, className)}
-      TransitionComponent={Transition}
+      slots={{
+        transition: Transition
+      }}
       {...rest}>
-			<FormattedMessage id="ui.paymentDetailDialog.content" defaultMessage="ui.paymentDetailDialog.content" />
+      <FormattedMessage id="ui.paymentDetailDialog.content" defaultMessage="ui.paymentDetailDialog.content" />
     </Root>
   );
 }
