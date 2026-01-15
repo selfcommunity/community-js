@@ -397,11 +397,7 @@ export default function SnippetNotifications(inProps: SnippetNotificationsProps)
           <ScrollContainer {...ScrollContainerProps}>
             <MenuList className={classes.list} disabledItemsFocusable disableListWrap>
               {scUserContext.user.unseen_notification_banners_counter ? (
-                <MenuItem
-                  className={classNames(classes.item, classes.broadcastMessagesBanner)}
-                  key="banner"
-                  component={Link}
-                  to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
+                <MenuItem className={classNames(classes.item, classes.broadcastMessagesBanner)} key="banner">
                   <NotificationItem
                     template={SCNotificationObjectTemplateType.SNIPPET}
                     isNew
