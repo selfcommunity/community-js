@@ -8,7 +8,7 @@ on:
 
 permissions:
   id-token: write
-  contents: read
+  contents: write
 
 jobs:
   publish:
@@ -21,6 +21,9 @@ jobs:
       with:
         node-version: '22.x'
     - run: yarn bootstrap
+    - run: echo //registry.npmjs.org/:_authToken=${NPM_TOKEN} > .npmrc
+      env:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     - run: git config --global user.email "team@quentral.com"
     - run: git config --global user.name "quentralhub"
     - run: yarn build
