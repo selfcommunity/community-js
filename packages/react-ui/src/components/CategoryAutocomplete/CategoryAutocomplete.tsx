@@ -174,16 +174,23 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
       noOptionsText={<FormattedMessage id="ui.categoryAutocomplete.empty" defaultMessage="ui.categoryAutocomplete.empty" />}
       onChange={handleChange}
       isOptionEqualToValue={(option: SCCategoryType, value: SCCategoryType) => value.id === option.id}
-      renderTags={(value, getTagProps) => {
-        return value.map((option: any, index) => (
-          <Chip key={option.id} id={option.id} label={option.name} color={option.color} {...getTagProps({index})} />
-        ));
+      renderValue={(value: any, getItemProps: any) => {
+        if (multiple) {
+          return (value as any[]).map((option, index) => {
+            const {key, ...rest} = getItemProps({index});
+            return <Chip key={key} id={option.id} label={option.name} color={option.color} {...rest} />;
+          });
+        }
+
+        return <Chip id={value.id} label={value.name} color={value.color} {...getItemProps} />;
       }}
       renderOption={(props, option: SCCategoryType, {selected, inputValue}) => {
+        const {key, ...rest} = props;
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
+
         return (
-          <li {...props}>
+          <li key={key} {...rest}>
             {checkboxSelect && <Checkbox style={{marginRight: 8}} checked={selected} />}
             <Chip
               label={
