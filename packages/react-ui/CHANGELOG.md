@@ -3,6 +3,222 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.11.0-alpha.119](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.118...@selfcommunity/react-ui@0.11.0-alpha.119) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* fixed and refactored some codes ([a78dbb5](https://github.com/selfcommunity/community-js/commit/a78dbb51a44a4d42e1c6a0d77283afad34949bf5))
+* fixed bug on menu link ([1d0b056](https://github.com/selfcommunity/community-js/commit/1d0b0569f345dc6aec967d70be6d40e38302f470))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed grid layout after mui7 migration. Linear: https://linear.app/quentral/issue/QUE-2290/sistemare-layout-platformwidget ([cc53341](https://github.com/selfcommunity/community-js/commit/cc533418c5c47fc3344fc91d03a0b6a5242b5044))
+* fixed Group's prop name into UserSubscribedGroupsWidget ([ed81cca](https://github.com/selfcommunity/community-js/commit/ed81cca74ab97c0c1bb436195026f89a46c367b6))
+* fixed lint error ([510c5ff](https://github.com/selfcommunity/community-js/commit/510c5ffcc1d85367b3b0e769600bd9cd379010a7))
+* fixed some bugs ([2209560](https://github.com/selfcommunity/community-js/commit/2209560deabce2b3f5a78f35acc919d8b1ec3fd6))
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([eb921d8](https://github.com/selfcommunity/community-js/commit/eb921d8ad871762659e356d9fe6751280d063cc3))
+* fixed some codes ([bd82fbb](https://github.com/selfcommunity/community-js/commit/bd82fbb695c7455696af128d7a33c672f1e2f869))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* fixed some codes ([f93f19b](https://github.com/selfcommunity/community-js/commit/f93f19bc407566feed12fe5ea611a56aef80c4c6))
+* fixed some errors ([23b21f0](https://github.com/selfcommunity/community-js/commit/23b21f0df1616aca5b64107fcba008199dec57c6))
+* fixed some errors ([69d643e](https://github.com/selfcommunity/community-js/commit/69d643e0cfb9512d2b252943bf7977c996443fe7))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed some grid breakpoints ([12ed95e](https://github.com/selfcommunity/community-js/commit/12ed95e0f752611b71ca5c15402636559ab919e5))
+* fixed some runtime errors ([28bfcd6](https://github.com/selfcommunity/community-js/commit/28bfcd6dc194e15b7b0833a39b3496daf21bdba8))
+* mui7 ([adda305](https://github.com/selfcommunity/community-js/commit/adda3057e92a117405f379886e3b0f899a525c57))
+* mui7 ([087e000](https://github.com/selfcommunity/community-js/commit/087e0000e090252adb7b0f35ef523ae741b8aca2))
+* mui7 ([8d0c35f](https://github.com/selfcommunity/community-js/commit/8d0c35f42bec77de3012089071678655a12927b0))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* removed export keyword from some styled components; separeted events root. ([103350c](https://github.com/selfcommunity/community-js/commit/103350ccc5e52d88e7c7315be2ecd81e8ebbf409))
+* storybook ([2c03da8](https://github.com/selfcommunity/community-js/commit/2c03da82245579154ecb2e87cf39490e3798fd4c))
+* storybook ([da0f70a](https://github.com/selfcommunity/community-js/commit/da0f70ab23fee635f562d35fa785a106abae524e))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+* virtual-scroller yarn.lock fix version ([4d1a46b](https://github.com/selfcommunity/community-js/commit/4d1a46b77d9322763153b28da87a67927a02b229))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* replaced Button instead of LoadingButton ([76d0834](https://github.com/selfcommunity/community-js/commit/76d08342cb5f14621bfee0f903edd17a64d70fa9))
+* update mui-color-input package ([14611ac](https://github.com/selfcommunity/community-js/commit/14611ac0a3121bc18f33df7970e298eb1900773d))
+* updated @mui/lab package ([eb38427](https://github.com/selfcommunity/community-js/commit/eb38427a558e58a2b2750aee5cad5177bdf88e69))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some deps ([8d09246](https://github.com/selfcommunity/community-js/commit/8d09246a868f6c242c14d096d8698e15473e6281))
+* updated some packages ([bff3940](https://github.com/selfcommunity/community-js/commit/bff3940b9889fd5f4302f4c26b156741539ce4d8))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+* updated some packages ([b06a17e](https://github.com/selfcommunity/community-js/commit/b06a17e73994a7f284ac8834727ca33238f89749))
+* updated virtual-scroller package ([7e4e013](https://github.com/selfcommunity/community-js/commit/7e4e01398ddd7c7aa68d820456387d426329b461))
+* updated x-date-pickers and date-fns; updated related components ([3f2b77f](https://github.com/selfcommunity/community-js/commit/3f2b77f1b33748611b47edf138fae9cd3317923d))
+
+
+
+
+
+# [0.11.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.118...@selfcommunity/react-ui@0.11.0) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* fixed and refactored some codes ([a78dbb5](https://github.com/selfcommunity/community-js/commit/a78dbb51a44a4d42e1c6a0d77283afad34949bf5))
+* fixed bug on menu link ([1d0b056](https://github.com/selfcommunity/community-js/commit/1d0b0569f345dc6aec967d70be6d40e38302f470))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed grid layout after mui7 migration. Linear: https://linear.app/quentral/issue/QUE-2290/sistemare-layout-platformwidget ([cc53341](https://github.com/selfcommunity/community-js/commit/cc533418c5c47fc3344fc91d03a0b6a5242b5044))
+* fixed Group's prop name into UserSubscribedGroupsWidget ([ed81cca](https://github.com/selfcommunity/community-js/commit/ed81cca74ab97c0c1bb436195026f89a46c367b6))
+* fixed lint error ([510c5ff](https://github.com/selfcommunity/community-js/commit/510c5ffcc1d85367b3b0e769600bd9cd379010a7))
+* fixed some bugs ([2209560](https://github.com/selfcommunity/community-js/commit/2209560deabce2b3f5a78f35acc919d8b1ec3fd6))
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([eb921d8](https://github.com/selfcommunity/community-js/commit/eb921d8ad871762659e356d9fe6751280d063cc3))
+* fixed some codes ([bd82fbb](https://github.com/selfcommunity/community-js/commit/bd82fbb695c7455696af128d7a33c672f1e2f869))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* fixed some codes ([f93f19b](https://github.com/selfcommunity/community-js/commit/f93f19bc407566feed12fe5ea611a56aef80c4c6))
+* fixed some errors ([23b21f0](https://github.com/selfcommunity/community-js/commit/23b21f0df1616aca5b64107fcba008199dec57c6))
+* fixed some errors ([69d643e](https://github.com/selfcommunity/community-js/commit/69d643e0cfb9512d2b252943bf7977c996443fe7))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed some grid breakpoints ([12ed95e](https://github.com/selfcommunity/community-js/commit/12ed95e0f752611b71ca5c15402636559ab919e5))
+* fixed some runtime errors ([28bfcd6](https://github.com/selfcommunity/community-js/commit/28bfcd6dc194e15b7b0833a39b3496daf21bdba8))
+* mui7 ([adda305](https://github.com/selfcommunity/community-js/commit/adda3057e92a117405f379886e3b0f899a525c57))
+* mui7 ([087e000](https://github.com/selfcommunity/community-js/commit/087e0000e090252adb7b0f35ef523ae741b8aca2))
+* mui7 ([8d0c35f](https://github.com/selfcommunity/community-js/commit/8d0c35f42bec77de3012089071678655a12927b0))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* removed export keyword from some styled components; separeted events root. ([103350c](https://github.com/selfcommunity/community-js/commit/103350ccc5e52d88e7c7315be2ecd81e8ebbf409))
+* storybook ([2c03da8](https://github.com/selfcommunity/community-js/commit/2c03da82245579154ecb2e87cf39490e3798fd4c))
+* storybook ([da0f70a](https://github.com/selfcommunity/community-js/commit/da0f70ab23fee635f562d35fa785a106abae524e))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+* virtual-scroller yarn.lock fix version ([4d1a46b](https://github.com/selfcommunity/community-js/commit/4d1a46b77d9322763153b28da87a67927a02b229))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* replaced Button instead of LoadingButton ([76d0834](https://github.com/selfcommunity/community-js/commit/76d08342cb5f14621bfee0f903edd17a64d70fa9))
+* update mui-color-input package ([14611ac](https://github.com/selfcommunity/community-js/commit/14611ac0a3121bc18f33df7970e298eb1900773d))
+* updated @mui/lab package ([eb38427](https://github.com/selfcommunity/community-js/commit/eb38427a558e58a2b2750aee5cad5177bdf88e69))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some deps ([8d09246](https://github.com/selfcommunity/community-js/commit/8d09246a868f6c242c14d096d8698e15473e6281))
+* updated some packages ([bff3940](https://github.com/selfcommunity/community-js/commit/bff3940b9889fd5f4302f4c26b156741539ce4d8))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+* updated some packages ([b06a17e](https://github.com/selfcommunity/community-js/commit/b06a17e73994a7f284ac8834727ca33238f89749))
+* updated virtual-scroller package ([7e4e013](https://github.com/selfcommunity/community-js/commit/7e4e01398ddd7c7aa68d820456387d426329b461))
+* updated x-date-pickers and date-fns; updated related components ([3f2b77f](https://github.com/selfcommunity/community-js/commit/3f2b77f1b33748611b47edf138fae9cd3317923d))
+
+
+
+
+
+# [0.11.0-alpha.120](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.118...@selfcommunity/react-ui@0.11.0-alpha.120) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* fixed and refactored some codes ([a78dbb5](https://github.com/selfcommunity/community-js/commit/a78dbb51a44a4d42e1c6a0d77283afad34949bf5))
+* fixed bug on menu link ([1d0b056](https://github.com/selfcommunity/community-js/commit/1d0b0569f345dc6aec967d70be6d40e38302f470))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed grid layout after mui7 migration. Linear: https://linear.app/quentral/issue/QUE-2290/sistemare-layout-platformwidget ([cc53341](https://github.com/selfcommunity/community-js/commit/cc533418c5c47fc3344fc91d03a0b6a5242b5044))
+* fixed Group's prop name into UserSubscribedGroupsWidget ([ed81cca](https://github.com/selfcommunity/community-js/commit/ed81cca74ab97c0c1bb436195026f89a46c367b6))
+* fixed lint error ([510c5ff](https://github.com/selfcommunity/community-js/commit/510c5ffcc1d85367b3b0e769600bd9cd379010a7))
+* fixed some bugs ([2209560](https://github.com/selfcommunity/community-js/commit/2209560deabce2b3f5a78f35acc919d8b1ec3fd6))
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([eb921d8](https://github.com/selfcommunity/community-js/commit/eb921d8ad871762659e356d9fe6751280d063cc3))
+* fixed some codes ([bd82fbb](https://github.com/selfcommunity/community-js/commit/bd82fbb695c7455696af128d7a33c672f1e2f869))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* fixed some codes ([f93f19b](https://github.com/selfcommunity/community-js/commit/f93f19bc407566feed12fe5ea611a56aef80c4c6))
+* fixed some errors ([23b21f0](https://github.com/selfcommunity/community-js/commit/23b21f0df1616aca5b64107fcba008199dec57c6))
+* fixed some errors ([69d643e](https://github.com/selfcommunity/community-js/commit/69d643e0cfb9512d2b252943bf7977c996443fe7))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed some grid breakpoints ([12ed95e](https://github.com/selfcommunity/community-js/commit/12ed95e0f752611b71ca5c15402636559ab919e5))
+* fixed some runtime errors ([28bfcd6](https://github.com/selfcommunity/community-js/commit/28bfcd6dc194e15b7b0833a39b3496daf21bdba8))
+* mui7 ([adda305](https://github.com/selfcommunity/community-js/commit/adda3057e92a117405f379886e3b0f899a525c57))
+* mui7 ([087e000](https://github.com/selfcommunity/community-js/commit/087e0000e090252adb7b0f35ef523ae741b8aca2))
+* mui7 ([8d0c35f](https://github.com/selfcommunity/community-js/commit/8d0c35f42bec77de3012089071678655a12927b0))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* removed export keyword from some styled components; separeted events root. ([103350c](https://github.com/selfcommunity/community-js/commit/103350ccc5e52d88e7c7315be2ecd81e8ebbf409))
+* storybook ([2c03da8](https://github.com/selfcommunity/community-js/commit/2c03da82245579154ecb2e87cf39490e3798fd4c))
+* storybook ([da0f70a](https://github.com/selfcommunity/community-js/commit/da0f70ab23fee635f562d35fa785a106abae524e))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+* virtual-scroller yarn.lock fix version ([4d1a46b](https://github.com/selfcommunity/community-js/commit/4d1a46b77d9322763153b28da87a67927a02b229))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* replaced Button instead of LoadingButton ([76d0834](https://github.com/selfcommunity/community-js/commit/76d08342cb5f14621bfee0f903edd17a64d70fa9))
+* update mui-color-input package ([14611ac](https://github.com/selfcommunity/community-js/commit/14611ac0a3121bc18f33df7970e298eb1900773d))
+* updated @mui/lab package ([eb38427](https://github.com/selfcommunity/community-js/commit/eb38427a558e58a2b2750aee5cad5177bdf88e69))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some deps ([8d09246](https://github.com/selfcommunity/community-js/commit/8d09246a868f6c242c14d096d8698e15473e6281))
+* updated some packages ([bff3940](https://github.com/selfcommunity/community-js/commit/bff3940b9889fd5f4302f4c26b156741539ce4d8))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+* updated some packages ([b06a17e](https://github.com/selfcommunity/community-js/commit/b06a17e73994a7f284ac8834727ca33238f89749))
+* updated virtual-scroller package ([7e4e013](https://github.com/selfcommunity/community-js/commit/7e4e01398ddd7c7aa68d820456387d426329b461))
+* updated x-date-pickers and date-fns; updated related components ([3f2b77f](https://github.com/selfcommunity/community-js/commit/3f2b77f1b33748611b47edf138fae9cd3317923d))
+
+
+
+
+
+# [0.11.0-alpha.119](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.118...@selfcommunity/react-ui@0.11.0-alpha.119) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* fixed and refactored some codes ([a78dbb5](https://github.com/selfcommunity/community-js/commit/a78dbb51a44a4d42e1c6a0d77283afad34949bf5))
+* fixed bug on menu link ([1d0b056](https://github.com/selfcommunity/community-js/commit/1d0b0569f345dc6aec967d70be6d40e38302f470))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed grid layout after mui7 migration. Linear: https://linear.app/quentral/issue/QUE-2290/sistemare-layout-platformwidget ([cc53341](https://github.com/selfcommunity/community-js/commit/cc533418c5c47fc3344fc91d03a0b6a5242b5044))
+* fixed Group's prop name into UserSubscribedGroupsWidget ([ed81cca](https://github.com/selfcommunity/community-js/commit/ed81cca74ab97c0c1bb436195026f89a46c367b6))
+* fixed lint error ([510c5ff](https://github.com/selfcommunity/community-js/commit/510c5ffcc1d85367b3b0e769600bd9cd379010a7))
+* fixed some bugs ([2209560](https://github.com/selfcommunity/community-js/commit/2209560deabce2b3f5a78f35acc919d8b1ec3fd6))
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([eb921d8](https://github.com/selfcommunity/community-js/commit/eb921d8ad871762659e356d9fe6751280d063cc3))
+* fixed some codes ([bd82fbb](https://github.com/selfcommunity/community-js/commit/bd82fbb695c7455696af128d7a33c672f1e2f869))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* fixed some codes ([f93f19b](https://github.com/selfcommunity/community-js/commit/f93f19bc407566feed12fe5ea611a56aef80c4c6))
+* fixed some errors ([23b21f0](https://github.com/selfcommunity/community-js/commit/23b21f0df1616aca5b64107fcba008199dec57c6))
+* fixed some errors ([69d643e](https://github.com/selfcommunity/community-js/commit/69d643e0cfb9512d2b252943bf7977c996443fe7))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed some grid breakpoints ([12ed95e](https://github.com/selfcommunity/community-js/commit/12ed95e0f752611b71ca5c15402636559ab919e5))
+* fixed some runtime errors ([28bfcd6](https://github.com/selfcommunity/community-js/commit/28bfcd6dc194e15b7b0833a39b3496daf21bdba8))
+* mui7 ([adda305](https://github.com/selfcommunity/community-js/commit/adda3057e92a117405f379886e3b0f899a525c57))
+* mui7 ([087e000](https://github.com/selfcommunity/community-js/commit/087e0000e090252adb7b0f35ef523ae741b8aca2))
+* mui7 ([8d0c35f](https://github.com/selfcommunity/community-js/commit/8d0c35f42bec77de3012089071678655a12927b0))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* removed export keyword from some styled components; separeted events root. ([103350c](https://github.com/selfcommunity/community-js/commit/103350ccc5e52d88e7c7315be2ecd81e8ebbf409))
+* storybook ([2c03da8](https://github.com/selfcommunity/community-js/commit/2c03da82245579154ecb2e87cf39490e3798fd4c))
+* storybook ([da0f70a](https://github.com/selfcommunity/community-js/commit/da0f70ab23fee635f562d35fa785a106abae524e))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+* virtual-scroller yarn.lock fix version ([4d1a46b](https://github.com/selfcommunity/community-js/commit/4d1a46b77d9322763153b28da87a67927a02b229))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* replaced Button instead of LoadingButton ([76d0834](https://github.com/selfcommunity/community-js/commit/76d08342cb5f14621bfee0f903edd17a64d70fa9))
+* update mui-color-input package ([14611ac](https://github.com/selfcommunity/community-js/commit/14611ac0a3121bc18f33df7970e298eb1900773d))
+* updated @mui/lab package ([eb38427](https://github.com/selfcommunity/community-js/commit/eb38427a558e58a2b2750aee5cad5177bdf88e69))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some deps ([8d09246](https://github.com/selfcommunity/community-js/commit/8d09246a868f6c242c14d096d8698e15473e6281))
+* updated some packages ([bff3940](https://github.com/selfcommunity/community-js/commit/bff3940b9889fd5f4302f4c26b156741539ce4d8))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+* updated some packages ([b06a17e](https://github.com/selfcommunity/community-js/commit/b06a17e73994a7f284ac8834727ca33238f89749))
+* updated virtual-scroller package ([7e4e013](https://github.com/selfcommunity/community-js/commit/7e4e01398ddd7c7aa68d820456387d426329b461))
+* updated x-date-pickers and date-fns; updated related components ([3f2b77f](https://github.com/selfcommunity/community-js/commit/3f2b77f1b33748611b47edf138fae9cd3317923d))
+
+
+
+
+
 # [0.11.0-alpha.118](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@0.11.0-alpha.117...@selfcommunity/react-ui@0.11.0-alpha.118) (2025-10-01)
 
 

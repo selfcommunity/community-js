@@ -13,6 +13,8 @@
     "build": "yarn run build:essentials && lerna run build --ignore @selfcommunity/utils --ignore @selfcommunity/types --ignore @selfcommunity/api-services --ignore @selfcommunity/react-theme-default",
     "prerelease": "lerna publish --conventional-commits --conventional-prerelease --yes",
     "release": "lerna publish --conventional-commits --conventional-graduate --yes",
+  	"check-versions:prerelease": "node ./scripts/packagesVersion/check-next-version.js prerelease",
+  	"check-versions:release": "node ./scripts/packagesVersion/check-next-version.js release",
     "lint": "lerna run lint",
     "test": "lerna run test",
     "tdd": "npm run rw tdd",

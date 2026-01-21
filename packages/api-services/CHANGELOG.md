@@ -3,6 +3,70 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0-alpha.13) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.7.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.7.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0-alpha.14) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.7.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0-alpha.13) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
 # [0.7.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.11...@selfcommunity/api-services@0.7.0-alpha.12) (2025-10-01)
 
 **Note:** Version bump only for package @selfcommunity/api-services
