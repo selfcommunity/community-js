@@ -103,7 +103,6 @@ export default function CopyTextField(inProps: CopyTextFieldProps): JSX.Element 
       onChange={handleChange}
       slotProps={{
         input: {
-          disableUnderline: true,
           endAdornment: (
             <InputAdornment position="end">
               {openConfirm ? (

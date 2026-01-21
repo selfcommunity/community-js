@@ -194,10 +194,12 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
       inputValue={inputValue}
       onInputChange={(_e, newInputValue) => setInputValue(newInputValue)}
       renderOption={(props, option: SCTagType, {inputValue}) => {
+        const {key, ...rest} = props;
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
+
         return (
-          <li {...props}>
+          <li key={key} {...rest}>
             <TagChip
               showDescription={true}
               key={option.id}
@@ -205,7 +207,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
               tag={option}
               label={
                 <React.Fragment>
-                  {parts.map((part, index) => (
+                  {parts.map((part, index: number) => (
                     <span key={index} style={{fontWeight: part.highlight ? 700 : 400}}>
                       {part.text}
                     </span>

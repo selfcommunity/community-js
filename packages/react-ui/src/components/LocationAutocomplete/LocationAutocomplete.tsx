@@ -1,11 +1,10 @@
 import {SyntheticEvent, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {Autocomplete, AutocompleteProps, TextField, TextFieldProps, CircularProgress, styled} from '@mui/material';
+import {Autocomplete, AutocompleteProps, TextField, TextFieldProps, CircularProgress, styled, useThemeProps} from '@mui/material';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCContributionLocation, SCLocalityType} from '@selfcommunity/types';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCLocationAutocomplete';
 
@@ -187,11 +186,13 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
         );
       }}
       renderOption={(props, option: SCLocalityType, {inputValue}) => {
+        const {key, ...rest} = props;
         const matches = match(option.full_address, inputValue);
         const parts = parse(option.full_address, matches);
+
         return (
-          <li {...props} key={`${option.lat}_${option.lng}`} style={{whiteSpace: 'break-spaces'}}>
-            {parts.map((part, index) =>
+          <li key={key || `${option.lat}_${option.lng}`} {...rest} style={{whiteSpace: 'break-spaces'}}>
+            {parts.map((part, index: number) =>
               part.highlight ? (
                 <span key={index} style={{fontWeight: 700}}>
                   {part.text}

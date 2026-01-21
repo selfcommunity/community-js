@@ -199,12 +199,16 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
         }
         return optionLabel(option);
       }}
-      renderOption={(props, option: SCSuggestionType) => (
-        <Box component="li" {...props}>
-          <Avatar alt={getOptionData(option).name} src={getOptionData(option).image} variant={getOptionData(option).variant} />
-          <Typography ml={1}>{getOptionData(option).name}</Typography>
-        </Box>
-      )}
+      renderOption={(props, option: SCSuggestionType) => {
+        const {key, ...rest} = props;
+
+        return (
+          <Box component="li" key={key} {...rest}>
+            <Avatar alt={getOptionData(option).name} src={getOptionData(option).image} variant={getOptionData(option).variant} />
+            <Typography ml={1}>{getOptionData(option).name}</Typography>
+          </Box>
+        );
+      }}
       renderInput={(params) => (
         <TextField
           {...params}
