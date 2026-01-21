@@ -144,7 +144,6 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
 
   const handleClickHome = useCallback(() => {
     if (onClickHome) {
-      onClose?.();
       onClickHome();
     } else {
       const pathName = window.location.pathname;
@@ -152,6 +151,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
         scroll(window, {top: 0, behavior: 'smooth'});
       }
     }
+    onClose?.();
   }, [onClickHome, onClose]);
 
   // Order categories
