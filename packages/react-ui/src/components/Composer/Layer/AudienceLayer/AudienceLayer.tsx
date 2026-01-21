@@ -259,14 +259,20 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
             noOptionsText={<FormattedMessage id="ui.composer.layer.audience.tags.empty" defaultMessage="ui.composer.layer.audience.tags.empty" />}
             onChange={handleChange}
             isOptionEqualToValue={(option: SCTagType, value: SCTagType) => value.id === option.id}
-            renderTags={(value, getTagProps) => {
-              return value.map((option: any, index) => <TagChip key={option.id} tag={option} {...getTagProps({index})} showDescription />);
+            renderValue={(value, getItemProps) => {
+              return value.map((option, index) => {
+                const {key, ...rest} = getItemProps({index});
+
+                return <TagChip key={key || option.id} tag={option} {...rest} showDescription />;
+              });
             }}
             renderOption={(props, option: SCTagType, {inputValue}) => {
+              const {key, ...rest} = props;
               const matches = match(option.name, inputValue);
               const parts = parse(option.name, matches);
+
               return (
-                <li {...props}>
+                <li key={key} {...rest}>
                   <TagChip
                     showDescription
                     disposable={false}
@@ -274,7 +280,7 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
                     tag={option}
                     label={
                       <React.Fragment>
-                        {parts.map((part, index) => (
+                        {parts.map((part, index: number) => (
                           <span key={index} style={{fontWeight: part.highlight ? 700 : 400}}>
                             {part.text}
                           </span>

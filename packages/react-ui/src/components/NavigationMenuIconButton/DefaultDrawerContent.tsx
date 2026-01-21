@@ -144,6 +144,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
 
   const handleClickHome = useCallback(() => {
     if (onClickHome) {
+      onClose?.();
       onClickHome();
     } else {
       const pathName = window.location.pathname;
@@ -151,7 +152,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
         scroll(window, {top: 0, behavior: 'smooth'});
       }
     }
-  }, [onClickHome]);
+  }, [onClickHome, onClose]);
 
   // Order categories
   useEffect(() => {
@@ -213,7 +214,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
         )}
         {coursesEnabled && (scUserContext.user || contentAvailable) && (
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})} onClick={onClose}>
               <ListItemIcon>
                 <Icon>courses</Icon>
               </ListItemIcon>
@@ -230,7 +231,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
         )}
         {groupsEnabled && scUserContext.user && (
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})}>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {})} onClick={onClose}>
               <ListItemIcon>
                 <Icon>groups</Icon>
               </ListItemIcon>
@@ -247,7 +248,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
         )}
         {eventsEnabled && (scUserContext.user || contentAvailable) && (
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})} onClick={onClose}>
               <ListItemIcon>
                 <Icon>CalendarIcon</Icon>
               </ListItemIcon>
@@ -264,7 +265,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
         )}
         {exploreStreamEnabled && (contentAvailable || scUserContext.user) && (
           <ListItem disablePadding>
-            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}>
+            <ListItemButton component={Link} to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})} onClick={onClose}>
               <ListItemIcon>
                 <Icon>explore</Icon>
               </ListItemIcon>

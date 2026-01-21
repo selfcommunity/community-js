@@ -203,23 +203,27 @@ const UserAutocomplete = (inProps: UserAutocompleteProps): JSX.Element => {
         noOptionsText={<FormattedMessage id="ui.userAutocomplete.empty" defaultMessage="ui.userAutocomplete.empty" />}
         onChange={handleChange}
         isOptionEqualToValue={(option: SCUserAutocompleteType, val: SCUserAutocompleteType) => (option ? val.id === option.id : false)}
-        renderTags={(value, getTagProps) =>
-          value.map((option: SCUserAutocompleteType | string, index) => {
-            const username = typeof option === 'string' ? option : option.username;
-            const avatar = typeof option === 'string' ? '' : option.avatar;
-            const id = typeof option === 'string' ? `fallback-${option}` : option.id;
+        renderValue={(value: SCUserAutocompleteType[] | string[], getItemProps: any) =>
+          value.map((option: SCUserAutocompleteType | string, index: number) => {
+            if (typeof option === 'object') {
+              const {key, ...rest} = getItemProps({index});
 
-            return <Chip key={id} avatar={<Avatar src={avatar} />} label={username} {...getTagProps({index})} />;
+              return <Chip key={key || option.id} avatar={<Avatar src={option.avatar} />} label={option.username} {...rest} />;
+            }
+
+            return <Chip key={`fallback-${option}`} avatar={<Avatar src="" />} label={option} {...getItemProps} />;
           })
         }
         renderOption={(props, option: SCUserAutocompleteType, {inputValue}) => {
+          const {key, ...rest} = props;
           const matches = match(option.username, inputValue);
           const parts = parse(option.username, matches);
+
           return (
-            <Box component="li" {...props}>
+            <Box component="li" key={key} {...rest}>
               <Avatar alt={option.username} src={option.avatar} sx={{marginRight: 1}} />
               <React.Fragment>
-                {parts.map((part, index) => (
+                {parts.map((part, index: number) => (
                   <Typography key={index}>{part.text}</Typography>
                 ))}
               </React.Fragment>

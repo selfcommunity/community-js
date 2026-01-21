@@ -163,13 +163,15 @@ const EventAutocomplete = (inProps: EventAutocompleteProps): JSX.Element => {
       //   ));
       // }}
       renderOption={(props, option: SCEventType, {inputValue}) => {
+        const {key, ...rest} = props;
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
+
         return (
-          <Box component="li" {...props}>
+          <Box component="li" key={key} {...rest}>
             <Avatar alt={option.name} src={option.image_small} sx={{marginRight: 1}} />
             <React.Fragment>
-              {parts.map((part, index) => (
+              {parts.map((part, index: number) => (
                 <Typography key={index} sx={{fontWeight: part.highlight ? 700 : 400, marginRight: 0.2}}>
                   {part.text}
                 </Typography>
