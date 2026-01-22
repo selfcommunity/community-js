@@ -46,10 +46,6 @@ const Component = {
           display: 'flex',
           justifyContent: 'space-between'
         },
-        '& .SCEvent-skeleton-preview-name': {
-          marginTop: 6,
-          marginBottom: 6
-        },
         '& .SCEvent-skeleton-snippet .SCBaseItem-content': {
           maxWidth: '70%'
         }
@@ -84,10 +80,10 @@ const Component = {
     }),
     skeletonRoot: ({theme}: any) => ({
       '& .SCEvents-skeleton-events': {
-        justifyContent: 'center',
         marginTop: theme.spacing(2),
         '& .SCEvents-skeleton-item': {
-          paddingTop: theme.spacing(2)
+          paddingTop: theme.spacing(2),
+          width: '200px'
         }
       }
     }),

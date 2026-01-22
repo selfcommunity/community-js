@@ -403,7 +403,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
             filters
           ) : showUserEvents ? (
             <>
-              <Grid size="grow">
+              <Grid>
                 <EventsChipRoot
                   color={showMyEvents ? 'secondary' : 'default'}
                   variant={showMyEvents ? 'filled' : 'outlined'}
@@ -416,7 +416,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   disabled={loading}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid>
                 <PastEventsFilter
                   showPastEvents={showPastEvents}
                   handleClick={handleChipPastClick}
@@ -424,7 +424,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   disabled={loading}
                 />
               </Grid>
-              <Grid size="grow">
+              <Grid>
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
               </Grid>
             </>
@@ -562,7 +562,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
               </Box>
             ) : (
               <>
-                <Grid container width="100%" spacing={{xs: 2}} className={classes.events} {...GridContainerComponentProps}>
+                <Grid container width="100%" gap={2} className={classes.events} {...GridContainerComponentProps}>
                   <>
                     {events.map((event: SCEventType) => (
                       <Grid size={{xs: 12, md: 6}} key={event.id} className={classes.item} {...GridItemComponentProps}>
