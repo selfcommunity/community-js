@@ -400,7 +400,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                 </FormControl>
               </Grid>
               {authUserId && (
-                <Grid size={{xs: 12}}>
+                <Grid>
                   <CoursesChipRoot
                     color={showMine ? 'primary' : 'default'}
                     variant={showMine ? 'filled' : 'outlined'}

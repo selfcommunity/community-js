@@ -424,7 +424,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   disabled={loading}
                 />
               </Grid>
-              <Grid>
+              <Grid size={{xs: 'grow', sm: 3, md: 2}}>
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
               </Grid>
             </>
@@ -504,7 +504,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                 <LocationEventsFilter value={location} disabled={loading} handleOnChange={handleOnChangeLocation} />
               </Grid>
               {authUserId && (
-                <Grid size="grow">
+                <Grid>
                   <EventsChipRoot
                     color={showFollowed ? 'secondary' : 'default'}
                     variant={showFollowed ? 'filled' : 'outlined'}
@@ -518,7 +518,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                   />
                 </Grid>
               )}
-              <Grid size="grow">
+              <Grid>
                 <OngoingEventsFilter
                   showOngoingEvents={showOngoingEvents}
                   handleClick={handleChipOngoingClick}
@@ -562,7 +562,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
               </Box>
             ) : (
               <>
-                <Grid container width="100%" gap={2} className={classes.events} {...GridContainerComponentProps}>
+                <Grid container width="100%" spacing={2} gap={2} className={classes.events} {...GridContainerComponentProps}>
                   <>
                     {events.map((event: SCEventType) => (
                       <Grid size={{xs: 12, md: 6}} key={event.id} className={classes.item} {...GridItemComponentProps}>

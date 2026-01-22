@@ -30,17 +30,8 @@ const Component = {
       },
       '& .SCEvents-events': {
         marginTop: theme.spacing(2),
-
         [theme.breakpoints.down('md')]: {
           marginBottom: theme.spacing(7)
-        },
-
-        '& .SCEvents-item': {
-          paddingTop: theme.spacing(2)
-        },
-
-        '& .SCEvents-item-skeleton': {
-          paddingTop: theme.spacing(2)
         },
         '& .SCBaseItem-root': {
           display: 'flex',
