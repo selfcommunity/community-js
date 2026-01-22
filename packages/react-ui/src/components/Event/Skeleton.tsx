@@ -20,7 +20,6 @@ const classes = {
   skeletonDetailFirstDivider: `${PREFIX}-skeleton-detail-first-divider`,
   skeletonDetailSecondDivider: `${PREFIX}-skeleton-detail-second-divider`,
   skeletonPreviewContent: `${PREFIX}-skeleton-preview-content`,
-  skeletonPreviewName: `${PREFIX}-skeleton-preview-name`,
   skeletonPreviewActions: `${PREFIX}-skeleton-preview-actions`,
   skeletonSnippetImage: `${PREFIX}-skeleton-snippet-image`,
   skeletonSnippetAction: `${PREFIX}-skeleton-snippet-action`
@@ -168,10 +167,9 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
             <Skeleton animation={skeletonsAnimation} width="50%" height="20px" />
           </Stack>
 
-          <Skeleton animation={skeletonsAnimation} width="67%" height="25px" className={classes.skeletonPreviewName} />
-
-          <Stack direction="row" alignItems="center" gap="8px" marginBottom="2px">
-            <Skeleton animation={skeletonsAnimation} width="27%" height="18px" />
+          <Stack direction="column" marginY="5px">
+            <Skeleton animation={skeletonsAnimation} width="67%" height="25px" />
+            <Skeleton animation={skeletonsAnimation} width="27%" height="16px" />
           </Stack>
 
           <Stack direction="row" gap="8px" alignItems="center">

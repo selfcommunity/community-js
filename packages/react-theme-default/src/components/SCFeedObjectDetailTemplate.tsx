@@ -3,11 +3,18 @@ const Component = {
     root: ({theme}: any) => ({
       '& .SCCommentsFeedObject-root': {
         padding: theme.spacing(2, 1),
+        [theme.breakpoints.down('md')]: {
+          width: 'auto'
+        },
         '& .SCCommentsObject-root h6': {
           paddingLeft: theme.spacing(2)
         }
       },
       '& .SCFeedObject-detail': {
+        [theme.breakpoints.down('md')]: {
+          width: 'auto',
+          margin: theme.spacing(0, 1)
+        },
         '& .SCFeedObject-content': {
           '& .SCFeedObject-text-section .SCFeedObject-text': {
             '& span': {
