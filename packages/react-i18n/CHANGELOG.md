@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.8.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.22...@selfcommunity/react-i18n@0.8.0-alpha.23) (2026-01-22)
+
+
+### Bug Fixes
+
+* fixed it file version ([fcfb7fe](https://github.com/selfcommunity/community-js/commit/fcfb7fe87302c72dc149a6a152e25aa68529681b))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* updated some labels ([cb4e3f4](https://github.com/selfcommunity/community-js/commit/cb4e3f418eaabaebe43ca4b1e58b9294b5784f0d))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.8.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.22...@selfcommunity/react-i18n@0.8.0-alpha.23) (2026-01-22)
+
+
+### Bug Fixes
+
+* fixed it file version ([fcfb7fe](https://github.com/selfcommunity/community-js/commit/fcfb7fe87302c72dc149a6a152e25aa68529681b))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* updated some labels ([cb4e3f4](https://github.com/selfcommunity/community-js/commit/cb4e3f418eaabaebe43ca4b1e58b9294b5784f0d))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
 # [0.8.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@0.8.0-alpha.22...@selfcommunity/react-i18n@0.8.0-alpha.23) (2026-01-21)
 
 
