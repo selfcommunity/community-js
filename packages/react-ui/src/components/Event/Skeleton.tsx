@@ -164,7 +164,7 @@ export default function EventSkeleton(inProps: EventSkeletonProps): JSX.Element 
         <CardContent className={classes.skeletonPreviewContent}>
           <Stack direction="row" alignItems="center" gap="8px">
             <Skeleton animation={skeletonsAnimation} variant="circular" width="21px" height="21px" />
-            <Skeleton animation={skeletonsAnimation} width="50%" height="20px" />
+            <Skeleton animation={skeletonsAnimation} width="80%" height="20px" />
           </Stack>
 
           <Stack direction="column" marginY="5px">
