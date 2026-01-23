@@ -73,8 +73,7 @@ const Component = {
       '& .SCEvents-skeleton-events': {
         marginTop: theme.spacing(2),
         '& .SCEvents-skeleton-item': {
-          paddingTop: theme.spacing(2),
-          width: '200px'
+          paddingTop: theme.spacing(2)
         }
       }
     }),
