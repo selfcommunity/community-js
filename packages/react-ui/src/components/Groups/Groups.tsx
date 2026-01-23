@@ -338,7 +338,7 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
             dataLength={groups.length}
             next={handleNext}
             hasMoreNext={Boolean(next)}
-            loaderNext={isMobile ? <GroupSkeleton /> : <Skeleton groupsNumber={2} />}
+            loaderNext={isMobile ? <GroupSkeleton sx={{marginTop: '16px'}} /> : <Skeleton groupsNumber={2} />}
             endMessage={
               <Typography component="div" className={classes.endMessage}>
                 <FormattedMessage
