@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.22...@selfcommunity/react-core@0.7.0-alpha.23) (2025-10-07)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 # [0.7.0-alpha.22](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.21...@selfcommunity/react-core@0.7.0-alpha.22) (2025-10-01)
 
 **Note:** Version bump only for package @selfcommunity/react-core
