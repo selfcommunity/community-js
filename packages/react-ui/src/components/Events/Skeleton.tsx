@@ -69,7 +69,7 @@ export default function EventsSkeleton(inProps: EventsSkeletonProps): JSX.Elemen
   const {className, EventSkeletonProps = {}, eventsNumber = 8, GridContainerComponentProps = {}, GridItemComponentProps = {}, ...rest} = inProps;
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Grid container width="100%" spacing={2} className={classes.events} {...GridContainerComponentProps}>
+      <Grid container width="100%" spacing={2} gap={2} className={classes.events} {...GridContainerComponentProps}>
         {[...Array(eventsNumber)].map((_event, index) => (
           <Grid size={{xs: 12, md: 6}} key={index} {...GridItemComponentProps} className={classes.item}>
             <EventSkeleton {...EventSkeletonProps} />

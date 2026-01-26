@@ -71,10 +71,7 @@ const Component = {
     }),
     skeletonRoot: ({theme}: any) => ({
       '& .SCEvents-skeleton-events': {
-        marginTop: theme.spacing(2),
-        '& .SCEvents-skeleton-item': {
-          paddingTop: theme.spacing(2)
-        }
+        marginTop: theme.spacing(2)
       }
     }),
     eventsChipRoot: ({theme, showFollowed, showPastEvents, showOngoingEvents}: any) => ({
