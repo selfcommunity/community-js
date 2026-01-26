@@ -76,3 +76,12 @@ export const iOS = () => {
     (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
   );
 };
+
+export const isPWA = () => {
+  const nav = window.navigator as Navigator & {standalone?: boolean};
+
+  const isIOSStandalone = nav.standalone === true;
+  const isDisplayModeStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+  return isIOSStandalone || isDisplayModeStandalone;
+};
