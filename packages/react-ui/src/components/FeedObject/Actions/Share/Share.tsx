@@ -1,6 +1,5 @@
 import React, {useContext, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import LoadingButton from '@mui/lab/LoadingButton';
 import SharesDialog from './SharesDialog';
 import {
   Box,
@@ -377,9 +376,9 @@ export default function Share(props: ShareProps): JSX.Element {
           <React.Fragment>
             {!inlineAction && withAudience && <Divider className={classes.divider} />}
             <Tooltip title={`${intl.formatMessage(messages.share)}`}>
-              <LoadingButton loading={isSharing} onClick={handleOpenShareMenu} className={classes.button}>
+              <Button loading={isSharing} onClick={handleOpenShareMenu} className={classes.button}>
                 <Icon>share</Icon>
-              </LoadingButton>
+              </Button>
             </Tooltip>
             {Boolean(anchorEl) && (
               <>

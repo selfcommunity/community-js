@@ -57,7 +57,7 @@ const BaseLightbox = (props: BaseLightboxProps) => {
       onIndexChange={handleIndexChange}
       onClose={onClose}
       afterClose={afterClose}
-      loadingElement={<CircularProgress color={'primary'} />}
+      loadingElement={<CircularProgress color="primary" />}
       toolbarRender={
         toolbarRender
           ? toolbarRender

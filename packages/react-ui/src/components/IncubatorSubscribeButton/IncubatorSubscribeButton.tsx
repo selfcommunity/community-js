@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {styled} from '@mui/material';
+import {useEffect, useState} from 'react';
+import {Button, styled} from '@mui/material';
 import {SCOPE_SC_UI} from '../../constants/Errors';
-import {LoadingButton} from '@mui/lab';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {SCIncubatorType} from '@selfcommunity/types';
@@ -22,11 +21,11 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(LoadingButton, {
+const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 export interface IncubatorSubscribeButtonProps {
   /**

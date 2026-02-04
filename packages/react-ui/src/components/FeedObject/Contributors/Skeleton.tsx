@@ -1,4 +1,3 @@
-import React from 'react';
 import {Box, BoxProps, Button, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import AvatarGroupSkeleton from '../../Skeleton/AvatarGroupSkeleton';
@@ -52,7 +51,7 @@ export default function ContributorsSkeleton(props): JSX.Element {
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <Button variant="text" disabled classes={{root: classes.btnParticipants}}>
-        <FormattedMessage id={'ui.feedObject.contributors.participants'} defaultMessage={'ui.feedObject.contributors.participants'} />:
+        <FormattedMessage id="ui.feedObject.contributors.participants" defaultMessage="ui.feedObject.contributors.participants" />:
         <AvatarGroupSkeleton {...props.AvatarGroupSkeletonProps} />
       </Button>
     </Root>

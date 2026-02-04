@@ -64,7 +64,7 @@ export interface EventAutocompleteProps
 const Root = styled(Autocomplete, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 /**
  * > API documentation for the Community-JS Event Autocomplete component. Learn about the available props and the CSS API.
@@ -134,7 +134,7 @@ const EventAutocomplete = (inProps: EventAutocompleteProps): JSX.Element => {
     setOpen(false);
   };
 
-  const handleChange = (e: SyntheticEvent, value) => {
+  const handleChange = (_e: SyntheticEvent, value) => {
     setValue(value);
   };
 
@@ -163,13 +163,15 @@ const EventAutocomplete = (inProps: EventAutocompleteProps): JSX.Element => {
       //   ));
       // }}
       renderOption={(props, option: SCEventType, {inputValue}) => {
+        const {key, ...rest} = props;
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
+
         return (
-          <Box component="li" {...props}>
+          <Box component="li" key={key} {...rest}>
             <Avatar alt={option.name} src={option.image_small} sx={{marginRight: 1}} />
             <React.Fragment>
-              {parts.map((part, index) => (
+              {parts.map((part, index: number) => (
                 <Typography key={index} sx={{fontWeight: part.highlight ? 700 : 400, marginRight: 0.2}}>
                   {part.text}
                 </Typography>
@@ -184,15 +186,17 @@ const EventAutocomplete = (inProps: EventAutocompleteProps): JSX.Element => {
             {...params}
             {...TextFieldProps}
             margin="dense"
-            InputProps={{
-              ...params.InputProps,
-              autoComplete: 'events', // disable autocomplete and autofill
-              endAdornment: (
-                <React.Fragment>
-                  {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              )
+            slotProps={{
+              input: {
+                ...params.InputProps,
+                autoComplete: 'events', // disable autocomplete and autofill
+                endAdornment: (
+                  <>
+                    {isLoading && <CircularProgress color="inherit" size={20} />}
+                    {params.InputProps.endAdornment}
+                  </>
+                )
+              }
             }}
           />
         );

@@ -1,4 +1,4 @@
-import React, {Fragment, SyntheticEvent, useCallback, useEffect, useState} from 'react';
+import React, {SyntheticEvent, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
@@ -194,10 +194,12 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
       inputValue={inputValue}
       onInputChange={(_e, newInputValue) => setInputValue(newInputValue)}
       renderOption={(props, option: SCTagType, {inputValue}) => {
+        const {key, ...rest} = props;
         const matches = match(option.name, inputValue);
         const parts = parse(option.name, matches);
+
         return (
-          <li {...props}>
+          <li key={key} {...rest}>
             <TagChip
               showDescription={true}
               key={option.id}
@@ -205,7 +207,7 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
               tag={option}
               label={
                 <React.Fragment>
-                  {parts.map((part, index) => (
+                  {parts.map((part, index: number) => (
                     <span key={index} style={{fontWeight: part.highlight ? 700 : 400}}>
                       {part.text}
                     </span>
@@ -222,16 +224,18 @@ const TagAutocomplete = (inProps: TagAutocompleteProps): JSX.Element => {
           <TextField
             {...params}
             {...TextFieldProps}
-            InputProps={{
-              ...params.InputProps,
-              autoComplete: 'tags',
-              endAdornment:
-                value || tags.length > 0 ? (
-                  <Fragment>
-                    {loading && <CircularProgress color="inherit" size={20} />}
-                    {params.InputProps.endAdornment}
-                  </Fragment>
-                ) : null
+            slotProps={{
+              input: {
+                ...params.InputProps,
+                autoComplete: 'tags',
+                endAdornment:
+                  value || tags.length > 0 ? (
+                    <>
+                      {loading && <CircularProgress color="inherit" size={20} />}
+                      {params.InputProps.endAdornment}
+                    </>
+                  ) : null
+              }
             }}
           />
         );

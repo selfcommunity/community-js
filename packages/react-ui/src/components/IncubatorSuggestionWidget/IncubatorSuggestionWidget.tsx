@@ -267,7 +267,7 @@ export default function IncubatorSuggestionWidget(inProps: IncubatorSuggestionWi
   }
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant={'h5'}>
+      <Typography className={classes.title} variant="h5">
         <FormattedMessage id="ui.incubatorSuggestionWidget.title" defaultMessage="ui.incubatorSuggestionWidget.title" />
       </Typography>
       {!state.count ? (

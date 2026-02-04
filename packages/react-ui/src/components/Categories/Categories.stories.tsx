@@ -1,7 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import {prefetchedCategories} from './prefetchedCategories';
-import Categories from './index';
-import CategoriesSkeleton from './Skeleton';
+import Categories, { CategoriesProps } from './index';
 
 export default {
   title: 'Design System/React UI/Categories',
@@ -10,25 +9,25 @@ export default {
     showFilters: {
       control: {type: 'boolean'},
       description: 'Show/Hide filters.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   },
   args: {
-    showFilters: 1,
+    showFilters: true,
   }
 } as Meta<typeof Categories>;
 
-const template = (args) => (
+const template = (args: CategoriesProps) => (
   <div style={{maxWidth: 1280}}>
     <Categories {...args} />
   </div>
 );
 
-export const Base: StoryObj<CategoriesSkeleton> = {
+export const Base: StoryObj<typeof Categories> = {
   render: template
 };
 
-export const BasePrefetchedCategories: StoryObj<Categories> = {
+export const BasePrefetchedCategories: StoryObj<typeof Categories> = {
   args: {
     prefetchedCategories
   },

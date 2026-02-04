@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import UserSocialAssociation from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import UserSocialAssociation, { UserSocialAssociationProps } from './index';
 
 export default {
   title: 'Design System/React UI/User Social Association ',
@@ -8,7 +8,7 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 7}}
+      table: {defaultValue: {summary: '7'}}
     }
   },
   args: {
@@ -16,7 +16,7 @@ export default {
   }
 } as Meta<typeof UserSocialAssociation>;
 
-const template = (args) => (
+const template = (args: UserSocialAssociationProps) => (
   <div style={{width: '100%'}}>
     <UserSocialAssociation {...args} />
   </div>

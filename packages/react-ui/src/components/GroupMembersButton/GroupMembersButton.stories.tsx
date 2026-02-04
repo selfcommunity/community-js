@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import GroupMembersButton from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import GroupMembersButton, { GroupMembersButtonProps } from './index';
 
 export default {
   title: 'Design System/React UI/Group Members Button ',
@@ -8,12 +8,12 @@ export default {
     groupId: {
       control: {type: 'number'},
       description: 'Group Id',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     }
   }
 } as Meta<typeof GroupMembersButton>;
 
-const template = (args) => (
+const template = (args: GroupMembersButtonProps) => (
   <div style={{width: '100%'}}>
     <GroupMembersButton {...args} />
   </div>

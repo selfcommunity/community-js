@@ -1,8 +1,8 @@
-import {LoadingButton} from '@mui/lab';
 import {
   Alert,
   Box,
   BoxProps,
+  Button,
   FormControl,
   FormGroup,
   Icon,
@@ -28,6 +28,7 @@ import {
   SCPreferencesContextType,
   UserUtils,
   useSCContext,
+  useSCGoogleApiLoader,
   useSCPaymentsEnabled,
   useSCPreferences,
   useSCUser
@@ -35,8 +36,8 @@ import {
 import {SCContentType, SCEventLocationType, SCEventPrivacyType, SCEventRecurrenceType, SCEventType, SCFeatureName} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
-import enLocale from 'date-fns/locale/en-US';
-import itLocale from 'date-fns/locale/it';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import PubSub from 'pubsub-js';
 import {ChangeEvent, useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -52,8 +53,17 @@ import {LIVESTREAM_DEFAULT_SETTINGS} from '../LiveStreamForm/constants';
 import CoverPlaceholder from '../../assets/deafultCover';
 import PaywallsConfigurator from '../PaywallsConfigurator';
 import {ContentAccessType} from '../PaywallsConfigurator/constants';
+import {APIProvider} from '@vis.gl/react-google-maps';
 
 const messages = defineMessages({
+  titleDate: {
+    id: 'ui.eventForm.date.title',
+    defaultMessage: 'ui.eventForm.date.title'
+  },
+  titleTime: {
+    id: 'ui.eventForm.time.title',
+    defaultMessage: 'ui.eventForm.time.title'
+  },
   name: {
     id: 'ui.eventForm.name.placeholder',
     defaultMessage: 'ui.eventForm.name.placeholder'
@@ -248,6 +258,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
   const [field, setField] = useState<InitialFieldState>(initialFieldState);
   const [error, setError] = useState<any>({});
   const [genericError, setGenericError] = useState<string | null>(null);
+
+  // HOOKS
+  const {geocodingApiKey, libraries} = useSCGoogleApiLoader();
 
   // PREFERENCES
   const scPreferences: SCPreferencesContextType = useSCPreferences();
@@ -538,8 +551,10 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           value={field.name}
           name="name"
           onChange={handleChange}
-          InputProps={{
-            endAdornment: <Typography variant="body2">{EVENT_TITLE_MAX_LENGTH - field.name.length}</Typography>
+          slotProps={{
+            input: {
+              endAdornment: <Typography variant="body2">{EVENT_TITLE_MAX_LENGTH - field.name.length}</Typography>
+            }
           }}
           error={Boolean(field.name.length > EVENT_TITLE_MAX_LENGTH) || Boolean(error['nameError'])}
           helperText={
@@ -553,9 +568,9 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         <Box className={classes.dateTime}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
-            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+            adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}
             localeText={{
-              cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`
+              cancelButtonLabel: intl.formatMessage(messages.pickerCancelAction)
             }}>
             <MobileDatePicker
               className={classes.picker}
@@ -563,29 +578,27 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               minDate={minStartDate}
               label={field.startDate && <FormattedMessage id="ui.eventForm.date.placeholder" defaultMessage="ui.eventForm.date.placeholder" />}
               value={field.startDate}
+              enableAccessibleFieldDOMStructure={false}
+              localeText={{
+                toolbarTitle: intl.formatMessage(messages.titleDate)
+              }}
               slots={{
-                textField: (params) => (
-                  <TextField
-                    {...params}
-                    InputProps={{
-                      ...params.InputProps,
-                      placeholder: `${intl.formatMessage(messages.startDate)}`,
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <IconButton>
-                            <Icon>CalendarIcon</Icon>
-                          </IconButton>
-                        </InputAdornment>
-                      )
-                    }}
-                  />
+                openPickerButton: (params) => (
+                  <IconButton {...params} sx={{marginLeft: 0}}>
+                    <Icon>CalendarIcon</Icon>
+                  </IconButton>
                 )
               }}
               slotProps={{
-                toolbar: {
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
+                field: {
+                  openPickerButtonPosition: 'start'
+                },
+                textField: {
+                  slotProps: {
+                    input: {
+                      placeholder: intl.formatMessage(messages.startDate)
+                    }
+                  }
                 }
               }}
               onChange={(value) => {
@@ -599,29 +612,27 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               minTime={minStartTime}
               label={field.startTime && <FormattedMessage id="ui.eventForm.time.placeholder" defaultMessage="ui.eventForm.time.placeholder" />}
               value={field.startTime}
+              enableAccessibleFieldDOMStructure={false}
+              localeText={{
+                toolbarTitle: intl.formatMessage(messages.titleTime)
+              }}
               slots={{
-                textField: (params) => (
-                  <TextField
-                    {...params}
-                    InputProps={{
-                      ...params.InputProps,
-                      placeholder: `${intl.formatMessage(messages.startTime)}`,
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <IconButton>
-                            <Icon>access_time</Icon>
-                          </IconButton>
-                        </InputAdornment>
-                      )
-                    }}
-                  />
+                openPickerButton: (params) => (
+                  <IconButton {...params} sx={{marginLeft: 0}}>
+                    <Icon>access_time</Icon>
+                  </IconButton>
                 )
               }}
               slotProps={{
-                toolbar: {
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  toolbarTitle: <FormattedMessage id="ui.eventForm.time.title" defaultMessage="ui.eventForm.time.title" />
+                field: {
+                  openPickerButtonPosition: 'start'
+                },
+                textField: {
+                  slotProps: {
+                    input: {
+                      placeholder: intl.formatMessage(messages.startTime)
+                    }
+                  }
                 }
               }}
               onChange={(value) => {
@@ -632,17 +643,17 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           </LocalizationProvider>
         </Box>
         <FormControl className={classes.frequency}>
-          {field.recurring !== SCEventRecurrenceType.NEVER && <InputLabel id="recurring">{`${intl.formatMessage(messages.frequency)}`}</InputLabel>}
+          {field.recurring !== SCEventRecurrenceType.NEVER && <InputLabel id="recurring">{intl.formatMessage(messages.frequency)}</InputLabel>}
           <Select
             name="recurring"
-            label={field.recurring !== SCEventRecurrenceType.NEVER && `${intl.formatMessage(messages.frequency)}`}
+            label={field.recurring !== SCEventRecurrenceType.NEVER && intl.formatMessage(messages.frequency)}
             labelId="recurring"
             value={field.recurring}
             onChange={handleChange}
             displayEmpty
             renderValue={(selected) => {
               if (!selected) {
-                return <em>{`${intl.formatMessage(messages.frequencyPlaceholder)}`}</em>;
+                return <em>{intl.formatMessage(messages.frequencyPlaceholder)}</em>;
               }
 
               return (
@@ -669,38 +680,36 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         <Box className={classes.dateTime}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
-            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+            adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}
             localeText={{
-              cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`
+              cancelButtonLabel: intl.formatMessage(messages.pickerCancelAction)
             }}>
             <MobileDatePicker
               className={classes.picker}
               minDate={field.startDate}
               label={<FormattedMessage id="ui.eventForm.date.end.placeholder" defaultMessage="ui.eventForm.date.end.placeholder" />}
               value={field.endDate}
+              enableAccessibleFieldDOMStructure={false}
+              localeText={{
+                toolbarTitle: intl.formatMessage(messages.titleDate)
+              }}
               slots={{
-                textField: (params) => (
-                  <TextField
-                    {...params}
-                    InputProps={{
-                      ...params.InputProps,
-                      placeholder: `${intl.formatMessage(messages.endDate)}`,
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <IconButton>
-                            <Icon>calendar_off</Icon>
-                          </IconButton>
-                        </InputAdornment>
-                      )
-                    }}
-                  />
+                openPickerButton: (params) => (
+                  <IconButton {...params} sx={{marginLeft: 0}}>
+                    <Icon>calendar_off</Icon>
+                  </IconButton>
                 )
               }}
               slotProps={{
-                toolbar: {
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  toolbarTitle: <FormattedMessage id="ui.eventForm.date.title" defaultMessage="ui.eventForm.date.title" />
+                field: {
+                  openPickerButtonPosition: 'start'
+                },
+                textField: {
+                  slotProps: {
+                    input: {
+                      placeholder: intl.formatMessage(messages.endDate)
+                    }
+                  }
                 }
               }}
               onChange={(value) => {
@@ -714,29 +723,27 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
               disablePast={disablePastEndTime}
               label={field.endTime && <FormattedMessage id="ui.eventForm.time.end.placeholder" defaultMessage="ui.eventForm.time.end.placeholder" />}
               value={field.endTime}
+              enableAccessibleFieldDOMStructure={false}
+              localeText={{
+                toolbarTitle: intl.formatMessage(messages.titleTime)
+              }}
               slots={{
-                textField: (params) => (
-                  <TextField
-                    {...params}
-                    InputProps={{
-                      ...params.InputProps,
-                      placeholder: `${intl.formatMessage(messages.endTime)}`,
-                      startAdornment: (
-                        <InputAdornment position="start">
-                          <IconButton>
-                            <Icon>access_time</Icon>
-                          </IconButton>
-                        </InputAdornment>
-                      )
-                    }}
-                  />
+                openPickerButton: (params) => (
+                  <IconButton {...params} sx={{marginLeft: 0}}>
+                    <Icon>access_time</Icon>
+                  </IconButton>
                 )
               }}
               slotProps={{
-                toolbar: {
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                  // @ts-ignore
-                  toolbarTitle: <FormattedMessage id="ui.eventForm.time.title" defaultMessage="ui.eventForm.time.title" />
+                field: {
+                  openPickerButtonPosition: 'start'
+                },
+                textField: {
+                  slotProps: {
+                    input: {
+                      placeholder: intl.formatMessage(messages.endTime)
+                    }
+                  }
                 }
               }}
               onChange={(value) => {
@@ -747,27 +754,29 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             />
           </LocalizationProvider>
         </Box>
-        <EventAddress
-          forwardGeolocationData={handleGeoData}
-          forwardLivestreamSettingsData={handleLiveStreamSettingsData}
-          event={
-            {
-              ...event,
-              ...{
-                name: field.name,
-                start_date: field.startDate,
-                location: field.location,
-                geolocation: field.geolocation,
-                live_stream: {
-                  title: field.name || `${intl.formatMessage(messages.name)}`,
-                  ...(event && event.live_stream?.created_at && {created_at: field.startDate}),
-                  settings: field.liveStreamSettings
+        <APIProvider apiKey={geocodingApiKey} libraries={libraries}>
+          <EventAddress
+            forwardGeolocationData={handleGeoData}
+            forwardLivestreamSettingsData={handleLiveStreamSettingsData}
+            event={
+              {
+                ...event,
+                ...{
+                  name: field.name,
+                  start_date: field.startDate,
+                  location: field.location,
+                  geolocation: field.geolocation,
+                  live_stream: {
+                    title: field.name || intl.formatMessage(messages.name),
+                    ...(event && event.live_stream?.created_at && {created_at: field.startDate}),
+                    settings: field.liveStreamSettings
+                  }
                 }
-              }
-            } as unknown as SCEventType
-          }
-          {...EventAddressComponentProps}
-        />
+              } as unknown as SCEventType
+            }
+            {...EventAddressComponentProps}
+          />
+        </APIProvider>
         {privateEnabled && (
           <Box className={classes.privacySection}>
             <Stack direction="row" spacing={1} alignItems="center" justifyContent="center">
@@ -792,9 +801,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   id="ui.eventForm.privacy.public.info"
                   defaultMessage="ui.eventForm.privacy.public.info"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                    // @ts-ignores
-                    b: (chunks) => <strong>{chunks}</strong>
+                    b: (chunks) => <strong key="ui.eventForm.privacy.public.info.b">{chunks}</strong>
                   }}
                 />
               ) : (
@@ -802,9 +809,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
                   id="ui.eventForm.privacy.private.info"
                   defaultMessage="ui.eventForm.private.public.info"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    b: (chunks) => <strong>{chunks}</strong>
+                    b: (chunks) => <strong key="ui.eventForm.privacy.private.info.b">{chunks}</strong>
                   }}
                 />
               )}
@@ -814,17 +819,19 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
         <TextField
           multiline
           className={classes.description}
-          placeholder={`${intl.formatMessage(messages.description)}`}
+          placeholder={intl.formatMessage(messages.description)}
           margin="normal"
           value={field.description}
           name="description"
           onChange={handleChange}
-          InputProps={{
-            endAdornment: (
-              <Typography variant="body2">
-                {field.description?.length ? EVENT_DESCRIPTION_MAX_LENGTH - field.description.length : EVENT_DESCRIPTION_MAX_LENGTH}
-              </Typography>
-            )
+          slotProps={{
+            input: {
+              endAdornment: (
+                <Typography variant="body2">
+                  {field.description?.length ? EVENT_DESCRIPTION_MAX_LENGTH - field.description.length : EVENT_DESCRIPTION_MAX_LENGTH}
+                </Typography>
+              )
+            }
           }}
           error={Boolean(field.description?.length > EVENT_DESCRIPTION_MAX_LENGTH)}
           helperText={
@@ -851,7 +858,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
           </Box>
         )}
         <Box className={classes.actions}>
-          <LoadingButton
+          <Button
             loading={field.isSubmitting}
             disabled={
               !field.name ||
@@ -876,7 +883,7 @@ export default function EventForm(inProps: EventFormProps): JSX.Element {
             ) : (
               <FormattedMessage id="ui.eventForm.button.create" defaultMessage="ui.eventForm.button.create" />
             )}
-          </LoadingButton>
+          </Button>
         </Box>
       </FormGroup>
     </Root>

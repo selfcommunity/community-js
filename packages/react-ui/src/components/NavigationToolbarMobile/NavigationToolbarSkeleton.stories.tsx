@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import NavigationToolbarMobileSkeleton from './Skeleton';
 import { AppBar } from '@mui/material';
-import {INITIAL_VIEWPORTS} from '@storybook/addon-viewport';
+import {INITIAL_VIEWPORTS} from 'storybook/viewport';
 
 export default {
   title: 'Design System/React UI/Skeleton/Navigation Toolbar Mobile',
@@ -15,13 +15,13 @@ export default {
   },
 } as Meta<typeof NavigationToolbarMobileSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <AppBar position="relative">
-    <NavigationToolbarMobileSkeleton {...args} />
+    <NavigationToolbarMobileSkeleton />
   </AppBar>
 );
 
-export const Base: StoryObj<NavigationToolbarMobileSkeleton> = {
+export const Base: StoryObj<typeof NavigationToolbarMobileSkeleton> = {
   parameters: {
     viewport: {
       defaultViewport: 'iphone6',

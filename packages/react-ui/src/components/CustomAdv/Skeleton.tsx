@@ -1,4 +1,3 @@
-import React from 'react';
 import {GenericSkeleton} from '../Skeleton';
 import {styled} from '@mui/material';
 import {PREFIX} from './constants';
@@ -10,7 +9,7 @@ const classes = {
 const Root = styled(GenericSkeleton, {
   name: PREFIX,
   slot: 'SkeletonRoot'
-})(({theme}) => ({}));
+})(() => ({}));
 /**
  * > API documentation for the Community-JS Custom Adv Skeleton component. Learn about the available props and the CSS API.
 

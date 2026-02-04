@@ -130,10 +130,10 @@ export default function CommentNotification(props: CommentNotificationProps): JS
             </Link>{' '}
             {notificationObject.type === SCNotificationTypologyType.NESTED_COMMENT
               ? intl.formatMessage(messages.nestedComment, {
-                  b: (...chunks) => <strong>{chunks}</strong>
+                  b: (chunks) => <strong key="ui.notification.comment.nestedComment.b">{chunks}</strong>
                 })
               : intl.formatMessage(messages.comment, {
-                  b: (...chunks) => <strong>{chunks}</strong>
+                  b: (chunks) => <strong key="ui.notification.comment.comment.b">{chunks}</strong>
                 })}
           </>
         }
@@ -165,9 +165,9 @@ export default function CommentNotification(props: CommentNotificationProps): JS
           template === SCNotificationObjectTemplateType.TOAST && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <DateTimeAgo date={notificationObject.active_at} />
-              <Typography color="primary" component={'div'}>
+              <Typography color="primary" component="div">
                 <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(notificationObject.comment))}>
-                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage={'ui.userToastNotifications.viewContribution'} />
+                  <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage="ui.userToastNotifications.viewContribution" />
                 </Link>
               </Typography>
             </Stack>

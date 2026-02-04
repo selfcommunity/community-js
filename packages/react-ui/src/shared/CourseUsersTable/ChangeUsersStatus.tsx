@@ -1,7 +1,6 @@
-import {MenuItem, Select, SelectChangeEvent, Typography} from '@mui/material';
+import {Button, MenuItem, Select, SelectChangeEvent, Typography} from '@mui/material';
 import {memo, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
 import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
 import {CourseService, CourseUserRoleParams} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
@@ -75,7 +74,7 @@ function ChangeUserStatus(props: ChangeUserStatusProps) {
     <Select size="small" value={value} onChange={handleChange}>
       {OPTIONS.map((option, i) => (
         <MenuItem key={i} value={option}>
-          <LoadingButton
+          <Button
             size="small"
             color="inherit"
             loading={loading}
@@ -89,7 +88,7 @@ function ChangeUserStatus(props: ChangeUserStatusProps) {
             <Typography variant="body1">
               <FormattedMessage id={option} defaultMessage={option} />
             </Typography>
-          </LoadingButton>
+          </Button>
         </MenuItem>
       ))}
     </Select>

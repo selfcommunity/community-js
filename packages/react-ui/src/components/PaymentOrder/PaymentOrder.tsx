@@ -1,4 +1,3 @@
-import React from 'react';
 import {Box, Chip, Stack, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -153,7 +152,7 @@ export default function PaymentOrder(inProps: PaymentOrderProps) {
         </Typography>
         <Chip
           className={classes.status}
-          variant={'outlined'}
+          variant="outlined"
           label={<FormattedMessage id="ui.paymentOrder.status.paid" defaultMessage="ui.paymentOrder.status.paid" />}
           color="success"
           size="small"

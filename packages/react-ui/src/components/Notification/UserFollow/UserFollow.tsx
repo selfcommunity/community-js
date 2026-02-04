@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Avatar, Stack, Typography, styled} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCNotificationUserFollowType} from '@selfcommunity/types';
@@ -103,7 +103,7 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
               className={classes.username}>
               {notificationObject.follower.username}
             </Link>{' '}
-            {intl.formatMessage(messages.followUser, {b: (...chunks) => <strong>{chunks}</strong>})}
+            {intl.formatMessage(messages.followUser, {b: (chunks) => <strong key="ui.notification.userFollow.followUser.b">{chunks}</strong>})}
           </Typography>
         }
         secondary={
@@ -115,13 +115,13 @@ export default function UserFollowNotification(props: NotificationFollowProps): 
           template === SCNotificationObjectTemplateType.TOAST && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <DateTimeAgo date={notificationObject.active_at} />
-              <Typography color="primary" component={'div'}>
+              <Typography color="primary" component="div">
                 <Link
                   {...(!notificationObject.follower.deleted && {
                     to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, notificationObject.follower)
                   })}
                   onClick={notificationObject.follower.deleted ? () => setOpenAlert(true) : null}>
-                  <FormattedMessage id="ui.userToastNotifications.goToProfile" defaultMessage={'ui.userToastNotifications.goToProfile'} />
+                  <FormattedMessage id="ui.userToastNotifications.goToProfile" defaultMessage="ui.userToastNotifications.goToProfile" />
                 </Link>
               </Typography>
             </Stack>

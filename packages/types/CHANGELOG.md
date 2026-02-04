@@ -3,12 +3,117 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.8.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.11...@selfcommunity/types@0.8.0-alpha.12) (2025-10-07)
+# [0.8.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.11...@selfcommunity/types@0.8.0-alpha.12) (2026-01-22)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* storybook ([30b8092](https://github.com/selfcommunity/community-js/commit/30b809252cd6d41294aa358fc66fb8641d9bfdbe))
+* storybook ([2c03da8](https://github.com/selfcommunity/community-js/commit/2c03da82245579154ecb2e87cf39490e3798fd4c))
 
 
 ### Features
 
 * added new adv position for category feed. Linear issue: https://linear.app/quentral/issue/QUE-2123/differenziare-la-nuova-posizione-sopra-il-feed-categorie-da-sopra-il ([57a351e](https://github.com/selfcommunity/community-js/commit/57a351eaee906645e76537631fec6ac67d6ec6f6))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.8.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.11...@selfcommunity/types@0.8.0-alpha.12) (2026-01-22)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* storybook ([30b8092](https://github.com/selfcommunity/community-js/commit/30b809252cd6d41294aa358fc66fb8641d9bfdbe))
+* storybook ([2c03da8](https://github.com/selfcommunity/community-js/commit/2c03da82245579154ecb2e87cf39490e3798fd4c))
+
+
+### Features
+
+* added new adv position for category feed. Linear issue: https://linear.app/quentral/issue/QUE-2123/differenziare-la-nuova-posizione-sopra-il-feed-categorie-da-sopra-il ([57a351e](https://github.com/selfcommunity/community-js/commit/57a351eaee906645e76537631fec6ac67d6ec6f6))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.8.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.11...@selfcommunity/types@0.8.0-alpha.12) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* storybook ([30b8092](https://github.com/selfcommunity/community-js/commit/30b809252cd6d41294aa358fc66fb8641d9bfdbe))
+* storybook ([2c03da8](https://github.com/selfcommunity/community-js/commit/2c03da82245579154ecb2e87cf39490e3798fd4c))
+
+
+### Features
+
+* added new adv position for category feed. Linear issue: https://linear.app/quentral/issue/QUE-2123/differenziare-la-nuova-posizione-sopra-il-feed-categorie-da-sopra-il ([57a351e](https://github.com/selfcommunity/community-js/commit/57a351eaee906645e76537631fec6ac67d6ec6f6))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.8.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.11...@selfcommunity/types@0.8.0) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* storybook ([30b8092](https://github.com/selfcommunity/community-js/commit/30b809252cd6d41294aa358fc66fb8641d9bfdbe))
+* storybook ([2c03da8](https://github.com/selfcommunity/community-js/commit/2c03da82245579154ecb2e87cf39490e3798fd4c))
+
+
+### Features
+
+* added new adv position for category feed. Linear issue: https://linear.app/quentral/issue/QUE-2123/differenziare-la-nuova-posizione-sopra-il-feed-categorie-da-sopra-il ([57a351e](https://github.com/selfcommunity/community-js/commit/57a351eaee906645e76537631fec6ac67d6ec6f6))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.8.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.11...@selfcommunity/types@0.8.0-alpha.13) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* storybook ([30b8092](https://github.com/selfcommunity/community-js/commit/30b809252cd6d41294aa358fc66fb8641d9bfdbe))
+* storybook ([2c03da8](https://github.com/selfcommunity/community-js/commit/2c03da82245579154ecb2e87cf39490e3798fd4c))
+
+
+### Features
+
+* added new adv position for category feed. Linear issue: https://linear.app/quentral/issue/QUE-2123/differenziare-la-nuova-posizione-sopra-il-feed-categorie-da-sopra-il ([57a351e](https://github.com/selfcommunity/community-js/commit/57a351eaee906645e76537631fec6ac67d6ec6f6))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.8.0-alpha.12](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@0.8.0-alpha.11...@selfcommunity/types@0.8.0-alpha.12) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* storybook ([30b8092](https://github.com/selfcommunity/community-js/commit/30b809252cd6d41294aa358fc66fb8641d9bfdbe))
+* storybook ([2c03da8](https://github.com/selfcommunity/community-js/commit/2c03da82245579154ecb2e87cf39490e3798fd4c))
+
+
+### Features
+
+* added new adv position for category feed. Linear issue: https://linear.app/quentral/issue/QUE-2123/differenziare-la-nuova-posizione-sopra-il-feed-categorie-da-sopra-il ([57a351e](https://github.com/selfcommunity/community-js/commit/57a351eaee906645e76537631fec6ac67d6ec6f6))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
 
 
 

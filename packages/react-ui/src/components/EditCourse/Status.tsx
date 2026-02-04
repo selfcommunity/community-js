@@ -41,7 +41,7 @@ export default function Status(props: StatusProps) {
                   defaultMessage: `ui.course.privacy.${course.privacy === SCCoursePrivacyType.DRAFT ? 'draft' : course.privacy}`
                 }),
                 b: (chunks) => (
-                  <Typography component="b" fontWeight="bold">
+                  <Typography key="ui.editCourse.tab.lessons.status.b" component="b" fontWeight="bold">
                     {chunks}
                   </Typography>
                 )

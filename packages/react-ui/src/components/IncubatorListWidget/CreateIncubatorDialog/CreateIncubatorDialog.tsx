@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {TextField, Typography, FormGroup, styled} from '@mui/material';
-import {http, Endpoints, HttpResponse} from '@selfcommunity/api-services';
+import {TextField, Typography, FormGroup, styled, Button} from '@mui/material';
+import {http, Endpoints} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../../shared/BaseDialog';
 import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
-import {LoadingButton} from '@mui/lab';
 import {PREFIX} from '../constants';
 
 const messages = defineMessages({
@@ -83,7 +82,7 @@ export default function CreateIncubatorDialog(props: CreateIncubatorDialogProps)
           slogan: slogan
         }
       })
-      .then((res: HttpResponse<any>) => {
+      .then(() => {
         setIsSubmitting(false);
         setSubmitted(true);
       })
@@ -101,7 +100,7 @@ export default function CreateIncubatorDialog(props: CreateIncubatorDialogProps)
   let dialogContent;
   if (submitted) {
     dialogContent = (
-      <Typography variant={'subtitle2'} className={classes.submittedMessage}>
+      <Typography variant="subtitle2" className={classes.submittedMessage}>
         <FormattedMessage
           id="ui.incubatorListWidget.createIncubatorDialog.propose.success"
           defaultMessage="ui.incubatorListWidget.createIncubatorDialog.propose.success"
@@ -111,7 +110,7 @@ export default function CreateIncubatorDialog(props: CreateIncubatorDialogProps)
   } else {
     dialogContent = (
       <>
-        <Typography component={'span'} className={classes.intro}>
+        <Typography component="span" className={classes.intro}>
           <FormattedMessage
             id="ui.incubatorsListDialog.createIncubatorDialog.intro"
             defaultMessage="ui.incubatorsListDialog.createIncubatorDialog.intro"
@@ -137,12 +136,12 @@ export default function CreateIncubatorDialog(props: CreateIncubatorDialogProps)
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => setSlogan(event.target.value)}
           />
         </FormGroup>
-        <LoadingButton loading={isSubmitting} disabled={!name || Boolean(error)} variant="contained" onClick={handleSubmit}>
+        <Button loading={isSubmitting} disabled={!name || Boolean(error)} variant="contained" onClick={handleSubmit}>
           <FormattedMessage
             id="ui.incubatorListWidget.createIncubatorDialog.button"
             defaultMessage="ui.incubatorListWidget.createIncubatorDialog.button"
           />
-        </LoadingButton>
+        </Button>
       </>
     );
   }

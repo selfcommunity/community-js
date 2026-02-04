@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import { INITIAL_VIEWPORTS } from 'storybook/viewport';
 import BottomNavigation, { BottomNavigationProps } from './index';
 
 export default {
@@ -14,7 +14,7 @@ export default {
   },
 } as Meta<typeof BottomNavigation>;
 
-const template = (args) => (
+const template = (args: BottomNavigationProps) => (
   <BottomNavigation {...args} />
 );
 

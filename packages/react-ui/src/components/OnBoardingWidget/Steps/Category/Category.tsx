@@ -1,7 +1,7 @@
 import {Alert, Button, CardMedia, Icon, Typography, styled, Box} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import React, {useEffect, useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../../constants';
 import ProgressBar from '../../../../shared/ProgressBar';
@@ -105,15 +105,25 @@ export default function Category(inProps: CategoryProps) {
   const getLoadingMessage = useMemo((): JSX.Element => {
     let message;
     if (progress <= 10) {
-      message = (<FormattedMessage id="ui.onBoardingWidget.step.categories.loading.a" defaultMessage="ui.onBoardingWidget.step.categories.loading.a" />);
+      message = (
+        <FormattedMessage id="ui.onBoardingWidget.step.categories.loading.a" defaultMessage="ui.onBoardingWidget.step.categories.loading.a" />
+      );
     } else if (progress <= 20) {
-      message = (<FormattedMessage id="ui.onBoardingWidget.step.categories.loading.b" defaultMessage="ui.onBoardingWidget.step.categories.loading.b" />);
+      message = (
+        <FormattedMessage id="ui.onBoardingWidget.step.categories.loading.b" defaultMessage="ui.onBoardingWidget.step.categories.loading.b" />
+      );
     } else if (progress <= 40) {
-      message = (<FormattedMessage id="ui.onBoardingWidget.step.categories.loading.c" defaultMessage="ui.onBoardingWidget.step.categories.loading.c" />);
+      message = (
+        <FormattedMessage id="ui.onBoardingWidget.step.categories.loading.c" defaultMessage="ui.onBoardingWidget.step.categories.loading.c" />
+      );
     } else if (progress <= 60) {
-      message = (<FormattedMessage id="ui.onBoardingWidget.step.categories.loading.d" defaultMessage="ui.onBoardingWidget.step.categories.loading.d" />);
+      message = (
+        <FormattedMessage id="ui.onBoardingWidget.step.categories.loading.d" defaultMessage="ui.onBoardingWidget.step.categories.loading.d" />
+      );
     } else {
-      message = (<FormattedMessage id="ui.onBoardingWidget.step.categories.loading.e" defaultMessage="ui.onBoardingWidget.step.categories.loading.e" />);
+      message = (
+        <FormattedMessage id="ui.onBoardingWidget.step.categories.loading.e" defaultMessage="ui.onBoardingWidget.step.categories.loading.e" />
+      );
     }
     return message;
   }, [progress]);
@@ -133,15 +143,9 @@ export default function Category(inProps: CategoryProps) {
               id="ui.onBoardingWidget.step.category.generation.steps"
               defaultMessage="ui.onBoardingWidget.step.category.generation.steps"
               values={{
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                iconA: (...chunks) => <CircledLetter letter="a" statement={chunks} />,
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                iconB: (...chunks) => <CircledLetter letter="b" statement={chunks} />,
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                iconC: (...chunks) => <CircledLetter letter="c" statement={chunks} />
+                iconA: (chunks) => <CircledLetter key="ui.onBoardingWidget.step.category.generation.steps.iconA" letter="a" statement={chunks} />,
+                iconB: (chunks) => <CircledLetter key="ui.onBoardingWidget.step.category.generation.steps.iconB" letter="b" statement={chunks} />,
+                iconC: (chunks) => <CircledLetter key="ui.onBoardingWidget.step.category.generation.steps.iconC" letter="c" statement={chunks} />
               }}
             />
           </Typography>

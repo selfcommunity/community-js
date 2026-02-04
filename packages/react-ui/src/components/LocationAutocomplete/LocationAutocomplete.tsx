@@ -1,11 +1,10 @@
-import React, {SyntheticEvent, useEffect, useMemo, useState} from 'react';
+import {SyntheticEvent, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import {Autocomplete, AutocompleteProps, TextField, TextFieldProps, CircularProgress, styled} from '@mui/material';
+import {Autocomplete, AutocompleteProps, TextField, TextFieldProps, CircularProgress, styled, useThemeProps} from '@mui/material';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {SCContributionLocation, SCLocalityType} from '@selfcommunity/types';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {useThemeProps} from '@mui/system';
 
 const PREFIX = 'SCLocationAutocomplete';
 
@@ -16,7 +15,7 @@ const classes = {
 const Root = styled(Autocomplete, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({
   minWidth: 120
 }));
@@ -132,12 +131,12 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
 
   // Handlers
 
-  const handleChange = (event: SyntheticEvent, value: SCLocalityType) => {
+  const handleChange = (_event: SyntheticEvent, value: SCLocalityType) => {
     setValue(value ? {location: value.full_address, lat: value.lat, lng: value.lng} : null);
     onChange && onChange(value);
   };
 
-  const handleSearch = (event: SyntheticEvent, _search: string) => {
+  const handleSearch = (_event: SyntheticEvent, _search: string) => {
     setSearch(_search);
   };
 
@@ -153,8 +152,7 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
     <Root
       className={classes.root}
       options={options || []}
-      // @ts-ignore
-      getOptionLabel={(option: SCLocalityType | SCContributionLocation) => option?.full_address || option?.location || ''}
+      getOptionLabel={(option: SCLocalityType | SCContributionLocation) => option?.['full_address'] || option?.['location'] || ''}
       filterOptions={(x) => x}
       autoComplete
       includeInputInList
@@ -172,25 +170,29 @@ export default function LocationAutocomplete(inProps: LocationAutocompleteProps)
             {...params}
             {...TextFieldProps}
             margin="dense"
-            InputProps={{
-              ...params.InputProps,
-              autoComplete: 'location', // disable autocomplete and autofill
-              endAdornment: (
-                <React.Fragment>
-                  {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
-                  {params.InputProps.endAdornment}
-                </React.Fragment>
-              )
+            slotProps={{
+              input: {
+                ...params.InputProps,
+                autoComplete: 'location', // disable autocomplete and autofill
+                endAdornment: (
+                  <>
+                    {isLoading ? <CircularProgress color="inherit" size={20} /> : null}
+                    {params.InputProps.endAdornment}
+                  </>
+                )
+              }
             }}
           />
         );
       }}
       renderOption={(props, option: SCLocalityType, {inputValue}) => {
+        const {key, ...rest} = props;
         const matches = match(option.full_address, inputValue);
         const parts = parse(option.full_address, matches);
+
         return (
-          <li key={`${option.lat}_${option.lng}`} {...props} style={{whiteSpace: 'break-spaces'}}>
-            {parts.map((part, index) =>
+          <li key={key || `${option.lat}_${option.lng}`} {...rest} style={{whiteSpace: 'break-spaces'}}>
+            {parts.map((part, index: number) =>
               part.highlight ? (
                 <span key={index} style={{fontWeight: 700}}>
                   {part.text}

@@ -24,7 +24,6 @@ import {
 } from '@livekit/components-react';
 import ParticipantTileAvatar from './ParticipantTileAvatar';
 import ParticipantTileActions from './ParticipantTileActions';
-import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
 
 /**
  * The `ParticipantContextIfNeeded` component only creates a `ParticipantContext`
@@ -85,9 +84,6 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
     }: ParticipantTileProps,
     ref
   ) {
-
-    const scUserContext: SCUserContextType = useSCUser();
-
     const trackReference = useEnsureTrackRef(trackRef);
 
     const {elementProps} = useParticipantTile<HTMLDivElement>({
@@ -154,7 +150,7 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
                             participant: trackReference.participant,
                             source: Track.Source.Microphone
                           }}
-                          show={'muted'}></TrackMutedIndicator>
+                          show="muted"></TrackMutedIndicator>
                         {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                         {/* @ts-ignore */}
                         <ParticipantName>{!disableTileActions && <ParticipantTileActions />}</ParticipantName>
@@ -176,7 +172,7 @@ export const ParticipantTile: (props: ParticipantTileProps & React.RefAttributes
             )}
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}
-						{!disableTileFocusToggle && <FocusToggle trackRef={trackReference} />}
+            {!disableTileFocusToggle && <FocusToggle trackRef={trackReference} />}
           </ParticipantContextIfNeeded>
         </TrackRefContextIfNeeded>
       </div>

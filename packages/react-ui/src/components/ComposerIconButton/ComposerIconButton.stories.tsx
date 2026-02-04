@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import ComposerIconButton, { ComposerIconButtonProps } from './index';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: ComposerIconButton,
 } as Meta<typeof ComposerIconButton>;
 
-const template = (args) => (
+const template = (args: ComposerIconButtonProps) => (
   <div style={{width: '100%'}}>
     <ComposerIconButton {...args} />
   </div>

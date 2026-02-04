@@ -51,13 +51,13 @@ export default function PrivateMessageComponentSkeleton(props: PrivateMessageCom
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   return (
-    <Root container className={classNames(classes.root, className)}>
+    <Root container width="100%" className={classNames(classes.root, className)}>
       {!isMobile && (
-        <Grid item xs={12} md={5} className={classes.snippetsSection}>
+        <Grid size={{xs: 12, md: 5}} className={classes.snippetsSection}>
           <PrivateMessageSnippetsSkeleton />
         </Grid>
       )}
-      <Grid item xs={12} md={7} className={classes.threadSection}>
+      <Grid size={{xs: 12, md: 7}} className={classes.threadSection}>
         <PrivateMessageThreadSkeleton />
       </Grid>
     </Root>

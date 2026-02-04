@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Accordion,
   AccordionDetails,
@@ -86,20 +86,20 @@ const classes = {
 const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 const AccordionRoot = styled(Accordion, {
   name: PREFIX,
   slot: 'AccordionRoot',
-  overridesResolver: (props, styles) => styles.accordionRoot
+  overridesResolver: (_props, styles) => styles.accordionRoot
 })(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.dialogRoot
+})(() => ({}));
 
 export interface OnBoardingWidgetProps extends VirtualScrollerItemProps {
   /**
@@ -314,16 +314,16 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
 
   const startStep = async (stepId: number) => {
     showCategoriesWarningModal && setShowWarningCategoriesModal(false);
-		try {
-			await OnBoardingService.startAStep(stepId, GenerateContentsParams);
-			setIsGenerating(true);
-		} catch (error) {
-			Logger.error(SCOPE_SC_UI, error);
-			enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
-				variant: 'error',
-				autoHideDuration: 3000
-			});
-		}
+    try {
+      await OnBoardingService.startAStep(stepId, GenerateContentsParams);
+      setIsGenerating(true);
+    } catch (error) {
+      Logger.error(SCOPE_SC_UI, error);
+      enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+        variant: 'error',
+        autoHideDuration: 3000
+      });
+    }
   };
 
   const handlePreferencesUpdate = () => {
@@ -399,10 +399,8 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     const categoryStep = steps.find((step) => step.step === SCOnBoardingStepType.CATEGORIES);
 
     if (categoryStep?.status === SCOnBoardingStepStatusType.IN_PROGRESS && categoryStep.results.length !== 0) {
-      categoryStep.results.forEach((c: any) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-        // @ts-ignore
-        const isAlreadyNotified = prevCategoriesStep?.results.some((result: any) => result.id === c.id);
+      categoryStep.results.forEach((c) => {
+        const isAlreadyNotified = prevCategoriesStep?.results.some((result) => result.id === c.id);
         if (!isAlreadyNotified) {
           notifyCategoryChanges(c);
         }
@@ -441,17 +439,22 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
     return content;
   };
 
+  const handleAccordionChange = useCallback(() => {
+    setExpanded((prev) => !prev);
+  }, [setExpanded]);
+
   if (!isAdmin || !showOnBoarding) {
     return <HiddenPlaceholder />;
   }
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <AccordionRoot defaultExpanded className={classes.accordionRoot} expanded={expanded}>
+      <AccordionRoot defaultExpanded className={classes.accordionRoot} expanded={expanded} onChange={handleAccordionChange}>
         <AccordionSummary
           expandIcon={<OnBoardingActionsButton isExpanded={expanded} onExpandChange={handleExpand} onHideOnBoarding={handlePreferencesUpdate} />}
           aria-controls="accordion"
-          id="onBoarding-accordion">
+          id="onBoarding-accordion"
+          component="div">
           <>
             {expanded ? (
               <>
@@ -466,9 +469,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                       id="ui.onBoardingWidget.accordion.expanded.title.mobile"
                       defaultMessage="ui.onBoardingWidget.accordion.expanded.title.mobile"
                       values={{
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore
-                        b: (chunks) => <strong>{chunks}</strong>
+                        b: (chunks) => <strong key="ui.onBoardingWidget.accordion.expanded.title.mobile.b">{chunks}</strong>
                       }}
                     />
                   </Typography>
@@ -493,12 +494,8 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                       id="ui.onBoardingWidget.accordion.expanded.summary"
                       defaultMessage="ui.onBoardingWidget.accordion.expanded.summary"
                       values={{
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore
-                        b: (chunks) => <strong>{chunks}</strong>,
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                        // @ts-ignore
-                        icon: (...chunks) => <Icon>{chunks}</Icon>
+                        b: (chunks) => <strong key="ui.onBoardingWidget.accordion.expanded.summary.b">{chunks}</strong>,
+                        icon: (chunks) => <Icon key="ui.onBoardingWidget.accordion.expanded.summary.icon">{chunks}</Icon>
                       }}
                     />
                   </Typography>
@@ -510,13 +507,12 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                   id="ui.onBoardingWidget.accordion.collapsed"
                   defaultMessage="ui.onBoardingWidget.accordion.collapsed"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
-                    b: (chunks) => <strong>{chunks}</strong>,
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
-                    // eslint-disable-next-line prettier/prettier
-                    icon: (...chunks) => <Icon color="secondary" fontSize="medium">{chunks}</Icon>
+                    b: (chunks) => <strong key="ui.onBoardingWidget.accordion.collapsed.b">{chunks}</strong>,
+                    icon: (chunks) => (
+                      <Icon key="ui.onBoardingWidget.accordion.collapsed.icon" color="secondary" fontSize="medium">
+                        {chunks}
+                      </Icon>
+                    )
                   }}
                 />
               </Typography>
@@ -558,8 +554,12 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                               checked={step.status === SCOnBoardingStepStatusType.COMPLETED}
                               tabIndex={-1}
                               disableRipple
-                              inputProps={{'aria-labelledby': step.step}}
-                              size={'small'}
+                              slotProps={{
+                                input: {
+                                  'aria-labelledby': `${step.step}`
+                                }
+                              }}
+                              size="small"
                             />
                           </ListItemIcon>
                           <ListItemText
@@ -635,9 +635,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                           id="ui.onBoardingWidget.ai.categories.warning.confirm"
                           defaultMessage="ui.onBoardingWidget.ai.categories.warning.confirm"
                           values={{
-                            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                            // @ts-ignore
-                            b: (chunks) => <b>{chunks}</b>
+                            b: (chunks) => <b key="ui.onBoardingWidget.ai.categories.warning.confirm.b">{chunks}</b>
                           }}
                         />
                       </Typography>

@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
-import {Avatar, Box, Stack, Typography, styled} from '@mui/material';
+import {useContext, useEffect, useMemo, useState} from 'react';
+import {Avatar, Box, Button, Stack, Typography, styled} from '@mui/material';
 import {
   Link,
   SCConnectionsManagerType,
@@ -19,7 +19,6 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
-import {LoadingButton} from '@mui/lab';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
 import {PREFIX} from '../constants';
@@ -156,8 +155,8 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
                   {notificationObject.message.sender.username}
                 </Link>{' '}
                 <FormattedMessage
-                  id={'ui.userToastNotifications.privateMessage.sentMessage'}
-                  defaultMessage={'ui.userToastNotifications.privateMessage.sentMessage'}
+                  id="ui.userToastNotifications.privateMessage.sentMessage"
+                  defaultMessage="ui.userToastNotifications.privateMessage.sentMessage"
                 />
                 :
                 <Box className={classes.messageWrap}>
@@ -193,7 +192,7 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
                     className={classes.messageLabel}>
                     {intl.formatMessage(messages.receivePrivateMessage, {
                       total: 1,
-                      b: (...chunks) => <strong>{chunks}</strong>
+                      b: (chunks) => <strong key="ui.notification.receivePrivateMessage.b">{chunks}</strong>
                     })}
                   </Link>
                 </Typography>
@@ -213,9 +212,9 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
                       : scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, notificationObject.message.sender)
                   }>
                   {scUserContext.user && follower ? (
-                    <FormattedMessage id="ui.userToastNotifications.replyMessage" defaultMessage={'ui.userToastNotifications.replyMessage'} />
+                    <FormattedMessage id="ui.userToastNotifications.replyMessage" defaultMessage="ui.userToastNotifications.replyMessage" />
                   ) : (
-                    <FormattedMessage id="ui.userToastNotifications.viewMessage" defaultMessage={'ui.userToastNotifications.viewMessage'} />
+                    <FormattedMessage id="ui.userToastNotifications.viewMessage" defaultMessage="ui.userToastNotifications.viewMessage" />
                   )}
                 </Link>
               </Typography>
@@ -237,8 +236,8 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
         actions={
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-            <LoadingButton
-              color={'primary'}
+            <Button
+              color="primary"
               variant="outlined"
               size="small"
               classes={{root: classes.replyButton}}
@@ -260,7 +259,7 @@ export default function PrivateMessageNotification(props: NotificationPrivateMes
               ) : (
                 <FormattedMessage id="ui.notification.privateMessage.btnViewLabel" defaultMessage="ui.notification.privateMessage.btnViewLabel" />
               )}
-            </LoadingButton>
+            </Button>
           </Stack>
         }
         primary={

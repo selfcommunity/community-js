@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import PaymentOrderPdfButton, { PaymentOrderPdfButtonProps } from './index';
 
 export default {
@@ -9,7 +9,7 @@ export default {
   }
 } as Meta<typeof PaymentOrderPdfButton>;
 
-const template = (args) => (
+const template = (args: PaymentOrderPdfButtonProps) => (
     <PaymentOrderPdfButton {...args} />
 );
 

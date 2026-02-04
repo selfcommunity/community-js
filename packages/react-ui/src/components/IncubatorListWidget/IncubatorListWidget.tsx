@@ -45,13 +45,13 @@ const classes = {
 const Root = styled(Widget, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'DialogRoot'
-})(({theme}) => ({}));
+})(() => ({}));
 export interface IncubatorListWidgetProps extends VirtualScrollerItemProps {
   /**
    * Hides this component
@@ -317,7 +317,7 @@ export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): 
   const content = (
     <CardContent>
       <Box className={classes.header}>
-        <Typography className={classes.title} variant={'h5'}>
+        <Typography className={classes.title} variant="h5">
           <FormattedMessage id="ui.incubatorListWidget.title" defaultMessage="ui.incubatorListWidget.title" />
         </Typography>
         <IconButton className={classes.helpPopover} color="primary" aria-label="info" component="span" onClick={handleClickHelpButton}>
@@ -333,7 +333,7 @@ export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): 
               horizontal: 'right'
             }}>
             <Box sx={{p: '10px'}}>
-              <Typography component={'span'} sx={{whiteSpace: 'pre-line'}}>
+              <Typography component="span" sx={{whiteSpace: 'pre-line'}}>
                 <FormattedMessage id="ui.incubatorListWidget.popover" defaultMessage="ui.incubatorListWidget.popover" />
               </Typography>
             </Box>

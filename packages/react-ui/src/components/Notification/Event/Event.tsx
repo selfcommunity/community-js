@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Avatar, Box, Icon, Stack, Typography, styled} from '@mui/material';
+import {useState} from 'react';
+import {Avatar, Box, Button, Icon, Stack, Typography, styled} from '@mui/material';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventSubscriptionStatusType, SCNotificationEventActivityType, SCNotificationTypologyType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -7,7 +7,6 @@ import DateTimeAgo from '../../../shared/DateTimeAgo';
 import classNames from 'classnames';
 import {SCNotificationObjectTemplateType} from '../../../types';
 import NotificationItem, {NotificationItemProps} from '../../../shared/NotificationItem';
-import {LoadingButton} from '@mui/lab';
 import UserDeletedSnackBar from '../../../shared/UserDeletedSnackBar';
 import UserAvatar from '../../../shared/UserAvatar';
 import {PREFIX} from '../constants';
@@ -120,11 +119,15 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               id={`ui.notification.event.${notificationObject.type}`}
               defaultMessage={`ui.notification.event.${notificationObject.type}`}
               values={{
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                icon: (...chunks) => <Icon>{chunks}</Icon>,
+                icon: (chunks) => <Icon key={`ui.notification.event.${notificationObject.type}.icon`}>{chunks}</Icon>,
                 event: notificationObject.event.name,
-                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>{chunks}</Link>
+                link: (chunks) => (
+                  <Link
+                    key={`ui.notification.event.${notificationObject.type}.link`}
+                    to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>
+                    {chunks}
+                  </Link>
+                )
               }}
             />
           </Box>
@@ -166,10 +169,10 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               <DateTimeAgo date={notificationObject.active_at} />
               <Typography color="primary">
                 {notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT ? (
-                  <LoadingButton
+                  <Button
                     disabled={disabled}
                     loading={loading}
-                    color={'primary'}
+                    color="primary"
                     variant="text"
                     size="small"
                     onClick={() => acceptRequest(notificationObject.event)}>
@@ -178,7 +181,7 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
                     ) : (
                       <FormattedMessage id="ui.notification.event.button.accept" defaultMessage="ui.notification.event.button.accept" />
                     )}
-                  </LoadingButton>
+                  </Button>
                 ) : (
                   <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>
                     <FormattedMessage id="ui.notification.event.button.see" defaultMessage="ui.notification.event.button.see" />
@@ -227,11 +230,15 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               id={`ui.notification.${notificationObject.type}`}
               defaultMessage={`ui.notification.${notificationObject.type}`}
               values={{
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                // @ts-ignore
-                icon: (...chunks) => <Icon>{chunks}</Icon>,
+                icon: (chunks) => <Icon key={`ui.notification.${notificationObject.type}.icon`}>{chunks}</Icon>,
                 event: notificationObject.event.name,
-                link: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>{chunks}</Link>
+                link: (chunks) => (
+                  <Link
+                    key={`ui.notification.${notificationObject.type}.link`}
+                    to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, notificationObject.event)}>
+                    {chunks}
+                  </Link>
+                )
               }}
             />
             <EventItem event={notificationObject.event as any} actions={<></>} elevation={0} />
@@ -240,12 +247,12 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
         actions={
           <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
             <DateTimeAgo date={notificationObject.active_at} className={classes.activeAt} />
-            <LoadingButton
+            <Button
               {...(notificationObject.type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_EVENT && {
                 disabled: disabled
               })}
               loading={loading}
-              color={'primary'}
+              color="primary"
               variant="outlined"
               size="small"
               classes={{root: classes.seeButton}}
@@ -269,7 +276,7 @@ export default function EventNotification(props: NotificationEventProps): JSX.El
               ) : (
                 <FormattedMessage id="ui.notification.event.button.see" defaultMessage="ui.notification.event.button.see" />
               )}
-            </LoadingButton>
+            </Button>
           </Stack>
         }
         {...rest}

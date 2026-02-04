@@ -3,6 +3,116 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.64-alpha.2...@selfcommunity/utils@0.3.0-alpha.0) (2026-01-22)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* mui7 ([79d1895](https://github.com/selfcommunity/community-js/commit/79d1895504c896d84f160b20af7fb6adb7ab51bb))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.64-alpha.2...@selfcommunity/utils@0.3.0-alpha.0) (2026-01-22)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* mui7 ([79d1895](https://github.com/selfcommunity/community-js/commit/79d1895504c896d84f160b20af7fb6adb7ab51bb))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.64-alpha.2...@selfcommunity/utils@0.3.0-alpha.0) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* mui7 ([79d1895](https://github.com/selfcommunity/community-js/commit/79d1895504c896d84f160b20af7fb6adb7ab51bb))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.3.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.64-alpha.2...@selfcommunity/utils@0.3.0) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* mui7 ([79d1895](https://github.com/selfcommunity/community-js/commit/79d1895504c896d84f160b20af7fb6adb7ab51bb))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.64-alpha.2...@selfcommunity/utils@0.3.0-alpha.1) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* mui7 ([79d1895](https://github.com/selfcommunity/community-js/commit/79d1895504c896d84f160b20af7fb6adb7ab51bb))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.64-alpha.2...@selfcommunity/utils@0.3.0-alpha.0) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* mui7 ([79d1895](https://github.com/selfcommunity/community-js/commit/79d1895504c896d84f160b20af7fb6adb7ab51bb))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
 ## [0.2.64-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.64-alpha.1...@selfcommunity/utils@0.2.64-alpha.2) (2025-09-04)
 
 

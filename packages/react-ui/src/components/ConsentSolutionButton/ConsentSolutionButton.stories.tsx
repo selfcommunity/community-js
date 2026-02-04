@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import ConsentSolutionButton, {ConsentSolutionButtonProps} from './index';
 import {SCLegalPagePoliciesType} from '@selfcommunity/types';
 
@@ -7,7 +7,7 @@ export default {
   component: ConsentSolutionButton,
 } as Meta<typeof ConsentSolutionButton>;
 
-const template = (args) => (
+const template = (args: ConsentSolutionButtonProps) => (
   <div style={{width: 800}}>
     <ConsentSolutionButton {...args} />
   </div>

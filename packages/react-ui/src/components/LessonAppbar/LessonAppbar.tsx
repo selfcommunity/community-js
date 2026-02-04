@@ -1,11 +1,9 @@
-import React from 'react';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {AppBar, Icon, IconButton, Toolbar, Typography, Box, styled} from '@mui/material';
+import {AppBar, Icon, IconButton, Toolbar, Typography, Box, styled, Button} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCLessonActionsType} from '../../types';
 import {FormattedMessage} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -17,9 +15,9 @@ const classes = {
 const Root = styled(AppBar, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root],
+  overridesResolver: (_props, styles) => [styles.root],
   shouldForwardProp: (prop) => prop !== 'open'
-})<{open: boolean}>(({theme}) => ({}));
+})<{open: boolean}>(() => ({}));
 
 export interface LessonAppbarProps {
   /**
@@ -86,9 +84,9 @@ export default function LessonAppbar(inProps: LessonAppbarProps): JSX.Element {
             <IconButton onClick={() => handleOpen(SCLessonActionsType.SETTINGS)} color="primary">
               <Icon>settings</Icon>
             </IconButton>
-            <LoadingButton variant="contained" size="small" onClick={onSave} loading={updating}>
+            <Button variant="contained" size="small" onClick={onSave} loading={updating}>
               <FormattedMessage id="ui.lessonAppbar.button.save" defaultMessage="ui.lessonAppbar.button.save" />
-            </LoadingButton>
+            </Button>
           </>
         ) : (
           <Box className={classes.endItems}>

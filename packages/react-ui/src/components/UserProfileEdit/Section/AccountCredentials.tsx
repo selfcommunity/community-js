@@ -8,8 +8,7 @@ import {Logger} from '@selfcommunity/utils';
 import BaseDialog from '../../../shared/BaseDialog';
 import PasswordTextField from '../../../shared/PasswordTextField';
 import EmailTextField from '../../../shared/EmailTextField';
-import {SCUserChangeEmailType, SCUserType} from '@selfcommunity/types';
-import {LoadingButton} from '@mui/lab';
+import {SCUserType} from '@selfcommunity/types';
 import {useSnackbar} from 'notistack';
 import {PREFIX} from '../constants';
 
@@ -164,7 +163,7 @@ export default function AccountCredentials(props: AccountCredentialProps): JSX.E
     e.stopPropagation();
     setIsSubmitting(true);
     UserService.changeUserMail(user?.id, field.email, !skipEmailValidation, !skipEmailValidation)
-      .then((res: SCUserChangeEmailType) => {
+      .then(() => {
         setIsEditing(false);
         setIsSubmitting(false);
         if (skipEmailValidation) {
@@ -229,22 +228,24 @@ export default function AccountCredentials(props: AccountCredentialProps): JSX.E
                     />
                   )
                 }
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      {!isEditing ? (
-                        <IconButton onClick={() => setIsEditing(true)} edge="end">
-                          <Icon>edit</Icon>
-                        </IconButton>
-                      ) : error.email ? (
-                        <Icon color="error">error</Icon>
-                      ) : (
-                        <IconButton onClick={handleSubmitEmail} edge="end" color="primary" disabled={!field.email || error.email}>
-                          <Icon>check</Icon>
-                        </IconButton>
-                      )}
-                    </InputAdornment>
-                  )
+                slotProps={{
+                  input: {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {!isEditing ? (
+                          <IconButton onClick={() => setIsEditing(true)} edge="end">
+                            <Icon>edit</Icon>
+                          </IconButton>
+                        ) : error.email ? (
+                          <Icon color="error">error</Icon>
+                        ) : (
+                          <IconButton onClick={handleSubmitEmail} edge="end" color="primary" disabled={!field.email || error.email}>
+                            <Icon>check</Icon>
+                          </IconButton>
+                        )}
+                      </InputAdornment>
+                    )
+                  }
                 }}
               />
             </>
@@ -313,14 +314,16 @@ export default function AccountCredentials(props: AccountCredentialProps): JSX.E
                   />
                 )
               }
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton aria-label="info" onClick={handlePopoverOpen} edge="end">
-                      {<Icon>info</Icon>}
-                    </IconButton>
-                  </InputAdornment>
-                )
+              slotProps={{
+                input: {
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton aria-label="info" onClick={handlePopoverOpen} edge="end">
+                        {<Icon>info</Icon>}
+                      </IconButton>
+                    </InputAdornment>
+                  )
+                }
               }}
             />
             <Popover
@@ -336,7 +339,7 @@ export default function AccountCredentials(props: AccountCredentialProps): JSX.E
               }}
               onClose={handlePopoverClose}>
               <Box sx={{p: '10px'}}>
-                <Typography component={'span'} sx={{whiteSpace: 'pre-line'}}>
+                <Typography component="span" sx={{whiteSpace: 'pre-line'}}>
                   <FormattedMessage
                     id="ui.userProfileEditAccountCredentials.newPassword.info"
                     defaultMessage="ui.userProfileEditAccountCredentials.newPassword.info"
@@ -362,7 +365,7 @@ export default function AccountCredentials(props: AccountCredentialProps): JSX.E
               helperText={error.confirmPassword}
             />
           </FormGroup>
-          <LoadingButton
+          <Button
             className={classes.confirmChangeButton}
             loading={isSubmittingPassword}
             disabled={!field.confirmPassword || Boolean(error.confirmPassword) || Boolean(error.password) || Boolean(error.newPassword)}
@@ -372,7 +375,7 @@ export default function AccountCredentials(props: AccountCredentialProps): JSX.E
               id="ui.userProfileEditAccountCredentials.changePassword"
               defaultMessage="ui.userProfileEditAccountCredentials.changePassword"
             />
-          </LoadingButton>
+          </Button>
         </PasswordDialogRoot>
       )}
     </Root>

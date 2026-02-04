@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import {useContext, useEffect, useMemo, useState} from 'react';
 import {http, Endpoints, HttpResponse, UserService, LoyaltyService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCThemeType, SCUserContext, SCUserContextType} from '@selfcommunity/react-core';
 import {SCPrizeType} from '@selfcommunity/types';
@@ -137,7 +137,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
           }
         );
       })
-      .catch((error) => {
+      .catch(() => {
         setOpen(false);
         let _snackBar = enqueueSnackbar(
           <FormattedMessage
@@ -265,7 +265,7 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
                   id="templates.loyaltyProgramDetail.content.end.message"
                   defaultMessage="templates.loyaltyProgramDetail.content.end.message"
                 />
-                <Button color={'secondary'} onClick={handleScrollUp}>
+                <Button color="secondary" onClick={handleScrollUp}>
                   <FormattedMessage
                     id="templates.loyaltyProgramDetail.content.end.button"
                     defaultMessage="templates.loyaltyProgramDetail.content.end.button"
@@ -275,9 +275,9 @@ export default function LoyaltyProgramDetail(inProps: LoyaltyProgramDetailProps)
             ) : null}
           </>
         }>
-        <Grid container spacing={!isMobile ? 3 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
+        <Grid container width="100%" spacing={!isMobile ? 3 : 0} direction={isMobile ? 'column' : 'row'} className={classes.prizeSection}>
           {prizes.map((prize: SCPrizeType) => (
-            <Grid item xs={12} sm={12} md={6} lg={4} xl={3} key={prize.id}>
+            <Grid size={{xs: 12, md: 6, lg: 4, xl: 3}} key={prize.id}>
               <Card className={classes.card}>
                 <CardMedia component="img" image={prize.image} />
                 <Box className={classes.prizePoints}>

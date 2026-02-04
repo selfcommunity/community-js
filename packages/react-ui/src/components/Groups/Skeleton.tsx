@@ -1,4 +1,3 @@
-import React from 'react';;
 import {PREFIX} from './constants';
 import {Box, Grid, styled} from '@mui/material';
 import classNames from 'classnames';
@@ -59,10 +58,10 @@ export default function GroupsSkeleton(inProps: GroupsSkeletonProps): JSX.Elemen
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Grid container spacing={{xs: 3}} className={classes.groups}>
-        {[...Array(groupsNumber)].map((category, index) => (
-          <Grid item xs={12} sm={8} md={6} key={index}>
-            <GroupSkeleton elevation={0} variant={'outlined'} {...GroupSkeletonProps} />
+      <Grid container width="100%" spacing={2} gap={2} className={classes.groups}>
+        {[...Array(groupsNumber)].map((_category, index) => (
+          <Grid size={{xs: 12, md: 6}} key={index}>
+            <GroupSkeleton elevation={0} variant="outlined" {...GroupSkeletonProps} />
           </Grid>
         ))}
       </Grid>

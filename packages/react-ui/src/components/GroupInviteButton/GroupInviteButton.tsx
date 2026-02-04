@@ -5,7 +5,6 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {SCUserContext, SCUserContextType, useSCFetchGroup} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
-import {LoadingButton} from '@mui/lab';
 import {GroupService} from '@selfcommunity/api-services';
 import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import User from '../User';
@@ -39,14 +38,14 @@ const classes = {
 const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 const DialogRoot = styled(BaseDialog, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.dialogRoot
-})(({theme}) => ({}));
+  overridesResolver: (_props, styles) => styles.dialogRoot
+})(() => ({}));
 
 export interface GroupInviteButtonProps extends ButtonProps {
   /**
@@ -251,7 +250,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
 
   // Autocomplete Handlers
 
-  const handleInputChange = (event, value, reason) => {
+  const handleInputChange = (_event, value, reason) => {
     switch (reason) {
       case 'input':
         setValue(value);
@@ -331,7 +330,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
               <Typography className={classes.dialogTitle}>
                 <FormattedMessage id="ui.groupInviteButton.dialog.title" defaultMessage="ui.groupInviteButton.dialog.title" />
               </Typography>
-              <LoadingButton
+              <Button
                 size="small"
                 color="secondary"
                 variant="contained"
@@ -339,7 +338,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
                 loading={isSending}
                 disabled={!invited.length}>
                 <FormattedMessage id="ui.groupInviteButton.dialog.button.end" defaultMessage="ui.groupInviteButton.dialog.button.end" />
-              </LoadingButton>
+              </Button>
             </>
           }>
           <Box className={classes.dialogContent}>
@@ -370,17 +369,19 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
                   {...params}
                   variant="outlined"
                   placeholder={`${intl.formatMessage(messages.placeholder)}`}
-                  InputProps={{
-                    ...params.InputProps,
-                    className: classes.input,
-                    startAdornment: (
-                      <>
-                        <InputAdornment position="start">
-                          <Icon className={classes.icon}>search</Icon>
-                        </InputAdornment>
-                        {params.InputProps.startAdornment}
-                      </>
-                    )
+                  slotProps={{
+                    input: {
+                      ...params.InputProps,
+                      className: classes.input,
+                      startAdornment: (
+                        <>
+                          <InputAdornment position="start">
+                            <Icon className={classes.icon}>search</Icon>
+                          </InputAdornment>
+                          {params.InputProps.startAdornment}
+                        </>
+                      )
+                    }
                   }}
                 />
               )}

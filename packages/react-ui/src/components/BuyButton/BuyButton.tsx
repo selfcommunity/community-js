@@ -1,5 +1,4 @@
-import {LoadingButton} from '@mui/lab';
-import {Icon, styled, SwipeableDrawer, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
+import {Button, Icon, styled, SwipeableDrawer, Tooltip, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {SCContextType, SCThemeType, SCUserContextType, useSCContext, useSCUser} from '@selfcommunity/react-core';
 import {
@@ -17,7 +16,7 @@ import {
   SCPurchasableContent
 } from '@selfcommunity/types';
 import classNames from 'classnames';
-import React, {MouseEvent, ReactNode, useCallback, useEffect, useState} from 'react';
+import React, {ReactNode, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import PaywallsDialog from '../PaywallsDialog';
 import {CategoryApiClient, CourseApiClient, EventApiClient, GroupApiClient} from '@selfcommunity/api-services';
@@ -38,7 +37,7 @@ const classes = {
   notGoing: `${PREFIX}-not-going`
 };
 
-const RequestRoot = styled(LoadingButton, {
+const RequestRoot = styled(Button, {
   name: PREFIX,
   slot: 'RequestRoot'
 })(() => ({}));
@@ -169,25 +168,22 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
     setOpen(false);
   }, [open]);
 
-  const handleOpen = useCallback(
-    (e: MouseEvent<HTMLElement>) => {
-      if (!open) {
-        if (!scUserContext.user) {
-          scContext.settings.handleAnonymousAction();
-        } else {
-          setOpen(true);
-        }
+  const handleOpen = useCallback(() => {
+    if (!open) {
+      if (!scUserContext.user) {
+        scContext.settings.handleAnonymousAction();
+      } else {
+        setOpen(true);
       }
-    },
-    [scUserContext.user, open, scContext.settings]
-  );
+    }
+  }, [scUserContext.user, open, scContext.settings]);
 
   /**
    * Handle update order
    * Price param is the new price selected
    */
   const handleUpdatePaymentOrder = useCallback(
-    (price: SCPaymentPrice) => {
+    (_price: SCPaymentPrice) => {
       // update order/subscription when will be recurring payment
     },
     [paymentOrder, purchased]
@@ -303,7 +299,11 @@ export default function BuyButton(inProps: BuyButtonProps): JSX.Element {
           {isMobile ? (
             <SwipeableDrawerRoot
               className={classes.drawerRoot}
-              PaperProps={{className: classes.paper}}
+              slotProps={{
+                paper: {
+                  className: classes.paper
+                }
+              }}
               open
               onClose={handleClose}
               onOpen={handleOpen}

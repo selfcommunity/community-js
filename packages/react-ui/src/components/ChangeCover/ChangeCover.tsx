@@ -286,12 +286,8 @@ export default function ChangeCover(inProps: ChangeCoverProps): JSX.Element {
                     id="ui.changeCover.info"
                     defaultMessage="ui.changeCover.info"
                     values={{
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
-                      li: (chunks) => <li>{chunks}</li>,
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                      // @ts-ignore
-                      ul: (chunks) => <ul>{chunks}</ul>
+                      li: (chunks) => <li key="ui.changeCover.info.li">{chunks}</li>,
+                      ul: (chunks) => <ul key="ui.changeCover.info.ul">{chunks}</ul>
                     }}
                   />
                 </Typography>
