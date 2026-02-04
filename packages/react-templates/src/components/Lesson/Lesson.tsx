@@ -1,6 +1,6 @@
 import {Fragment, useCallback, useEffect, useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
-import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme, Alert, styled} from '@mui/material';
+import {Box, Icon, IconButton, Typography, useMediaQuery, useTheme, Alert, styled, Button} from '@mui/material';
 import {PREFIX} from './constants';
 import {SCCourseJoinStatusType, SCCourseLessonCompletionStatusType, SCCourseLessonType, SCCourseSectionType, SCMediaType} from '@selfcommunity/types';
 import {SCRoutes, SCRoutingContextType, SCThemeType, useSCFetchCourse, useSCFetchLesson, useSCRouting, Link} from '@selfcommunity/react-core';
@@ -17,7 +17,6 @@ import {
 } from '@selfcommunity/react-ui';
 import {CourseInfoViewType, CourseService} from '@selfcommunity/api-services';
 import {FormattedMessage} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
 import {useSnackbar} from 'notistack';
 import {getUrlLesson} from '@selfcommunity/react-ui';
 
@@ -325,10 +324,18 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
                   id="templates.lesson.previewMode"
                   defaultMessage="templates.lesson.previewMode"
                   values={{
-                    link: (...chunks) => (
-                      <Link to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(scCourse, scLesson))}>{chunks}</Link>
+                    link: (chunks) => (
+                      <Link
+                        key="templates.lesson.previewMode.link"
+                        to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(scCourse, scLesson))}>
+                        {chunks}
+                      </Link>
                     ),
-                    linkBack: (...chunks) => <Link to={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)}>{chunks}</Link>
+                    linkBack: (chunks) => (
+                      <Link key="templates.lesson.previewMode.linkBack" to={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)}>
+                        {chunks}
+                      </Link>
+                    )
                   }}
                 />
               </Typography>
@@ -362,7 +369,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
             onMediaChange={handleLessonMediaEdit}
           />
           {!isCourseAdmin && !editMode && !previewMode && (
-            <LoadingButton
+            <Button
               className={classes.button}
               loading={loading}
               size="small"
@@ -375,7 +382,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
               ) : (
                 <FormattedMessage id="templates.lesson.button.complete" defaultMessage="templates.lesson.button.complete" />
               )}
-            </LoadingButton>
+            </Button>
           )}
         </Container>
         <LessonDrawer

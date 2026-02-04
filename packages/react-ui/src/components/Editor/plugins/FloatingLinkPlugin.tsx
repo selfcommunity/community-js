@@ -14,7 +14,6 @@ import {
   SELECTION_CHANGE_COMMAND
 } from 'lexical';
 import {TableSelection} from '@lexical/table';
-import * as React from 'react';
 import {Dispatch, useCallback, useEffect, useState} from 'react';
 import {getSelectedNode} from '../../../utils/editor';
 import {isValidUrl} from '@selfcommunity/utils';
@@ -137,22 +136,24 @@ function FloatingLinkPlugin({editor, isLink, setIsLink}: {editor: LexicalEditor;
           onChange={(event) => {
             setLinkUrl(event.target.value);
           }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  size="small"
-                  tabIndex={0}
-                  onClick={() => {
-                    setIsLink(false);
-                  }}>
-                  <Icon>close</Icon>
-                </IconButton>
-                <IconButton size="small" tabIndex={1} onClick={handleLinkSubmission}>
-                  <Icon>check</Icon>
-                </IconButton>
-              </InputAdornment>
-            )
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    size="small"
+                    tabIndex={0}
+                    onClick={() => {
+                      setIsLink(false);
+                    }}>
+                    <Icon>close</Icon>
+                  </IconButton>
+                  <IconButton size="small" tabIndex={1} onClick={handleLinkSubmission}>
+                    <Icon>check</Icon>
+                  </IconButton>
+                </InputAdornment>
+              )
+            }
           }}
         />
       </Paper>

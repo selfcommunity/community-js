@@ -1,4 +1,3 @@
-import React from 'react';
 import {useMediaQuery, useTheme, styled, Skeleton, CardContent} from '@mui/material';
 import BaseItem from '../../shared/BaseItem';
 import {SCThemeType} from '@selfcommunity/react-core';
@@ -51,7 +50,7 @@ export default function PaymentProductSkeleton(inProps: PaymentProductSkeletonPr
     props: inProps,
     name: `${PREFIX}Skeleton`
   });
-  const {className, ...rest} = props;
+  const {...rest} = props;
 
   // HOOKS
   const theme = useTheme<SCThemeType>();

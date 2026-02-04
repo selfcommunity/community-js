@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import CommentsFeedObject from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import CommentsFeedObject, { CommentsFeedObjectProps } from './index';
 import { SCCommentsOrderBy } from '../../types/comments';
 import { SCContributionType } from '@selfcommunity/types';
 
@@ -10,7 +10,7 @@ export default {
     feedObjectId: {
       control: {type: 'number'},
       description: 'FeedObject Id',
-      table: {defaultValue: {summary: 360}}
+      table: {defaultValue: {summary: '360'}}
     },
     feedObjectType: {
       options: [SCContributionType.POST, SCContributionType.DISCUSSION, SCContributionType.STATUS],
@@ -21,7 +21,7 @@ export default {
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     variant: {
       options: ['elevation', 'outlined'],
@@ -42,43 +42,43 @@ export default {
 
 } as Meta<typeof CommentsFeedObject>;
 
-const template = (args) => (
+const template = (args: CommentsFeedObjectProps) => (
   <div style={{width: '100%', maxWidth: 800}}>
     <CommentsFeedObject {...args} />
   </div>
 );
 
-const templateContainerFixed = (args) => (
+const templateContainerFixed = (args: CommentsFeedObjectProps) => (
 	<div style={{position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1, maxWidth: '1200px', height: '92vh', overflow: 'auto', paddingLeft: 20, paddingRight: 20}} id="scrollableDiv">
 		<CommentsFeedObject {...args} />
 	</div>);
 
-export const Base: StoryObj<CommentsFeedObject> = {
+export const Base: StoryObj<typeof CommentsFeedObject> = {
   args: {
     CommentObjectSkeletonProps: {elevation: 0, WidgetProps: {variant: 'outlined'}},
     CommentComponentProps: {
-      CommentObjectReplyProps: {elevation: 0, WidgetProps: {elevation: 0, variant: 'outlined'}},
+      CommentObjectReplyProps: {elevation: 0},
       variant: 'outlined'
     }
   },
   render: template
 };
 
-export const CommentFirstLevel: StoryObj<CommentsFeedObject> = {
+export const CommentFirstLevel: StoryObj<typeof CommentsFeedObject> = {
   args: {
     commentObjectId: 1585
   },
   render: template
 };
 
-export const CommentSecondLevel: StoryObj<CommentsFeedObject> = {
+export const CommentSecondLevel: StoryObj<typeof CommentsFeedObject> = {
   args: {
     commentObjectId: 1119
   },
   render: template
 };
 
-export const CommentFirstLevelContainerFixed: StoryObj<CommentsFeedObject> = {
+export const CommentFirstLevelContainerFixed: StoryObj<typeof CommentsFeedObject> = {
 	args: {
 		commentObjectId: 1585
 	},

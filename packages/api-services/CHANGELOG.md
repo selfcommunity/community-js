@@ -3,25 +3,159 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.7.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.14...@selfcommunity/api-services@0.7.0) (2026-01-14)
-
-**Note:** Version bump only for package @selfcommunity/api-services
+# [1.0.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.13...@selfcommunity/api-services@1.0.0-alpha.0) (2026-02-04)
 
 
+### Bug Fixes
+
+* changes ([eb3eeb0](https://github.com/selfcommunity/community-js/commit/eb3eeb0fac275e9ee661a2e3cc346d3fbdbde168))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+
+
+### Features
+
+* **api-services:** upgrade to React 19 ([eb8a0b5](https://github.com/selfcommunity/community-js/commit/eb8a0b5fe8d0963ca24e9767735da3f95ca50b16))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+### BREAKING CHANGES
+
+* **api-services:** migration to React 19. Some legacy APIs and third-party libraries may not be compatible
 
 
 
-# [0.7.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.13...@selfcommunity/api-services@0.7.0-alpha.14) (2026-01-14)
-
-**Note:** Version bump only for package @selfcommunity/api-services
 
 
+# [0.7.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.13...@selfcommunity/api-services@0.7.0-alpha.14) (2026-02-04)
+
+
+### Bug Fixes
+
+* changes ([eb3eeb0](https://github.com/selfcommunity/community-js/commit/eb3eeb0fac275e9ee661a2e3cc346d3fbdbde168))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
 
 
 
-# [0.7.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0-alpha.13) (2025-10-07)
 
-**Note:** Version bump only for package @selfcommunity/api-services
+
+# [0.7.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.13...@selfcommunity/api-services@0.7.0-alpha.14) (2026-02-04)
+
+
+### Bug Fixes
+
+* changes ([eb3eeb0](https://github.com/selfcommunity/community-js/commit/eb3eeb0fac275e9ee661a2e3cc346d3fbdbde168))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.7.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0-alpha.13) (2026-01-22)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.7.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0-alpha.13) (2026-01-22)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.7.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0-alpha.13) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.7.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.7.0-alpha.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0-alpha.14) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.7.0-alpha.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@0.7.0-alpha.12...@selfcommunity/api-services@0.7.0-alpha.13) (2026-01-21)
+
+
+### Bug Fixes
+
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
 
 
 

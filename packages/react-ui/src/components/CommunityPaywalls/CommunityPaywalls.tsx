@@ -1,6 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import Grid from '@mui/material/Unstable_Grid2';
-import {styled} from '@mui/material';
+import {useEffect, useState} from 'react';
+import {styled, Grid} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import {CommunityApiClient, SCPaginatedResponse} from '@selfcommunity/api-services';
@@ -19,7 +18,7 @@ const classes = {
 const Root = styled(Grid, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({}));
+})(() => ({}));
 
 export interface CommunityPaywallsProps {
   className?: string;
@@ -76,9 +75,9 @@ export default function CommunityPaywalls(inProps: CommunityPaywallsProps) {
   }
 
   return (
-    <Root className={classNames(classes.root, className)} container spacing={4} {...rest}>
+    <Root className={classNames(classes.root, className)} container width="100%" spacing={4} {...rest}>
       {scCommunity.paywalls.map((p, i) => (
-        <Grid xs={12} sm={12} md={4} key={i}>
+        <Grid size={{xs: 12, md: 4}} key={i}>
           <PaymentProduct
             paymentProduct={p}
             contentType={SCContentType.COMMUNITY}

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import {useMemo, useState} from 'react';
 import CommentNotification from './Comment';
 import UserFollowNotification from './UserFollow';
 import UndeletedForNotification from './UndeletedFor';
@@ -17,14 +17,13 @@ import LiveStreamNotification from './LiveStream/LiveStream';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {getContribution, getContributionRouteName, getContributionSnippet, getRouteData} from '../../utils/contribution';
 import ContributionFollowNotification from './ContributionFollow';
-import {Avatar, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Tooltip, styled, CardContent, Icon} from '@mui/material';
+import {Avatar, CardHeader, CardProps, Collapse, ListItemButton, ListItemText, Tooltip, styled, CardContent, Icon, Button} from '@mui/material';
 import IncubatorApprovedNotification from './IncubatorApproved';
 import {Endpoints, http, HttpResponse} from '@selfcommunity/api-services';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
 import ContributionNotification from './Contribution';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import classNames from 'classnames';
-import LoadingButton from '@mui/lab/LoadingButton';
 import Widget from '../Widget';
 import {useThemeProps} from '@mui/system';
 import {Logger} from '@selfcommunity/utils';
@@ -221,7 +220,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
   function handleStopContentNotification(contribution) {
     setLoadingSuspendNotification(true);
     performSuspendNotification(contribution)
-      .then((data) => {
+      .then(() => {
         const newObj: SCNotificationAggregatedType = obj;
         newObj[contribution.type].suspended = !newObj[contribution.type].suspended;
         setObj(newObj);
@@ -286,7 +285,9 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
               </UserAvatar>
             </Link>
           }
-          titleTypographyProps={{className: classes.title, variant: 'subtitle1'}}
+          slotProps={{
+            title: {className: classes.title, variant: 'subtitle1'}
+          }}
           title={
             <>
               <Link
@@ -299,7 +300,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
               </Link>{' '}
               {intl.formatMessage(messages.receivePrivateMessage, {
                 total: notificationObject.aggregated.length,
-                b: (...chunks) => <strong>{chunks}</strong>
+                b: (chunks) => <strong key="ui.notification.receivePrivateMessage.b">{chunks}</strong>
               })}
             </>
           }
@@ -331,7 +332,9 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
               </UserAvatar>
             </Link>
           }
-          titleTypographyProps={{className: classes.title, variant: 'subtitle1'}}
+          slotProps={{
+            title: {className: classes.title, variant: 'subtitle1'}
+          }}
           title={
             <>
               <Link
@@ -347,8 +350,9 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
                 defaultMessage={`ui.notification.${notificationObject.aggregated[0].type}`}
                 values={{
                   group: groupNotification.group.name,
-                  link: (...chunks) => (
+                  link: (chunks) => (
                     <Link
+                      key={`ui.notification.${notificationObject.aggregated[0].type}.link`}
                       to={
                         notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_REQUESTED_TO_JOIN_GROUP ||
                         notificationObject.aggregated[0].type === SCNotificationTypologyType.USER_ACCEPTED_TO_JOIN_GROUP
@@ -381,7 +385,12 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
       return (
         <CardHeader
           className={classes.header}
-          titleTypographyProps={{className: classes.title, variant: 'subtitle1'}}
+          slotProps={{
+            title: {
+              className: classes.title,
+              variant: 'subtitle1'
+            }
+          }}
           title={
             <Link to={scRoutingContext.url(getContributionRouteName(contribution), getRouteData(notificationObject[contribution.type]))}>
               {getContributionSnippet(contribution)}
@@ -392,20 +401,20 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
               <Tooltip
                 title={
                   contribution.suspended ? (
-                    <FormattedMessage id={'ui.notification.notificationSuspended'} defaultMessage={'ui.notification.notificationSuspended'} />
+                    <FormattedMessage id="ui.notification.notificationSuspended" defaultMessage="ui.notification.notificationSuspended" />
                   ) : (
-                    <FormattedMessage id={'ui.notification.notificationSuspend'} defaultMessage={'ui.notification.notificationSuspend'} />
+                    <FormattedMessage id="ui.notification.notificationSuspend" defaultMessage="ui.notification.notificationSuspend" />
                   )
                 }>
-                <LoadingButton
+                <Button
                   variant="text"
                   size="small"
                   loading={loadingSuspendNotification}
-                  color={'inherit'}
+                  color="inherit"
                   classes={{root: classes.stopButton}}
                   onClick={() => handleStopContentNotification(contribution)}>
-                  {contribution.suspended ? <Icon color={'primary'}>notifications_off</Icon> : <Icon color={'inherit'}>notifications_active</Icon>}
-                </LoadingButton>
+                  {contribution.suspended ? <Icon color="primary">notifications_off</Icon> : <Icon color="inherit">notifications_active</Icon>}
+                </Button>
               </Tooltip>
             )
           }
@@ -514,7 +523,7 @@ export default function UserNotification(inProps: NotificationProps): JSX.Elemen
           {notificationObject.aggregated.length > showMaxAggregated && (
             <>
               <ListItemButton onClick={setStateAggregated} classes={{root: classes.showOtherAggregated}}>
-                <ListItemText primary={<FormattedMessage id={'ui.notification.showOthers'} defaultMessage={'ui.notification.showOthers'} />} />
+                <ListItemText primary={<FormattedMessage id="ui.notification.showOthers" defaultMessage="ui.notification.showOthers" />} />
                 {openOtherAggregated ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
               </ListItemButton>
               <Collapse in={openOtherAggregated} timeout="auto" unmountOnExit classes={{root: classes.collapsed}}>

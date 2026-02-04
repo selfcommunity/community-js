@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 import {Typography, styled, CardContent} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
@@ -23,9 +23,9 @@ const classes = {
 const Root = styled(Widget, {
   slot: 'Root',
   name: PREFIX
-})(({theme}) => ({}));
+})(() => ({}));
 
-export interface PaymentProductProps extends WidgetProps {
+export interface PaymentProductProps extends Omit<WidgetProps, 'content'> {
   className?: string;
   paymentProductId?: number;
   paymentProduct?: SCPaymentProduct;

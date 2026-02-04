@@ -160,6 +160,7 @@ const Component = {
       }
     }),
     skeletonRoot: ({theme}: any) => ({
+      height: '100%',
       '& .SCEvent-skeleton-detail-root': {
         '& .SCEvent-skeleton-detail-calendar': {
           position: 'absolute',
@@ -193,6 +194,7 @@ const Component = {
         }
       },
       '& .SCEvent-skeleton-preview-root': {
+        minWidth: '212px',
         '& .SCEvent-skeleton-preview-content': {
           padding: theme.spacing()
         },

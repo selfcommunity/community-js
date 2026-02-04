@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import PaywallsDialog from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import PaywallsDialog, { PaywallsDialogProps } from './index';
 import {SCContentType} from '@selfcommunity/types';
 
 export default {
@@ -7,7 +7,7 @@ export default {
 	component: PaywallsDialog,
 } as Meta<typeof PaywallsDialog>;
 
-const template = (args) => (
+const template = (args: PaywallsDialogProps) => (
 	<div style={{ maxWidth: 400 }}>
 		<PaywallsDialog {...args} />
 	</div>

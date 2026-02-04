@@ -7,8 +7,8 @@ const Component = {
       },
       '& .SCEventLocationWidget-map': {
         marginBottom: theme.spacing(1),
-        minHeight: 248,
-        width: '100%'
+        height: 300,
+        width: '100%',
       }
     }),
     skeletonRoot: ({theme}: any) => ({

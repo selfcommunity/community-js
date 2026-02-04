@@ -25,7 +25,6 @@ import {
   MenuItem
 } from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import LoadingButton from '@mui/lab/LoadingButton';
 import {useInView} from 'react-intersection-observer';
 import {PaymentService} from '@selfcommunity/api-services';
 import {useThemeProps} from '@mui/system';
@@ -44,13 +43,17 @@ import {SCOPE_SC_UI} from '../../constants/Errors';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import {LocalizationProvider, MobileDatePicker} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import Category from '../Category';
 
 const PREFIX = 'SCPaymentOrders';
 
 const messages = defineMessages({
+  datePicker: {
+    id: 'ui.paymentOrders.picker.date',
+    defaultMessage: 'ui.paymentOrders.picker.date'
+  },
   dateFrom: {
     id: 'ui.paymentOrders.dateFrom',
     defaultMessage: 'ui.paymentOrders.dateFrom'
@@ -313,11 +316,11 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
 
   return (
     <Root variant="outlined" className={classNames(classes.root, className)} {...rest}>
-      <Grid container className={classes.filters} gap={3}>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
+      <Grid container width="100%" className={classes.filters} gap={3}>
+        <Grid size={{xs: 12, md: 3}}>
           <TextField
             className={classes.search}
-            size={'small'}
+            size="small"
             fullWidth
             value={query}
             label={<FormattedMessage id="ui.paymentOrders.search" defaultMessage="ui.paymentOrders.search" />}
@@ -330,37 +333,39 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                 fetchInvoices();
               }
             }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  {query.length > 0 && (
-                    <IconButton
-                      onClick={() => {
-                        setQuery('');
-                        fetchInvoices('');
-                      }}
-                      disabled={isLoading}>
-                      <Icon>close</Icon>
-                    </IconButton>
-                  )}
-                  {isMobile ? (
-                    <IconButton onClick={() => fetchInvoices()} disabled={isLoading}></IconButton>
-                  ) : (
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => fetchInvoices()}
-                      endIcon={<Icon>search</Icon>}
-                      disabled={isLoading}
-                    />
-                  )}
-                </InputAdornment>
-              )
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    {query.length > 0 && (
+                      <IconButton
+                        onClick={() => {
+                          setQuery('');
+                          fetchInvoices('');
+                        }}
+                        disabled={isLoading}>
+                        <Icon>close</Icon>
+                      </IconButton>
+                    )}
+                    {isMobile ? (
+                      <IconButton onClick={() => fetchInvoices()} disabled={isLoading}></IconButton>
+                    ) : (
+                      <Button
+                        size="small"
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => fetchInvoices()}
+                        endIcon={<Icon>search</Icon>}
+                        disabled={isLoading}
+                      />
+                    )}
+                  </InputAdornment>
+                )
+              }
             }}
           />
         </Grid>
-        <Grid item xs={12} sm={12} md={3} lg={3}>
+        <Grid size={{xs: 12, md: 3}}>
           <TextField
             select
             fullWidth
@@ -376,87 +381,75 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
             ))}
           </TextField>
         </Grid>
-        <Grid item xs={12} sm={8} md={4}>
+        <Grid size={{xs: 12, sm: 8, md: 4}}>
           <LocalizationProvider
             dateAdapter={AdapterDateFns}
-            adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+            adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}
             localeText={{
-              cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelAction)}`,
-              clearButtonLabel: `${intl.formatMessage(messages.pickerClearAction)}`
+              cancelButtonLabel: intl.formatMessage(messages.pickerCancelAction),
+              clearButtonLabel: intl.formatMessage(messages.pickerClearAction)
             }}>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
+            <Grid container width="100%" spacing={2}>
+              <Grid size={6}>
                 <MobileDatePicker
                   className={classes.picker}
                   label={<FormattedMessage id="ui.paymentOrders.dateFrom" defaultMessage="ui.paymentOrders.dateFrom" />}
                   value={startDate}
+                  enableAccessibleFieldDOMStructure={false}
+                  localeText={{
+                    toolbarTitle: intl.formatMessage(messages.datePicker)
+                  }}
                   slots={{
-                    textField: (params) => (
-                      <TextField
-                        {...params}
-                        size="small"
-                        InputProps={{
-                          ...params.InputProps,
-                          placeholder: `${intl.formatMessage(messages.dateFrom)}`,
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton>
-                                <Icon>CalendarIcon</Icon>
-                              </IconButton>
-                            </InputAdornment>
-                          )
-                        }}
-                      />
+                    openPickerButton: (params) => (
+                      <IconButton {...params}>
+                        <Icon>CalendarIcon</Icon>
+                      </IconButton>
                     )
                   }}
                   slotProps={{
                     actionBar: {
                       actions: ['cancel', 'clear', 'accept']
                     },
-                    toolbar: {
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                      // @ts-ignore
-                      toolbarTitle: <FormattedMessage id="ui.paymentOrders.picker.date" defaultMessage="ui.paymentOrders.picker.date" />
+                    textField: {
+                      slotProps: {
+                        input: {
+                          placeholder: intl.formatMessage(messages.dateFrom)
+                        }
+                      }
                     }
                   }}
-                  onChange={(newValue) => setStartDate(newValue)}
+                  onChange={setStartDate}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid size={6}>
                 <MobileDatePicker
                   className={classes.picker}
                   label={<FormattedMessage id="ui.paymentOrders.dateTo" defaultMessage="ui.paymentOrders.dateTo" />}
                   value={endDate}
+                  enableAccessibleFieldDOMStructure={false}
+                  localeText={{
+                    toolbarTitle: intl.formatMessage(messages.datePicker)
+                  }}
                   slots={{
-                    textField: (params) => (
-                      <TextField
-                        {...params}
-                        size="small"
-                        InputProps={{
-                          ...params.InputProps,
-                          placeholder: `${intl.formatMessage(messages.dateTo)}`,
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <IconButton>
-                                <Icon>CalendarIcon</Icon>
-                              </IconButton>
-                            </InputAdornment>
-                          )
-                        }}
-                      />
+                    openPickerButton: (params) => (
+                      <IconButton {...params}>
+                        <Icon>CalendarIcon</Icon>
+                      </IconButton>
                     )
                   }}
                   slotProps={{
                     actionBar: {
                       actions: ['cancel', 'clear', 'accept']
                     },
-                    toolbar: {
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                      // @ts-ignore
-                      toolbarTitle: <FormattedMessage id="ui.paymentOrders.picker.date" defaultMessage="ui.paymentOrders.picker.date" />
+                    textField: {
+                      slotProps: {
+                        input: {
+                          placeholder: intl.formatMessage(messages.dateTo)
+                        }
+                      }
                     }
                   }}
-                  onChange={(newValue) => setEndDate(newValue)}
+                  onChange={setEndDate}
                 />
               </Grid>
             </Grid>
@@ -532,7 +525,7 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                     </TableCell>
                     <TableCell scope="row">
                       <Chip
-                        variant={'outlined'}
+                        variant="outlined"
                         label={<FormattedMessage id="ui.paymentOrders.status.paid" defaultMessage="ui.paymentOrders.status.paid" />}
                         color="success"
                         size="small"
@@ -542,9 +535,9 @@ export default function PaymentOrders(inProps: PaymentOrdersProps) {
                       <Stack direction="row" justifyContent="left" alignItems="center" spacing={2}>
                         {order.content_type === SCContentType.EVENT && <PaymentOrderPdfButton paymentOrder={order} />}
                         {Boolean(!order.paid && order.billing_reason === 'subscription_create') && (
-                          <LoadingButton size="small" variant="contained" disabled={true}>
+                          <Button size="small" variant="contained" disabled={true}>
                             <FormattedMessage id="ui.paymentOrders.pay" defaultMessage="ui.paymentOrders.pay" />
-                          </LoadingButton>
+                          </Button>
                         )}
                       </Stack>
                     </TableCell>

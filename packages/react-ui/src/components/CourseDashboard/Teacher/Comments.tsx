@@ -4,7 +4,6 @@ import {Fragment, memo, useCallback, useEffect, useMemo, useReducer, useState} f
 import {CacheStrategies, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {FormattedDate, FormattedMessage} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
 import {PREFIX} from '../constants';
 import {DEFAULT_PAGINATION_OFFSET} from '../../../constants/Pagination';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../../utils/widget';
@@ -224,14 +223,14 @@ function Comments(props: CommentsProps) {
 
           {isLoading && <CommentSkeleton id={1} />}
 
-          <LoadingButton size="small" variant="outlined" color="inherit" loading={isLoading} disabled={!state.next} onClick={handleNext}>
+          <Button size="small" variant="outlined" color="inherit" loading={isLoading} disabled={!state.next} onClick={handleNext}>
             <Typography variant="body2">
               <FormattedMessage
                 id="ui.course.dashboard.teacher.tab.comments.btn.label"
                 defaultMessage="ui.course.dashboard.teacher.tab.comments.btn.label"
               />
             </Typography>
-          </LoadingButton>
+          </Button>
         </Fragment>
       ) : (
         <Typography variant="body2">

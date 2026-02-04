@@ -1,4 +1,4 @@
-import {Box, Stack, Typography} from '@mui/material';
+import {Box, Button, Stack, Typography} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
 import {memo, useCallback, useState} from 'react';
@@ -8,7 +8,6 @@ import {OptionsData} from './types';
 import {useSnackbar} from 'notistack';
 import SwitchForm from './Options/SwitchForm';
 import useDeepCompareEffect from 'use-deep-compare-effect';
-import {LoadingButton} from '@mui/lab';
 import {SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
 
@@ -130,11 +129,11 @@ function Options(props: OptionsProps) {
       </Stack>
 
       <Stack className={classes.optionsButtonWrapper}>
-        <LoadingButton size="small" variant="contained" disabled={!canSave} onClick={handleSubmit} loading={loading}>
+        <Button size="small" variant="contained" disabled={!canSave} onClick={handleSubmit} loading={loading}>
           <Typography variant="body1">
             <FormattedMessage id="ui.editCourse.tab.options.button.save" defaultMessage="ui.editCourse.tab.options.button.save" />
           </Typography>
-        </LoadingButton>
+        </Button>
       </Stack>
     </Box>
   );

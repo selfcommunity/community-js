@@ -1,9 +1,7 @@
 import React from 'react';
-import {styled, Chip, ChipClasses, Theme, ChipPropsSizeOverrides, ChipPropsVariantOverrides, Tooltip} from '@mui/material';
+import {styled, Chip, Tooltip, ChipProps} from '@mui/material';
 import classNames from 'classnames';
 import {SCTagType} from '@selfcommunity/types';
-import {OverridableStringUnion} from '@mui/types';
-import {SxProps} from '@mui/system';
 
 const PREFIX = 'SCTagChip';
 
@@ -14,8 +12,8 @@ const classes = {
 const Root = styled(Chip, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root]
-})(({theme}) => ({
+  overridesResolver: (_props, styles) => [styles.root]
+})(() => ({
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -25,20 +23,8 @@ const Root = styled(Chip, {
   }
 }));
 
-export interface TagChipProps {
+export interface TagChipProps extends Omit<ChipProps, 'avatar' | 'children' | 'color' | 'deleteIcon' | 'skipFocusWhenDisabled' | 'tabIndex'> {
   className?: string;
-  /**
-   * Overrides or extends the styles applied to the component.
-   */
-  classes?: Partial<ChipClasses>;
-  /**
-   * If `true`, the chip will appear clickable, and will raise when pressed,
-   * even if the onClick prop is not defined.
-   * If `false`, the chip will not appear clickable, even if onClick prop is defined.
-   * This can be used, for example, along with the component prop to indicate an anchor Chip is clickable.
-   * @default true
-   */
-  clickable?: boolean;
   /**
    * If `true`, the chip will appear disposable, and will raise when pressed,
    * even if the onDelete prop is not defined.
@@ -48,42 +34,10 @@ export interface TagChipProps {
    */
   disposable?: boolean;
   /**
-   * If `true`, the component is disabled.
-   * @default false
-   */
-  disabled?: boolean;
-  /**
-   * Icon element.
-   */
-  icon?: React.ReactElement;
-  /**
-   * The content of the component.
-   */
-  label?: React.ReactNode;
-  /**
    * Callback fired when the delete icon is clicked.
    * If set, the delete icon will be shown.
    */
   onClick?: React.EventHandler<any>;
-  /**
-   * Callback fired when the delete icon is clicked.
-   * If set, the delete icon will be shown.
-   */
-  onDelete?: React.EventHandler<any>;
-  /**
-   * The size of the component.
-   * @default 'medium'
-   */
-  size?: OverridableStringUnion<'small' | 'medium', ChipPropsSizeOverrides>;
-  /**
-   * The system prop that allows defining system overrides as well as additional CSS styles.
-   */
-  sx?: SxProps<Theme>;
-  /**
-   * The variant to use.
-   * @default 'filled'
-   */
-  variant?: OverridableStringUnion<'filled' | 'outlined', ChipPropsVariantOverrides>;
   /**
    * The tag to use.
    * @default null

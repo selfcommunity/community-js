@@ -1,4 +1,4 @@
-import {useContext, useMemo, useRef} from 'react';
+import {useContext, useRef} from 'react';
 import {styled} from '@mui/material';
 import {
   CategoriesSuggestionWidget,
@@ -149,7 +149,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
   const {enqueueSnackbar} = useSnackbar();
 
   // REF
-  const feedRef = useRef<FeedRef>();
+  const feedRef = useRef<FeedRef | null>(null);
 
   /**
    * Render advertising above the feed
@@ -228,7 +228,7 @@ export default function MainFeed(inProps: MainFeedProps): JSX.Element {
         <>
           <InlineComposerWidget onSuccess={handleComposerSuccess} />
           {UserUtils.isAdmin(scUserContext.user) && <OnBoardingWidget onGeneratedContent={handleAddGenerationContent} />}
-					{renderAdvertising()}
+          {renderAdvertising()}
         </>
       }
       requireAuthentication={true}

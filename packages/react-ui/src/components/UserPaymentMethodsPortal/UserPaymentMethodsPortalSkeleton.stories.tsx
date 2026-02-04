@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import UserPaymentMethodsPortalSkeleton from './Skeleton';
 
 export default {
@@ -6,9 +6,9 @@ export default {
   component: UserPaymentMethodsPortalSkeleton
 } as Meta<typeof UserPaymentMethodsPortalSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: '100%'}}>
-    <UserPaymentMethodsPortalSkeleton {...args} />
+    <UserPaymentMethodsPortalSkeleton />
   </div>
 );
 

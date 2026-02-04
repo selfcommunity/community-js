@@ -22,8 +22,8 @@ import {DateTimePickerTabs, LocalizationProvider, MobileDateTimePicker} from '@m
 import {SCCourseSectionType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {SCContextType, useSCContext} from '@selfcommunity/react-core';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import {CourseService} from '@selfcommunity/api-services';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
@@ -195,7 +195,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
       {course && course.type === SCCourseTypologyType.SCHEDULED ? (
         <LocalizationProvider
           dateAdapter={AdapterDateFns}
-          adapterLocale={scContext.settings.locale.default === 'it' ? itLocale : enLocale}
+          adapterLocale={scContext.settings.locale.default === 'it' ? it : enUS}
           localeText={{
             okButtonLabel: `${intl.formatMessage(messages.pickerOkMessage)}`,
             cancelButtonLabel: `${intl.formatMessage(messages.pickerCancelMessage)}`,
@@ -213,48 +213,36 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
               )
             }
             value={drippedAt}
+            enableAccessibleFieldDOMStructure={false}
+            localeText={{
+              toolbarTitle: intl.formatMessage(messages.pickerPlaceholder)
+            }}
             slots={{
-              //actionBar: PickerActionBar,
               tabs: (props) => <DateTimePickerTabs {...props} />,
-              textField: (params) => (
-                <TextField
-                  {...params}
-                  error={false}
-                  InputProps={{
-                    ...params.InputProps,
-                    placeholder: `${intl.formatMessage(messages.pickerPlaceholder)}`,
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton disabled={isDisabled}>
-                          <Icon>expand_more</Icon>
-                        </IconButton>
-                      </InputAdornment>
-                    )
-                  }}
-                />
+              openPickerButton: (params) => (
+                <IconButton {...params}>
+                  <Icon>expand_more</Icon>
+                </IconButton>
               )
             }}
             slotProps={{
               tabs: {
                 hidden: false
               },
-              toolbar: {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-ignore,@typescript-eslint/ban-ts-comment
-                // @ts-ignore
-                toolbarTitle: (
-                  <FormattedMessage
-                    id="ui.lessonReleaseMenu.scheduled.picker.placeholder"
-                    defaultMessage="ui.lessonReleaseMenu.scheduled.picker.placeholder"
-                  />
-                )
-              },
               actionBar: {
                 actions: ['cancel', 'clear', 'accept']
+              },
+              textField: {
+                error: false,
+                slotProps: {
+                  input: {
+                    placeholder: intl.formatMessage(messages.pickerPlaceholder)
+                  }
+                }
               }
             }}
-            onChange={(value) => setDrippedAt(value)}
+            onChange={setDrippedAt}
             onAccept={handleUpdate}
-            onClear={() => setDrippedAt(null)}
             disabled={isDisabled}
           />
         </LocalizationProvider>
@@ -264,14 +252,16 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
             size="small"
             value={placeholderStructured}
             onClick={isDisabled ? undefined : handleClick}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={handleClick} disabled={isDisabled}>
-                    <Icon>expand_more</Icon>
-                  </IconButton>
-                </InputAdornment>
-              )
+            slotProps={{
+              input: {
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleClick} disabled={isDisabled}>
+                      <Icon>expand_more</Icon>
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }
             }}
             disabled={isDisabled}
           />
@@ -297,9 +287,11 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
                   type="number"
                   value={dripDelay}
                   onChange={handleValueChange}
-                  InputProps={{
-                    inputProps: {
-                      min: 0
+                  slotProps={{
+                    input: {
+                      inputProps: {
+                        min: 0
+                      }
                     }
                   }}
                 />

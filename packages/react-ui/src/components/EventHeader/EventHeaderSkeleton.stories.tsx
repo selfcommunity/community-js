@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import EventHeaderSkeleton from './Skeleton';
 
 export default {
@@ -8,9 +8,9 @@ export default {
   args: {}
 } as Meta<typeof EventHeaderSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: '100%'}}>
-    <EventHeaderSkeleton {...args} />
+    <EventHeaderSkeleton />
   </div>
 );
 

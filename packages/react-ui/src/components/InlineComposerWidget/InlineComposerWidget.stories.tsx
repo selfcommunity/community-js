@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import InlineComposerWidget, { InlineComposerWidgetProps } from './index';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: InlineComposerWidget
 } as Meta<typeof InlineComposerWidget>;
 
-const template = (args) => (
+const template = (args: InlineComposerWidgetProps) => (
   <div style={{maxWidth: 500}}>
     <InlineComposerWidget {...args} />
   </div>

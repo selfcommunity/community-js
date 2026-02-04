@@ -24,10 +24,6 @@ const Component = {
       '& .SCGroups-groups': {
         marginTop: theme.spacing(2),
         '& .SCGroups-item': {
-          [theme.breakpoints.up('md')]: {
-            padding: theme.spacing(2)
-          },
-          width: 'auto',
           '& > div': {
             cursor: 'default',
             padding: theme.spacing(1)

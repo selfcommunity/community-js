@@ -1,11 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {styled} from '@mui/material';
+import {useContext, useEffect, useState} from 'react';
+import {Button, styled} from '@mui/material';
 import {SCConnectionStatus, SCUserType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {useSnackbar} from 'notistack';
 import {FormattedMessage} from 'react-intl';
-import {LoadingButton} from '@mui/lab';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
@@ -25,10 +24,10 @@ const classes = {
   root: `${PREFIX}-root`
 };
 
-const Root = styled(LoadingButton, {
+const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 export interface FriendshipButtonProps {

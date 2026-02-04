@@ -1,4 +1,3 @@
-import React from 'react';
 import {PREFIX} from './constants';
 import {Box, Grid, GridProps, styled} from '@mui/material';
 import classNames from 'classnames';
@@ -85,9 +84,9 @@ export default function CoursesSkeleton(inProps: CoursesSkeletonProps): JSX.Elem
   } = inProps;
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Grid container spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
-        {[...Array(coursesNumber)].map((course, index) => (
-          <Grid item xs={12} sm={12} md={6} lg={3} key={index} {...GridItemComponentProps} className={classes.item}>
+      <Grid container width="100%" spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
+        {[...Array(coursesNumber)].map((_course, index) => (
+          <Grid size={{xs: 12, md: 6, lg: 3}} key={index} {...GridItemComponentProps} className={classes.item}>
             {teacherView ? <CourseCreatePlaceholder /> : <CourseSkeleton {...CourseSkeletonProps} />}
           </Grid>
         ))}

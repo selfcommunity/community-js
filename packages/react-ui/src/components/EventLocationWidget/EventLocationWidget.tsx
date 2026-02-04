@@ -1,6 +1,6 @@
 import {Box, CardContent, Typography, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
-import {GoogleMap, MarkerF} from '@react-google-maps/api';
+import {APIProvider, Map} from '@vis.gl/react-google-maps';
 import {useSCGoogleApiLoader, useSCFetchEvent} from '@selfcommunity/react-core';
 import {SCEventLocationType, SCEventType} from '@selfcommunity/types';
 import classNames from 'classnames';
@@ -11,6 +11,7 @@ import {formatEventLocationGeolocation} from '../../utils/string';
 import Widget from '../Widget';
 import {PREFIX} from './constants';
 import EventLocationWidgetSkeleton from './Skeleton';
+import EventMap from './EventMap';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -89,14 +90,7 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
   const {scEvent} = useSCFetchEvent({id: eventId, event});
 
   // HOOKS
-  const {isLoaded, geocodingApiKey} = useSCGoogleApiLoader();
-
-  const mapOptions = {
-    fullscreenControl: false, // Disables the fullscreen control
-    mapTypeControl: false, // Disables the map type selector (satellite/map)
-    streetViewControl: false, // Disables the Street View pegman control
-    zoomControl: false // Disables the zoom control (+/- buttons)
-  };
+  const {geocodingApiKey, libraries} = useSCGoogleApiLoader();
 
   if (!geocodingApiKey || scEvent?.location === SCEventLocationType.ONLINE) {
     return <HiddenPlaceholder />;
@@ -105,7 +99,7 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
   /**
    * Loading event
    */
-  if (!isLoaded || !scEvent) {
+  if (!scEvent) {
     return <EventLocationWidgetSkeleton />;
   }
 
@@ -119,21 +113,9 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
           <FormattedMessage id="ui.eventLocationWidget.title" defaultMessage="ui.eventLocationWidget.title" />
         </Typography>
         <Box className={classes.map}>
-          <GoogleMap
-            mapContainerClassName={classes.map}
-            center={{
-              lat: scEvent.geolocation_lat,
-              lng: scEvent.geolocation_lng
-            }}
-            options={mapOptions}
-            zoom={15}>
-            <MarkerF
-              position={{
-                lat: scEvent.geolocation_lat,
-                lng: scEvent.geolocation_lng
-              }}
-            />
-          </GoogleMap>
+          <APIProvider apiKey={geocodingApiKey} libraries={libraries}>
+						<EventMap event={scEvent} className={classes.map} />
+          </APIProvider>
         </Box>
         <Typography variant="h4" className={classes.locationTitle}>
           {formatEventLocationGeolocation(scEvent.geolocation, true)}

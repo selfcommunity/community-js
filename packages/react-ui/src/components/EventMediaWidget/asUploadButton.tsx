@@ -1,9 +1,9 @@
-import { markAsUploadOptionsComponent, useUploadyContext } from '@rpldy/shared-ui';
-import { forwardRef, useCallback, useRef } from 'react';
+import {markAsUploadOptionsComponent, useUploadyContext} from '@rpldy/shared-ui';
+import {forwardRef, useCallback, useRef} from 'react';
 
-import type { UploadOptions } from '@rpldy/shared';
-import { UploadButtonProps } from '@rpldy/upload-button';
-import type { ComponentType, MouseEvent, Ref } from 'react';
+import type {UploadOptions} from '@rpldy/shared';
+import {UploadButtonProps} from '@rpldy/upload-button';
+import type {ComponentType, MouseEvent, Ref} from 'react';
 
 type FileInputProps = {
   accept: string;
@@ -11,8 +11,8 @@ type FileInputProps = {
 
 const asUploadButton = (Component: ComponentType<any>, inputProps: FileInputProps) => {
   const AsUploadButton = (props: UploadButtonProps, ref: Ref<any>) => {
-    const { showFileUpload, getInternalFileInput } = useUploadyContext();
-    const { id, className, text, children, extraProps, onClick, ...uploadOptions } = props;
+    const {showFileUpload, getInternalFileInput} = useUploadyContext();
+    const {id, className, text, children, extraProps, onClick, ...uploadOptions} = props;
 
     //using ref so onButtonClick can stay memoized
     const uploadOptionsRef = useRef<UploadOptions>();

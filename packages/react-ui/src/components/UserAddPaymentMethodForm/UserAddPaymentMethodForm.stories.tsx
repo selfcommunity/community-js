@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import UserAddPaymentMethodForm from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import UserAddPaymentMethodForm, { UserAddPaymentMethodFormProps } from './index';
 
 export default {
   title: 'Design System/React UI/Payments/UserAddPaymentMethodForm',
@@ -8,12 +8,12 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 7}}
+      table: {defaultValue: {summary: '7'}}
     }
   }
 } as Meta<typeof UserAddPaymentMethodForm>;
 
-const template = (args) => (
+const template = (args: UserAddPaymentMethodFormProps) => (
   <div style={{width: '100%'}}>
     <UserAddPaymentMethodForm {...args} />
   </div>

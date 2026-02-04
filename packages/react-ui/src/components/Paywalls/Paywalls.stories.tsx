@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import Paywalls from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import Paywalls, { PaywallsProps } from './index';
 import {SCContentType} from '@selfcommunity/types';
 
 export default {
@@ -7,7 +7,7 @@ export default {
 	component: Paywalls,
 } as Meta<typeof Paywalls>;
 
-const template = (args) => (
+const template = (args: PaywallsProps) => (
 	<div style={{ maxWidth: 400 }}>
 		<Paywalls {...args} />
 	</div>

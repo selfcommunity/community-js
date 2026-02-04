@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import {useMemo} from 'react';
 import {Box, Typography, styled} from '@mui/material';
 import {defineMessages, useIntl} from 'react-intl';
 import {camelCase, Logger} from '@selfcommunity/utils';
@@ -162,7 +162,7 @@ export default function UserInfo(inProps: UserInfoProps): JSX.Element {
           <Tags
             tags={user.tags.filter((t) => t.visible)}
             type={TagsComponentType.LIST}
-            direction={'row'}
+            direction="row"
             TagChipProps={{clickable: false, disposable: false}}
           />
         );

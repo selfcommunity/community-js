@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import LoyaltyProgramDetailSkeleton from './Skeleton';
 
 export default {
@@ -7,6 +7,8 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
 } as Meta<typeof LoyaltyProgramDetailSkeleton>;
 
-export const Base: StoryObj<typeof LoyaltyProgramDetailSkeleton> = {render: (args) => (
-    <LoyaltyProgramDetailSkeleton {...args} />
-)};
+export const Base: StoryObj<typeof LoyaltyProgramDetailSkeleton> = {
+  render: () => (
+    <LoyaltyProgramDetailSkeleton />
+  )
+};

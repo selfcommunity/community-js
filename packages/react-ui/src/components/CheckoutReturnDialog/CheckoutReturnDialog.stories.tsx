@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import CheckoutReturnDialog from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import CheckoutReturnDialog, { CheckoutReturnDialogProps } from './index';
 
 export default {
 	title: 'Design System/React UI/Payments/CheckoutReturnDialog',
 	component: CheckoutReturnDialog,
 } as Meta<typeof CheckoutReturnDialog>;
 
-const template = (args) => (
+const template = (args: CheckoutReturnDialogProps) => (
 	<div style={{ maxWidth: 400 }}>
 		<CheckoutReturnDialog {...args} />
 	</div>

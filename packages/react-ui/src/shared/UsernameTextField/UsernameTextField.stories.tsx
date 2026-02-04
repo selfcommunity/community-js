@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import UsernameTextField from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import UsernameTextField, { UsernameTextFieldProps } from './index';
 
 export default {
   title: 'Design System/React UI Shared/UsernameTextfield',
   component: UsernameTextField,
 } as Meta<typeof UsernameTextField>;
 
-const template = (args) => <UsernameTextField {...args} />;
+const template = (args: UsernameTextFieldProps) => <UsernameTextField {...args} />;
 
 export const Base: StoryObj<typeof UsernameTextField> = {
   render: template

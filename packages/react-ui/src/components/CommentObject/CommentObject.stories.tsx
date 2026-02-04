@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import CommentObject from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import CommentObject, { CommentObjectProps } from './index';
 import { SCContributionType } from '@selfcommunity/types';
 
 export default {
@@ -9,12 +9,12 @@ export default {
     commentObjectId: {
       control: {type: 'number'},
       description: 'CommentObject Id',
-      table: {defaultValue: {summary: 79}}
+      table: {defaultValue: {summary: '79'}}
     },
     elevation: {
       control: {type: 'number'},
       description: 'Used only if variant="elevation". Shadow depth, corresponds to dp in the spec. It accepts values between 0 and 24 inclusive.',
-      table: {defaultValue: {summary: 1}}
+      table: {defaultValue: {summary: '1'}}
     },
     variant: {
       options: ['elevation', 'outlined'],
@@ -32,12 +32,12 @@ export default {
 
 } as Meta<typeof CommentObject>;
 
-const template = (args) => (
+const template = (args: CommentObjectProps) => (
   <div style={{width: 500}}>
     <CommentObject {...args} />
   </div>
 );
 
-export const Base: StoryObj<CommentObject> = {
+export const Base: StoryObj<typeof CommentObject> = {
   render: template
 };

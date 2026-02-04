@@ -57,7 +57,7 @@ export default function App(inProps: AppProps) {
 
   // HANDLERS
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
 
@@ -84,12 +84,12 @@ export default function App(inProps: AppProps) {
                 id="ui.onBoardingWidget.step.app.android.a"
                 defaultMessage="ui.onBoardingWidget.step.app.android.a"
                 values={{
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  icon: (...chunks) => <Icon fontSize="medium">{chunks}</Icon>,
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  b: (...chunks) => <strong>{chunks}</strong>
+                  icon: (chunks) => (
+                    <Icon key="ui.onBoardingWidget.step.app.android.a.icon" fontSize="medium">
+                      {chunks}
+                    </Icon>
+                  ),
+                  b: (chunks) => <strong key="ui.onBoardingWidget.step.app.android.a.b">{chunks}</strong>
                 }}
               />
             </Typography>
@@ -98,12 +98,12 @@ export default function App(inProps: AppProps) {
                 id="ui.onBoardingWidget.step.app.android.b"
                 defaultMessage="ui.onBoardingWidget.step.app.android.b"
                 values={{
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  icon: (...chunks) => <Icon fontSize="medium">{chunks}</Icon>,
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  b: (...chunks) => <strong>{chunks}</strong>
+                  icon: (chunks) => (
+                    <Icon key="ui.onBoardingWidget.step.app.android.b.icon" fontSize="medium">
+                      {chunks}
+                    </Icon>
+                  ),
+                  b: (chunks) => <strong key="ui.onBoardingWidget.step.app.android.b.b">{chunks}</strong>
                 }}
               />
             </Typography>
@@ -120,12 +120,12 @@ export default function App(inProps: AppProps) {
                 id="ui.onBoardingWidget.step.app.ios.a"
                 defaultMessage="ui.onBoardingWidget.step.app.ios.a"
                 values={{
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  icon: (...chunks) => <Icon fontSize="medium">{chunks}</Icon>,
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  b: (...chunks) => <strong>{chunks}</strong>
+                  icon: (chunks) => (
+                    <Icon key="ui.onBoardingWidget.step.app.ios.a.icon" fontSize="medium">
+                      {chunks}
+                    </Icon>
+                  ),
+                  b: (chunks) => <strong key="ui.onBoardingWidget.step.app.ios.a.b">{chunks}</strong>
                 }}
               />
             </Typography>
@@ -134,12 +134,12 @@ export default function App(inProps: AppProps) {
                 id="ui.onBoardingWidget.step.app.ios.b"
                 defaultMessage="ui.onBoardingWidget.step.app.ios.b"
                 values={{
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  icon: (...chunks) => <Icon fontSize="medium">{chunks}</Icon>,
-                  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                  // @ts-ignore
-                  b: (...chunks) => <strong>{chunks}</strong>
+                  icon: (chunks) => (
+                    <Icon key="ui.onBoardingWidget.step.app.ios.b.icon" fontSize="medium">
+                      {chunks}
+                    </Icon>
+                  ),
+                  b: (chunks) => <strong key="ui.onBoardingWidget.step.app.ios.b.b">{chunks}</strong>
                 }}
               />
             </Typography>

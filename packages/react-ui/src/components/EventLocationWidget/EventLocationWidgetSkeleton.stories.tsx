@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import EventLocationWidgetSkeleton from './Skeleton';
 
 export default {
@@ -6,8 +6,8 @@ export default {
   component: EventLocationWidgetSkeleton
 } as Meta<typeof EventLocationWidgetSkeleton>;
 
-const template = (args) => (
-  <EventLocationWidgetSkeleton {...args} />
+const template = () => (
+  <EventLocationWidgetSkeleton />
 );
 
 export const Base: StoryObj<typeof EventLocationWidgetSkeleton> = {

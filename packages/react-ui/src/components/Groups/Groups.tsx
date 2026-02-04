@@ -250,11 +250,11 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
   const content = (
     <>
       {showFilters && (groups.length !== 0 || search.length !== 0) && (
-        <Grid container direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
+        <Grid container width="100%" direction="row" justifyContent="center" alignItems="center" className={classes.filters}>
           {filters ? (
             filters
           ) : (
-            <Grid item xs={12} md={6}>
+            <Grid size={{xs: 12, md: 6}}>
               <TextField
                 className={classes.search}
                 fullWidth
@@ -269,35 +269,37 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
                     fetchGroups();
                   }
                 }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      {search.length > 0 && (
-                        <IconButton
-                          onClick={() => {
-                            setSearch('');
-                            fetchGroups('');
-                          }}
-                          disabled={loading}>
-                          <Icon>close</Icon>
-                        </IconButton>
-                      )}
-                      {isMobile ? (
-                        <IconButton onClick={() => fetchGroups()} disabled={loading}>
-                          <Icon>search</Icon>
-                        </IconButton>
-                      ) : (
-                        <Button
-                          size="small"
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => fetchGroups()}
-                          endIcon={<Icon>search</Icon>}
-                          disabled={loading}
-                        />
-                      )}
-                    </InputAdornment>
-                  )
+                slotProps={{
+                  input: {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        {search.length > 0 && (
+                          <IconButton
+                            onClick={() => {
+                              setSearch('');
+                              fetchGroups('');
+                            }}
+                            disabled={loading}>
+                            <Icon>close</Icon>
+                          </IconButton>
+                        )}
+                        {isMobile ? (
+                          <IconButton onClick={() => fetchGroups()} disabled={loading}>
+                            <Icon>search</Icon>
+                          </IconButton>
+                        ) : (
+                          <Button
+                            size="small"
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => fetchGroups()}
+                            endIcon={<Icon>search</Icon>}
+                            disabled={loading}
+                          />
+                        )}
+                      </InputAdornment>
+                    )
+                  }
                 }}
               />
             </Grid>
@@ -336,19 +338,15 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
             dataLength={groups.length}
             next={handleNext}
             hasMoreNext={Boolean(next)}
-            loaderNext={isMobile ? <GroupSkeleton /> : <Skeleton groupsNumber={2} />}
+            loaderNext={isMobile ? <GroupSkeleton sx={{marginTop: '16px'}} /> : <Skeleton groupsNumber={2} />}
             endMessage={
               <Typography component="div" className={classes.endMessage}>
                 <FormattedMessage
                   id="ui.groups.endMessage"
                   defaultMessage="ui.groups.endMessage"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
                     button: (chunk) => (
                       <Button color="secondary" variant="text" onClick={handleScrollUp}>
-                        {/*eslint-disable-next-line @typescript-eslint/ban-ts-ignore*/}
-                        {/*@ts-ignore*/}
                         {chunk}
                       </Button>
                     )
@@ -356,9 +354,9 @@ export default function Groups(inProps: GroupsProps): JSX.Element {
                 />
               </Typography>
             }>
-            <Grid container spacing={{xs: 2}} className={classes.groups}>
+            <Grid container width="100%" spacing={2} className={classes.groups}>
               {groups.map((group: SCGroupType) => (
-                <Grid item xs={12} sm={8} md={6} key={group.id} className={classes.item}>
+                <Grid size={{xs: 12, md: 6}} key={group.id} className={classes.item}>
                   <Group group={group} groupId={group.id} actionRedirect={true} {...GroupComponentProps} />
                 </Grid>
               ))}

@@ -1,4 +1,3 @@
-import React from 'react';
 import {Box, Card, CardContent, ListSubheader, Skeleton, useMediaQuery, useTheme, styled, List} from '@mui/material';
 import PrivateMessageThreadItemSkeleton from '../PrivateMessageThreadItem/Skeleton';
 import {SCThemeType} from '@selfcommunity/react-core';
@@ -50,7 +49,7 @@ export default function PrivateMessageThreadSkeleton(props): JSX.Element {
           ))}
         </List>
         <Box className={classes.editor}>
-          <Skeleton animation="wave" height={55} width={'100%'} variant={'rectangular'} />
+          <Skeleton animation="wave" height={55} width="100%" variant="rectangular" />
         </Box>
       </CardContent>
     </Root>

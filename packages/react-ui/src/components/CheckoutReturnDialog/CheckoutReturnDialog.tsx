@@ -44,9 +44,9 @@ const Transition = React.forwardRef(function Transition(props: TransitionProps &
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const NoTransition = React.forwardRef(function NoTransition(props: {children: React.ReactElement}, ref) {
-  return <React.Fragment> {props.children} </React.Fragment>;
-});
+const NoTransition = function NoTransition(props: {children: React.ReactElement}) {
+  return <React.Fragment>{props.children}</React.Fragment>;
+};
 
 export interface CheckoutReturnDialogProps extends DialogProps {
   className?: string;
@@ -67,7 +67,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
   // STATE
   const [loading, setLoading] = useState<boolean>(true);
   const [contentType, setContentType] = useState<SCContentType | null>(null);
-  const [contentId, setContentId] = useState<number | null>(null);
+  const [, setContentId] = useState<number | null>(null);
   const [content, setContent] = useState<SCEventType | SCGroupType | SCCourseType | SCCategoryType | null>(null);
   const [paymentPrice, setPaymentPrice] = useState<SCPaymentPrice | null>(null);
 
@@ -187,7 +187,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
               <FormattedMessage id="ui.checkoutReturnDialog.buy.event" defaultMessage="ui.checkoutReturnDialog.buy.event" />
             )}
           </Typography>
-          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
+          <Button size="medium" variant="contained" onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.event.button" defaultMessage="ui.checkoutReturnDialog.event.button" />
           </Button>
         </>
@@ -201,7 +201,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
           <Typography variant="body2" color="textSecondary">
             <FormattedMessage id="ui.checkoutReturnDialog.buy" defaultMessage="ui.checkoutReturnDialog.buy" />
           </Typography>
-          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
+          <Button size="medium" variant="contained" onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.category.button" defaultMessage="ui.checkoutReturnDialog.category.button" />
           </Button>
         </>
@@ -225,7 +225,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
               <FormattedMessage id="ui.checkoutReturnDialog.buy.course" defaultMessage="ui.checkoutReturnDialog.buy.course" />
             )}
           </Typography>
-          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
+          <Button size="medium" variant="contained" onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.course.button" defaultMessage="ui.checkoutReturnDialog.course.button" />
           </Button>
         </>
@@ -249,7 +249,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
               <FormattedMessage id="ui.checkoutReturnDialog.buy.group" defaultMessage="ui.checkoutReturnDialog.buy.group" />
             )}
           </Typography>
-          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
+          <Button size="medium" variant="contained" onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.group.button" defaultMessage="ui.checkoutReturnDialog.group.button" />
           </Button>
         </>
@@ -277,7 +277,7 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
               </Typography>
             </>
           )}
-          <Button size="medium" variant={'contained'} onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
+          <Button size="medium" variant="contained" onClick={handleViewPurchasedObject} component={Link} className={classes.btn}>
             <FormattedMessage id="ui.checkoutReturnDialog.community.button" defaultMessage="ui.checkoutReturnDialog.community.button" />
           </Button>
         </>
@@ -308,13 +308,12 @@ export default function CheckoutReturnDialog(inProps: CheckoutReturnDialogProps)
 
   return (
     <Root
-      maxWidth={'sm'}
+      maxWidth="sm"
       fullWidth
-      scroll={'paper'}
+      scroll="paper"
       open
-      {...(disableInitialTransition ? {TransitionComponent: NoTransition} : {TransitionComponent: Transition})}
+      {...(disableInitialTransition ? {slots: {transition: NoTransition}} : {slots: {transition: Transition}})}
       className={classNames(classes.root, className)}
-      TransitionComponent={Transition}
       {...rest}>
       <DialogTitle>{renderTitle()}</DialogTitle>
       <DialogContent>{loading ? <CircularProgress /> : renderContent()}</DialogContent>

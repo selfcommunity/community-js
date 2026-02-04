@@ -13,7 +13,7 @@ import {getHighestSafeWindowContext, getWindowWidth, getWindowHeight, isClientSi
 import {mergeDeep, isObject, objectWithoutProperties, isFunc} from './utils/object';
 import {isInteger} from './utils/number';
 import {arraysEqual, groupBy, sortByAttr} from './utils/array';
-import {loadVersionBrowser, iOS} from './utils/browser';
+import {loadVersionBrowser, iOS, isPWA} from './utils/browser';
 import {LocalStorageDB} from './utils/localStorage';
 import LRUCache, {LruCache, LruCacheType, CacheStrategies} from './utils/cache';
 import {Logger} from './utils/logger';
@@ -21,7 +21,7 @@ import WSClient, {WSClientType, WSClientPropTypes} from './utils/websocket';
 import {resizeImage} from './utils/image';
 
 /**
- * Export all utilities
+ * Export utilities
  */
 export {
   capitalize,
@@ -64,5 +64,6 @@ export {
   LruCache,
   LruCacheType,
   CacheStrategies,
-  resizeImage
+  resizeImage,
+  isPWA
 };
