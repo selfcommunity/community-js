@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import UserInfo from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import UserInfo, { UserInfoProps } from './index';
 import { DEFAULT_FIELDS } from '../../constants/UserProfile';
 
 export default {
@@ -9,18 +9,18 @@ export default {
     userId: {
       control: {type: 'number'},
       description: 'User Id',
-      table: {defaultValue: {summary: 7}}
+      table: {defaultValue: {summary: '7'}}
     }
   }
 } as Meta<typeof UserInfo>;
 
-const template = (args) => (
+const template = (args: UserInfoProps) => (
   <div style={{width: '100%'}}>
     <UserInfo {...args} />
   </div>
 );
 
-export const Base: StoryObj<UserInfo> = {
+export const Base: StoryObj<typeof UserInfo> = {
   args: {
     userId: 167,
     fields: [...DEFAULT_FIELDS]

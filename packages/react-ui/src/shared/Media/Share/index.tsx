@@ -1,4 +1,4 @@
-import { SCMediaObjectType } from '../../../types/media';
+import {SCMediaObjectType} from '../../../types/media';
 import DisplayComponent from './DisplayComponent';
 import filter from './filter';
 

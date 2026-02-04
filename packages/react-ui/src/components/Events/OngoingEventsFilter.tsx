@@ -1,7 +1,12 @@
-import {ChipProps, Icon, useThemeProps} from '@mui/material';
+import {Chip, ChipProps, Icon, styled, useThemeProps} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import {PREFIX} from './constants';
-import {EventsChipRoot} from './Events';
+
+const EventsChipRoot = styled(Chip, {
+  name: PREFIX,
+  slot: 'EventsChipRoot',
+  shouldForwardProp: (prop) => prop !== 'showOngoingEvents'
+})(() => ({}));
 
 export interface OngoingEventsFilterProps extends ChipProps {
   autoHide?: boolean;

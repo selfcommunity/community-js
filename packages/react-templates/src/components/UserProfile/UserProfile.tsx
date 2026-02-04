@@ -462,7 +462,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
                     </Typography>
                   )}
                   {taggingEnabled && (
-                    <Stack key={`tags_${scUser.id}`} direction="row" spacing={2} className={classes.tags}>
+                    <Stack key={`tags_${scUser.id}`} direction="row" className={classes.tags}>
                       {scUser.tags
                         .filter((t) => t.visible)
                         .map((tag) => (

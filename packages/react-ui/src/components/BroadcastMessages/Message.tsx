@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import {useContext, useEffect, useMemo, useState} from 'react';
 import {
   Avatar,
   Box,
@@ -244,8 +244,8 @@ export default function Message(props: MessageProps): JSX.Element {
   return (
     <Root id={id} className={className} {...rest}>
       <ListItem
-        alignItems={'center'}
-        component={'div'}
+        alignItems="center"
+        component="div"
         classes={{
           root: classNames(classes.listItemSnippet, classes.listItemSnippetNew)
         }}>

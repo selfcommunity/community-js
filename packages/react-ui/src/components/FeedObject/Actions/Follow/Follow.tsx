@@ -1,7 +1,6 @@
 import React, {useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
-import LoadingButton from '@mui/lab/LoadingButton';
-import {Box, Tooltip, styled, Icon} from '@mui/material';
+import {Box, Tooltip, styled, Icon, Button} from '@mui/material';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
 import classNames from 'classnames';
 import {useSnackbar} from 'notistack';
@@ -118,7 +117,7 @@ export default function Follow(props: FollowProps): JSX.Element {
     } else {
       setIsFollowing(true);
       performFollow()
-        .then((data) => {
+        .then(() => {
           const isFollow = !obj.followed;
           setObj(Object.assign({}, obj, {followed: isFollow}));
           setIsFollowing(false);
@@ -150,14 +149,14 @@ export default function Follow(props: FollowProps): JSX.Element {
       <React.Fragment>
         {scUserContext.user && obj.author.id !== scUserContext.user.id && !obj.deleted && (
           <Tooltip title={btnLabel}>
-            <LoadingButton
+            <Button
               className={classNames(classes.button, {[classes.iconized]: iconized, [classes.followed]: obj.followed})}
               loading={isFollowing}
               variant={iconized ? 'text' : 'contained'}
               disabled={isFollowing}
               onClick={follow}>
               {iconized ? <Icon>{obj.followed ? 'bookmark_added' : 'bookmark_border'}</Icon> : btnLabel}
-            </LoadingButton>
+            </Button>
           </Tooltip>
         )}
       </React.Fragment>

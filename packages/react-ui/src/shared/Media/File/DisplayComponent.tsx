@@ -96,7 +96,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
       }
 
       setPreview(index);
-      onMediaClick(images[index]);
+      onMediaClick?.(images[index]);
     },
     [gallery, setPreview, images, onMediaClick]
   );
@@ -138,20 +138,18 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     return (
       <Grid
         container
+        width="100%"
         style={{
           ...(images[0].image_thumbnail && images[0].image_thumbnail.color ? {backgroundColor: images[0].image_thumbnail.color} : {})
         }}>
         <Grid
-          item
           ref={ref}
-          xs={12}
-          classes={{
-            root: classNames(classes.border, classes.heightOne, {
-              ...(isGif || isLandscape ? {[classes.background]: true} : {[classes.backgroundPortrait]: true}),
-              [classes.gallery]: gallery,
-              [classes.heightHalfOne]: images.length > 1
-            })
-          }}
+          size={12}
+          className={classNames(classes.border, classes.heightOne, {
+            ...(isGif || isLandscape ? {[classes.background]: true} : {[classes.backgroundPortrait]: true}),
+            [classes.gallery]: gallery,
+            [classes.heightHalfOne]: images.length > 1
+          })}
           onClick={() => openPreviewImage(0)}
           style={{
             background: `url(${getImageUrl(images[0], inView && isGif)})`,
@@ -168,20 +166,18 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
     const overlay = images.length > maxVisible && [2, 3].includes(+maxVisible) ? renderCountOverlay(true) : renderOverlay(1);
     const conditionalRender = [3, 4].includes(images.length) || (images.length > +maxVisible && [3, 4].includes(+maxVisible));
     return (
-      <Grid container>
+      <Grid container width="100%">
         <Grid
-          item
-          xs={6}
-          classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
+          size={6}
+          className={classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 0)}
           style={{background: `url(${getImageUrl(conditionalRender ? images[1] : images[0])})`}}>
           {renderOverlay(conditionalRender ? 1 : 0)}
           {renderTitle(images[0])}
         </Grid>
         <Grid
-          item
-          xs={6}
-          classes={{root: classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}}
+          size={6}
+          className={classNames(classes.border, classes.heightTwo, classes.background, {[classes.gallery]: gallery})}
           onClick={() => openPreviewImage(conditionalRender ? 2 : 1)}
           style={{background: `url(${getImageUrl(conditionalRender ? images[2] : images[1])})`}}>
           {overlay}
@@ -198,32 +194,26 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
         ? renderCountOverlay(true)
         : renderOverlay(conditionalRender ? 3 : 4);
     return (
-      <Grid container>
+      <Grid container width="100%">
         <Grid
-          item
-          xs={4}
-          md={4}
-          classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
+          size={4}
+          className={classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}
           onClick={() => openPreviewImage(conditionalRender ? 1 : 2)}
           style={{background: `url(${getImageUrl(conditionalRender ? images[1] : images[2])})`}}>
           {renderOverlay(conditionalRender ? 1 : 2)}
           {renderTitle(images[1])}
         </Grid>
         <Grid
-          item
-          xs={4}
-          md={4}
-          classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
+          size={4}
+          className={classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}
           onClick={() => openPreviewImage(conditionalRender ? 2 : 3)}
           style={{background: `url(${getImageUrl(conditionalRender ? images[2] : images[3])})`}}>
           {renderOverlay(conditionalRender ? 2 : 3)}
           {renderTitle(images[2])}
         </Grid>
         <Grid
-          item
-          xs={4}
-          md={4}
-          classes={{root: classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}}
+          size={4}
+          className={classNames(classes.border, classes.heightThree, classes.background, {[classes.gallery]: gallery})}
           onClick={() => openPreviewImage(conditionalRender ? 3 : 4)}
           style={{background: `url(${getImageUrl(conditionalRender ? images[3] : images[4])})`}}>
           {overlay}

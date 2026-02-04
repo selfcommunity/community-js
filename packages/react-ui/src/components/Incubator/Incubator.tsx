@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Typography, Grid, Box, Button, ButtonProps, CardContent, CardActions, styled, LinearProgress, LinearProgressProps} from '@mui/material';
 import {SCIncubatorType} from '@selfcommunity/types';
 import {Link, SCRoutes, SCRoutingContextType, useSCFetchIncubator, useSCRouting} from '@selfcommunity/react-core';
@@ -35,16 +35,16 @@ function LinearProgressWithLabel({className, ...props}: LinearProgressProps & {v
           </Typography>
         )}
       </Box>
-      <Grid container spacing={2} className={className}>
-        <Grid item xs>
+      <Grid container width="100%" spacing={2} className={className}>
+        <Grid size="grow">
           <Typography>
             <FormattedMessage defaultMessage="ui.incubator.progressBar.proposal" id="ui.incubator.progressBar.proposal" />
           </Typography>
         </Grid>
-        <Grid item xs>
+        <Grid size="grow">
           <FormattedMessage defaultMessage="ui.incubator.progressBar.collectingSubscribers" id="ui.incubator.progressBar.collectingSubscribers" />
         </Grid>
-        <Grid item xs>
+        <Grid size="grow">
           <Typography align="right">
             <FormattedMessage defaultMessage="ui.incubator.progressBar.approved" id="ui.incubator.progressBar.approved" />
           </Typography>
@@ -139,7 +139,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
   } = props;
 
   // STATE
-  const {scIncubator, setSCIncubator} = useSCFetchIncubator({id: incubatorId, incubator});
+  const {scIncubator} = useSCFetchIncubator({id: incubatorId, incubator});
   // CONTEXT
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const [openAlert, setOpenAlert] = useState<boolean>(false);
@@ -177,7 +177,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
           {/*<Link className={classes.name} to={scRoutingContext.url(SCRoutes.INCUBATOR_ROUTE_NAME, incubator)}>*/}
           {/*  {incubator.name}*/}
           {/*</Link>*/}
-          <Typography component={'span'}>
+          <Typography component="span">
             <FormattedMessage
               defaultMessage="ui.incubator.proposedBy"
               id="ui.incubator.proposedBy"
@@ -192,7 +192,7 @@ export default function Incubator(inProps: IncubatorProps): JSX.Element {
               }}
             />
           </Typography>
-          <Typography component={'p'} className={!detailView ? classes.slogan : null}>
+          <Typography component="p" className={!detailView ? classes.slogan : null}>
             {scIncubator.slogan}
           </Typography>
           <LinearProgressWithLabel

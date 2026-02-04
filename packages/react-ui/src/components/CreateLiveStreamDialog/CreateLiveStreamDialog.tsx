@@ -173,8 +173,14 @@ export default function CreateLiveStreamDialog(inProps: CreateLiveStreamDialogPr
       scroll="body"
       onClose={!canShowBackButton ? onClose : undefined}
       className={classNames(classes.root, className)}
-      TransitionComponent={Transition}
-      PaperProps={{elevation: 0}}
+      slots={{
+        transition: Transition
+      }}
+      slotProps={{
+        paper: {
+          elevation: 0
+        }
+      }}
       {...rest}>
       <Box className={classes.content}>
         {step === CreateLiveStreamStep.SELECT_TYPE && (

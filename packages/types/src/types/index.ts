@@ -87,9 +87,9 @@ import {
   type SCNotificationUserFollowType,
   type SCNotificationVoteUpType,
   type SCNotificationGroupActivityType,
-  SCNotificationEventActivityType,
-  SCNotificationLiveStreamActivityType,
-  SCNotificationCourseActivityType
+  type SCNotificationEventActivityType,
+  type SCNotificationLiveStreamActivityType,
+  type SCNotificationCourseActivityType
 } from './notification';
 import {type SCWebhookEndpointAttemptType, type SCWebhookEndpointSecretType, type SCWebhookEndpointType, type SCWebhookEventsType} from './webhook';
 import {type SCVoteType} from './vote';
@@ -150,10 +150,10 @@ import {
 import {
   type SCLiveStreamType,
   SCLiveStreamViewType,
-  SCLiveStreamConnectionDetailsType,
-  SCLiveStreamSettingsType,
-  SCLiveStreamMonthlyDurationType,
-  SCLiveStreamConnectionDetailsResponseErrorType,
+  type SCLiveStreamConnectionDetailsType,
+  type SCLiveStreamSettingsType,
+  type SCLiveStreamMonthlyDurationType,
+  type SCLiveStreamConnectionDetailsResponseErrorType,
   SCLiveStreamConnectionDetailsErrorType
 } from './liveStream';
 import {type SCStepType, SCOnBoardingStepType, SCOnBoardingStepStatusType, SCOnBoardingStepIdType} from './onboarding';
@@ -284,7 +284,6 @@ export {
   type SCNotificationIncubatorType,
   type SCNotificationContributionType,
   type SCNotificationGroupActivityType,
-  type SCNotificationEventActivityType,
   type SCNotificationCourseActivityType,
   type SCNotificationLiveStreamActivityType,
   type SCPrizeType,
@@ -361,9 +360,9 @@ export {
   SCCourseOrderingUsersType,
   type SCLiveStreamType,
   type SCLiveStreamConnectionDetailsType,
-  type SCLiveStreamSettingsType,
+  SCLiveStreamSettingsType,
   type SCLiveStreamConnectionDetailsResponseErrorType,
-  type SCLiveStreamMonthlyDurationType,
+  SCLiveStreamMonthlyDurationType,
   SCLiveStreamConnectionDetailsErrorType,
   SCLiveStreamViewType,
   SCCommunitySubscriptionTier,
@@ -386,5 +385,6 @@ export {
   type SCCommunityType,
   type SCCustomerBillingInfo,
   type SCCountryType,
-  type SCContactUsRequestType
+  type SCContactUsRequestType,
+  type SCNotificationEventActivityType
 };

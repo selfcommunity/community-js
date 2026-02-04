@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
+import {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
 import {Endpoints, http, HttpResponse, PrivateMessageService, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {SCUserContext, SCUserContextType, UserUtils, useSCFetchUser} from '@selfcommunity/react-core';
 import {
@@ -97,7 +97,7 @@ export interface PrivateMessageThreadProps extends CardProps {
    * Callback fired when new message section is closed
    * @default null
    */
-  onNewMessageClose?: (dispatch: any) => void;
+  onNewMessageClose?: (dispatch?: any) => void;
   /**
    * Callback fired when a single message section is open
    * @default null
@@ -269,7 +269,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
       });
   }
 
-  const handleInputChange = (event, value, reason) => {
+  const handleInputChange = (_event, value, reason) => {
     switch (reason) {
       case 'input':
         setValue(value);
@@ -296,7 +296,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     return false;
   };
 
-  const handleClear = (event?, value?) => {
+  const handleClear = (_event?, value?) => {
     setValue('');
     setFollowers([]);
     setRecipients(value ?? []);
@@ -304,8 +304,6 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
 
   const handleNewMessageClose = () => {
     handleClear();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
     onNewMessageClose && onNewMessageClose();
   };
 
@@ -534,7 +532,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
   /**
    * Notification subscriber
    */
-  const subscriber = (msg, data) => {
+  const subscriber = (_msg, data) => {
     const res = data.data;
     const newMessages = [...messageObjs];
     const index = newMessages.findIndex((m) => m.thread_id === res.thread_id);
@@ -573,7 +571,7 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
     return (
       <CardContent>
         <InfiniteScroll
-          height={'100%'}
+          height="100%"
           dataLength={messageObjs.length}
           previous={handlePrevious}
           inverse={true}
@@ -680,9 +678,11 @@ export default function PrivateMessageThread(inProps: PrivateMessageThreadProps)
                       {...params}
                       placeholder={singleMessageThread ? '...' : `${intl.formatMessage(translMessages.placeholder)}`}
                       variant="standard"
-                      InputProps={{
-                        ...params.InputProps,
-                        disableUnderline: true
+                      slotProps={{
+                        input: {
+                          ...params.InputProps,
+                          disableUnderline: true
+                        }
                       }}
                     />
                   )}

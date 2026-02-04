@@ -1,4 +1,4 @@
-import React, {forwardRef, SyntheticEvent, useCallback, useMemo} from 'react';
+import React, {forwardRef, useCallback, useMemo} from 'react';
 import {
   Box,
   BoxProps,
@@ -20,8 +20,8 @@ import {ReactSortable} from 'react-sortablejs';
 import {DatePicker, LocalizationProvider} from '@mui/x-date-pickers';
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns';
 import {COMPOSER_POLL_MIN_CHOICES, COMPOSER_POLL_MIN_CLOSE_DATE_DELTA, COMPOSER_POLL_TITLE_MAX_LENGTH} from '../../../../constants/Composer';
-import itLocale from 'date-fns/locale/it';
-import enLocale from 'date-fns/locale/en-US';
+import {it} from 'date-fns/locale/it';
+import {enUS} from 'date-fns/locale/en-US';
 import {SCPollChoiceType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -30,8 +30,8 @@ import {ComposerContentType} from '../../../../types/composer';
 import {PREFIX} from '../../constants';
 
 const localeMap = {
-  en: enLocale,
-  it: itLocale
+  en: it,
+  it: enUS
 };
 
 const classes = {
@@ -46,7 +46,7 @@ const classes = {
 const Root = styled(Box, {
   name: PREFIX,
   slot: 'ContentPollRoot'
-})(({theme}) => ({}));
+})(() => ({}));
 
 const messages = defineMessages({
   choicePlaceholder: {
@@ -57,7 +57,7 @@ const messages = defineMessages({
 
 const SortableComponent = forwardRef<HTMLDivElement, any>(({children, ...props}, ref) => {
   return (
-    <FormGroup direction="column" ref={ref} {...props}>
+    <FormGroup sx={{display: 'flex', flexDirection: 'column'}} ref={ref} {...props}>
       {children}
     </FormGroup>
   );
@@ -147,7 +147,7 @@ export default (inProps: ContentPollProps): JSX.Element => {
 
   const handleDeleteChoice = useCallback(
     (index: number) => {
-      return (event: SyntheticEvent) => {
+      return () => {
         const _choices = [...poll.choices];
         _choices.splice(index, 1);
         onChange({...value, poll: {...poll, choices: _choices}});
@@ -203,8 +203,10 @@ export default (inProps: ContentPollProps): JSX.Element => {
           fullWidth
           error={Boolean(titleError)}
           helperText={titleError && titleError}
-          InputProps={{
-            endAdornment: <Typography variant="body2">{COMPOSER_POLL_TITLE_MAX_LENGTH - poll.title.length}</Typography>
+          slotProps={{
+            input: {
+              endAdornment: <Typography variant="body2">{COMPOSER_POLL_TITLE_MAX_LENGTH - poll.title.length}</Typography>
+            }
           }}
         />
       </Box>
@@ -218,33 +220,35 @@ export default (inProps: ContentPollProps): JSX.Element => {
               onChange={handleChangeChoice(index)}
               variant="outlined"
               disabled={disabled}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Icon>drag</Icon>
-                  </InputAdornment>
-                ),
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Tooltip
-                      title={
-                        poll.choices.length <= COMPOSER_POLL_MIN_CHOICES ? (
-                          <FormattedMessage
-                            id="ui.composer.content.poll.choice.delete.disabled"
-                            defaultMessage="ui.composer.content.poll.choice.delete.disabled"
-                          />
-                        ) : (
-                          <FormattedMessage id="ui.composer.content.poll.choice.delete" defaultMessage="ui.composer.content.poll.choice.delete" />
-                        )
-                      }>
-                      <span>
-                        <IconButton onClick={handleDeleteChoice(index)} disabled={poll.choices.length <= COMPOSER_POLL_MIN_CHOICES} edge="end">
-                          <Icon>delete</Icon>
-                        </IconButton>
-                      </span>
-                    </Tooltip>
-                  </InputAdornment>
-                )
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <Icon>drag</Icon>
+                    </InputAdornment>
+                  ),
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <Tooltip
+                        title={
+                          poll.choices.length <= COMPOSER_POLL_MIN_CHOICES ? (
+                            <FormattedMessage
+                              id="ui.composer.content.poll.choice.delete.disabled"
+                              defaultMessage="ui.composer.content.poll.choice.delete.disabled"
+                            />
+                          ) : (
+                            <FormattedMessage id="ui.composer.content.poll.choice.delete" defaultMessage="ui.composer.content.poll.choice.delete" />
+                          )
+                        }>
+                        <span>
+                          <IconButton onClick={handleDeleteChoice(index)} disabled={poll.choices.length <= COMPOSER_POLL_MIN_CHOICES} edge="end">
+                            <Icon>delete</Icon>
+                          </IconButton>
+                        </span>
+                      </Tooltip>
+                    </InputAdornment>
+                  )
+                }
               }}
             />
           ))}

@@ -1,4 +1,3 @@
-import React from 'react';
 import {Box, Grid, useMediaQuery, useTheme, styled} from '@mui/material';
 import {PREFIX} from './constants';
 import classNames from 'classnames';
@@ -46,10 +45,10 @@ export default function PaywallsConfiguratorSkeleton(inProps): JSX.Element {
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Grid container spacing={{xs: 3}} className={classes.products}>
-        {[...Array(isMobile ? 1 : 2)].map((product, index) => (
-          <Grid item xs={12} key={index}>
-            <PaymentProductSkeleton elevation={0} variant={'outlined'} {...PaymentProductSkeletonProps} />
+      <Grid container width="100%" spacing={{xs: 3}} className={classes.products}>
+        {[...Array(isMobile ? 1 : 2)].map((_product, index) => (
+          <Grid size={12} key={index}>
+            <PaymentProductSkeleton elevation={0} variant="outlined" {...PaymentProductSkeletonProps} />
           </Grid>
         ))}
       </Grid>

@@ -1,5 +1,5 @@
 import {useRef} from 'react';
-import type {Meta, StoryObj} from '@storybook/react';
+import type {Meta, StoryObj} from '@storybook/react-webpack5';
 import Feed, {FeedProps, FeedRef} from './Feed';
 import {Endpoints} from '@selfcommunity/api-services';
 import {SCContributionType, SCNotificationTopicType} from '@selfcommunity/types';
@@ -22,9 +22,9 @@ export default {
  * General template structure
  * @param args
  */
-const template = (args) => {
+const template = (args: any) => {
   // REF
-  const feedRef = useRef<FeedRef>();
+  const feedRef = useRef<FeedRef | null>(null);
 
   // HANDLERS
   const handleRefresh = () => {
@@ -45,20 +45,20 @@ const template = (args) => {
  * General template FIXED structure
  * @param args
  */
-const templateContainerFixed = (args) => {
+const templateContainerFixed = (args: any) => {
   // REF
-  const feedRef = useRef<FeedRef>();
+  const feedRef = useRef<FeedRef | null>(null);
 
   // HANDLERS
   const handleRefresh = () => {
     feedRef && feedRef.current && feedRef.current.refresh();
   };
 
-  // The feed is wrapped in a container with position fixed and scrollbar and overflow: auto, so pass to the Feed scrollableTargetId={'scrollableDiv'}
+  // The feed is wrapped in a container with position fixed and scrollbar and overflow: auto, so pass to the Feed scrollableTargetId="scrollableDiv"
   return (
     <div>
       <Button
-        id={'testButton'}
+        id="testButton"
         color="info"
         variant="contained"
         size="small"
@@ -69,7 +69,7 @@ const templateContainerFixed = (args) => {
       <div
         style={{position: 'fixed', bottom: 0, left: 0, right: 0, top: 70, zIndex: 1, maxWidth: '100% !important', height: '92vh', overflow: 'auto'}}
         id="scrollableDiv">
-        <Feed {...args} ref={feedRef} scrollableTargetId={'scrollableDiv'} />
+        <Feed {...args} ref={feedRef} scrollableTargetId="scrollableDiv" />
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import EditorSkeleton from './Skeleton';
 
 export default {
@@ -6,9 +6,9 @@ export default {
   component: EditorSkeleton
 } as Meta<typeof EditorSkeleton>;
 
-const template = (args) => (
+const template = () => (
   <div style={{width: 400}}>
-    <EditorSkeleton {...args} />
+    <EditorSkeleton />
   </div>
 );
 

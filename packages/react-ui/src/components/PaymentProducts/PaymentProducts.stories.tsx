@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import PaymentProducts from './index';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import PaymentProducts, { PaymentProductsProps } from './index';
 import {SCContentType} from '@selfcommunity/types';
 
 export default {
@@ -7,7 +7,7 @@ export default {
 	component: PaymentProducts,
 } as Meta<typeof PaymentProducts>;
 
-const template = (args) => (
+const template = (args: PaymentProductsProps) => (
 	<div style={{ maxWidth: 600 }}>
 		<PaymentProducts {...args} />
 	</div>

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
 import Editor, { EditorProps } from './index';
 
 export default {
@@ -6,7 +6,7 @@ export default {
   component: Editor
 } as Meta<typeof Editor>;
 
-const template = (args) => (
+const template = (args: EditorProps) => (
   <div style={{width: 600}}>
     <Editor {...args} />
   </div>

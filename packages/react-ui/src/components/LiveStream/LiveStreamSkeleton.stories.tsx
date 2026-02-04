@@ -1,12 +1,12 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import EventSkeleton from './Skeleton';
+import type { Meta, StoryObj } from '@storybook/react-webpack5';
+import EventSkeleton, { LiveStreamSkeletonProps } from './Skeleton';
 
 export default {
   title: 'Design System/React UI/Skeleton/LiveStream',
   component: EventSkeleton
 } as Meta<typeof EventSkeleton>;
 
-const template = (args) => (
+const template = (args: LiveStreamSkeletonProps) => (
   <div style={{ width: '50%' }}>
     <EventSkeleton {...args} />
   </div>

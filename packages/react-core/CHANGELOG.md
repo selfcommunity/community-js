@@ -3,9 +3,167 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [0.7.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.22...@selfcommunity/react-core@0.7.0-alpha.23) (2025-10-07)
+# [0.7.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.23...@selfcommunity/react-core@0.7.0-alpha.24) (2026-02-04)
 
-**Note:** Version bump only for package @selfcommunity/react-core
+
+### Bug Fixes
+
+* changes ([eb3eeb0](https://github.com/selfcommunity/community-js/commit/eb3eeb0fac275e9ee661a2e3cc346d3fbdbde168))
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+
+
+
+
+
+# [0.7.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.23...@selfcommunity/react-core@0.7.0-alpha.24) (2026-02-04)
+
+
+### Bug Fixes
+
+* changes ([eb3eeb0](https://github.com/selfcommunity/community-js/commit/eb3eeb0fac275e9ee661a2e3cc346d3fbdbde168))
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+
+
+
+
+
+# [0.7.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.22...@selfcommunity/react-core@0.7.0-alpha.23) (2026-01-22)
+
+
+### Bug Fixes
+
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+
+
+
+
+
+# [0.7.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.22...@selfcommunity/react-core@0.7.0-alpha.23) (2026-01-22)
+
+
+### Bug Fixes
+
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+
+
+
+
+
+# [0.7.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.22...@selfcommunity/react-core@0.7.0-alpha.23) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+
+
+
+
+
+# [0.7.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.22...@selfcommunity/react-core@0.7.0) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+
+
+
+
+
+# [0.7.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.22...@selfcommunity/react-core@0.7.0-alpha.24) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+
+
+
+
+
+# [0.7.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@0.7.0-alpha.22...@selfcommunity/react-core@0.7.0-alpha.23) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some codes ([cc03520](https://github.com/selfcommunity/community-js/commit/cc03520a20d01a6358c7c7857b8bd93d2641bd69))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* updated google maps dependencies ([c4bbebd](https://github.com/selfcommunity/community-js/commit/c4bbebdcdfff24ae095b21baaee6184db96f3a56))
+
+
+### Features
+
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
 
 
 

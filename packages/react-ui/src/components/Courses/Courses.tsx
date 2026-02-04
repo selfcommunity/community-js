@@ -59,7 +59,7 @@ const Root = styled(Box, {
   slot: 'Root'
 })(() => ({}));
 
-export const CoursesChipRoot = styled(Chip, {
+const CoursesChipRoot = styled(Chip, {
   name: PREFIX,
   slot: 'CoursesChipRoot',
   shouldForwardProp: (prop) => prop !== 'showMine' && prop !== 'showManagedCourses'
@@ -334,15 +334,15 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   const c = (
     <>
       {showFilters && (
-        <Grid container className={classes.filters} gap={2}>
+        <Grid container width="100%" className={classes.filters} gap={2}>
           {filters ? (
             filters
           ) : (
             <>
-              <Grid item xs={12} md={3}>
+              <Grid size={{xs: 12, md: 3}}>
                 <TextField
                   className={classes.search}
-                  size={'small'}
+                  size="small"
                   fullWidth
                   value={query}
                   label={<FormattedMessage id="ui.courses.filterByName" defaultMessage="ui.courses.filterByName" />}
@@ -355,30 +355,32 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                       fetchCourses();
                     }
                   }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        {isMobile ? (
-                          <IconButton onClick={() => fetchCourses()} disabled={loading}>
-                            <Icon>search</Icon>
-                          </IconButton>
-                        ) : (
-                          <Button
-                            size="small"
-                            variant="contained"
-                            color="secondary"
-                            onClick={() => fetchCourses()}
-                            endIcon={<Icon>search</Icon>}
-                            disabled={loading}
-                          />
-                        )}
-                      </InputAdornment>
-                    )
+                  slotProps={{
+                    input: {
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          {isMobile ? (
+                            <IconButton onClick={() => fetchCourses()} disabled={loading}>
+                              <Icon>search</Icon>
+                            </IconButton>
+                          ) : (
+                            <Button
+                              size="small"
+                              variant="contained"
+                              color="secondary"
+                              onClick={() => fetchCourses()}
+                              endIcon={<Icon>search</Icon>}
+                              disabled={loading}
+                            />
+                          )}
+                        </InputAdornment>
+                      )
+                    }
                   }}
                 />
               </Grid>
               {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && (
-                <Grid item>
+                <Grid size="grow">
                   <CoursesChipRoot
                     color={showManagedCourses ? 'primary' : 'default'}
                     variant={showManagedCourses ? 'filled' : 'outlined'}
@@ -392,13 +394,13 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                   />
                 </Grid>
               )}
-              <Grid item xs={12} md="auto">
+              <Grid size={{xs: 12, md: 'auto'}}>
                 <FormControl fullWidth>
                   <CategoryAutocomplete onChange={handleOnChangeCategory} className={classes.category} size="small" multiple={true} />
                 </FormControl>
               </Grid>
               {authUserId && (
-                <Grid item>
+                <Grid>
                   <CoursesChipRoot
                     color={showMine ? 'primary' : 'default'}
                     variant={showMine ? 'filled' : 'outlined'}
@@ -464,12 +466,8 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                   id="ui.courses.endMessage"
                   defaultMessage="ui.courses.endMessage"
                   values={{
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-                    // @ts-ignore
                     button: (chunk) => (
                       <Button color="secondary" variant="text" onClick={handleScrollUp}>
-                        {/*eslint-disable-next-line @typescript-eslint/ban-ts-ignore*/}
-                        {/*@ts-ignore*/}
                         {chunk}
                       </Button>
                     )
@@ -477,15 +475,15 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                 />
               </Typography>
             }>
-            <Grid container spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
+            <Grid container width="100%" spacing={{xs: 3}} className={classes.courses} {...GridContainerComponentProps}>
               <>
                 {courses.map((course: SCCourseType) => (
-                  <Grid item xs={12} sm={12} md={6} lg={3} key={course.id} className={classes.item} {...GridItemComponentProps}>
+                  <Grid size={{xs: 12, md: 6, lg: 3}} key={course.id} className={classes.item} {...GridItemComponentProps}>
                     <Course courseId={course.id} {...CourseComponentProps} />
                   </Grid>
                 ))}
                 {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && courses.length % 2 !== 0 && (
-                  <Grid item xs={12} sm={12} md={6} lg={3} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
+                  <Grid size={{xs: 12, md: 6, lg: 3}} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
                     <CourseCreatePlaceholder CreateCourseButtonComponentProps={CreateCourseButtonComponentProps} />
                   </Grid>
                 )}

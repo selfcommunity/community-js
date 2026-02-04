@@ -3,6 +3,212 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.23...@selfcommunity/react-theme-default@0.5.0-alpha.24) (2026-02-04)
+
+
+### Bug Fixes
+
+* changes ([eb3eeb0](https://github.com/selfcommunity/community-js/commit/eb3eeb0fac275e9ee661a2e3cc346d3fbdbde168))
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed some skeleton grid ([983370a](https://github.com/selfcommunity/community-js/commit/983370a7cd4917fdb176d7d358a8424d53b41e3b))
+* fixed some ui codes ([d3566eb](https://github.com/selfcommunity/community-js/commit/d3566eb03529bea384e36a44a8b6b501da28edca))
+* fixed some ui codes ([7930b26](https://github.com/selfcommunity/community-js/commit/7930b2667aedbd631bf852b33e2150399d390e63))
+* fixed ui bug ([8dcc4eb](https://github.com/selfcommunity/community-js/commit/8dcc4eb7652891d2a3903ba7c5d88863179a9dd4))
+* fixed ui report. Linear: https://linear.app/quentral/issue/QUE-2131/lista-tag-nel-profilo ([447f886](https://github.com/selfcommunity/community-js/commit/447f88612b55b265b7f2c500fc4501e853eb7917))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* react-google-maps ([2d68c2b](https://github.com/selfcommunity/community-js/commit/2d68c2bf5b7935dcb9da0e7c9b2bbd812eac0df1))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* restored previous changes ([cfd4450](https://github.com/selfcommunity/community-js/commit/cfd4450759232e09356e98925c7691aa631425b6))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.5.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.23...@selfcommunity/react-theme-default@0.5.0-alpha.24) (2026-02-04)
+
+
+### Bug Fixes
+
+* changes ([eb3eeb0](https://github.com/selfcommunity/community-js/commit/eb3eeb0fac275e9ee661a2e3cc346d3fbdbde168))
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed some skeleton grid ([983370a](https://github.com/selfcommunity/community-js/commit/983370a7cd4917fdb176d7d358a8424d53b41e3b))
+* fixed some ui codes ([d3566eb](https://github.com/selfcommunity/community-js/commit/d3566eb03529bea384e36a44a8b6b501da28edca))
+* fixed some ui codes ([7930b26](https://github.com/selfcommunity/community-js/commit/7930b2667aedbd631bf852b33e2150399d390e63))
+* fixed ui bug ([8dcc4eb](https://github.com/selfcommunity/community-js/commit/8dcc4eb7652891d2a3903ba7c5d88863179a9dd4))
+* fixed ui report. Linear: https://linear.app/quentral/issue/QUE-2131/lista-tag-nel-profilo ([447f886](https://github.com/selfcommunity/community-js/commit/447f88612b55b265b7f2c500fc4501e853eb7917))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* react-google-maps ([2d68c2b](https://github.com/selfcommunity/community-js/commit/2d68c2bf5b7935dcb9da0e7c9b2bbd812eac0df1))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* restored previous changes ([cfd4450](https://github.com/selfcommunity/community-js/commit/cfd4450759232e09356e98925c7691aa631425b6))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.5.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.23...@selfcommunity/react-theme-default@0.5.0-alpha.24) (2026-01-22)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed ui report. Linear: https://linear.app/quentral/issue/QUE-2131/lista-tag-nel-profilo ([447f886](https://github.com/selfcommunity/community-js/commit/447f88612b55b265b7f2c500fc4501e853eb7917))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* react-google-maps ([2d68c2b](https://github.com/selfcommunity/community-js/commit/2d68c2bf5b7935dcb9da0e7c9b2bbd812eac0df1))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* restored previous changes ([cfd4450](https://github.com/selfcommunity/community-js/commit/cfd4450759232e09356e98925c7691aa631425b6))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.5.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.23...@selfcommunity/react-theme-default@0.5.0-alpha.24) (2026-01-22)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed ui report. Linear: https://linear.app/quentral/issue/QUE-2131/lista-tag-nel-profilo ([447f886](https://github.com/selfcommunity/community-js/commit/447f88612b55b265b7f2c500fc4501e853eb7917))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* react-google-maps ([2d68c2b](https://github.com/selfcommunity/community-js/commit/2d68c2bf5b7935dcb9da0e7c9b2bbd812eac0df1))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* restored previous changes ([cfd4450](https://github.com/selfcommunity/community-js/commit/cfd4450759232e09356e98925c7691aa631425b6))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.5.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.23...@selfcommunity/react-theme-default@0.5.0-alpha.24) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed ui report. Linear: https://linear.app/quentral/issue/QUE-2131/lista-tag-nel-profilo ([447f886](https://github.com/selfcommunity/community-js/commit/447f88612b55b265b7f2c500fc4501e853eb7917))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* react-google-maps ([2d68c2b](https://github.com/selfcommunity/community-js/commit/2d68c2bf5b7935dcb9da0e7c9b2bbd812eac0df1))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* restored previous changes ([cfd4450](https://github.com/selfcommunity/community-js/commit/cfd4450759232e09356e98925c7691aa631425b6))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.5.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.23...@selfcommunity/react-theme-default@0.5.0) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed ui report. Linear: https://linear.app/quentral/issue/QUE-2131/lista-tag-nel-profilo ([447f886](https://github.com/selfcommunity/community-js/commit/447f88612b55b265b7f2c500fc4501e853eb7917))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* react-google-maps ([2d68c2b](https://github.com/selfcommunity/community-js/commit/2d68c2bf5b7935dcb9da0e7c9b2bbd812eac0df1))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* restored previous changes ([cfd4450](https://github.com/selfcommunity/community-js/commit/cfd4450759232e09356e98925c7691aa631425b6))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.5.0-alpha.25](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.23...@selfcommunity/react-theme-default@0.5.0-alpha.25) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed ui report. Linear: https://linear.app/quentral/issue/QUE-2131/lista-tag-nel-profilo ([447f886](https://github.com/selfcommunity/community-js/commit/447f88612b55b265b7f2c500fc4501e853eb7917))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* react-google-maps ([2d68c2b](https://github.com/selfcommunity/community-js/commit/2d68c2bf5b7935dcb9da0e7c9b2bbd812eac0df1))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* restored previous changes ([cfd4450](https://github.com/selfcommunity/community-js/commit/cfd4450759232e09356e98925c7691aa631425b6))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
+# [0.5.0-alpha.24](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.23...@selfcommunity/react-theme-default@0.5.0-alpha.24) (2026-01-21)
+
+
+### Bug Fixes
+
+* fixed and refactored some codes ([ae46a17](https://github.com/selfcommunity/community-js/commit/ae46a178cfc4f705e2ffe81290d131faf80c2cfc))
+* fixed click problem on Tag component. Linear: https://linear.app/quentral/issue/QUE-2132/quando-viene-aperto-il-popup-della-lista-tag-di-un-post-poi-non-si ([df7ef73](https://github.com/selfcommunity/community-js/commit/df7ef737f22ff3166095d1d81772fd875a83c068))
+* fixed some errors ([0b6a619](https://github.com/selfcommunity/community-js/commit/0b6a6192d057eb35d4f4da9fd0bfd6a210cfe884))
+* fixed ui report. Linear: https://linear.app/quentral/issue/QUE-2131/lista-tag-nel-profilo ([447f886](https://github.com/selfcommunity/community-js/commit/447f88612b55b265b7f2c500fc4501e853eb7917))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* react-google-maps ([2d68c2b](https://github.com/selfcommunity/community-js/commit/2d68c2bf5b7935dcb9da0e7c9b2bbd812eac0df1))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* restored previous changes ([cfd4450](https://github.com/selfcommunity/community-js/commit/cfd4450759232e09356e98925c7691aa631425b6))
+
+
+### Features
+
+* added grab cursor on preview DocComponent ([90c7e19](https://github.com/selfcommunity/community-js/commit/90c7e19217faf25c3f632912b356da994e058627))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+
+
+
+
+
 # [0.5.0-alpha.23](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@0.5.0-alpha.22...@selfcommunity/react-theme-default@0.5.0-alpha.23) (2025-09-30)
 
 

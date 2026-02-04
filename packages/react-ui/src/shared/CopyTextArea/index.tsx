@@ -14,7 +14,7 @@ const classes = {
 const Root = styled(TextField, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(({theme}) => ({
   [`& .${classes.btnCopy}`]: {
     color: theme.palette.secondary.main
@@ -101,27 +101,32 @@ export default function CopyTextField(inProps: CopyTextFieldProps): JSX.Element 
       value={value}
       multiline
       onChange={handleChange}
-      InputProps={{
-        disableUnderline: true,
-        endAdornment: (
-          <InputAdornment position="end">
-            {openConfirm ? (
-              <Tooltip
-                open={openConfirm}
-                PopperProps={{open: true}}
-                title={<FormattedMessage id="ui.shared.copyTextField.textCopied" defaultMessage="ui.shared.copyTextField.textCopied" />}>
-                {button}
-              </Tooltip>
-            ) : (
-              <Tooltip title={<FormattedMessage id="ui.shared.copyTextField.textToCopy" defaultMessage="ui.shared.copyTextField.textToCopy" />}>
-                {button}
-              </Tooltip>
-            )}
-          </InputAdornment>
-        )
-      }}
-      InputLabelProps={{
-        shrink: true
+      slotProps={{
+        input: {
+          endAdornment: (
+            <InputAdornment position="end">
+              {openConfirm ? (
+                <Tooltip
+                  open={openConfirm}
+                  slotProps={{
+                    popper: {
+                      open: true
+                    }
+                  }}
+                  title={<FormattedMessage id="ui.shared.copyTextField.textCopied" defaultMessage="ui.shared.copyTextField.textCopied" />}>
+                  {button}
+                </Tooltip>
+              ) : (
+                <Tooltip title={<FormattedMessage id="ui.shared.copyTextField.textToCopy" defaultMessage="ui.shared.copyTextField.textToCopy" />}>
+                  {button}
+                </Tooltip>
+              )}
+            </InputAdornment>
+          )
+        },
+        inputLabel: {
+          shrink: true
+        }
       }}
       {...rest}
     />

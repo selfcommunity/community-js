@@ -9,7 +9,7 @@ const File: SCMediaObjectType = {
   displayComponent: DisplayComponent,
   triggerButton: TriggerButton,
   layerComponent: null,
-  previewComponent: PreviewComponent,
+  previewComponent: PreviewComponent as any,
   filter: filteredImages
 };
 

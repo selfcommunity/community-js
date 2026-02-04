@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
 import {Avatar, Stack, Typography, styled} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
@@ -107,8 +107,12 @@ export default function UserConnectionNotification(props: NotificationConnection
               {userConnection.username}
             </Link>{' '}
             {notificationObject.type === SCNotificationTypologyType.CONNECTION_REQUEST
-              ? intl.formatMessage(messages.requestConnection, {b: (...chunks) => <strong>{chunks}</strong>})
-              : intl.formatMessage(messages.acceptConnection, {b: (...chunks) => <strong>{chunks}</strong>})}
+              ? intl.formatMessage(messages.requestConnection, {
+                  b: (chunks) => <strong key="ui.notification.userConnection.requestConnection.b">{chunks}</strong>
+                })
+              : intl.formatMessage(messages.acceptConnection, {
+                  b: (chunks) => <strong key="ui.notification.userConnection.acceptConnection.b">{chunks}</strong>
+                })}
           </Typography>
         }
         secondary={
@@ -120,11 +124,11 @@ export default function UserConnectionNotification(props: NotificationConnection
           template === SCNotificationObjectTemplateType.TOAST && (
             <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
               <DateTimeAgo date={notificationObject.active_at} />
-              <Typography color="primary" component={'div'}>
+              <Typography color="primary" component="div">
                 <Link
                   {...(!userConnection.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, userConnection)})}
                   onClick={userConnection.deleted ? () => setOpenAlert(true) : null}>
-                  <FormattedMessage id="ui.userToastNotifications.goToProfile" defaultMessage={'ui.userToastNotifications.goToProfile'} />
+                  <FormattedMessage id="ui.userToastNotifications.goToProfile" defaultMessage="ui.userToastNotifications.goToProfile" />
                 </Link>
               </Typography>
             </Stack>
