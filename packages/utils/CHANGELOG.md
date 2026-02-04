@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.64-alpha.2...@selfcommunity/utils@1.0.0-alpha.0) (2026-02-04)
+
+
+### Bug Fixes
+
+* changes ([eb3eeb0](https://github.com/selfcommunity/community-js/commit/eb3eeb0fac275e9ee661a2e3cc346d3fbdbde168))
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* mui7 ([79d1895](https://github.com/selfcommunity/community-js/commit/79d1895504c896d84f160b20af7fb6adb7ab51bb))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+
+
+### Features
+
+* added isPWA utility ([4619834](https://github.com/selfcommunity/community-js/commit/46198347b1c9fd092bdf405e88026b2cac238485))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* **utils:** upgrade to React 19 ([2905280](https://github.com/selfcommunity/community-js/commit/2905280b05d8b920e8842219c3441a6dafb72963))
+
+
+### BREAKING CHANGES
+
+* **utils:** migration to React 19. Some legacy APIs and third-party libraries may not be compatible
+
+
+
+
+
 # [0.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/utils@0.2.64-alpha.2...@selfcommunity/utils@0.3.0-alpha.0) (2026-02-04)
 
 

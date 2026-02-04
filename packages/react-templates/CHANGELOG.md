@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.58...@selfcommunity/react-templates@1.0.0-alpha.0) (2026-02-04)
+
+
+### Bug Fixes
+
+* align react-intl ([71ab8b8](https://github.com/selfcommunity/community-js/commit/71ab8b81af22a576fd09269ae50e5de423381a7c))
+* changes ([eb3eeb0](https://github.com/selfcommunity/community-js/commit/eb3eeb0fac275e9ee661a2e3cc346d3fbdbde168))
+* fixed and refactored some codes ([63cb07a](https://github.com/selfcommunity/community-js/commit/63cb07a08e80c78db381d9b5c1e20cee8ba858f2))
+* fixed and refactored some codes ([a78dbb5](https://github.com/selfcommunity/community-js/commit/a78dbb51a44a4d42e1c6a0d77283afad34949bf5))
+* fixed some bugs after updating libraries ([4ff4bd4](https://github.com/selfcommunity/community-js/commit/4ff4bd418e3424b9e3f304a06b613b09efa2869d))
+* fixed some grid breakpoints ([12ed95e](https://github.com/selfcommunity/community-js/commit/12ed95e0f752611b71ca5c15402636559ab919e5))
+* fixed ui report. Linear: https://linear.app/quentral/issue/QUE-2131/lista-tag-nel-profilo ([447f886](https://github.com/selfcommunity/community-js/commit/447f88612b55b265b7f2c500fc4501e853eb7917))
+* mui7 ([ad291a3](https://github.com/selfcommunity/community-js/commit/ad291a390bc73045de4d2a53501043745cba27b9))
+* pipelines ([bc9bc06](https://github.com/selfcommunity/community-js/commit/bc9bc0674a332b80eea4bdf0d76dd74893a6b120))
+* react-google-maps ([48b7d15](https://github.com/selfcommunity/community-js/commit/48b7d1559d7cde56918e43c331aab321473f54ea))
+* storybook ([da0f70a](https://github.com/selfcommunity/community-js/commit/da0f70ab23fee635f562d35fa785a106abae524e))
+
+
+### Features
+
+* **react-templates:** upgrade to React 19 ([3097d56](https://github.com/selfcommunity/community-js/commit/3097d560075e2eaf9dfd97abee6cd57a65810598))
+* replaced Button instead of LoadingButton ([76d0834](https://github.com/selfcommunity/community-js/commit/76d08342cb5f14621bfee0f903edd17a64d70fa9))
+* updated react, mui and some related libraries ([cdb8564](https://github.com/selfcommunity/community-js/commit/cdb8564feb8b016078d77891049d20a055279d8b))
+* updated some packages ([fa7faac](https://github.com/selfcommunity/community-js/commit/fa7faac7909d29346c3bb7c9666294bda0da03c9))
+
+
+### BREAKING CHANGES
+
+* **react-templates:** migration to React 19. Some legacy APIs and third-party libraries may not be compatible
+
+
+
+
+
 # [0.5.0-alpha.59](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@0.5.0-alpha.58...@selfcommunity/react-templates@0.5.0-alpha.59) (2026-02-04)
 
 
