@@ -6,7 +6,7 @@ import {SCPreferences, SCPreferencesContextType, useSCFetchUser, useSCFetchUserP
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCUserSocialAssociations} from '../../types';
-import {PROVIDER_ICONS_CONTAINED} from '../../constants/SocialShare';
+import {PROVIDER_ENTRAID_ALTERNATIVE_NAME, PROVIDER_ICONS_CONTAINED} from '../../constants/SocialShare';
 
 const messages = defineMessages({
   provider: {
@@ -48,7 +48,9 @@ const PREFERENCES = [
   SCPreferences.PROVIDERS_FACEBOOK_SIGNIN_ENABLED,
   SCPreferences.PROVIDERS_GOOGLE_SIGNIN_ENABLED,
   SCPreferences.PROVIDERS_TWITTER_SIGNIN_ENABLED,
-  SCPreferences.PROVIDERS_LINKEDIN_SIGNIN_ENABLED
+  SCPreferences.PROVIDERS_LINKEDIN_SIGNIN_ENABLED,
+  SCPreferences.PROVIDERS_ENTRAID_SIGNIN_ENABLED,
+  SCPreferences.PROVIDERS_KEYCLOAK_SIGNIN_ENABLED
 ];
 
 export interface UserSocialAssociationProps extends StackProps {
@@ -153,12 +155,32 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
   // MEMO PROVIDERS
   const _providers: {[p: string]: SCUserProviderAssociationType} = useMemo(() => {
     return scUserProviders
-      .map((provider: SCUserProviderAssociationType) => ({[provider.provider]: provider}))
+      .map((provider: SCUserProviderAssociationType) => {
+        if (provider.provider === PROVIDER_ENTRAID_ALTERNATIVE_NAME) {
+          return {entraid: {...provider, provider: SCUserSocialAssociations.ENTRAID}};
+        }
+        return {[provider.provider]: provider};
+      })
       .reduce((prev, provider) => Object.assign(prev, provider), {});
   }, [scUserProviders]);
   const providersEnabled = Object.values<string>(SCUserSocialAssociations).filter((p) => preferences[`providers.${p}_signin_enabled`]);
   const providersToLink = providersEnabled?.filter((p) => !_providers[p]?.provider && !_providers[p]?.ext_id);
   const providersLinked = Object.values(_providers).filter((p) => providersEnabled.includes(p.provider));
+
+  const handleOnCreateAssociation = (p: string) => {
+    onCreateAssociation && onCreateAssociation(p === SCUserSocialAssociations.ENTRAID ? PROVIDER_ENTRAID_ALTERNATIVE_NAME : p);
+  };
+
+  const handleOnDeleteAssociation = (p: SCUserProviderAssociationType) => {
+    if (onDeleteAssociation) {
+      if (p.provider === SCUserSocialAssociations.ENTRAID) {
+        onDeleteAssociation && onDeleteAssociation({...p, provider: PROVIDER_ENTRAID_ALTERNATIVE_NAME});
+      } else {
+        onDeleteAssociation && onDeleteAssociation(p);
+      }
+    }
+  };
+
   /**
    * Updates providers list onDelete association
    */
@@ -200,7 +222,7 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
                         variant="contained"
                         className={classes.providerAction}
                         color="primary"
-                        onClick={onCreateAssociation ? () => onCreateAssociation(p) : null}
+                        onClick={() => handleOnCreateAssociation(p)}
                         size="small">
                         {intl.formatMessage(messages.socialAdd)}
                       </Button>
@@ -214,17 +236,11 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
                 {providersLinked.map((p: SCUserProviderAssociationType, index) => (
                   <TableRow key={index} sx={{'&:last-child td, &:last-child th': {border: 0}}}>
                     <TableCell scope="row">
-                      <img
-                        src={PROVIDER_ICONS_CONTAINED[`${p.provider}`]}
-                        width="30"
-                        height="30"
-                        className={classes.providerIcon}
-                        alt={p.provider}
-                      />
+                      <img src={PROVIDER_ICONS_CONTAINED[`${p.provider}`]} width="30" height="30" className={classes.providerIcon} alt={p.provider} />
                       <span className={classes.providerName}>{p.provider}</span>
                     </TableCell>
                     <TableCell align="left">
-                      <Button variant="outlined" className={classes.providerAction} onClick={() => onDeleteAssociation(p)} size="small">
+                      <Button variant="outlined" className={classes.providerAction} onClick={() => handleOnDeleteAssociation(p)} size="small">
                         {intl.formatMessage(messages.socialRemove)}
                       </Button>
                     </TableCell>

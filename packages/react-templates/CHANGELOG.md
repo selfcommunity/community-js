@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.0.2-alpha.0...@selfcommunity/react-templates@1.0.2-alpha.1) (2026-02-05)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+## [1.0.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.0.1...@selfcommunity/react-templates@1.0.2-alpha.0) (2026-02-05)
+
+
+### Bug Fixes
+
+* profile social associations ([1564768](https://github.com/selfcommunity/community-js/commit/156476811c62b327d6c7571edd3d6457d5301118))
+
+
+
+
+
 ## [1.0.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.0.1-alpha.4...@selfcommunity/react-templates@1.0.1) (2026-02-05)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
