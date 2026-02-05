@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.0.1-alpha.0...@selfcommunity/types@1.0.1-alpha.1) (2026-02-05)
+
+
+### Bug Fixes
+
+* add keycloak & entraid preferences ([7fe889c](https://github.com/selfcommunity/community-js/commit/7fe889c1e417a0f5a033ed7c1111db35e60f295e))
+
+
+
+
+
 ## [1.0.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.0.0...@selfcommunity/types@1.0.1-alpha.0) (2026-02-04)
 
 **Note:** Version bump only for package @selfcommunity/types
