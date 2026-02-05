@@ -13,7 +13,7 @@ export default {
     }
   },
   args: {
-    id: 796
+    id: 659
   }
 } as Meta<typeof UserProfileEdit>;
 
@@ -25,7 +25,7 @@ const template = (args: UserProfileEditProps) => (
 
 export const Base: StoryObj<typeof UserProfileEdit> = {
   args: {
-    id: 796,
+    id: 659,
     fields: [...DEFAULT_FIELDS],
     settings: [...DEFAULT_SETTINGS],
 		UserProfileEditSectionAccountProps: {
@@ -50,7 +50,7 @@ export const BaseWithLanguage: StoryObj<typeof UserProfileEdit> = {
 
 export const BaseWithCustomLanguageSwitcher: StoryObj<typeof UserProfileEdit> = {
 	args: {
-		id: 796,
+		id: 659,
 		fields: [...DEFAULT_FIELDS],
 		settings: [...DEFAULT_SETTINGS],
 		UserProfileEditSectionAccountProps: {
