@@ -3,10 +3,14 @@ import {
   LinkedinIconContained,
   TwitterIconContained,
   FacebookIconContained,
+  KeycloakIconContained,
+  EntraIdIconContained,
   GoogleIconOutlined,
   LinkedinIconOutlined,
   TwitterIconOutlined,
-  FacebookIconOutlined
+  FacebookIconOutlined,
+  KeycloakIconOutlined,
+  EntraIdIconOutlined
 } from '@selfcommunity/react-theme-default';
 
 /**
@@ -20,12 +24,16 @@ export const PROVIDER_ICONS_CONTAINED = {
   facebook: FacebookIconContained,
   twitter: TwitterIconContained,
   linkedin: LinkedinIconContained,
-  google: GoogleIconContained
+  google: GoogleIconContained,
+  keycloak: KeycloakIconContained,
+  entraId: EntraIdIconContained
 };
 
 export const PROVIDER_ICONS_OUTLINED = {
   facebook: FacebookIconOutlined,
   twitter: TwitterIconOutlined,
   linkedin: LinkedinIconOutlined,
-  google: GoogleIconOutlined
+  google: GoogleIconOutlined,
+  keycloak: KeycloakIconOutlined,
+  entraId: EntraIdIconOutlined
 };
