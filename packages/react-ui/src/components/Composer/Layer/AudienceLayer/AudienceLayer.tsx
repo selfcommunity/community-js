@@ -186,7 +186,13 @@ const AudienceLayer = React.forwardRef((props: AudienceLayerProps, ref: React.Re
         </Button>
       </DialogTitle>
       <DialogContent className={classes.content}>
-        <Tabs value={audience} onChange={handleChangeAudience} aria-label="audience type">
+        <Tabs
+          value={audience}
+          onChange={handleChangeAudience}
+          variant="scrollable"
+          scrollButtons="auto"
+          allowScrollButtonsMobile
+          aria-label="audience type">
           {!taggingRequiredEnabled && (
             <Tab
               value={AudienceTypes.AUDIENCE_ALL}

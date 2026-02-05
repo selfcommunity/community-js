@@ -227,7 +227,6 @@ const Component = {
         minHeight: 'auto',
         marginBottom: theme.spacing(4),
         '& .MuiTabs-flexContainer': {
-          justifyContent: 'center',
           '& .MuiTab-labelIcon': {
             minHeight: 'auto',
             flexDirection: 'row',
