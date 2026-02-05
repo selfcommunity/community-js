@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.0.1-alpha.1...@selfcommunity/react-ui@1.0.1-alpha.2) (2026-02-05)
+
+
+### Bug Fixes
+
+* add keycloak & entraid icons ([2969acb](https://github.com/selfcommunity/community-js/commit/2969acb9d69e4acb10dba00814490d8ae3b82827))
+
+
+
+
+
 ## [1.0.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.0.1-alpha.0...@selfcommunity/react-ui@1.0.1-alpha.1) (2026-02-05)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
