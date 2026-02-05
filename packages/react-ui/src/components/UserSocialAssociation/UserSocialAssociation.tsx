@@ -168,7 +168,7 @@ export default function UserSocialAssociation(inProps: UserSocialAssociationProp
   const providersLinked = Object.values(_providers).filter((p) => providersEnabled.includes(p.provider));
 
   const handleOnCreateAssociation = (p: string) => {
-    onCreateAssociation && onCreateAssociation(p);
+    onCreateAssociation && onCreateAssociation(p === SCUserSocialAssociations.ENTRAID ? PROVIDER_ENTRAID_ALTERNATIVE_NAME : p);
   };
 
   const handleOnDeleteAssociation = (p: SCUserProviderAssociationType) => {
