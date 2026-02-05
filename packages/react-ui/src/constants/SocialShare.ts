@@ -26,7 +26,7 @@ export const PROVIDER_ICONS_CONTAINED = {
   linkedin: LinkedinIconContained,
   google: GoogleIconContained,
   keycloak: KeycloakIconContained,
-  entraId: EntraIdIconContained
+  entraid: EntraIdIconContained
 };
 
 export const PROVIDER_ICONS_OUTLINED = {
@@ -35,5 +35,7 @@ export const PROVIDER_ICONS_OUTLINED = {
   linkedin: LinkedinIconOutlined,
   google: GoogleIconOutlined,
   keycloak: KeycloakIconOutlined,
-  entraId: EntraIdIconOutlined
+  entraid: EntraIdIconOutlined
 };
+
+export const PROVIDER_ENTRAID_ALTERNATIVE_NAME = 'azure-ad';

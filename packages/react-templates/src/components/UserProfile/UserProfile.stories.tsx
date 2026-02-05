@@ -19,7 +19,7 @@ export default {
  */
 export const Base: StoryObj<typeof UserProfile> = {
   args: {
-    userId: 1,
+    userId: 659,
     startActions: <>
       <IconButton>
         <Icon>card_membership</Icon>

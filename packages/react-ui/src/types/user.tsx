@@ -31,5 +31,8 @@ export enum SCUserSocialAssociations {
   GOOGLE = 'google',
   FACEBOOK = 'facebook',
   TWITTER = 'twitter',
-  LINKEDIN = 'linkedin'
+  LINKEDIN = 'linkedin',
+  ENTRAID = 'entraid',
+  KEYCLOAK = 'keycloak'
 }
+
