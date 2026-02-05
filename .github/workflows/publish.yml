@@ -14,6 +14,8 @@ on:
 permissions:
   id-token: write
   contents: write
+  pull-requests: write
+  issues: write
 
 jobs:
   call-feature:
@@ -23,6 +25,8 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      pull-requests: write
+      issues: write
 
   call-prerelease:
     if: github.ref == 'refs/heads/prerelease'
@@ -31,6 +35,8 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      pull-requests: write
+      issues: write
 
   call-release:
     if: github.ref == 'refs/heads/main'
@@ -39,3 +45,5 @@ jobs:
     permissions:
       id-token: write
       contents: write
+      pull-requests: write
+      issues: write

@@ -231,10 +231,15 @@ import GoogleIconContained from './assets/social/contained/google';
 import FacebookIconContained from './assets/social/contained/facebook';
 import TwitterIconContained from './assets/social/contained/twitter';
 import LinkedinIconContained from './assets/social/contained/linkedin';
+import KeycloakIconContained from './assets/social/contained/keycloak';
+import EntraIdIconContained from './assets/social/contained/entraId';
 import GoogleIconOutlined from './assets/social/outlined/google';
 import FacebookIconOutlined from './assets/social/outlined/facebook';
 import TwitterIconOutlined from './assets/social/outlined/twitter';
 import LinkedinIconOutlined from './assets/social/outlined/linkedin';
+import KeycloakIconOutlined from './assets/social/outlined/keycloak';
+import EntraIdIconOutlined from './assets/social/outlined/entraId';
+
 /**
  * Style assets - Imports - End
  */
@@ -571,10 +576,14 @@ export {
   FacebookIconContained,
   LinkedinIconContained,
   TwitterIconContained,
+  KeycloakIconContained,
+  EntraIdIconContained,
   GoogleIconOutlined,
   FacebookIconOutlined,
   LinkedinIconOutlined,
-  TwitterIconOutlined
+  TwitterIconOutlined,
+  KeycloakIconOutlined,
+  EntraIdIconOutlined
 };
 /**
  * Style assets - Exports - End
