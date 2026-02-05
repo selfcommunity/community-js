@@ -1,6 +1,6 @@
 {
   "name": "@selfcommunity/react-ui",
-  "version": "1.0.1-alpha.2",
+  "version": "1.0.1-alpha.3",
   "description": "React UI Components to integrate a Community created with SelfCommunity Platform.",
   "author": "SelfCommunity <https://www.selfcommunity.com>",
   "homepage": "https://www.selfcommunity.com",
@@ -101,7 +101,7 @@
     "@selfcommunity/api-services": "^1.0.1-alpha.1",
     "@selfcommunity/react-core": "^1.0.1-alpha.1",
     "@selfcommunity/react-i18n": "^1.0.1-alpha.0",
-    "@selfcommunity/react-theme-default": "^1.0.1-alpha.1",
+    "@selfcommunity/react-theme-default": "^1.0.1-alpha.2",
     "@selfcommunity/types": "^1.0.1-alpha.1",
     "@selfcommunity/utils": "^1.0.1-alpha.0",
     "@stripe/react-stripe-js": "^3.1.1",

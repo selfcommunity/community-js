@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.0.1-alpha.1...@selfcommunity/react-theme-default@1.0.1-alpha.2) (2026-02-05)
+
+
+### Bug Fixes
+
+* fixed scrollable and positions tabs into composer post ([371881d](https://github.com/selfcommunity/community-js/commit/371881deca0ba2b5f3aeaab660f643926f7878b9))
+
+
+
+
+
 ## [1.0.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.0.1-alpha.0...@selfcommunity/react-theme-default@1.0.1-alpha.1) (2026-02-05)
 
 
