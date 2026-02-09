@@ -1136,7 +1136,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    */
   function canPublishContribution(): boolean {
     const user = scUserContext.user;
-    if (!user || contributionObj.deleted || !scheduledPostsEnabled || !feedObj.draft) return false;
+    if (!user || contributionObj.deleted || !scheduledPostsEnabled || !feedObj?.draft) return false;
 
     return user.id === contributionObj.author.id || (scheduledPostsEnabled && (UserUtils.isAdmin(user) || UserUtils.isModerator(user)));
   }
