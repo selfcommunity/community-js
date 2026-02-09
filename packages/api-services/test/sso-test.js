@@ -3,7 +3,7 @@ import {generateString, getRandomInt} from './utils/random';
 
 describe('SSO Service Test', () => {
   test('SignUp', () => {
-    const data = {username: generateString(), ext_id: getRandomInt()};
+    const data = {username: generateString(), ext_id: generateString()};
     return SSOService.SignUp(data).then((data) => {
       expect(data).toHaveProperty('ext_id');
     });

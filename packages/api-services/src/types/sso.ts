@@ -3,7 +3,7 @@
  */
 
 export interface SSOSignUpParams {
-  ext_id?: number;
+  ext_id?: string;
   username: string;
   email: string;
   password?: string;

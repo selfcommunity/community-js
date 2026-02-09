@@ -46,7 +46,7 @@ export class SSOApiClient {
  The async function `SignUp` will return the user registration data. It takes the username and ext_id obj as body params.
 
  async SignUp() {
-       const data = {username: 'string', ext_id: 'number'};
+       const data = {username: 'string', ext_id: 'string'};
          return await SSOService.SignUp(data);
        }
  ```
