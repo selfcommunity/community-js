@@ -128,7 +128,7 @@ export interface SCUserType {
   /**
    * The external ID of the user. It is assigned only during signup if necessary.
    */
-  ext_id?: number;
+  ext_id?: string;
 
   /**
    * User's tag list. List of Tag.
@@ -419,7 +419,7 @@ export interface SCUserAutocompleteType {
   /**
    * The external ID of the user. It is assigned only during signup.
    */
-  ext_id: number;
+  ext_id: string;
 }
 
 /**
