@@ -1,5 +1,5 @@
-import React, {useMemo} from 'react';
-import {Box, Paper, Typography, styled} from '@mui/material';
+import {useMemo, useState} from 'react';
+import {Box, Button, Icon, Paper, Typography, styled} from '@mui/material';
 import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
 import {FormattedMessage} from 'react-intl';
 import {SCPreferences, useSCFetchCategory, useSCPaymentsEnabled, useSCPreferenceEnabled} from '@selfcommunity/react-core';
@@ -10,6 +10,7 @@ import CategoryFollowersButton, {CategoryFollowersButtonProps} from '../Category
 import {PREFIX} from './constants';
 import BuyButton from '../BuyButton';
 import TagChip from '../../shared/TagChip';
+import HtmlInfoDialog from '../HtmlInfoDialog';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -111,6 +112,8 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
   // STATE
   const {scCategory, setSCCategory} = useSCFetchCategory({id: categoryId, category});
   const categoryFollowEnabled = useSCPreferenceEnabled(SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED);
+  const [openHtmlInfoDialog, setOpenHtmlInfoDialog] = useState(false);
+
   // PAYMENTS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
   /**
@@ -134,7 +137,13 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
-      <Paper style={_backgroundCover} classes={{root: classes.cover}} />
+      <Paper style={_backgroundCover} classes={{root: classes.cover}}>
+        {scCategory.html_info && (
+          <Button variant="contained" onClick={() => setOpenHtmlInfoDialog(true)}>
+            <Icon>info</Icon>
+          </Button>
+        )}
+      </Paper>
       <Box className={classes.info}>
         <Typography variant="h3" className={classes.name} gutterBottom>
           {scCategory.name}
@@ -170,6 +179,8 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
           <CategoryFollowButton category={scCategory} onFollow={handleFollow} {...CategoryFollowButtonProps} />
         </Box>
       </Box>
+
+      {openHtmlInfoDialog && <HtmlInfoDialog open htmlInfo={category.html_info} onClose={() => setOpenHtmlInfoDialog(false)} />}
     </Root>
   );
 }
