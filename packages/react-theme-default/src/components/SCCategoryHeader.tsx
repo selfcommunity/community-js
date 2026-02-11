@@ -7,6 +7,7 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       '& .SCCategoryHeader-cover': {
+        position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -18,6 +19,14 @@ const Component = {
         borderRadius: 0,
         [theme.breakpoints.up('md')]: {
           borderRadius: theme.spacing(0, 0, 2.5, 2.5)
+        },
+        '& .MuiButtonBase-root': {
+          position: 'absolute',
+          right: '10px',
+          bottom: '10px',
+          padding: 6,
+          borderRadius: 50,
+          minWidth: 'auto'
         }
       },
       '& .SCCategoryHeader-info': {
