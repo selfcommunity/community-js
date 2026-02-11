@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.0.4...@selfcommunity/types@1.0.5-alpha.0) (2026-02-11)
+
+
+### Bug Fixes
+
+* fixed prop into SCCategoryType ([0b9e422](https://github.com/selfcommunity/community-js/commit/0b9e422f7d588e7299ecdd9803a9df56a386c4b9))
+* updated prop into SCCategoryType ([acd51b1](https://github.com/selfcommunity/community-js/commit/acd51b1e7a666cd2965b21b37cd9d536c83bc24b))
+
+
+
+
+
 ## [1.0.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.0.4-alpha.1...@selfcommunity/types@1.0.4) (2026-02-09)
 
 **Note:** Version bump only for package @selfcommunity/types

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.0.3...@selfcommunity/react-i18n@1.1.0-alpha.0) (2026-02-11)
+
+
+### Features
+
+* updated locale files ([3737d19](https://github.com/selfcommunity/community-js/commit/3737d1982540931a13f643e9f5654cdd1fc11585))
+
+
+
+
+
 ## [1.0.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.0.3-alpha.1...@selfcommunity/react-i18n@1.0.3) (2026-02-09)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.0.3...@selfcommunity/react-theme-default@1.1.0-alpha.0) (2026-02-11)
+
+
+### Features
+
+* added info button into CategoryHeader ([34d199b](https://github.com/selfcommunity/community-js/commit/34d199bb33f9e5b21e0f72b8ff24e745fcacfa1f))
+
+
+
+
+
 ## [1.0.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.0.3-alpha.1...@selfcommunity/react-theme-default@1.0.3) (2026-02-09)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
