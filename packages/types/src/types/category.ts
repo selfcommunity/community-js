@@ -39,7 +39,7 @@ export interface SCCategoryType extends SCPurchasableContent {
   /**
    * The category's html text.
    */
-  html_info: string | null;
+  html_info?: string | null;
 
   /**
    * The category's html meta tag.
