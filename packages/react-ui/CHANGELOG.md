@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.1.0...@selfcommunity/react-ui@1.2.0-alpha.0) (2026-02-27)
+
+
+### Features
+
+* changed variant button into some widgets ([779c197](https://github.com/selfcommunity/community-js/commit/779c1971caaf2540ee062dc200a05df820e79a69))
+* changed variant button into some widgets ([0630e32](https://github.com/selfcommunity/community-js/commit/0630e3267de895bc2b6b5241977bf4d656ea6ba9))
+* updated backgroungImage size on AutoPLayer ([6727876](https://github.com/selfcommunity/community-js/commit/67278763c24661b70fa5718188b8d1de5ec6f62e))
+
+
+
+
+
 # [1.1.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.1.0-alpha.1...@selfcommunity/react-ui@1.1.0) (2026-02-11)
 
 **Note:** Version bump only for package @selfcommunity/react-ui

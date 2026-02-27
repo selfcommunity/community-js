@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.1.0...@selfcommunity/react-theme-default@1.2.0-alpha.0) (2026-02-27)
+
+
+### Features
+
+* removed bg color into MuiButton under SCInlineComposerWidget ([1a770ce](https://github.com/selfcommunity/community-js/commit/1a770ce462cf02a55f127129cd5e94885d84f243))
+* updated backgroungImage size on AutoPLayer ([6727876](https://github.com/selfcommunity/community-js/commit/67278763c24661b70fa5718188b8d1de5ec6f62e))
+* updated bg color into MuiPaper-elevation under SCWidget ([00b2617](https://github.com/selfcommunity/community-js/commit/00b261728b251b5d8e31d1aed2fb63441ea66436))
+* updated theme file and SCWidget ([f2741f5](https://github.com/selfcommunity/community-js/commit/f2741f5c82e304b04de85baedf69b5c2b380828c))
+
+
+
+
+
 # [1.1.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.1.0-alpha.1...@selfcommunity/react-theme-default@1.1.0) (2026-02-11)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.0.5...@selfcommunity/types@1.1.0-alpha.0) (2026-02-27)
+
+
+### Features
+
+* added new preferencies ([ec9d20b](https://github.com/selfcommunity/community-js/commit/ec9d20ba672aac063720baa9c272fdedceae1484))
+
+
+
+
+
 ## [1.0.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.0.5-alpha.1...@selfcommunity/types@1.0.5) (2026-02-11)
 
 **Note:** Version bump only for package @selfcommunity/types
