@@ -171,7 +171,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
       <Stack className={classes.actions} direction="row" alignItems="center" justifyContent="center" spacing={2}>
         {isGroupAdmin && <Icon>face</Icon>}
         {actionRedirect ? (
-          <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, scGroup)}>
+          <Button size="small" variant="contained" component={Link} to={scRoutingContext.url(SCRoutes.GROUP_ROUTE_NAME, scGroup)}>
             {scGroup.subscription_status === SCGroupSubscriptionStatusType.SUBSCRIBED ? (
               <FormattedMessage defaultMessage="ui.group.status.enter" id="ui.group.status.enter" />
             ) : (

@@ -259,7 +259,7 @@ export default function Event(inProps: EventProps): JSX.Element {
         </CardContent>
         {actions ?? (
           <CardActions className={classes.detailActions}>
-            <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
+            <Button size="small" variant="contained" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
               <FormattedMessage defaultMessage="ui.event.see" id="ui.event.see" />
             </Button>
           </CardActions>
@@ -305,7 +305,7 @@ export default function Event(inProps: EventProps): JSX.Element {
         </CardContent>
         {actions ?? (
           <CardActions className={classes.previewActions}>
-            <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
+            <Button size="small" variant="contained" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
               <FormattedMessage defaultMessage="ui.event.see" id="ui.event.see" />
             </Button>
           </CardActions>
@@ -369,7 +369,7 @@ export default function Event(inProps: EventProps): JSX.Element {
         actions={
           actions ?? (
             <Box className={classes.snippetActions}>
-              <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
+              <Button size="small" variant="contained" component={Link} to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, scEvent)}>
                 <FormattedMessage defaultMessage="ui.event.see" id="ui.event.see" />
               </Button>
             </Box>

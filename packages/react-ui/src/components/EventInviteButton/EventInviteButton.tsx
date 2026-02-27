@@ -302,7 +302,7 @@ export default function EventInviteButton(inProps: EventInviteButtonProps): JSX.
       <Root
         className={classNames(classes.root, className)}
         onClick={handleClose}
-        variant={scEvent ? 'contained' : 'outlined'}
+        variant="contained"
         color={scEvent ? 'secondary' : 'inherit'}
         startIcon={<Icon>add</Icon>}
         {...rest}>
