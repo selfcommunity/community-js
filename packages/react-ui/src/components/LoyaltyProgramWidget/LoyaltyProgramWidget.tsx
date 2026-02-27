@@ -130,7 +130,7 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <CardContent>
-        <Typography className={classes.title}>
+        <Typography variant="h5" className={classes.title}>
           <FormattedMessage id="ui.loyaltyProgramWidget.title" defaultMessage="ui.loyaltyProgramWidget.title" />
         </Typography>
       </CardContent>
@@ -141,7 +141,7 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
         </Typography>
         <Button
           size="small"
-          variant="outlined"
+          variant="contained"
           className={classes.discoverMore}
           component={Link}
           to={scRoutingContext.url(SCRoutes.LOYALTY_ROUTE_NAME, {})}>
