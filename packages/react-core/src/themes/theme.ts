@@ -1,4 +1,4 @@
-import {createTheme} from '@mui/material';
+import {createTheme, getContrastRatio} from '@mui/material';
 import {mergeDeep} from '@selfcommunity/utils';
 import validateColor from 'validate-color';
 import {
@@ -9,6 +9,7 @@ import {
   COLORS_COLORFONTSECONDARY,
   COLORS_NAVBARBACK,
   STYLE_FONT_FAMILY,
+  COLORS_BOXCOLORBACK,
 } from '../constants/Preferences';
 import {isString} from '@selfcommunity/utils';
 import {SCThemeVariablesType, SCThemeType} from '../types';
@@ -75,13 +76,18 @@ const getTheme = (options, preferences): SCThemeType => {
   const defaultOptions = preferences
     ? {
         palette: {
+          ...(isValidPreference(preferences, COLORS_BOXCOLORBACK, validateColor) && {
+            mode: getContrastRatio(preferences[COLORS_BOXCOLORBACK].value, '#fff') > 4.5 ? 'dark' : 'light',
+          }),
           ...(isValidPreference(preferences, COLORS_COLORBACK, validateColor) && {background: {default: preferences[COLORS_COLORBACK].value}}),
+          ...(isValidPreference(preferences, COLORS_BOXCOLORBACK, validateColor) && {background: {paper: preferences[COLORS_BOXCOLORBACK].value}}),
           text: {
             ...(isValidPreference(preferences, COLORS_COLORFONT, validateColor) && {primary: preferences[COLORS_COLORFONT].value}),
             ...(isValidPreference(preferences, COLORS_COLORFONTSECONDARY, validateColor) && {
               secondary: preferences[COLORS_COLORFONTSECONDARY].value,
             }),
           },
+          // ...(isValidPreference(preferences, COLORS_TITLE_COLOR, validateColor) && {action: {active: preferences[COLORS_TITLE_COLOR].value}}),
           ...(isValidPreference(preferences, COLORS_COLORPRIMARY, validateColor) && {primary: {main: preferences[COLORS_COLORPRIMARY].value}}),
           ...(isValidPreference(preferences, COLORS_COLORSECONDARY, validateColor) && {
             secondary: {main: preferences[COLORS_COLORSECONDARY].value},

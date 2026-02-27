@@ -19,7 +19,6 @@ const Component = {
             padding: theme.spacing(0.5, 0),
             '&:hover': {
               color: theme.palette.text.secondary,
-              background: 'white',
               border: 'none'
             }
           },

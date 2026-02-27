@@ -11,7 +11,12 @@ const Root = styled(Waypoint, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root
-})(() => ({}));
+})(({theme}) => ({
+  '& .react-player__preview': {
+    backgroundSize: 'contain !important',
+    backgroundColor: theme.palette.common.black
+  }
+}));
 
 export interface AutoPlayerProps {
   /**
@@ -102,6 +107,7 @@ export default function AutoPlayer(props: AutoPlayerProps) {
     <Root scrollableAncestor={window} onEnter={handleEnterViewport} onLeave={handleExitViewport}>
       <div>
         <ReactPlayer
+          light={!enableAutoplay}
           loop={loop}
           controls={controls}
           stopOnUnmount={stopOnUnmount}

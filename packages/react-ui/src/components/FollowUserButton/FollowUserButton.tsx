@@ -27,7 +27,7 @@ const classes = {
 const FollowButton = styled(Button, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 export interface FollowUserButtonProps {
@@ -157,7 +157,7 @@ export default function FollowUserButton(inProps: FollowUserButtonProps): JSX.El
   return (
     <FollowButton
       size="small"
-      variant="outlined"
+      variant="contained"
       onClick={handleFollowAction}
       loading={scUserContext.user ? followed === null || scFollowedManager.isLoading(scUser) : null}
       disabled={disabled}

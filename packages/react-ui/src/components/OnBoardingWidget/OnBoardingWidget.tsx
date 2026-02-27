@@ -607,7 +607,7 @@ const OnBoardingWidget = (inProps: OnBoardingWidgetProps) => {
                       onClose={() => setShowWarningCategoriesModal(false)}
                       actions={
                         <>
-                          <Button size="small" variant="outlined" color="primary" onClick={() => setShowWarningCategoriesModal(false)}>
+                          <Button size="small" variant="contained" color="primary" onClick={() => setShowWarningCategoriesModal(false)}>
                             <FormattedMessage
                               id="ui.onBoardingWidget.ai.categories.warning.button.close"
                               defaultMessage="ui.onBoardingWidget.ai.categories.warning.button.close"

@@ -249,7 +249,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
       ? [
           {
             render: (
-              <Button variant="outlined" size="small" onClick={() => fetchPlatform('')}>
+              <Button variant="contained" size="small" onClick={() => fetchPlatform('')}>
                 <FormattedMessage id="ui.platformWidget.adm" defaultMessage="ui.platformWidget.adm" />
               </Button>
             ),
@@ -262,7 +262,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
       ? [
           {
             render: (
-              <Button variant="outlined" size="small" onClick={() => fetchPlatform('/moderation/flags/')}>
+              <Button variant="contained" size="small" onClick={() => fetchPlatform('/moderation/flags/')}>
                 <FormattedMessage id="ui.platformWidget.mod" defaultMessage="ui.platformWidget.mod" />
               </Button>
             ),
@@ -275,7 +275,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
       ? [
           {
             render: (
-              <Button variant="outlined" size="small" component={Link} to={isStage ? HUB_STAGE : HUB_PROD} target="_blank">
+              <Button variant="contained" size="small" component={Link} to={isStage ? HUB_STAGE : HUB_PROD} target="_blank">
                 <FormattedMessage id="ui.platformWidget.hub" defaultMessage="ui.platformWidget.hub" />
               </Button>
             ),
@@ -288,7 +288,7 @@ export default function PlatformWidget(inProps: PlatformWidgetProps): JSX.Elemen
       ? [
           {
             render: (
-              <Button variant="outlined" size="small" component={Link} to={isStage ? CONTACT_STAGE : CONTACT_PROD} target="_blank">
+              <Button variant="contained" size="small" component={Link} to={isStage ? CONTACT_STAGE : CONTACT_PROD} target="_blank">
                 <FormattedMessage id="ui.platformWidget.contactUs" defaultMessage="ui.platformWidget.contactUs" />
               </Button>
             ),
