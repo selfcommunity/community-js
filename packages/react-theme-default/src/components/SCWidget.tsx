@@ -1,4 +1,4 @@
-import {darken} from '@mui/system';
+import {lighten} from '@mui/material';
 
 const Component = {
   variants: [
@@ -33,7 +33,7 @@ const Component = {
         '& h5': {
           fontFamily: theme.typography.fontFamily,
           fontWeight: theme.typography.fontWeightBold,
-          color: darken(theme.palette.text.primary, 0.5),
+          color: lighten(theme.palette.text.primary, 0.5),
           fontSize: '1.143rem'
         },
         '& .MuiList-root': {
