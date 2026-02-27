@@ -26,7 +26,8 @@ const Component = {
         borderRadius: theme.shape.borderRadius
       },
       '&.MuiPaper-elevation0': {
-        borderRadius: 0
+        borderRadius: 0,
+        backgroundColor: 'rgba(255,255,255,0)'
       },
       '& .MuiCardContent-root': {
         padding: theme.spacing(2.2),
