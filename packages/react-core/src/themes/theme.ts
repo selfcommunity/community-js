@@ -36,6 +36,12 @@ const isValidPreference = (preferences, prop, tFunc) => {
  * @return {SCThemeType}
  */
 const getTheme = (options, preferences): SCThemeType => {
+  const mode = isValidPreference(preferences, COLORS_BOXCOLORBACK, validateColor)
+    ? getContrastRatio(preferences[COLORS_BOXCOLORBACK].value, '#fff') > 4.5
+      ? 'dark'
+      : 'light'
+    : 'light';
+  const defaultMuiTheme = createTheme({palette: {mode}});
   const selfcommunity: SCThemeVariablesType = {
     user: {
       avatar: {
@@ -79,15 +85,22 @@ const getTheme = (options, preferences): SCThemeType => {
           ...(isValidPreference(preferences, COLORS_BOXCOLORBACK, validateColor) && {
             mode: getContrastRatio(preferences[COLORS_BOXCOLORBACK].value, '#fff') > 4.5 ? 'dark' : 'light',
           }),
-          ...(isValidPreference(preferences, COLORS_COLORBACK, validateColor) && {background: {default: preferences[COLORS_COLORBACK].value}}),
-          ...(isValidPreference(preferences, COLORS_BOXCOLORBACK, validateColor) && {background: {paper: preferences[COLORS_BOXCOLORBACK].value}}),
+          ...{
+            background: {
+              default: isValidPreference(preferences, COLORS_COLORBACK, validateColor)
+                ? preferences[COLORS_COLORBACK].value
+                : defaultMuiTheme.palette.background.default,
+              paper: isValidPreference(preferences, COLORS_BOXCOLORBACK, validateColor)
+                ? preferences[COLORS_BOXCOLORBACK].value
+                : defaultMuiTheme.palette.background.paper,
+            },
+          },
           text: {
             ...(isValidPreference(preferences, COLORS_COLORFONT, validateColor) && {primary: preferences[COLORS_COLORFONT].value}),
             ...(isValidPreference(preferences, COLORS_COLORFONTSECONDARY, validateColor) && {
               secondary: preferences[COLORS_COLORFONTSECONDARY].value,
             }),
           },
-          // ...(isValidPreference(preferences, COLORS_TITLE_COLOR, validateColor) && {action: {active: preferences[COLORS_TITLE_COLOR].value}}),
           ...(isValidPreference(preferences, COLORS_COLORPRIMARY, validateColor) && {primary: {main: preferences[COLORS_COLORPRIMARY].value}}),
           ...(isValidPreference(preferences, COLORS_COLORSECONDARY, validateColor) && {
             secondary: {main: preferences[COLORS_COLORSECONDARY].value},
