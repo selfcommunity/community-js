@@ -1,4 +1,4 @@
-import {alpha} from '@mui/system';
+import {alpha, darken, getContrastRatio, lighten} from '@mui/material';
 
 const Component = {
   styleOverrides: {
@@ -85,7 +85,10 @@ const Component = {
             textTransform: 'initial'
           }
         },
-        borderBottom: '1px solid rgba(221, 221, 221, 1)',
+        borderBottom:
+          getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+            ? '1px solid rgba(255, 255, 255, 0.12)'
+            : '1px solid rgba(221, 221, 221, 1)',
         margin: theme.spacing(0.5, 2, 0, 2)
       },
       '& .SCFeedObject-content': {
@@ -162,7 +165,10 @@ const Component = {
           borderRadius: theme.shape.borderRadius
         },
         '& .SCFeedObject-category': {
-          borderBottom: '1px solid rgba(221, 221, 221, 1)',
+          borderBottom:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? '1px solid rgba(255, 255, 255, 0.12)'
+              : '1px solid rgba(221, 221, 221, 1)',
           margin: theme.spacing(0, 2),
           '& .SCFeedObject-group, & .SCFeedObject-event': {
             borderBottom: 'none',
@@ -232,7 +238,11 @@ const Component = {
               display: 'block'
             },
             '& hr': {
-              margin: '1em 0'
+              margin: '1em 0',
+              borderColor:
+                getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                  ? 'rgba(255, 255, 255, 0.12)'
+                  : 'rgba(221, 221, 221, 1)'
             },
             '& a': {
               color: theme.palette.text.secondary,
@@ -378,7 +388,10 @@ const Component = {
                   fontWeight: theme.typography.fontWeightRegular,
                   marginTop: theme.spacing(0),
                   marginBottom: 0,
-                  color: theme.palette.primary.main,
+                  color:
+                    getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                      ? lighten(theme.palette.text.primary, 0.5)
+                      : darken(theme.palette.text.primary, 0.5),
                   '&:hover': {
                     color: 'inherit'
                   }
@@ -388,7 +401,10 @@ const Component = {
               },
               '& .SCFeedObject-action-vote-button, & .SCFeedObject-action-comment-button, & .SCFeedObject-action-share-button, & .SCReactionAction-button':
                 {
-                  color: theme.palette.primary.main,
+                  color:
+                    getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                      ? lighten(theme.palette.text.primary, 0.5)
+                      : darken(theme.palette.text.primary, 0.5),
                   marginTop: theme.spacing(-0.5),
                   marginBottom: theme.spacing(0.5),
                   borderRadius: '50%',

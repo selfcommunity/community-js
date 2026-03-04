@@ -1,6 +1,6 @@
 import {Avatar, Button, Icon, IconButton, Skeleton, Stack, styled, Typography, useMediaQuery, useTheme} from '@mui/material';
 import {Fragment, memo, useCallback, useEffect, useMemo, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import BaseDialog from '../BaseDialog';
 import {
   Link,
@@ -26,7 +26,8 @@ const classes = {
   infoOuterWrapper: `${PREFIX}-info-outer-wrapper`,
   infoInnerWrapper: `${PREFIX}-info-inner-wrapper`,
   avatarWrapper: `${PREFIX}-avatar-wrapper`,
-  avatar: `${PREFIX}-avatar`
+  avatar: `${PREFIX}-avatar`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const DialogRoot = styled(BaseDialog, {
@@ -55,6 +56,7 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
   // HOOKS
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const intl = useIntl();
   const privateMessagingEnabled = useMemo(
     () => SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED in preferences && preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
     [preferences]
@@ -81,8 +83,8 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
           <Icon>chevron_right</Icon>
         </IconButton>
       ) : (
-        <Button variant="outlined" size="small" color="inherit" onClick={handleToggleOpen}>
-          <Typography variant="body2">
+        <Button variant="contained" size="small" color="inherit" onClick={handleToggleOpen}>
+          <Typography variant="body2" className={classes.contrastColor}>
             <FormattedMessage id="ui.courseUsersTable.action.btn.label" defaultMessage="ui.courseUsersTable.action.btn.label" />
           </Typography>
         </Button>
@@ -94,11 +96,7 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
           open
           scroll="paper"
           onClose={handleToggleOpen}
-          title={
-            <Typography variant="h3">
-              <FormattedMessage id="ui.courseUsersTable.dialog.title" defaultMessage="ui.courseUsersTable.dialog.title" />
-            </Typography>
-          }
+          title={intl.formatMessage({id: 'ui.courseUsersTable.dialog.title', defaultMessage: 'ui.courseUsersTable.dialog.title'})}
           className={classes.dialogRoot}>
           <Stack className={classes.contentWrapper}>
             <Stack className={classes.infoOuterWrapper}>
@@ -112,17 +110,19 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
                       <Avatar className={classes.avatar} src={user.avatar} alt={user.username} />
                     </UserAvatar>
                   </Link>
-                  <Typography variant="body1">{user.username}</Typography>
+                  <Typography variant="body1" className={classes.contrastColor}>
+                    {user.username}
+                  </Typography>
                 </Stack>
 
                 {privateMessagingEnabled && (
                   <Button
                     component={Link}
                     to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}
-                    variant="outlined"
+                    variant="contained"
                     size="small"
                     color="inherit">
-                    <Typography variant="body2">
+                    <Typography variant="body2" className={classes.contrastColor}>
                       <FormattedMessage id="ui.courseUsersTable.dialog.btn.label" defaultMessage="ui.courseUsersTable.dialog.btn.label" />
                     </Typography>
                   </Button>
@@ -130,7 +130,7 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
               </Stack>
 
               {student ? (
-                <Typography variant="body1">
+                <Typography variant="body1" className={classes.contrastColor}>
                   <FormattedMessage
                     id="ui.courseUsersTable.dialog.info.text1"
                     defaultMessage="ui.courseUsersTable.dialog.info.text1"
@@ -142,7 +142,7 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
               )}
 
               {student ? (
-                <Typography variant="body1">
+                <Typography variant="body1" className={classes.contrastColor}>
                   <FormattedMessage
                     id="ui.courseUsersTable.dialog.info.text2"
                     defaultMessage="ui.courseUsersTable.dialog.info.text2"

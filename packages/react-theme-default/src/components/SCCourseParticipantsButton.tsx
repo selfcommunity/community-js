@@ -1,3 +1,5 @@
+import {darken, getContrastRatio, lighten} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme, enrolled}) => ({
@@ -10,12 +12,22 @@ const Component = {
         backgroundColor: 'unset'
       },
 
+      '& .SCCourseParticipantsButton-contrast-color': {
+        color:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? lighten(theme.palette.common.white, 0.5)
+            : darken(theme.palette.common.white, 0.5)
+      },
+
       '& .MuiAvatarGroup-root': {
         '&:not(.SCAvatarCourseSkeleton-root) .MuiAvatar-root': {
           '&.MuiAvatar-colorDefault': {
             marginLeft: 0,
             backgroundColor: 'transparent',
-            color: theme.palette.primary.main,
+            color:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                ? lighten(theme.palette.common.white, 0.5)
+                : darken(theme.palette.common.white, 0.5),
             border: '0 none',
             borderRadius: 0,
             padding: 1
@@ -38,7 +50,6 @@ const Component = {
       },
 
       '& .SCCourseParticipantsButton-participants': {
-        color: theme.palette.text.primary,
         '& .MuiIcon-root': {
           marginRight: theme.spacing(1)
         }

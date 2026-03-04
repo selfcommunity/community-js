@@ -22,7 +22,8 @@ const classes = {
   cellAlignRight: `${PREFIX}-cell-align-right`,
   cellPadding: `${PREFIX}-cell-padding`,
   tableBodyIconWrapper: `${PREFIX}-table-body-icon-wrapper`,
-  actionsWrapper: `${PREFIX}-actions-wrapper`
+  actionsWrapper: `${PREFIX}-actions-wrapper`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 interface LessonRowProps {
@@ -121,22 +122,22 @@ function LessonRow(props: LessonRowProps, ref: Ref<DeleteRowRef>) {
 
           <MenuRow disabled={isDisabled}>
             <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(course, lesson, section))}>
-              <Typography variant="body1">
+              <Typography variant="body1" className={classes.contrastColor}>
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.edit" defaultMessage="ui.editCourse.tab.lessons.table.menu.edit" />
               </Typography>
             </MenuItem>
             <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_PREVIEW_ROUTE_NAME, getUrlLesson(course, lesson, section))}>
-              <Typography variant="body1">
+              <Typography variant="body1" className={classes.contrastColor}>
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.preview" defaultMessage="ui.editCourse.tab.lessons.table.menu.preview" />
               </Typography>
             </MenuItem>
             <MenuItem onClick={handleAbleEditMode}>
-              <Typography variant="body1">
+              <Typography variant="body1" className={classes.contrastColor}>
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
               </Typography>
             </MenuItem>
             <MenuItem onClick={handleOpenDialog}>
-              <Typography variant="body1">
+              <Typography variant="body1" className={classes.contrastColor}>
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
               </Typography>
             </MenuItem>

@@ -1,6 +1,11 @@
 import {FormControl, FormControlLabel, FormLabel, Switch, Typography} from '@mui/material';
 import {ChangeEvent, memo, useCallback, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
+import {PREFIX} from '../constants';
+
+const classes = {
+  contrastColor: `${PREFIX}-contrast-color`
+};
 
 interface SwitchFormProps {
   name: string;
@@ -38,7 +43,7 @@ function SwitchForm(props: SwitchFormProps) {
       <FormControlLabel
         control={<Switch color="primary" checked={value} name={name} onChange={handleChange} />}
         label={
-          <Typography variant="body1">
+          <Typography variant="body1" className={classes.contrastColor}>
             <FormattedMessage id={description} defaultMessage={description} />
           </Typography>
         }

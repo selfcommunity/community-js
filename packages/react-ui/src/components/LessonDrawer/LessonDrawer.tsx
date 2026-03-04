@@ -16,7 +16,8 @@ const classes = {
   header: `${PREFIX}-header`,
   headerAction: `${PREFIX}-header-action`,
   headerContent: `${PREFIX}-header-content`,
-  headerEdit: `${PREFIX}-header-edit`
+  headerEdit: `${PREFIX}-header-edit`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(Drawer, {
@@ -96,7 +97,7 @@ export default function LessonDrawer(inProps: LessonDrawerProps): JSX.Element {
     <Root className={classNames(classes.root, className)} anchor="right" open={Boolean(activePanel) || editMode} variant="persistent" {...rest}>
       <Box className={classNames(classes.header, {[classes.headerEdit]: editMode})}>
         <Box className={classes.headerContent}>
-          <Typography variant="h4" textAlign="center">
+          <Typography variant="h4" textAlign="center" className={classes.contrastColor}>
             {editMode ? (
               <FormattedMessage id="ui.lessonDrawer.settings" defaultMessage="ui.lessonDrawer.settings" />
             ) : (

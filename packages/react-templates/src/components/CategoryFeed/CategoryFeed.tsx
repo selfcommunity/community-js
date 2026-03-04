@@ -33,7 +33,7 @@ import {
 } from '@selfcommunity/react-core';
 import {SCCategoryType, SCCustomAdvPosition, SCFeatureName, SCFeedTypologyType} from '@selfcommunity/types';
 import {CategoryFeedSkeleton} from './index';
-import {useThemeProps} from '@mui/system';
+import {useThemeProps} from '@mui/material';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import {useSnackbar} from 'notistack';

@@ -25,7 +25,8 @@ const classes = {
   cellWidth: `${PREFIX}-cell-width`,
   cellAlignRight: `${PREFIX}-cell-align-right`,
   cellAlignCenter: `${PREFIX}-cell-align-center`,
-  cellPadding: `${PREFIX}-cell-padding`
+  cellPadding: `${PREFIX}-cell-padding`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 interface SectionRowProps {
@@ -272,18 +273,18 @@ function SectionRow(props: SectionRowProps, ref: Ref<DeleteRowRef>) {
               label="ui.editCourse.tab.lessons.table.lesson"
               handleAddRow={handleAddTempLesson}
               color="primary"
-              variant="outlined"
+              variant="contained"
               disabled={isDisabled}
             />
 
             <MenuRow disabled={isDisabled}>
               <MenuItem onClick={handleAbleEditMode}>
-                <Typography variant="body1">
+                <Typography variant="body1" className={classes.contrastColor}>
                   <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
                 </Typography>
               </MenuItem>
               <MenuItem onClick={() => handleOpenDialog({row: RowType.SECTION, section})}>
-                <Typography variant="body1">
+                <Typography variant="body1" className={classes.contrastColor}>
                   <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
                 </Typography>
               </MenuItem>

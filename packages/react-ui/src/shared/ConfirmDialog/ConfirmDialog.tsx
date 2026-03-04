@@ -1,16 +1,39 @@
-import {styled, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card} from '@mui/material';
+import {
+  styled,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Card,
+  lighten,
+  darken,
+  getContrastRatio
+} from '@mui/material';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCConfirmDialog';
 
+const classes = {
+  contrastColor: `${PREFIX}-contrast-color`
+};
+
 const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 800,
-  marginBottom: theme.spacing(2)
+  marginBottom: theme.spacing(2),
+
+  [`& .${PREFIX}-contrast-color`]: {
+    color:
+      getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+        ? lighten(theme.palette.common.white, 0.5)
+        : darken(theme.palette.common.white, 0.5)
+  }
 }));
 
 export interface ConfirmDialogProps {
@@ -104,17 +127,21 @@ export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
   return (
     <Root>
       <Dialog open={open} onClose={handleClose} {...rest}>
-        <DialogTitle>{title || <FormattedMessage id="ui.confirmDialog.title" defaultMessage="ui.confirmDialog.title" />}</DialogTitle>
+        <DialogTitle className={classes.contrastColor}>
+          {title || <FormattedMessage id="ui.confirmDialog.title" defaultMessage="ui.confirmDialog.title" />}
+        </DialogTitle>
         {content && (
           <DialogContent>
-            <DialogContentText component="div">{content}</DialogContentText>
+            <DialogContentText component="div" className={classes.contrastColor}>
+              {content}
+            </DialogContentText>
           </DialogContent>
         )}
         <DialogActions>
-          <Button onClick={handleClose}>
+          <Button onClick={handleClose} className={classes.contrastColor}>
             {btnCancel || <FormattedMessage id="ui.confirmDialog.btnCancel" defaultMessage="ui.confirmDialog.btnCancel" />}
           </Button>
-          <Button onClick={handleConfirm} variant="contained" autoFocus loading={isUpdating}>
+          <Button onClick={handleConfirm} variant="contained" autoFocus loading={isUpdating} className={classes.contrastColor}>
             {btnConfirm || <FormattedMessage id="ui.confirmDialog.btnConfirm" defaultMessage="ui.confirmDialog.btnConfirm" />}
           </Button>
         </DialogActions>

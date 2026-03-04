@@ -1,4 +1,4 @@
-import {alpha} from '@mui/system';
+import {alpha, getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {
@@ -44,7 +44,10 @@ const Component = {
         display: 'flex',
         padding: `6px`,
         borderRadius: theme.shape.borderRadius * 0.5,
-        borderColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
+        borderColor:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? 'rgba(255, 255, 255, 0.12)'
+            : alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
         '& .MuiCardContent-root': {
           flexGrow: 1,
           padding: 0,

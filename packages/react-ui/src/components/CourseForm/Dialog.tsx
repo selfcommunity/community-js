@@ -2,6 +2,11 @@ import {Button, Typography} from '@mui/material';
 import BaseDialog from '../../shared/BaseDialog';
 import {FormattedMessage} from 'react-intl';
 import {memo, useCallback} from 'react';
+import {PREFIX} from './constants';
+
+const classes = {
+  contrastColor: `${PREFIX}-contrast-color`
+};
 
 interface CoursePublicationDialogProps {
   onSubmit: () => void;
@@ -24,18 +29,18 @@ function CoursePublicationDialog(props: CoursePublicationDialogProps) {
       DialogContentProps={{dividers: false}}
       onClose={onClose}
       title={
-        <Typography variant="h5">
+        <Typography variant="h5" className={classes.contrastColor}>
           <FormattedMessage id="ui.courseForm.edit.dialog.title" defaultMessage="ui.courseForm.edit.dialog.title" />
         </Typography>
       }
       actions={
         <Button size="small" color="primary" variant="contained" onClick={handleSubmit}>
-          <Typography variant="body1">
+          <Typography variant="body1" className={classes.contrastColor}>
             <FormattedMessage id="ui.courseForm.edit.dialog.btn" defaultMessage="ui.courseForm.edit.dialog.btn" />
           </Typography>
         </Button>
       }>
-      <Typography variant="body1">
+      <Typography variant="body1" className={classes.contrastColor}>
         <FormattedMessage id="ui.courseForm.edit.dialog.description" defaultMessage="ui.courseForm.edit.dialog.description" />
       </Typography>
     </BaseDialog>

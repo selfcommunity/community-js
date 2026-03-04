@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
-import {Box, Button, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, styled} from '@mui/material';
+import {Box, Button, Checkbox, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, styled, Typography} from '@mui/material';
 import {PREFIX} from './constants';
 import {FormattedMessage} from 'react-intl';
 import {SCCourseLessonStatusType, SCCourseLessonType} from '@selfcommunity/types';
@@ -10,7 +10,8 @@ const classes = {
   root: `${PREFIX}-root`,
   form: `${PREFIX}-form`,
   settings: `${PREFIX}-settings`,
-  button: `${PREFIX}-button`
+  button: `${PREFIX}-button`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(Box, {
@@ -70,7 +71,9 @@ export default function LessonEditForm(inProps: LessonEditFormProps): JSX.Elemen
       <Box className={classes.form}>
         <FormControl>
           <FormLabel id="status">
-            <FormattedMessage id="ui.lessonEditForm.status.title" defaultMessage="ui.lessonEditForm.status.title" />
+            <Typography component="span" className={classes.contrastColor}>
+              <FormattedMessage id="ui.lessonEditForm.status.title" defaultMessage="ui.lessonEditForm.status.title" />
+            </Typography>
           </FormLabel>
           <RadioGroup
             aria-labelledby="course-status-radio-buttons-group"
@@ -80,26 +83,40 @@ export default function LessonEditForm(inProps: LessonEditFormProps): JSX.Elemen
             <FormControlLabel
               value={SCCourseLessonStatusType.DRAFT}
               control={<Radio />}
-              label={<FormattedMessage id="ui.lessonEditForm.status.draft" defaultMessage="ui.lessonEditForm.status.draft" />}
+              label={
+                <Typography component="span" className={classes.contrastColor}>
+                  <FormattedMessage id="ui.lessonEditForm.status.draft" defaultMessage="ui.lessonEditForm.status.draft" />
+                </Typography>
+              }
             />
             <FormControlLabel
               value={SCCourseLessonStatusType.PUBLISHED}
               control={<Radio />}
-              label={<FormattedMessage id="ui.lessonEditForm.status.published" defaultMessage="ui.lessonEditForm.status.published" />}
+              label={
+                <Typography component="span" className={classes.contrastColor}>
+                  <FormattedMessage id="ui.lessonEditForm.status.published" defaultMessage="ui.lessonEditForm.status.published" />
+                </Typography>
+              }
             />
           </RadioGroup>
         </FormControl>
         <FormControl className={classes.settings}>
           <FormLabel id="settings">
-            <FormattedMessage id="ui.lessonEditForm.settings.title" defaultMessage="ui.lessonEditForm.settings.title" />
+            <Typography component="span" className={classes.contrastColor}>
+              <FormattedMessage id="ui.lessonEditForm.settings.title" defaultMessage="ui.lessonEditForm.settings.title" />
+            </Typography>
           </FormLabel>
           <FormControlLabel
             control={<Checkbox checked={settings.comments_enabled} onChange={(e) => handleChange('comments_enabled', e.target.checked)} />}
-            label={<FormattedMessage id="ui.lessonEditForm.settings.enableComments" defaultMessage="ui.lessonEditForm.settings.enableComments" />}
+            label={
+              <Typography component="span" className={classes.contrastColor}>
+                <FormattedMessage id="ui.lessonEditForm.settings.enableComments" defaultMessage="ui.lessonEditForm.settings.enableComments" />
+              </Typography>
+            }
           />
         </FormControl>
       </Box>
-      <Button className={classes.button} variant="contained" size="small" onClick={onSave} loading={updating}>
+      <Button className={classNames(classes.button, classes.contrastColor)} variant="contained" size="small" onClick={onSave} loading={updating}>
         <FormattedMessage id="ui.lessonEditForm.button.save" defaultMessage="ui.lessonEditForm.button.save" />
       </Button>
     </Root>

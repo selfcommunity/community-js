@@ -15,7 +15,8 @@ import {SCGroupEventType, SCTopicType} from '../../../constants/PubSub';
 const classes = {
   editModeWrapper: `${PREFIX}-edit-mode-wrapper`,
   editModeSaveButton: `${PREFIX}-edit-mode-save-button`,
-  editModeCloseButton: `${PREFIX}-edit-mode-close-button`
+  editModeCloseButton: `${PREFIX}-edit-mode-close-button`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 interface FieldNameProps<T> {
@@ -110,7 +111,7 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
           <Button
             size="small"
             color="primary"
-            variant="outlined"
+            variant="contained"
             onClick={handleSubmit}
             loading={loading}
             disabled={loading}
@@ -123,7 +124,9 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
           </IconButton>
         </Stack>
       ) : (
-        <Typography variant="body1">{row.name}</Typography>
+        <Typography variant="body1" className={classes.contrastColor}>
+          {row.name}
+        </Typography>
       )}
     </Fragment>
   );

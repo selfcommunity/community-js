@@ -299,7 +299,7 @@ function Lessons(props: LessonsProps) {
         <Box className={classes.lessonsInnerWrapper}>
           <Stack className={classes.lessonsSectionsWrapper}>
             <Stack className={classes.lessonsSections}>
-              <Typography variant="h5">
+              <Typography variant="h5" className={classes.contrastColor}>
                 <FormattedMessage
                   id="ui.course.table.sections.title"
                   defaultMessage="ui.course.table.sections.title"
@@ -311,7 +311,7 @@ function Lessons(props: LessonsProps) {
 
               <Box className={classes.circle} />
 
-              <Typography variant="h5">
+              <Typography variant="h5" className={classes.contrastColor}>
                 <FormattedMessage
                   id="ui.course.table.lessons.title"
                   defaultMessage="ui.course.table.lessons.title"
@@ -340,7 +340,7 @@ function Lessons(props: LessonsProps) {
 
                     {headerCells.map((cell, i) => (
                       <TableCell key={i} className={cell.className}>
-                        <Typography className={classes.tableHeaderTypography} variant="overline">
+                        <Typography className={classNames(classes.tableHeaderTypography, classes.contrastColor)} variant="overline">
                           <FormattedMessage id={cell.id} defaultMessage={cell.id} />
                         </Typography>
                       </TableCell>

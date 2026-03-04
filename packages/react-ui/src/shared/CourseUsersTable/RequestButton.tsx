@@ -113,14 +113,14 @@ function RequestButton(props: RequestButtonProps, ref: Ref<SCCourseEditManageUse
 
   return (
     <Stack className={classes.requestButtonWrapper}>
-      <Button size="small" color="primary" variant="outlined" onClick={handleAccept} loading={acceptLoading} disabled={acceptLoading}>
+      <Button size="small" color="primary" variant="contained" onClick={handleAccept} loading={acceptLoading} disabled={acceptLoading}>
         <Icon>check</Icon>
       </Button>
 
       <Button
         size="small"
         color="inherit"
-        variant="outlined"
+        variant="contained"
         onClick={() => handleOpenDialog({tab: SCCourseEditTabType.REQUESTS, request: user})}
         loading={rejectLoading}
         disabled={rejectLoading}>

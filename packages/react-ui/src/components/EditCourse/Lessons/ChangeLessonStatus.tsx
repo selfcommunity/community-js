@@ -10,6 +10,7 @@ import {useSnackbar} from 'notistack';
 import {SCCourseLessonStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
 import {CourseService} from '@selfcommunity/api-services';
 import {ActionLessonType} from '../types';
+import classNames from 'classnames';
 
 const OPTIONS = [
   {
@@ -24,7 +25,8 @@ const OPTIONS = [
 
 const classes = {
   changeLessonStatusPublishedWrapper: `${PREFIX}-change-lesson-status-published-wrapper`,
-  changeLessonStatusIconDraft: `${PREFIX}-change-lesson-status-icon-draft`
+  changeLessonStatusIconDraft: `${PREFIX}-change-lesson-status-icon-draft`,
+  contrastColor: `${PREFIX}-constrast-color`
 };
 
 interface ChangeLessonStatusProps {
@@ -124,7 +126,9 @@ function ChangeLessonStatus(props: ChangeLessonStatusProps) {
   return (
     <Fragment>
       {isMobile ? (
-        <MenuRow buttonClassName={hasPublished ? classes.changeLessonStatusPublishedWrapper : undefined} icon={icon}>
+        <MenuRow
+          buttonClassName={classNames(classes.contrastColor, hasPublished ? classes.changeLessonStatusPublishedWrapper : undefined)}
+          icon={icon}>
           {OPTIONS.map((option, i) => (
             <MenuItem key={i}>
               <Button
@@ -140,7 +144,7 @@ function ChangeLessonStatus(props: ChangeLessonStatusProps) {
                     backgroundColor: 'unset'
                   }
                 }}>
-                <Typography variant="body1">
+                <Typography variant="body1" className={classes.contrastColor}>
                   <FormattedMessage id={option.id} defaultMessage={option.id} />
                 </Typography>
               </Button>
@@ -149,7 +153,7 @@ function ChangeLessonStatus(props: ChangeLessonStatusProps) {
         </MenuRow>
       ) : (
         <Select
-          className={hasPublished ? classes.changeLessonStatusPublishedWrapper : undefined}
+          className={classNames(classes.contrastColor, hasPublished ? classes.changeLessonStatusPublishedWrapper : undefined)}
           size="small"
           value={value}
           onChange={handleChange}
@@ -167,7 +171,7 @@ function ChangeLessonStatus(props: ChangeLessonStatusProps) {
                     backgroundColor: 'unset'
                   }
                 }}>
-                <Typography variant="body1">
+                <Typography variant="body1" className={classes.contrastColor}>
                   <FormattedMessage id={option.id} defaultMessage={option.id} />
                 </Typography>
               </Button>

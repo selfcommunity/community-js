@@ -26,7 +26,8 @@ const classes = {
   navigation: `${PREFIX}-navigation`,
   navigationTitle: `${PREFIX}-navigation-title`,
   previewInfo: `${PREFIX}-preview-info`,
-  button: `${PREFIX}-button`
+  button: `${PREFIX}-button`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(Box, {
@@ -342,7 +343,7 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
             </Alert>
           )}
           <Box className={classes.navigation}>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" className={classes.contrastColor}>
               <FormattedMessage
                 id="templates.lesson.number"
                 defaultMessage="templates.lesson.number"
@@ -351,7 +352,9 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
             </Typography>
           </Box>
           <Box className={classes.navigationTitle}>
-            <Typography variant="h5">{scLesson.name}</Typography>
+            <Typography variant="h5" className={classes.contrastColor}>
+              {scLesson.name}
+            </Typography>
             <Box>
               <IconButton onClick={handlePrev} disabled={isPrevDisabled}>
                 <Icon>arrow_back</Icon>
@@ -370,10 +373,10 @@ export default function Lesson(inProps: LessonProps): JSX.Element {
           />
           {!isCourseAdmin && !editMode && !previewMode && (
             <Button
-              className={classes.button}
+              className={classNames(classes.button, classes.contrastColor)}
               loading={loading}
               size="small"
-              variant={completed ? 'outlined' : 'contained'}
+              variant="contained"
               startIcon={!completed && <Icon>arrow_next</Icon>}
               endIcon={completed && <Icon>circle_checked</Icon>}
               onClick={toggleLessonCompletion}>
