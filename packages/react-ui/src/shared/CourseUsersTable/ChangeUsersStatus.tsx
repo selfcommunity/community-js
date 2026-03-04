@@ -6,8 +6,13 @@ import {CourseService, CourseUserRoleParams} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
+import {PREFIX} from './constants';
 
 const OPTIONS = ['ui.editCourse.tab.users.table.select.joined', 'ui.editCourse.tab.users.table.select.manager'];
+
+const classes = {
+  contrastColor: `${PREFIX}-contrast-color`
+};
 
 interface ChangeUserStatusProps {
   course: SCCourseType;
@@ -85,7 +90,7 @@ function ChangeUserStatus(props: ChangeUserStatusProps) {
                 backgroundColor: 'unset'
               }
             }}>
-            <Typography variant="body1">
+            <Typography variant="body1" className={classes.contrastColor}>
               <FormattedMessage id={option} defaultMessage={option} />
             </Typography>
           </Button>

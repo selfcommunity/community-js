@@ -1,11 +1,10 @@
-import React from 'react';
 import {Box, styled} from '@mui/material';
 import {FeedObjectProps, FeedSidebarProps, CategoryHeader, SCFeedWidgetType} from '@selfcommunity/react-ui';
 import CategoryFeed, {CategoryFeedProps} from '../CategoryFeed';
 import {useSCFetchCategory} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import CategorySkeleton from './Skeleton';
-import {useThemeProps} from '@mui/system';
+import {useThemeProps} from '@mui/material';
 import classNames from 'classnames';
 import {PREFIX} from './constants';
 

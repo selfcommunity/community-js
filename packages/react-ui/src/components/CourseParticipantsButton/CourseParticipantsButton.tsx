@@ -1,5 +1,4 @@
-import {Avatar, AvatarGroup, Button, Icon, List, ListItem, Typography, styled, ButtonProps} from '@mui/material';
-import {useThemeProps} from '@mui/system';
+import {Avatar, AvatarGroup, Button, Icon, List, ListItem, Typography, styled, ButtonProps, useThemeProps} from '@mui/material';
 import {CourseService, Endpoints, http, HttpResponse, SCPaginatedResponse} from '@selfcommunity/api-services';
 import {useSCFetchCourse} from '@selfcommunity/react-core';
 import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
@@ -23,7 +22,8 @@ const classes = {
   dialogRoot: `${PREFIX}-dialog-root`,
   endMessage: `${PREFIX}-end-message`,
   infiniteScroll: `${PREFIX}-infinite-scroll`,
-  participants: `${PREFIX}-participants`
+  participants: `${PREFIX}-participants`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(Button, {
@@ -199,7 +199,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
         enrolled={enrolled}
         {...rest}>
         {!hideCaption && (
-          <Typography className={classes.participants}>
+          <Typography className={classNames(classes.participants, classes.contrastColor)}>
             <Icon>people_alt</Icon>
             <FormattedMessage
               defaultMessage="ui.courseParticipantsButton.participants"
@@ -212,7 +212,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
         {!count && (loading || !scCourse) ? (
           <AvatarGroupSkeleton {...rest} {...(!participantsAvailable && {skeletonsAnimation: false})} count={4} />
         ) : (
-          <AvatarGroup total={count} renderSurplus={renderSurplus}>
+          <AvatarGroup total={count} renderSurplus={renderSurplus} className={classes.contrastColor}>
             {enrolled.map((c: SCUserType) => (
               <Avatar key={c.id} alt={c.username} src={c.avatar} />
             ))}
@@ -240,7 +240,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
             loaderNext={<UserSkeleton elevation={0} />}
             className={classes.infiniteScroll}
             endMessage={
-              <Typography className={classes.endMessage}>
+              <Typography className={classNames(classes.endMessage, classes.contrastColor)}>
                 <FormattedMessage
                   id="ui.courseParticipantsButton.noOtherParticipants"
                   defaultMessage="ui.courseParticipantsButton.noOtherParticipants"

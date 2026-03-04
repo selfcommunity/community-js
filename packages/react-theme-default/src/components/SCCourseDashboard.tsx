@@ -1,4 +1,4 @@
-import {getContrastRatio} from '@mui/material';
+import {darken, getContrastRatio, lighten} from '@mui/material';
 
 const Component = {
   styleOverrides: {
@@ -8,7 +8,10 @@ const Component = {
       },
 
       '& .SCCourseDashboard-contrast-color': {
-        color: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
+        color:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? lighten(theme.palette.common.white, 0.5)
+            : darken(theme.palette.common.white, 0.5)
       },
 
       '& .SCCourseDashboard-header': {
@@ -93,10 +96,16 @@ const Component = {
         '& .SCCourseDashboard-info': {
           flex: 1,
           gap: '6px',
-          border: `1px solid ${theme.palette.grey['300']}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderRadius: '5px',
           padding: theme.spacing('17px', 3, '19px'),
-          backgroundColor: theme.palette.common.white,
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? theme.palette.background.paper
+              : theme.palette.common.white,
 
           '& .SCCourseParticipantsButton-root': {
             justifyContent: 'flex-start',
@@ -106,7 +115,10 @@ const Component = {
       },
 
       '& .SCCourseDashboard-tab-list': {
-        borderBottom: `1px solid ${theme.palette.grey['300']}`,
+        borderBottom:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? `1px solid ${theme.palette.grey[800]}`
+            : `1px solid ${theme.palette.grey[300]}`,
 
         '& .SCCourseDashboard-tab': {
           textTransform: 'inherit'
@@ -131,8 +143,14 @@ const Component = {
       },
 
       '& .SCCourseDashboard-comments-container': {
-        backgroundColor: theme.palette.common.white,
-        border: `1px solid ${theme.palette.grey['300']}`,
+        backgroundColor:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? theme.palette.background.paper
+            : theme.palette.common.white,
+        border:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? `1px solid ${theme.palette.grey[800]}`
+            : `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '5px',
         padding: theme.spacing(1),
 
@@ -167,7 +185,7 @@ const Component = {
                   width: '5px',
                   height: '5px',
                   borderRadius: '9999px',
-                  backgroundColor: theme.palette.grey['600']
+                  backgroundColor: theme.palette.grey[600]
                 }
               }
             },
@@ -193,7 +211,14 @@ const Component = {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'space-between',
-          backgroundColor: theme.palette.common.white,
+          color:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? lighten(theme.palette.text.primary, 0.5)
+              : darken(theme.palette.text.primary, 0.5),
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? theme.palette.background.paper
+              : theme.palette.common.white,
           padding: '6px',
 
           '& .SCCourseDashboard-user': {
@@ -224,8 +249,14 @@ const Component = {
             },
             '& .SCBuyButton-request-root': {
               '&:hover, &:active': {
-                backgroundColor: theme.palette.common.white,
-                color: theme.palette.primary.main,
+                backgroundColor:
+                  getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                    ? theme.palette.background.paper
+                    : theme.palette.common.white,
+                color:
+                  getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                    ? lighten(theme.palette.text.primary, 0.5)
+                    : darken(theme.palette.text.primary, 0.5),
                 border: `1px solid ${theme.palette.primary.main}`,
                 '& .MuiIcon-root': {
                   color: theme.palette.primary.main
@@ -239,18 +270,27 @@ const Component = {
           flexDirection: 'row',
           alignItems: 'center',
           gap: '6px',
-          border: `1px solid ${theme.palette.grey['300']}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderBottom: 'unset',
           borderTopLeftRadius: '5px',
           borderTopRightRadius: '5px',
           padding: '19px 24px',
-          backgroundColor: theme.palette.common.white,
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? theme.palette.background.paper
+              : theme.palette.common.white,
 
           '& .SCCourseDashboard-circle': {
             width: '6px',
             height: '6px',
             borderRadius: 9999,
-            backgroundColor: theme.palette.common.black
+            backgroundColor:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                ? theme.palette.common.white
+                : theme.palette.common.black
           }
         },
 
@@ -261,10 +301,16 @@ const Component = {
 
         '& .SCCourseDashboard-box': {
           gap: '13px',
-          border: `1px solid ${theme.palette.grey['300']}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderRadius: '5px',
           padding: '11px 24px',
-          backgroundColor: theme.palette.common.white
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? theme.palette.background.paper
+              : theme.palette.common.white
         },
 
         '& .SCCourseDashboard-percentage-wrapper': {
@@ -278,7 +324,8 @@ const Component = {
 
         '& .SCCourseDashboard-progress': {
           borderRadius: '28px',
-          backgroundColor: theme.palette.grey['300']
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? theme.palette.grey[800] : theme.palette.grey[300]
         },
 
         '& .SCCourseDashboard-completed-wrapper': {
@@ -358,7 +405,10 @@ const Component = {
           '& .SCCourseDashboard-info': {
             flex: 1,
             gap: '6px',
-            border: `1px solid ${theme.palette.grey['300']}`,
+            border:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                ? `1px solid ${theme.palette.grey[800]}`
+                : `1px solid ${theme.palette.grey[300]}`,
             borderRadius: '5px',
             padding: theme.spacing('17px', 3, '19px'),
 
@@ -374,7 +424,10 @@ const Component = {
           alignItems: 'center',
           justifyContent: 'center',
           gap: theme.spacing(4),
-          borderBottom: `1px solid ${theme.palette.grey['300']}`,
+          borderBottom:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           padding: theme.spacing('12px 0')
         }
       },
@@ -405,7 +458,10 @@ const Component = {
 
         '& .SCCourseDashboard-box': {
           gap: '13px',
-          border: `1px solid ${theme.palette.grey['300']}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderRadius: '5px',
           padding: '11px 24px'
         },
@@ -423,7 +479,10 @@ const Component = {
           flexDirection: 'row',
           alignItems: 'center',
           gap: '6px',
-          border: `1px solid ${theme.palette.grey['300']}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderBottom: 'unset',
           borderTopLeftRadius: '5px',
           borderTopRightRadius: '5px',

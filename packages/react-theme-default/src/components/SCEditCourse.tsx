@@ -1,4 +1,4 @@
-import {getContrastRatio} from '@mui/material';
+import {darken, getContrastRatio, lighten} from '@mui/material';
 
 const Component = {
   styleOverrides: {
@@ -8,7 +8,10 @@ const Component = {
       },
 
       '& .SCEditCourse-contrast-color': {
-        color: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
+        color:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? lighten(theme.palette.common.white, 0.5)
+            : darken(theme.palette.common.white, 0.5)
       },
 
       '& .SCEditCourse-header': {
@@ -22,7 +25,10 @@ const Component = {
       },
 
       '& .SCEditCourse-tab-list': {
-        borderBottom: `1px solid ${theme.palette.grey['300']}`,
+        borderBottom:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? `1px solid ${theme.palette.grey[800]}`
+            : `1px solid ${theme.palette.grey[300]}`,
 
         '& .SCEditCourse-tab': {
           textTransform: 'inherit'
@@ -81,7 +87,10 @@ const Component = {
         },
 
         '& .SCEditCourse-lesson-empty-status': {
-          border: `1px solid ${theme.palette.grey[300]}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderRadius: '5px'
         },
 
@@ -90,9 +99,15 @@ const Component = {
         },
 
         '& .SCEditCourse-lessons-inner-wrapper': {
-          border: `1px solid ${theme.palette.grey[300]}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderRadius: '5px',
-          backgroundColor: theme.palette.common.white,
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? theme.palette.background.paper
+              : theme.palette.common.white,
           marginTop: '9px',
           padding: theme.spacing(1),
 
@@ -105,11 +120,17 @@ const Component = {
             alignItems: 'center',
             justifyContent: 'space-between',
             padding: theme.spacing(2),
-            border: `1px solid ${theme.palette.grey[300]}`,
+            border:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                ? `1px solid ${theme.palette.grey[800]}`
+                : `1px solid ${theme.palette.grey[300]}`,
             borderBottom: 'unset',
             borderTopLeftRadius: '5px',
             borderTopRightRadius: '5px',
-            backgroundColor: theme.palette.common.white,
+            backgroundColor:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                ? theme.palette.background.paper
+                : theme.palette.common.white,
 
             '& .SCEditCourse-lessons-sections': {
               flexDirection: 'row',
@@ -120,7 +141,10 @@ const Component = {
                 width: '6px',
                 height: '6px',
                 borderRadius: 9999,
-                backgroundColor: theme.palette.common.black
+                backgroundColor:
+                  getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                    ? theme.palette.common.white
+                    : theme.palette.common.black
               }
             },
 
@@ -135,10 +159,16 @@ const Component = {
 
           '& .SCEditCourse-table-container': {
             width: 'auto',
-            border: `1px solid ${theme.palette.grey[300]}`,
+            border:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                ? `1px solid ${theme.palette.grey[800]}`
+                : `1px solid ${theme.palette.grey[300]}`,
             borderBottomLeftRadius: '5px',
             borderBottomRightRadius: '5px',
-            backgroundColor: theme.palette.common.white,
+            backgroundColor:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                ? theme.palette.background.paper
+                : theme.palette.common.white,
 
             '& .SCEditCourse-table': {
               '& .SCEditCourse-cell-width': {
@@ -175,7 +205,10 @@ const Component = {
                 },
 
                 '& .SCEditCourse-table-body-accordion': {
-                  backgroundColor: theme.palette.grey[200]
+                  backgroundColor:
+                    getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                      ? theme.palette.grey[800]
+                      : theme.palette.grey[200]
                 },
 
                 '& .SCEditCourse-edit-mode-wrapper': {
@@ -207,11 +240,16 @@ const Component = {
                   },
 
                   '& .SCEditCourse-change-lesson-status-published-wrapper': {
-                    color: theme.palette.common.white,
-                    backgroundColor: theme.palette.primary.main,
+                    backgroundColor:
+                      getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                        ? theme.palette.primary.dark
+                        : theme.palette.primary.main,
 
                     '& .MuiIcon-root': {
-                      color: theme.palette.common.white
+                      color:
+                        getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                          ? lighten(theme.palette.common.white, 0.5)
+                          : darken(theme.palette.common.white, 0.5)
                     }
                   },
 
@@ -219,7 +257,7 @@ const Component = {
                     width: '20px',
                     height: '20px',
                     borderRadius: 9999,
-                    backgroundColor: theme.palette.grey['600']
+                    backgroundColor: theme.palette.grey[600]
                   }
                 },
 
@@ -242,10 +280,16 @@ const Component = {
         },
 
         '& .SCEditCourse-options-container': {
-          border: `1px solid ${theme.palette.grey['300']}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderRadius: '5px',
           padding: theme.spacing(1),
-          backgroundColor: theme.palette.common.white,
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? theme.palette.background.paper
+              : theme.palette.common.white,
 
           [theme.breakpoints.up('sm')]: {
             padding: theme.spacing(2)
@@ -294,7 +338,10 @@ const Component = {
         alignItems: 'center',
         justifyContent: 'center',
         gap: theme.spacing(4),
-        borderBottom: `1px solid ${theme.palette.grey['300']}`,
+        borderBottom:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? `1px solid ${theme.palette.grey[800]}`
+            : `1px solid ${theme.palette.grey[300]}`,
         padding: theme.spacing('12px 0'),
         marginBottom: '13px'
       },
@@ -321,9 +368,15 @@ const Component = {
       },
 
       '& .SCEditCourse-lessons-inner-wrapper': {
-        border: `1px solid ${theme.palette.grey[300]}`,
+        border:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? `1px solid ${theme.palette.grey[800]}`
+            : `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '5px',
-        backgroundColor: theme.palette.common.white,
+        backgroundColor:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? theme.palette.background.paper
+            : theme.palette.common.white,
         marginTop: '9px',
         padding: theme.spacing(1),
 
@@ -336,13 +389,19 @@ const Component = {
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: theme.spacing(2),
-          border: `1px solid ${theme.palette.grey[300]}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderRadius: '5px'
         },
 
         '& .SCEditCourse-table-container': {
           width: 'auto',
-          border: `1px solid ${theme.palette.grey[300]}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderBottomLeftRadius: '5px',
           borderBottomRightRadius: '5px',
 
@@ -370,10 +429,16 @@ const Component = {
       },
 
       '& .SCEditCourse-options-container': {
-        border: `1px solid ${theme.palette.grey['300']}`,
+        border:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? `1px solid ${theme.palette.grey[800]}`
+            : `1px solid ${theme.palette.grey[300]}`,
         borderRadius: '5px',
         paddingBottom: '10px',
-        backgroundColor: theme.palette.common.white,
+        backgroundColor:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? theme.palette.background.paper
+            : theme.palette.common.white,
 
         '& .SCEditCourse-options-wrapper': {
           gap: theme.spacing(5),

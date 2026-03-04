@@ -1,3 +1,5 @@
+import {darken, getContrastRatio, lighten} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
@@ -6,12 +8,25 @@ const Component = {
       gap: '10px',
       padding: theme.spacing(3),
       marginTop: '9px',
-      backgroundColor: theme.palette.common.white,
+      backgroundColor:
+        getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+          ? theme.palette.background.paper
+          : theme.palette.common.white,
+
+      '& .SCEmptyStatus-contrast-color': {
+        color:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? lighten(theme.palette.common.white, 0.5)
+            : darken(theme.palette.common.white, 0.5)
+      },
 
       '& .SCEmptyStatus-box': {
         width: '130px',
         height: '130px',
-        border: `2px solid ${theme.palette.grey[300]}`,
+        border:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? `2px solid ${theme.palette.grey[800]}`
+            : `2px solid ${theme.palette.grey[300]}`,
         borderRadius: '20px',
         marginBottom: '10px',
 

@@ -47,7 +47,8 @@ const classes = {
   avatarWrapper: `${PREFIX}-avatar-wrapper`,
   progressWrapper: `${PREFIX}-progress-wrapper`,
   progress: `${PREFIX}-progress`,
-  loadingButton: `${PREFIX}-loading-button`
+  loadingButton: `${PREFIX}-loading-button`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(Box, {
@@ -266,7 +267,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
 
                 return (
                   <TableCell width={mode === SCCourseUsersTableModeType.DASHBOARD ? '20%' : '25%'} key={i}>
-                    <Typography variant="body2">
+                    <Typography variant="body2" className={classes.contrastColor}>
                       <FormattedMessage id={cell.id} defaultMessage={cell.id} />
                     </Typography>
                   </TableCell>
@@ -282,7 +283,9 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                   <TableCell>
                     <Stack className={classes.avatarWrapper}>
                       <Avatar alt={user.username} src={user.avatar} />
-                      <Typography variant="body2">{user.username}</Typography>
+                      <Typography variant="body2" className={classes.contrastColor}>
+                        {user.username}
+                      </Typography>
                     </Stack>
                   </TableCell>
                   {mode === SCCourseUsersTableModeType.DASHBOARD && (
@@ -290,7 +293,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                       <Stack className={classes.progressWrapper}>
                         <LinearProgress className={classes.progress} variant="determinate" value={user.user_completion_rate} />
 
-                        <Typography variant="body1">{`${Math.round(user.user_completion_rate)}%`}</Typography>
+                        <Typography variant="body1" className={classes.contrastColor}>{`${Math.round(user.user_completion_rate)}%`}</Typography>
                       </Stack>
                     </TableCell>
                   )}
@@ -299,7 +302,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                       {user.join_status !== SCCourseJoinStatusType.CREATOR && scUserContext.user.id !== user.id ? (
                         <ChangeUserStatus course={course} user={user} />
                       ) : (
-                        <Typography variant="body2">
+                        <Typography variant="body2" className={classes.contrastColor}>
                           <FormattedMessage
                             id={`ui.editCourse.tab.users.table.select.${user.join_status}`}
                             defaultMessage={`ui.editCourse.tab.users.table.select.${user.join_status}`}
@@ -309,12 +312,12 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                     </TableCell>
                   )}
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="body2" className={classes.contrastColor}>
                       <FormattedDate value={mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.joined_at || new Date()} />
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2">
+                    <Typography variant="body2" className={classes.contrastColor}>
                       <FormattedDate value={mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.last_active_at || new Date()} />
                     </Typography>
                   </TableCell>
@@ -347,13 +350,13 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
       {users.length > 0 && (
         <Button
           size="small"
-          variant="outlined"
+          variant="contained"
           color="inherit"
           loading={state.isLoadingNext}
           disabled={value.length > 0 || !state.next}
           className={classes.loadingButton}
           onClick={handleNext}>
-          <Typography variant="body2">
+          <Typography variant="body2" className={classes.contrastColor}>
             <FormattedMessage id="ui.courseUsersTable.btn.label" defaultMessage="ui.courseUsersTable.btn.label" />
           </Typography>
         </Button>

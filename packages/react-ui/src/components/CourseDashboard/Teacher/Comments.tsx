@@ -158,7 +158,9 @@ function Comments(props: CommentsProps) {
 
     return Array.from(map.entries()).map(([name, comments]) => (
       <Box key={name} className={classes.outerWrapper}>
-        <Typography variant="h5">{name}</Typography>
+        <Typography variant="h5" className={classes.contrastColor}>
+          {name}
+        </Typography>
         <Divider />
         <Stack className={classes.innerWrapper}>
           {comments.map((comment: SCCourseCommentType) => (
@@ -167,16 +169,18 @@ function Comments(props: CommentsProps) {
 
               <Box>
                 <Stack className={classes.userInfo}>
-                  <Typography variant="body1">{comment.created_by.username}</Typography>
+                  <Typography variant="body1" className={classes.contrastColor}>
+                    {comment.created_by.username}
+                  </Typography>
 
                   <Box className={classes.circle} />
 
-                  <Typography variant="body2">
+                  <Typography variant="body2" className={classes.contrastColor}>
                     <FormattedDate value={comment.created_at} />
                   </Typography>
                 </Stack>
 
-                <Typography variant="body1" component="div" dangerouslySetInnerHTML={{__html: comment.html}} />
+                <Typography variant="body1" component="div" dangerouslySetInnerHTML={{__html: comment.html}} className={classes.contrastColor} />
               </Box>
             </Stack>
           ))}
@@ -188,10 +192,10 @@ function Comments(props: CommentsProps) {
               getUrlLesson(comments[0].extras.course, comments[0].extras.lesson, comments[0].extras.section)
             )}
             size="small"
-            variant="outlined"
+            variant="contained"
             color="inherit"
             className={classes.button}>
-            <Typography variant="body2">
+            <Typography variant="body2" className={classes.contrastColor}>
               <FormattedMessage
                 id="ui.course.dashboard.teacher.tab.comments.lessons.btn.label"
                 defaultMessage="ui.course.dashboard.teacher.tab.comments.lessons.btn.label"
@@ -211,7 +215,7 @@ function Comments(props: CommentsProps) {
     <Box className={classes.container}>
       {state.count > 0 ? (
         <Fragment>
-          <Typography variant="body1">
+          <Typography variant="body1" className={classes.contrastColor}>
             <FormattedMessage
               id="ui.course.dashboard.teacher.tab.comments.number"
               defaultMessage="ui.course.dashboard.teacher.tab.comments.number"
@@ -223,8 +227,8 @@ function Comments(props: CommentsProps) {
 
           {isLoading && <CommentSkeleton id={1} />}
 
-          <Button size="small" variant="outlined" color="inherit" loading={isLoading} disabled={!state.next} onClick={handleNext}>
-            <Typography variant="body2">
+          <Button size="small" variant="contained" color="inherit" loading={isLoading} disabled={!state.next} onClick={handleNext}>
+            <Typography variant="body2" className={classes.contrastColor}>
               <FormattedMessage
                 id="ui.course.dashboard.teacher.tab.comments.btn.label"
                 defaultMessage="ui.course.dashboard.teacher.tab.comments.btn.label"
@@ -233,7 +237,7 @@ function Comments(props: CommentsProps) {
           </Button>
         </Fragment>
       ) : (
-        <Typography variant="body2">
+        <Typography variant="body2" className={classes.contrastColor}>
           <FormattedMessage id="ui.course.dashboard.teacher.tab.comments.empty" defaultMessage="ui.course.dashboard.teacher.tab.comments.empty" />
         </Typography>
       )}

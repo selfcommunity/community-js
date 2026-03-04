@@ -1,8 +1,17 @@
+import {darken, getContrastRatio, lighten} from '@mui/material';
+
 const Component = {
   styleOverrides: {
-    root: () => ({
+    root: ({theme}) => ({
       '& .SCCourseCompletedDialog-wrapper': {
         alignItems: 'center',
+
+        '& .SCCourseCompletedDialog-contrast-color': {
+          color:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? lighten(theme.palette.common.white, 0.5)
+              : darken(theme.palette.common.white, 0.5)
+        },
 
         '& .SCCourseCompletedDialog-title': {
           marginTop: '60px',

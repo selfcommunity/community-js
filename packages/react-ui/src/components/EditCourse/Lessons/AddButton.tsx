@@ -9,7 +9,8 @@ import {Fragment, memo, useCallback} from 'react';
 
 const classes = {
   sectionButton: `${PREFIX}-section-button`,
-  sectionButtonTypography: `${PREFIX}-section-button-typography`
+  sectionButtonTypography: `${PREFIX}-section-button-typography`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 interface AddButtonProps extends ButtonProps {
@@ -44,7 +45,7 @@ function AddButton(props: AddButtonProps) {
           startIcon={<Icon>add_circle_outline</Icon>}
           onClick={handleClick}
           {...rest}>
-          <Typography className={classes.sectionButtonTypography} variant="body1">
+          <Typography className={classNames(classes.sectionButtonTypography, classes.contrastColor)} variant="body1">
             <FormattedMessage id={label} defaultMessage={label} />
           </Typography>
         </Button>

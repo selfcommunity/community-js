@@ -56,7 +56,8 @@ const classes = {
   popoverRoot: `${PREFIX}-popover-root`,
   popoverContent: `${PREFIX}-popover-content`,
   popoverSelection: `${PREFIX}-popover-selection`,
-  popoverAction: `${PREFIX}-popover-action`
+  popoverAction: `${PREFIX}-popover-action`,
+  popoverContrastColor: `${PREFIX}-popover-contrast-color`
 };
 
 const Root = styled(FormControl, {
@@ -278,7 +279,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
               vertical: 'top',
               horizontal: 'left'
             }}>
-            <Typography variant="h6">
+            <Typography variant="h6" className={classes.popoverContrastColor}>
               <FormattedMessage id="ui.lessonReleaseMenu.dialog.title" defaultMessage="ui.lessonReleaseMenu.dialog.title" />
             </Typography>
             <Box className={classes.popoverContent}>
@@ -310,7 +311,7 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
                   </RadioGroup>
                 </FormControl>
               </Box>
-              <Typography variant="body1">
+              <Typography variant="body1" className={classes.popoverContrastColor}>
                 {dripDelay > 0 ? (
                   <FormattedMessage
                     id={`ui.lessonReleaseMenu.dialog.info.structured.${unit}`}
@@ -321,7 +322,11 @@ export default function LessonReleaseMenu(inProps: LessonReleaseMenuProps): JSX.
                   <FormattedMessage id="ui.lessonReleaseMenu.dialog.info.now" defaultMessage="ui.lessonReleaseMenu.dialog.info.now" />
                 )}
               </Typography>
-              <Button className={classes.popoverAction} variant="contained" disabled={section.drip_delay === dripDelay} onClick={handleSave}>
+              <Button
+                className={classNames(classes.popoverAction, classes.popoverContrastColor)}
+                variant="contained"
+                disabled={section.drip_delay === dripDelay}
+                onClick={handleSave}>
                 <FormattedMessage id="ui.lessonReleaseMenu.dialog.button.done" defaultMessage="ui.lessonReleaseMenu.dialog.button.done" />
               </Button>
             </Box>

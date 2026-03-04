@@ -1,3 +1,5 @@
+import {darken, getContrastRatio, lighten} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -8,6 +10,12 @@ const Component = {
       [theme.breakpoints.up('sm')]: {
         width: '300px'
       },
+      '& .SCLessonDrawer-contrast-color': {
+        color:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? lighten(theme.palette.common.white, 0.5)
+            : darken(theme.palette.common.white, 0.5)
+      },
       '& h4': {
         fontWeight: theme.typography.fontWeightMedium
       },
@@ -16,7 +24,10 @@ const Component = {
         [theme.breakpoints.up('sm')]: {
           width: '300px'
         },
-        backgroundColor: theme.palette.grey[200]
+        backgroundColor:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? theme.palette.background.paper
+            : theme.palette.grey[200]
       },
       '& .SCLessonDrawer-header': {
         [theme.breakpoints.up('sm')]: {

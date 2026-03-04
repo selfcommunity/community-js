@@ -9,7 +9,8 @@ const classes = {
   root: `${PREFIX}-root`,
   box: `${PREFIX}-box`,
   rotatedBox: `${PREFIX}-rotated-box`,
-  icon: `${PREFIX}-icon`
+  icon: `${PREFIX}-icon`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(Stack, {
@@ -40,12 +41,12 @@ function EmptyStatus(props: EmptyStatusProps) {
         </Stack>
       </Stack>
 
-      <Typography variant="body1">
+      <Typography variant="body1" className={classes.contrastColor}>
         <FormattedMessage id={title} defaultMessage={title} />
       </Typography>
 
       {description && (
-        <Typography variant="body1">
+        <Typography variant="body1" className={classes.contrastColor}>
           <FormattedMessage id={description} defaultMessage={description} />
         </Typography>
       )}

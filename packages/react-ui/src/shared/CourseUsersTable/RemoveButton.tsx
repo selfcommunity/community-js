@@ -73,7 +73,7 @@ function RemoveButton(props: RemoveButtonProps, ref: Ref<SCCourseEditManageUserR
     <Button
       size="small"
       color="inherit"
-      variant="outlined"
+      variant="contained"
       onClick={() => handleOpenDialog({tab: SCCourseEditTabType.USERS, user})}
       loading={loading}
       disabled={loading}>

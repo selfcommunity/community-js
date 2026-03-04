@@ -1,4 +1,4 @@
-import React, {Fragment, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState} from 'react';
+import {Fragment, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {PREFIX} from './constants';
 import {Avatar, Box, Divider, LinearProgress, Skeleton, Stack, styled, Typography, useThemeProps} from '@mui/material';
 import classNames from 'classnames';
@@ -246,7 +246,7 @@ function Student(inProps: StudentCourseDashboardProps) {
             labelId={BUTTON_MESSAGES.dashboard}
             to={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)}
             color="inherit"
-            variant="outlined"
+            variant="contained"
           />
         )}
 
@@ -271,7 +271,7 @@ function Student(inProps: StudentCourseDashboardProps) {
               to={scCourse.join_status !== null ? scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse)) : undefined}
               disabled={scCourse.join_status !== null ? getIsNextLessonLocked(scCourse) : undefined}
               color={scCourse.user_completion_rate === 100 ? 'inherit' : undefined}
-              variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
+              variant={scCourse.user_completion_rate === 100 ? 'contained' : undefined}
               loading={scCourse.join_status === null ? loadingRequest : undefined}
               onClick={!scUserContext.user ? handleAnonymousAction : scCourse.join_status === null ? handleRequest : undefined}
             />
@@ -281,7 +281,7 @@ function Student(inProps: StudentCourseDashboardProps) {
           <ActionButton
             labelId={sentRequest ? BUTTON_MESSAGES.cancel : BUTTON_MESSAGES.request}
             color="inherit"
-            variant="outlined"
+            variant="contained"
             loading={loadingRequest}
             onClick={handleRequest}
           />
@@ -346,7 +346,7 @@ function Student(inProps: StudentCourseDashboardProps) {
             </Typography>
 
             <Stack className={classes.box}>
-              <Typography variant="body1" className={classes.description}>
+              <Typography variant="body1" className={classNames(classes.description, classes.contrastColor)}>
                 {scCourse.description}
               </Typography>
             </Stack>
@@ -365,7 +365,7 @@ function Student(inProps: StudentCourseDashboardProps) {
 
               <Stack className={classes.box}>
                 <Stack className={classes.percentageWrapper}>
-                  <Typography variant="body1">
+                  <Typography variant="body1" className={classes.contrastColor}>
                     <FormattedMessage
                       id="ui.course.dashboard.student.progress.described"
                       defaultMessage="ui.course.dashboard.student.progress.described"
@@ -373,7 +373,7 @@ function Student(inProps: StudentCourseDashboardProps) {
                     />
                   </Typography>
 
-                  <Typography variant="body1">
+                  <Typography variant="body1" className={classes.contrastColor}>
                     <FormattedMessage
                       id="ui.course.dashboard.student.progress.percentage"
                       defaultMessage="ui.course.dashboard.student.progress.percentage"
@@ -406,7 +406,7 @@ function Student(inProps: StudentCourseDashboardProps) {
           </Typography>
 
           <Stack className={classes.lessonsSections}>
-            <Typography variant="h5">
+            <Typography variant="h5" className={classes.contrastColor}>
               <FormattedMessage
                 id="ui.course.table.sections.title"
                 defaultMessage="ui.course.table.sections.title"
@@ -418,7 +418,7 @@ function Student(inProps: StudentCourseDashboardProps) {
 
             <Box className={classes.circle} />
 
-            <Typography variant="h5">
+            <Typography variant="h5" className={classes.contrastColor}>
               <FormattedMessage
                 id="ui.course.table.lessons.title"
                 defaultMessage="ui.course.table.lessons.title"
