@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.1.0-alpha.0...@selfcommunity/types@1.1.0-alpha.1) (2026-03-04)
+
+
+### Bug Fixes
+
+* background theme ([53fa7f6](https://github.com/selfcommunity/community-js/commit/53fa7f6197265b9b992620cab75477ff2cb63d85))
+
+
+
+
+
 # [1.1.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.0.5...@selfcommunity/types@1.1.0-alpha.0) (2026-02-27)
 
 
