@@ -1,3 +1,5 @@
+import {darken, getContrastRatio, lighten} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -5,6 +7,12 @@ const Component = {
       padding: `${theme.spacing(0)}!important`,
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
       marginBottom: theme.spacing(1),
+      '& .SCPrivateMessageSnippetItem-contrast-color': {
+        color:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? lighten(theme.palette.common.white, 0.5)
+            : darken(theme.palette.common.white, 0.5)
+      },
       '& .SCPrivateMessageSnippetItem-time': {
         float: 'right',
         fontSize: theme.typography.fontWeightRegular

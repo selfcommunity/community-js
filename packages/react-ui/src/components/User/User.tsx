@@ -35,14 +35,15 @@ const classes = {
   root: `${PREFIX}-root`,
   avatar: `${PREFIX}-avatar`,
   staffBadgeLabel: `${PREFIX}-staff-badge-label`,
-  groupAdminBadgeLabel: `${PREFIX}-group-admin-badge-label`
+  groupAdminBadgeLabel: `${PREFIX}-group-admin-badge-label`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(BaseItemButton, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
-})(({theme}: any) => ({}));
+  overridesResolver: (_props, styles) => styles.root
+})(() => ({}));
 
 export interface UserProps extends WidgetProps {
   /**
@@ -223,7 +224,7 @@ export default function User(inProps: UserProps): JSX.Element {
               {scUser.username}
               <Chip
                 component="span"
-                className={isGroupAdmin ? classes.groupAdminBadgeLabel : classes.staffBadgeLabel}
+                className={classNames(classes.contrastColor, isGroupAdmin ? classes.groupAdminBadgeLabel : classes.staffBadgeLabel)}
                 size="small"
                 label={
                   isGroupAdmin ? (

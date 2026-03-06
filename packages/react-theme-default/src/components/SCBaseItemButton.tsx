@@ -1,3 +1,5 @@
+import {darken, getContrastRatio, lighten} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -27,10 +29,16 @@ const Component = {
           marginTop: theme.spacing(),
           marginBottom: theme.spacing(),
           '& .SCBaseItemButton-primary': {
-            color: theme.palette.text.primary
+            color:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                ? lighten(theme.palette.text.primary, 0.5)
+                : darken(theme.palette.text.primary, 0.5)
           },
           '& .SCBaseItemButton-secondary': {
-            color: theme.palette.text.secondary
+            color:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                ? lighten(theme.palette.text.secondary, 0.5)
+                : darken(theme.palette.text.secondary, 0.5)
           }
         }
       },

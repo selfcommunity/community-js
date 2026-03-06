@@ -297,7 +297,7 @@ export default function PrivateMessageSnippets(inProps: PrivateMessageSnippetsPr
   return (
     <Root {...rest} className={classNames(classes.root, className)}>
       <CardContent>
-        <Button variant="outlined" size="medium" className={classes.newMessageButton} onClick={handleOpenNewMessage}>
+        <Button variant="contained" size="medium" className={classes.newMessageButton} onClick={handleOpenNewMessage}>
           <FormattedMessage id="ui.privateMessage.snippets.button.newMessage" defaultMessage="ui.privateMessage.snippets.button.newMessage" />
         </Button>
         {data.snippets.length !== 0 && (

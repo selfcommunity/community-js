@@ -200,7 +200,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                 <FormattedMessage id="ui.eventHeader.finished" defaultMessage="ui.eventHeader.finished" />
               </Typography>
             }
-            variant="outlined"
+            variant="filled"
             size="medium"
             color="secondary"
             className={classes.chip}
