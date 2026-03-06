@@ -1,4 +1,4 @@
-import {alpha} from '@mui/system';
+import {alpha, getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {
@@ -40,7 +40,10 @@ const Component = {
                 position: 'relative',
                 marginBottom: theme.spacing(1),
                 '&.SCPrivateMessageThread-receiver': {
-                  backgroundColor: theme.palette.common.white,
+                  backgroundColor:
+                    getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+                      ? theme.palette.background.paper
+                      : theme.palette.common.white,
                   marginLeft: theme.spacing(-4),
                   filter: 'drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.1))',
                   '&:after': {
@@ -48,7 +51,10 @@ const Component = {
                     content: `""`,
                     position: 'absolute',
                     border: `${theme.spacing(3)} solid transparent`,
-                    borderTop: `${theme.spacing(3)} solid ${theme.palette.common.white}`,
+                    borderTop:
+                      getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+                        ? `${theme.spacing(3)} solid ${theme.palette.background.paper}`
+                        : `${theme.spacing(3)} solid ${theme.palette.common.white}`,
                     top: theme.spacing(0),
                     left: theme.spacing(-2)
                   }

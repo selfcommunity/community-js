@@ -1,10 +1,12 @@
-import {alpha} from '@mui/system';
+import {alpha, getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
-      backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-
+      backgroundColor:
+        getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+          ? alpha(theme.palette.primary.dark, 0.5)
+          : alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
       '& .SCPrivateMessageEditor-message-input': {
         width: '100%'
       },

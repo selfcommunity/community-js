@@ -1,3 +1,5 @@
+import {darken, getContrastRatio, lighten} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -6,6 +8,12 @@ const Component = {
       overflow: 'visible',
       [theme.breakpoints.up('sm')]: {
         borderRadius: theme.shape.borderRadius
+      },
+      '& .SCUser-contrast-color': {
+        color:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? lighten(theme.palette.common.white, 0.5)
+            : darken(theme.palette.common.white, 0.5)
       },
       '& .MuiChip-root': {
         height: '18px'

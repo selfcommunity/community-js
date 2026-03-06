@@ -1,7 +1,11 @@
+import {darken, getContrastRatio, lighten} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     selectRoot: ({theme}) => ({
-      backgroundColor: theme.palette.grey['A200'],
+      backgroundColor:
+        getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? theme.palette.grey[800] : theme.palette.grey['A200'],
+      color: getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined,
       justifyContent: 'space-between',
       height: 33,
       borderRadius: '5px',
@@ -11,7 +15,8 @@ const Component = {
       },
 
       '&:hover, &:active': {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? theme.palette.grey[900] : theme.palette.common.black,
         color: theme.palette.common.white,
 
         '& .MuiIcon-root': {
@@ -74,6 +79,10 @@ const Component = {
         '& .MuiList-root .SCEventSubscribeButton-item': {
           paddingTop: 0,
           paddingBottom: 0,
+          color:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? lighten(theme.palette.common.white, 0.5)
+              : darken(theme.palette.common.white, 0.5),
           '&.Mui-disabled': {
             paddingTop: theme.spacing(1),
             paddingBottom: theme.spacing(1)
