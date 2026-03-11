@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.1.1-alpha.0...@selfcommunity/react-i18n@1.2.0-alpha.0) (2026-03-11)
+
+
+### Features
+
+* updated some colors to dark mode ([0d9c43c](https://github.com/selfcommunity/community-js/commit/0d9c43c3379dfcb8f6a307d1dc6e464aa271d043))
+
+
+
+
+
 ## [1.1.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.1.0...@selfcommunity/react-i18n@1.1.1-alpha.0) (2026-02-27)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
