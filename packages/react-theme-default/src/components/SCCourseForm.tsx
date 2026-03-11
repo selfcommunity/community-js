@@ -1,13 +1,14 @@
-import {alpha, darken, getContrastRatio, lighten} from '@mui/material';
+import {alpha, getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
-      '& .SCCourseForm-contrast-color': {
-        color:
-          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-            ? lighten(theme.palette.common.white, 0.5)
-            : darken(theme.palette.common.white, 0.5)
+      '& .SCCourseForm-default-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.default)
+      },
+
+      '& .SCCourseForm-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
       },
 
       '& .SCCourseForm-cover': {
@@ -51,6 +52,9 @@ const Component = {
         },
         '& .SCCourseForm-name': {
           marginTop: theme.spacing(3)
+        },
+        '.MuiInputBase-root': {
+          color: theme.palette.getContrastText(theme.palette.background.paper)
         },
         '& .SCCategoryAutocomplete-root ': {
           marginTop: theme.spacing(1)

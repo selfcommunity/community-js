@@ -7,11 +7,12 @@ const Component = {
         marginBottom: '56px'
       },
 
-      '& .SCCourseDashboard-contrast-color': {
-        color:
-          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-            ? lighten(theme.palette.common.white, 0.5)
-            : darken(theme.palette.common.white, 0.5)
+      '& .SCCourseDashboard-default-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.default)
+      },
+
+      '& .SCCourseDashboard-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
       },
 
       '& .SCCourseDashboard-header': {
@@ -231,8 +232,7 @@ const Component = {
               height: '36px'
             },
             '& a': {
-              textDecoration: 'none',
-              color: 'inherit'
+              textDecoration: 'none'
             },
             '& .MuiBadge-root': {
               marginRight: theme.spacing(0.5)

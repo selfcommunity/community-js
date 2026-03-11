@@ -500,7 +500,7 @@ export default function PaywallsConfigurator(inProps: PaywallsConfiguratorProps)
                         slots={{
                           popper: PopperComponent
                         }}
-                        renderTags={() => null}
+                        renderValue={() => null}
                         noOptionsText={
                           <FormattedMessage id="ui.paywallsConfigurator.noProducts" defaultMessage="ui.paywallsConfigurator.noProducts" />
                         }

@@ -1,4 +1,4 @@
-import {darken, getContrastRatio, lighten} from '@mui/material';
+import {getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {
@@ -7,11 +7,12 @@ const Component = {
         marginBottom: '56px'
       },
 
-      '& .SCEditCourse-contrast-color': {
-        color:
-          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-            ? lighten(theme.palette.common.white, 0.5)
-            : darken(theme.palette.common.white, 0.5)
+      '& .SCEditCourse-default-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.default)
+      },
+
+      '& .SCEditCourse-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
       },
 
       '& .SCEditCourse-header': {
@@ -245,11 +246,12 @@ const Component = {
                         ? theme.palette.primary.dark
                         : theme.palette.primary.main,
 
+                    '& .MuiTypography-root': {
+                      color: theme.palette.common.white
+                    },
+
                     '& .MuiIcon-root': {
-                      color:
-                        getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-                          ? lighten(theme.palette.common.white, 0.5)
-                          : darken(theme.palette.common.white, 0.5)
+                      color: theme.palette.common.white
                     }
                   },
 

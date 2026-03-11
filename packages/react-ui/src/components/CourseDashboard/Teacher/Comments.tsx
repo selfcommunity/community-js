@@ -21,7 +21,7 @@ const classes = {
   userInfo: `${PREFIX}-user-info`,
   circle: `${PREFIX}-circle`,
   button: `${PREFIX}-button`,
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 interface CommentsProps {
@@ -158,7 +158,7 @@ function Comments(props: CommentsProps) {
 
     return Array.from(map.entries()).map(([name, comments]) => (
       <Box key={name} className={classes.outerWrapper}>
-        <Typography variant="h5" className={classes.contrastColor}>
+        <Typography variant="h5" className={classes.paperContrastColor}>
           {name}
         </Typography>
         <Divider />
@@ -169,18 +169,18 @@ function Comments(props: CommentsProps) {
 
               <Box>
                 <Stack className={classes.userInfo}>
-                  <Typography variant="body1" className={classes.contrastColor}>
+                  <Typography variant="body1" className={classes.paperContrastColor}>
                     {comment.created_by.username}
                   </Typography>
 
                   <Box className={classes.circle} />
 
-                  <Typography variant="body2" className={classes.contrastColor}>
+                  <Typography variant="body2" className={classes.paperContrastColor}>
                     <FormattedDate value={comment.created_at} />
                   </Typography>
                 </Stack>
 
-                <Typography variant="body1" component="div" dangerouslySetInnerHTML={{__html: comment.html}} className={classes.contrastColor} />
+                <Typography variant="body1" component="div" dangerouslySetInnerHTML={{__html: comment.html}} className={classes.paperContrastColor} />
               </Box>
             </Stack>
           ))}
@@ -195,7 +195,7 @@ function Comments(props: CommentsProps) {
             variant="contained"
             color="inherit"
             className={classes.button}>
-            <Typography variant="body2" className={classes.contrastColor}>
+            <Typography variant="body2" className={classes.paperContrastColor}>
               <FormattedMessage
                 id="ui.course.dashboard.teacher.tab.comments.lessons.btn.label"
                 defaultMessage="ui.course.dashboard.teacher.tab.comments.lessons.btn.label"
@@ -215,7 +215,7 @@ function Comments(props: CommentsProps) {
     <Box className={classes.container}>
       {state.count > 0 ? (
         <Fragment>
-          <Typography variant="body1" className={classes.contrastColor}>
+          <Typography variant="body1" className={classes.paperContrastColor}>
             <FormattedMessage
               id="ui.course.dashboard.teacher.tab.comments.number"
               defaultMessage="ui.course.dashboard.teacher.tab.comments.number"
@@ -228,7 +228,7 @@ function Comments(props: CommentsProps) {
           {isLoading && <CommentSkeleton id={1} />}
 
           <Button size="small" variant="contained" color="inherit" loading={isLoading} disabled={!state.next} onClick={handleNext}>
-            <Typography variant="body2" className={classes.contrastColor}>
+            <Typography variant="body2" className={classes.paperContrastColor}>
               <FormattedMessage
                 id="ui.course.dashboard.teacher.tab.comments.btn.label"
                 defaultMessage="ui.course.dashboard.teacher.tab.comments.btn.label"
@@ -237,7 +237,7 @@ function Comments(props: CommentsProps) {
           </Button>
         </Fragment>
       ) : (
-        <Typography variant="body2" className={classes.contrastColor}>
+        <Typography variant="body2" className={classes.paperContrastColor}>
           <FormattedMessage id="ui.course.dashboard.teacher.tab.comments.empty" defaultMessage="ui.course.dashboard.teacher.tab.comments.empty" />
         </Typography>
       )}

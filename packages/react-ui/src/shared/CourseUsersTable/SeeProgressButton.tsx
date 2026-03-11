@@ -27,7 +27,8 @@ const classes = {
   infoInnerWrapper: `${PREFIX}-info-inner-wrapper`,
   avatarWrapper: `${PREFIX}-avatar-wrapper`,
   avatar: `${PREFIX}-avatar`,
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`,
+  dialogPaperContrastColor: `${PREFIX}-dialog-paper-contrast-color`
 };
 
 const DialogRoot = styled(BaseDialog, {
@@ -84,7 +85,7 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
         </IconButton>
       ) : (
         <Button variant="contained" size="small" color="inherit" onClick={handleToggleOpen}>
-          <Typography variant="body2" className={classes.contrastColor}>
+          <Typography variant="body2" className={classes.paperContrastColor}>
             <FormattedMessage id="ui.courseUsersTable.action.btn.label" defaultMessage="ui.courseUsersTable.action.btn.label" />
           </Typography>
         </Button>
@@ -110,7 +111,7 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
                       <Avatar className={classes.avatar} src={user.avatar} alt={user.username} />
                     </UserAvatar>
                   </Link>
-                  <Typography variant="body1" className={classes.contrastColor}>
+                  <Typography variant="body1" className={classes.dialogPaperContrastColor}>
                     {user.username}
                   </Typography>
                 </Stack>
@@ -122,7 +123,7 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
                     variant="contained"
                     size="small"
                     color="inherit">
-                    <Typography variant="body2" className={classes.contrastColor}>
+                    <Typography variant="body2" className={classes.dialogPaperContrastColor}>
                       <FormattedMessage id="ui.courseUsersTable.dialog.btn.label" defaultMessage="ui.courseUsersTable.dialog.btn.label" />
                     </Typography>
                   </Button>
@@ -130,7 +131,7 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
               </Stack>
 
               {student ? (
-                <Typography variant="body1" className={classes.contrastColor}>
+                <Typography variant="body1" className={classes.dialogPaperContrastColor}>
                   <FormattedMessage
                     id="ui.courseUsersTable.dialog.info.text1"
                     defaultMessage="ui.courseUsersTable.dialog.info.text1"
@@ -142,7 +143,7 @@ function SeeProgressButton(props: SeeProgressButtonProps) {
               )}
 
               {student ? (
-                <Typography variant="body1" className={classes.contrastColor}>
+                <Typography variant="body1" className={classes.dialogPaperContrastColor}>
                   <FormattedMessage
                     id="ui.courseUsersTable.dialog.info.text2"
                     defaultMessage="ui.courseUsersTable.dialog.info.text2"

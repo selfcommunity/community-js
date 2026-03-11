@@ -32,12 +32,13 @@ import {AxiosResponse} from 'axios';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import ChangeUserStatus from './ChangeUsersStatus';
-import {SCUserContextType, useSCUser} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCUserContextType, useSCRouting, useSCUser} from '@selfcommunity/react-core';
 import RequestButton from './RequestButton';
 import {SCCourseUsersTableModeType} from '../../types/course';
 import RemoveButton from './RemoveButton';
 import ConfirmDialog from '../ConfirmDialog/ConfirmDialog';
 import {SCCourseEditManageUserProps, SCCourseEditManageUserRef, SCCourseEditTabType} from '../../types/course';
+import {getUrlEditDashboard} from '../../utils/course';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -48,7 +49,7 @@ const classes = {
   progressWrapper: `${PREFIX}-progress-wrapper`,
   progress: `${PREFIX}-progress`,
   loadingButton: `${PREFIX}-loading-button`,
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 const Root = styled(Box, {
@@ -104,6 +105,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
 
   // CONTEXTS
   const scUserContext: SCUserContextType = useSCUser();
+  const scRoutingContext: SCRoutingContextType = useSCRouting();
 
   // INTL
   const intl = useIntl();
@@ -267,7 +269,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
 
                 return (
                   <TableCell width={mode === SCCourseUsersTableModeType.DASHBOARD ? '20%' : '25%'} key={i}>
-                    <Typography variant="body2" className={classes.contrastColor}>
+                    <Typography variant="body2" className={classes.paperContrastColor}>
                       <FormattedMessage id={cell.id} defaultMessage={cell.id} />
                     </Typography>
                   </TableCell>
@@ -283,7 +285,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                   <TableCell>
                     <Stack className={classes.avatarWrapper}>
                       <Avatar alt={user.username} src={user.avatar} />
-                      <Typography variant="body2" className={classes.contrastColor}>
+                      <Typography variant="body2" className={classes.paperContrastColor}>
                         {user.username}
                       </Typography>
                     </Stack>
@@ -293,7 +295,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                       <Stack className={classes.progressWrapper}>
                         <LinearProgress className={classes.progress} variant="determinate" value={user.user_completion_rate} />
 
-                        <Typography variant="body1" className={classes.contrastColor}>{`${Math.round(user.user_completion_rate)}%`}</Typography>
+                        <Typography variant="body1" className={classes.paperContrastColor}>{`${Math.round(user.user_completion_rate)}%`}</Typography>
                       </Stack>
                     </TableCell>
                   )}
@@ -302,7 +304,7 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                       {user.join_status !== SCCourseJoinStatusType.CREATOR && scUserContext.user.id !== user.id ? (
                         <ChangeUserStatus course={course} user={user} />
                       ) : (
-                        <Typography variant="body2" className={classes.contrastColor}>
+                        <Typography variant="body2" className={classes.paperContrastColor}>
                           <FormattedMessage
                             id={`ui.editCourse.tab.users.table.select.${user.join_status}`}
                             defaultMessage={`ui.editCourse.tab.users.table.select.${user.join_status}`}
@@ -312,12 +314,12 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
                     </TableCell>
                   )}
                   <TableCell>
-                    <Typography variant="body2" className={classes.contrastColor}>
+                    <Typography variant="body2" className={classes.paperContrastColor}>
                       <FormattedDate value={mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.joined_at || new Date()} />
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography variant="body2" className={classes.contrastColor}>
+                    <Typography variant="body2" className={classes.paperContrastColor}>
                       <FormattedDate value={mode === SCCourseUsersTableModeType.REQUESTS ? user.date_joined : user.last_active_at || new Date()} />
                     </Typography>
                   </TableCell>
@@ -347,16 +349,16 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
         </Table>
       </TableContainer>
 
-      {users.length > 0 && (
+      {users.length > 0 && state.next && (
         <Button
           size="small"
           variant="contained"
           color="inherit"
           loading={state.isLoadingNext}
-          disabled={value.length > 0 || !state.next}
+          disabled={value.length > 0}
           className={classes.loadingButton}
           onClick={handleNext}>
-          <Typography variant="body2" className={classes.contrastColor}>
+          <Typography variant="body2" className={classes.paperContrastColor}>
             <FormattedMessage id="ui.courseUsersTable.btn.label" defaultMessage="ui.courseUsersTable.btn.label" />
           </Typography>
         </Button>
@@ -367,6 +369,20 @@ function CourseUsersTable(inProps: CourseUsersTableProps) {
           icon="face"
           title={value.length > 0 ? 'ui.courseUsersTable.empty.search.title' : emptyStatusTitle}
           description={value.length > 0 ? 'ui.courseUsersTable.empty.search.description' : emptyStatusDescription}
+          actions={
+            value.length === 0 && (
+              <Button
+                component={Link}
+                to={scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, getUrlEditDashboard(course, SCCourseEditTabType.USERS))}
+                size="small"
+                variant="contained"
+                color="primary">
+                <Typography variant="body2">
+                  <FormattedMessage id="ui.courseUsersTable.empty.btn.label" defaultMessage="ui.courseUsersTable.empty.btn.label" />
+                </Typography>
+              </Button>
+            )
+          }
         />
       )}
 

@@ -2,13 +2,12 @@ import {Button, Chip, Typography} from '@mui/material';
 import {useIntl} from 'react-intl';
 import {PREFIX} from './constants';
 import {SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
-import classNames from 'classnames';
 import {SyntheticEvent, useCallback} from 'react';
 import {SCCourseEditTabType} from '../../types';
 
 const classes = {
   status: `${PREFIX}-status`,
-  contrastColor: `${PREFIX}-contrast-color`
+  defaultContrastColor: `${PREFIX}-default-contrast-color`
 };
 
 interface StatusProps {
@@ -32,7 +31,7 @@ export default function Status(props: StatusProps) {
     <Chip
       label={
         <Button size="small" variant="text" color="inherit" onClick={handleClick}>
-          <Typography variant="body1">
+          <Typography variant="body1" className={classes.defaultContrastColor}>
             {intl.formatMessage(
               {id: 'ui.editCourse.tab.lessons.status', defaultMessage: 'ui.editCourse.tab.lessons.status'},
               {
@@ -50,7 +49,7 @@ export default function Status(props: StatusProps) {
           </Typography>
         </Button>
       }
-      className={classNames(classes.status, classes.contrastColor)}
+      className={classes.status}
     />
   );
 }

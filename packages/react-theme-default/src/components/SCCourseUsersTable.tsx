@@ -18,11 +18,12 @@ const Component = {
         padding: theme.spacing(2)
       },
 
-      '& .SCCourseUsersTable-contrast-color': {
-        color:
-          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-            ? lighten(theme.palette.common.white, 0.5)
-            : darken(theme.palette.common.white, 0.5)
+      '& .SCCourseUsersTable-default-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.default)
+      },
+
+      '& .SCCourseUsersTable-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
       },
 
       '& .SCCourseUsersTable-search': {
@@ -92,6 +93,10 @@ const Component = {
       paddingTop: theme.spacing(3)
     }),
     dialogRoot: ({theme}) => ({
+      '& .SCCourseUsersTable-dialog-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
+      },
+
       '& .MuiDialogTitle-root': {
         color:
           getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5

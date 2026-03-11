@@ -23,7 +23,8 @@ const classes = {
   endMessage: `${PREFIX}-end-message`,
   infiniteScroll: `${PREFIX}-infinite-scroll`,
   participants: `${PREFIX}-participants`,
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`,
+  dialogPaperContrastColor: `${PREFIX}-dialog-paper-contrast-color`
 };
 
 const Root = styled(Button, {
@@ -199,7 +200,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
         enrolled={enrolled}
         {...rest}>
         {!hideCaption && (
-          <Typography className={classNames(classes.participants, classes.contrastColor)}>
+          <Typography className={classNames(classes.participants, classes.paperContrastColor)}>
             <Icon>people_alt</Icon>
             <FormattedMessage
               defaultMessage="ui.courseParticipantsButton.participants"
@@ -212,7 +213,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
         {!count && (loading || !scCourse) ? (
           <AvatarGroupSkeleton {...rest} {...(!participantsAvailable && {skeletonsAnimation: false})} count={4} />
         ) : (
-          <AvatarGroup total={count} renderSurplus={renderSurplus} className={classes.contrastColor}>
+          <AvatarGroup total={count} renderSurplus={renderSurplus} className={classes.paperContrastColor}>
             {enrolled.map((c: SCUserType) => (
               <Avatar key={c.id} alt={c.username} src={c.avatar} />
             ))}
@@ -224,11 +225,13 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
         <DialogRoot
           className={classes.dialogRoot}
           title={
-            <FormattedMessage
-              defaultMessage="ui.courseParticipantsButton.dialogTitle"
-              id="ui.courseParticipantsButton.dialogTitle"
-              values={{total: count}}
-            />
+            <Typography component="span" className={classes.dialogPaperContrastColor}>
+              <FormattedMessage
+                defaultMessage="ui.courseParticipantsButton.dialogTitle"
+                id="ui.courseParticipantsButton.dialogTitle"
+                values={{total: count}}
+              />
+            </Typography>
           }
           onClose={handleToggleDialogOpen}
           open
@@ -240,7 +243,7 @@ export default function CourseParticipantsButton(inProps: CourseParticipantsButt
             loaderNext={<UserSkeleton elevation={0} />}
             className={classes.infiniteScroll}
             endMessage={
-              <Typography className={classNames(classes.endMessage, classes.contrastColor)}>
+              <Typography className={classNames(classes.endMessage, classes.dialogPaperContrastColor)}>
                 <FormattedMessage
                   id="ui.courseParticipantsButton.noOtherParticipants"
                   defaultMessage="ui.courseParticipantsButton.noOtherParticipants"

@@ -111,12 +111,14 @@ export default function ContributorsFeedObject(props: ContributorsFeedObjectProp
             {contributorsObject.contributors.length > 0 ? (
               <>
                 <Button variant="text" onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}} color="inherit">
-                  <FormattedMessage id="ui.feedObject.contributors.participants" defaultMessage="ui.feedObject.contributors.participants" />:
+                  <Typography component="span" sx={{'&': {all: 'unset'}}}>
+                    <FormattedMessage id="ui.feedObject.contributors.participants" defaultMessage="ui.feedObject.contributors.participants" />:
+                  </Typography>
                   <AvatarGroup {...rest}>
                     {contributorsObject.contributors.map((c: SCUserType, i) => (
                       <Avatar alt={c.username} src={c.avatar} key={i} />
                     ))}
-                    {[...Array(Math.max(contributorsObject.total - contributorsObject.contributors.length, 0))].map((x, i) => (
+                    {[...Array(Math.max(contributorsObject.total - contributorsObject.contributors.length, 0))].map((_x, i) => (
                       <Avatar key={i}></Avatar>
                     ))}
                   </AvatarGroup>

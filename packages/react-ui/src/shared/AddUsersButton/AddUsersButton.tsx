@@ -10,6 +10,7 @@ import {
   styled,
   TextField,
   Typography,
+  useTheme,
   useThemeProps
 } from '@mui/material';
 import {Fragment, memo, SyntheticEvent, useCallback, useEffect, useState} from 'react';
@@ -23,16 +24,18 @@ import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
 import classNames from 'classnames';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const PREFIX = 'SCAddUsersButton';
 
 const classes = {
   root: `${PREFIX}-root`,
+  defaultContrastColor: `${PREFIX}-default-contrast-color`,
   dialogRoot: `${PREFIX}-dialog-root`,
   dialogAutocompleteWrapper: `${PREFIX}-dialog-autocomplete-wrapper`,
   dialogUserWrapper: `${PREFIX}-dialog-user-wrapper`,
   dialogChipWrapper: `${PREFIX}-dialog-chip-wrapper`,
-  contrastColor: `${PREFIX}-contrast-color`
+  dialogPaperContrastColor: `${PREFIX}-dialog-paper-contrast-color`
 };
 
 const messages = defineMessages({
@@ -90,7 +93,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
 
   const {
     label,
-    variant = 'outlined',
+    variant = 'contained',
     color = 'inherit',
     size = 'small',
     endpoint = Endpoints.GetCourseSuggestedUsers,
@@ -107,9 +110,12 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
   const [value, setValue] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
+  // CONTEXTS
+  const {enqueueSnackbar} = useSnackbar();
+
   // HOOKS
   const intl = useIntl();
-  const {enqueueSnackbar} = useSnackbar();
+  const theme = useTheme<SCThemeType>();
 
   // CALLBACKS
   const fetchUsers = useCallback(
@@ -223,7 +229,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
         variant={variant}
         color={color}
         size={size}
-        className={classNames(classes.root, classes.contrastColor, className)}
+        className={classNames(classes.root, classes.defaultContrastColor, className)}
         {...rest}>
         <FormattedMessage id={label} defaultMessage={label} />
       </Root>
@@ -234,7 +240,7 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
           open
           onClose={handleToggleDialogOpen}
           title={
-            <Typography variant="h5">
+            <Typography variant="h5" className={classes.dialogPaperContrastColor}>
               <FormattedMessage id="ui.addUserButton.dialog.title" defaultMessage="ui.addUserButton.dialog.title" />
             </Typography>
           }
@@ -259,17 +265,23 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
               value={invited}
               getOptionLabel={(option) => option?.username || '...'}
               isOptionEqualToValue={(option, value) => option?.id === value.id}
-              loadingText={<FormattedMessage id="ui.addUserButton.autocomplete.loading" defaultMessage="ui.addUserButton.autocomplete.loading" />}
-              noOptionsText={
-                <FormattedMessage id="ui.addUserButton.autocomplete.noResults" defaultMessage="ui.addUserButton.autocomplete.noResults" />
+              loadingText={
+                <Typography component="span" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
+                  <FormattedMessage id="ui.addUserButton.autocomplete.loading" defaultMessage="ui.addUserButton.autocomplete.loading" />
+                </Typography>
               }
-              renderTags={() => null}
+              noOptionsText={
+                <Typography component="span" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
+                  <FormattedMessage id="ui.addUserButton.autocomplete.noResults" defaultMessage="ui.addUserButton.autocomplete.noResults" />
+                </Typography>
+              }
+              renderValue={() => null}
               popupIcon={null}
               disableClearable
               renderOption={(props, option) => (
                 <Stack component="li" flexDirection="row" gap="5px" {...props}>
                   <Avatar alt={option.username} src={option.avatar} />
-                  <Typography>{option.username}</Typography>
+                  <Typography sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>{option.username}</Typography>
                 </Stack>
               )}
               renderInput={(params) => (
@@ -279,7 +291,13 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
                   placeholder={`${intl.formatMessage(messages.placeholder)}`}
                   slotProps={{
                     input: {
-                      ...params.InputProps
+                      ...params.InputProps,
+                      sx: {
+                        '&::placeholder': {
+                          color: theme.palette.getContrastText(theme.palette.background.paper)
+                        },
+                        color: theme.palette.getContrastText(theme.palette.background.paper)
+                      }
                     }
                   }}
                 />
@@ -290,7 +308,11 @@ function AddUsersButton(inProps: AddUsersButtonProps) {
                 <Chip
                   key={index}
                   avatar={<Avatar alt={option.username} src={option.avatar} />}
-                  label={option.username}
+                  label={
+                    <Typography component="span" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
+                      {option.username}
+                    </Typography>
+                  }
                   onDelete={() => {
                     handleDelete(option);
                   }}

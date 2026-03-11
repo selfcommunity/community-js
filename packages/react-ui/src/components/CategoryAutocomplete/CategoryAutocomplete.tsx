@@ -2,15 +2,26 @@ import {SyntheticEvent, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {Autocomplete, AutocompleteProps, Chip, TextField, TextFieldProps, Checkbox, CircularProgress, styled, Typography} from '@mui/material';
-import {useSCFetchCategories} from '@selfcommunity/react-core';
+import {
+  Autocomplete,
+  AutocompleteProps,
+  Chip,
+  TextField,
+  TextFieldProps,
+  Checkbox,
+  CircularProgress,
+  styled,
+  Typography,
+  useTheme
+} from '@mui/material';
+import {SCThemeType, useSCFetchCategories} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 
 const classes = {
   root: `${PREFIX}-root`,
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 export interface CategoryAutocompleteProps
@@ -119,6 +130,7 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
 
   // HOOKS
   const {categories, isLoading} = useSCFetchCategories({endpointQueryParams});
+  const theme = useTheme<SCThemeType>();
 
   useEffect(() => {
     onChange?.(value);
@@ -171,7 +183,11 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
       handleHomeEndKeys
       clearIcon={null}
       disabled={disabled || isLoading}
-      noOptionsText={<FormattedMessage id="ui.categoryAutocomplete.empty" defaultMessage="ui.categoryAutocomplete.empty" />}
+      noOptionsText={
+        <Typography component="span" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
+          <FormattedMessage id="ui.categoryAutocomplete.empty" defaultMessage="ui.categoryAutocomplete.empty" />
+        </Typography>
+      }
       onChange={handleChange}
       isOptionEqualToValue={(option: SCCategoryType, value: SCCategoryType) => value.id === option.id}
       renderValue={(value: any, getItemProps: any) => {
@@ -183,7 +199,7 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
                 key={key}
                 id={option.id}
                 label={
-                  <Typography component="span" className={classes.contrastColor}>
+                  <Typography component="span" className={classes.paperContrastColor}>
                     {option.name}
                   </Typography>
                 }
@@ -198,7 +214,7 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
           <Chip
             id={value.id}
             label={
-              <Typography component="span" className={classes.contrastColor}>
+              <Typography component="span" className={classes.paperContrastColor}>
                 {value.name}
               </Typography>
             }
@@ -217,7 +233,10 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
             {checkboxSelect && <Checkbox style={{marginRight: 8}} checked={selected} />}
             <Chip
               label={parts.map((part, index: number) => (
-                <Typography component="span" key={index} style={{fontWeight: part.highlight ? 700 : 400}}>
+                <Typography
+                  component="span"
+                  key={index}
+                  sx={{fontWeight: part.highlight ? 700 : 400, color: theme.palette.getContrastText(theme.palette.background.paper)}}>
                   {part.text}
                 </Typography>
               ))}

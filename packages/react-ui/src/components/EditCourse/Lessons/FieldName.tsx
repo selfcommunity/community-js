@@ -16,7 +16,7 @@ const classes = {
   editModeWrapper: `${PREFIX}-edit-mode-wrapper`,
   editModeSaveButton: `${PREFIX}-edit-mode-save-button`,
   editModeCloseButton: `${PREFIX}-edit-mode-close-button`,
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 interface FieldNameProps<T> {
@@ -124,7 +124,7 @@ function FieldName<T extends SCCourseSectionType>(props: FieldNameProps<T>) {
           </IconButton>
         </Stack>
       ) : (
-        <Typography variant="body1" className={classes.contrastColor}>
+        <Typography variant="body1" className={classes.paperContrastColor}>
           {row.name}
         </Typography>
       )}

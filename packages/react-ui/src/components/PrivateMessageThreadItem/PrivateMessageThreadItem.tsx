@@ -27,6 +27,7 @@ const classes = {
   messageTime: `${PREFIX}-message-time`,
   menuItem: `${PREFIX}-menu-item`,
   downloadButton: `${PREFIX}-download-button`,
+  paperContrastColor: `${PREFIX}-paper-contrast-color`,
   dialogRoot: `${PREFIX}-dialog-root`
 };
 
@@ -247,13 +248,16 @@ export default function PrivateMessageThreadItem(inProps: PrivateMessageThreadIt
           renderMessageFile(message)
         ) : (
           <Box className={classes.text}>
-            <Typography component="span" dangerouslySetInnerHTML={{__html: message.message}} />
+            <Typography component="span" dangerouslySetInnerHTML={{__html: message.message}} className={classes.paperContrastColor} />
           </Box>
         )}
-        <Typography className={classes.messageTime} color="text.secondary">{`${intl.formatDate(message.created_at, {
-          hour: 'numeric',
-          minute: 'numeric'
-        })}`}</Typography>
+        <Typography className={classNames(classes.messageTime, classes.paperContrastColor)} color="text.secondary">{`${intl.formatDate(
+          message.created_at,
+          {
+            hour: 'numeric',
+            minute: 'numeric'
+          }
+        )}`}</Typography>
       </>
       {openDialog && (
         <>

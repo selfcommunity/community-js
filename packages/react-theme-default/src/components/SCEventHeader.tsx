@@ -3,12 +3,6 @@ import {alpha, darken, getContrastRatio, lighten} from '@mui/material';
 const Component = {
   styleOverrides: {
     root: ({theme, isEventAdmin, isEventFinished}: any) => ({
-      '& .SCEventHeader-contrast-color': {
-        color:
-          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-            ? lighten(theme.palette.common.white, 0.5)
-            : darken(theme.palette.common.white, 0.5)
-      },
       '& .SCEventHeader-cover': {
         position: 'relative',
         minHeight: 150,
@@ -51,7 +45,7 @@ const Component = {
         marginLeft: theme.spacing(2),
         marginBottom: theme.spacing(),
         border:
-          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+          getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
             ? '1px solid rgba(255, 255, 255, 0.12)'
             : `1px solid ${theme.palette.grey[400]}`,
         '& .SCEventHeader-chip-icon': {
@@ -62,10 +56,11 @@ const Component = {
         textTransform: 'uppercase',
         fontSize: '1.143rem',
         fontWeight: theme.typography.fontWeightLight,
-        color:
-          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-            ? lighten(isEventFinished ? theme.palette.grey[500] : theme.palette.text.secondary, 0.5)
-            : darken(isEventFinished ? theme.palette.grey[500] : theme.palette.text.secondary, 0.5),
+        color: isEventFinished
+          ? getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+            ? lighten(theme.palette.grey[500], 0.5)
+            : darken(theme.palette.grey[500], 0.5)
+          : theme.palette.getContrastText(theme.palette.background.default),
         paddingLeft: theme.spacing(2)
       },
       '& .SCEventHeader-info': {
@@ -74,10 +69,11 @@ const Component = {
           fontSize: '1.857rem',
           fontWeight: theme.typography.fontWeightBold,
           paddingLeft: theme.spacing(2),
-          color:
-            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-              ? lighten(isEventFinished ? theme.palette.grey[500] : theme.palette.common.white, 0.5)
-              : darken(isEventFinished ? theme.palette.grey[500] : theme.palette.common.white, 0.5)
+          color: isEventFinished
+            ? getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+              ? lighten(theme.palette.grey[500], 0.5)
+              : darken(theme.palette.grey[500], 0.5)
+            : theme.palette.getContrastText(theme.palette.background.default)
         },
         '& .SCEventHeader-visibility': {
           display: 'flex',
@@ -88,10 +84,11 @@ const Component = {
           '& .SCEventHeader-visibility-item': {
             fontSize: theme.typography.fontSize,
             fontWeight: theme.typography.fontWeightLight,
-            color:
-              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-                ? lighten(isEventFinished ? theme.palette.grey[500] : theme.palette.common.white, 0.5)
-                : darken(isEventFinished ? theme.palette.grey[500] : theme.palette.common.white, 0.5),
+            color: isEventFinished
+              ? getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+                ? lighten(theme.palette.grey[500], 0.5)
+                : darken(theme.palette.grey[500], 0.5)
+              : theme.palette.getContrastText(theme.palette.background.default),
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',

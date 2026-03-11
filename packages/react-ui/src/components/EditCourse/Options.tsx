@@ -16,7 +16,7 @@ const classes = {
   optionsWrapper: `${PREFIX}-options-wrapper`,
   optionsDivider: `${PREFIX}-options-divider`,
   optionsButtonWrapper: `${PREFIX}-options-button-wrapper`,
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 const OPTIONS = {
@@ -131,7 +131,7 @@ function Options(props: OptionsProps) {
 
       <Stack className={classes.optionsButtonWrapper}>
         <Button size="small" variant="contained" disabled={!canSave} onClick={handleSubmit} loading={loading}>
-          <Typography variant="body1" className={classes.contrastColor}>
+          <Typography variant="body1">
             <FormattedMessage id="ui.editCourse.tab.options.button.save" defaultMessage="ui.editCourse.tab.options.button.save" />
           </Typography>
         </Button>

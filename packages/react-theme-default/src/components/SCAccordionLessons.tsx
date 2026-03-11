@@ -1,4 +1,4 @@
-import {darken, getContrastRatio, lighten} from '@mui/material';
+import {getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {
@@ -13,11 +13,8 @@ const Component = {
           : `1px solid ${theme.palette.grey[300]}`,
       borderRadius: '5px',
 
-      '& .SCAccordionLessons-contrast-color': {
-        color:
-          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-            ? lighten(theme.palette.common.white, 0.5)
-            : darken(theme.palette.common.white, 0.5)
+      '& .SCAccordionLessons-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
       },
 
       '& .SCAccordionLessons-empty': {

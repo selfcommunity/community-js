@@ -60,7 +60,10 @@ const Component = {
                   }
                 },
                 '&.SCPrivateMessageThread-sender': {
-                  backgroundColor: theme.palette.grey[300],
+                  backgroundColor:
+                    getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+                      ? theme.palette.grey[600]
+                      : theme.palette.grey[300],
                   position: 'relative',
                   marginLeft: 'auto',
                   marginRight: theme.spacing(1),
@@ -68,7 +71,10 @@ const Component = {
                     content: `""`,
                     position: 'absolute',
                     border: `${theme.spacing(3)} solid transparent`,
-                    borderTop: `${theme.spacing(3)} solid ${theme.palette.grey[300]}`,
+                    borderTop:
+                      getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+                        ? `${theme.spacing(3)} solid ${theme.palette.grey[600]}`
+                        : `${theme.spacing(3)} solid ${theme.palette.grey[300]}`,
                     top: theme.spacing(0),
                     right: theme.spacing(-2)
                   }
