@@ -1,8 +1,8 @@
-import {Divider, FormControl, FormControlLabel, FormLabel, Skeleton, Stack, Switch} from '@mui/material';
+import {Box, Divider, FormControl, FormControlLabel, FormLabel, Skeleton, Stack, Switch} from '@mui/material';
 import {PREFIX} from '../constants';
-import {Fragment} from 'react';
 
 const classes = {
+  optionsContainer: `${PREFIX}-options-container`,
   optionsWrapper: `${PREFIX}-options-wrapper`,
   optionsDivider: `${PREFIX}-options-divider`,
   optionsButtonWrapper: `${PREFIX}-options-button-wrapper`
@@ -10,7 +10,7 @@ const classes = {
 
 export default function OptionsSkeleton() {
   return (
-    <Fragment>
+    <Box className={classes.optionsContainer}>
       <Stack className={classes.optionsWrapper}>
         {Array.from(Array(3)).map((_, i) => (
           <FormControl key={i} component="fieldset" variant="standard">
@@ -27,6 +27,6 @@ export default function OptionsSkeleton() {
       <Stack className={classes.optionsButtonWrapper}>
         <Skeleton animation="wave" variant="rounded" width="133px" height="33px" />
       </Stack>
-    </Fragment>
+    </Box>
   );
 }
