@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.0-alpha.4...@selfcommunity/react-ui@1.2.0-alpha.5) (2026-03-11)
+
+
+### Features
+
+* updated some colors to dark mode ([bf605ea](https://github.com/selfcommunity/community-js/commit/bf605eaa11c1dee95b08ec89ab4ff062089b4eb1))
+
+
+
+
+
 # [1.2.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.0-alpha.3...@selfcommunity/react-ui@1.2.0-alpha.4) (2026-03-11)
 
 
