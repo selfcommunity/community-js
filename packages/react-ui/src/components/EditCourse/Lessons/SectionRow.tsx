@@ -1,6 +1,6 @@
 import {DragDropContext, Draggable, DraggableProvided, Droppable, DropResult} from '@hello-pangea/dnd';
 import {forwardRef, Fragment, memo, Ref, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState} from 'react';
-import {Collapse, Icon, IconButton, MenuItem, Stack, Table, TableBody, TableCell, TableRow, Typography} from '@mui/material';
+import {Collapse, Icon, IconButton, MenuItem, Stack, Table, TableBody, TableCell, TableRow, Typography, useTheme} from '@mui/material';
 import classNames from 'classnames';
 import {PREFIX} from '../constants';
 import LessonRow from './LessonRow';
@@ -16,6 +16,7 @@ import {SCCourseLessonType, SCCourseLessonTypologyType, SCCourseSectionType, SCC
 import {CourseService, Endpoints} from '@selfcommunity/api-services';
 import {ActionLessonType, DeleteRowProps, DeleteRowRef, RowType} from '../types';
 import {useIsDisabled} from '../hooks';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const classes = {
   tableBodyIconWrapper: `${PREFIX}-table-body-icon-wrapper`,
@@ -25,8 +26,7 @@ const classes = {
   cellWidth: `${PREFIX}-cell-width`,
   cellAlignRight: `${PREFIX}-cell-align-right`,
   cellAlignCenter: `${PREFIX}-cell-align-center`,
-  cellPadding: `${PREFIX}-cell-padding`,
-  contrastColor: `${PREFIX}-contrast-color`
+  cellPadding: `${PREFIX}-cell-padding`
 };
 
 interface SectionRowProps {
@@ -54,6 +54,7 @@ function SectionRow(props: SectionRowProps, ref: Ref<DeleteRowRef>) {
   const {isDisabled} = useIsDisabled();
   const intl = useIntl();
   const {enqueueSnackbar} = useSnackbar();
+  const theme = useTheme<SCThemeType>();
 
   // EFFECTS
   useEffect(() => {
@@ -279,12 +280,12 @@ function SectionRow(props: SectionRowProps, ref: Ref<DeleteRowRef>) {
 
             <MenuRow disabled={isDisabled}>
               <MenuItem onClick={handleAbleEditMode}>
-                <Typography variant="body1" className={classes.contrastColor}>
+                <Typography variant="body1" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
                   <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
                 </Typography>
               </MenuItem>
               <MenuItem onClick={() => handleOpenDialog({row: RowType.SECTION, section})}>
-                <Typography variant="body1" className={classes.contrastColor}>
+                <Typography variant="body1" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
                   <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
                 </Typography>
               </MenuItem>

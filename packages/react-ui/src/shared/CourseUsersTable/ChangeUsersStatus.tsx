@@ -1,4 +1,4 @@
-import {Button, MenuItem, Select, SelectChangeEvent, Typography} from '@mui/material';
+import {Button, MenuItem, Select, SelectChangeEvent, Typography, useTheme} from '@mui/material';
 import {memo, useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {SCCourseJoinStatusType, SCCourseType, SCUserType} from '@selfcommunity/types';
@@ -6,13 +6,9 @@ import {CourseService, CourseUserRoleParams} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {useSnackbar} from 'notistack';
-import {PREFIX} from './constants';
+import {SCThemeType} from '@selfcommunity/react-core';
 
 const OPTIONS = ['ui.editCourse.tab.users.table.select.joined', 'ui.editCourse.tab.users.table.select.manager'];
-
-const classes = {
-  contrastColor: `${PREFIX}-contrast-color`
-};
 
 interface ChangeUserStatusProps {
   course: SCCourseType;
@@ -29,6 +25,9 @@ function ChangeUserStatus(props: ChangeUserStatusProps) {
 
   // CONTEXTS
   const {enqueueSnackbar} = useSnackbar();
+
+  // HOOKS
+  const theme = useTheme<SCThemeType>();
 
   // EFFECTS
   useEffect(() => {
@@ -90,7 +89,7 @@ function ChangeUserStatus(props: ChangeUserStatusProps) {
                 backgroundColor: 'unset'
               }
             }}>
-            <Typography variant="body1" className={classes.contrastColor}>
+            <Typography variant="body1" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
               <FormattedMessage id={option} defaultMessage={option} />
             </Typography>
           </Button>

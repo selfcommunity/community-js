@@ -1,3 +1,5 @@
+import {getContrastRatio} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme, subscribers}: any) => ({
@@ -17,7 +19,10 @@ const Component = {
 
         '& .MuiAvatar-root': {
           height: theme.selfcommunity.user.avatar.sizeSmall,
-          border: `1px solid ${theme.palette.common.white}`,
+          border:
+            getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+              ? '1px solid rgba(255, 255, 255, 0.12)'
+              : `1px solid ${theme.palette.common.white}`,
           fontSize: '0.7rem',
 
           '&:first-of-type': {

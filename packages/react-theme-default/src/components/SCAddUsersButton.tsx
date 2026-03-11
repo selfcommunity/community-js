@@ -1,13 +1,14 @@
-import {getContrastRatio} from '@mui/material';
-
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
-      '&.SCAddUsersButton-contrast-color': {
-        color: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
+      '&.SCAddUsersButton-default-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.default)
       }
     }),
-    dialogRoot: () => ({
+    dialogRoot: ({theme}) => ({
+      '& .SCAddUsersButton-dialog-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
+      },
       '& .MuiDialogActions-root': {
         marginTop: '36px'
       },

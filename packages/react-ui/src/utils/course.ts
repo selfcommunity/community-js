@@ -1,5 +1,5 @@
 import {SCCourseJoinStatusType, SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommunity/types';
-import {SCCourseGetUrlLessonData} from '../types/course';
+import {SCCourseEditTabType, SCCourseGetUrlLessonData, SCDataUrlEditDashboard} from '../types/course';
 
 export function isCourseNew(course: SCCourseType | null): boolean {
   if (course && course.join_status === SCCourseJoinStatusType.JOINED) {
@@ -33,5 +33,13 @@ export function getUrlLesson(course: SCCourseType, lesson: Partial<SCCourseLesso
     slug: course.slug,
     section_id: section ? section.id : lesson.section_id,
     lesson_id: lesson.id
+  };
+}
+
+export function getUrlEditDashboard(course: SCCourseType, tab: SCCourseEditTabType): SCDataUrlEditDashboard {
+  return {
+    id: course.id,
+    slug: course.slug,
+    tab
   };
 }

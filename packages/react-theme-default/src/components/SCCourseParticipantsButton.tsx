@@ -12,11 +12,8 @@ const Component = {
         backgroundColor: 'unset'
       },
 
-      '& .SCCourseParticipantsButton-contrast-color': {
-        color:
-          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-            ? lighten(theme.palette.common.white, 0.5)
-            : darken(theme.palette.common.white, 0.5)
+      '& .SCCourseParticipantsButton-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
       },
 
       '& .MuiAvatarGroup-root': {
@@ -36,7 +33,10 @@ const Component = {
 
         '& .MuiAvatar-root': {
           height: theme.selfcommunity.user.avatar.sizeSmall,
-          border: `1px solid ${theme.palette.common.white}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? 'rgba(255, 255, 255, 0.12)'
+              : `1px solid ${theme.palette.common.white}`,
           fontSize: '0.7rem',
 
           '&:first-of-type': {
@@ -56,6 +56,10 @@ const Component = {
       }
     }),
     dialogRoot: ({theme}) => ({
+      '& .SCCourseParticipantsButton-dialog-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
+      },
+
       '& .SCCourseParticipantsButton-infinite-scroll': {
         height: '400px !important',
 

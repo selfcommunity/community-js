@@ -1,5 +1,3 @@
-import {darken, getContrastRatio, lighten} from '@mui/material';
-
 const Component = {
   styleOverrides: {
     menuRoot: ({theme}: any) => ({
@@ -11,10 +9,7 @@ const Component = {
         }
       },
       '& .SCNavigationSettingsIconButton-item': {
-        color:
-          getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
-            ? lighten(theme.palette.common.white, 0.5)
-            : darken(theme.palette.common.white, 0.5),
+        color: theme.palette.getContrastText(theme.palette.background.default),
         '& .MuiListItemIcon-root': {
           marginLeft: theme.spacing(0.5),
           marginBottom: theme.spacing(0.5),

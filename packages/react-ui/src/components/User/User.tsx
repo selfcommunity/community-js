@@ -1,4 +1,4 @@
-import {Avatar, Badge, Button, ButtonBaseProps, Chip, styled} from '@mui/material';
+import {Avatar, Badge, Button, ButtonBaseProps, Chip, styled, Typography} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {
   Link,
@@ -36,7 +36,7 @@ const classes = {
   avatar: `${PREFIX}-avatar`,
   staffBadgeLabel: `${PREFIX}-staff-badge-label`,
   groupAdminBadgeLabel: `${PREFIX}-group-admin-badge-label`,
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 const Root = styled(BaseItemButton, {
@@ -221,26 +221,34 @@ export default function User(inProps: UserProps): JSX.Element {
         primary={
           (hasBadge && preferences) || isGroupAdmin ? (
             <>
-              {scUser.username}
+              <Typography component="span" className={classes.paperContrastColor}>
+                {scUser.username}
+              </Typography>
               <Chip
                 component="span"
-                className={classNames(classes.contrastColor, isGroupAdmin ? classes.groupAdminBadgeLabel : classes.staffBadgeLabel)}
+                className={classNames(isGroupAdmin ? classes.groupAdminBadgeLabel : classes.staffBadgeLabel)}
                 size="small"
                 label={
-                  isGroupAdmin ? (
-                    <FormattedMessage defaultMessage="ui.user.group.admin" id="ui.user.group.admin" />
-                  ) : (
-                    preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]
-                  )
+                  <Typography component="span" sx={{'&': {all: 'unset'}}} className={classes.paperContrastColor}>
+                    {isGroupAdmin ? (
+                      <FormattedMessage defaultMessage="ui.user.group.admin" id="ui.user.group.admin" />
+                    ) : (
+                      preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]
+                    )}
+                  </Typography>
                 }
               />
             </>
           ) : (
-            scUser.username
+            <Typography component="span" className={classes.paperContrastColor}>
+              {scUser.username}
+            </Typography>
           )
         }
         secondary={
-          secondary || (showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description)
+          <Typography component="span" className={classes.paperContrastColor}>
+            {secondary || (showFollowers ? `${intl.formatMessage(messages.userFollowers, {total: scUser.followers_counter})}` : scUser.description)}
+          </Typography>
         }
         actions={actions ?? renderAuthenticatedActions()}
       />

@@ -8,7 +8,7 @@ import {InfoPositionType} from '../types';
 
 const classes = {
   info: `${PREFIX}-info`,
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 interface InfoCourseDashboardProps {
@@ -23,13 +23,13 @@ function InfoCourseDashboard(props: InfoCourseDashboardProps) {
 
   return (
     <Stack className={classes.info}>
-      <Typography variant="h4" className={classes.contrastColor}>
+      <Typography variant="h4" className={classes.paperContrastColor}>
         <FormattedMessage id={title} defaultMessage={title} />
       </Typography>
 
       {position === InfoPositionType.FIRST && <CourseParticipantsButton course={course} />}
       {position === InfoPositionType.SECOND && (
-        <Typography variant="h5" className={classes.contrastColor}>
+        <Typography variant="h5" className={classes.paperContrastColor}>
           {course.avg_completion_rate}%
         </Typography>
       )}

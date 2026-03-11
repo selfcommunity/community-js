@@ -1,7 +1,29 @@
-import {Box, BoxProps, CardActionArea, Card, CardContent, FormGroup, Paper, TextField, Typography, Chip, styled, Button} from '@mui/material';
+import {
+  Box,
+  BoxProps,
+  CardActionArea,
+  Card,
+  CardContent,
+  FormGroup,
+  Paper,
+  TextField,
+  Typography,
+  Chip,
+  styled,
+  Button,
+  useTheme
+} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {CourseService, formatHttpErrorCode} from '@selfcommunity/api-services';
-import {SCPreferences, SCPreferencesContextType, UserUtils, useSCPaymentsEnabled, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContextType,
+  SCThemeType,
+  UserUtils,
+  useSCPaymentsEnabled,
+  useSCPreferences,
+  useSCUser
+} from '@selfcommunity/react-core';
 import {SCCategoryType, SCContentType, SCCoursePrivacyType, SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
@@ -58,7 +80,8 @@ const classes = {
   stepCustomization: `${PREFIX}-step-customization`,
   cardTitle: `${PREFIX}-card-title`,
   title: `${PREFIX}-title`,
-  contrastColor: `${PREFIX}-contrast-color`,
+  defaultContrastColor: `${PREFIX}-default-contrast-color`,
+  paperContrastColor: `${PREFIX}-paper-contrast-color`,
   paywallsConfiguratorWrap: `${PREFIX}-paywalls-configurator-wrap`
 };
 
@@ -188,6 +211,9 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
 
   // PAYMENTS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
+
+  // HOOKS
+  const theme = useTheme<SCThemeType>();
 
   const isStaff = useMemo(() => scUserContext.user && UserUtils.isStaff(scUserContext.user), [scUserContext.user]);
   const courseAdvancedEnabled = useMemo(() => preferences[SCPreferences.CONFIGURATIONS_COURSES_ADVANCED_ENABLED].value, [preferences]);
@@ -386,7 +412,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                 key={index}>
                 <CardActionArea onClick={() => setField((prev) => ({...prev, ['type']: option}))}>
                   <CardContent>
-                    <Typography variant="subtitle2" className={classNames(classes.cardTitle, classes.contrastColor)}>
+                    <Typography variant="subtitle2" className={classNames(classes.cardTitle, classes.paperContrastColor)}>
                       <FormattedMessage id={`ui.courseForm.${option}.title`} defaultMessage={`ui.courseForm.${option}.title`} />
                       {!courseAdvancedEnabled && option !== SCCourseTypologyType.SELF && (
                         <Chip
@@ -397,7 +423,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                         />
                       )}
                     </Typography>
-                    <Typography variant="body2" className={classes.contrastColor}>
+                    <Typography variant="body2" className={classes.paperContrastColor}>
                       <FormattedMessage id={`ui.courseForm.${option}.info`} defaultMessage={`ui.courseForm.${option}.info`} />
                     </Typography>
                   </CardContent>
@@ -407,7 +433,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
           {_step === SCCourseFormStepType.CUSTOMIZATION && (
             <Fragment>
               {course && (
-                <Typography variant="h5" className={classes.contrastColor}>
+                <Typography variant="h5" className={classes.defaultContrastColor}>
                   <FormattedMessage id="ui.courseForm.edit.title.general" defaultMessage="ui.courseForm.edit.title.general" />
                 </Typography>
               )}
@@ -427,7 +453,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   slotProps={{
                     input: {
                       endAdornment: (
-                        <Typography variant="body2" className={classes.contrastColor}>
+                        <Typography variant="body2" className={classes.paperContrastColor}>
                           {COURSE_TITLE_MAX_LENGTH - field.name.length}
                         </Typography>
                       )
@@ -455,7 +481,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                   slotProps={{
                     input: {
                       endAdornment: (
-                        <Typography variant="body2" className={classes.contrastColor}>
+                        <Typography variant="body2" className={classes.paperContrastColor}>
                           {field.description?.length ? COURSE_DESCRIPTION_MAX_LENGTH - field.description.length : COURSE_DESCRIPTION_MAX_LENGTH}
                         </Typography>
                       )
@@ -474,7 +500,13 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
                 />
                 <CategoryAutocomplete
                   defaultValue={field.categories}
-                  TextFieldProps={{label: intl.formatMessage(Object.keys(field.categories).length ? messages.category : messages.categoryEmpty)}}
+                  TextFieldProps={{
+                    label: (
+                      <Typography component="span" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
+                        {intl.formatMessage(Object.keys(field.categories).length ? messages.category : messages.categoryEmpty)}
+                      </Typography>
+                    )
+                  }}
                   multiple={true}
                   onChange={handleOnChangeCategory}
                 />
@@ -517,17 +549,11 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
               }
               color="primary">
               {course ? (
-                <Typography component="span" className={classes.contrastColor}>
-                  <FormattedMessage id="ui.courseForm.edit.action.save" defaultMessage="ui.courseForm.edit.action.save" />
-                </Typography>
+                <FormattedMessage id="ui.courseForm.edit.action.save" defaultMessage="ui.courseForm.edit.action.save" />
               ) : _step === SCCourseFormStepType.GENERAL ? (
-                <Typography component="span" className={classes.contrastColor}>
-                  <FormattedMessage id="ui.courseForm.button.next" defaultMessage="ui.courseForm.button.next" />
-                </Typography>
+                <FormattedMessage id="ui.courseForm.button.next" defaultMessage="ui.courseForm.button.next" />
               ) : (
-                <Typography component="span" className={classes.contrastColor}>
-                  <FormattedMessage id="ui.courseForm.button.create" defaultMessage="ui.courseForm.button.create" />
-                </Typography>
+                <FormattedMessage id="ui.courseForm.button.create" defaultMessage="ui.courseForm.button.create" />
               )}
             </Button>
           </Box>

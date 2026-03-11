@@ -2,12 +2,13 @@ import {Box, Button, Icon, Stack, Typography} from '@mui/material';
 import {SCContentType, SCCourseJoinStatusType, SCCoursePrivacyType, SCCourseType} from '@selfcommunity/types';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {PREFIX} from './constants';
-import React, {memo} from 'react';
+import {memo} from 'react';
 import {Link, SCRoutes, SCRoutingContextType, useSCPaymentsEnabled, useSCRouting} from '@selfcommunity/react-core';
 import {SCCourseEditTabType} from '../../types';
 import classNames from 'classnames';
 import CourseTypePopover from '../../shared/CourseTypePopover';
 import BuyButton from '../BuyButton';
+import {getUrlEditDashboard} from '../../utils/course';
 
 const classes = {
   header: `${PREFIX}-header`,
@@ -16,22 +17,8 @@ const classes = {
   innerWrapper: `${PREFIX}-header-inner-wrapper`,
   iconWrapper: `${PREFIX}-header-icon-wrapper`,
   buttonPopover: `${PREFIX}-header-button-popover`,
-  contrastColor: `${PREFIX}-contrast-color`
+  defaultContrastColor: `${PREFIX}-default-contrast-color`
 };
-
-type DataUrlEditDashboard = {
-  id: number;
-  slug: string;
-  tab: SCCourseEditTabType;
-};
-
-function getUrlEditDashboard(course: SCCourseType): DataUrlEditDashboard {
-  return {
-    id: course.id,
-    slug: course.slug,
-    tab: SCCourseEditTabType.LESSONS
-  };
-}
 
 interface HeaderCourseDashboardProps {
   course: SCCourseType;
@@ -55,13 +42,13 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
     <Box className={classes.header}>
       <img src={course.image_bigger} alt={course.image_bigger} className={classes.img} />
 
-      <Typography variant="h3" className={classes.contrastColor}>
+      <Typography variant="h3" className={classes.defaultContrastColor}>
         {course.name}
       </Typography>
 
       <Stack className={classes.outerWrapper}>
         <Stack className={classes.innerWrapper}>
-          <Stack className={classNames(classes.iconWrapper, classes.contrastColor)}>
+          <Stack className={classNames(classes.iconWrapper, classes.defaultContrastColor)}>
             <Icon fontSize="small">public</Icon>
 
             <Typography variant="body2">
@@ -97,7 +84,7 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
         {hasAction && (
           <Button
             component={Link}
-            to={scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, getUrlEditDashboard(course))}
+            to={scRoutingContext.url(SCRoutes.COURSE_EDIT_ROUTE_NAME, getUrlEditDashboard(course, SCCourseEditTabType.LESSONS))}
             size="small"
             color="primary"
             variant="contained">

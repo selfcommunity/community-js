@@ -622,6 +622,8 @@ const Component = {
     }),
     contributorsRoot: ({theme}: any) => ({
       '& .SCFeedObject-contributors-btn-participants': {
+        display: 'flex',
+        gap: '4px',
         padding: theme.spacing(0.5),
         marginLeft: theme.spacing(-0.5),
         color: 'inherit',
@@ -636,8 +638,8 @@ const Component = {
       },
       ['& .MuiAvatar-root']: {
         backgroundColor: '#d5d5d5',
-        border: '2px solid #FFF !important',
-        color: '#FFF',
+        border: `1px solid ${theme.palette.common.white}`,
+        color: theme.palette.common.white,
         fontSize: '0.55rem',
         width: theme.selfcommunity.user.avatar.sizeSmall,
         height: theme.selfcommunity.user.avatar.sizeSmall,

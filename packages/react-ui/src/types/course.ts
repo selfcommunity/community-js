@@ -46,3 +46,9 @@ export interface SCCourseGetUrlLessonData {
   section_id: number;
   lesson_id: number;
 }
+
+export interface SCDataUrlEditDashboard {
+  id: number;
+  slug: string;
+  tab: SCCourseEditTabType;
+}

@@ -1,23 +1,11 @@
-import {
-  styled,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Card,
-  lighten,
-  darken,
-  getContrastRatio
-} from '@mui/material';
+import {styled, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, getContrastRatio, lighten} from '@mui/material';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCConfirmDialog';
 
 const classes = {
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 const Root = styled(Card, {
@@ -26,13 +14,16 @@ const Root = styled(Card, {
   overridesResolver: (_props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 800,
-  marginBottom: theme.spacing(2),
+  marginBottom: theme.spacing(2)
+}));
 
-  [`& .${PREFIX}-contrast-color`]: {
-    color:
-      getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-        ? lighten(theme.palette.common.white, 0.5)
-        : darken(theme.palette.common.white, 0.5)
+const DialogRoot = styled(Dialog, {
+  name: PREFIX,
+  slot: 'DialogRoot',
+  overridesResolver: (_props, styles) => styles.dialogRoot
+})(({theme}) => ({
+  [`& .${classes.paperContrastColor}`]: {
+    color: getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? lighten(theme.palette.common.white, 0.5) : undefined
   }
 }));
 
@@ -126,26 +117,26 @@ export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
    */
   return (
     <Root>
-      <Dialog open={open} onClose={handleClose} {...rest}>
-        <DialogTitle className={classes.contrastColor}>
+      <DialogRoot open={open} onClose={handleClose} {...rest}>
+        <DialogTitle className={classes.paperContrastColor}>
           {title || <FormattedMessage id="ui.confirmDialog.title" defaultMessage="ui.confirmDialog.title" />}
         </DialogTitle>
         {content && (
           <DialogContent>
-            <DialogContentText component="div" className={classes.contrastColor}>
+            <DialogContentText component="div" className={classes.paperContrastColor}>
               {content}
             </DialogContentText>
           </DialogContent>
         )}
         <DialogActions>
-          <Button onClick={handleClose} className={classes.contrastColor}>
+          <Button onClick={handleClose}>
             {btnCancel || <FormattedMessage id="ui.confirmDialog.btnCancel" defaultMessage="ui.confirmDialog.btnCancel" />}
           </Button>
-          <Button onClick={handleConfirm} variant="contained" autoFocus loading={isUpdating} className={classes.contrastColor}>
+          <Button onClick={handleConfirm} variant="contained" autoFocus loading={isUpdating}>
             {btnConfirm || <FormattedMessage id="ui.confirmDialog.btnConfirm" defaultMessage="ui.confirmDialog.btnConfirm" />}
           </Button>
         </DialogActions>
-      </Dialog>
+      </DialogRoot>
     </Root>
   );
 }

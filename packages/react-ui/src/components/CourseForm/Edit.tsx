@@ -17,7 +17,7 @@ const classes = {
   privacyItem: `${PREFIX}-edit-privacy-item`,
   privacyItemInfo: `${PREFIX}-edit-privacy-item-info`,
   disabled: `${PREFIX}-disabled`,
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 const Root = styled(Box, {
@@ -75,7 +75,7 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
     <Root className={classNames(classes.root, className)} {...rest}>
       {course.privacy === SCCoursePrivacyType.DRAFT && (
         <Box className={classes.access}>
-          <Typography variant="h5" className={classes.contrastColor}>
+          <Typography variant="h5" className={classes.paperContrastColor}>
             <FormattedMessage id="ui.courseForm.edit.access.section.title" defaultMessage="ui.courseForm.edit.access.section.title" />
           </Typography>
           <Widget className={classes.card}>
@@ -83,21 +83,21 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
               error
             </Icon>
             <Box>
-              <Typography variant="h5" className={classes.contrastColor}>
+              <Typography variant="h5" className={classes.paperContrastColor}>
                 <FormattedMessage id="ui.courseForm.edit.access.info.title" defaultMessage="ui.courseForm.edit.access.info.title" />
               </Typography>
-              <Typography variant="body1" className={classes.contrastColor}>
+              <Typography variant="body1" className={classes.paperContrastColor}>
                 <FormattedMessage id="ui.courseForm.edit.access.info.subtitle" defaultMessage="ui.courseForm.edit.access.info.subtitle" />
               </Typography>
               <Box className={classes.accessInfo}>
-                <Typography variant="body1" className={classes.contrastColor}>
+                <Typography variant="body1" className={classes.paperContrastColor}>
                   <FormattedMessage
                     id="ui.courseForm.edit.access.info.access"
                     defaultMessage="ui.courseForm.edit.access.info.access"
                     values={{icon: (chunks: [parts: ReactNode[]]) => <Icon key="ui.courseForm.edit.access.info.access.icon">{chunks}</Icon>}}
                   />
                 </Typography>
-                <Typography variant="body1" className={classes.contrastColor}>
+                <Typography variant="body1" className={classes.paperContrastColor}>
                   <FormattedMessage
                     id="ui.courseForm.edit.access.info.visibility"
                     defaultMessage="ui.courseForm.edit.access.info.visibility"
@@ -110,7 +110,7 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
         </Box>
       )}
       <Box className={classes.publish}>
-        <Typography variant="h5" className={classes.contrastColor}>
+        <Typography variant="h5" className={classes.paperContrastColor}>
           <FormattedMessage id="ui.courseForm.edit.publication.title" defaultMessage="ui.courseForm.edit.publication.title" />
         </Typography>
         {notPublishable ? (
@@ -118,12 +118,12 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
             <Icon fontSize="medium" color="warning">
               error
             </Icon>
-            <Typography className={classes.contrastColor}>
+            <Typography className={classes.paperContrastColor}>
               <FormattedMessage id="ui.courseForm.edit.publication.subtitle.info" defaultMessage="ui.courseForm.edit.publication.subtitle.info" />
             </Typography>
           </Widget>
         ) : (
-          <Typography variant="body1" className={classNames(classes.publishInfo, classes.contrastColor)}>
+          <Typography variant="body1" className={classNames(classes.publishInfo, classes.paperContrastColor)}>
             <FormattedMessage id="ui.courseForm.edit.publication.subtitle" defaultMessage="ui.courseForm.edit.publication.subtitle" />
           </Typography>
         )}
@@ -135,7 +135,7 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
                 <FormControlLabel
                   control={<Radio size="small" value={option} checked={option === privacy} onChange={handleChange} disabled={notPublishable} />}
                   label={
-                    <Typography component="span" className={classes.contrastColor}>
+                    <Typography component="span" className={classes.paperContrastColor}>
                       <FormattedMessage
                         id={`ui.courseForm.edit.publication.option.${option}.title`}
                         defaultMessage={`ui.courseForm.edit.publication.option.${option}.title`}
@@ -146,7 +146,7 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
                 <>
                   <Typography
                     variant="body1"
-                    className={classNames(classes.contrastColor, classes.privacyItemInfo, {[classes.disabled]: notPublishable})}>
+                    className={classNames(classes.paperContrastColor, classes.privacyItemInfo, {[classes.disabled]: notPublishable})}>
                     <FormattedMessage
                       id={`ui.courseForm.edit.publication.option.${option}.access`}
                       defaultMessage={`ui.courseForm.edit.publication.option.${option}.access`}
@@ -159,7 +159,7 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
                   </Typography>
                   <Typography
                     variant="body1"
-                    className={(classes.contrastColor, classNames(classes.privacyItemInfo, {[classes.disabled]: notPublishable}))}>
+                    className={(classes.paperContrastColor, classNames(classes.privacyItemInfo, {[classes.disabled]: notPublishable}))}>
                     <FormattedMessage
                       id={`ui.courseForm.edit.publication.option.${option}.visibility`}
                       defaultMessage={`ui.courseForm.edit.publication.option.${option}.visibility`}

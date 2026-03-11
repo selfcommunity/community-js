@@ -4,7 +4,7 @@ import {FormattedMessage} from 'react-intl';
 import {PREFIX} from '../constants';
 
 const classes = {
-  contrastColor: `${PREFIX}-contrast-color`
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 interface SwitchFormProps {
@@ -36,14 +36,14 @@ function SwitchForm(props: SwitchFormProps) {
   return (
     <FormControl component="fieldset" variant="standard">
       <FormLabel component="legend">
-        <Typography variant="h5">
+        <Typography variant="h5" className={classes.paperContrastColor}>
           <FormattedMessage id={title} defaultMessage={title} />
         </Typography>
       </FormLabel>
       <FormControlLabel
         control={<Switch color="primary" checked={value} name={name} onChange={handleChange} />}
         label={
-          <Typography variant="body1" className={classes.contrastColor}>
+          <Typography variant="body1" className={classes.paperContrastColor}>
             <FormattedMessage id={description} defaultMessage={description} />
           </Typography>
         }
