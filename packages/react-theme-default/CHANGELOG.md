@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.0-alpha.4...@selfcommunity/react-theme-default@1.2.0-alpha.5) (2026-03-13)
+
+
+### Features
+
+* updated some colors to dark mode ([7fee8ce](https://github.com/selfcommunity/community-js/commit/7fee8ce84e1b6b99923c715026093ce998760de3))
+
+
+
+
+
 # [1.2.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.0-alpha.3...@selfcommunity/react-theme-default@1.2.0-alpha.4) (2026-03-11)
 
 
