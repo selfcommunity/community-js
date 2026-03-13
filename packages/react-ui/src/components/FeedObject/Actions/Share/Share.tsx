@@ -15,7 +15,8 @@ import {
   MenuItem,
   ListItemIcon,
   styled,
-  Skeleton
+  Skeleton,
+  Typography
 } from '@mui/material';
 import {MEDIA_EMBED_SC_SHARED_EVENT, MEDIA_TYPE_SHARE} from '../../../../constants/Media';
 import {SCOPE_SC_UI} from '../../../../constants/Errors';
@@ -59,7 +60,8 @@ const classes = {
   divider: `${PREFIX}-action-share-divider`,
   inline: `${PREFIX}-action-share-inline`,
   button: `${PREFIX}-action-share-button`,
-  viewAudienceButton: `${PREFIX}-action-share-view-audience-button`
+  viewAudienceButton: `${PREFIX}-action-share-view-audience-button`,
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 const Root = styled(Box, {
@@ -295,7 +297,9 @@ export default function Share(props: ShareProps): JSX.Element {
               onClick={handleToggleSharesDialog}
               disabled={sharesCount < 1}
               classes={{root: classes.viewAudienceButton}}>
-              {`${intl.formatMessage(messages.shares, {total: sharesCount})}`}
+              <Typography component="span" sx={{'&': {all: 'unset'}}} className={classes.paperContrastColor}>{`${intl.formatMessage(messages.shares, {
+                total: sharesCount
+              })}`}</Typography>
             </Button>
             {openSharesDialog && sharesCount > 0 && (
               <SharesDialog feedObject={obj} feedObjectType={obj.type} open={openSharesDialog} onClose={handleToggleSharesDialog} />

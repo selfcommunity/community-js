@@ -1,9 +1,13 @@
-import {alpha} from '@mui/system';
+import {alpha, getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       '& .MuiDialog-paper': {
+        boxShadow:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? '0px 0px 2px 2px rgba(0 0 0 / 50%)'
+            : '0px 0px 1px 1px rgba(255 255 255 / 50%)',
         [theme.breakpoints.down('md')]: {
           height: '100%'
         },
