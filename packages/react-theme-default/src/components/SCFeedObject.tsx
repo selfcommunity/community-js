@@ -391,13 +391,7 @@ const Component = {
                   fontWeight: theme.typography.fontWeightRegular,
                   marginTop: theme.spacing(0),
                   marginBottom: 0,
-                  color:
-                    getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-                      ? lighten(theme.palette.text.primary, 0.5)
-                      : darken(theme.palette.text.primary, 0.5),
-                  '&:hover': {
-                    color: 'inherit'
-                  }
+                  color: theme.palette.getContrastText(theme.palette.background.paper)
                 },
               '& .MuiDivider-root': {
                 borderColor: theme.palette.grey[300]
