@@ -4,6 +4,9 @@ const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       width: '100%',
+      '& .SCFeedObject-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
+      },
       '& .SCFeedObject-title-section': {
         '& a': {
           textDecoration: 'none'

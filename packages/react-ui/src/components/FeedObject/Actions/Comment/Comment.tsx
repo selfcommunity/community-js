@@ -24,7 +24,8 @@ const classes = {
   divider: `${PREFIX}-action-comment-divider`,
   inline: `${PREFIX}-action-comment-inline`,
   button: `${PREFIX}-action-comment-button`,
-  viewAudienceButton: `${PREFIX}-action-comment-view-audience-button`
+  viewAudienceButton: `${PREFIX}-action-comment-view-audience-button`,
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 const Root = styled(Box, {
@@ -143,12 +144,17 @@ export default function Comment(props: CommentProps): JSX.Element {
           <>
             {onViewCommentsAction ? (
               <Button variant="text" size="small" onClick={onViewCommentsAction} color="inherit">
-                {`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}
+                <Typography component="span" sx={{'&': {all: 'unset'}}} className={classes.paperContrastColor}>{`${intl.formatMessage(
+                  messages.comments,
+                  {total: obj.comment_count}
+                )}`}</Typography>
               </Button>
             ) : (
               <>
                 {feedObjectTemplate === SCFeedObjectTemplateType.DETAIL ? (
-                  <Typography variant="body2">{`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}</Typography>
+                  <Typography variant="body2" className={classes.paperContrastColor}>{`${intl.formatMessage(messages.comments, {
+                    total: obj.comment_count
+                  })}`}</Typography>
                 ) : (
                   <Button
                     variant="text"
@@ -156,7 +162,10 @@ export default function Comment(props: CommentProps): JSX.Element {
                     component={Link}
                     to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
                     classes={{root: classes.viewAudienceButton}}>
-                    {`${intl.formatMessage(messages.comments, {total: obj.comment_count})}`}
+                    <Typography component="span" sx={{'&': {all: 'unset'}}} className={classes.paperContrastColor}>{`${intl.formatMessage(
+                      messages.comments,
+                      {total: obj.comment_count}
+                    )}`}</Typography>
                   </Button>
                 )}
               </>
