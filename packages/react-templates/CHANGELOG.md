@@ -3,6 +3,65 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.1.0-alpha.4...@selfcommunity/react-templates@1.1.0-alpha.5) (2026-03-13)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [1.1.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.1.0-alpha.3...@selfcommunity/react-templates@1.1.0-alpha.4) (2026-03-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [1.1.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.1.0-alpha.2...@selfcommunity/react-templates@1.1.0-alpha.3) (2026-03-11)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [1.1.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.1.0-alpha.1...@selfcommunity/react-templates@1.1.0-alpha.2) (2026-03-06)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [1.1.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.1.0-alpha.0...@selfcommunity/react-templates@1.1.0-alpha.1) (2026-03-04)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
+# [1.1.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.0.6-alpha.0...@selfcommunity/react-templates@1.1.0-alpha.0) (2026-03-04)
+
+
+### Features
+
+* updated some codes to dark mode ([180cb32](https://github.com/selfcommunity/community-js/commit/180cb327295ad21748abd49677b30d8225c0b879))
+
+
+
+
+
+## [1.0.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.0.5...@selfcommunity/react-templates@1.0.6-alpha.0) (2026-02-27)
+
+**Note:** Version bump only for package @selfcommunity/react-templates
+
+
+
+
+
 ## [1.0.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.0.5-alpha.1...@selfcommunity/react-templates@1.0.5) (2026-02-11)
 
 **Note:** Version bump only for package @selfcommunity/react-templates

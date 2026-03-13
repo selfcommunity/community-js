@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.1.0-alpha.1...@selfcommunity/react-core@1.1.0-alpha.2) (2026-03-11)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+# [1.1.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.1.0-alpha.0...@selfcommunity/react-core@1.1.0-alpha.1) (2026-03-04)
+
+
+### Bug Fixes
+
+* background theme ([53fa7f6](https://github.com/selfcommunity/community-js/commit/53fa7f6197265b9b992620cab75477ff2cb63d85))
+
+
+
+
+
+# [1.1.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.0.5...@selfcommunity/react-core@1.1.0-alpha.0) (2026-02-27)
+
+
+### Features
+
+* added new preferencies ([ec9d20b](https://github.com/selfcommunity/community-js/commit/ec9d20ba672aac063720baa9c272fdedceae1484))
+* updated theme file and SCWidget ([f2741f5](https://github.com/selfcommunity/community-js/commit/f2741f5c82e304b04de85baedf69b5c2b380828c))
+
+
+
+
+
 ## [1.0.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.0.5-alpha.1...@selfcommunity/react-core@1.0.5) (2026-02-11)
 
 **Note:** Version bump only for package @selfcommunity/react-core

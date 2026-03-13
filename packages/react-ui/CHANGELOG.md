@@ -3,6 +3,82 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.0-alpha.5...@selfcommunity/react-ui@1.2.0-alpha.6) (2026-03-13)
+
+
+### Features
+
+* updated some colors to dark mode ([7fee8ce](https://github.com/selfcommunity/community-js/commit/7fee8ce84e1b6b99923c715026093ce998760de3))
+
+
+
+
+
+# [1.2.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.0-alpha.4...@selfcommunity/react-ui@1.2.0-alpha.5) (2026-03-11)
+
+
+### Features
+
+* updated some colors to dark mode ([bf605ea](https://github.com/selfcommunity/community-js/commit/bf605eaa11c1dee95b08ec89ab4ff062089b4eb1))
+
+
+
+
+
+# [1.2.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.0-alpha.3...@selfcommunity/react-ui@1.2.0-alpha.4) (2026-03-11)
+
+
+### Features
+
+* updated some colors to dark mode ([0d9c43c](https://github.com/selfcommunity/community-js/commit/0d9c43c3379dfcb8f6a307d1dc6e464aa271d043))
+
+
+
+
+
+# [1.2.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.0-alpha.2...@selfcommunity/react-ui@1.2.0-alpha.3) (2026-03-06)
+
+
+### Features
+
+* updated some colors to dark mode ([6c64702](https://github.com/selfcommunity/community-js/commit/6c64702ae00d2d3412d69659d74766a04c4ff2e6))
+
+
+
+
+
+# [1.2.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.0-alpha.1...@selfcommunity/react-ui@1.2.0-alpha.2) (2026-03-04)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+# [1.2.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.0-alpha.0...@selfcommunity/react-ui@1.2.0-alpha.1) (2026-03-04)
+
+
+### Features
+
+* updated some codes to dark mode ([180cb32](https://github.com/selfcommunity/community-js/commit/180cb327295ad21748abd49677b30d8225c0b879))
+
+
+
+
+
+# [1.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.1.0...@selfcommunity/react-ui@1.2.0-alpha.0) (2026-02-27)
+
+
+### Features
+
+* changed variant button into some widgets ([779c197](https://github.com/selfcommunity/community-js/commit/779c1971caaf2540ee062dc200a05df820e79a69))
+* changed variant button into some widgets ([0630e32](https://github.com/selfcommunity/community-js/commit/0630e3267de895bc2b6b5241977bf4d656ea6ba9))
+* updated backgroungImage size on AutoPLayer ([6727876](https://github.com/selfcommunity/community-js/commit/67278763c24661b70fa5718188b8d1de5ec6f62e))
+
+
+
+
+
 # [1.1.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.1.0-alpha.1...@selfcommunity/react-ui@1.1.0) (2026-02-11)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
