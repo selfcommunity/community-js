@@ -1,3 +1,5 @@
+import {darken, getContrastRatio, lighten} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: () => ({}),
@@ -15,6 +17,12 @@ const Component = {
         [theme.breakpoints.down('md')]: {width: '100%'},
         width: `calc(100% - 300px)`
       }),
+      '& .SCLessonTemplate-contrast-color': {
+        color:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? lighten(theme.palette.common.white, 0.5)
+            : darken(theme.palette.common.white, 0.5)
+      },
       '& .SCLessonTemplate-navigation-title': {
         display: 'flex',
         alignItems: 'center',

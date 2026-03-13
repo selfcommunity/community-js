@@ -1,16 +1,30 @@
-import {styled, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card} from '@mui/material';
+import {styled, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Card, getContrastRatio, lighten} from '@mui/material';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
 const PREFIX = 'SCConfirmDialog';
 
+const classes = {
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
+};
+
 const Root = styled(Card, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(({theme}) => ({
   maxWidth: 800,
   marginBottom: theme.spacing(2)
+}));
+
+const DialogRoot = styled(Dialog, {
+  name: PREFIX,
+  slot: 'DialogRoot',
+  overridesResolver: (_props, styles) => styles.dialogRoot
+})(({theme}) => ({
+  [`& .${classes.paperContrastColor}`]: {
+    color: getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? lighten(theme.palette.common.white, 0.5) : undefined
+  }
 }));
 
 export interface ConfirmDialogProps {
@@ -103,11 +117,15 @@ export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
    */
   return (
     <Root>
-      <Dialog open={open} onClose={handleClose} {...rest}>
-        <DialogTitle>{title || <FormattedMessage id="ui.confirmDialog.title" defaultMessage="ui.confirmDialog.title" />}</DialogTitle>
+      <DialogRoot open={open} onClose={handleClose} {...rest}>
+        <DialogTitle className={classes.paperContrastColor}>
+          {title || <FormattedMessage id="ui.confirmDialog.title" defaultMessage="ui.confirmDialog.title" />}
+        </DialogTitle>
         {content && (
           <DialogContent>
-            <DialogContentText component="div">{content}</DialogContentText>
+            <DialogContentText component="div" className={classes.paperContrastColor}>
+              {content}
+            </DialogContentText>
           </DialogContent>
         )}
         <DialogActions>
@@ -118,7 +136,7 @@ export default function ConfirmDialog(props: ConfirmDialogProps): JSX.Element {
             {btnConfirm || <FormattedMessage id="ui.confirmDialog.btnConfirm" defaultMessage="ui.confirmDialog.btnConfirm" />}
           </Button>
         </DialogActions>
-      </Dialog>
+      </DialogRoot>
     </Root>
   );
 }

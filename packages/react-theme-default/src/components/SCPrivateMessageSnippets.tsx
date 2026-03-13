@@ -22,23 +22,14 @@ const Component = {
           }
         },
         '& .SCPrivateMessageSnippets-new-message-button': {
-          color: `${theme.palette.primary.main} !important`,
-          alignSelf: 'center',
-          backgroundColor: 'transparent',
-          '&:hover': {
-            borderWidth: '2px !important',
-            backgroundColor: theme.palette.grey['A200']
-          }
+          alignSelf: 'center'
         },
         '& .MuiList-root': {
           flexGrow: 1,
           overflowY: 'auto',
           padding: theme.spacing(1),
-          '& .Mui-selected': {
-            backgroundColor: theme.palette.grey['A200']
-          },
           '& .MuiButtonBase-root, MuiListItemButton-root': {
-            '&:hover': {borderRadius: 'inherit', backgroundColor: theme.palette.grey['A200']}
+            '&:hover': {borderRadius: 'inherit'}
           }
         }
       },

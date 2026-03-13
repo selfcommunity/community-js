@@ -1,5 +1,5 @@
 import {DraggableProvided} from '@hello-pangea/dnd';
-import {Icon, MenuItem, Stack, TableCell, TableRow, Typography} from '@mui/material';
+import {Icon, MenuItem, Stack, TableCell, TableRow, Typography, useTheme} from '@mui/material';
 import classNames from 'classnames';
 import {PREFIX} from '../constants';
 import {forwardRef, memo, Ref, useCallback, useImperativeHandle, useState} from 'react';
@@ -11,7 +11,7 @@ import {SCCourseLessonType, SCCourseSectionType, SCCourseType} from '@selfcommun
 import {CourseService, Endpoints} from '@selfcommunity/api-services';
 import {Logger} from '@selfcommunity/utils';
 import {useSnackbar} from 'notistack';
-import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
+import {Link, SCRoutes, SCRoutingContextType, SCThemeType, useSCRouting} from '@selfcommunity/react-core';
 import {SCOPE_SC_UI} from '../../../constants/Errors';
 import {ActionLessonType, DeleteRowRef} from '../types';
 import {useIsDisabled} from '../hooks';
@@ -48,6 +48,7 @@ function LessonRow(props: LessonRowProps, ref: Ref<DeleteRowRef>) {
   // HOOKS
   const {isDisabled} = useIsDisabled();
   const {enqueueSnackbar} = useSnackbar();
+  const theme = useTheme<SCThemeType>();
 
   // HANDLERS
   const handleAbleEditMode = useCallback(() => setTimeout(() => setEditMode(true)), [setEditMode]);
@@ -121,22 +122,22 @@ function LessonRow(props: LessonRowProps, ref: Ref<DeleteRowRef>) {
 
           <MenuRow disabled={isDisabled}>
             <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_EDIT_ROUTE_NAME, getUrlLesson(course, lesson, section))}>
-              <Typography variant="body1">
+              <Typography variant="body1" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.edit" defaultMessage="ui.editCourse.tab.lessons.table.menu.edit" />
               </Typography>
             </MenuItem>
             <MenuItem component={Link} to={scRoutingContext.url(SCRoutes.COURSE_LESSON_PREVIEW_ROUTE_NAME, getUrlLesson(course, lesson, section))}>
-              <Typography variant="body1">
+              <Typography variant="body1" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.preview" defaultMessage="ui.editCourse.tab.lessons.table.menu.preview" />
               </Typography>
             </MenuItem>
             <MenuItem onClick={handleAbleEditMode}>
-              <Typography variant="body1">
+              <Typography variant="body1" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.rename" defaultMessage="ui.editCourse.tab.lessons.table.menu.rename" />
               </Typography>
             </MenuItem>
             <MenuItem onClick={handleOpenDialog}>
-              <Typography variant="body1">
+              <Typography variant="body1" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
                 <FormattedMessage id="ui.editCourse.tab.lessons.table.menu.delete" defaultMessage="ui.editCourse.tab.lessons.table.menu.delete" />
               </Typography>
             </MenuItem>

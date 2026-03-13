@@ -1,4 +1,4 @@
-import React, {Fragment, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState} from 'react';
+import {Fragment, HTMLAttributes, memo, useCallback, useEffect, useMemo, useState} from 'react';
 import {PREFIX} from './constants';
 import {Avatar, Box, Divider, LinearProgress, Skeleton, Stack, styled, Typography, useThemeProps} from '@mui/material';
 import classNames from 'classnames';
@@ -67,7 +67,8 @@ const classes = {
   box: `${PREFIX}-box`,
   percentageWrapper: `${PREFIX}-percentage-wrapper`,
   completedWrapper: `${PREFIX}-completed-wrapper`,
-  contrastColor: `${PREFIX}-contrast-color`
+  defaultContrastColor: `${PREFIX}-default-contrast-color`,
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 type DataUrlLesson = {
@@ -246,7 +247,7 @@ function Student(inProps: StudentCourseDashboardProps) {
             labelId={BUTTON_MESSAGES.dashboard}
             to={scRoutingContext.url(SCRoutes.COURSE_DASHBOARD_ROUTE_NAME, scCourse)}
             color="inherit"
-            variant="outlined"
+            variant="contained"
           />
         )}
 
@@ -271,7 +272,7 @@ function Student(inProps: StudentCourseDashboardProps) {
               to={scCourse.join_status !== null ? scRoutingContext.url(SCRoutes.COURSE_LESSON_ROUTE_NAME, getUrlNextLesson(scCourse)) : undefined}
               disabled={scCourse.join_status !== null ? getIsNextLessonLocked(scCourse) : undefined}
               color={scCourse.user_completion_rate === 100 ? 'inherit' : undefined}
-              variant={scCourse.user_completion_rate === 100 ? 'outlined' : undefined}
+              variant={scCourse.user_completion_rate === 100 ? 'contained' : undefined}
               loading={scCourse.join_status === null ? loadingRequest : undefined}
               onClick={!scUserContext.user ? handleAnonymousAction : scCourse.join_status === null ? handleRequest : undefined}
             />
@@ -281,7 +282,7 @@ function Student(inProps: StudentCourseDashboardProps) {
           <ActionButton
             labelId={sentRequest ? BUTTON_MESSAGES.cancel : BUTTON_MESSAGES.request}
             color="inherit"
-            variant="outlined"
+            variant="contained"
             loading={loadingRequest}
             onClick={handleRequest}
           />
@@ -320,9 +321,11 @@ function Student(inProps: StudentCourseDashboardProps) {
               {...(!scCourse.created_by.deleted && {
                 to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
               })}>
-              <Typography variant="body1">{scCourse.created_by.username}</Typography>
+              <Typography variant="body1" className={classes.paperContrastColor}>
+                {scCourse.created_by.username}
+              </Typography>
             </Link>
-            <Typography variant="body1">
+            <Typography variant="body1" className={classes.paperContrastColor}>
               <FormattedMessage id="ui.course.dashboard.header.user.creator" defaultMessage="ui.course.dashboard.header.user.creator" />
             </Typography>
           </Box>
@@ -341,12 +344,12 @@ function Student(inProps: StudentCourseDashboardProps) {
         scCourse.privacy === SCCoursePrivacyType.DRAFT) &&
         scCourse.description && (
           <Fragment>
-            <Typography variant="h6" className={classNames(classes.margin, classes.contrastColor)}>
+            <Typography variant="h6" className={classNames(classes.margin, classes.defaultContrastColor)}>
               <FormattedMessage id="ui.course.dashboard.student.description" defaultMessage="ui.course.dashboard.student.description" />
             </Typography>
 
             <Stack className={classes.box}>
-              <Typography variant="body1" className={classes.description}>
+              <Typography variant="body1" className={classNames(classes.description, classes.paperContrastColor)}>
                 {scCourse.description}
               </Typography>
             </Stack>
@@ -359,13 +362,13 @@ function Student(inProps: StudentCourseDashboardProps) {
         <Fragment>
           {scCourse.join_status !== null && (
             <Fragment>
-              <Typography variant="h6" className={classNames(classes.margin, classes.contrastColor)}>
+              <Typography variant="h6" className={classNames(classes.margin, classes.defaultContrastColor)}>
                 <FormattedMessage id="ui.course.dashboard.student.progress" defaultMessage="ui.course.dashboard.student.progress" />
               </Typography>
 
               <Stack className={classes.box}>
                 <Stack className={classes.percentageWrapper}>
-                  <Typography variant="body1">
+                  <Typography variant="body1" className={classes.paperContrastColor}>
                     <FormattedMessage
                       id="ui.course.dashboard.student.progress.described"
                       defaultMessage="ui.course.dashboard.student.progress.described"
@@ -373,7 +376,7 @@ function Student(inProps: StudentCourseDashboardProps) {
                     />
                   </Typography>
 
-                  <Typography variant="body1">
+                  <Typography variant="body1" className={classes.paperContrastColor}>
                     <FormattedMessage
                       id="ui.course.dashboard.student.progress.percentage"
                       defaultMessage="ui.course.dashboard.student.progress.percentage"
@@ -389,7 +392,7 @@ function Student(inProps: StudentCourseDashboardProps) {
 
           {scCourse.user_completion_rate === 100 && (
             <Stack className={classNames(classes.completedWrapper, classes.margin)}>
-              <Typography variant="h3" className={classes.contrastColor}>
+              <Typography variant="h3" className={classes.defaultContrastColor}>
                 <FormattedMessage id="ui.course.dashboard.student.completed" defaultMessage="ui.course.dashboard.student.completed" />
               </Typography>
               <img
@@ -401,12 +404,12 @@ function Student(inProps: StudentCourseDashboardProps) {
             </Stack>
           )}
 
-          <Typography variant="h6" className={classNames(classes.margin, classes.contrastColor)}>
+          <Typography variant="h6" className={classNames(classes.margin, classes.defaultContrastColor)}>
             <FormattedMessage id="ui.course.dashboard.student.contents" defaultMessage="ui.course.dashboard.student.contents" />
           </Typography>
 
           <Stack className={classes.lessonsSections}>
-            <Typography variant="h5">
+            <Typography variant="h5" className={classes.paperContrastColor}>
               <FormattedMessage
                 id="ui.course.table.sections.title"
                 defaultMessage="ui.course.table.sections.title"
@@ -418,7 +421,7 @@ function Student(inProps: StudentCourseDashboardProps) {
 
             <Box className={classes.circle} />
 
-            <Typography variant="h5">
+            <Typography variant="h5" className={classes.paperContrastColor}>
               <FormattedMessage
                 id="ui.course.table.lessons.title"
                 defaultMessage="ui.course.table.lessons.title"

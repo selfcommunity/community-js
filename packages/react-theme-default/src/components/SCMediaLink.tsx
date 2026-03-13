@@ -1,9 +1,13 @@
-import {alpha} from '@mui/system';
+import {alpha} from '@mui/material';
 
 const Component = {
   styleOverrides: {
     displayRoot: ({theme}: any) => ({
       marginTop: theme.spacing(2),
+      '& .react-player__preview': {
+        backgroundSize: 'contain !important',
+        backgroundColor: '#000'
+      },
       '& .SCMediaLink-link': {
         position: 'relative',
         backgroundColor: '#F5F5F5',

@@ -3,6 +3,86 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.0-alpha.5...@selfcommunity/react-theme-default@1.2.0-alpha.6) (2026-03-13)
+
+
+### Bug Fixes
+
+* fixed some reports ([5c94db9](https://github.com/selfcommunity/community-js/commit/5c94db920122520f1bb17b071ba86d8186894937))
+
+
+
+
+
+# [1.2.0-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.0-alpha.4...@selfcommunity/react-theme-default@1.2.0-alpha.5) (2026-03-13)
+
+
+### Features
+
+* updated some colors to dark mode ([7fee8ce](https://github.com/selfcommunity/community-js/commit/7fee8ce84e1b6b99923c715026093ce998760de3))
+
+
+
+
+
+# [1.2.0-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.0-alpha.3...@selfcommunity/react-theme-default@1.2.0-alpha.4) (2026-03-11)
+
+
+### Features
+
+* updated some colors to dark mode ([0d9c43c](https://github.com/selfcommunity/community-js/commit/0d9c43c3379dfcb8f6a307d1dc6e464aa271d043))
+
+
+
+
+
+# [1.2.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.0-alpha.2...@selfcommunity/react-theme-default@1.2.0-alpha.3) (2026-03-06)
+
+
+### Features
+
+* updated some colors to dark mode ([6c64702](https://github.com/selfcommunity/community-js/commit/6c64702ae00d2d3412d69659d74766a04c4ff2e6))
+
+
+
+
+
+# [1.2.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.0-alpha.1...@selfcommunity/react-theme-default@1.2.0-alpha.2) (2026-03-04)
+
+
+### Features
+
+* updated some codes to dark mode ([26956a4](https://github.com/selfcommunity/community-js/commit/26956a46c3cf17864a467909ece0e0b248782f44))
+
+
+
+
+
+# [1.2.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.0-alpha.0...@selfcommunity/react-theme-default@1.2.0-alpha.1) (2026-03-04)
+
+
+### Features
+
+* updated some codes to dark mode ([180cb32](https://github.com/selfcommunity/community-js/commit/180cb327295ad21748abd49677b30d8225c0b879))
+
+
+
+
+
+# [1.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.1.0...@selfcommunity/react-theme-default@1.2.0-alpha.0) (2026-02-27)
+
+
+### Features
+
+* removed bg color into MuiButton under SCInlineComposerWidget ([1a770ce](https://github.com/selfcommunity/community-js/commit/1a770ce462cf02a55f127129cd5e94885d84f243))
+* updated backgroungImage size on AutoPLayer ([6727876](https://github.com/selfcommunity/community-js/commit/67278763c24661b70fa5718188b8d1de5ec6f62e))
+* updated bg color into MuiPaper-elevation under SCWidget ([00b2617](https://github.com/selfcommunity/community-js/commit/00b261728b251b5d8e31d1aed2fb63441ea66436))
+* updated theme file and SCWidget ([f2741f5](https://github.com/selfcommunity/community-js/commit/f2741f5c82e304b04de85baedf69b5c2b380828c))
+
+
+
+
+
 # [1.1.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.1.0-alpha.1...@selfcommunity/react-theme-default@1.1.0) (2026-02-11)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

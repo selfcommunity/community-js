@@ -31,7 +31,8 @@ const classes = {
   nameWrapper: `${PREFIX}-name-wrapper`,
   details: `${PREFIX}-details`,
   circle: `${PREFIX}-circle`,
-  link: `${PREFIX}-link`
+  link: `${PREFIX}-link`,
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 const Root = styled(Box, {
@@ -94,7 +95,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
             square>
             <AccordionSummary className={classes.summary} expandIcon={<Icon>expand_more</Icon>}>
               <Stack className={classes.nameWrapper}>
-                <Typography component="span" variant="body1">
+                <Typography component="span" variant="body1" className={classes.paperContrastColor}>
                   {section.name}
                 </Typography>
 
@@ -102,7 +103,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
                   <Fragment>
                     <Bullet />
 
-                    <Typography component="span" variant="body1">
+                    <Typography component="span" variant="body1" className={classes.paperContrastColor}>
                       <FormattedMessage
                         id="ui.course.accordionLessons.date"
                         defaultMessage="ui.course.accordionLessons.date"
@@ -116,7 +117,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
                 )}
               </Stack>
               {!isMobile && (
-                <Typography component="span" variant="body1">
+                <Typography component="span" variant="body1" className={classes.paperContrastColor}>
                   <FormattedMessage
                     id="ui.course.table.lessons.title"
                     defaultMessage="ui.course.table.lessons.title"
@@ -142,7 +143,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
                 viewerJoinStatus === SCCourseJoinStatusType.CREATOR ||
                 viewerJoinStatus === SCCourseJoinStatusType.MANAGER ||
                 lesson.locked ? (
-                  <Typography>{lesson.name}</Typography>
+                  <Typography className={classes.paperContrastColor}>{lesson.name}</Typography>
                 ) : (
                   <Button
                     component={Link}
@@ -150,7 +151,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
                     variant="text"
                     color="inherit"
                     className={classes.link}>
-                    <Typography>{lesson.name}</Typography>
+                    <Typography className={classes.paperContrastColor}>{lesson.name}</Typography>
                   </Button>
                 )}
               </AccordionDetails>
@@ -158,7 +159,7 @@ export default function AccordionLessons(inProps: AccordionLessonsProps) {
           </Accordion>
         ))
       ) : (
-        <Typography variant="body1" className={classes.empty}>
+        <Typography variant="body1" className={classNames(classes.empty, classes.paperContrastColor)}>
           <FormattedMessage id="ui.course.accordionLessons.empty" defaultMessage="ui.course.accordionLessons.empty" />
         </Typography>
       )}

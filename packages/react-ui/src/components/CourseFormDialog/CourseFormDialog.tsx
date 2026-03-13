@@ -76,8 +76,9 @@ export default function CourseFormDialog(inProps: CourseFormDialogProps): JSX.El
   });
   const {className, open = true, onClose, CourseFormComponentProps = {}, ...rest} = props;
   // STATE
-  const [step, setStep] = useState(SCCourseFormStepType.GENERAL);
-  const [type, setType] = useState('');
+  // TODO - temporary hardcoded CUSTOMIZATION and 'self-paced' --> previous value: GENERAL and ''
+  const [step, setStep] = useState(SCCourseFormStepType.CUSTOMIZATION);
+  const [type, setType] = useState('self-paced');
 
   //HANDLERS
 

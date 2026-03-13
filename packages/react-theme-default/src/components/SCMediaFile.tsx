@@ -1,3 +1,5 @@
+import {darken, getContrastRatio, lighten} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     displayRoot: ({theme}: any) => ({
@@ -67,7 +69,10 @@ const Component = {
       },
       '& .SCMediaFile-border': {
         position: 'relative',
-        border: '2px solid #FFF',
+        border:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? '2px solid rgba(255, 255, 255, 0.12)'
+            : `2px solid ${theme.palette.common.white}`,
         '&:hover > div': {
           bottom: 0,
           height: 'auto'
@@ -164,11 +169,18 @@ const Component = {
     }),
     triggerMenuRoot: () => ({}),
     docRoot: ({theme}) => ({
-      border: '1px solid #DDD',
+      border:
+        getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? '1px solid rgba(255, 255, 255, 0.12)' : '1px solid #DDD',
       borderRadius: '10px',
       padding: theme.spacing(1),
       flexDirection: 'row',
       gap: '8px',
+      '& .SCMediaFile-contrast-color': {
+        color:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? lighten(theme.palette.common.white, 0.5)
+            : darken(theme.palette.common.white, 0.5)
+      },
       '& .SCMediaFile-image-wrapper': {
         flexShrink: 0,
         padding: 0,
@@ -189,8 +201,7 @@ const Component = {
           overflow: 'hidden'
         },
         '& .SCMediaFile-subtitle': {
-          textAlign: 'left',
-          color: theme.palette.grey['600']
+          textAlign: 'left'
         }
       },
       '& .SCMediaFile-action-wrapper': {

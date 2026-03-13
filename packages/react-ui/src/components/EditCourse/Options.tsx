@@ -15,7 +15,8 @@ const classes = {
   optionsContainer: `${PREFIX}-options-container`,
   optionsWrapper: `${PREFIX}-options-wrapper`,
   optionsDivider: `${PREFIX}-options-divider`,
-  optionsButtonWrapper: `${PREFIX}-options-button-wrapper`
+  optionsButtonWrapper: `${PREFIX}-options-button-wrapper`,
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 const OPTIONS = {

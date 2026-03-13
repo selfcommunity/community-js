@@ -1,9 +1,12 @@
-import {alpha} from '@mui/system';
+import {alpha, darken, getContrastRatio, lighten} from '@mui/material';
 
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
       width: '100%',
+      '& .SCFeedObject-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
+      },
       '& .SCFeedObject-title-section': {
         '& a': {
           textDecoration: 'none'
@@ -85,7 +88,10 @@ const Component = {
             textTransform: 'initial'
           }
         },
-        borderBottom: '1px solid rgba(221, 221, 221, 1)',
+        borderBottom:
+          getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+            ? '1px solid rgba(255, 255, 255, 0.12)'
+            : '1px solid rgba(221, 221, 221, 1)',
         margin: theme.spacing(0.5, 2, 0, 2)
       },
       '& .SCFeedObject-content': {
@@ -162,7 +168,10 @@ const Component = {
           borderRadius: theme.shape.borderRadius
         },
         '& .SCFeedObject-category': {
-          borderBottom: '1px solid rgba(221, 221, 221, 1)',
+          borderBottom:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? '1px solid rgba(255, 255, 255, 0.12)'
+              : '1px solid rgba(221, 221, 221, 1)',
           margin: theme.spacing(0, 2),
           '& .SCFeedObject-group, & .SCFeedObject-event': {
             borderBottom: 'none',
@@ -232,7 +241,11 @@ const Component = {
               display: 'block'
             },
             '& hr': {
-              margin: '1em 0'
+              margin: '1em 0',
+              borderColor:
+                getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                  ? 'rgba(255, 255, 255, 0.12)'
+                  : 'rgba(221, 221, 221, 1)'
             },
             '& a': {
               color: theme.palette.text.secondary,
@@ -378,17 +391,17 @@ const Component = {
                   fontWeight: theme.typography.fontWeightRegular,
                   marginTop: theme.spacing(0),
                   marginBottom: 0,
-                  color: theme.palette.primary.main,
-                  '&:hover': {
-                    color: 'inherit'
-                  }
+                  color: theme.palette.getContrastText(theme.palette.background.paper)
                 },
               '& .MuiDivider-root': {
                 borderColor: theme.palette.grey[300]
               },
               '& .SCFeedObject-action-vote-button, & .SCFeedObject-action-comment-button, & .SCFeedObject-action-share-button, & .SCReactionAction-button':
                 {
-                  color: theme.palette.primary.main,
+                  color:
+                    getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                      ? lighten(theme.palette.text.primary, 0.5)
+                      : darken(theme.palette.text.primary, 0.5),
                   marginTop: theme.spacing(-0.5),
                   marginBottom: theme.spacing(0.5),
                   borderRadius: '50%',
@@ -606,6 +619,8 @@ const Component = {
     }),
     contributorsRoot: ({theme}: any) => ({
       '& .SCFeedObject-contributors-btn-participants': {
+        display: 'flex',
+        gap: '4px',
         padding: theme.spacing(0.5),
         marginLeft: theme.spacing(-0.5),
         color: 'inherit',
@@ -620,8 +635,8 @@ const Component = {
       },
       ['& .MuiAvatar-root']: {
         backgroundColor: '#d5d5d5',
-        border: '2px solid #FFF !important',
-        color: '#FFF',
+        border: `1px solid ${theme.palette.common.white}`,
+        color: theme.palette.common.white,
         fontSize: '0.55rem',
         width: theme.selfcommunity.user.avatar.sizeSmall,
         height: theme.selfcommunity.user.avatar.sizeSmall,

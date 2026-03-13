@@ -169,7 +169,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
 
   if (scUserContext.user && (scCategoriesManager.isLoading(scCategory) || followed === null)) {
     return (
-      <Root size="small" variant="outlined" loading className={classNames(classes.root, className)}>
+      <Root size="small" variant="contained" loading className={classNames(classes.root, className)}>
         <FormattedMessage defaultMessage="ui.categoryFollowButton.follow" id="ui.categoryFollowButton.follow" />
       </Root>
     );
@@ -192,7 +192,7 @@ export default function CategoryFollowButton(inProps: CategoryFollowButtonProps)
   return (
     <Root
       size="small"
-      variant="outlined"
+      variant="contained"
       onClick={handleFollowAction}
       loading={scUserContext.user ? scCategoriesManager.isLoading(scCategory) : null}
       className={classNames(classes.root, className)}

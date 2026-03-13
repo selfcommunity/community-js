@@ -94,7 +94,7 @@ export default function IncubatorSubscribeButton(inProps: IncubatorSubscribeButt
   const scSubscribedIncubatorsManager: SCSubscribedIncubatorsManagerType = scUserContext.managers.incubators;
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   // STATE
-  const {scIncubator, setSCIncubator} = useSCFetchIncubator({
+  const {scIncubator} = useSCFetchIncubator({
     id: incubatorId,
     incubator,
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
@@ -133,7 +133,7 @@ export default function IncubatorSubscribeButton(inProps: IncubatorSubscribeButt
   return (
     <Root
       size="small"
-      variant={subscribed ? 'contained' : 'outlined'}
+      variant="contained"
       onClick={handleSubscribeAction}
       loading={scUserContext.user ? subscribed === null || scSubscribedIncubatorsManager.isLoading(scIncubator) : null}
       className={classNames(classes.root, className)}

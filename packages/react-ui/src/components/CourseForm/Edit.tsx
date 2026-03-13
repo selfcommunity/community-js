@@ -16,7 +16,8 @@ const classes = {
   publishInfo: `${PREFIX}-edit-publish-info`,
   privacyItem: `${PREFIX}-edit-privacy-item`,
   privacyItemInfo: `${PREFIX}-edit-privacy-item-info`,
-  disabled: `${PREFIX}-disabled`
+  disabled: `${PREFIX}-disabled`,
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 const Root = styled(Box, {
@@ -74,7 +75,7 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
     <Root className={classNames(classes.root, className)} {...rest}>
       {course.privacy === SCCoursePrivacyType.DRAFT && (
         <Box className={classes.access}>
-          <Typography variant="h5">
+          <Typography variant="h5" className={classes.paperContrastColor}>
             <FormattedMessage id="ui.courseForm.edit.access.section.title" defaultMessage="ui.courseForm.edit.access.section.title" />
           </Typography>
           <Widget className={classes.card}>
@@ -82,21 +83,21 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
               error
             </Icon>
             <Box>
-              <Typography variant="h5">
+              <Typography variant="h5" className={classes.paperContrastColor}>
                 <FormattedMessage id="ui.courseForm.edit.access.info.title" defaultMessage="ui.courseForm.edit.access.info.title" />
               </Typography>
-              <Typography variant="body1">
+              <Typography variant="body1" className={classes.paperContrastColor}>
                 <FormattedMessage id="ui.courseForm.edit.access.info.subtitle" defaultMessage="ui.courseForm.edit.access.info.subtitle" />
               </Typography>
               <Box className={classes.accessInfo}>
-                <Typography variant="body1">
+                <Typography variant="body1" className={classes.paperContrastColor}>
                   <FormattedMessage
                     id="ui.courseForm.edit.access.info.access"
                     defaultMessage="ui.courseForm.edit.access.info.access"
                     values={{icon: (chunks: [parts: ReactNode[]]) => <Icon key="ui.courseForm.edit.access.info.access.icon">{chunks}</Icon>}}
                   />
                 </Typography>
-                <Typography variant="body1">
+                <Typography variant="body1" className={classes.paperContrastColor}>
                   <FormattedMessage
                     id="ui.courseForm.edit.access.info.visibility"
                     defaultMessage="ui.courseForm.edit.access.info.visibility"
@@ -109,7 +110,7 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
         </Box>
       )}
       <Box className={classes.publish}>
-        <Typography variant="h5">
+        <Typography variant="h5" className={classes.paperContrastColor}>
           <FormattedMessage id="ui.courseForm.edit.publication.title" defaultMessage="ui.courseForm.edit.publication.title" />
         </Typography>
         {notPublishable ? (
@@ -117,12 +118,12 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
             <Icon fontSize="medium" color="warning">
               error
             </Icon>
-            <Typography>
+            <Typography className={classes.paperContrastColor}>
               <FormattedMessage id="ui.courseForm.edit.publication.subtitle.info" defaultMessage="ui.courseForm.edit.publication.subtitle.info" />
             </Typography>
           </Widget>
         ) : (
-          <Typography variant="body1" className={classes.publishInfo}>
+          <Typography variant="body1" className={classNames(classes.publishInfo, classes.paperContrastColor)}>
             <FormattedMessage id="ui.courseForm.edit.publication.subtitle" defaultMessage="ui.courseForm.edit.publication.subtitle" />
           </Typography>
         )}
@@ -134,14 +135,18 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
                 <FormControlLabel
                   control={<Radio size="small" value={option} checked={option === privacy} onChange={handleChange} disabled={notPublishable} />}
                   label={
-                    <FormattedMessage
-                      id={`ui.courseForm.edit.publication.option.${option}.title`}
-                      defaultMessage={`ui.courseForm.edit.publication.option.${option}.title`}
-                    />
+                    <Typography component="span" className={classes.paperContrastColor}>
+                      <FormattedMessage
+                        id={`ui.courseForm.edit.publication.option.${option}.title`}
+                        defaultMessage={`ui.courseForm.edit.publication.option.${option}.title`}
+                      />
+                    </Typography>
                   }
                 />
                 <>
-                  <Typography variant="body1" className={classNames(classes.privacyItemInfo, {[classes.disabled]: notPublishable})}>
+                  <Typography
+                    variant="body1"
+                    className={classNames(classes.paperContrastColor, classes.privacyItemInfo, {[classes.disabled]: notPublishable})}>
                     <FormattedMessage
                       id={`ui.courseForm.edit.publication.option.${option}.access`}
                       defaultMessage={`ui.courseForm.edit.publication.option.${option}.access`}
@@ -152,7 +157,9 @@ export default function CourseEdit(inProps: CourseEditProps): JSX.Element {
                       }}
                     />
                   </Typography>
-                  <Typography variant="body1" className={classNames(classes.privacyItemInfo, {[classes.disabled]: notPublishable})}>
+                  <Typography
+                    variant="body1"
+                    className={(classes.paperContrastColor, classNames(classes.privacyItemInfo, {[classes.disabled]: notPublishable}))}>
                     <FormattedMessage
                       id={`ui.courseForm.edit.publication.option.${option}.visibility`}
                       defaultMessage={`ui.courseForm.edit.publication.option.${option}.visibility`}

@@ -1,5 +1,3 @@
-import {darken} from '@mui/system';
-
 const Component = {
   variants: [
     {
@@ -26,14 +24,15 @@ const Component = {
         borderRadius: theme.shape.borderRadius
       },
       '&.MuiPaper-elevation0': {
-        borderRadius: 0
+        borderRadius: 0,
+        backgroundColor: 'rgba(255,255,255,0)'
       },
       '& .MuiCardContent-root': {
         padding: theme.spacing(2.2),
         '& h5': {
           fontFamily: theme.typography.fontFamily,
           fontWeight: theme.typography.fontWeightBold,
-          color: darken(theme.palette.text.primary, 0.5),
+          color: theme.palette.getContrastText(theme.palette.background.default),
           fontSize: '1.143rem'
         },
         '& .MuiList-root': {

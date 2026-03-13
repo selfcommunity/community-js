@@ -7,6 +7,9 @@ const Component = {
       [theme.breakpoints.up('sm')]: {
         borderRadius: theme.shape.borderRadius
       },
+      '& .SCUser-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
+      },
       '& .MuiChip-root': {
         height: '18px'
       },

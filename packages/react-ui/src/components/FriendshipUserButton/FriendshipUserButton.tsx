@@ -185,7 +185,7 @@ export default function FriendshipUserButton(inProps: FriendshipButtonProps): JS
   return (
     <Root
       size="small"
-      variant="outlined"
+      variant="contained"
       disabled={disabled}
       loading={scUserContext.user ? scConnectionsManager.isLoading(scUser) : null}
       onClick={handleConnectionStatus}

@@ -1,3 +1,5 @@
+import {getContrastRatio} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -16,7 +18,10 @@ const Component = {
       '& .MuiCardContent-root': {
         '& .MuiList-root': {
           paddingTop: 0,
-          borderRight: `1px solid ${theme.palette.grey[200]}`,
+          borderRight:
+            getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+              ? '1px solid rgba(255, 255, 255, 0.12)'
+              : `1px solid ${theme.palette.grey[200]}`,
           '& .MuiListItem-root': {
             paddingBottom: 0
           }
@@ -99,7 +104,10 @@ const Component = {
         }
       },
       '& .MuiAccordionSummary-root': {
-        borderBottom: `1px solid ${theme.palette.grey[200]}`,
+        borderBottom:
+          getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+            ? '1px solid rgba(255, 255, 255, 0.12)'
+            : `1px solid ${theme.palette.grey[200]}`,
         borderRadius: 0,
         [theme.breakpoints.up('md')]: {
           borderRadius: theme.shape.borderRadius,
@@ -172,7 +180,10 @@ const Component = {
           padding: 0
         },
         [theme.breakpoints.up('md')]: {
-          borderRight: `1px solid ${theme.palette.grey[200]}`
+          borderRight:
+            getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5
+              ? '1px solid rgba(255, 255, 255, 0.12)'
+              : `1px solid ${theme.palette.grey[200]}`
         }
       }
     }),

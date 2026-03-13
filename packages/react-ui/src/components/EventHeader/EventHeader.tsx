@@ -1,4 +1,4 @@
-import {Box, Chip, Icon, Paper, Typography, useMediaQuery, useTheme, styled, Button} from '@mui/material';
+import {Box, Chip, Icon, Paper, Typography, useMediaQuery, useTheme, styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
 import {
   SCPreferences,
@@ -200,7 +200,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
                 <FormattedMessage id="ui.eventHeader.finished" defaultMessage="ui.eventHeader.finished" />
               </Typography>
             }
-            variant="outlined"
+            variant="filled"
             size="medium"
             color="secondary"
             className={classes.chip}

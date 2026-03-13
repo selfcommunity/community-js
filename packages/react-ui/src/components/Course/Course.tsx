@@ -336,7 +336,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
         </CardContent>
         {actions ?? (
           <CardActions className={classes.previewActions}>
-            <Button variant="outlined" size="small" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
+            <Button variant="contained" size="small" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
               <FormattedMessage defaultMessage="ui.course.see" id="ui.course.see" />
             </Button>
           </CardActions>
@@ -423,7 +423,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
         }
         actions={
           actions ?? (
-            <Button size="small" variant="outlined" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
+            <Button size="small" variant="contained" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
               <FormattedMessage defaultMessage="ui.course.see" id="ui.course.see" />
             </Button>
           )

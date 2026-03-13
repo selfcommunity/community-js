@@ -18,7 +18,8 @@ const classes = {
   title: `${PREFIX}-title`,
   subtitle: `${PREFIX}-subtitle`,
   actionWrapper: `${PREFIX}-action-wrapper`,
-  action: `${PREFIX}-action`
+  action: `${PREFIX}-action`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(Stack, {
@@ -89,8 +90,8 @@ export default function DocComponent(props: DocComponentProps) {
     <Root className={classNames(classes.docRoot, className)}>
       <Box component="img" alt={document.title} src={getImage()} />
       <Stack className={classes.textWrapper}>
-        <Typography className={classes.title}>{document.title}</Typography>
-        {document.size && <Typography className={classes.subtitle}>{formatBytes(document.size)}</Typography>}
+        <Typography className={classNames(classes.title, classes.contrastColor)}>{document.title}</Typography>
+        {document.size && <Typography className={classNames(classes.subtitle, classes.contrastColor)}>{formatBytes(document.size)}</Typography>}
       </Stack>
 
       {(handleDownload || onDelete) && (

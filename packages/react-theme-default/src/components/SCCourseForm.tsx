@@ -3,8 +3,12 @@ import {alpha, getContrastRatio} from '@mui/material';
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
-      '& .SCCourseForm-contrast-color': {
-        color: getContrastRatio(theme.palette.background.default, theme.palette.common.white) > 4.5 ? theme.palette.common.white : undefined
+      '& .SCCourseForm-default-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.default)
+      },
+
+      '& .SCCourseForm-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
       },
 
       '& .SCCourseForm-cover': {
@@ -29,8 +33,14 @@ const Component = {
       },
       '& .SCCourseForm-form': {
         '&.SCCourseForm-step-customization': {
-          backgroundColor: theme.palette.common.white,
-          border: `1px solid ${theme.palette.grey['300']}`,
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? theme.palette.background.paper
+              : theme.palette.common.white,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderBottom: 'unset',
           borderRadius: '5px',
           borderBottomLeftRadius: 'unset',
@@ -43,11 +53,17 @@ const Component = {
         '& .SCCourseForm-name': {
           marginTop: theme.spacing(3)
         },
+        '.MuiInputBase-root': {
+          color: theme.palette.getContrastText(theme.palette.background.paper)
+        },
         '& .SCCategoryAutocomplete-root ': {
           marginTop: theme.spacing(1)
         },
         '& .SCCourseForm-edit-root': {
-          backgroundColor: theme.palette.common.white,
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? theme.palette.background.paper
+              : theme.palette.common.white,
           marginTop: theme.spacing(1),
           '& .SCCourseForm-edit-card': {
             display: 'flex',
@@ -113,10 +129,19 @@ const Component = {
         gap: theme.spacing(2.5),
         marginTop: theme.spacing(1.5),
         '& .SCCourseForm-selected': {
-          backgroundColor: alpha(theme.palette.success.main, theme.palette.action.selectedOpacity),
-          border: `1px solid ${theme.palette.success.main} !important`,
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? alpha(theme.palette.success.dark, 0.5)
+              : alpha(theme.palette.success.main, theme.palette.action.selectedOpacity),
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.success.dark} !important`
+              : `1px solid ${theme.palette.success.main} !important`,
           '&:hover': {
-            backgroundColor: alpha(theme.palette.success.main, theme.palette.action.selectedOpacity)
+            backgroundColor:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                ? `${alpha(theme.palette.success.dark, 0.8)} !important`
+                : `${alpha(theme.palette.success.main, theme.palette.action.selectedOpacity)} !important`
           }
         },
         '& .SCCourseForm-disabled': {
@@ -125,10 +150,14 @@ const Component = {
         },
         '& .MuiCard-root': {
           boxShadow: 'none',
-          border: `1px solid ${theme.palette.grey[300]}`,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderRadius: '10px',
           '&:hover': {
-            backgroundColor: theme.palette.grey[200]
+            backgroundColor:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? theme.palette.grey[900] : theme.palette.grey[200]
           },
           '& .MuiCardContent-root': {
             '& .MuiTypography-h5': {
@@ -155,8 +184,14 @@ const Component = {
         justifyContent: 'flex-end',
         gap: theme.spacing(2),
         '&.SCCourseForm-step-customization': {
-          backgroundColor: theme.palette.common.white,
-          border: `1px solid ${theme.palette.grey['300']}`,
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? theme.palette.background.paper
+              : theme.palette.common.white,
+          border:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
           borderTop: 'unset',
           borderRadius: '5px',
           borderTopLeftRadius: 'unset',
@@ -172,7 +207,10 @@ const Component = {
       },
       '& .MuiDivider-root': {
         marginTop: theme.spacing(2),
-        border: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`
+        border:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? `1px solid ${alpha(theme.palette.primary.dark, 0.5)}`
+            : `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`
       },
       '& .MuiDialogTitle-root': {
         '& span': {

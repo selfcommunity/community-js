@@ -36,7 +36,8 @@ const classes = {
   cellAlignCenter: `${PREFIX}-cell-align-center`,
   lessonEmptyStatus: `${PREFIX}-lesson-empty-status`,
   emptyStatusButton: `${PREFIX}-empty-status-button`,
-  contrastColor: `${PREFIX}-contrast-color`
+  defaultContrastColor: `${PREFIX}-default-contrast-color`,
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 interface LessonsProps {
@@ -268,7 +269,7 @@ function Lessons(props: LessonsProps) {
 
   return (
     <Box>
-      <Typography className={classNames(classes.lessonTitle, classes.contrastColor)} variant="h4">
+      <Typography className={classNames(classes.lessonTitle, classes.defaultContrastColor)} variant="h4">
         <FormattedMessage id="ui.editCourse.tab.lessons" defaultMessage="ui.editCourse.tab.lessons" />
       </Typography>
 
@@ -299,7 +300,7 @@ function Lessons(props: LessonsProps) {
         <Box className={classes.lessonsInnerWrapper}>
           <Stack className={classes.lessonsSectionsWrapper}>
             <Stack className={classes.lessonsSections}>
-              <Typography variant="h5">
+              <Typography variant="h5" className={classes.paperContrastColor}>
                 <FormattedMessage
                   id="ui.course.table.sections.title"
                   defaultMessage="ui.course.table.sections.title"
@@ -311,7 +312,7 @@ function Lessons(props: LessonsProps) {
 
               <Box className={classes.circle} />
 
-              <Typography variant="h5">
+              <Typography variant="h5" className={classes.paperContrastColor}>
                 <FormattedMessage
                   id="ui.course.table.lessons.title"
                   defaultMessage="ui.course.table.lessons.title"
@@ -340,7 +341,7 @@ function Lessons(props: LessonsProps) {
 
                     {headerCells.map((cell, i) => (
                       <TableCell key={i} className={cell.className}>
-                        <Typography className={classes.tableHeaderTypography} variant="overline">
+                        <Typography className={classNames(classes.tableHeaderTypography, classes.paperContrastColor)} variant="overline">
                           <FormattedMessage id={cell.id} defaultMessage={cell.id} />
                         </Typography>
                       </TableCell>

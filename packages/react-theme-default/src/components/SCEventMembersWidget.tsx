@@ -1,3 +1,5 @@
+import {getContrastRatio} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
@@ -9,7 +11,10 @@ const Component = {
         },
 
         '& .SCEventMembersWidget-tabs-wrapper': {
-          borderBottom: `1px solid ${theme.palette.grey['300']}`,
+          borderBottom:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
 
           '& .SCEventMembersWidget-tab-label-wrapper': {
             gap: '2px',
@@ -42,7 +47,10 @@ const Component = {
         },
 
         '& .SCEventMembersWidget-tabs-wrapper': {
-          borderBottom: `1px solid ${theme.palette.grey['300']}`,
+          borderBottom:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? `1px solid ${theme.palette.grey[800]}`
+              : `1px solid ${theme.palette.grey[300]}`,
 
           '& .SCEventMembersWidget-tab-label-wrapper': {
             gap: '2px',

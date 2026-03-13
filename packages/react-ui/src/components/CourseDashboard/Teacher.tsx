@@ -20,7 +20,7 @@ const classes = {
   tabList: `${PREFIX}-tab-list`,
   tab: `${PREFIX}-tab`,
   tabPanel: `${PREFIX}-tab-panel`,
-  contrastColor: `${PREFIX}-contrast-color`
+  defaultContrastColor: `${PREFIX}-default-contrast-color`
 };
 
 const TAB_DATA = [
@@ -94,7 +94,7 @@ function Teacher(inProps: TeacherCourseDashboardProps) {
                 </Typography>
               }
               value={data.value}
-              className={classNames(classes.tab, classes.contrastColor)}
+              className={classNames(classes.tab, classes.defaultContrastColor)}
             />
           ))}
         </TabList>

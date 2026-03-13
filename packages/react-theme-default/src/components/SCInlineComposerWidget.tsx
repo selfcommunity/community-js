@@ -16,10 +16,9 @@ const Component = {
           '& .MuiButton-root': {
             fontWeight: theme.typography.fontWeightMedium,
             letterSpacing: '0.17px',
-            padding: theme.spacing(0.5, 0),
+            padding: theme.spacing(0.5, 0, 0.5, 1),
             '&:hover': {
               color: theme.palette.text.secondary,
-              background: 'white',
               border: 'none'
             }
           },

@@ -35,6 +35,7 @@ export enum SCPreferenceName {
   NAVBARBACK = 'navbarback',
   COLORFONT = 'font_color',
   COLORFONTSECONDARY = 'font_color_secondary',
+  BOXCOLORBACK = 'boxcolorback',
   COVER_1_HP_M1920 = 'cover_1_hp_m1920',
   COVER_2_HP_M1920 = 'cover_2_hp_m1920',
   COVER_3_HP_M1920 = 'cover_3_hp_m1920',

@@ -8,10 +8,13 @@ const Component = {
           padding: 0
         }
       },
-      '& .SCNavigationSettingsIconButton-item .MuiListItemIcon-root': {
-        marginLeft: theme.spacing(0.5),
-        marginBottom: theme.spacing(0.5),
-        color: theme.palette.secondary.main
+      '& .SCNavigationSettingsIconButton-item': {
+        color: theme.palette.getContrastText(theme.palette.background.default),
+        '& .MuiListItemIcon-root': {
+          marginLeft: theme.spacing(0.5),
+          marginBottom: theme.spacing(0.5),
+          color: theme.palette.secondary.main
+        }
       }
     }),
     drawerRoot: ({theme}: any) => ({

@@ -6,6 +6,9 @@ const Component = {
       padding: theme.spacing(2, 4, 4, 2),
       boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
       marginBottom: theme.spacing(1),
+      '& .SCPrivateMessageThreadItem-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
+      },
       '& .MuiListItemSecondaryAction-root': {
         right: 10,
         top: theme.spacing(3),

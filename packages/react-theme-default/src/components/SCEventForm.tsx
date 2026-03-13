@@ -1,4 +1,4 @@
-import {alpha} from '@mui/system';
+import {alpha, getContrastRatio} from '@mui/material';
 
 const Component = {
   styleOverrides: {
@@ -90,7 +90,10 @@ const Component = {
       },
       '& .MuiDivider-root': {
         marginTop: theme.spacing(2),
-        border: `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`
+        border:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? `1px solid ${alpha(theme.palette.primary.dark, 0.5)}`
+            : `1px solid ${alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity)}`
       },
       '& .MuiDialogTitle-root': {
         '& span': {
@@ -100,7 +103,10 @@ const Component = {
       },
       '& .SCEventForm-event-address-root': {
         marginTop: theme.spacing(2),
-        backgroundColor: theme.palette.grey['A200'],
+        backgroundColor:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? theme.palette.background.paper
+            : theme.palette.grey['A200'],
         borderRadius: 5,
         '& .SCEventForm-event-address-tabs': {
           padding: theme.spacing(0, 2, 0, 2),

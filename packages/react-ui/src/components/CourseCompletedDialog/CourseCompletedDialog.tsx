@@ -5,15 +5,16 @@ import clapping from '../../assets/courses/clapping';
 import {SCCourseType} from '@selfcommunity/types';
 import {memo} from 'react';
 import {Link, SCRoutes, SCRoutingContextType, useSCRouting} from '@selfcommunity/react-core';
-
-const PREFIX = 'SCCourseCompletedDialog';
+import {PREFIX} from './constants';
+import classNames from 'classnames';
 
 const classes = {
   root: `${PREFIX}-root`,
   wrapper: `${PREFIX}-wrapper`,
   title: `${PREFIX}-title`,
   descriptionPt1: `${PREFIX}-description-pt1`,
-  descriptionPt2: `${PREFIX}-description-pt2`
+  descriptionPt2: `${PREFIX}-description-pt2`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(BaseDialog, {
@@ -49,7 +50,7 @@ function CourseCompletedDialog(inProps: CourseCompletedDialogProps) {
       onClose={onClose}
       actions={
         <Button component={Link} to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})} size="medium" variant="contained">
-          <Typography variant="body1">
+          <Typography variant="body1" className={classes.contrastColor}>
             <FormattedMessage id="ui.course.completedDialog.btn.label" defaultMessage="ui.course.completedDialog.btn.label" />
           </Typography>
         </Button>
@@ -62,15 +63,15 @@ function CourseCompletedDialog(inProps: CourseCompletedDialogProps) {
           width={100}
           height={100}
         />
-        <Typography variant="h2" className={classes.title}>
+        <Typography variant="h2" className={classNames(classes.title, classes.contrastColor)}>
           <FormattedMessage id="ui.course.completedDialog.title" defaultMessage="ui.course.completedDialog.title" />
         </Typography>
 
-        <Typography variant="h4" className={classes.descriptionPt1}>
+        <Typography variant="h4" className={classNames(classes.descriptionPt1, classes.contrastColor)}>
           <FormattedMessage id="ui.course.completedDialog.description.pt1" defaultMessage="ui.course.completedDialog.description.pt1" />
         </Typography>
 
-        <Typography variant="h4" className={classes.descriptionPt2}>
+        <Typography variant="h4" className={classNames(classes.descriptionPt2, classes.contrastColor)}>
           {intl.formatMessage(
             {id: 'ui.course.completedDialog.description.pt2', defaultMessage: 'ui.course.completedDialog.description.pt2'},
             {

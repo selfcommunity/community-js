@@ -19,7 +19,7 @@ import {SCCourseEditTabType, SCCourseUsersTableModeType} from '../../types/cours
 
 const classes = {
   usersStatusWrapper: `${PREFIX}-users-status-wrapper`,
-  contrastColor: `${PREFIX}-contrast-color`
+  defaultContrastColor: `${PREFIX}-default-contrast-color`
 };
 
 const headerCells = [
@@ -170,7 +170,7 @@ function Users(props: UsersProps) {
 
   return (
     <Box>
-      <Typography variant="h6" className={classes.contrastColor}>
+      <Typography variant="h6" className={classes.defaultContrastColor}>
         <FormattedMessage id="ui.editCourse.tab.users.title" defaultMessage="ui.editCourse.tab.users.title" values={{usersNumber: state.count}} />
       </Typography>
 

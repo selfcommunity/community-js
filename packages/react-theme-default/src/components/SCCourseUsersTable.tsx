@@ -1,19 +1,42 @@
+import {darken, getContrastRatio, lighten} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme}) => ({
-      border: `1px solid ${theme.palette.grey['300']}`,
+      border:
+        getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+          ? `1px solid ${theme.palette.grey[800]}`
+          : `1px solid ${theme.palette.grey[300]}`,
       borderRadius: '5px',
       padding: theme.spacing(1),
-      backgroundColor: theme.palette.common.white,
+      backgroundColor:
+        getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+          ? theme.palette.background.paper
+          : theme.palette.common.white,
 
       [theme.breakpoints.up('sm')]: {
         padding: theme.spacing(2)
       },
 
+      '& .SCCourseUsersTable-default-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.default)
+      },
+
+      '& .SCCourseUsersTable-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
+      },
+
       '& .SCCourseUsersTable-search': {
         '& > .MuiInputBase-root': {
           borderBottomLeftRadius: 'unset',
-          borderBottomRightRadius: 'unset'
+          borderBottomRightRadius: 'unset',
+
+          '& > input': {
+            color:
+              getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+                ? lighten(theme.palette.common.white, 0.5)
+                : darken(theme.palette.common.white, 0.5)
+          }
         },
 
         '& .SCCourseUsersTable-end-adornment-wrapper': {
@@ -47,7 +70,8 @@ const Component = {
         '& .SCCourseUsersTable-progress': {
           width: '100%',
           borderRadius: '28px',
-          backgroundColor: theme.palette.grey['300'],
+          backgroundColor:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? theme.palette.grey[800] : theme.palette.grey[300],
 
           [theme.breakpoints.down('sm')]: {
             display: 'none'
@@ -69,9 +93,27 @@ const Component = {
       paddingTop: theme.spacing(3)
     }),
     dialogRoot: ({theme}) => ({
+      '& .SCCourseUsersTable-dialog-paper-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.background.paper)
+      },
+
+      '& .MuiDialogTitle-root': {
+        color:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+            ? lighten(theme.palette.common.white, 0.5)
+            : darken(theme.palette.common.white, 0.5)
+      },
+
       '& .MuiDialogContent-root': {
         [theme.breakpoints.down('md')]: {
           paddingBottom: '20px'
+        },
+
+        '& .SCCourseUsersTable-contrast-color': {
+          color:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
+              ? lighten(theme.palette.common.white, 0.5)
+              : darken(theme.palette.common.white, 0.5)
         },
 
         '& .SCCourseUsersTable-content-wrapper': {

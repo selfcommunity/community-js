@@ -140,7 +140,7 @@ export default function AcceptRequestUserEventButton(inProps: AcceptRequestUserE
     <>
       <AcceptButton
         size="small"
-        variant="outlined"
+        variant="contained"
         onClick={() => setOpenDialog(true)}
         loading={loading}
         className={classNames(classes.root, className)}

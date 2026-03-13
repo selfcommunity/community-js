@@ -1,16 +1,27 @@
-import {Fragment, SyntheticEvent, useEffect, useState} from 'react';
+import {SyntheticEvent, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
-import {Autocomplete, AutocompleteProps, Chip, TextField, TextFieldProps, Checkbox, CircularProgress, styled} from '@mui/material';
-import {useSCFetchCategories} from '@selfcommunity/react-core';
+import {
+  Autocomplete,
+  AutocompleteProps,
+  Chip,
+  TextField,
+  TextFieldProps,
+  Checkbox,
+  CircularProgress,
+  styled,
+  Typography,
+  useTheme
+} from '@mui/material';
+import {SCThemeType, useSCFetchCategories} from '@selfcommunity/react-core';
 import {SCCategoryType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
-
-const PREFIX = 'SCCategoryAutocomplete';
+import {PREFIX} from './constants';
 
 const classes = {
-  root: `${PREFIX}-root`
+  root: `${PREFIX}-root`,
+  paperContrastColor: `${PREFIX}-paper-contrast-color`
 };
 
 export interface CategoryAutocompleteProps
@@ -119,6 +130,7 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
 
   // HOOKS
   const {categories, isLoading} = useSCFetchCategories({endpointQueryParams});
+  const theme = useTheme<SCThemeType>();
 
   useEffect(() => {
     onChange?.(value);
@@ -171,18 +183,45 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
       handleHomeEndKeys
       clearIcon={null}
       disabled={disabled || isLoading}
-      noOptionsText={<FormattedMessage id="ui.categoryAutocomplete.empty" defaultMessage="ui.categoryAutocomplete.empty" />}
+      noOptionsText={
+        <Typography component="span" sx={{color: theme.palette.getContrastText(theme.palette.background.paper)}}>
+          <FormattedMessage id="ui.categoryAutocomplete.empty" defaultMessage="ui.categoryAutocomplete.empty" />
+        </Typography>
+      }
       onChange={handleChange}
       isOptionEqualToValue={(option: SCCategoryType, value: SCCategoryType) => value.id === option.id}
       renderValue={(value: any, getItemProps: any) => {
         if (multiple) {
           return (value as any[]).map((option, index) => {
             const {key, ...rest} = getItemProps({index});
-            return <Chip key={key} id={option.id} label={option.name} color={option.color} {...rest} />;
+            return (
+              <Chip
+                key={key}
+                id={option.id}
+                label={
+                  <Typography component="span" className={classes.paperContrastColor}>
+                    {option.name}
+                  </Typography>
+                }
+                color={option.color}
+                {...rest}
+              />
+            );
           });
         }
 
-        return <Chip id={value.id} label={value.name} color={value.color} {...getItemProps} />;
+        return (
+          <Chip
+            id={value.id}
+            label={
+              <Typography component="span" className={classes.paperContrastColor}>
+                {value.name}
+              </Typography>
+            }
+            color={value.color}
+            {...getItemProps}
+          />
+        );
       }}
       renderOption={(props, option: SCCategoryType, {selected, inputValue}) => {
         const {key, ...rest} = props;
@@ -193,15 +232,14 @@ const CategoryAutocomplete = (inProps: CategoryAutocompleteProps): JSX.Element =
           <li key={key} {...rest}>
             {checkboxSelect && <Checkbox style={{marginRight: 8}} checked={selected} />}
             <Chip
-              label={
-                <Fragment>
-                  {parts.map((part, index) => (
-                    <span key={index} style={{fontWeight: part.highlight ? 700 : 400}}>
-                      {part.text}
-                    </span>
-                  ))}
-                </Fragment>
-              }
+              label={parts.map((part, index: number) => (
+                <Typography
+                  component="span"
+                  key={index}
+                  sx={{fontWeight: part.highlight ? 700 : 400, color: theme.palette.getContrastText(theme.palette.background.paper)}}>
+                  {part.text}
+                </Typography>
+              ))}
             />
           </li>
         );

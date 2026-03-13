@@ -15,7 +15,8 @@ const classes = {
   badgeLabel: `${PREFIX}-badge-label`,
   time: `${PREFIX}-time`,
   menuItem: `${PREFIX}-menu-item`,
-  unread: `${PREFIX}-unread`
+  unread: `${PREFIX}-unread`,
+  contrastColor: `${PREFIX}-contrast-color`
 };
 
 const Root = styled(ListItem, {
@@ -135,7 +136,7 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
         <ListItemText
           primary={
             <>
-              <Typography component="span" className={classes.username}>
+              <Typography component="span" className={classNames(classes.username, classes.contrastColor)}>
                 {message.group
                   ? message.group.name
                   : scUserContext?.user?.username === message.receiver.username
@@ -154,7 +155,12 @@ export default function PrivateMessageSnippetItem(inProps: PrivateMessageSnippet
           }
           secondary={
             <>
-              <Typography component="span" color="text.secondary" dangerouslySetInnerHTML={{__html: message.headline ?? message.message}} />
+              <Typography
+                component="span"
+                color="text.secondary"
+                dangerouslySetInnerHTML={{__html: message.headline ?? message.message}}
+                className={classes.contrastColor}
+              />
             </>
           }
         />
