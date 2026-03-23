@@ -1,6 +1,6 @@
 const Component = {
   styleOverrides: {
-    root: ({ theme }) => ({
+    root: ({theme}) => ({
       gap: '7px',
       position: 'absolute',
       bottom: '-36px',
@@ -10,6 +10,7 @@ const Component = {
       borderRadius: '5px',
       boxShadow: '0px 3px 8px #00000040',
       backgroundColor: theme.palette.common.white,
+      color: theme.palette.common.black,
       overflow: 'hidden',
 
       '& .SCCalendar-header': {
