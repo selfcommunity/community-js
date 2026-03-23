@@ -5,9 +5,7 @@ const Component = {
     root: ({theme}: any) => ({
       '& .MuiDialog-paper': {
         boxShadow:
-          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
-            ? '0px 0px 2px 2px rgba(0 0 0 / 50%)'
-            : '0px 0px 1px 1px rgba(255 255 255 / 50%)',
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? '0px 0px 30px 10px rgba(0, 0, 0, 0.5)' : undefined,
         [theme.breakpoints.down('md')]: {
           height: '100%'
         },
@@ -27,7 +25,8 @@ const Component = {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          borderBottom: `1px solid ${theme.palette.grey[400]}`,
+          borderBottom:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? undefined : `1px solid ${theme.palette.grey[400]}`,
           zIndex: 2,
           backgroundColor: theme.palette.background.paper,
           '& .MuiTypography-root': {
@@ -85,7 +84,8 @@ const Component = {
           justifyContent: 'space-between',
           zIndex: 1,
           backgroundColor: theme.palette.background.paper,
-          borderTop: `1px solid ${theme.palette.grey[400]}`,
+          borderTop:
+            getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? undefined : `1px solid ${theme.palette.grey[400]}`,
           '& .SCComposer-selected-action': {
             display: 'flex',
             alignItems: 'center',
