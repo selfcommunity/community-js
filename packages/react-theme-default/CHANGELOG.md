@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.1...@selfcommunity/react-theme-default@1.2.2-alpha.0) (2026-03-23)
+
+
+### Bug Fixes
+
+* fixed color in Calendar component ([036051d](https://github.com/selfcommunity/community-js/commit/036051d012015036feb4d438189edb85ee9848d1))
+
+
+
+
+
 ## [1.2.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.1-alpha.1...@selfcommunity/react-theme-default@1.2.1) (2026-03-23)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
