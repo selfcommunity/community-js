@@ -1,4 +1,4 @@
-import { Box, Stack, styled, Typography } from '@mui/material';
+import {Box, Stack, styled, Typography} from '@mui/material';
 
 const PREFIX = 'SCCalendar';
 
