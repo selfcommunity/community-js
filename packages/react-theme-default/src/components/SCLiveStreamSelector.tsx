@@ -1,3 +1,5 @@
+import {getContrastRatio} from '@mui/material';
+
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
@@ -44,7 +46,9 @@ const Component = {
       }),
       backgroundColor: selected ? theme.palette.grey[100] : theme.palette.background.paper,
       '&:hover': {
-        backgroundColor: theme.palette.grey[50],
+        backgroundColor: getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? undefined : theme.palette.grey[50],
+        border:
+          getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? `2px solid ${theme.palette.primary.main}` : undefined,
         boxShadow: theme.shadows[2]
       },
       border: `1px solid ${theme.palette.divider}`,
