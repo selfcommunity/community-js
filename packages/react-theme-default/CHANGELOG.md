@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.2...@selfcommunity/react-theme-default@1.2.3-alpha.0) (2026-03-26)
+
+
+### Bug Fixes
+
+* fixed hover bgcolor on LiveStreamSelector ([b158f76](https://github.com/selfcommunity/community-js/commit/b158f7659ec149321289a6cc283174af6feaf37a))
+
+
+
+
+
 ## [1.2.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.2-alpha.1...@selfcommunity/react-theme-default@1.2.2) (2026-03-23)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
