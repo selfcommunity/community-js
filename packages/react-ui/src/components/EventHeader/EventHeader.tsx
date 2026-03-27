@@ -261,7 +261,7 @@ export default function EventHeader(inProps: EventHeaderProps): JSX.Element {
             />
           )}
         </Typography>
-        <Typography variant="h5" className={classes.name}>
+        <Typography component="h1" variant="h5" className={classes.name}>
           {scEvent.name}
         </Typography>
         <Box className={classes.visibility}>

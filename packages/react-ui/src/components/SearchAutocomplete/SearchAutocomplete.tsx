@@ -27,11 +27,7 @@ const Root = styled(Autocomplete, {
   name: PREFIX,
   slot: 'Root',
   overridesResolver: (_props, styles) => styles.root
-})(() => ({
-  [`& .${classes.input}`]: {
-    flexGrow: 1
-  }
-}));
+})(() => ({}));
 
 export interface SearchAutocompleteProps
   extends Pick<
@@ -181,6 +177,7 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
   return (
     <Root
       id={id}
+      role="search"
       className={classNames(classes.root, className)}
       blurOnSelect={blurOnSelect}
       onChange={handleChange}
@@ -231,6 +228,9 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
               )
             }
           }}
+          title={`${intl.formatMessage(messages.placeholder, {
+            community: scPreferences.preferences[SCPreferences.TEXT_APPLICATION_NAME].value
+          })}`}
         />
       )}
       {...rest}

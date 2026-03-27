@@ -317,7 +317,7 @@ export default function IncubatorListWidget(inProps: IncubatorListWidgetProps): 
   const content = (
     <CardContent>
       <Box className={classes.header}>
-        <Typography className={classes.title} variant="h5">
+        <Typography className={classes.title} variant="h2">
           <FormattedMessage id="ui.incubatorListWidget.title" defaultMessage="ui.incubatorListWidget.title" />
         </Typography>
         <IconButton className={classes.helpPopover} color="primary" aria-label="info" component="span" onClick={handleClickHelpButton}>

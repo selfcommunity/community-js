@@ -42,7 +42,7 @@ function HeaderCourseDashboard(props: HeaderCourseDashboardProps) {
     <Box className={classes.header}>
       <img src={course.image_bigger} alt={course.image_bigger} className={classes.img} />
 
-      <Typography variant="h3" className={classes.defaultContrastColor}>
+      <Typography component="h1" variant="h3" className={classes.defaultContrastColor}>
         {course.name}
       </Typography>
 

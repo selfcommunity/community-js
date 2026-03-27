@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
 import {useThemeProps} from '@mui/system';
 import {Avatar, Box, List, ListItem, Tab, Tabs, Typography, Icon, styled, Button, ButtonProps} from '@mui/material';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {SCUserContextType, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
 import BaseDialog from '../../shared/BaseDialog';
 import CentralProgress from '../../shared/CentralProgress';
@@ -123,6 +123,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
     contributionType,
     contribution
   });
+  const intl = useIntl();
 
   // EFFECTS
   useEffect(() => {
@@ -189,6 +190,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
   return (
     <>
       <Root
+        title={intl.formatMessage({id: 'ui.voteAudienceButton.title', defaultMessage: 'ui.voteAudienceButton.title'})}
         onClick={handleOpen}
         disabled={isLoading || Boolean(error) || contributionVoteCount === 0}
         loading={isLoading}

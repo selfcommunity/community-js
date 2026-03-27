@@ -281,7 +281,7 @@ export default function UserFollowersWidget(inProps: UserFollowersWidgetProps): 
 
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage
           id="ui.userFollowersWidget.title"
           defaultMessage="ui.userFollowersWidget.title"

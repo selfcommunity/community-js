@@ -285,7 +285,7 @@ export default function EventMembersWidget(inProps: EventMembersWidgetProps) {
   return (
     <Root className={classes.root} {...rest}>
       <CardContent className={classes.content}>
-        <Typography variant="h5" className={classes.title}>
+        <Typography variant="h3" className={classes.title}>
           <FormattedMessage id={title} defaultMessage={title} />
         </Typography>
 

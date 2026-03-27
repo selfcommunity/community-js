@@ -60,11 +60,11 @@ export interface GroupRequestsWidgetProps extends VirtualScrollerItemProps, Widg
    * @default null
    */
   groupId?: number | string;
-	/**
-	 * Hides this component
-	 * @default true
-	 */
-	autoHide?: boolean;
+  /**
+   * Hides this component
+   * @default true
+   */
+  autoHide?: boolean;
   /**
    * Limit the number of users to show
    * @default false
@@ -143,7 +143,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
   const {
     groupId,
     group,
-		autoHide = true,
+    autoHide = true,
     limit = 5,
     className,
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
@@ -198,7 +198,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
    */
   const _initComponent = useMemo(
     () => (): void => {
-			console.log('initComponent');
+      console.log('initComponent');
       if (!state.initialized && !state.isLoadingNext) {
         dispatch({type: actionWidgetTypes.LOADING_NEXT});
         GroupService.getGroupWaitingApprovalSubscribers(scGroup.id, {limit})
@@ -217,7 +217,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
   // EFFECTS
   useEffect(() => {
     let _t;
-		console.log(scGroup, scUserContext.user);
+    console.log(scGroup, scUserContext.user);
     if ((contentAvailability || (!contentAvailability && scUserContext.user?.id)) && scGroup && scUserContext.user !== undefined) {
       _t = setTimeout(_initComponent);
       return (): void => {
@@ -305,7 +305,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
 
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage id="ui.groupRequestsWidget.title" defaultMessage="ui.groupRequestsWidget.title" />
       </Typography>
       {state.results.length === 0 && (

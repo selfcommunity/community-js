@@ -174,7 +174,7 @@ export default function EventInfoWidget(inProps: EventInfoWidgetProps) {
       <CardContent className={classes.content}>
         <Stack className={classes.titleWrapper}>
           <Icon fontSize="small">info</Icon>
-          <Typography variant="h5">
+          <Typography variant="h2">
             <FormattedMessage id="ui.infoEventWidget.title" defaultMessage="ui.infoEventWidget.title" />
           </Typography>
         </Stack>

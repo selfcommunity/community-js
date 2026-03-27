@@ -39,7 +39,7 @@ const Component = {
           position: 'absolute',
           top: 5,
           right: 3,
-          color: theme.palette.common.white,
+          color: theme.palette.getContrastText(theme.palette.secondary.main),
           boxShadow: 'rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px',
           '& span': {
             fontSize: '0.8rem',
@@ -74,7 +74,7 @@ const Component = {
         position: 'absolute',
         top: theme.spacing(1),
         left: theme.spacing(0.5),
-        color: theme.palette.common.white,
+        color: theme.palette.getContrastText(theme.palette.common.white),
         borderRadius: 0,
         '& .MuiChip-label': {
           fontWeight: 700,
@@ -104,7 +104,7 @@ const Component = {
           position: 'absolute',
           top: theme.spacing(2),
           left: theme.spacing(2),
-          color: theme.palette.common.white,
+          color: theme.palette.getContrastText(theme.palette.common.white),
           borderRadius: 0,
           '& .MuiChip-label': {
             fontWeight: 700,

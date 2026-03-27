@@ -23,7 +23,7 @@ const classes = {
   copyright: `${PREFIX}-copyright`
 };
 
-const Root = styled(Box, {
+const Root = styled('footer', {
   name: PREFIX,
   slot: 'Root'
 })(() => ({}));
@@ -115,7 +115,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
     return <FooterSkeleton />;
   }
   return (
-    <Root {...rest} className={classNames(classes.root, className)}>
+    <Root {...rest} role="contentinfo" className={classNames(classes.root, className)}>
       {startActions}
       <Box className={classes.itemList}>
         {sortByAttr(_menu.items, 'order')

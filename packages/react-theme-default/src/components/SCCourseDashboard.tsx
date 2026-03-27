@@ -15,6 +15,10 @@ const Component = {
         color: theme.palette.getContrastText(theme.palette.background.paper)
       },
 
+      '& .SCCourseDashboard-secondary-contrast-color': {
+        color: theme.palette.getContrastText(theme.palette.secondary.main)
+      },
+
       '& .SCCourseDashboard-header': {
         [theme.breakpoints.down('sm')]: {
           paddingLeft: '14px',

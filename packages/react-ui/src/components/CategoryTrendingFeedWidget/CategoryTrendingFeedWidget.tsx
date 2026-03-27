@@ -272,7 +272,7 @@ export default function CategoryTrendingFeedWidget(inProps: CategoryTrendingFeed
 
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage id="ui.categoryTrendingFeedWidget.title" defaultMessage="ui.categoryTrendingFeedWidget.title" />
       </Typography>
       {!state.count ? (

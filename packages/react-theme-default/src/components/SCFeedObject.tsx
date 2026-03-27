@@ -143,7 +143,10 @@ const Component = {
       '& .SCFeedObject-activity-at': {
         textDecoration: 'none',
         color: 'inherit',
-        marginTop: 0
+        marginTop: 0,
+        minHeight: 24,
+        minWidth: 24,
+        padding: '0 2px'
       },
       '& .SCFeedObject-deleted': {
         opacity: 0.3,
@@ -199,7 +202,10 @@ const Component = {
             }
           },
           '& .SCFeedObject-username': {
-            fontWeight: theme.typography.fontWeightBold
+            fontWeight: theme.typography.fontWeightBold,
+            minHeight: 24,
+            minWidth: 24,
+            padding: '0 2px'
           },
           '& .MuiCardHeader-subheader': {
             fontSize: '0.857rem',

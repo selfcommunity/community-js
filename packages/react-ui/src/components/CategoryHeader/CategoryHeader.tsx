@@ -1,7 +1,7 @@
 import {useMemo, useState} from 'react';
 import {Box, Button, Icon, Paper, Typography, styled} from '@mui/material';
 import CategoryFollowButton, {CategoryFollowButtonProps} from '../CategoryFollowButton';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {SCPreferences, useSCFetchCategory, useSCPaymentsEnabled, useSCPreferenceEnabled} from '@selfcommunity/react-core';
 import {SCCategoryType, SCContentType, SCTagType} from '@selfcommunity/types';
 import classNames from 'classnames';
@@ -114,6 +114,9 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
   const categoryFollowEnabled = useSCPreferenceEnabled(SCPreferences.CONFIGURATIONS_CATEGORY_FOLLOW_ENABLED);
   const [openHtmlInfoDialog, setOpenHtmlInfoDialog] = useState(false);
 
+  // INTL
+  const intl = useIntl();
+
   // PAYMENTS
   const {isPaymentsEnabled} = useSCPaymentsEnabled();
   /**
@@ -139,17 +142,20 @@ export default function CategoryHeader(inProps: CategoryHeaderProps): JSX.Elemen
     <Root className={classNames(classes.root, className)} {...rest}>
       <Paper style={_backgroundCover} classes={{root: classes.cover}}>
         {scCategory.html_info && (
-          <Button variant="contained" onClick={() => setOpenHtmlInfoDialog(true)}>
+          <Button
+            title={intl.formatMessage({id: 'ui.categoryHeader.htmlInfo.dialog.title', defaultMessage: 'ui.categoryHeader.htmlInfo.dialog.title'})}
+            variant="contained"
+            onClick={() => setOpenHtmlInfoDialog(true)}>
             <Icon>info</Icon>
           </Button>
         )}
       </Paper>
       <Box className={classes.info}>
-        <Typography variant="h3" className={classes.name} gutterBottom>
+        <Typography component="h1" variant="h3" className={classes.name} gutterBottom>
           {scCategory.name}
         </Typography>
         {scCategory.slogan && (
-          <Typography variant="h5" className={classes.slogan}>
+          <Typography component="h2" variant="h5" className={classes.slogan}>
             {scCategory.slogan}
           </Typography>
         )}

@@ -306,7 +306,7 @@ export default function RelatedFeedObjectWidget(inProps: RelatedFeedObjectWidget
 
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage id="ui.relatedFeedObjectsWidget.title" defaultMessage="ui.relatedFeedObjectsWidget.title" />
       </Typography>
       {!state.count ? (
