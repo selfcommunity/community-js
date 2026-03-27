@@ -3,7 +3,7 @@ import React, {useCallback, useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
 import classNames from 'classnames';
 import NavigationToolbarSkeleton from './Skeleton';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import NotificationMenu, {NotificationsMenuProps} from './NotificationMenu';
 import SearchAutocomplete, {SearchAutocompleteProps} from '../SearchAutocomplete';
 import NavigationSettingsIconButton, {NavigationSettingsIconButtonProps} from '../NavigationSettingsIconButton';
@@ -29,7 +29,7 @@ const classes = {
   root: `${PREFIX}-root`,
   logo: `${PREFIX}-logo`,
   customItem: `${PREFIX}-custom-item`,
-  register: `${PREFIX}-register`,
+  link: `${PREFIX}-link`,
   navigation: `${PREFIX}-navigation`,
   home: `${PREFIX}-home`,
   explore: `${PREFIX}-explore`,
@@ -193,6 +193,8 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
     onCloseNotificationMenu,
     ...rest
   } = props;
+  // INTL
+  const intl = useIntl();
 
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
@@ -286,7 +288,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       {scUserContext.user && (
         <IconButton
           className={classNames(classes.home, {[classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {}))})}
-          aria-label="Home"
+          title={intl.formatMessage({id: 'ui.navigationToolbar.button.title.home', defaultMessage: 'ui.navigationToolbar.button.title.home'})}
           to={scRoutingContext.url(SCRoutes.HOME_ROUTE_NAME, {})}
           component={Link}
           onClick={handleClickHome}>
@@ -300,7 +302,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
             className={classNames(classes.explore, {
               [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {}))
             })}
-            aria-label="Explore"
+            title={intl.formatMessage({id: 'ui.navigationToolbar.button.title.explore', defaultMessage: 'ui.navigationToolbar.button.title.explore'})}
             to={scRoutingContext.url(SCRoutes.EXPLORE_ROUTE_NAME, {})}
             component={Link}>
             <Icon>explore</Icon>
@@ -311,7 +313,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           className={classNames(classes.courses, {
             [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {}))
           })}
-          aria-label="Courses"
+          title={intl.formatMessage({id: 'ui.navigationToolbar.button.title.courses', defaultMessage: 'ui.navigationToolbar.button.title.courses'})}
           to={scRoutingContext.url(SCRoutes.COURSES_ROUTE_NAME, {})}
           component={Link}>
           <Icon>courses</Icon>
@@ -324,7 +326,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
               value.startsWith(scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {})) ||
               value.startsWith(scRoutingContext.url(SCRoutes.GROUPS_ROUTE_NAME, {}))
           })}
-          aria-label="Groups"
+          title={intl.formatMessage({id: 'ui.navigationToolbar.button.title.groups', defaultMessage: 'ui.navigationToolbar.button.title.groups'})}
           to={scRoutingContext.url(SCRoutes.GROUPS_SUBSCRIBED_ROUTE_NAME, {})}
           component={Link}>
           <Icon>groups</Icon>
@@ -335,7 +337,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
           className={classNames(classes.events, {
             [classes.active]: value.startsWith(scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {}))
           })}
-          aria-label="Events"
+          title={intl.formatMessage({id: 'ui.navigationToolbar.button.title.events', defaultMessage: 'ui.navigationToolbar.button.title.events'})}
           to={scRoutingContext.url(SCRoutes.EVENTS_ROUTE_NAME, {})}
           component={Link}>
           <Icon>CalendarIcon</Icon>
@@ -351,7 +353,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
         <img src={preferences[SCPreferences.LOGO_NAVBAR_LOGO]} alt="logo"></img>
       </Link>
       {!scUserContext.user && !preferences[SCPreferences.ADDONS_CLOSED_COMMUNITY] && (
-        <Button color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNUP_ROUTE_NAME, {})} className={classes.register}>
+        <Button color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNUP_ROUTE_NAME, {})} className={classes.link}>
           <FormattedMessage id="ui.appBar.navigation.register" defaultMessage="ui.appBar.navigation.register" />
         </Button>
       )}
@@ -435,7 +437,7 @@ export default function NavigationToolbar(inProps: NavigationToolbarProps) {
       ) : (
         <>
           {endActions}
-          <Button color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})}>
+          <Button color="inherit" component={Link} to={scRoutingContext.url(SCRoutes.SIGNIN_ROUTE_NAME, {})} className={classes.link}>
             <FormattedMessage id="ui.appBar.navigation.login" defaultMessage="ui.appBar.navigation.login" />
           </Button>
         </>

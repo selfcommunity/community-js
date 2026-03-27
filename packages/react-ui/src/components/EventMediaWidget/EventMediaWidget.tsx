@@ -362,7 +362,7 @@ export default function EventMediaWidget(inProps: EventMediaWidgetProps) {
       <CardHeader
         title={
           <Stack direction="row" justifyContent="space-between" alignItems="center">
-            <Typography variant="h5">
+            <Typography variant="h2">
               <FormattedMessage id="ui.eventMediaWidget.title" defaultMessage="ui.eventMediaWidget.title" />
             </Typography>
 

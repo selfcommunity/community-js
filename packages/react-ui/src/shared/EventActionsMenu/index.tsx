@@ -21,7 +21,7 @@ import classNames from 'classnames';
 import {enqueueSnackbar} from 'notistack';
 import PubSub from 'pubsub-js';
 import React, {useMemo, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import EventForm from '../../components/EventForm';
 import {ADD_EVENT_TO_CALENDAR, CANCEL_EVENT, GET_EVENT_LINK} from '../../constants/EventActionsMenu';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
@@ -129,6 +129,7 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scUserContext: SCUserContextType = useSCUser();
   const {scEvent, setSCEvent} = useSCFetchEvent({id: eventId, event});
+  const intl = useIntl();
 
   const isEventAdmin = useMemo(
     () => scUserContext.user && scEvent?.managed_by?.id === scUserContext.user.id,
@@ -252,7 +253,11 @@ export default function EventActionsMenu(inProps: EventActionsMenuProps): JSX.El
 
   return (
     <>
-      <Root className={classNames(classes.root, className)} {...rest} onClick={handleOpen}>
+      <Root
+        title={intl.formatMessage({id: 'ui.shared.eventActionsMenu.button.title', defaultMessage: 'ui.shared.eventActionsMenu.button.title'})}
+        className={classNames(classes.root, className)}
+        {...rest}
+        onClick={handleOpen}>
         <Icon>more_vert</Icon>
       </Root>
       {isMobile ? (

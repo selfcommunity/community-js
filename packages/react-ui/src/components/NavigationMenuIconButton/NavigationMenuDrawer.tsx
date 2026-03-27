@@ -6,6 +6,7 @@ import ScrollContainer from '../../shared/ScrollContainer';
 import DefaultDrawerContent, {DefaultDrawerContentProps} from './DefaultDrawerContent';
 import DefaultHeaderContent from './DefaultHeaderContent';
 import CreateLiveStreamButton, {CreateLiveStreamButtonProps} from '../CreateLiveStreamButton';
+import {useIntl} from 'react-intl';
 
 const PREFIX = 'SCNavigationMenuDrawer';
 
@@ -15,7 +16,6 @@ const classes = {
   drawerRoot: `${PREFIX}-drawer-root`,
   drawerHeader: `${PREFIX}-drawer-header`,
   drawerHeaderAction: `${PREFIX}-drawer-header-action`,
-  drawerContent: `${PREFIX}-drawer-content`,
   drawerFooter: `${PREFIX}-drawer-footer`,
   drawerFooterLiveStream: `${PREFIX}-drawer-footer-live`,
   drawerFooterLiveStreamButton: `${PREFIX}-drawer-footer-live-button`
@@ -99,6 +99,9 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
     ...rest
   } = props;
 
+  // INTL
+  const intl = useIntl();
+
   const footerContent = (() => {
     if (typeof drawerFooterContent === 'function') {
       return drawerFooterContent({handleCloseMenuDrawer: onClose});
@@ -121,18 +124,20 @@ export default function NavigationMenuDrawer(inProps: NavigationMenuDrawerProps)
             {drawerHeaderContent}
             {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
             {/* @ts-ignore */}
-            <IconButton className={classes.drawerHeaderAction} onClick={onClose}>
+            <IconButton
+              title={intl.formatMessage({
+                id: 'ui.navigationMenuIconButton.defaultDrawerContent.button.title',
+                defaultMessage: 'ui.navigationMenuIconButton.defaultDrawerContent.button.title'
+              })}
+              className={classes.drawerHeaderAction}
+              onClick={onClose}>
               <Icon>close</Icon>
             </IconButton>
           </Box>
           <Divider />
         </>
       )}
-      <ScrollContainer {...ScrollContainerProps}>
-        {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-        {/* @ts-ignore */}
-        <List className={classes.drawerContent}>{drawerContent}</List>
-      </ScrollContainer>
+      <ScrollContainer {...ScrollContainerProps}>{drawerContent}</ScrollContainer>
       {showDrawerFooterContent && (
         <>
           <Box component="div" className={classes.drawerFooter}>

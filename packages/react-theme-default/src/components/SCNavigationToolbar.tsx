@@ -74,6 +74,11 @@ const Component = {
             margin: theme.spacing(0, 2)
           }
         }
+      },
+      '& .SCNavigationToolbar-link': {
+        '&:hover': {
+          textDecoration: 'underline'
+        }
       }
     }),
     skeletonRoot: ({theme}: any) => ({

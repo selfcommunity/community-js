@@ -46,7 +46,8 @@ const classes = {
   root: `${PREFIX}-root`,
   navigation: `${PREFIX}-navigation`,
   noResults: `${PREFIX}-no-results`,
-  title: `${PREFIX}-title`
+  title: `${PREFIX}-title`,
+  items: `${PREFIX}-items`
 };
 
 const Root = styled(Box, {
@@ -282,7 +283,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
         )}
       </List>
       <Divider />
-      <Typography variant="subtitle1" className={classes.title}>
+      <Typography component="h2" variant="subtitle1" className={classes.title}>
         <FormattedMessage
           id="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
           defaultMessage="ui.navigationMenuIconButton.defaultDrawerContent.category.title"
@@ -344,7 +345,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
           );
         })}
         {untaggedCategories.length > 0 && (
-          <>
+          <List className={classes.items}>
             {untaggedCategories.map((c: SCCategoryType, index: number) => (
               <Zoom in={true} style={{transform: isHovered[c.id] && 'scale(1.05)'}} key={index}>
                 <ListItem key={c.id}>
@@ -363,7 +364,7 @@ export default function DefaultDrawerContent(inProps: DefaultDrawerContentProps)
                 </ListItem>
               </Zoom>
             ))}
-          </>
+          </List>
         )}
       </>
     </Root>

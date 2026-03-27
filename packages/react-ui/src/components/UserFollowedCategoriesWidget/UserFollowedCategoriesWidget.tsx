@@ -1,15 +1,8 @@
-import React, {useContext, useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useEffect, useMemo, useReducer, useState} from 'react';
 import {Button, CardContent, ListItem, Typography, styled, List} from '@mui/material';
 import {UserService} from '@selfcommunity/api-services';
 import {CacheStrategies, isInteger, Logger} from '@selfcommunity/utils';
-import {
-  SCCache,
-  SCPreferences,
-  SCPreferencesContextType,
-  SCUserContextType,
-  useSCPreferences,
-  useSCUser
-} from '@selfcommunity/react-core';
+import {SCCache, SCPreferences, SCPreferencesContextType, SCUserContextType, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import Category, {CategoryProps, CategorySkeleton} from '../Category';
 import {SCCategoryType} from '@selfcommunity/types';
@@ -244,7 +237,7 @@ export default function UserFollowedCategoriesWidget(inProps: UserFollowedCatego
   }
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage
           id="ui.userFollowedCategoriesWidget.title"
           defaultMessage="ui.userFollowedCategoriesWidget.title"

@@ -269,7 +269,7 @@ export default function UserConnectionsRequestsSentWidget(inProps: UserConnectio
   }
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage
           id="ui.userConnectionsRequestsSentWidget.title"
           defaultMessage="ui.userConnectionsRequestsSentWidget.title"

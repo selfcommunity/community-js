@@ -221,7 +221,7 @@ export default function MyEventsWidget(inProps: MyEventsWidgetProps) {
   return (
     <Root className={classes.root} {...rest}>
       <Box className={classes.titleWrapper}>
-        <Typography variant="h5">
+        <Typography variant="h2">
           <FormattedMessage id="ui.myEventsWidget.title" defaultMessage="ui.myEventsWidget.title" />
         </Typography>
       </Box>

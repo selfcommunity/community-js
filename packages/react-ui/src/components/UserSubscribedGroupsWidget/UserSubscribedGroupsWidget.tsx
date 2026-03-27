@@ -235,7 +235,7 @@ export default function UserSubscribedGroupsWidget(inProps: UserSubscribedGroups
 
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage
           id="ui.userSubscribedGroupsWidget.title"
           defaultMessage="ui.userSubscribedGroupsWidget.title"

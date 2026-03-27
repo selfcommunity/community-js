@@ -299,7 +299,7 @@ export default function GroupInvitedWidget(inProps: GroupInvitedWidgetProps): JS
 
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage id="ui.groupInvitedWidget.title" defaultMessage="ui.groupInvitedWidget.title" />
       </Typography>
       <React.Fragment>

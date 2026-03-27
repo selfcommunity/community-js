@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {SCPreferences, useSCPreferences, useSCUser} from '@selfcommunity/react-core';
 import NavigationMenuDrawer, {NavigationMenuDrawerProps} from './NavigationMenuDrawer';
+import {useIntl} from 'react-intl';
 
 const PREFIX = 'SCNavigationMenuIconButton';
 
@@ -68,6 +69,9 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
+  // INTL
+  const intl = useIntl();
+
   // CONTEXT
   const {preferences} = useSCPreferences();
   const scUserContext = useSCUser();
@@ -87,7 +91,11 @@ export default function NavigationMenuIconButton(inProps: NavigationMenuIconButt
 
   return (
     <>
-      <Root className={classNames(classes.root, className)} {...rest} onClick={onMenuIconClick ?? handleOpen}>
+      <Root
+        className={classNames(classes.root, className)}
+        title={intl.formatMessage({id: 'ui.navigationMenuIconButton.title', defaultMessage: 'ui.navigationMenuIconButton.title'})}
+        {...rest}
+        onClick={onMenuIconClick ?? handleOpen}>
         <Icon>menu</Icon>
       </Root>
       {showDrawer && <NavigationMenuDrawer open={Boolean(anchorEl)} onClose={handleClose} {...DrawerProps} />}
