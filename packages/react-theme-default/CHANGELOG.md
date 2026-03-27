@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.4...@selfcommunity/react-theme-default@1.2.5-alpha.0) (2026-03-27)
+
+
+### Bug Fixes
+
+* try to fixing accessibility reports ([5ea0c53](https://github.com/selfcommunity/community-js/commit/5ea0c53030951893ba7d98a3367c2fae133c47d0))
+
+
+
+
+
 ## [1.2.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.4-alpha.1...@selfcommunity/react-theme-default@1.2.4) (2026-03-26)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
