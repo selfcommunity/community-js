@@ -115,7 +115,7 @@ export default function Footer(inProps: FooterProps): JSX.Element {
     return <FooterSkeleton />;
   }
   return (
-    <Root {...rest} role="contentinfo" className={classNames(classes.root, className)}>
+    <Root {...rest} className={classNames(classes.root, className)}>
       {startActions}
       <Box className={classes.itemList}>
         {sortByAttr(_menu.items, 'order')
