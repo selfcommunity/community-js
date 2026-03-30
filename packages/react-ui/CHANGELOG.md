@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.5-alpha.0...@selfcommunity/react-ui@1.2.5-alpha.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* try to fixing accessibility reports ([47ae111](https://github.com/selfcommunity/community-js/commit/47ae111efe30408b464e85a9bf2aebf2931c3935))
+
+
+
+
+
 ## [1.2.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.4...@selfcommunity/react-ui@1.2.5-alpha.0) (2026-03-27)
 
 
