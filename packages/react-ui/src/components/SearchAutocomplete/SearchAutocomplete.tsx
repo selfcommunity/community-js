@@ -177,7 +177,6 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
   return (
     <Root
       id={id}
-      role="search"
       className={classNames(classes.root, className)}
       blurOnSelect={blurOnSelect}
       onChange={handleChange}
@@ -209,28 +208,50 @@ export default function SearchAutocomplete(inProps: SearchAutocompleteProps) {
       renderInput={(params) => (
         <TextField
           {...params}
-          placeholder={`${intl.formatMessage(messages.placeholder, {
+          placeholder={intl.formatMessage(messages.placeholder, {
             community: scPreferences.preferences[SCPreferences.TEXT_APPLICATION_NAME].value
-          })}`}
+          })}
           slotProps={{
             input: {
               ...params.InputProps,
-              autoFocus,
-              name: 'search-autocomplete',
               className: classes.input,
-              startAdornment: <Icon className={classes.icon}>search</Icon>,
+              startAdornment: (
+                <Icon
+                  aria-label={intl.formatMessage({
+                    id: 'ui.searchAutocomplete.startAdornment.title',
+                    defaultMessage: 'ui.searchAutocomplete.startAdornment.title'
+                  })}
+                  className={classes.icon}>
+                  search
+                </Icon>
+              ),
               endAdornment: (
                 <Fade in={value.length > 0 || Boolean(onClear)} appear={false}>
-                  <IconButton className={classes.clear} onClick={handleClear} size="small">
+                  <IconButton
+                    aria-label={intl.formatMessage({
+                      id: 'ui.searchAutocomplete.endAdornment.title',
+                      defaultMessage: 'ui.searchAutocomplete.endAdornment.title'
+                    })}
+                    title={intl.formatMessage({
+                      id: 'ui.searchAutocomplete.endAdornment.title',
+                      defaultMessage: 'ui.searchAutocomplete.endAdornment.title'
+                    })}
+                    className={classes.clear}
+                    onClick={handleClear}
+                    size="small">
                     <Icon>close</Icon>
                   </IconButton>
                 </Fade>
               )
+            },
+            htmlInput: {
+              role: 'search',
+              name: 'search-autocomplete',
+              title: intl.formatMessage(messages.placeholder, {
+                community: scPreferences.preferences[SCPreferences.TEXT_APPLICATION_NAME].value
+              })
             }
           }}
-          title={`${intl.formatMessage(messages.placeholder, {
-            community: scPreferences.preferences[SCPreferences.TEXT_APPLICATION_NAME].value
-          })}`}
         />
       )}
       {...rest}

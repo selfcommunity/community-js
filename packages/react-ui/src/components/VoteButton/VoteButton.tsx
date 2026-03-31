@@ -177,6 +177,7 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
   const button = (
     <Root
       title={intl.formatMessage({id: 'ui.voteButton.title', defaultMessage: 'ui.voteButton.title'})}
+      aria-label={intl.formatMessage({id: 'ui.voteButton.title', defaultMessage: 'ui.voteButton.title'})}
       onClick={
         isMobile && reactions.reactions
           ? handleMouseEnter
