@@ -191,25 +191,28 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
     <>
       <Root
         title={intl.formatMessage({id: 'ui.voteAudienceButton.title', defaultMessage: 'ui.voteAudienceButton.title'})}
+        aria-label={intl.formatMessage({id: 'ui.voteAudienceButton.title', defaultMessage: 'ui.voteAudienceButton.title'})}
         onClick={handleOpen}
         disabled={isLoading || Boolean(error) || contributionVoteCount === 0}
         loading={isLoading}
         className={classNames(classes.root, className)}
         {...rest}>
-        {audienceIcon}&nbsp;
-        {scUserContext.user && contributionVoted ? (
-          contributionVoteCount === 1 ? (
-            <FormattedMessage id="ui.voteAudienceButton.votedOnlyByMe" defaultMessage="ui.voteAudienceButton.votedOnlyByMe" />
+        <Typography component="span">
+          {audienceIcon}&nbsp;
+          {scUserContext.user && contributionVoted ? (
+            contributionVoteCount === 1 ? (
+              <FormattedMessage id="ui.voteAudienceButton.votedOnlyByMe" defaultMessage="ui.voteAudienceButton.votedOnlyByMe" />
+            ) : (
+              <FormattedMessage
+                id="ui.voteAudienceButton.votedByMe"
+                defaultMessage="ui.voteAudienceButton.votedByMe"
+                values={{total: contributionVoteCount - 1}}
+              />
+            )
           ) : (
-            <FormattedMessage
-              id="ui.voteAudienceButton.votedByMe"
-              defaultMessage="ui.voteAudienceButton.votedByMe"
-              values={{total: contributionVoteCount - 1}}
-            />
-          )
-        ) : (
-          <FormattedMessage id="ui.voteAudienceButton.votes" defaultMessage="ui.voteAudienceButton.votes" values={{total: contributionVoteCount}} />
-        )}
+            <FormattedMessage id="ui.voteAudienceButton.votes" defaultMessage="ui.voteAudienceButton.votes" values={{total: contributionVoteCount}} />
+          )}
+        </Typography>
       </Root>
       {open && (
         <DialogRoot title={dialogTitle} onClose={handleClose} open={open} DialogContentProps={{}}>

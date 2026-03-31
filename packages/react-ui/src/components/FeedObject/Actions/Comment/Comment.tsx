@@ -144,10 +144,11 @@ export default function Comment(props: CommentProps): JSX.Element {
           <>
             {onViewCommentsAction ? (
               <Button variant="text" size="small" onClick={onViewCommentsAction} color="inherit">
-                <Typography component="span" sx={{'&': {all: 'unset'}}} className={classes.paperContrastColor}>{`${intl.formatMessage(
-                  messages.comments,
-                  {total: obj.comment_count}
-                )}`}</Typography>
+                <Typography component="span" className={classes.paperContrastColor}>
+                  {intl.formatMessage(messages.comments, {
+                    total: obj.comment_count
+                  })}
+                </Typography>
               </Button>
             ) : (
               <>
@@ -162,10 +163,11 @@ export default function Comment(props: CommentProps): JSX.Element {
                     component={Link}
                     to={scRoutingContext.url(getContributionRouteName(obj), getRouteData(obj))}
                     classes={{root: classes.viewAudienceButton}}>
-                    <Typography component="span" sx={{'&': {all: 'unset'}}} className={classes.paperContrastColor}>{`${intl.formatMessage(
-                      messages.comments,
-                      {total: obj.comment_count}
-                    )}`}</Typography>
+                    <Typography component="span" className={classes.paperContrastColor}>
+                      {intl.formatMessage(messages.comments, {
+                        total: obj.comment_count
+                      })}
+                    </Typography>
                   </Button>
                 )}
               </>

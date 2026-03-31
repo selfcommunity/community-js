@@ -8,14 +8,6 @@ const Component = {
         padding: theme.spacing(0, 2),
         borderRadius: theme.shape.borderRadius,
         flexGrow: 1,
-        '& .MuiOutlinedInput-root:focus-within .MuiOutlinedInput-notchedOutline': {
-          borderColor: 'primary.main',
-          borderWidth: 2
-        },
-        '& .MuiInputBase-input:focus-visible': {
-          outline: '3px solid currentColor',
-          outlineOffset: 2
-        },
         '& .MuiAutocomplete-input': {
           padding: theme.spacing(0.5, 1),
           color:

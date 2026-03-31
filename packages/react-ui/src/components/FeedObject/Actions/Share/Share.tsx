@@ -297,7 +297,7 @@ export default function Share(props: ShareProps): JSX.Element {
               onClick={handleToggleSharesDialog}
               disabled={sharesCount < 1}
               classes={{root: classes.viewAudienceButton}}>
-              <Typography component="span" sx={{'&': {all: 'unset'}}} className={classes.paperContrastColor}>{`${intl.formatMessage(messages.shares, {
+              <Typography component="span" className={classes.paperContrastColor}>{`${intl.formatMessage(messages.shares, {
                 total: sharesCount
               })}`}</Typography>
             </Button>
