@@ -143,7 +143,14 @@ export default function Comment(props: CommentProps): JSX.Element {
         audience = (
           <>
             {onViewCommentsAction ? (
-              <Button variant="text" size="small" onClick={onViewCommentsAction} color="inherit">
+              <Button
+                title={intl.formatMessage(messages.comments, {
+                  total: obj.comment_count
+                })}
+                variant="text"
+                size="small"
+                onClick={onViewCommentsAction}
+                color="inherit">
                 <Typography component="span" className={classes.paperContrastColor}>
                   {intl.formatMessage(messages.comments, {
                     total: obj.comment_count
