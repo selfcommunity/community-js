@@ -164,7 +164,7 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
   const dialogTitle = useMemo(() => {
     if (reactions.default && !isLoading) {
       return (
-        <Tabs className={classes.dialogTabs} value={tab} onChange={handleChangeTab} aria-label="reactions">
+        <Tabs className={classes.dialogTabs} value={tab} onChange={handleChangeTab}>
           <Tab label={<FormattedMessage defaultMessage="ui.voteAudienceButton.dialog.tab.all" id="ui.voteAudienceButton.dialog.tab.all" />} />
           {contributionReactionsCount &&
             contributionReactionsCount.map((count: any) => (
@@ -191,7 +191,6 @@ export default function VoteAudienceButton(inProps: VoteAudienceButtonProps): JS
     <>
       <Root
         title={intl.formatMessage({id: 'ui.voteAudienceButton.title', defaultMessage: 'ui.voteAudienceButton.title'})}
-        aria-label={intl.formatMessage({id: 'ui.voteAudienceButton.title', defaultMessage: 'ui.voteAudienceButton.title'})}
         onClick={handleOpen}
         disabled={isLoading || Boolean(error) || contributionVoteCount === 0}
         loading={isLoading}
