@@ -1,5 +1,5 @@
 import {ChipProps, FormControl, InputLabel, MenuItem, Radio, Select, styled} from '@mui/material';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 import {SCEventLocationFilterType} from '@selfcommunity/types';
@@ -50,6 +50,8 @@ export default function LocationEventsFilter(inProps: LocationEventsFilterProps)
 
   const {className, value, disabled = false, autoHide = false, handleOnChange} = props;
 
+  const intl = useIntl();
+
   if (autoHide) {
     return null;
   }
@@ -62,6 +64,7 @@ export default function LocationEventsFilter(inProps: LocationEventsFilterProps)
       <Select
         disabled={disabled}
         size="small"
+        title={intl.formatMessage({id: 'ui.events.location', defaultMessage: 'ui.events.location'})}
         label={<FormattedMessage id="ui.events.location" defaultMessage="ui.events.location" />}
         value={value}
         onChange={handleOnChange}

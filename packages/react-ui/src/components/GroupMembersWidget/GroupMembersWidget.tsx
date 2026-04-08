@@ -306,7 +306,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
   const content = (
     <>
       <CardContent>
-        <Typography className={classes.title} variant="h5">
+        <Typography className={classes.title} variant="h2">
           <FormattedMessage id="ui.groupMembersWidget.title" defaultMessage="ui.groupMembersWidget.title" />
         </Typography>
         {!state.count ? (

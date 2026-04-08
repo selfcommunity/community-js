@@ -99,7 +99,7 @@ export default function CreateEventWidget(inProps: CreateEventWidgetProps) {
       </Box>
 
       <CardContent className={classes.content}>
-        <Typography variant="h5" className={classes.title}>
+        <Typography variant="h2" className={classes.title}>
           <FormattedMessage id="ui.createEvent.title" defaultMessage="ui.createEvent.title" />
         </Typography>
 

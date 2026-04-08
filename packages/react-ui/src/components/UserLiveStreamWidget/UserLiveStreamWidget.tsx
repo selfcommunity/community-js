@@ -222,7 +222,7 @@ export default function UserLiveStreamWidget(inProps: UserLiveStreamWidgetProps)
   return (
     <Root className={classes.root} {...rest}>
       <CardContent className={classes.content}>
-        <Typography className={classes.title} variant="h5">
+        <Typography className={classes.title} variant="h2">
           {intl.formatMessage(messages.title, {user: scUser.username})}
         </Typography>
         <Stack className={classes.liveWrapper}>

@@ -12,7 +12,8 @@ const Component = {
         flexWrap: 'wrap',
         '& .SCFooter-item': {
           padding: theme.spacing(0.5, 1),
-          color: theme.palette.text.primary
+          color: theme.palette.text.primary,
+          textDecoration: 'underline'
         }
       }
     }),

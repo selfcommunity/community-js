@@ -297,7 +297,7 @@ export default function CategoriesPopularWidget(inProps: CategoriesPopularWidget
 
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage id="ui.categoriesPopularWidget.title" defaultMessage="ui.categoriesPopularWidget.title" />
       </Typography>
       {!state.count ? (

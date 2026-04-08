@@ -23,7 +23,7 @@ import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {SCCourseEventType, SCTopicType} from '../../constants/PubSub';
@@ -199,6 +199,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
   const {preferences}: SCPreferencesContextType = useSCPreferences();
+
   // MEMO
   const contentAvailability =
     SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY in preferences && preferences[SCPreferences.CONFIGURATIONS_CONTENT_AVAILABILITY].value;
@@ -213,8 +214,10 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
   // REFS
   const updatesSubscription = useRef(null);
 
-  // HANDLERS
+  // INTL
+  const intl = useIntl();
 
+  // HANDLERS
   const handleChipClick = () => {
     setShowMine(!showMine);
   };
@@ -360,11 +363,15 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                       endAdornment: (
                         <InputAdornment position="end">
                           {isMobile ? (
-                            <IconButton onClick={() => fetchCourses()} disabled={loading}>
+                            <IconButton
+                              title={intl.formatMessage({id: 'ui.courses.filterByName', defaultMessage: 'ui.courses.filterByName'})}
+                              onClick={() => fetchCourses()}
+                              disabled={loading}>
                               <Icon>search</Icon>
                             </IconButton>
                           ) : (
                             <Button
+                              title={intl.formatMessage({id: 'ui.courses.filterByName', defaultMessage: 'ui.courses.filterByName'})}
                               size="small"
                               variant="contained"
                               color="secondary"
@@ -483,7 +490,7 @@ export default function Courses(inProps: CoursesProps): JSX.Element {
                   </Grid>
                 ))}
                 {authUserId && ((onlyStaffEnabled && canCreateCourse) || !onlyStaffEnabled) && courses.length % 2 !== 0 && (
-                  <Grid size={{xs: 12, md: 6, lg: 3}} key="placeholder-item" className={classes.itemPlaceholder} {...GridItemComponentProps}>
+                  <Grid size={{xs: 12, md: 6, lg: 3}} className={classes.itemPlaceholder} {...GridItemComponentProps}>
                     <CourseCreatePlaceholder CreateCourseButtonComponentProps={CreateCourseButtonComponentProps} />
                   </Grid>
                 )}

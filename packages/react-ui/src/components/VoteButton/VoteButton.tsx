@@ -4,7 +4,7 @@ import {SCCommentType, SCContributionType, SCFeedObjectType, SCReactionType} fro
 import {useThemeProps} from '@mui/system';
 import {IconButton, Paper, Popper, Tooltip, useMediaQuery, useTheme, styled, Icon, Button, ButtonProps} from '@mui/material';
 import {SCContextType, SCThemeType, SCUserContextType, UserUtils, useSCContext, useSCFetchVote, useSCUser} from '@selfcommunity/react-core';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
 
@@ -160,6 +160,7 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
   });
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const intl = useIntl();
 
   // MEMO
   const rootProps = useMemo(() => {
@@ -175,6 +176,8 @@ export default function VoteButton(inProps: VoteButtonProps): JSX.Element {
   // RENDER
   const button = (
     <Root
+      title={intl.formatMessage({id: 'ui.voteButton.title', defaultMessage: 'ui.voteButton.title'})}
+      aria-label={intl.formatMessage({id: 'ui.voteButton.title', defaultMessage: 'ui.voteButton.title'})}
       onClick={
         isMobile && reactions.reactions
           ? handleMouseEnter

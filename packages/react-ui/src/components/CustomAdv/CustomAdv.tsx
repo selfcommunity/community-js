@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import {useEffect, useId, useRef} from 'react';
 import {Box, styled} from '@mui/material';
 import {useIsComponentMountedRef, useSCFetchCustomAdv} from '@selfcommunity/react-core';
 import {SCCustomAdvPosition} from '@selfcommunity/types';
@@ -94,7 +94,9 @@ export default function CustomAdv(inProps: CustomAdvProps): JSX.Element {
     name: PREFIX
   });
 
-  const {id = 'custom_adv', className, advId = null, position, categoriesId, prefixedHeight, onStateChange, onHeightChange} = props;
+  const _id = useId();
+
+  const {id = `custom_adv_${_id}`, className, advId = null, position, categoriesId, prefixedHeight, onStateChange, onHeightChange} = props;
 
   // REFS
   const isMountedRef = useIsComponentMountedRef();

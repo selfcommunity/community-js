@@ -1,5 +1,5 @@
 import React, {ForwardedRef, forwardRef, ForwardRefRenderFunction, useCallback, useImperativeHandle, useMemo, useRef, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {Box, Stack, styled} from '@mui/material';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
@@ -240,6 +240,9 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
   // STATE
   const [focused, setFocused] = useState<boolean>(false);
 
+  // INTL
+  const intl = useIntl();
+
   // HANDLERS
   const handleChange = (value) => {
     onChange && onChange(value);
@@ -312,7 +315,12 @@ const Editor: ForwardRefRenderFunction<EditorRef, EditorProps> = (inProps: Edito
           </Stack>
         )}
         <RichTextPlugin
-          contentEditable={<ContentEditable className={classes.content} />}
+          contentEditable={
+            <ContentEditable
+              aria-label={intl.formatMessage({id: 'ui.editor.title', defaultMessage: 'ui.editor.title'})}
+              className={classes.content}
+            />
+          }
           placeholder={
             <Box className={classes.placeholder} onClick={handleFocus}>
               {placeholder}

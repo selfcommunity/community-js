@@ -143,7 +143,10 @@ const Component = {
       '& .SCFeedObject-activity-at': {
         textDecoration: 'none',
         color: 'inherit',
-        marginTop: 0
+        marginTop: 0,
+        minHeight: 24,
+        minWidth: 24,
+        padding: '0 2px'
       },
       '& .SCFeedObject-deleted': {
         opacity: 0.3,
@@ -198,8 +201,16 @@ const Component = {
               right: theme.spacing(0.25)
             }
           },
+          '& .MuiCardHeader-content': {
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '4px'
+          },
           '& .SCFeedObject-username': {
-            fontWeight: theme.typography.fontWeightBold
+            fontWeight: theme.typography.fontWeightBold,
+            minHeight: 24,
+            minWidth: 24,
+            padding: '0 2px'
           },
           '& .MuiCardHeader-subheader': {
             fontSize: '0.857rem',
@@ -402,17 +413,16 @@ const Component = {
                     getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5
                       ? lighten(theme.palette.text.primary, 0.5)
                       : darken(theme.palette.text.primary, 0.5),
-                  marginTop: theme.spacing(-0.5),
                   marginBottom: theme.spacing(0.5),
                   borderRadius: '50%',
                   padding: theme.spacing(1),
                   minWidth: 0,
                   '& .MuiIcon-root': {
-                    fontSize: '1.57rem'
+                    fontSize: '24px'
                   },
                   '& > img': {
-                    width: '1.57rem',
-                    height: '1.57rem'
+                    width: '24px',
+                    height: '24px'
                   }
                 }
             }
@@ -523,7 +533,7 @@ const Component = {
     }),
     skeletonRoot: ({theme}: any) => ({
       '&.SCFeedObject-preview, &.SCFeedObject-detail, &.SCFeedObject-search': {
-        border: `0 none`,
+        border: '0 none',
         boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
         borderRadius: 0,
         [theme.breakpoints.up('sm')]: {

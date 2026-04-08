@@ -13,6 +13,7 @@ import {asUploadButton} from '@rpldy/upload-button';
 import {useSnackbar} from 'notistack';
 import {$createImageNode, ImageNode} from '../nodes/ImageNode';
 import {PREFIX} from '../constants';
+import {useIntl} from 'react-intl';
 
 export interface InsertImagePayload {
   altText: string;
@@ -116,6 +117,7 @@ const Root = styled(Image, {
 
 export default function ImagePlugin(): JSX.Element {
   const [editor] = useLexicalComposerContext();
+  const intl = useIntl();
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
@@ -129,7 +131,7 @@ export default function ImagePlugin(): JSX.Element {
       (payload: InsertImagePayload) => {
         const imageNode = $createImageNode({
           src: payload.src,
-          altText: payload.altText,
+          altText: payload.altText || intl.formatMessage({id: 'ui.editor.imagePlugin.alt', defaultMessage: 'ui.editor.imagePlugin.alt'}),
           maxWidth: '100%',
           width: payload.width,
           height: payload.height

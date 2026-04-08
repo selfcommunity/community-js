@@ -16,7 +16,7 @@ import {
 } from '@selfcommunity/react-core';
 import {Avatar, Box, Button, CardContent, styled} from '@mui/material';
 import {SCMediaObjectType} from '../../types/media';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useSnackbar} from 'notistack';
 import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
@@ -114,6 +114,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const {enqueueSnackbar} = useSnackbar();
+  const intl = useIntl();
 
   // PREFERENCES
   const preferences: SCPreferencesContextType = useSCPreferences();
@@ -173,7 +174,10 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
           </Box>
           <Box className={classes.avatar}>
             {!scUserContext.user ? (
-              <Avatar variant="circular" />
+              <Avatar
+                aria-label={intl.formatMessage({id: 'ui.inlineComposerWidget.avatar.alt', defaultMessage: 'ui.inlineComposerWidget.avatar.alt'})}
+                variant="circular"
+              />
             ) : (
               <Link to={scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scUserContext.user)}>
                 <Avatar alt={scUserContext.user.username} variant="circular" src={scUserContext.user.avatar} />

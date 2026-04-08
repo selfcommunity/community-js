@@ -179,7 +179,7 @@ export default function SuggestedEventsWidget(inProps: SuggestedEventsWidgetProp
   return (
     <Root className={classes.root} {...rest}>
       <CardContent className={classes.content}>
-        <Typography variant="h5" className={classes.title}>
+        <Typography variant="h2" className={classes.title}>
           <FormattedMessage id="ui.suggestedEventsWidget.title" defaultMessage="ui.suggestedEventsWidget.title" />
         </Typography>
 

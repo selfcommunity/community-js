@@ -300,7 +300,7 @@ export default function CategoriesSuggestionWidget(inProps: CategoriesSuggestion
 
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage id="ui.categoriesSuggestionWidget.title" defaultMessage="ui.categoriesSuggestionWidget.title" />
       </Typography>
       {!state.count ? (

@@ -35,7 +35,7 @@ import {Logger} from '@selfcommunity/utils';
 import classNames from 'classnames';
 import PubSub from 'pubsub-js';
 import React, {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {DEFAULT_PAGINATION_OFFSET} from '../../constants/Pagination';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
@@ -244,12 +244,12 @@ export default function Events(inProps: EventsProps): JSX.Element {
   const authUserId = scUserContext.user ? scUserContext.user.id : null;
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const intl = useIntl();
 
   // REFS
   const updatesSubscription = useRef(null);
 
   // HANDLERS
-
   const handleChipClick = () => {
     setShowFollowed(!showFollowed);
   };
@@ -451,11 +451,15 @@ export default function Events(inProps: EventsProps): JSX.Element {
                       endAdornment: (
                         <InputAdornment position="end">
                           {isMobile ? (
-                            <IconButton onClick={() => fetchEvents()} disabled={loading}>
+                            <IconButton
+                              title={intl.formatMessage({id: 'ui.events.filterByName', defaultMessage: 'ui.events.filterByName'})}
+                              onClick={() => fetchEvents()}
+                              disabled={loading}>
                               <Icon>search</Icon>
                             </IconButton>
                           ) : (
                             <Button
+                              title={intl.formatMessage({id: 'ui.events.filterByName', defaultMessage: 'ui.events.filterByName'})}
                               size="small"
                               variant="contained"
                               color="secondary"
@@ -472,28 +476,21 @@ export default function Events(inProps: EventsProps): JSX.Element {
               </Grid>
               <Grid size={{xs: 12, md: 2}}>
                 <FormControl fullWidth>
-                  <InputLabel>
+                  <InputLabel htmlFor="filterByDate">
                     <FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />
                   </InputLabel>
                   <Select
+                    id="filterByDate"
                     disabled={showOngoingEvents || loading}
                     size="small"
+                    title={intl.formatMessage({id: 'ui.events.filterByDate', defaultMessage: 'ui.events.filterByDate'})}
                     label={<FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />}
                     value={dateSearch as any}
                     onChange={handleOnChangeTimeFrame}
                     renderValue={(selected) => options.find((option) => option.value === selected).label}>
                     {options.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
-                        <Radio
-                          checked={dateSearch === option.value}
-                          value={option.value}
-                          name="radio-button-select"
-                          slotProps={{
-                            input: {
-                              'aria-label': `${option.label}`
-                            }
-                          }}
-                        />
+                        <Radio checked={dateSearch === option.value} value={option.value} name="radio-button-select" />
                         {option.label}
                       </MenuItem>
                     ))}
@@ -609,14 +606,14 @@ export default function Events(inProps: EventsProps): JSX.Element {
       <>
         {showUserEvents && !hideTitle ? (
           <>
-            <Typography variant="h4" className={classes.sectionTitle}>
+            <Typography component="h1" variant="h4" className={classes.sectionTitle}>
               <FormattedMessage id="ui.events.myEvents.title" defaultMessage="ui.events.myEvents.title" />
             </Typography>
             <Divider className={classes.divider} />
           </>
         ) : general ? (
           <>
-            <Typography variant="h4" className={classes.sectionTitle}>
+            <Typography component="h1" variant="h4" className={classes.sectionTitle}>
               <FormattedMessage id="ui.events.allEvents.title" defaultMessage="ui.events.allEvents.title" />
             </Typography>
             <Divider className={classes.divider} />

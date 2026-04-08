@@ -29,7 +29,7 @@ const Component = {
       },
       '& .MuiCardContent-root': {
         padding: theme.spacing(2.2),
-        '& h5': {
+        '& h2': {
           fontFamily: theme.typography.fontFamily,
           fontWeight: theme.typography.fontWeightBold,
           color: theme.palette.getContrastText(theme.palette.background.default),
