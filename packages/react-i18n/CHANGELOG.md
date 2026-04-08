@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.2.5-alpha.1...@selfcommunity/react-i18n@1.2.5-alpha.2) (2026-04-08)
+
+
+### Bug Fixes
+
+* try to fixing accessibility reports ([12dd4a2](https://github.com/selfcommunity/community-js/commit/12dd4a28c5f319ea2275e7b70a004ce4d5535d24))
+
+
+
+
+
 ## [1.2.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.2.5-alpha.0...@selfcommunity/react-i18n@1.2.5-alpha.1) (2026-03-31)
 
 
