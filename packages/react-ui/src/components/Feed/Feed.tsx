@@ -827,7 +827,7 @@ const Feed: ForwardRefRenderFunction<FeedRef, FeedProps> = (inProps: FeedProps, 
   }
 
   return (
-    <Root role="main" container width="100%" spacing={2} id={id} className={classNames(classes.root, className)}>
+    <Root container width="100%" spacing={2} id={id} className={classNames(classes.root, className)}>
       {advEnabled && !hideAdvs && enabledCustomAdvPositions.includes(SCCustomAdvPosition.POSITION_BELOW_TOPBAR) ? (
         <Grid size={12}>
           <CustomAdv position={SCCustomAdvPosition.POSITION_BELOW_TOPBAR} {...CustomAdvProps} />

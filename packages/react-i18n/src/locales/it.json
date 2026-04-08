@@ -484,6 +484,7 @@
   "ui.eventForm.button.create": "Crea Evento",
   "ui.eventForm.button.edit": "Modifica",
   "ui.eventForm.genericError": "Si è verificato un errore nella creazione dell'evento.",
+  "ui.eventLocationWidget.map.ariaLabel": "Mappa della posizione dell'evento",
   "ui.eventLocationWidget.title": "Luogo",
   "ui.groupForm.title": "Crea il gruppo",
   "ui.groupForm.title.edit": "Modifica il gruppo",

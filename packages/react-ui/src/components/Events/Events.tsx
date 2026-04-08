@@ -476,10 +476,11 @@ export default function Events(inProps: EventsProps): JSX.Element {
               </Grid>
               <Grid size={{xs: 12, md: 2}}>
                 <FormControl fullWidth>
-                  <InputLabel>
+                  <InputLabel htmlFor="filterByDate">
                     <FormattedMessage id="ui.events.filterByDate" defaultMessage="ui.events.filterByDate" />
                   </InputLabel>
                   <Select
+                    id="filterByDate"
                     disabled={showOngoingEvents || loading}
                     size="small"
                     title={intl.formatMessage({id: 'ui.events.filterByDate', defaultMessage: 'ui.events.filterByDate'})}
@@ -489,16 +490,7 @@ export default function Events(inProps: EventsProps): JSX.Element {
                     renderValue={(selected) => options.find((option) => option.value === selected).label}>
                     {options.map((option) => (
                       <MenuItem key={option.value} value={option.value}>
-                        <Radio
-                          checked={dateSearch === option.value}
-                          value={option.value}
-                          name="radio-button-select"
-                          slotProps={{
-                            input: {
-                              'aria-label': `${option.label}`
-                            }
-                          }}
-                        />
+                        <Radio checked={dateSearch === option.value} value={option.value} name="radio-button-select" />
                         {option.label}
                       </MenuItem>
                     ))}

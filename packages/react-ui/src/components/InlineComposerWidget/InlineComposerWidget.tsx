@@ -175,7 +175,7 @@ export default function InlineComposerWidget(inProps: InlineComposerWidgetProps)
           <Box className={classes.avatar}>
             {!scUserContext.user ? (
               <Avatar
-                alt={intl.formatMessage({id: 'ui.inlineComposerWidget.avatar.alt', defaultMessage: 'ui.inlineComposerWidget.avatar.alt'})}
+                aria-label={intl.formatMessage({id: 'ui.inlineComposerWidget.avatar.alt', defaultMessage: 'ui.inlineComposerWidget.avatar.alt'})}
                 variant="circular"
               />
             ) : (
