@@ -294,7 +294,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
             <Typography variant="body2">{scCourse.created_by?.username}</Typography>
           </Link>
           <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)} className={classes.previewNameWrapper}>
-            <Typography variant="h6" className={classes.previewName}>
+            <Typography component="h2" variant="h6" className={classes.previewName}>
               {scCourse.name}
             </Typography>
           </Link>

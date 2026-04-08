@@ -484,6 +484,7 @@
   "ui.eventForm.button.create": "Create Event",
   "ui.eventForm.button.edit": "Edit",
   "ui.eventForm.genericError": "An error occurred while creating the event.",
+  "ui.eventLocationWidget.map.ariaLabel": "Event location map",
   "ui.eventLocationWidget.title": "Location",
   "ui.eventMediaWidget.add": "Add photos",
   "ui.eventMediaWidget.dialog.confirm": "Yes",
