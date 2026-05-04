@@ -119,7 +119,7 @@ export interface CourseFormProps extends BoxProps {
    * On step change callback function
    * @default null
    */
-  onStepChange?: (step: SCCourseFormStepType, type: SCCourseType) => void;
+  onStepChange?: (step: SCCourseFormStepType, type: SCCourseTypologyType) => void;
 
   /**
    * On error callback function
@@ -188,7 +188,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
     imageOriginal: course?.image_bigger || '',
     imageOriginalFile: '',
     name: course?.name || '',
-    type: course?.type || '',
+    type: course?.type || SCCourseTypologyType.SELF, // TODO - temporary hardcoded SELF --> previous value: ''
     description: course ? course.description : '',
     categories: course ? course.categories : [],
     privacy: course ? course.privacy : '',
@@ -251,7 +251,7 @@ export default function CourseForm(inProps: CourseFormProps): JSX.Element {
    */
   const handleChangeStep = (newStep: SCCourseFormStepType) => {
     setStep(newStep);
-    onStepChange(newStep, field.type);
+    onStepChange?.(newStep, field.type);
   };
 
   /**

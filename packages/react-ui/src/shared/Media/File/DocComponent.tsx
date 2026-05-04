@@ -101,7 +101,7 @@ export default function DocComponent(props: DocComponentProps) {
               <Icon>delete</Icon>
             </IconButton>
           )}
-          {handleDownload && (
+          {handleDownload && index && (
             <>
               {document.mimetype === SCMimeTypes.PDF && (
                 <IconButton className={classes.action} component={Link} to={document.url} target="_blank" onClick={() => onMediaClick?.(document)}>
