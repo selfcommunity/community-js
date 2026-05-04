@@ -40,7 +40,7 @@ const PreviewComponent = forwardRef((props: PreviewComponentProps, ref: Ref<unkn
   // EFFECTS
   useEffect(() => {
     if (typeof document === undefined) {
-      return null;
+      return;
     }
     const sortable = document.getElementById(SORTABLE_ID);
     if (sortable) {

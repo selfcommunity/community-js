@@ -58,11 +58,11 @@ export interface ImagePreviewComponentProps {
   /**
    * Handles on media click
    */
-  onMediaClick?: (any) => void;
+  onMediaClick?: (media: SCMediaType) => void;
 }
-export default (props: ImagePreviewComponentProps): JSX.Element => {
+export default (props: ImagePreviewComponentProps) => {
   // PROPS
-  const {className = '', medias = [], maxVisible = 5, gallery = true, onMediaClick = null} = props;
+  const {className = '', medias = [], maxVisible = 5, gallery = true, onMediaClick = undefined} = props;
 
   // STATE
   const [preview, setPreview] = useState(-1);
@@ -80,7 +80,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   };
 
   // UTILS
-  const getImageUrl = (image, original = false) => {
+  const getImageUrl = (image: SCMediaType, original = false) => {
     if (typeof image === 'object') {
       const _image = image.image_thumbnail ? image.image_thumbnail.url : image.image ? image.image : '/static/frontend_v2/images/image.svg';
       return original && image.image ? image.image : _image;
@@ -103,7 +103,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
 
   // RENDERING
 
-  const renderTitle = (o) => {
+  const renderTitle = (o: SCMediaType) => {
     if (!o) {
       return null;
     }
@@ -134,7 +134,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
   const renderOne = () => {
     const overlay = images.length > maxVisible && maxVisible == 1 ? renderCountOverlay(true) : renderOverlay(0);
     const isGif = images[0]['image_mimetype'] ? images[0]['image_mimetype'].includes('image/gif') : false;
-    const isLandscape = images[0].image_height < images[0].image_width;
+    const isLandscape = images[0].image_height && images[0].image_width && images[0].image_height < images[0].image_width;
     return (
       <Grid
         container
@@ -153,7 +153,9 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
           onClick={() => openPreviewImage(0)}
           style={{
             background: `url(${getImageUrl(images[0], inView && isGif)})`,
-            ...(isLandscape ? {paddingTop: `${(100 * images[0].image_height) / images[0].image_width}%`} : {})
+            ...(isLandscape && images[0].image_height && images[0].image_width
+              ? {paddingTop: `${(100 * images[0].image_height) / images[0].image_width}%`}
+              : {})
           }}>
           {overlay}
           {renderTitle(images[0])}
@@ -256,7 +258,7 @@ export default (props: ImagePreviewComponentProps): JSX.Element => {
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = docs[index].title;
+        link.download = docs[index].title || '';
         link.click();
         // Cleanup
         window.URL.revokeObjectURL(url);
