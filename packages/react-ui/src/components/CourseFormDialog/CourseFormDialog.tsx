@@ -1,6 +1,6 @@
 import {styled} from '@mui/material';
 import {useThemeProps} from '@mui/system';
-import {SCCourseType} from '@selfcommunity/types';
+import {SCCourseType, SCCourseTypologyType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import {FormattedMessage} from 'react-intl';
 import BaseDialog, {BaseDialogProps} from '../../shared/BaseDialog';
@@ -76,13 +76,13 @@ export default function CourseFormDialog(inProps: CourseFormDialogProps): JSX.El
   });
   const {className, open = true, onClose, CourseFormComponentProps = {}, ...rest} = props;
   // STATE
-  // TODO - temporary hardcoded CUSTOMIZATION and 'self-paced' --> previous value: GENERAL and ''
+  // TODO - temporary hardcoded CUSTOMIZATION and SELF --> previous value: GENERAL and ''
   const [step, setStep] = useState(SCCourseFormStepType.CUSTOMIZATION);
-  const [type, setType] = useState('self-paced');
+  const [type, setType] = useState(SCCourseTypologyType.SELF);
 
   //HANDLERS
 
-  const handleStepTypeChange = (step: SCCourseFormStepType, type) => {
+  const handleStepTypeChange = (step: SCCourseFormStepType, type: SCCourseTypologyType) => {
     setStep(step);
     setType(type);
   };
