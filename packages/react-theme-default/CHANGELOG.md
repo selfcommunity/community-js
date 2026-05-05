@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.5-alpha.4...@selfcommunity/react-theme-default@1.2.5) (2026-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [1.2.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.5-alpha.3...@selfcommunity/react-theme-default@1.2.5-alpha.4) (2026-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [1.2.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.5-alpha.2...@selfcommunity/react-theme-default@1.2.5-alpha.3) (2026-05-05)
+
+
+### Bug Fixes
+
+* fixed SCMediaFile-action-wrapper ui; refactored some css codes ([62e6c8c](https://github.com/selfcommunity/community-js/commit/62e6c8c16b3c42439f883bbdc538bf8b11fe0af2))
+
+
+
+
+
 ## [1.2.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.5-alpha.1...@selfcommunity/react-theme-default@1.2.5-alpha.2) (2026-03-31)
 
 

@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.5-alpha.6...@selfcommunity/react-ui@1.2.5) (2026-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [1.2.5-alpha.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.5-alpha.5...@selfcommunity/react-ui@1.2.5-alpha.6) (2026-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [1.2.5-alpha.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.5-alpha.4...@selfcommunity/react-ui@1.2.5-alpha.5) (2026-05-05)
+
+
+### Bug Fixes
+
+* added temporary hardcoded into CourseForm; refactored related codes ([be12096](https://github.com/selfcommunity/community-js/commit/be12096c145c7f87ebe835707a2ca1039d7dd5d1))
+* comments ([ecb6633](https://github.com/selfcommunity/community-js/commit/ecb66338fbddc03a43ff1304024e5fbc7e07fce9))
+
+
+
+
+
 ## [1.2.5-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.5-alpha.3...@selfcommunity/react-ui@1.2.5-alpha.4) (2026-04-08)
 
 
