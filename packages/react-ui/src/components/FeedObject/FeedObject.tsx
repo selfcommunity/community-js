@@ -884,7 +884,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   {...(!obj.author.deleted && {to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, obj.author)})}
                   onClick={obj.author.deleted ? () => setOpenAlert(true) : null}>
                   <UserAvatar hide={!obj.author.community_badge}>
-                    <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
+                    <Avatar alt={obj.author.username} src={obj.author.avatar} className={classes.avatar}>
                       {obj.author.username}
                     </Avatar>
                   </UserAvatar>
@@ -1150,7 +1150,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                   onClick={obj.author.deleted ? () => setOpenAlert(true) : null}
                   className={classes.username}>
                   <UserAvatar hide={!obj.author.community_badge}>
-                    <Avatar aria-label="recipe" src={obj.author.avatar} className={classes.avatar}>
+                    <Avatar alt={obj.author.username} src={obj.author.avatar} className={classes.avatar}>
                       {obj.author.username}
                     </Avatar>
                   </UserAvatar>

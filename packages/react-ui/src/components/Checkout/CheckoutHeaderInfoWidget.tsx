@@ -44,7 +44,7 @@ export default function CheckoutHeaderInfoWidget(inProps: CheckoutHeaderProps) {
         <Icon fontSize="large">{contentType === SCContentType.EVENT ? 'ticket' : contentType === SCContentType.GROUP ? 'groups' : 'courses'}</Icon>
       </Box>
       <CardContent className={classes.content}>
-        <Typography variant="h5">
+        <Typography variant="h2">
           {isRecurring ? (
             <FormattedMessage
               id={`ui.checkout.contentDesc.title.${contentType}.recurring`}

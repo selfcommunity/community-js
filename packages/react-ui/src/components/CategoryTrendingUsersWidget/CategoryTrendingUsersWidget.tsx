@@ -275,7 +275,7 @@ export default function CategoryTrendingUsersWidget(inProps: CategoryTrendingUse
 
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage id="ui.categoryTrendingUsersWidget.title" defaultMessage="ui.categoryTrendingUsersWidget.title" />
       </Typography>
       {!state.count ? (

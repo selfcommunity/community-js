@@ -130,7 +130,7 @@ export default function LoyaltyProgramWidget(inProps: LoyaltyProgramWidgetProps)
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <CardContent>
-        <Typography variant="h5" className={classes.title}>
+        <Typography variant="h2" className={classes.title}>
           <FormattedMessage id="ui.loyaltyProgramWidget.title" defaultMessage="ui.loyaltyProgramWidget.title" />
         </Typography>
       </CardContent>

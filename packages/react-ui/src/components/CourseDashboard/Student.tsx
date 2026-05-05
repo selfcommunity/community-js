@@ -392,7 +392,7 @@ function Student(inProps: StudentCourseDashboardProps) {
 
           {scCourse.user_completion_rate === 100 && (
             <Stack className={classNames(classes.completedWrapper, classes.margin)}>
-              <Typography variant="h3" className={classes.defaultContrastColor}>
+              <Typography component="h2" variant="h3" className={classes.defaultContrastColor}>
                 <FormattedMessage id="ui.course.dashboard.student.completed" defaultMessage="ui.course.dashboard.student.completed" />
               </Typography>
               <img
@@ -404,12 +404,12 @@ function Student(inProps: StudentCourseDashboardProps) {
             </Stack>
           )}
 
-          <Typography variant="h6" className={classNames(classes.margin, classes.defaultContrastColor)}>
+          <Typography component="h2" variant="h6" className={classNames(classes.margin, classes.defaultContrastColor)}>
             <FormattedMessage id="ui.course.dashboard.student.contents" defaultMessage="ui.course.dashboard.student.contents" />
           </Typography>
 
           <Stack className={classes.lessonsSections}>
-            <Typography variant="h5" className={classes.paperContrastColor}>
+            <Typography component="h3" variant="h5" className={classes.paperContrastColor}>
               <FormattedMessage
                 id="ui.course.table.sections.title"
                 defaultMessage="ui.course.table.sections.title"
@@ -421,7 +421,7 @@ function Student(inProps: StudentCourseDashboardProps) {
 
             <Box className={classes.circle} />
 
-            <Typography variant="h5" className={classes.paperContrastColor}>
+            <Typography component="h3" variant="h5" className={classes.paperContrastColor}>
               <FormattedMessage
                 id="ui.course.table.lessons.title"
                 defaultMessage="ui.course.table.lessons.title"

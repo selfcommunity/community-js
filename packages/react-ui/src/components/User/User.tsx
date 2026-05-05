@@ -229,7 +229,7 @@ export default function User(inProps: UserProps): JSX.Element {
                 className={classNames(isGroupAdmin ? classes.groupAdminBadgeLabel : classes.staffBadgeLabel)}
                 size="small"
                 label={
-                  <Typography component="span" sx={{'&': {all: 'unset'}}} className={classes.paperContrastColor}>
+                  <Typography component="span" className={classes.paperContrastColor}>
                     {isGroupAdmin ? (
                       <FormattedMessage defaultMessage="ui.user.group.admin" id="ui.user.group.admin" />
                     ) : (

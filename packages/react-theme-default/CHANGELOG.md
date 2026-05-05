@@ -3,6 +3,50 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.5-alpha.2...@selfcommunity/react-theme-default@1.2.5-alpha.3) (2026-05-05)
+
+
+### Bug Fixes
+
+* fixed SCMediaFile-action-wrapper ui; refactored some css codes ([62e6c8c](https://github.com/selfcommunity/community-js/commit/62e6c8c16b3c42439f883bbdc538bf8b11fe0af2))
+
+
+
+
+
+## [1.2.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.5-alpha.1...@selfcommunity/react-theme-default@1.2.5-alpha.2) (2026-03-31)
+
+
+### Bug Fixes
+
+* try to fixing accessibility reports ([d1b674e](https://github.com/selfcommunity/community-js/commit/d1b674e21dac0e196100931bc92dd3cc85ea6285))
+
+
+
+
+
+## [1.2.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.5-alpha.0...@selfcommunity/react-theme-default@1.2.5-alpha.1) (2026-03-30)
+
+
+### Bug Fixes
+
+* try to fixing accessibility reports ([47ae111](https://github.com/selfcommunity/community-js/commit/47ae111efe30408b464e85a9bf2aebf2931c3935))
+
+
+
+
+
+## [1.2.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.4...@selfcommunity/react-theme-default@1.2.5-alpha.0) (2026-03-27)
+
+
+### Bug Fixes
+
+* try to fixing accessibility reports ([5ea0c53](https://github.com/selfcommunity/community-js/commit/5ea0c53030951893ba7d98a3367c2fae133c47d0))
+
+
+
+
+
 ## [1.2.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.4-alpha.1...@selfcommunity/react-theme-default@1.2.4) (2026-03-26)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default

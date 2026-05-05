@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.1.5-alpha.2...@selfcommunity/react-core@1.1.5-alpha.3) (2026-05-05)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [1.1.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.1.5-alpha.1...@selfcommunity/react-core@1.1.5-alpha.2) (2026-04-08)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [1.1.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.1.5-alpha.0...@selfcommunity/react-core@1.1.5-alpha.1) (2026-03-31)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+## [1.1.5-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.1.4...@selfcommunity/react-core@1.1.5-alpha.0) (2026-03-27)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
 ## [1.1.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.1.4-alpha.1...@selfcommunity/react-core@1.1.4) (2026-03-26)
 
 **Note:** Version bump only for package @selfcommunity/react-core

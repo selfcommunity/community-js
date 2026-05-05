@@ -85,8 +85,8 @@ const Component = {
         cursor: 'pointer'
       },
       '& .SCMediaFile-title .MuiTypography-root': {
-        color: '#FFF',
-        backgroundColor: theme.palette.getContrastText('#FFF'),
+        color: theme.palette.common.white,
+        backgroundColor: theme.palette.getContrastText(theme.palette.common.white),
         opacity: 0.6
       },
       '& .SCMediaFile-icon-file': {
@@ -168,7 +168,7 @@ const Component = {
       zIndex: 1300
     }),
     triggerMenuRoot: () => ({}),
-    docRoot: ({theme}) => ({
+    docRoot: ({theme}: any) => ({
       border:
         getContrastRatio(theme.palette.background.paper, theme.palette.common.white) > 4.5 ? '1px solid rgba(255, 255, 255, 0.12)' : '1px solid #DDD',
       borderRadius: '10px',
@@ -206,13 +206,9 @@ const Component = {
       },
       '& .SCMediaFile-action-wrapper': {
         flexDirection: 'row',
+        alignItems: 'center',
         gap: '8px',
-        marginLeft: 'auto',
-        '& .SCMediaFile-action': {
-          '&:hover': {
-            backgroundColor: theme.palette.common.white
-          }
-        }
+        marginLeft: 'auto'
       }
     })
   }

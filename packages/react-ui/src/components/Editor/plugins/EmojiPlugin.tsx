@@ -6,6 +6,7 @@ import {SCThemeType} from '@selfcommunity/react-core';
 import {EmojiClickData} from 'emoji-picker-react';
 import EmojiPicker from '../../../shared/EmojiPicker';
 import {PREFIX} from '../constants';
+import {useIntl} from 'react-intl';
 
 function Emoji({
   editor,
@@ -20,6 +21,9 @@ function Emoji({
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [emojiAnchorEl, setEmojiAnchorEl] = useState<any>(false);
+
+  // INTL
+  const intl = useIntl();
 
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -37,7 +41,10 @@ function Emoji({
 
   return (
     <>
-      <IconButton className={className} onClick={handleOpen}>
+      <IconButton
+        title={intl.formatMessage({id: 'ui.editor.emoticon.title', defaultMessage: 'ui.editor.emoticon.title'})}
+        className={className}
+        onClick={handleOpen}>
         <Icon>sentiment_satisfied_alt</Icon>
       </IconButton>
       <Popover

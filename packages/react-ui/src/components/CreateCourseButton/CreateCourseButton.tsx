@@ -16,7 +16,7 @@ const classes = {
 const Root = styled(Button, {
   name: PREFIX,
   slot: 'Root',
-  overridesResolver: (props, styles) => styles.root
+  overridesResolver: (_props, styles) => styles.root
 })(() => ({}));
 
 export interface CreateCourseButtonProps extends ButtonProps {
@@ -56,7 +56,7 @@ export interface CreateCourseButtonProps extends ButtonProps {
 
  * @param inProps
  */
-export default function CreateCourseButton(inProps: CreateCourseButtonProps): JSX.Element {
+export default function CreateCourseButton(inProps: CreateCourseButtonProps) {
   //PROPS
   const props: CreateCourseButtonProps = useThemeProps({
     props: inProps,

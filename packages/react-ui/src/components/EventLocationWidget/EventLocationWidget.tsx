@@ -109,15 +109,15 @@ export default function EventLocationWidget(inProps: EventLocationWidgetProps): 
   return (
     <Root className={classNames(classes.root, className)} {...rest}>
       <CardContent>
-        <Typography variant="h4" className={classes.title} gutterBottom>
+        <Typography component="h2" variant="h4" className={classes.title} gutterBottom>
           <FormattedMessage id="ui.eventLocationWidget.title" defaultMessage="ui.eventLocationWidget.title" />
         </Typography>
         <Box className={classes.map}>
           <APIProvider apiKey={geocodingApiKey} libraries={libraries}>
-						<EventMap event={scEvent} className={classes.map} />
+            <EventMap event={scEvent} className={classes.map} />
           </APIProvider>
         </Box>
-        <Typography variant="h4" className={classes.locationTitle}>
+        <Typography component="h3" variant="h4" className={classes.locationTitle}>
           {formatEventLocationGeolocation(scEvent.geolocation, true)}
         </Typography>
         <Typography variant="body1" className={classes.address}>

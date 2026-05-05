@@ -111,7 +111,7 @@ export default function ContributorsFeedObject(props: ContributorsFeedObjectProp
             {contributorsObject.contributors.length > 0 ? (
               <>
                 <Button variant="text" onClick={() => setOpenContributorsDialog(true)} classes={{root: classes.btnParticipants}} color="inherit">
-                  <Typography component="span" sx={{'&': {all: 'unset'}}}>
+                  <Typography component="span">
                     <FormattedMessage id="ui.feedObject.contributors.participants" defaultMessage="ui.feedObject.contributors.participants" />:
                   </Typography>
                   <AvatarGroup {...rest}>

@@ -1,4 +1,4 @@
-import {darken} from '@mui/system';
+import {darken, height} from '@mui/system';
 
 const Component = {
   styleOverrides: {
@@ -14,6 +14,7 @@ const Component = {
         padding: '1px',
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
         '& > a:first-of-type': {
           display: 'flex',
           justifyContent: 'center',
@@ -23,10 +24,10 @@ const Component = {
         '& img': {
           maxHeight: theme.mixins.toolbar.minHeight - 20,
           paddingLeft: theme.spacing(1.5)
+        },
+        '& button': {
+          height: theme.mixins.toolbar.minHeight - 9
         }
-      },
-      '& .SCNavigationMenuDrawer-drawer-content': {
-        paddingTop: 0
       },
       '& .MuiTypography-subtitle1': {
         fontSize: '1.286rem',

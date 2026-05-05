@@ -1362,7 +1362,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         aria-haspopup="true"
         onClick={handleOpen}
         className={classes.button}
-        size="small">
+        size="small"
+        title={intl.formatMessage({id: 'ui.contributionActionMenu.button.title', defaultMessage: 'ui.contributionActionMenu.button.title'})}>
         {contributionObj && (contributionObj.collapsed || contributionObj.deleted) ? (
           <span className={classes.visibilityIcons}>
             {contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}

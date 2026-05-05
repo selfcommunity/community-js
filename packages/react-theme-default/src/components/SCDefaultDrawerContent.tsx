@@ -32,6 +32,9 @@ const Component = {
         '& .MuiAccordionDetails-root, .MuiList-root': {
           paddingTop: 0
         }
+      },
+      '& .SCDefaultDrawerContent-items': {
+        paddingTop: 0
       }
     })
   }

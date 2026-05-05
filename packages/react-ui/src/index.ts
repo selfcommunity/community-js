@@ -474,6 +474,7 @@ export {
   EditCourse,
   EditCourseProps,
   EditCourseSkeleton,
+  /* EVENTS */
   Event,
   EventActionsMenu,
   EventActionsMenuProps,

@@ -251,7 +251,7 @@ export default function UserSuggestionWidget(inProps: UserSuggestionWidgetProps)
   }
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage id="ui.userSuggestionWidget.title" defaultMessage="ui.userSuggestionWidget.title" />
       </Typography>
       {!state.count ? (

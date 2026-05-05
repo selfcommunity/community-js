@@ -282,7 +282,7 @@ export default function UserFollowedUsersWidget(inProps: UserFollowedUsersWidget
   }
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage
           id="ui.userFollowedUsersWidget.title"
           defaultMessage="ui.userFollowedUsersWidget.title"

@@ -233,7 +233,7 @@ export default function PollSuggestionWidget(inProps: PollSuggestionWidgetProps)
 
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage id="ui.pollSuggestionWidget.title" defaultMessage="ui.pollSuggestionWidget.title" />
       </Typography>
       {!state.count ? (

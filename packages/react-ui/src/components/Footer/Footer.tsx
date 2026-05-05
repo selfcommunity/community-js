@@ -23,7 +23,7 @@ const classes = {
   copyright: `${PREFIX}-copyright`
 };
 
-const Root = styled(Box, {
+const Root = styled('footer', {
   name: PREFIX,
   slot: 'Root'
 })(() => ({}));

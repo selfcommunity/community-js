@@ -4,7 +4,7 @@ import {Link} from '@selfcommunity/react-core';
 import {PREFIX} from './../constants';
 
 const classes = {
-  paperContrastColor: `${PREFIX}-paper-contrast-color`
+  backgroundContrastColor: `${PREFIX}-background-contrast-color`
 };
 
 interface ActionButtonProps extends ButtonProps, Omit<ButtonProps, 'classes'> {
@@ -18,7 +18,7 @@ export default function ActionButton(props: ActionButtonProps) {
   if (to) {
     return (
       <Button component={Link} to={to} size={size} color={color} variant={variant} {...rest}>
-        <Typography variant="body2" className={classes.paperContrastColor}>
+        <Typography variant="body2" className={classes.backgroundContrastColor}>
           <FormattedMessage id={labelId} defaultMessage={labelId} />
         </Typography>
       </Button>
@@ -27,7 +27,7 @@ export default function ActionButton(props: ActionButtonProps) {
 
   return (
     <Button size={size} color={color} variant={variant} {...rest}>
-      <Typography variant="body2" className={classes.paperContrastColor}>
+      <Typography variant="body2" className={classes.backgroundContrastColor}>
         <FormattedMessage id={labelId} defaultMessage={labelId} />
       </Typography>
     </Button>

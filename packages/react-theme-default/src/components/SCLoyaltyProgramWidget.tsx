@@ -20,7 +20,7 @@ const Component = {
           display: 'flex',
           alignItems: 'center',
           '& .MuiChip-root': {
-            color: theme.palette.common.white,
+            color: theme.palette.getContrastText(theme.palette.secondary.main),
             borderRadius: theme.shape.borderRadius,
             backgroundColor: theme.palette.secondary.main,
             marginRight: theme.spacing(1)

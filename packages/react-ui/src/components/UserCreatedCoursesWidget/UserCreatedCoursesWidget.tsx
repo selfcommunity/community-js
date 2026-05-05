@@ -210,7 +210,7 @@ export default function UserCreatedCoursesWidget(inProps: UserCreatedCoursesWidg
 
   const content = (
     <CardContent>
-      <Typography className={classes.title} variant="h5">
+      <Typography className={classes.title} variant="h2">
         <FormattedMessage
           id="ui.userCreatedCoursesWidget.title"
           defaultMessage="ui.userCreatedCoursesWidget.title"
