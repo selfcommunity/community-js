@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.1.5-alpha.2...@selfcommunity/types@1.1.5) (2026-05-05)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
+## [1.1.5-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.1.5-alpha.1...@selfcommunity/types@1.1.5-alpha.2) (2026-05-05)
+
+**Note:** Version bump only for package @selfcommunity/types
+
+
+
+
+
 ## [1.1.5-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.1.5-alpha.0...@selfcommunity/types@1.1.5-alpha.1) (2026-05-05)
 
 **Note:** Version bump only for package @selfcommunity/types
