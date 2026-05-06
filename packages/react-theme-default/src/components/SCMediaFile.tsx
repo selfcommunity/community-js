@@ -137,7 +137,7 @@ const Component = {
             whiteSpace: 'nowrap'
           },
           '& .SCMediaFile-delete': {
-            background: theme.palette.common.white,
+            background: theme.palette.background.paper,
             position: 'absolute',
             right: theme.spacing(0.5),
             top: theme.spacing(0.5)

@@ -51,7 +51,7 @@ const PreviewComponent = React.forwardRef((props: PreviewComponentProps, ref: Re
           {medias.map((media) => (
             <Box
               key={media.id}
-              className={classNames(classes.media, {[classes.video]: media.embed.metadata && media.embed.metadata.type === MEDIA_TYPE_VIDEO})}>
+              className={classNames(classes.media, {[classes.video]: media.embed?.metadata && media.embed.metadata.type === MEDIA_TYPE_VIDEO})}>
               <DisplayComponent medias={[media]} />
               <IconButton className={classes.delete} onClick={handleDelete(media.id)} size="small">
                 <Icon>delete</Icon>

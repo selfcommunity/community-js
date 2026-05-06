@@ -18,7 +18,6 @@ const classes = {
   title: `${PREFIX}-title`,
   subtitle: `${PREFIX}-subtitle`,
   actionWrapper: `${PREFIX}-action-wrapper`,
-  action: `${PREFIX}-action`,
   contrastColor: `${PREFIX}-contrast-color`
 };
 
@@ -97,18 +96,18 @@ export default function DocComponent(props: DocComponentProps) {
       {(handleDownload || onDelete) && (
         <Stack className={classes.actionWrapper}>
           {onDelete && (
-            <IconButton className={classes.action} onClick={() => onDelete(document.id)}>
+            <IconButton onClick={() => onDelete(document.id)}>
               <Icon>delete</Icon>
             </IconButton>
           )}
           {handleDownload && index && (
             <>
               {document.mimetype === SCMimeTypes.PDF && (
-                <IconButton className={classes.action} component={Link} to={document.url} target="_blank" onClick={() => onMediaClick?.(document)}>
+                <IconButton component={Link} to={document.url} target="_blank" onClick={() => onMediaClick?.(document)}>
                   <Icon>visibility</Icon>
                 </IconButton>
               )}
-              <IconButton className={classes.action} onClick={() => handleDownload(index)}>
+              <IconButton onClick={() => handleDownload(index)}>
                 <Icon>download</Icon>
               </IconButton>
             </>

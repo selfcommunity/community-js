@@ -141,7 +141,7 @@ const Component = {
           },
           '& .SCCourse-preview-name': {
             display: '-webkit-box',
-            height: theme.spacing(4),
+            height: theme.spacing(5),
             marginBottom: theme.spacing(0.5),
             textOverflow: 'ellipsis',
             overflow: 'hidden',
