@@ -76,12 +76,12 @@ const SnippetRoot = styled(BaseItemButton, {
 export interface CourseProps extends WidgetProps {
   /**
    * Course Object
-   * @default null
+   * @default undefined
    */
   course?: SCCourseType;
   /**
    * Id of the course for filter the feed
-   * @default null
+   * @default undefined
    */
   courseId?: number;
   /**
@@ -171,8 +171,8 @@ export default function Course(inProps: CourseProps): JSX.Element {
   });
   const {
     id = `course_object_${props.courseId ? props.courseId : props.course ? props.course.id : ''}`,
-    courseId = null,
-    course = null,
+    courseId = undefined,
+    course = undefined,
     className = null,
     template = SCCourseTemplateType.PREVIEW,
     actions,
@@ -222,7 +222,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
             <FormattedMessage
               id="ui.course.completion.percentage"
               defaultMessage="ui.course.completion.percentage"
-              values={{percentage: `${Math.round(scCourse.user_completion_rate)}%`}}
+              values={{percentage: `${Math.round(scCourse.user_completion_rate || 0)}%`}}
             />
           </Typography>
           <LinearProgress className={classes.previewProgressBar} variant="determinate" color="primary" value={scCourse.user_completion_rate} />
@@ -278,7 +278,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
           )}
           <Link
             {...(!scCourse.created_by?.deleted && {
-              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
+              to: scRoutingContext.url?.(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
             })}>
             <UserAvatar hide={!scCourse.created_by?.community_badge} smaller={true}>
               <Avatar alt={scCourse.name} src={scCourse.created_by?.avatar} className={classes.previewAvatar} />
@@ -289,12 +289,12 @@ export default function Course(inProps: CourseProps): JSX.Element {
           <Link
             className={classes.previewCreator}
             {...(!scCourse.created_by?.deleted && {
-              to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
+              to: scRoutingContext.url?.(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
             })}>
             <Typography variant="body2">{scCourse.created_by?.username}</Typography>
           </Link>
-          <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)} className={classes.previewNameWrapper}>
-            <Typography component="h2" variant="h6" className={classes.previewName}>
+          <Link to={scRoutingContext.url?.(SCRoutes.COURSE_ROUTE_NAME, scCourse)} className={classes.previewNameWrapper}>
+            <Typography component="h2" variant="h6" className={classes.previewName} title={scCourse.name}>
               {scCourse.name}
             </Typography>
           </Link>
@@ -315,11 +315,11 @@ export default function Course(inProps: CourseProps): JSX.Element {
             </Typography>
           </Stack>
           <Box className={classes.previewCategory}>
-            {scCourse.categories.slice(0, MAX_VISIBLE_CATEGORIES).map((category) => (
+            {scCourse.categories?.slice(0, MAX_VISIBLE_CATEGORIES).map((category) => (
               <Chip key={category.id} size="small" label={category.name} />
             ))}
 
-            {scCourse.categories.length > MAX_VISIBLE_CATEGORIES && (
+            {scCourse.categories && scCourse.categories.length > MAX_VISIBLE_CATEGORIES && (
               <Tooltip
                 title={
                   <>
@@ -336,7 +336,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
         </CardContent>
         {actions ?? (
           <CardActions className={classes.previewActions}>
-            <Button variant="contained" size="small" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
+            <Button variant="contained" size="small" component={Link} to={scRoutingContext.url?.(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
               <FormattedMessage defaultMessage="ui.course.see" id="ui.course.see" />
             </Button>
           </CardActions>
@@ -381,12 +381,12 @@ export default function Course(inProps: CourseProps): JSX.Element {
             {!userProfileSnippet && (
               <Link
                 {...(!scCourse.created_by?.deleted && {
-                  to: scRoutingContext.url(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
+                  to: scRoutingContext.url?.(SCRoutes.USER_PROFILE_ROUTE_NAME, scCourse.created_by)
                 })}>
                 <Typography component="span">{scCourse.created_by?.username}</Typography>
               </Link>
             )}
-            <Link to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
+            <Link to={scRoutingContext.url?.(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
               <Typography variant="body1">{scCourse.name}</Typography>
             </Link>
           </>
@@ -423,7 +423,7 @@ export default function Course(inProps: CourseProps): JSX.Element {
         }
         actions={
           actions ?? (
-            <Button size="small" variant="contained" component={Link} to={scRoutingContext.url(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
+            <Button size="small" variant="contained" component={Link} to={scRoutingContext.url?.(SCRoutes.COURSE_ROUTE_NAME, scCourse)}>
               <FormattedMessage defaultMessage="ui.course.see" id="ui.course.see" />
             </Button>
           )

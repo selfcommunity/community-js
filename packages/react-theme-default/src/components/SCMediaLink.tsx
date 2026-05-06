@@ -109,17 +109,12 @@ const Component = {
             }
           }
         },
-        '& .SCMediaLink-delete': {
-          background: theme.palette.common.white,
-          position: 'absolute',
-          right: theme.spacing(0.5),
-          top: theme.spacing(0.5),
-          zIndex: 3
-        },
         '&.SCMediaLink-media-video .SCMediaLink-delete': {
-          background: theme.palette.common.white,
+          color: theme.palette.common.white,
+          position: 'absolute',
           right: theme.spacing(1),
-          top: theme.spacing(1)
+          top: theme.spacing(1),
+          zIndex: 3
         }
       }
     }),
