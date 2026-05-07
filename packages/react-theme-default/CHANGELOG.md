@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.6-alpha.0...@selfcommunity/react-theme-default@1.2.6-alpha.1) (2026-05-06)
+
+**Note:** Version bump only for package @selfcommunity/react-theme-default
+
+
+
+
+
+## [1.2.6-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.5...@selfcommunity/react-theme-default@1.2.6-alpha.0) (2026-05-06)
+
+
+### Bug Fixes
+
+* fixed preview name's height into SCCourse. Linear: https://linear.app/quentral/issue/QUE-2677/bug-titolo-corsi-su-due-righe-sono-tagliati-no-suff-padding-below ([ceb267a](https://github.com/selfcommunity/community-js/commit/ceb267a32acf86dd20201e0404fe35bf6cd3e2cb))
+* fixed trash icon color and bg into SCMediaLink and SCMediaFile. Linear: https://linear.app/quentral/issue/QUE-2676/bug-su-mouseover-tasto-cestino-anche-nella-creazione-corsi ([85029c4](https://github.com/selfcommunity/community-js/commit/85029c48f21d3dde4e0ef21d7eed16c480c70d4d))
+
+
+
+
+
 ## [1.2.5](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.5-alpha.4...@selfcommunity/react-theme-default@1.2.5) (2026-05-05)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
