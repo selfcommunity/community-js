@@ -103,7 +103,6 @@ export default function AcceptRequestUserEventButton(inProps: AcceptRequestUserE
 
   const handleConfirmAction = useCallback(() => {
     setLoading(true);
-
     EventService.inviteOrAcceptEventRequest(scEvent.id, {users: [scUser.id]})
       .then(() => {
         if (handleConfirm) {
