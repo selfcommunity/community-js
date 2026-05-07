@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.6-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.6-alpha.1...@selfcommunity/react-ui@1.2.6-alpha.2) (2026-05-07)
+
+
+### Bug Fixes
+
+* AcceptRequestUserEventButton ([3123d4e](https://github.com/selfcommunity/community-js/commit/3123d4e57a2d8df5bff2a4b11619484a4061eef2))
+
+
+
+
+
 ## [1.2.6-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.6-alpha.0...@selfcommunity/react-ui@1.2.6-alpha.1) (2026-05-06)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
