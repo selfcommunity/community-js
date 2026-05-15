@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.2.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.1.7-alpha.0...@selfcommunity/react-core@1.2.0-alpha.0) (2026-05-15)
+
+
+### Features
+
+* added new adv position for category feed. Linear issue: https://linear.app/quentral/issue/QUE-2123/differenziare-la-nuova-posizione-sopra-il-feed-categorie-da-sopra-il ([e351e5d](https://github.com/selfcommunity/community-js/commit/e351e5dd153a70076cfb4eb61e08a58752fcc124))
+
+
+
+
+
 ## [1.1.7-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.1.6...@selfcommunity/react-core@1.1.7-alpha.0) (2026-05-07)
 
 **Note:** Version bump only for package @selfcommunity/react-core
