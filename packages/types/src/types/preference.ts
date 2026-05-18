@@ -179,7 +179,8 @@ export enum SCPreferenceName {
   POST_ADDRESSING_REQUIRED_ENABLED = 'post_addressing_required_enabled',
   POST_USER_ADDRESSING_ENABLED = 'post_user_addressing_enabled',
   CONTACT_API_ENABLED = 'contact_api_enabled',
-  ACCEPTED_MEDIA_MIMETYPES = 'accepted_media_mimetypes'
+  ACCEPTED_MEDIA_MIMETYPES = 'accepted_media_mimetypes',
+  SIGNUP_USERNAME_NAME_SURNAME_ENABLED = 'signup_username_name_surname_enabled'
 }
 
 /**
