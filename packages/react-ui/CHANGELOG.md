@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.8-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.7...@selfcommunity/react-ui@1.2.8-alpha.0) (2026-06-03)
+
+
+### Bug Fixes
+
+* removed user occupation from user profile default fields. Linear issue: https://linear.app/quentral/issue/QUE-2707/nascondere-di-default-campo-occupazione ([1108c98](https://github.com/selfcommunity/community-js/commit/1108c98ea52c9afb619d853319776be4693aba30))
+
+
+
+
+
 ## [1.2.7](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.7-alpha.2...@selfcommunity/react-ui@1.2.7) (2026-05-18)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
