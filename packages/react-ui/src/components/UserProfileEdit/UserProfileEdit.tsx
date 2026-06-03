@@ -95,6 +95,9 @@ export interface UserProfileEditProps {
  |root|.SCUserProfileEdit-root|Styles applied to the root element.|
  |tabs|.SCUserProfileEdit-tabs|Styles applied to the tab elements.|
  |tabsContent|.SCUserProfileEdit-tabs-content|Styles applied to tab content elements.|
+ |publicInfo|.SCUserProfileEdit-public-info|Styles applied to the public info section.|
+ |account|.SCUserProfileEdit-account|Styles applied to the account section.|
+ |settings|.SCUserProfileEdit-settings|Styles applied to the settings section.|
 
  * @param inProps
  */
