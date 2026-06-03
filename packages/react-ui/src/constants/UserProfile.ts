@@ -4,8 +4,7 @@ export const DEFAULT_FIELDS = [
   SCUserProfileFields.REAL_NAME,
   SCUserProfileFields.DATE_OF_BIRTH,
   SCUserProfileFields.BIO,
-  SCUserProfileFields.WEBSITE,
-  SCUserProfileFields.DESCRIPTION
+  SCUserProfileFields.WEBSITE
 ];
 
 export const DEFAULT_SETTINGS = [SCUserProfileSettings.NOTIFICATION, SCUserProfileSettings.INTERACTION, SCUserProfileSettings.PRIVATE_MESSAGE];
