@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.2.1...@selfcommunity/types@1.2.2-alpha.0) (2026-06-11)
+
+
+### Performance Improvements
+
+* added new preference email_password_login_enabled ([547bab9](https://github.com/selfcommunity/community-js/commit/547bab92fd917ffbae63b4cfdcd02fc31596056a))
+
+
+
+
+
 ## [1.2.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.2.1-alpha.3...@selfcommunity/types@1.2.1) (2026-06-03)
 
 **Note:** Version bump only for package @selfcommunity/types
