@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.10-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.9...@selfcommunity/react-ui@1.2.10-alpha.0) (2026-07-06)
+
+
+### Bug Fixes
+
+* fixed feedObj file preview. Linear issue: https://linear.app/quentral/issue/QUE-2753/bug-disfunzione-visualizzazione-download-file-allegati-postati-in ([c65b5a0](https://github.com/selfcommunity/community-js/commit/c65b5a009cd6795e4956cfb1402db65dec71824a))
+
+
+
+
+
 ## [1.2.9](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.9-alpha.1...@selfcommunity/react-ui@1.2.9) (2026-06-11)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
