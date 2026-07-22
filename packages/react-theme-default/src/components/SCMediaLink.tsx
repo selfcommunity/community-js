@@ -1,4 +1,4 @@
-import {alpha} from '@mui/material';
+import {alpha, darken, lighten} from '@mui/material';
 
 const Component = {
   styleOverrides: {
@@ -10,7 +10,7 @@ const Component = {
       },
       '& .SCMediaLink-link': {
         position: 'relative',
-        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#F5F5F5',
+        backgroundColor: theme.palette.mode === 'dark' ? lighten(theme.palette.background.paper, 0.1) : darken(theme.palette.background.paper, 0.05),
         margin: theme.spacing(1, 0),
         padding: theme.spacing(1)
       },
