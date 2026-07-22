@@ -10,7 +10,7 @@ const Component = {
       },
       '& .SCMediaLink-link': {
         position: 'relative',
-        backgroundColor: '#F5F5F5',
+        backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#F5F5F5',
         margin: theme.spacing(1, 0),
         padding: theme.spacing(1)
       },
