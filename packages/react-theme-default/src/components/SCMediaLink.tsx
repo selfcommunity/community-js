@@ -68,7 +68,7 @@ const Component = {
         padding: theme.spacing(2),
         '& .SCMediaLink-snippet-title': {},
         '& .SCMediaLink-snippet-description': {
-          fontSize: '0.857rem'
+          fontSize: '0.857rem',
         },
         '& a': {
           fontSize: '1rem',
