@@ -1,4 +1,4 @@
-import {alpha} from '@mui/material';
+import {alpha, darken, lighten} from '@mui/material';
 
 const Component = {
   styleOverrides: {
@@ -10,7 +10,7 @@ const Component = {
       },
       '& .SCMediaLink-link': {
         position: 'relative',
-        backgroundColor: '#F5F5F5',
+        backgroundColor: theme.palette.mode === 'dark' ? lighten(theme.palette.background.paper, 0.1) : darken(theme.palette.background.paper, 0.05),
         margin: theme.spacing(1, 0),
         padding: theme.spacing(1)
       },
@@ -68,7 +68,7 @@ const Component = {
         padding: theme.spacing(2),
         '& .SCMediaLink-snippet-title': {},
         '& .SCMediaLink-snippet-description': {
-          fontSize: '0.857rem'
+          fontSize: '0.857rem',
         },
         '& a': {
           fontSize: '1rem',
