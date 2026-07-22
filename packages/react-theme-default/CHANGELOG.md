@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.11-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.10...@selfcommunity/react-theme-default@1.2.11-alpha.0) (2026-07-22)
+
+
+### Bug Fixes
+
+* fixed media link readability on dark theme. Linear issue: https://linear.app/quentral/issue/QUE-2770/fix-condivisione-di-un-link-in-dark-mode ([f6990d1](https://github.com/selfcommunity/community-js/commit/f6990d1788a469a213504cffd3c2040e6c912754))
+
+
+
+
+
 ## [1.2.10](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.10-alpha.1...@selfcommunity/react-theme-default@1.2.10) (2026-07-07)
 
 **Note:** Version bump only for package @selfcommunity/react-theme-default
