@@ -129,6 +129,8 @@ import SCLessonCommentObject from './components/SCLessonCommentObject';
 import SCLessonCommentObjects from './components/SCLessonCommentObjects';
 import SCCourseCompletedDialog from './components/SCCourseCompletedDialog';
 import SCLeaderboardInfoWidget from './components/SCLeaderboardInfoWidget';
+import SCLeaderboardPositionWidget from './components/SCLeaderboardPositionWidget';
+import SCLeaderboardWidget from './components/SCLeaderboardWidget';
 import SCLessonEditForm from './components/SCLessonEditForm';
 import SCLessonFilePreview from './components/SCLessonFilePreview';
 import SCLessonTemplate from './components/SCLessonTemplate';
@@ -416,6 +418,8 @@ const theme = {
     SCLessonCommentObjects,
     SCCourseCompletedDialog,
     SCLeaderboardInfoWidget,
+    SCLeaderboardPositionWidget,
+    SCLeaderboardWidget,
     SCLessonEditForm,
     SCLessonFilePreview,
     SCLessonTemplate,

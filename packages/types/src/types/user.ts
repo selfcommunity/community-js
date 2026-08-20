@@ -368,7 +368,7 @@ interface LeaderboardUser {
   deleted: boolean;
 }
 
-interface LeaderboardEntry {
+export interface SCLeaderboardEntry {
   position: number;
   total_score: number;
   user: LeaderboardUser;
@@ -381,18 +381,18 @@ interface LeaderboardEntry {
  * pagination information, and the list of leaderboard entries.
  *
  * Properties:
- * - `my_position` (LeaderboardEntry): The entry representing the current user's position in the leaderboard.
+ * - `my_position` (SCLeaderboardEntry): The entry representing the current user's position in the leaderboard.
  * - `count` (number): The total number of entries available in the leaderboard.
  * - `next` (string | null): The URL for the next page of results, or null if there is no next page.
  * - `previous` (string | null): The URL for the previous page of results, or null if there is no previous page.
- * - `results` (LeaderboardEntry[]): An array of leaderboard entries containing details for each position.
+ * - `results` (SCLeaderboardEntry[]): An array of leaderboard entries containing details for each position.
  */
 export interface SCUserLeaderboardType {
-  my_position: LeaderboardEntry;
+  my_position: SCLeaderboardEntry;
   count: number;
   next: string | null;
   previous: string | null;
-  results: LeaderboardEntry[];
+  results: SCLeaderboardEntry[];
 }
 
 export enum SCUserReputationType {

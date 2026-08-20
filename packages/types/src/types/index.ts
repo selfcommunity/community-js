@@ -25,7 +25,8 @@ import {
   SCUserStatus,
   type SCUserType,
   type SCUserProviderAssociationType,
-  type SCUserLeaderboardType
+  type SCUserLeaderboardType,
+  type SCLeaderboardEntry
 } from './user';
 import {type SCTagType} from './tag';
 import {type SCCategoryAudienceType, type SCCategoryFollowedStatusType, type SCCategoryType, SCCategoryAutoFollowType} from './category';
@@ -212,6 +213,7 @@ export {
   type SCUserEmailTokenType,
   type SCUserProviderAssociationType,
   type SCUserLeaderboardType,
+  type SCLeaderboardEntry,
   SCMetadataTypeFieldType,
   type SCMetadataType,
   type SCTagType,
