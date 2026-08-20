@@ -1,7 +1,7 @@
 import {apiRequest} from '../../utils/apiRequest';
 import Endpoints from '../../constants/Endpoints';
-import {SCUserScoreType} from '@selfcommunity/types';
-import {ScoreParams, SCPaginatedResponse, UserScoreParams} from '../../types';
+import {SCUserLeaderboardType, SCUserScoreType} from '@selfcommunity/types';
+import {ScoreParams, SCPaginatedResponse, UserScoreParams, LeaderboardParams} from '../../types';
 import {AxiosRequestConfig} from 'axios';
 import {urlParams} from '../../utils/url';
 
@@ -43,6 +43,18 @@ export class ScoreApiClient {
   static addScore(data: UserScoreParams, config?: AxiosRequestConfig): Promise<SCUserScoreType> {
     return apiRequest({...config, url: Endpoints.AddScore.url({}), method: Endpoints.AddScore.method, data: data});
   }
+
+  /**
+   * Fetches a list of user leaderboards based on the provided parameters.
+   *
+   * @param {LeaderboardParams} [params] - Optional query parameters for filtering and pagination of the leaderboards.
+   * @param {AxiosRequestConfig} [config] - Optional Axios request configuration object for customizing the API request.
+   * @return {Promise<SCUserLeaderboardType>} A promise that resolves to a paginated response containing the user leaderboard data.
+   */
+  static getLeaderboards(params?: LeaderboardParams, config?: AxiosRequestConfig): Promise<SCUserLeaderboardType> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.GetLeaderboards.url({})}?${p.toString()}`, method: Endpoints.GetLeaderboards.method});
+  }
 }
 
 /**
@@ -82,5 +94,8 @@ export default class ScoreService {
   }
   static async addScore(data: UserScoreParams, config?: AxiosRequestConfig): Promise<SCUserScoreType> {
     return ScoreApiClient.addScore(data, config);
+  }
+  static async getLeaderboards(params?: LeaderboardParams, config?: AxiosRequestConfig): Promise<SCUserLeaderboardType> {
+    return ScoreApiClient.getLeaderboards(params, config);
   }
 }
