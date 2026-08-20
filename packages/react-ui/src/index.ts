@@ -101,6 +101,7 @@ import IncubatorSubscribeButton, {IncubatorSubscribeButtonProps} from './compone
 import IncubatorSuggestionWidget, {IncubatorSuggestionWidgetProps} from './components/IncubatorSuggestionWidget';
 import InlineComposerWidget, {InlineComposerWidgetProps, InlineComposerWidgetSkeleton} from './components/InlineComposerWidget';
 import InviteUserEventButton, {InviteUserEventButtonProps} from './components/InviteUserEventButton';
+import LeaderboardInfoWidget, {LeaderboardInfoWidgetProps} from './components/LeaderboardInfoWidget';
 import LessonAppbar, {LessonAppbarProps} from './components/LessonAppbar';
 import LessonDrawer, {LessonDrawerProps} from './components/LessonDrawer';
 import LessonEditForm, {LessonEditFormProps} from './components/LessonEditForm';
@@ -593,6 +594,8 @@ export {
   InlineComposerWidgetProps,
   InlineComposerWidgetSkeleton,
   InviteUserEventButton,
+  LeaderboardInfoWidget,
+  LeaderboardInfoWidgetProps,
   LessonAppbar,
   LessonAppbarProps,
   LessonDrawer,
