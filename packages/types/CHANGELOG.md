@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.2.6...@selfcommunity/types@1.3.0-alpha.0) (2026-08-20)
+
+
+### Features
+
+* added new preference leaderboards_enabled and related endpoint, service, type. ([6ff96c5](https://github.com/selfcommunity/community-js/commit/6ff96c532b0140cf2952d3a2677afc434d77d4e8))
+
+
+
+
+
 ## [1.2.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/types@1.2.6-alpha.1...@selfcommunity/types@1.2.6) (2026-07-28)
 
 **Note:** Version bump only for package @selfcommunity/types
