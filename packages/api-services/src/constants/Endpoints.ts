@@ -1172,7 +1172,7 @@ const Endpoints: {[key: string]: EndpointType} = {
     method: 'POST'
   },
   GetLeaderboards: {
-    url: urlReplacer('/api/v2/score/leaderboard'),
+    url: urlReplacer('/api/v2/score/leaderboard/'),
     method: 'GET'
   },
   /**
