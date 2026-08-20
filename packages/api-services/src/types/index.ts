@@ -141,5 +141,5 @@ export {
   CheckoutSessionParams,
   CheckoutCreateSessionParams,
   PaymentOrderParams,
-	ContactUsRequestParams
+  ContactUsRequestParams
 };
