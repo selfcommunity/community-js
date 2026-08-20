@@ -181,7 +181,8 @@ export enum SCPreferenceName {
   CONTACT_API_ENABLED = 'contact_api_enabled',
   ACCEPTED_MEDIA_MIMETYPES = 'accepted_media_mimetypes',
   SIGNUP_USERNAME_NAME_SURNAME_ENABLED = 'signup_username_name_surname_enabled',
-  EMAIL_PASSWORD_LOGIN_ENABLED = 'email_password_login_enabled'
+  EMAIL_PASSWORD_LOGIN_ENABLED = 'email_password_login_enabled',
+  LEADERBOARDS_ENABLED = 'leaderboards_enabled'
 }
 
 /**

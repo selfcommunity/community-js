@@ -52,6 +52,28 @@ export interface UserScoreParams {
   user: number;
 }
 
+/**
+ * interface LeaderboardParams
+ */
+export interface LeaderboardParams extends BaseGetParams {
+  /**
+   * Represents the starting timestamp or date from which a reputation-related event or status is considered.
+   * This property is optional and may not always be present.
+   * Expected to be in string format, typically representing a valid date or datetime.
+   */
+  reputed_at_from?: string;
+  /**
+   * An optional property representing the timestamp or date string to which
+   * the "reputed at" status is applicable. Typically used to denote an end time
+   * or boundary in contexts where a reputation or status is evaluated over a period.
+   */
+  reputed_at_to?: string;
+  /**
+   * Filter the results based on tag or campaign
+   */
+  search_reputation_context?: string;
+}
+
 export interface UserGetParams extends BaseGetParams {
   mutual?: number;
 }
