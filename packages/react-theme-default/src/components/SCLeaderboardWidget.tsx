@@ -28,10 +28,14 @@ const Component = {
         order: 3
       },
       '& .SCLeaderboardWidget-podium-crown': {
+        position: 'absolute',
+        top: -28,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 1,
         display: 'inline-block',
-        width: 24,
-        height: 24,
-        marginBottom: theme.spacing(0.5),
+        width: 38,
+        height: 38,
         backgroundColor: theme.palette.primary.main,
         maskRepeat: 'no-repeat',
         maskPosition: 'center',
@@ -74,7 +78,11 @@ const Component = {
         border: `2px solid ${theme.palette.background.paper}`
       },
       '& .SCLeaderboardWidget-podium-name': {
-        textAlign: 'center'
+        width: '100%',
+        textAlign: 'center',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
       },
       '& .SCLeaderboardWidget-podium-score': {
         color: theme.palette.text.secondary
@@ -87,10 +95,16 @@ const Component = {
       },
       '& .SCLeaderboardWidget-ranking-item': {
         padding: theme.spacing(1, 1.5),
-        borderRadius: theme.shape.borderRadius
+        borderRadius: 12,
+        backgroundColor: theme.palette.background.paper,
+        boxShadow: `0px 2px 8px ${alpha(theme.palette.common.black, 0.08)}`
       },
       '& .SCLeaderboardWidget-ranking-item-active': {
-        backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity)
+        backgroundColor: theme.palette.primary.main,
+        boxShadow: `0px 4px 12px ${alpha(theme.palette.primary.main, 0.35)}`,
+        '& .SCLeaderboardWidget-ranking-position, & .SCLeaderboardWidget-ranking-name, & .SCLeaderboardWidget-ranking-score': {
+          color: theme.palette.primary.contrastText
+        }
       },
       '& .SCLeaderboardWidget-ranking-position': {
         width: 16,

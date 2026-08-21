@@ -66,6 +66,14 @@ export const AnnualPodium: StoryObj<typeof LeaderboardWidget> = {
 export const Loading: StoryObj<typeof LeaderboardWidget> = {
   render: template,
   args: {
+    entries: [],
     isLoading: true
+  }
+};
+
+export const FullAutoFetch: StoryObj<typeof LeaderboardWidget> = {
+  render: template,
+  args: {
+    mode: 'full'
   }
 };
