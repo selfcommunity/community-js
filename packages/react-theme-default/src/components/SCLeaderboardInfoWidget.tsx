@@ -1,6 +1,9 @@
 const Component = {
   styleOverrides: {
     root: ({theme}: any) => ({
+      '& .SCLeaderboardInfoWidget-title': {
+        fontWeight: theme.typography.fontWeightBold
+      },
       '& .SCLeaderboardInfoWidget-item-icon': {
         backgroundColor: theme.palette.action.hover
       },
