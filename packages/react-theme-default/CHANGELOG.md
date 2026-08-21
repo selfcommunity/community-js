@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.14-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.14-alpha.1...@selfcommunity/react-theme-default@1.2.14-alpha.2) (2026-08-21)
+
+
+### Bug Fixes
+
+* fixed leaderboard widget styles ([0d8f6bd](https://github.com/selfcommunity/community-js/commit/0d8f6bdcf506db5b20214fee0c56c02c533b0d77))
+
+
+
+
+
 ## [1.2.14-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-theme-default@1.2.14-alpha.0...@selfcommunity/react-theme-default@1.2.14-alpha.1) (2026-08-21)
 
 
