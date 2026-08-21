@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.14-alpha.2...@selfcommunity/react-ui@1.3.0-alpha.0) (2026-08-21)
+
+
+### Features
+
+* added getPeriodRange util and leaderboard period params ([14d8655](https://github.com/selfcommunity/community-js/commit/14d8655a49fdd7273f1977846422ea292c9e703e))
+
+
+
+
+
 ## [1.2.14-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.14-alpha.1...@selfcommunity/react-ui@1.2.14-alpha.2) (2026-08-21)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
