@@ -5,7 +5,7 @@ const Component = {
     root: ({theme}: any) => ({
       borderRadius: theme.shape.borderRadius * 2,
       '& .SCLeaderboardWidget-podium-header': {
-        marginBottom: theme.spacing(2)
+        marginBottom: theme.spacing(4)
       },
       '& .SCLeaderboardWidget-podium-title': {
         fontWeight: theme.typography.fontWeightBold
