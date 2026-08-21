@@ -310,6 +310,7 @@ import {generateRoomId, randomString, decodePassphrase, encodePassphrase} from '
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
 import {getDefaultLocale, getDefaultPaymentMethodConfiguration, getDefaultAppearanceStyle, getConvertedAmount} from './utils/payment';
 import {getUrlLesson} from './utils/course';
+import {getPeriodRange, LeaderboardPeriod} from '@selfcommunity/utils';
 /**
  * Import Assets
  */
@@ -605,6 +606,8 @@ export {
   LeaderboardWidgetProps,
   LeaderboardWidgetSkeleton,
   LeaderboardWidgetVariant,
+  LeaderboardPeriod,
+  getPeriodRange,
   LessonAppbar,
   LessonAppbarProps,
   LessonDrawer,

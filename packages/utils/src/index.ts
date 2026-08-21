@@ -19,6 +19,7 @@ import LRUCache, {LruCache, LruCacheType, CacheStrategies} from './utils/cache';
 import {Logger} from './utils/logger';
 import WSClient, {WSClientType, WSClientPropTypes} from './utils/websocket';
 import {resizeImage} from './utils/image';
+import {getPeriodRange, LeaderboardPeriod} from './utils/leaderboard';
 
 /**
  * Export utilities
@@ -65,5 +66,7 @@ export {
   LruCacheType,
   CacheStrategies,
   resizeImage,
-  isPWA
+  isPWA,
+  getPeriodRange,
+  LeaderboardPeriod
 };

@@ -9,7 +9,7 @@ import crownIcon from '../../assets/leaderboard/crown';
 import {SCPreferences, SCUserContext, SCUserContextType, useIsComponentMountedRef, useSCPreferenceEnabled} from '@selfcommunity/react-core';
 import {ScoreService} from '@selfcommunity/api-services';
 import {SCLeaderboardEntry, SCUserLeaderboardType} from '@selfcommunity/types';
-import {Logger} from '@selfcommunity/utils';
+import {getPeriodRange, LeaderboardPeriod, Logger} from '@selfcommunity/utils';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import LeaderboardWidgetSkeleton from './Skeleton';
@@ -47,7 +47,7 @@ const Root = styled(Widget, {
 
 export type LeaderboardWidgetVariant = 'full' | 'podium';
 
-export type LeaderboardWidgetPeriod = 'week' | 'month' | 'year';
+export type LeaderboardWidgetPeriod = LeaderboardPeriod;
 
 export interface LeaderboardWidgetProps extends WidgetProps {
   /**
@@ -149,7 +149,7 @@ export default function LeaderboardWidget(inProps: LeaderboardWidgetProps): JSX.
       return;
     }
     setIsFetching(true);
-    ScoreService.getLeaderboards({limit: RANKING_LIMIT})
+    ScoreService.getLeaderboards({limit: RANKING_LIMIT, ...getPeriodRange(period)})
       .then((data: SCUserLeaderboardType) => {
         if (isMountedRef.current) {
           setFetchedEntries(data.results);
