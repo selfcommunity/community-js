@@ -1,4 +1,4 @@
-import {useContext} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {Avatar, Box, CardContent, Stack, Typography, styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
@@ -6,10 +6,15 @@ import Widget, {WidgetProps} from '../Widget';
 import {useThemeProps} from '@mui/system';
 import {PREFIX} from './constants';
 import crownIcon from '../../assets/leaderboard/crown';
-import {SCPreferences, SCUserContext, SCUserContextType, useSCPreferenceEnabled} from '@selfcommunity/react-core';
-import {SCLeaderboardEntry} from '@selfcommunity/types';
+import {SCPreferences, SCUserContext, SCUserContextType, useIsComponentMountedRef, useSCPreferenceEnabled} from '@selfcommunity/react-core';
+import {ScoreService} from '@selfcommunity/api-services';
+import {SCLeaderboardEntry, SCUserLeaderboardType} from '@selfcommunity/types';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import LeaderboardWidgetSkeleton from './Skeleton';
+
+const RANKING_LIMIT = 5;
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -77,7 +82,8 @@ export interface LeaderboardWidgetProps extends WidgetProps {
  *
  *
  * This component renders a widget showing the top 3 users of the leaderboard for the given period (podium) and, optionally, the general ranking list.
- * Leaderboard entries are provided via the `entries` prop; this component does not fetch any data on its own.
+ * Leaderboard entries can be provided via the `entries` prop; if `mode` is `full` and no `entries` are provided, the component fetches the general
+ * ranking on its own.
  * The widget is hidden if the leaderboard feature is disabled or no podium data is available.
 
  #### Import
@@ -124,13 +130,42 @@ export default function LeaderboardWidget(inProps: LeaderboardWidgetProps): JSX.
     props: inProps,
     name: PREFIX
   });
-  const {className, mode = 'full', period = 'month', entries = [], isLoading = true, onSeeMoreClick, ...rest} = props;
+  const {className, mode = 'full', period = 'month', entries: entriesProp, isLoading: isLoadingProp = true, onSeeMoreClick, ...rest} = props;
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
 
   // PREFERENCES
   const leaderboardsEnabled = useSCPreferenceEnabled(SCPreferences.CONFIGURATIONS_LEADERBOARDS_ENABLED);
+
+  // Self-fetches the leaderboard data when running in `full` mode and no entries are provided by the parent
+  const shouldFetch = mode === 'full' && !entriesProp;
+  const [fetchedEntries, setFetchedEntries] = useState<SCLeaderboardEntry[]>([]);
+  const [isFetching, setIsFetching] = useState<boolean>(shouldFetch);
+  const isMountedRef = useIsComponentMountedRef();
+
+  useEffect(() => {
+    if (!shouldFetch) {
+      return;
+    }
+    setIsFetching(true);
+    ScoreService.getLeaderboards({limit: RANKING_LIMIT})
+      .then((data: SCUserLeaderboardType) => {
+        if (isMountedRef.current) {
+          setFetchedEntries(data.results);
+          setIsFetching(false);
+        }
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+        if (isMountedRef.current) {
+          setIsFetching(false);
+        }
+      });
+  }, [shouldFetch, period]);
+
+  const entries = shouldFetch ? fetchedEntries : entriesProp || [];
+  const isLoading = shouldFetch ? isFetching : isLoadingProp;
 
   /**
    * Renders nothing if the leaderboard feature is disabled
@@ -166,14 +201,14 @@ export default function LeaderboardWidget(inProps: LeaderboardWidgetProps): JSX.
         <Stack direction="row" justifyContent="center" alignItems="flex-end" className={classes.podium}>
           {podium.map((entry) => (
             <Stack key={entry.user.id} alignItems="center" className={classNames(classes.podiumItem, `${classes.podiumItem}-${entry.position}`)}>
-              {entry.position === 1 && (
-                <Box
-                  component="span"
-                  className={classes.podiumCrown}
-                  style={{maskImage: `url(${crownIcon})`, WebkitMaskImage: `url(${crownIcon})`}}
-                />
-              )}
               <Box className={classes.podiumAvatarWrap}>
+                {entry.position === 1 && (
+                  <Box
+                    component="span"
+                    className={classes.podiumCrown}
+                    style={{maskImage: `url(${crownIcon})`, WebkitMaskImage: `url(${crownIcon})`}}
+                  />
+                )}
                 <Avatar alt={entry.user.username} src={entry.user.avatar} className={classes.podiumAvatar} />
                 <Box component="span" className={classes.podiumBadge}>
                   {entry.position}
@@ -199,9 +234,9 @@ export default function LeaderboardWidget(inProps: LeaderboardWidgetProps): JSX.
                 <FormattedMessage id="ui.leaderboardWidget.ranking.title" defaultMessage="ui.leaderboardWidget.ranking.title" />
               </Typography>
             </Stack>
-            <Stack className={classes.rankingList}>
+            <Stack spacing={1} className={classes.rankingList}>
               {entries.map((entry) => {
-                const isMe = Boolean(scUserContext.user) && entry.user.id === scUserContext.user.id;
+                const isMe = Boolean(scUserContext.user) && entry.user.id === scUserContext.user.id && entry.position <= RANKING_LIMIT;
                 return (
                   <Stack
                     key={entry.user.id}
