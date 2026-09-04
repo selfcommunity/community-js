@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.14-alpha.4](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.1.14-alpha.3...@selfcommunity/react-templates@1.1.14-alpha.4) (2026-09-04)
+
+
+### Performance Improvements
+
+* added leaderboard to user profile ([8b7cbf8](https://github.com/selfcommunity/community-js/commit/8b7cbf878483ed50c2d7b923c867454b296867c0))
+
+
+
+
+
 ## [1.1.14-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-templates@1.1.14-alpha.2...@selfcommunity/react-templates@1.1.14-alpha.3) (2026-08-21)
 
 **Note:** Version bump only for package @selfcommunity/react-templates
