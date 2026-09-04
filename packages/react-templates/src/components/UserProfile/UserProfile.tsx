@@ -4,6 +4,7 @@ import {
   ConnectionUserButton,
   FeedObjectProps,
   FeedSidebarProps,
+  LeaderboardPositionWidget,
   LoyaltyProgramWidget,
   SCFeedWidgetType,
   TagChip,
@@ -33,7 +34,8 @@ import {
   useSCPreferences,
   useSCRouting,
   useSCUser,
-  useSCFetchUserBlockedBy
+  useSCFetchUserBlockedBy,
+  useSCPreferenceEnabled
 } from '@selfcommunity/react-core';
 import {SCFeatureName, SCUserType} from '@selfcommunity/types';
 import UserProfileSkeleton from './Skeleton';
@@ -200,6 +202,13 @@ const WIDGETS_FOLLOWERS_MY_PROFILE = [
     component: LoyaltyProgramWidget,
     componentProps: {},
     column: 'right',
+    position: -2
+  },
+  {
+    type: 'widget',
+    component: LeaderboardPositionWidget,
+    componentProps: {},
+    column: 'right',
     position: -1
   }
 ];
@@ -239,6 +248,13 @@ const WIDGETS_CONNECTIONS_MY_PROFILE = [
   {
     type: 'widget',
     component: LoyaltyProgramWidget,
+    componentProps: {},
+    column: 'right',
+    position: -2
+  },
+  {
+    type: 'widget',
+    component: LeaderboardPositionWidget,
     componentProps: {},
     column: 'right',
     position: -1
@@ -346,6 +362,7 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
       scPreferencesContext.preferences[SCPreferences.ADDONS_PRIVATE_MESSAGES_ENABLED].value,
     [scPreferencesContext.preferences]
   );
+  const leaderboardsEnabled = useSCPreferenceEnabled(SCPreferences.CONFIGURATIONS_LEADERBOARDS_ENABLED);
 
   const _widgets = useMemo(() => {
     if (widgets !== null) {
@@ -364,8 +381,14 @@ export default function UserProfile(inProps: UserProfileProps): JSX.Element {
     } else {
       _widgets = [...WIDGETS_CONNECTIONS];
     }
-    return _widgets.map((w) => ({...w, componentProps: {...w.componentProps, userId: scUser.id}}));
-  }, [widgets, followEnabled, scUserContext?.user, scUser]);
+    return _widgets
+      .filter((w) => w.component !== LeaderboardPositionWidget || leaderboardsEnabled)
+      .map((w) =>
+        w.component === LeaderboardPositionWidget
+          ? {...w, componentProps: {...w.componentProps, to: scRoutingContext.url(SCRoutes.LEADERBOARD_ROUTE_NAME, {})}}
+          : {...w, componentProps: {...w.componentProps, userId: scUser.id}}
+      );
+  }, [widgets, followEnabled, leaderboardsEnabled, scUserContext?.user, scUser, scRoutingContext]);
 
   /**
    * Check if the authenticated user is connected (follow/friend) to the profile user
