@@ -101,6 +101,9 @@ import IncubatorSubscribeButton, {IncubatorSubscribeButtonProps} from './compone
 import IncubatorSuggestionWidget, {IncubatorSuggestionWidgetProps} from './components/IncubatorSuggestionWidget';
 import InlineComposerWidget, {InlineComposerWidgetProps, InlineComposerWidgetSkeleton} from './components/InlineComposerWidget';
 import InviteUserEventButton, {InviteUserEventButtonProps} from './components/InviteUserEventButton';
+import LeaderboardInfoWidget, {LeaderboardInfoWidgetProps} from './components/LeaderboardInfoWidget';
+import LeaderboardPositionWidget, {LeaderboardPositionWidgetProps, LeaderboardPositionWidgetSkeleton} from './components/LeaderboardPositionWidget';
+import LeaderboardWidget, {LeaderboardWidgetProps, LeaderboardWidgetSkeleton, LeaderboardWidgetVariant} from './components/LeaderboardWidget';
 import LessonAppbar, {LessonAppbarProps} from './components/LessonAppbar';
 import LessonDrawer, {LessonDrawerProps} from './components/LessonDrawer';
 import LessonEditForm, {LessonEditFormProps} from './components/LessonEditForm';
@@ -307,6 +310,7 @@ import {generateRoomId, randomString, decodePassphrase, encodePassphrase} from '
 import * as MessageUploaderUtils from './utils/thumbnailCoverter';
 import {getDefaultLocale, getDefaultPaymentMethodConfiguration, getDefaultAppearanceStyle, getConvertedAmount} from './utils/payment';
 import {getUrlLesson} from './utils/course';
+import {getPeriodRange, LeaderboardPeriod} from '@selfcommunity/utils';
 /**
  * Import Assets
  */
@@ -593,6 +597,17 @@ export {
   InlineComposerWidgetProps,
   InlineComposerWidgetSkeleton,
   InviteUserEventButton,
+  LeaderboardInfoWidget,
+  LeaderboardInfoWidgetProps,
+  LeaderboardPositionWidget,
+  LeaderboardPositionWidgetProps,
+  LeaderboardPositionWidgetSkeleton,
+  LeaderboardWidget,
+  LeaderboardWidgetProps,
+  LeaderboardWidgetSkeleton,
+  LeaderboardWidgetVariant,
+  LeaderboardPeriod,
+  getPeriodRange,
   LessonAppbar,
   LessonAppbarProps,
   LessonDrawer,

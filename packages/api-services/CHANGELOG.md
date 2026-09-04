@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@1.1.0-alpha.0...@selfcommunity/api-services@1.1.0-alpha.1) (2026-08-21)
+
+**Note:** Version bump only for package @selfcommunity/api-services
+
+
+
+
+
+# [1.1.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@1.0.19...@selfcommunity/api-services@1.1.0-alpha.0) (2026-08-20)
+
+
+### Bug Fixes
+
+* fixed endpoint ([e0bb69e](https://github.com/selfcommunity/community-js/commit/e0bb69e1bb70e46528e722c359fd45fe9fc8a190))
+
+
+### Features
+
+* added new preference leaderboards_enabled and related endpoint, service, type. ([6ff96c5](https://github.com/selfcommunity/community-js/commit/6ff96c532b0140cf2952d3a2677afc434d77d4e8))
+
+
+
+
+
 ## [1.0.19](https://github.com/selfcommunity/community-js/compare/@selfcommunity/api-services@1.0.19-alpha.1...@selfcommunity/api-services@1.0.19) (2026-07-28)
 
 **Note:** Version bump only for package @selfcommunity/api-services

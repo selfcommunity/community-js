@@ -359,6 +359,42 @@ export interface SCUserScoreType {
   comment: string;
 }
 
+interface LeaderboardUser {
+  id: number;
+  username: string;
+  real_name: string;
+  avatar: string;
+  ext_id: string | null;
+  deleted: boolean;
+}
+
+export interface SCLeaderboardEntry {
+  position: number;
+  total_score: number;
+  user: LeaderboardUser;
+}
+
+/**
+ * Represents the structure of user leaderboard data.
+ *
+ * This interface defines the format for leaderboard details, including the user's position,
+ * pagination information, and the list of leaderboard entries.
+ *
+ * Properties:
+ * - `my_position` (SCLeaderboardEntry): The entry representing the current user's position in the leaderboard.
+ * - `count` (number): The total number of entries available in the leaderboard.
+ * - `next` (string | null): The URL for the next page of results, or null if there is no next page.
+ * - `previous` (string | null): The URL for the previous page of results, or null if there is no previous page.
+ * - `results` (SCLeaderboardEntry[]): An array of leaderboard entries containing details for each position.
+ */
+export interface SCUserLeaderboardType {
+  my_position: SCLeaderboardEntry;
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: SCLeaderboardEntry[];
+}
+
 export enum SCUserReputationType {
   GAIN_BY_UPVOTED = 1,
   ASSIGNED_BY_MODERATOR = 10,

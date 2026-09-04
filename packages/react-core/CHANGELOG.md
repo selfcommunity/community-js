@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.3.0-alpha.1...@selfcommunity/react-core@1.3.0-alpha.2) (2026-09-04)
+
+
+### Performance Improvements
+
+* added leaderboard to user profile ([8b7cbf8](https://github.com/selfcommunity/community-js/commit/8b7cbf878483ed50c2d7b923c867454b296867c0))
+
+
+
+
+
+# [1.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.3.0-alpha.0...@selfcommunity/react-core@1.3.0-alpha.1) (2026-08-21)
+
+**Note:** Version bump only for package @selfcommunity/react-core
+
+
+
+
+
+# [1.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.2.6...@selfcommunity/react-core@1.3.0-alpha.0) (2026-08-20)
+
+
+### Features
+
+* added new preference leaderboards_enabled and related endpoint, service, type. ([6ff96c5](https://github.com/selfcommunity/community-js/commit/6ff96c532b0140cf2952d3a2677afc434d77d4e8))
+
+
+
+
+
 ## [1.2.6](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-core@1.2.6-alpha.1...@selfcommunity/react-core@1.2.6) (2026-07-28)
 
 **Note:** Version bump only for package @selfcommunity/react-core

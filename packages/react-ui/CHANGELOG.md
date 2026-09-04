@@ -3,6 +3,55 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.3.0-alpha.0...@selfcommunity/react-ui@1.3.0-alpha.1) (2026-09-04)
+
+
+### Performance Improvements
+
+* added leaderboard to user profile ([8b7cbf8](https://github.com/selfcommunity/community-js/commit/8b7cbf878483ed50c2d7b923c867454b296867c0))
+
+
+
+
+
+# [1.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.14-alpha.2...@selfcommunity/react-ui@1.3.0-alpha.0) (2026-08-21)
+
+
+### Features
+
+* added getPeriodRange util and leaderboard period params ([14d8655](https://github.com/selfcommunity/community-js/commit/14d8655a49fdd7273f1977846422ea292c9e703e))
+
+
+
+
+
+## [1.2.14-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.14-alpha.1...@selfcommunity/react-ui@1.2.14-alpha.2) (2026-08-21)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [1.2.14-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.14-alpha.0...@selfcommunity/react-ui@1.2.14-alpha.1) (2026-08-21)
+
+
+### Bug Fixes
+
+* fixed leaderboard widget ([8d034a7](https://github.com/selfcommunity/community-js/commit/8d034a766c4782ebb87ce9b25842d365e90438e8))
+
+
+
+
+
+## [1.2.14-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.13...@selfcommunity/react-ui@1.2.14-alpha.0) (2026-08-20)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
 ## [1.2.13](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.2.13-alpha.1...@selfcommunity/react-ui@1.2.13) (2026-07-28)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
