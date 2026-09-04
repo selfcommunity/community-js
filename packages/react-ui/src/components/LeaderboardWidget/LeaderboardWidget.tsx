@@ -15,6 +15,7 @@ import HiddenPlaceholder from '../../shared/HiddenPlaceholder';
 import LeaderboardWidgetSkeleton from './Skeleton';
 
 const RANKING_LIMIT = 5;
+const PODIUM_LIMIT = 3;
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -181,7 +182,10 @@ export default function LeaderboardWidget(inProps: LeaderboardWidgetProps): JSX.
     return <LeaderboardWidgetSkeleton mode={mode} />;
   }
 
-  const podium = entries.filter((entry) => entry.position <= 3);
+  // Entries can share the same position: the podium shows only the first one of each of the first three positions, while the ranking list below shows them all
+  const podium = entries
+    .filter((entry, index) => entry.position <= PODIUM_LIMIT && entries.findIndex((e) => e.position === entry.position) === index)
+    .slice(0, PODIUM_LIMIT);
 
   /**
    * Renders nothing if there's no podium data
