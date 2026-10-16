@@ -84,6 +84,8 @@ const messages = defineMessages({
 const classes = {
   root: `${PREFIX}-root`,
   deleted: `${PREFIX}-deleted`,
+  collapsed: `${PREFIX}-collapsed`,
+  collapsedChip: `${PREFIX}-collapsed-chip`,
   header: `${PREFIX}-header`,
   category: `${PREFIX}-category`,
   event: `${PREFIX}-event`,
@@ -319,6 +321,8 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
  |---|---|---|
  |root|.SCFeedObject-root|Styles applied to the root element.|
  |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
+ |collapsed|.SCFeedObject-collapsed|Styles applied to the feed obj when is hidden (visible only for the group manager, admin and moderator).|
+ |collapsedChip|.SCFeedObject-collapsed-chip|Styles applied to the hidden label of the feed obj.|
  |header|.SCFeedObject-header|Styles applied to the header of the card.|
  |category|.SCFeedObject-category|Styles applied to the category element.|
  |event|.SCFeedObject-event|Styles applied to the event element.|
@@ -813,7 +817,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     objElement = (
       <React.Fragment>
         {obj ? (
-          <Box className={classNames({[classes.deleted]: obj && obj.deleted})}>
+          <Box className={classNames({[classes.deleted]: obj && obj.deleted, [classes.collapsed]: obj && obj.collapsed && !obj.deleted})}>
             {obj.categories.length > 0 && (
               <div className={classes.category}>
                 <>
@@ -875,6 +879,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 component={Link}
                 to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
                 clickable
+              />
+            )}
+            {obj.collapsed && !obj.deleted && (
+              <Chip
+                className={classes.collapsedChip}
+                size="small"
+                icon={<Icon>visibility_off</Icon>}
+                label={<FormattedMessage id="ui.feedObject.collapsed" defaultMessage="ui.feedObject.collapsed" />}
               />
             )}
             <CardHeader

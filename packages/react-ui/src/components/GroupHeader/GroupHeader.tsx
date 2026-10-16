@@ -9,7 +9,8 @@ import {
   useSCFetchGroup,
   useSCPaymentsEnabled,
   useSCPreferences,
-  useSCUser
+  useSCUser,
+  GroupUtils
 } from '@selfcommunity/react-core';
 import GroupHeaderSkeleton from './Skeleton';
 import classNames from 'classnames';
@@ -180,10 +181,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
   const updatesSubscription = useRef(null);
 
   // CONST
-  const isGroupAdmin = useMemo(
-    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
-    [scUserContext.user, scGroup?.managed_by?.id]
-  );
+  const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
 
   /**
    * Handles Change Avatar

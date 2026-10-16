@@ -27,6 +27,7 @@ import {
   SCUserContext,
   SCUserContextType,
   UserUtils,
+  GroupUtils,
   useSCContext,
   useSCFetchCommentObject,
   useSCFetchCommentObjects,
@@ -290,6 +291,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   });
   const [openAlert, setOpenAlert] = useState<boolean>(false);
 
+  // CONST
+  const isGroupManager: boolean =
+    Boolean(commentsObject.feedObject?.group) && GroupUtils.isGroupAdmin(commentsObject.feedObject.group, scUserContext.user);
+
   // HANDLERS
   const handleVoteSuccess = (contribution: SCFeedObjectType | SCCommentType) => {
     setObj(contribution as SCCommentType);
@@ -417,7 +422,9 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
    * Handle comment delete
    */
   function handleHide(comment) {
-    updateObject(Object.assign({}, obj, {collapsed: !obj.collapsed}));
+    const _collapsed = !obj.collapsed;
+    updateObject(Object.assign({}, obj, {collapsed: _collapsed}));
+    setCollapsed(_collapsed);
     onCollapsed && onCollapsed(comment);
   }
 
@@ -563,14 +570,22 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                       onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
                       <Typography component="span">{comment.author.username}</Typography>
                     </Link>
-                    {comment.collapsed && (
-                      <Chip
-                        className={classes.flagChip}
-                        color="error"
-                        size="small"
-                        label={<FormattedMessage id="ui.commentObject.flag" defaultMessage="ui.commentObject.flag" />}
-                      />
-                    )}
+                    {comment.collapsed &&
+                      (isGroupManager ? (
+                        <Chip
+                          className={classes.flagChip}
+                          size="small"
+                          icon={<Icon>visibility_off</Icon>}
+                          label={<FormattedMessage id="ui.commentObject.collapsedGroup" defaultMessage="ui.commentObject.collapsedGroup" />}
+                        />
+                      ) : (
+                        <Chip
+                          className={classes.flagChip}
+                          color="error"
+                          size="small"
+                          label={<FormattedMessage id="ui.commentObject.flag" defaultMessage="ui.commentObject.flag" />}
+                        />
+                      ))}
                     <Typography className={classes.textContent} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />
                     {summaryHtmlTruncated && truncateContent && (
                       <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))} className={classes.showMoreContent}>
@@ -582,6 +597,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                     <Box className={classes.commentActionsMenu}>
                       <ContributionActionsMenu
                         commentObject={comment}
+                        group={commentsObject.feedObject?.group}
                         onRestoreContribution={handleRestore}
                         onHideContribution={handleHide}
                         onDeleteContribution={handleDelete}

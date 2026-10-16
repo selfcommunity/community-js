@@ -12,6 +12,8 @@ export interface CommentApiClientInterface {
   updateComment(id: number | string, text: string, config?: AxiosRequestConfig): Promise<SCCommentType>;
   deleteComment(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   restoreComment(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  collapseComment(id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  uncollapseComment(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   getSpecificCommentVotesList(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCVoteType>>;
   upvoteComment(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   getSpecificCommentFlags(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCFlagType>>;
@@ -78,6 +80,26 @@ export class CommentApiClient {
    */
   static restoreComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return apiRequest({...config, url: Endpoints.RestoreComment.url({id}), method: Endpoints.RestoreComment.method});
+  }
+
+  /**
+   * This endpoint hides a comment of a group contribution to the group members.
+   * Available for the group manager and community admins.
+   * @param id
+   * @param config
+   */
+  static collapseComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.CollapseComment.url({id}), method: Endpoints.CollapseComment.method});
+  }
+
+  /**
+   * This endpoint shows again a hidden comment of a group contribution.
+   * Available for the group manager and community admins.
+   * @param id
+   * @param config
+   */
+  static uncollapseComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.UncollapseComment.url({id}), method: Endpoints.UncollapseComment.method});
   }
 
   /**
@@ -181,6 +203,12 @@ export default class CommentService {
   }
   static async restoreComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
     return CommentApiClient.restoreComment(id, config);
+  }
+  static async collapseComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return CommentApiClient.collapseComment(id, config);
+  }
+  static async uncollapseComment(id: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return CommentApiClient.uncollapseComment(id, config);
   }
   static async getSpecificCommentVotesList(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCVoteType>> {
     return CommentApiClient.getSpecificCommentVotesList(id, config);

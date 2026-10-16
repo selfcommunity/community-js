@@ -8,7 +8,8 @@ import {
   useSCContext,
   useSCFetchGroup,
   useSCPaymentsEnabled,
-  useSCUser
+  useSCUser,
+  GroupUtils
 } from '@selfcommunity/react-core';
 import {SCContentType, SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupType, SCUserType} from '@selfcommunity/types';
 import {FormattedMessage} from 'react-intl';
@@ -120,10 +121,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     cacheStrategy: authUserId ? CacheStrategies.CACHE_FIRST : CacheStrategies.STALE_WHILE_REVALIDATE
   });
 
-  const isGroupAdmin = useMemo(
-    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
-    [scUserContext.user, scGroup?.managed_by?.id]
-  );
+  const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
 
   useEffect(() => {
     /**

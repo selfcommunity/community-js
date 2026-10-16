@@ -20,3 +20,5 @@ export const SUSPEND_NOTIFICATION_EVENT = '_suspend_notification_event';
 export const MODERATE_CONTRIBUTION_HIDDEN = '_moderate_contribution_hidden';
 export const MODERATE_CONTRIBUTION_DELETED = '_moderate_contribution_deleted';
 export const DOWNLOAD_CSV = '_download_csv';
+export const COLLAPSE_CONTRIBUTION = '_collapse_contribution';
+export const UNCOLLAPSE_CONTRIBUTION = '_uncollapse_contribution';
