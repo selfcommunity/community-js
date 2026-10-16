@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.3.0-alpha.0...@selfcommunity/react-i18n@1.3.0-alpha.1) (2026-10-16)
+
+
+### Bug Fixes
+
+* fixed hidden comment for group members copy ([2e337f7](https://github.com/selfcommunity/community-js/commit/2e337f7e4f0240b98f0cbc87f926a1987dd1363c))
+
+
+
+
+
 # [1.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.2.14...@selfcommunity/react-i18n@1.3.0-alpha.0) (2026-10-16)
 
 
