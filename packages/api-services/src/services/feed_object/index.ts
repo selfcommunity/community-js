@@ -76,6 +76,8 @@ export interface FeedObjectApiClientInterface {
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>>;
   restoreFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  collapseFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any>;
+  uncollapseFeedObject(type: Exclude<SCContributionType, SCContributionType.COMMENT>, id: number | string, config?: AxiosRequestConfig): Promise<any>;
   relatedFeedObjects(
     type: Exclude<SCContributionType, SCContributionType.COMMENT>,
     id: number | string,
@@ -353,6 +355,36 @@ export class FeedObjectApiClient {
     config?: AxiosRequestConfig
   ): Promise<any> {
     return apiRequest({...config, url: Endpoints.RestoreFeedObject.url({type, id}), method: Endpoints.RestoreFeedObject.method});
+  }
+
+  /**
+   * This endpoint hides a feed obj of a group to its members.
+   * Available for the group manager and community admins.
+   * @param type
+   * @param id
+   * @param config
+   */
+  static collapseFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
+    return apiRequest({...config, url: Endpoints.CollapseFeedObject.url({type, id}), method: Endpoints.CollapseFeedObject.method});
+  }
+
+  /**
+   * This endpoint shows again a hidden feed obj of a group.
+   * Available for the group manager and community admins.
+   * @param type
+   * @param id
+   * @param config
+   */
+  static uncollapseFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
+    return apiRequest({...config, url: Endpoints.UncollapseFeedObject.url({type, id}), method: Endpoints.UncollapseFeedObject.method});
   }
 
   /**
@@ -788,6 +820,22 @@ export default class FeedObjectService {
     config?: AxiosRequestConfig
   ): Promise<any> {
     return FeedObjectApiClient.restoreFeedObject(type, id, config);
+  }
+
+  static async collapseFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
+    return FeedObjectApiClient.collapseFeedObject(type, id, config);
+  }
+
+  static async uncollapseFeedObject(
+    type: Exclude<SCContributionType, SCContributionType.COMMENT>,
+    id: number | string,
+    config?: AxiosRequestConfig
+  ): Promise<any> {
+    return FeedObjectApiClient.uncollapseFeedObject(type, id, config);
   }
 
   static async relatedFeedObjects(

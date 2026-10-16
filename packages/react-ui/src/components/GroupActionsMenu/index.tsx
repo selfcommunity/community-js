@@ -16,7 +16,16 @@ import {
 import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
-import {SCRoutes, SCRoutingContextType, SCThemeType, SCUserContextType, useSCFetchGroup, useSCRouting, useSCUser} from '@selfcommunity/react-core';
+import {
+  SCRoutes,
+  SCRoutingContextType,
+  SCThemeType,
+  SCUserContextType,
+  useSCFetchGroup,
+  useSCRouting,
+  useSCUser,
+  GroupUtils
+} from '@selfcommunity/react-core';
 import ConfirmDialog from '../../shared/ConfirmDialog/ConfirmDialog';
 import {GroupService} from '@selfcommunity/api-services';
 import {SCGroupType} from '@selfcommunity/types';
@@ -129,10 +138,7 @@ export default function GroupActionsMenu(inProps: GroupActionsMenuProps): JSX.El
   const scUserContext: SCUserContextType = useSCUser();
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
 
-  const isGroupAdmin = useMemo(
-    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
-    [scUserContext.user, scGroup?.managed_by?.id]
-  );
+  const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
 
   // HANDLERS
   const handleOpen = (group: React.MouseEvent<HTMLButtonElement>) => {

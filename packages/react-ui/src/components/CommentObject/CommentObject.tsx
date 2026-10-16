@@ -582,6 +582,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                     <Box className={classes.commentActionsMenu}>
                       <ContributionActionsMenu
                         commentObject={comment}
+                        group={commentsObject.feedObject?.group}
                         onRestoreContribution={handleRestore}
                         onHideContribution={handleHide}
                         onDeleteContribution={handleDelete}

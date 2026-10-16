@@ -12,7 +12,8 @@ import {
   SCUserContextType,
   useSCFetchGroup,
   useSCPreferences,
-  useSCUser
+  useSCUser,
+  GroupUtils
 } from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import Skeleton from './Skeleton';
@@ -187,10 +188,7 @@ export default function GroupRequestsWidget(inProps: GroupRequestsWidgetProps): 
   const theme = useTheme<SCThemeType>();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const isGroupAdmin = useMemo(
-    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
-    [scUserContext.user, scGroup?.managed_by?.id]
-  );
+  const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
 
   /**
    * Initialize component

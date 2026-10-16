@@ -154,6 +154,15 @@ const Component = {
           opacity: 1
         }
       },
+      '& .SCFeedObject-collapsed': {
+        opacity: 0.5,
+        '&:hover': {
+          opacity: 1
+        }
+      },
+      '& .SCFeedObject-collapsed-chip': {
+        margin: theme.spacing(1, 2, 0)
+      },
       '& .SCFeedObject-new': {
         color: theme.palette.common.white,
         backgroundColor: '#fa0501',
