@@ -153,6 +153,7 @@
   "ui.changePicture.info": "<ul><li>Allowed formats: gif, png, jpg, jpeg</li><li>Maximum size: 3 MB: 3 MB</li></ul>",
   "ui.changePicture.title": "Change Profile Image",
   "ui.commentObject.collapsed": "Hidden Comment",
+  "ui.commentObject.collapsedGroup": "Hidden from group members",
   "ui.commentObject.flag": "Reported by the community",
   "ui.commentObject.reply": "Reply",
   "ui.commentObject.replyComment.cancel": "Cancel",
