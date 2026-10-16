@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.2.14...@selfcommunity/react-i18n@1.3.0-alpha.0) (2026-10-16)
+
+
+### Features
+
+* added group manager direct add and content moderation ([6db622d](https://github.com/selfcommunity/community-js/commit/6db622d3e5e75d4ed2080ccd09bd3c2d71b128f9))
+
+
+
+
+
 ## [1.2.14](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.2.14-alpha.1...@selfcommunity/react-i18n@1.2.14) (2026-09-04)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n

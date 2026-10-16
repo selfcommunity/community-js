@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.3.0...@selfcommunity/react-ui@1.4.0-alpha.0) (2026-10-16)
+
+
+### Features
+
+* added group manager direct add and content moderation ([6db622d](https://github.com/selfcommunity/community-js/commit/6db622d3e5e75d4ed2080ccd09bd3c2d71b128f9))
+
+
+
+
+
 # [1.3.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.3.0-alpha.2...@selfcommunity/react-ui@1.3.0) (2026-09-04)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
