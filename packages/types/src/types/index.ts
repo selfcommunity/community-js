@@ -126,7 +126,7 @@ import {
   type SCDeviceGcmTypeEnum,
   SCDeviceTypeEnum
 } from './device';
-import {type SCGroupType, SCGroupPrivacyType, SCGroupSubscriptionStatusType} from './group';
+import {type SCGroupType, SCGroupPrivacyType, SCGroupSubscriptionStatusType, SCGroupMembershipModeType} from './group';
 import {
   type SCEventType,
   SCEventPrivacyType,
@@ -340,6 +340,7 @@ export {
   type SCGroupType,
   SCGroupPrivacyType,
   SCGroupSubscriptionStatusType,
+  SCGroupMembershipModeType,
   type SCEventType,
   SCEventPrivacyType,
   SCEventSubscriptionStatusType,

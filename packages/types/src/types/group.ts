@@ -23,6 +23,15 @@ export enum SCGroupSubscriptionStatusType {
   PAYMENT_WAITING = 'payment_waiting'
 }
 
+/**
+ * SCGroupMembershipModeType enum
+ * Community preference `configurations.groups_membership_mode`
+ */
+export enum SCGroupMembershipModeType {
+  INVITE = 'invite',
+  ADD = 'add'
+}
+
 export interface SCGroupType extends SCPurchasableContent {
   /**
    * The ID of the group.
