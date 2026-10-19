@@ -301,10 +301,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   let popperRef = useRef(null);
   const contributionGroup: SCGroupType = feedObj?.group ?? group;
   const isGroupManager: boolean = Boolean(contributionGroup) && GroupUtils.isGroupAdmin(contributionGroup, scUserContext.user);
-  // The author of a hidden group contribution (feed obj or comment) must not know it is hidden
+  // The author of a hidden contribution (feed obj or comment) must not know it is hidden
   const canViewCollapsed: boolean = UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user) || isGroupManager;
-  const showCollapsedIcon: boolean =
-    Boolean(contributionObj?.collapsed) && (canViewCollapsed || !(Boolean(contributionGroup) && scUserId === contributionObj.author.id));
+  const showCollapsedIcon: boolean = Boolean(contributionObj?.collapsed) && (canViewCollapsed || scUserId !== contributionObj.author.id);
   const scheduledPostsEnabled = useMemo(
     () =>
       preferences &&
