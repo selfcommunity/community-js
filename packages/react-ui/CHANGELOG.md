@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0-alpha.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.4.0-alpha.2...@selfcommunity/react-ui@1.4.0-alpha.3) (2026-10-19)
+
+
+### Bug Fixes
+
+* contribution actions menu items are clickable on the whole row ([1ed5c65](https://github.com/selfcommunity/community-js/commit/1ed5c65bf729a907aaa55df88aeae6b68080455a))
+* exported missing types ([0373f5e](https://github.com/selfcommunity/community-js/commit/0373f5ef6e4ecc5e6ce2c568bdbd1663bb4e611e))
+* moderator can restore a group content hidden by the group manager ([c6ffe8b](https://github.com/selfcommunity/community-js/commit/c6ffe8b812e50b94e2d730a71efd4aaec2a760e1))
+* show direct add labels in group creation when membership mode is add ([1c40bc6](https://github.com/selfcommunity/community-js/commit/1c40bc64f4da954adee8b4eb4b152af755b6d0b4))
+
+
+
+
+
 # [1.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.4.0-alpha.1...@selfcommunity/react-ui@1.4.0-alpha.2) (2026-10-19)
 
 
