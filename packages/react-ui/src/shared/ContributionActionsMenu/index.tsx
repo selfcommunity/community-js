@@ -1019,9 +1019,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     let value = section === FLAG_CONTRIBUTION_SECTION ? flagType : section === HIDE_CONTRIBUTION_SECTION ? hideType : deleteType;
     return REPORTS.map((report, index) => {
       return (
-        <MenuItem key={`${section}_${index}`} className={classes.subItem} disabled={isFlagging}>
+        <MenuItem key={`${section}_${index}`} className={classes.subItem} disabled={isFlagging} onClick={() => handlerFunc(report)}>
           <ListItemIcon classes={{root: classes.selectedIcon}}>{value === report && <Icon color="secondary">check</Icon>}</ListItemIcon>
-          <ListItemText primary={getReportName(report)} onClick={() => handlerFunc(report)} classes={{root: classes.subItemText}} />
+          <ListItemText primary={getReportName(report)} classes={{root: classes.subItemText}} />
         </MenuItem>
       );
     });
@@ -1276,18 +1276,17 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   function renderGeneralSection() {
     return (
       <Box key={GENERAL_SECTION}>
-        <MenuItem className={classes.subItem} disabled={isFlagging}>
+        <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleAction(GET_CONTRIBUTION_PERMALINK)}>
           <ListItemIcon>
             <Icon>link</Icon>
           </ListItemIcon>
           <ListItemText
             primary={<FormattedMessage id="ui.contributionActionMenu.permanentLink" defaultMessage="ui.contributionActionMenu.permanentLink" />}
-            onClick={() => handleAction(GET_CONTRIBUTION_PERMALINK)}
             classes={{root: classes.itemText}}
           />
         </MenuItem>
         {canModifyContribution() && (
-          <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleAction(EDIT_CONTRIBUTION)}>
             <ListItemIcon>
               <Icon>edit</Icon>
             </ListItemIcon>
@@ -1295,13 +1294,15 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               primary={
                 <FormattedMessage id="ui.contributionActionMenu.editContribution" defaultMessage="ui.contributionActionMenu.editContribution" />
               }
-              onClick={() => handleAction(EDIT_CONTRIBUTION)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
         )}
         {canDeleteContribution() && (
-          <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <MenuItem
+            className={classes.subItem}
+            disabled={isFlagging}
+            onClick={() => handleAction(contributionObj.deleted ? RESTORE_CONTRIBUTION : DELETE_CONTRIBUTION)}>
             <ListItemIcon>
               {currentActionLoading === DELETE_CONTRIBUTION || currentActionLoading === RESTORE_CONTRIBUTION ? (
                 <CircularProgress size={20} />
@@ -1317,7 +1318,6 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                     defaultMessage="ui.contributionActionMenu.restoreContribution"
                   />
                 }
-                onClick={() => handleAction(RESTORE_CONTRIBUTION)}
                 classes={{root: classes.itemText}}
               />
             ) : (
@@ -1325,14 +1325,16 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                 primary={
                   <FormattedMessage id="ui.contributionActionMenu.deleteContribution" defaultMessage="ui.contributionActionMenu.deleteContribution" />
                 }
-                onClick={() => handleAction(DELETE_CONTRIBUTION)}
                 classes={{root: classes.itemText}}
               />
             )}
           </MenuItem>
         )}
         {canCollapseContribution() && (
-          <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <MenuItem
+            className={classes.subItem}
+            disabled={isFlagging}
+            onClick={() => handleAction(contributionObj.collapsed ? UNCOLLAPSE_CONTRIBUTION : COLLAPSE_CONTRIBUTION)}>
             <ListItemIcon>
               {currentActionLoading === COLLAPSE_CONTRIBUTION || currentActionLoading === UNCOLLAPSE_CONTRIBUTION ? (
                 <CircularProgress size={20} />
@@ -1350,7 +1352,6 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                     defaultMessage="ui.contributionActionMenu.uncollapseContribution"
                   />
                 }
-                onClick={() => handleAction(UNCOLLAPSE_CONTRIBUTION)}
                 classes={{root: classes.itemText}}
               />
             ) : (
@@ -1361,14 +1362,13 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                     defaultMessage="ui.contributionActionMenu.collapseContribution"
                   />
                 }
-                onClick={() => handleAction(COLLAPSE_CONTRIBUTION)}
                 classes={{root: classes.itemText}}
               />
             )}
           </MenuItem>
         )}
         {canPublishContribution() && (
-          <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleAction(PUBLISH_CONTRIBUTION)}>
             <ListItemIcon>
               <Icon>upload</Icon>
             </ListItemIcon>
@@ -1376,13 +1376,12 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               primary={
                 <FormattedMessage id="ui.contributionActionMenu.publishContribution" defaultMessage="ui.contributionActionMenu.publishContribution" />
               }
-              onClick={() => handleAction(PUBLISH_CONTRIBUTION)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
         )}
         {canSuspendNotificationContribution() && (
-          <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleAction(SUSPEND_NOTIFICATION_CONTRIBUTION)}>
             <ListItemIcon>
               {currentActionLoading === SUSPEND_NOTIFICATION_CONTRIBUTION ? (
                 <CircularProgress size={20} />
@@ -1406,13 +1405,12 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   />
                 )
               }
-              onClick={() => handleAction(SUSPEND_NOTIFICATION_CONTRIBUTION)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
         )}
         {canSuspendNotificationEvent() && (
-          <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleAction(SUSPEND_NOTIFICATION_EVENT)}>
             <ListItemIcon>
               {currentActionLoading === SUSPEND_NOTIFICATION_EVENT ? (
                 <CircularProgress size={20} />
@@ -1436,19 +1434,17 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   />
                 )
               }
-              onClick={() => handleAction(SUSPEND_NOTIFICATION_EVENT)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
         )}
         {canDownloadCSV() && (
-          <MenuItem className={classes.subItem}>
+          <MenuItem className={classes.subItem} onClick={() => handleAction(DOWNLOAD_CSV)}>
             <ListItemIcon>
               <Icon>download</Icon>
             </ListItemIcon>
             <ListItemText
               primary={<FormattedMessage id="ui.contributionActionMenu.downloadCSV" defaultMessage="ui.contributionActionMenu.downloadCSV" />}
-              onClick={() => handleAction(DOWNLOAD_CSV)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
