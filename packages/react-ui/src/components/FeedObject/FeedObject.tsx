@@ -43,6 +43,7 @@ import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
 import {
+  GroupUtils,
   Link,
   SCCache,
   SCContextType,
@@ -406,6 +407,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
   const objId = obj ? obj.id : null;
   const [openAlert, setOpenAlert] = useState<boolean>(false);
+  // Contents hidden from group members are visible only to admin, moderator and the manager of the group.
+  // The author keeps seeing the content as a normal one, without knowing it is hidden.
+  const canViewCollapsed: boolean =
+    UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user) || GroupUtils.isGroupAdmin(obj?.group, scUserContext.user);
+  const showCollapsed = Boolean(obj?.group && obj.collapsed && !obj.deleted && canViewCollapsed);
 
   /**
    * Get initial expanded activities type
@@ -817,7 +823,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     objElement = (
       <React.Fragment>
         {obj ? (
-          <Box className={classNames({[classes.deleted]: obj && obj.deleted, [classes.collapsed]: obj && obj.collapsed && !obj.deleted})}>
+          <Box className={classNames({[classes.deleted]: obj && obj.deleted, [classes.collapsed]: showCollapsed})}>
             {obj.categories.length > 0 && (
               <div className={classes.category}>
                 <>
@@ -881,7 +887,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 clickable
               />
             )}
-            {obj.collapsed && !obj.deleted && (
+            {showCollapsed && (
               <Chip
                 className={classes.collapsedChip}
                 size="small"
