@@ -304,8 +304,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   // The author of a hidden group contribution (feed obj or comment) must not know it is hidden
   const canViewCollapsed: boolean = UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user) || isGroupManager;
   const showCollapsedIcon: boolean =
-    Boolean(contributionObj?.collapsed) &&
-    (canViewCollapsed || !(Boolean(contributionGroup) && scUserId === contributionObj.author.id));
+    Boolean(contributionObj?.collapsed) && (canViewCollapsed || !(Boolean(contributionGroup) && scUserId === contributionObj.author.id));
   const scheduledPostsEnabled = useMemo(
     () =>
       preferences &&
@@ -1100,6 +1099,24 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   />
                 </MenuItem>
               </>
+            ) : contributionObj.collapsed && contributionGroup ? (
+              // Contribution hidden by the group manager (no moderation flag type)
+              // the group manager already has the show action
+              !isGroupManager && (
+                <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleAction(UNCOLLAPSE_CONTRIBUTION)}>
+                  <ListItemIcon>
+                    {currentActionLoading === UNCOLLAPSE_CONTRIBUTION ? <CircularProgress size={20} /> : <Icon>restore</Icon>}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <FormattedMessage
+                        id="ui.contributionActionMenu.restoreFromHidden"
+                        defaultMessage="ui.contributionActionMenu.restoreFromHidden"
+                      />
+                    }
+                  />
+                </MenuItem>
+              )
             ) : (
               <>
                 <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleOpenSection(HIDE_CONTRIBUTION_SECTION)}>
