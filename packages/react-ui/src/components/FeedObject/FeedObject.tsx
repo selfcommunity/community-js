@@ -43,6 +43,7 @@ import {CacheStrategies, Logger, LRUCache} from '@selfcommunity/utils';
 import {VirtualScrollerItemProps} from '../../types/virtualScroller';
 import {catchUnauthorizedActionByBlockedUser} from '../../utils/errors';
 import {
+  GroupUtils,
   Link,
   SCCache,
   SCContextType,
@@ -84,6 +85,8 @@ const messages = defineMessages({
 const classes = {
   root: `${PREFIX}-root`,
   deleted: `${PREFIX}-deleted`,
+  collapsed: `${PREFIX}-collapsed`,
+  collapsedChip: `${PREFIX}-collapsed-chip`,
   header: `${PREFIX}-header`,
   category: `${PREFIX}-category`,
   event: `${PREFIX}-event`,
@@ -319,6 +322,8 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
  |---|---|---|
  |root|.SCFeedObject-root|Styles applied to the root element.|
  |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
+ |collapsed|.SCFeedObject-collapsed|Styles applied to the feed obj when is hidden (visible only for the group manager, admin and moderator).|
+ |collapsedChip|.SCFeedObject-collapsed-chip|Styles applied to the hidden label of the feed obj.|
  |header|.SCFeedObject-header|Styles applied to the header of the card.|
  |category|.SCFeedObject-category|Styles applied to the category element.|
  |event|.SCFeedObject-event|Styles applied to the event element.|
@@ -402,6 +407,11 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
   const objId = obj ? obj.id : null;
   const [openAlert, setOpenAlert] = useState<boolean>(false);
+  // Contents hidden from group members are visible only to admin, moderator and the manager of the group.
+  // The author keeps seeing the content as a normal one, without knowing it is hidden.
+  const canViewCollapsed: boolean =
+    UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user) || GroupUtils.isGroupAdmin(obj?.group, scUserContext.user);
+  const showCollapsed = Boolean(obj?.group && obj.collapsed && !obj.deleted && canViewCollapsed);
 
   /**
    * Get initial expanded activities type
@@ -813,7 +823,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
     objElement = (
       <React.Fragment>
         {obj ? (
-          <Box className={classNames({[classes.deleted]: obj && obj.deleted})}>
+          <Box className={classNames({[classes.deleted]: obj && obj.deleted, [classes.collapsed]: showCollapsed})}>
             {obj.categories.length > 0 && (
               <div className={classes.category}>
                 <>
@@ -875,6 +885,14 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 component={Link}
                 to={scRoutingContext.url(SCRoutes.EVENT_ROUTE_NAME, obj.event)}
                 clickable
+              />
+            )}
+            {showCollapsed && (
+              <Chip
+                className={classes.collapsedChip}
+                size="small"
+                icon={<Icon>visibility_off</Icon>}
+                label={<FormattedMessage id="ui.feedObject.collapsed" defaultMessage="ui.feedObject.collapsed" />}
               />
             )}
             <CardHeader

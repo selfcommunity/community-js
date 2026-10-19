@@ -52,13 +52,15 @@ import {
   SCUserContext,
   SCUserContextType,
   UserUtils,
+  GroupUtils,
   useSCFetchCommentObject,
   useSCFetchFeedObject,
   useSCPreferences,
   useSCRouting
 } from '@selfcommunity/react-core';
-import {SCCommentType, SCContributionType, SCFeedObjectType} from '@selfcommunity/types';
+import {SCCommentType, SCContributionType, SCFeedObjectType, SCGroupType} from '@selfcommunity/types';
 import {
+  COLLAPSE_CONTRIBUTION,
   DELETE_CONTRIBUTION,
   DELETE_CONTRIBUTION_SECTION,
   DOWNLOAD_CSV,
@@ -72,7 +74,8 @@ import {
   PUBLISH_CONTRIBUTION,
   RESTORE_CONTRIBUTION,
   SUSPEND_NOTIFICATION_CONTRIBUTION,
-  SUSPEND_NOTIFICATION_EVENT
+  SUSPEND_NOTIFICATION_EVENT,
+  UNCOLLAPSE_CONTRIBUTION
 } from '../../constants/ContributionsActionsMenu';
 
 const PREFIX = 'SCContributionActionsMenu';
@@ -174,6 +177,13 @@ export interface ContributionActionsMenuProps {
   commentObject?: SCCommentType;
 
   /**
+   * Group of the contribution.
+   * Comments do not contain the group: pass the group of the parent contribution
+   * @default null
+   */
+  group?: SCGroupType;
+
+  /**
    * Handle edit obj
    */
   onEditContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
@@ -234,6 +244,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     feedObjectType = SCContributionType.POST,
     commentObjectId,
     commentObject,
+    group,
     onFlagContribution,
     onEditContribution,
     onHideContribution,
@@ -288,6 +299,12 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   // CONST
   const contributionObj: SCFeedObjectType | SCCommentType = commentObj ? commentObj : feedObj;
   let popperRef = useRef(null);
+  const contributionGroup: SCGroupType = feedObj?.group ?? group;
+  const isGroupManager: boolean = Boolean(contributionGroup) && GroupUtils.isGroupAdmin(contributionGroup, scUserContext.user);
+  // The author of a hidden group contribution (feed obj or comment) must not know it is hidden
+  const canViewCollapsed: boolean = UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user) || isGroupManager;
+  const showCollapsedIcon: boolean =
+    Boolean(contributionObj?.collapsed) && (canViewCollapsed || !(Boolean(contributionGroup) && scUserId === contributionObj.author.id));
   const scheduledPostsEnabled = useMemo(
     () =>
       preferences &&
@@ -571,6 +588,33 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   );
 
   /**
+   * Perform collapse/uncollapse contribution (group manager)
+   */
+  const performCollapseContribution = useMemo(
+    () => (collapse: boolean) => {
+      const contributionType: string = contributionObj.type;
+      let endpoint: EndpointType;
+      if (contributionType === SCContributionType.COMMENT) {
+        endpoint = collapse ? Endpoints.CollapseComment : Endpoints.UncollapseComment;
+      } else {
+        endpoint = collapse ? Endpoints.CollapseFeedObject : Endpoints.UncollapseFeedObject;
+      }
+      return http
+        .request({
+          url: endpoint.url({type: contributionType, id: contributionObj.id}),
+          method: endpoint.method
+        })
+        .then((res: HttpResponse<any>) => {
+          if (res.status >= 300) {
+            return Promise.reject(res);
+          }
+          return Promise.resolve(res.data);
+        });
+    },
+    [contributionObj]
+  );
+
+  /**
    * Perform publish contribution
    */
   const performPublishContribution = useMemo(
@@ -707,7 +751,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   function handleAction(action) {
     if (
       UserUtils.isBlocked(scUserContext.user) &&
-      [EDIT_CONTRIBUTION, MODERATE_CONTRIBUTION_HIDDEN, MODERATE_CONTRIBUTION_DELETED].includes(action)
+      [EDIT_CONTRIBUTION, MODERATE_CONTRIBUTION_HIDDEN, MODERATE_CONTRIBUTION_DELETED, COLLAPSE_CONTRIBUTION, UNCOLLAPSE_CONTRIBUTION].includes(
+        action
+      )
     ) {
       // if user is blocked, deny edit and moderate
       enqueueSnackbar(<FormattedMessage id="ui.common.userBlocked" defaultMessage="ui.common.userBlocked" />, {
@@ -740,6 +786,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       handleClose();
     } else if (action === RESTORE_CONTRIBUTION) {
       setCurrentAction(RESTORE_CONTRIBUTION);
+      setOpenConfirmDialog(true);
+      handleClose();
+    } else if (action === COLLAPSE_CONTRIBUTION || action === UNCOLLAPSE_CONTRIBUTION) {
+      setCurrentAction(action);
       setOpenConfirmDialog(true);
       handleClose();
     } else if (action === SUSPEND_NOTIFICATION_CONTRIBUTION) {
@@ -797,6 +847,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         commentObj
           ? setCommentObj({...commentObj, ...{deleted: currentAction === DELETE_CONTRIBUTION}})
           : setFeedObj({...feedObj, ...{deleted: currentAction === DELETE_CONTRIBUTION}});
+      } else if ([COLLAPSE_CONTRIBUTION, UNCOLLAPSE_CONTRIBUTION].includes(currentAction)) {
+        commentObj
+          ? setCommentObj({...commentObj, ...{collapsed: currentAction === COLLAPSE_CONTRIBUTION}})
+          : setFeedObj({...feedObj, ...{collapsed: currentAction === COLLAPSE_CONTRIBUTION}});
       } else if (currentAction === MODERATE_CONTRIBUTION_HIDDEN) {
         commentObj
           ? setCommentObj({...commentObj, ...{collapsed: !commentObj.collapsed}})
@@ -843,6 +897,19 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           .then(() => {
             const _contributionObj = Object.assign({}, contributionObj, {deleted: false});
             onRestoreContribution && onRestoreContribution(_contributionObj);
+            performPostConfirmAction(true);
+          })
+          .catch((error) => {
+            Logger.error(SCOPE_SC_UI, error);
+            performPostConfirmAction(false);
+          });
+      } else if (currentAction === COLLAPSE_CONTRIBUTION || currentAction === UNCOLLAPSE_CONTRIBUTION) {
+        const collapse: boolean = currentAction === COLLAPSE_CONTRIBUTION;
+        setCurrentActionLoading(currentAction);
+        performCollapseContribution(collapse)
+          .then(() => {
+            const _contributionObj = Object.assign({}, contributionObj, {collapsed: collapse});
+            onHideContribution && onHideContribution(_contributionObj);
             performPostConfirmAction(true);
           })
           .catch((error) => {
@@ -952,9 +1019,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     let value = section === FLAG_CONTRIBUTION_SECTION ? flagType : section === HIDE_CONTRIBUTION_SECTION ? hideType : deleteType;
     return REPORTS.map((report, index) => {
       return (
-        <MenuItem key={`${section}_${index}`} className={classes.subItem} disabled={isFlagging}>
+        <MenuItem key={`${section}_${index}`} className={classes.subItem} disabled={isFlagging} onClick={() => handlerFunc(report)}>
           <ListItemIcon classes={{root: classes.selectedIcon}}>{value === report && <Icon color="secondary">check</Icon>}</ListItemIcon>
-          <ListItemText primary={getReportName(report)} onClick={() => handlerFunc(report)} classes={{root: classes.subItemText}} />
+          <ListItemText primary={getReportName(report)} classes={{root: classes.subItemText}} />
         </MenuItem>
       );
     });
@@ -1032,6 +1099,24 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   />
                 </MenuItem>
               </>
+            ) : contributionObj.collapsed && contributionGroup ? (
+              // Contribution hidden by the group manager (no moderation flag type)
+              // the group manager already has the show action
+              !isGroupManager && (
+                <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleAction(UNCOLLAPSE_CONTRIBUTION)}>
+                  <ListItemIcon>
+                    {currentActionLoading === UNCOLLAPSE_CONTRIBUTION ? <CircularProgress size={20} /> : <Icon>restore</Icon>}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <FormattedMessage
+                        id="ui.contributionActionMenu.restoreFromHidden"
+                        defaultMessage="ui.contributionActionMenu.restoreFromHidden"
+                      />
+                    }
+                  />
+                </MenuItem>
+              )
             ) : (
               <>
                 <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleOpenSection(HIDE_CONTRIBUTION_SECTION)}>
@@ -1128,7 +1213,14 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    * Can authenticated user delete the contribution
    */
   function canDeleteContribution(): boolean {
-    return scUserContext.user && scUserContext.user.id === contributionObj.author.id;
+    return scUserContext.user && (scUserContext.user.id === contributionObj.author.id || isGroupManager);
+  }
+
+  /**
+   * Can authenticated user hide/show the contribution to the group members (group manager)
+   */
+  function canCollapseContribution(): boolean {
+    return isGroupManager && !contributionObj.deleted;
   }
 
   /**
@@ -1184,18 +1276,17 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   function renderGeneralSection() {
     return (
       <Box key={GENERAL_SECTION}>
-        <MenuItem className={classes.subItem} disabled={isFlagging}>
+        <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleAction(GET_CONTRIBUTION_PERMALINK)}>
           <ListItemIcon>
             <Icon>link</Icon>
           </ListItemIcon>
           <ListItemText
             primary={<FormattedMessage id="ui.contributionActionMenu.permanentLink" defaultMessage="ui.contributionActionMenu.permanentLink" />}
-            onClick={() => handleAction(GET_CONTRIBUTION_PERMALINK)}
             classes={{root: classes.itemText}}
           />
         </MenuItem>
         {canModifyContribution() && (
-          <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleAction(EDIT_CONTRIBUTION)}>
             <ListItemIcon>
               <Icon>edit</Icon>
             </ListItemIcon>
@@ -1203,13 +1294,15 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               primary={
                 <FormattedMessage id="ui.contributionActionMenu.editContribution" defaultMessage="ui.contributionActionMenu.editContribution" />
               }
-              onClick={() => handleAction(EDIT_CONTRIBUTION)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
         )}
         {canDeleteContribution() && (
-          <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <MenuItem
+            className={classes.subItem}
+            disabled={isFlagging}
+            onClick={() => handleAction(contributionObj.deleted ? RESTORE_CONTRIBUTION : DELETE_CONTRIBUTION)}>
             <ListItemIcon>
               {currentActionLoading === DELETE_CONTRIBUTION || currentActionLoading === RESTORE_CONTRIBUTION ? (
                 <CircularProgress size={20} />
@@ -1225,7 +1318,6 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                     defaultMessage="ui.contributionActionMenu.restoreContribution"
                   />
                 }
-                onClick={() => handleAction(RESTORE_CONTRIBUTION)}
                 classes={{root: classes.itemText}}
               />
             ) : (
@@ -1233,14 +1325,50 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                 primary={
                   <FormattedMessage id="ui.contributionActionMenu.deleteContribution" defaultMessage="ui.contributionActionMenu.deleteContribution" />
                 }
-                onClick={() => handleAction(DELETE_CONTRIBUTION)}
+                classes={{root: classes.itemText}}
+              />
+            )}
+          </MenuItem>
+        )}
+        {canCollapseContribution() && (
+          <MenuItem
+            className={classes.subItem}
+            disabled={isFlagging}
+            onClick={() => handleAction(contributionObj.collapsed ? UNCOLLAPSE_CONTRIBUTION : COLLAPSE_CONTRIBUTION)}>
+            <ListItemIcon>
+              {currentActionLoading === COLLAPSE_CONTRIBUTION || currentActionLoading === UNCOLLAPSE_CONTRIBUTION ? (
+                <CircularProgress size={20} />
+              ) : contributionObj.collapsed ? (
+                <Icon>visibility</Icon>
+              ) : (
+                <Icon>visibility_off</Icon>
+              )}
+            </ListItemIcon>
+            {contributionObj.collapsed ? (
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.uncollapseContribution"
+                    defaultMessage="ui.contributionActionMenu.uncollapseContribution"
+                  />
+                }
+                classes={{root: classes.itemText}}
+              />
+            ) : (
+              <ListItemText
+                primary={
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.collapseContribution"
+                    defaultMessage="ui.contributionActionMenu.collapseContribution"
+                  />
+                }
                 classes={{root: classes.itemText}}
               />
             )}
           </MenuItem>
         )}
         {canPublishContribution() && (
-          <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleAction(PUBLISH_CONTRIBUTION)}>
             <ListItemIcon>
               <Icon>upload</Icon>
             </ListItemIcon>
@@ -1248,13 +1376,12 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
               primary={
                 <FormattedMessage id="ui.contributionActionMenu.publishContribution" defaultMessage="ui.contributionActionMenu.publishContribution" />
               }
-              onClick={() => handleAction(PUBLISH_CONTRIBUTION)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
         )}
         {canSuspendNotificationContribution() && (
-          <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleAction(SUSPEND_NOTIFICATION_CONTRIBUTION)}>
             <ListItemIcon>
               {currentActionLoading === SUSPEND_NOTIFICATION_CONTRIBUTION ? (
                 <CircularProgress size={20} />
@@ -1278,13 +1405,12 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   />
                 )
               }
-              onClick={() => handleAction(SUSPEND_NOTIFICATION_CONTRIBUTION)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
         )}
         {canSuspendNotificationEvent() && (
-          <MenuItem className={classes.subItem} disabled={isFlagging}>
+          <MenuItem className={classes.subItem} disabled={isFlagging} onClick={() => handleAction(SUSPEND_NOTIFICATION_EVENT)}>
             <ListItemIcon>
               {currentActionLoading === SUSPEND_NOTIFICATION_EVENT ? (
                 <CircularProgress size={20} />
@@ -1308,19 +1434,17 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   />
                 )
               }
-              onClick={() => handleAction(SUSPEND_NOTIFICATION_EVENT)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
         )}
         {canDownloadCSV() && (
-          <MenuItem className={classes.subItem}>
+          <MenuItem className={classes.subItem} onClick={() => handleAction(DOWNLOAD_CSV)}>
             <ListItemIcon>
               <Icon>download</Icon>
             </ListItemIcon>
             <ListItemText
               primary={<FormattedMessage id="ui.contributionActionMenu.downloadCSV" defaultMessage="ui.contributionActionMenu.downloadCSV" />}
-              onClick={() => handleAction(DOWNLOAD_CSV)}
               classes={{root: classes.itemText}}
             />
           </MenuItem>
@@ -1364,9 +1488,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         className={classes.button}
         size="small"
         title={intl.formatMessage({id: 'ui.contributionActionMenu.button.title', defaultMessage: 'ui.contributionActionMenu.button.title'})}>
-        {contributionObj && (contributionObj.collapsed || contributionObj.deleted) ? (
+        {contributionObj && (showCollapsedIcon || contributionObj.deleted) ? (
           <span className={classes.visibilityIcons}>
-            {contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}
+            {showCollapsedIcon ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}
             <Icon>expand_more</Icon>
           </span>
         ) : (
@@ -1408,6 +1532,24 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
                   <FormattedMessage
                     id="ui.contributionActionMenu.deleteContributionInfo"
                     defaultMessage="ui.contributionActionMenu.deleteContributionInfo"
+                  />
+                )
+              }
+            : currentAction === COLLAPSE_CONTRIBUTION
+            ? {
+                content: (
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.collapseContributionInfo"
+                    defaultMessage="ui.contributionActionMenu.collapseContributionInfo"
+                  />
+                )
+              }
+            : currentAction === UNCOLLAPSE_CONTRIBUTION
+            ? {
+                content: (
+                  <FormattedMessage
+                    id="ui.contributionActionMenu.uncollapseContributionInfo"
+                    defaultMessage="ui.contributionActionMenu.uncollapseContributionInfo"
                   />
                 )
               }

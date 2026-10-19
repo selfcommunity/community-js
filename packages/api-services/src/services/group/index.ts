@@ -25,6 +25,7 @@ export interface GroupApiClientInterface {
   subscribeToGroup(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   unsubscribeFromGroup(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   inviteOrAcceptGroupRequest(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
+  addUsersToGroup(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
   getGroupSubscriptionStatus(id: number | string, config?: AxiosRequestConfig): Promise<any>;
   getGroupWaitingApprovalSubscribers(
     id: number | string,
@@ -238,6 +239,21 @@ export class GroupApiClient {
     });
   }
   /**
+   * This endpoint adds users directly to a group, without invitation.
+   * Available only when the community groups membership mode is `add`.
+   * @param id
+   * @param data
+   * @param config
+   */
+  static addUsersToGroup(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({
+      ...config,
+      url: Endpoints.SubscribeToGroup.url({id}),
+      method: Endpoints.SubscribeToGroup.method,
+      data: data
+    });
+  }
+  /**
    * This endpoint retrieves the group subscription status.
    * @param id
    * @param config
@@ -362,6 +378,9 @@ export default class GroupService {
   }
   static async inviteOrAcceptGroupRequest(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
     return GroupApiClient.inviteOrAcceptGroupRequest(id, data, config);
+  }
+  static async addUsersToGroup(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+    return GroupApiClient.addUsersToGroup(id, data, config);
   }
   static async getGroupSubscriptionStatus(id: number | string, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<any>> {
     return GroupApiClient.getGroupSubscriptionStatus(id, config);

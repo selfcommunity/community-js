@@ -8,7 +8,7 @@ export default {
 
 export const Base: StoryObj<typeof GroupTemplate> = {
   args: {
-    groupId: 38,
+    groupId: 191,
 
   },
   render: (args) => (

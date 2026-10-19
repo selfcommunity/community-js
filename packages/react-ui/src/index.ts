@@ -283,7 +283,7 @@ import {DEFAULT_WIDGETS_NUMBER} from './constants/Feed';
 import {DEFAULT_PRELOAD_OFFSET_VIEWPORT, MAX_PRELOAD_OFFSET_VIEWPORT, MIN_PRELOAD_OFFSET_VIEWPORT} from './constants/LazyLoad';
 import {LEGAL_POLICIES} from './constants/LegalPolicies';
 import {DEFAULT_PAGINATION_LIMIT, DEFAULT_PAGINATION_OFFSET, DEFAULT_PAGINATION_QUERY_PARAM_NAME} from './constants/Pagination';
-import {SCEventMembersEventType, SCGroupMembersEventType} from './constants/PubSub';
+import {SCEventMembersEventType, SCGroupEventType, SCGroupMembersEventType, SCTopicType} from './constants/PubSub';
 import {
   FACEBOOK_SHARE,
   LINKEDIN_SHARE,
@@ -720,10 +720,12 @@ export {
   SCFeedObjectActivitiesType,
   SCFeedObjectTemplateType,
   SCFeedWidgetType,
+  SCGroupEventType,
   SCGroupMembersEventType,
   SCMediaChunkType,
   SCMediaObjectType,
   SCNotificationObjectTemplateType,
+  SCTopicType,
   SCUserProfileFields,
   SCUserProfileSettings,
   SCUserSocialAssociations,

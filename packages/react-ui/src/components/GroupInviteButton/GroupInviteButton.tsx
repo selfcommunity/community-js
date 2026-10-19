@@ -2,21 +2,34 @@ import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {useThemeProps} from '@mui/system';
 import {Avatar, Box, Button, Chip, Icon, IconButton, InputAdornment, TextField, Typography, Autocomplete, styled, ButtonProps} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {SCUserContext, SCUserContextType, useSCFetchGroup} from '@selfcommunity/react-core';
+import {
+  SCPreferences,
+  SCPreferencesContextType,
+  SCUserContext,
+  SCUserContextType,
+  useSCFetchGroup,
+  useSCPreferences,
+  GroupUtils
+} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import BaseDialog from '../../shared/BaseDialog';
 import {GroupService} from '@selfcommunity/api-services';
-import {SCGroupType, SCUserType} from '@selfcommunity/types';
+import {SCGroupMembershipModeType, SCGroupType, SCUserType} from '@selfcommunity/types';
 import User from '../User';
 import {SCOPE_SC_UI} from '../../constants/Errors';
 import {Logger} from '@selfcommunity/utils';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import PubSub from 'pubsub-js';
+import {enqueueSnackbar} from 'notistack';
 
 const messages = defineMessages({
   placeholder: {
     id: 'ui.groupInviteButton.searchBar.placeholder',
     defaultMessage: 'ui.groupInviteButton.searchBar.placeholder'
+  },
+  placeholderAdd: {
+    id: 'ui.groupInviteButton.searchBar.placeholder.add',
+    defaultMessage: 'ui.groupInviteButton.searchBar.placeholder.add'
   }
 });
 
@@ -114,6 +127,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
 
   // CONTEXT
   const scUserContext: SCUserContextType = useContext(SCUserContext);
+  const scPreferences: SCPreferencesContextType = useSCPreferences();
 
   // STATE
   const [open, setOpen] = useState<boolean>(false);
@@ -132,6 +146,17 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
   function notifyChanges(group: SCGroupType, usersInvited: SCUserType[]) {
     if (group && usersInvited) {
       PubSub.publish(`${SCTopicType.GROUP}.${SCGroupEventType.INVITE_MEMBER}`, usersInvited);
+    }
+  }
+
+  /**
+   * Notify UI when members are added directly to a group
+   * @param group
+   * @param usersAdded
+   */
+  function notifyAddedMembers(group: SCGroupType, usersAdded: SCUserType[]) {
+    if (group && usersAdded) {
+      usersAdded.forEach((user) => PubSub.publish(`${SCTopicType.GROUP}.${SCGroupEventType.ADD_MEMBER}`, {group, user}));
     }
   }
 
@@ -158,9 +183,18 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
   // HOOKS
   const {scGroup} = useSCFetchGroup({id: groupId, group});
 
-  const isGroupAdmin = useMemo(
-    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
-    [scUserContext.user, scGroup?.managed_by?.id]
+  const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
+
+  /**
+   * In `add` membership mode the group manager adds users directly, without invitation.
+   * Any other value is treated as `invite`. In group creation (handleInvitations) only labels change:
+   * the selected users are always sent as `invite_users` and the API applies the membership mode.
+   */
+  const isAddMode = useMemo(
+    () =>
+      (Boolean(scGroup) || Boolean(handleInvitations)) &&
+      scPreferences.preferences?.[SCPreferences.CONFIGURATIONS_GROUPS_MEMBERSHIP_MODE]?.value === SCGroupMembershipModeType.ADD,
+    [scGroup, handleInvitations, scPreferences.preferences]
   );
 
   // INTL
@@ -233,17 +267,22 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
     } else {
       const data = {users: ids};
       setIsSending(true);
-      GroupService.inviteOrAcceptGroupRequest(scGroup.id, data)
+      (isAddMode ? GroupService.addUsersToGroup(scGroup.id, data) : GroupService.inviteOrAcceptGroupRequest(scGroup.id, data))
         .then(() => {
           setIsSending(false);
           setOpen(false);
           setInvited([]);
-          notifyChanges(scGroup, invited);
+          isAddMode ? notifyAddedMembers(scGroup, invited) : notifyChanges(scGroup, invited);
         })
         .catch((error) => {
           setOpen(false);
+          setIsSending(false);
           setLoading(false);
           Logger.error(SCOPE_SC_UI, error);
+          enqueueSnackbar(<FormattedMessage id="ui.common.error.action" defaultMessage="ui.common.error.action" />, {
+            variant: 'error',
+            autoHideDuration: 3000
+          });
         });
     }
   };
@@ -315,7 +354,11 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
         color={scGroup ? 'secondary' : 'inherit'}
         startIcon={<Icon>add</Icon>}
         {...rest}>
-        <FormattedMessage id="ui.groupInviteButton" defaultMessage="ui.groupInviteButton" />
+        {isAddMode ? (
+          <FormattedMessage id="ui.groupInviteButton.add" defaultMessage="ui.groupInviteButton.add" />
+        ) : (
+          <FormattedMessage id="ui.groupInviteButton" defaultMessage="ui.groupInviteButton" />
+        )}
       </Root>
       {open && (
         <DialogRoot
@@ -328,7 +371,11 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
                 <Icon>arrow_back</Icon>
               </IconButton>
               <Typography className={classes.dialogTitle}>
-                <FormattedMessage id="ui.groupInviteButton.dialog.title" defaultMessage="ui.groupInviteButton.dialog.title" />
+                {isAddMode ? (
+                  <FormattedMessage id="ui.groupInviteButton.dialog.title.add" defaultMessage="ui.groupInviteButton.dialog.title.add" />
+                ) : (
+                  <FormattedMessage id="ui.groupInviteButton.dialog.title" defaultMessage="ui.groupInviteButton.dialog.title" />
+                )}
               </Typography>
               <Button
                 size="small"
@@ -368,7 +415,7 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
                 <TextField
                   {...params}
                   variant="outlined"
-                  placeholder={`${intl.formatMessage(messages.placeholder)}`}
+                  placeholder={`${intl.formatMessage(isAddMode ? messages.placeholderAdd : messages.placeholder)}`}
                   slotProps={{
                     input: {
                       ...params.InputProps,

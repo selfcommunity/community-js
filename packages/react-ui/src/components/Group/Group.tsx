@@ -11,7 +11,8 @@ import {
   useSCFetchGroup,
   useSCPaymentsEnabled,
   useSCRouting,
-  useSCUser
+  useSCUser,
+  GroupUtils
 } from '@selfcommunity/react-core';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import classNames from 'classnames';
@@ -147,10 +148,7 @@ export default function Group(inProps: GroupProps): JSX.Element {
   const scUserContext: SCUserContextType = useSCUser();
 
   // CONST
-  const isGroupAdmin = useMemo(
-    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
-    [scUserContext.user, scGroup?.managed_by?.id]
-  );
+  const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
 
   const [openAlert, setOpenAlert] = useState<boolean>(false);
 

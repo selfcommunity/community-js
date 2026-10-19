@@ -135,6 +135,14 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/$(type)/$(id)/restore/'),
     method: 'POST'
   },
+  CollapseFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/collapse/'),
+    method: 'POST'
+  },
+  UncollapseFeedObject: {
+    url: urlReplacer('/api/v2/$(type)/$(id)/collapse/'),
+    method: 'DELETE'
+  },
   RelatedFeedObjects: {
     url: urlReplacer('/api/v2/$(type)/$(id)/related/'),
     method: 'GET'
@@ -197,6 +205,14 @@ const Endpoints: {[key: string]: EndpointType} = {
   RestoreComment: {
     url: urlReplacer('/api/v2/comment/$(id)/restore/'),
     method: 'POST'
+  },
+  CollapseComment: {
+    url: urlReplacer('/api/v2/comment/$(id)/collapse/'),
+    method: 'POST'
+  },
+  UncollapseComment: {
+    url: urlReplacer('/api/v2/comment/$(id)/collapse/'),
+    method: 'DELETE'
   },
   Comments: {
     url: urlReplacer('/api/v2/comment/'),

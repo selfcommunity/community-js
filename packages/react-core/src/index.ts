@@ -127,6 +127,7 @@ import * as SCRoutes from './constants/Routes';
  * User, hooks (useIsComponentMountedRef)
  */
 import * as UserUtils from './utils/user';
+import * as GroupUtils from './utils/group';
 import getTheme from './themes/theme';
 import {
   useIsComponentMountedRef,
@@ -209,6 +210,7 @@ export {
   SCRoutes,
   SCCache,
   UserUtils,
+  GroupUtils,
   getEventStatus,
   Locale,
   Preferences,

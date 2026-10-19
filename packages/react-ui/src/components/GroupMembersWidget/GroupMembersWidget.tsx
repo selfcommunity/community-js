@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useReducer, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useReducer, useRef, useState} from 'react';
 import {Button, CardActions, CardContent, ListItem, Typography, useMediaQuery, useTheme, styled, List} from '@mui/material';
 import Widget, {WidgetProps} from '../Widget';
 import {SCGroupType, SCUserType} from '@selfcommunity/types';
@@ -16,7 +16,8 @@ import {
   useSCFetchGroup,
   useSCPreferences,
   useSCRouting,
-  useSCUser
+  useSCUser,
+  GroupUtils
 } from '@selfcommunity/react-core';
 import {actionWidgetTypes, dataWidgetReducer, stateWidgetInitializer} from '../../utils/widget';
 import Skeleton from './Skeleton';
@@ -33,6 +34,8 @@ import {PREFIX} from './constants';
 import User, {UserProps, UserSkeleton} from '../User';
 import GroupInviteButton from '../GroupInviteButton';
 import GroupSettingsIconButton from '../GroupSettingsIconButton';
+import PubSub from 'pubsub-js';
+import {SCGroupEventType, SCGroupMembersEventType, SCTopicType} from '../../constants/PubSub';
 
 const classes = {
   root: `${PREFIX}-root`,
@@ -165,6 +168,10 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
 
+  // REFS
+  const updatesSubscription = useRef(null);
+  const reloadTimeout = useRef(null);
+
   // CONTEXT
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
@@ -172,10 +179,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
   const {scGroup} = useSCFetchGroup({id: groupId, group});
 
   // CONST
-  const isGroupAdmin = useMemo(
-    () => scUserContext.user && scGroup?.managed_by?.id === scUserContext.user.id,
-    [scUserContext.user, scGroup?.managed_by?.id]
-  );
+  const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
 
   // MEMO
   const contentAvailability = useMemo(
@@ -262,6 +266,51 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
     }
   }, []);
 
+  /**
+   * Reload the first page of members.
+   * Used when members are added (e.g. added directly by the group manager or a request is accepted)
+   */
+  const reloadMembers = useCallback(() => {
+    if (!scGroup) {
+      return;
+    }
+    GroupService.getGroupMembers(scGroup.id, {limit})
+      .then((payload: SCPaginatedResponse<SCUserType>) => {
+        dispatch({type: actionWidgetTypes.SET_RESULTS, payload: {results: []}});
+        dispatch({type: actionWidgetTypes.LOAD_NEXT_SUCCESS, payload});
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }, [scGroup?.id, limit, dispatch]);
+
+  /**
+   * Subscriber for pubsub callback.
+   * Multiple users added at once publish one event each: coalesce them in a single reload
+   */
+  const onAddMemberHandler = useCallback(
+    (_msg: string, data: SCGroupMembersEventType) => {
+      if (data?.group?.id === scGroup?.id) {
+        reloadTimeout.current && clearTimeout(reloadTimeout.current);
+        reloadTimeout.current = setTimeout(reloadMembers, 300);
+      }
+    },
+    [scGroup?.id, reloadMembers]
+  );
+
+  /**
+   * On mount, subscribe to receive group members updates
+   */
+  useEffect(() => {
+    if (scGroup && state.initialized) {
+      updatesSubscription.current = PubSub.subscribe(`${SCTopicType.GROUP}.${SCGroupEventType.ADD_MEMBER}`, onAddMemberHandler);
+    }
+    return () => {
+      updatesSubscription.current && PubSub.unsubscribe(updatesSubscription.current);
+      reloadTimeout.current && clearTimeout(reloadTimeout.current);
+    };
+  }, [scGroup?.id, state.initialized, onAddMemberHandler]);
+
   // HANDLERS
   const handleNext = useMemo(
     () => (): void => {
@@ -333,7 +382,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                         </Button>
                       ) : null
                     }
-                    isGroupAdmin={scGroup?.managed_by?.id === user.id}
+                    isGroupAdmin={GroupUtils.isGroupAdmin(scGroup, user)}
                     user={user}
                     userId={user.id}
                   />
@@ -389,7 +438,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                           </Button>
                         ) : null
                       }
-                      isGroupAdmin={scGroup?.managed_by?.id === user.id}
+                      isGroupAdmin={GroupUtils.isGroupAdmin(scGroup, user)}
                       user={user}
                       userId={user.id}
                     />
