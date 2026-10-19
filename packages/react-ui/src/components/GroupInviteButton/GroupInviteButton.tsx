@@ -187,12 +187,12 @@ export default function GroupInviteButton(inProps: GroupInviteButtonProps): JSX.
 
   /**
    * In `add` membership mode the group manager adds users directly, without invitation.
-   * Any other value is treated as `invite`. Group creation (handleInvitations) keeps using invitations.
+   * Any other value is treated as `invite`. In group creation (handleInvitations) only labels change:
+   * the selected users are always sent as `invite_users` and the API applies the membership mode.
    */
   const isAddMode = useMemo(
     () =>
-      Boolean(scGroup) &&
-      !handleInvitations &&
+      (Boolean(scGroup) || Boolean(handleInvitations)) &&
       scPreferences.preferences?.[SCPreferences.CONFIGURATIONS_GROUPS_MEMBERSHIP_MODE]?.value === SCGroupMembershipModeType.ADD,
     [scGroup, handleInvitations, scPreferences.preferences]
   );
