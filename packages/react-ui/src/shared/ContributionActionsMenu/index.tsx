@@ -301,6 +301,11 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
   let popperRef = useRef(null);
   const contributionGroup: SCGroupType = feedObj?.group ?? group;
   const isGroupManager: boolean = Boolean(contributionGroup) && GroupUtils.isGroupAdmin(contributionGroup, scUserContext.user);
+  // The author of a hidden group contribution (feed obj or comment) must not know it is hidden
+  const canViewCollapsed: boolean = UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user) || isGroupManager;
+  const showCollapsedIcon: boolean =
+    Boolean(contributionObj?.collapsed) &&
+    (canViewCollapsed || !(Boolean(contributionGroup) && scUserId === contributionObj.author.id));
   const scheduledPostsEnabled = useMemo(
     () =>
       preferences &&
@@ -1470,9 +1475,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         className={classes.button}
         size="small"
         title={intl.formatMessage({id: 'ui.contributionActionMenu.button.title', defaultMessage: 'ui.contributionActionMenu.button.title'})}>
-        {contributionObj && (contributionObj.collapsed || contributionObj.deleted) ? (
+        {contributionObj && (showCollapsedIcon || contributionObj.deleted) ? (
           <span className={classes.visibilityIcons}>
-            {contributionObj.collapsed ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}
+            {showCollapsedIcon ? <Icon>visibility_off</Icon> : <Icon>delete</Icon>}
             <Icon>expand_more</Icon>
           </span>
         ) : (
