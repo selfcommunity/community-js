@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0-alpha.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.4.0-alpha.1...@selfcommunity/react-ui@1.4.0-alpha.2) (2026-10-19)
+
+
+### Bug Fixes
+
+* hidden group contents are not shown as hidden to their author ([81b6cb3](https://github.com/selfcommunity/community-js/commit/81b6cb3ac348488e79b87e1bd67953b4b314efe3))
+
+
+
+
+
 # [1.4.0-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.4.0-alpha.0...@selfcommunity/react-ui@1.4.0-alpha.1) (2026-10-16)
 
 
