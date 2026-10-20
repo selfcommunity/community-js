@@ -932,7 +932,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         performModerationContribution(MODERATION_TYPE_ACTION_HIDE, hideFlagType)
           .then(() => {
             const _contributionObj = Object.assign({}, contributionObj, {collapsed: !contributionObj.collapsed});
-            setHideType(hideType === hideFlagType ? null : hideFlagType);
+            setHideType(contributionObj.collapsed ? null : hideFlagType);
             setHideFlagType(null);
             onHideContribution && onHideContribution(_contributionObj);
             performPostConfirmAction(true);
@@ -1079,7 +1079,9 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
       <Box key={HIDE_CONTRIBUTION_SECTION}>
         {!contributionObj.deleted && (
           <Box>
-            {hideType !== undefined && hideType !== null ? (
+            {hideType !== undefined && hideType !== null && contributionObj.collapsed ? (
+              // The moderation status could still be hidden even if the contribution has been made visible
+              // by the group manager: show the restore action only if the contribution is actually collapsed
               <>
                 <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleAction(MODERATE_CONTRIBUTION_HIDDEN)}>
                   <ListItemIcon>
