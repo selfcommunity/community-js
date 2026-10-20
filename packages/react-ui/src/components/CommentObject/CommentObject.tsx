@@ -294,10 +294,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   // CONST
   const isGroupManager: boolean =
     Boolean(commentsObject.feedObject?.group) && GroupUtils.isGroupAdmin(commentsObject.feedObject.group, scUserContext.user);
-  // The author of a hidden comment of a group post must not know it is hidden
+  // The author of a hidden comment must not know it is hidden
   const canViewCollapsed: boolean = UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user) || isGroupManager;
   const isCollapsedHiddenToAuthor = (comment: SCCommentType): boolean =>
-    Boolean(commentsObject.feedObject?.group) && !canViewCollapsed && Boolean(scUserContext.user) && scUserContext.user.id === comment.author.id;
+    !canViewCollapsed && Boolean(scUserContext.user) && scUserContext.user.id === comment.author.id;
 
   // HANDLERS
   const handleVoteSuccess = (contribution: SCFeedObjectType | SCCommentType) => {

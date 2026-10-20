@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1-alpha.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.4.1-alpha.0...@selfcommunity/react-ui@1.4.1-alpha.1) (2026-10-20)
+
+**Note:** Version bump only for package @selfcommunity/react-ui
+
+
+
+
+
+## [1.4.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.4.0...@selfcommunity/react-ui@1.4.1-alpha.0) (2026-10-19)
+
+
+### Bug Fixes
+
+* hidden contributions are not shown as hidden to their author ([441f19e](https://github.com/selfcommunity/community-js/commit/441f19e9dd5a63b411f56ac877b73dc99214ed7d))
+
+
+
+
+
 # [1.4.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.4.0-alpha.4...@selfcommunity/react-ui@1.4.0) (2026-10-19)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
