@@ -167,6 +167,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
     stateWidgetInitializer
   );
   const [openDialog, setOpenDialog] = useState<boolean>(false);
+  const [adminIds, setAdminIds] = useState<number[]>([]);
 
   // REFS
   const updatesSubscription = useRef(null);
@@ -176,7 +177,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
   const scUserContext: SCUserContextType = useSCUser();
   const scRoutingContext: SCRoutingContextType = useSCRouting();
   const scPreferencesContext: SCPreferencesContextType = useSCPreferences();
-  const {scGroup} = useSCFetchGroup({id: groupId, group});
+  const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
 
   // CONST
   const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
@@ -220,7 +221,30 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
     [state.isLoadingNext, state.initialized, scGroup, limit, dispatch]
   );
 
+  /**
+   * Fetch all the group admins (creator, manager and elected admins)
+   */
+  const fetchAdmins = useCallback(
+    async (next: string = Endpoints.GetGroupAdmins.url({id: scGroup.id})): Promise<SCUserType[]> => {
+      const res: AxiosResponse<SCPaginatedResponse<SCUserType>> = await http.request({url: next, method: Endpoints.GetGroupAdmins.method});
+      const data: SCPaginatedResponse<SCUserType> = res.data;
+      return data.next ? data.results.concat(await fetchAdmins(data.next)) : data.results;
+    },
+    [scGroup?.id]
+  );
+
   // EFFECTS
+  useEffect(() => {
+    if (!scGroup?.id || (!contentAvailability && !scUserContext.user)) {
+      return;
+    }
+    fetchAdmins()
+      .then((admins: SCUserType[]) => setAdminIds(admins.map((u) => u.id)))
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+      });
+  }, [scGroup?.id, scUserContext.user, contentAvailability]);
+
   useEffect(() => {
     let _t;
     if ((contentAvailability || (!contentAvailability && scUserContext.user?.id)) && scGroup && scUserContext.user !== undefined) {
@@ -340,9 +364,18 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
           type: actionWidgetTypes.SET_RESULTS,
           payload: {results: newMembers.length > 1 ? _updated : []}
         });
+        setAdminIds((ids) => ids.filter((id) => id !== userId));
       },
     [dispatch, state.count, state.results]
   );
+
+  const handleAdminChange = (userId: number, isAdmin: boolean): void => {
+    setAdminIds((ids) => (isAdmin ? [...ids, userId] : ids.filter((id) => id !== userId)));
+    if (!isAdmin && userId === scUserContext.user?.id) {
+      // The current user gave up the admin role
+      setSCGroup({...scGroup, can_manage: false});
+    }
+  };
 
   // RENDER
   if ((autoHide && !state.count && state.initialized) || (!contentAvailability && !scUserContext.user) || !scGroup) {
@@ -371,7 +404,13 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                     elevation={0}
                     actions={
                       isGroupAdmin ? (
-                        <GroupSettingsIconButton group={scGroup} user={user} onRemoveSuccess={() => handleRefresh(user.id)} />
+                        <GroupSettingsIconButton
+                          group={scGroup}
+                          user={user}
+                          isAdmin={adminIds.includes(user.id)}
+                          onRemoveSuccess={() => handleRefresh(user.id)}
+                          onAdminChange={(isAdmin: boolean) => handleAdminChange(user.id, isAdmin)}
+                        />
                       ) : scUserContext?.user?.id !== user.id && privateMessagingEnabled ? (
                         <Button
                           size="small"
@@ -382,7 +421,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                         </Button>
                       ) : null
                     }
-                    isGroupAdmin={GroupUtils.isGroupAdmin(scGroup, user)}
+                    isGroupAdmin={adminIds.includes(user.id)}
                     user={user}
                     userId={user.id}
                   />
@@ -427,7 +466,13 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                       elevation={0}
                       actions={
                         isGroupAdmin ? (
-                          <GroupSettingsIconButton group={scGroup} user={user} onRemoveSuccess={() => handleRefresh(user.id)} />
+                          <GroupSettingsIconButton
+                            group={scGroup}
+                            user={user}
+                            isAdmin={adminIds.includes(user.id)}
+                            onRemoveSuccess={() => handleRefresh(user.id)}
+                            onAdminChange={(isAdmin: boolean) => handleAdminChange(user.id, isAdmin)}
+                          />
                         ) : scUserContext?.user?.id !== user.id ? (
                           <Button
                             size="small"
@@ -438,7 +483,7 @@ export default function GroupMembersWidget(inProps: GroupMembersWidgetProps): JS
                           </Button>
                         ) : null
                       }
-                      isGroupAdmin={GroupUtils.isGroupAdmin(scGroup, user)}
+                      isGroupAdmin={adminIds.includes(user.id)}
                       user={user}
                       userId={user.id}
                     />
