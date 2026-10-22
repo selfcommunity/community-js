@@ -131,4 +131,9 @@ export interface SCGroupType extends SCPurchasableContent {
    * The number of group members
    */
   subscribers_counter: number;
+
+  /**
+   * True if the current user can manage the group (creator, manager or elected admin).
+   */
+  can_manage?: boolean;
 }

@@ -4,6 +4,7 @@ import {FormattedMessage} from 'react-intl';
 import classNames from 'classnames';
 import {useThemeProps} from '@mui/system';
 import {
+  GroupUtils,
   Link,
   SCPreferences,
   SCPreferencesContextType,
@@ -20,6 +21,9 @@ import {SCGroupType, SCUserType} from '@selfcommunity/types';
 import {GroupService} from '@selfcommunity/api-services';
 import {SCGroupEventType, SCTopicType} from '../../constants/PubSub';
 import PubSub from 'pubsub-js';
+import {enqueueSnackbar} from 'notistack';
+import {Logger} from '@selfcommunity/utils';
+import {SCOPE_SC_UI} from '../../constants/Errors';
 
 const PREFIX = 'SCGroupSettingsIconButton';
 
@@ -56,6 +60,15 @@ export interface GroupSettingsIconButtonProps extends IconButtonProps {
    * Handles callback on delete success
    */
   onRemoveSuccess?: () => void;
+  /**
+   * True if the user is an admin of the group
+   * @default false
+   */
+  isAdmin?: boolean;
+  /**
+   * Handles callback when the user is elected admin or removed from the admins
+   */
+  onAdminChange?: (isAdmin: boolean) => void;
   /**
    * The user
    */
@@ -98,11 +111,12 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
     props: inProps,
     name: PREFIX
   });
-  const {className = null, group, user, onRemoveSuccess, ...rest} = props;
+  const {className = null, group, user, onRemoveSuccess, isAdmin = false, onAdminChange, ...rest} = props;
 
   // STATE
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [openConfirmDialog, setOpenConfirmDialog] = useState<boolean>(false);
+  const [openRemoveAdminDialog, setOpenRemoveAdminDialog] = useState<boolean>(false);
 
   // HOOKS
   const theme = useTheme<SCThemeType>();
@@ -118,6 +132,18 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
     [preferences]
   );
 
+  // CONST
+  const isMe = scUserContext?.user?.id === user?.id;
+  const isGroupAdmin = GroupUtils.isGroupAdmin(group, scUserContext.user);
+  const isGroupCreator = GroupUtils.isGroupCreator(group, scUserContext.user);
+  const isUserCreator = GroupUtils.isGroupCreator(group, user);
+  // Any admin can elect a member
+  const canAddAdmin = isGroupAdmin && !isAdmin && !isMe;
+  // Only the creator can remove an admin, or the admin itself can give up the role
+  const canRemoveAdmin = isAdmin && !isUserCreator && (isGroupCreator || isMe);
+  // Only the creator can remove an admin from the group, the other admins can remove only the members
+  const canRemoveUser = isGroupAdmin && !isMe && !isUserCreator && (!isAdmin || isGroupCreator);
+
   // HANDLERS
   const handleOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -132,6 +158,15 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
   };
   const handleCloseDialog = () => {
     setOpenConfirmDialog(false);
+    setAnchorEl(null);
+  };
+
+  const handleOpenRemoveAdminDialog = () => {
+    setOpenRemoveAdminDialog(true);
+    setAnchorEl(null);
+  };
+  const handleCloseRemoveAdminDialog = () => {
+    setOpenRemoveAdminDialog(false);
     setAnchorEl(null);
   };
 
@@ -158,48 +193,90 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
       })
       .catch((error) => {
         setOpenConfirmDialog(false);
-        console.log(error);
+        Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(<FormattedMessage id="ui.groupSettingsIconButton.error.remove" defaultMessage="ui.groupSettingsIconButton.error.remove" />, {
+          variant: 'error',
+          autoHideDuration: 3000
+        });
       });
   }
 
-  if (scUserContext?.user?.id === user?.id) {
+  /**
+   * Handles admin election
+   */
+  function handleAddAdmin() {
+    handleClose();
+    GroupService.addGroupAdmins(group.id, {users: [user.id]})
+      .then(() => {
+        PubSub.publish(`${SCTopicType.GROUP}.${SCGroupEventType.ADD_ADMIN}`, {group, user});
+        onAdminChange && onAdminChange(true);
+      })
+      .catch((error) => {
+        Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(
+          <FormattedMessage id="ui.groupSettingsIconButton.error.addAdmin" defaultMessage="ui.groupSettingsIconButton.error.addAdmin" />,
+          {
+            variant: 'error',
+            autoHideDuration: 3000
+          }
+        );
+      });
+  }
+
+  /**
+   * Handles admin removal
+   */
+  function handleRemoveAdmin() {
+    GroupService.removeGroupAdmin(group.id, user.id)
+      .then(() => {
+        PubSub.publish(`${SCTopicType.GROUP}.${SCGroupEventType.REMOVE_ADMIN}`, {group, user});
+        onAdminChange && onAdminChange(false);
+        handleCloseRemoveAdminDialog();
+      })
+      .catch((error) => {
+        setOpenRemoveAdminDialog(false);
+        Logger.error(SCOPE_SC_UI, error);
+        enqueueSnackbar(
+          <FormattedMessage id="ui.groupSettingsIconButton.error.removeAdmin" defaultMessage="ui.groupSettingsIconButton.error.removeAdmin" />,
+          {
+            variant: 'error',
+            autoHideDuration: 3000
+          }
+        );
+      });
+  }
+
+  if ((isMe || !privateMessagingEnabled) && !canAddAdmin && !canRemoveAdmin && !canRemoveUser) {
     return null;
   }
+
   /**
    *
    */
   const renderList = () => {
-    if (isMobile) {
-      return [
-        privateMessagingEnabled && (
-          <ListItem
-            className={classes.item}
-            key="message"
-            component={Link}
-            to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}>
-            <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
-          </ListItem>
-        ),
-        <ListItem className={classes.item} key="delete" onClick={handleOpenDialog}>
+    const Item: any = isMobile ? ListItem : MenuItem;
+    return [
+      privateMessagingEnabled && !isMe && (
+        <Item className={classes.item} key="message" component={Link} to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}>
+          <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
+        </Item>
+      ),
+      canAddAdmin && (
+        <Item className={classes.item} key="addAdmin" onClick={handleAddAdmin}>
+          <FormattedMessage id="ui.groupSettingsIconButton.item.addAdmin" defaultMessage="ui.groupSettingsIconButton.item.addAdmin" />
+        </Item>
+      ),
+      canRemoveAdmin && (
+        <Item className={classes.item} key="removeAdmin" onClick={handleOpenRemoveAdminDialog}>
+          <FormattedMessage id="ui.groupSettingsIconButton.item.removeAdmin" defaultMessage="ui.groupSettingsIconButton.item.removeAdmin" />
+        </Item>
+      ),
+      canRemoveUser && (
+        <Item className={classes.item} key="delete" onClick={handleOpenDialog}>
           <FormattedMessage id="ui.groupSettingsIconButton.item.remove" defaultMessage="ui.groupSettingsIconButton.item.remove" />
-        </ListItem>
-      ];
-    } else {
-      return [
-        privateMessagingEnabled && (
-          <MenuItem
-            className={classes.item}
-            component={Link}
-            to={scRoutingContext.url(SCRoutes.USER_PRIVATE_MESSAGES_ROUTE_NAME, user)}
-            key="message">
-            <FormattedMessage id="ui.groupSettingsIconButton.item.message" defaultMessage="ui.groupSettingsIconButton.item.message" />
-          </MenuItem>
-        ),
-        <MenuItem className={classes.item} onClick={handleOpenDialog} key="delete">
-          <FormattedMessage id="ui.groupSettingsIconButton.item.remove" defaultMessage="ui.groupSettingsIconButton.item.remove" />
-        </MenuItem>
-      ];
-    }
+        </Item>
+      )
+    ];
   };
 
   return (
@@ -257,6 +334,33 @@ export default function GroupSettingsIconButton(inProps: GroupSettingsIconButton
           btnConfirm={<FormattedMessage id="ui.groupSettingsIconButton.dialog.confirm" defaultMessage="ui.groupSettingsIconButton.dialog.confirm" />}
           onConfirm={handleRemoveUser}
           onClose={handleCloseDialog}
+        />
+      )}
+      {openRemoveAdminDialog && (
+        <ConfirmDialog
+          open={openRemoveAdminDialog}
+          title={
+            isMe ? (
+              <FormattedMessage
+                id="ui.groupSettingsIconButton.dialog.removeAdmin.me"
+                defaultMessage="ui.groupSettingsIconButton.dialog.removeAdmin.me"
+                values={{group: group.name}}
+              />
+            ) : (
+              <FormattedMessage
+                id="ui.groupSettingsIconButton.dialog.removeAdmin"
+                defaultMessage="ui.groupSettingsIconButton.dialog.removeAdmin"
+                values={{
+                  b: (chunks) => <strong key="ui.groupSettingsIconButton.dialog.removeAdmin.b">{chunks}</strong>,
+                  user: user.username,
+                  group: group.name
+                }}
+              />
+            )
+          }
+          btnConfirm={<FormattedMessage id="ui.groupSettingsIconButton.dialog.confirm" defaultMessage="ui.groupSettingsIconButton.dialog.confirm" />}
+          onConfirm={handleRemoveAdmin}
+          onClose={handleCloseRemoveAdminDialog}
         />
       )}
     </>

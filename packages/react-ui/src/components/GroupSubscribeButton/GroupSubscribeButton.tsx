@@ -122,6 +122,7 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
   });
 
   const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
+  const isGroupCreator = useMemo(() => GroupUtils.isGroupCreator(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
 
   useEffect(() => {
     /**
@@ -215,7 +216,8 @@ export default function GroupSubscribeButton(inProps: GroupSubscribeButtonProps)
     return _status;
   }, [status, scGroup]);
 
-  if (!scGroup || isGroupAdmin) {
+  // The creator cannot leave the group, the other admins can
+  if (!scGroup || isGroupCreator) {
     return null;
   }
 

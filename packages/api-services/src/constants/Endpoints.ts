@@ -1282,6 +1282,18 @@ const Endpoints: {[key: string]: EndpointType} = {
     url: urlReplacer('/api/v2/user/$(id)/groups/'),
     method: 'GET'
   },
+  GetGroupAdmins: {
+    url: urlReplacer('/api/v2/group/$(id)/admin/'),
+    method: 'GET'
+  },
+  AddGroupAdmins: {
+    url: urlReplacer('/api/v2/group/$(id)/admin/'),
+    method: 'POST'
+  },
+  RemoveGroupAdmin: {
+    url: urlReplacer('/api/v2/group/$(id)/admin/?user=$(user)'),
+    method: 'DELETE'
+  },
   /**
    * Events
    */

@@ -32,6 +32,9 @@ export interface GroupApiClientInterface {
     params?: BaseGetParams,
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>>;
+  getGroupAdmins(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>>;
+  addGroupAdmins(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any>;
+  removeGroupAdmin(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any>;
 }
 /**
  * Contains all the endpoints needed to manage groups.
@@ -279,6 +282,36 @@ export class GroupApiClient {
       method: Endpoints.GetGroupWaitingApprovalSubscribers.method
     });
   }
+  /**
+   * This endpoint returns the admins of a group (creator, manager and elected admins).
+   * @param id
+   * @param params
+   * @param config
+   */
+  static getGroupAdmins(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    const p = urlParams(params);
+    return apiRequest({...config, url: `${Endpoints.GetGroupAdmins.url({id})}?${p.toString()}`, method: Endpoints.GetGroupAdmins.method});
+  }
+  /**
+   * This endpoint elects one or more group members as admins.
+   * Available to any group admin.
+   * @param id
+   * @param data
+   * @param config
+   */
+  static addGroupAdmins(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.AddGroupAdmins.url({id}), method: Endpoints.AddGroupAdmins.method, data: data});
+  }
+  /**
+   * This endpoint removes the admin role from a user.
+   * Available to the group creator, or to the admin itself.
+   * @param id
+   * @param user
+   * @param config
+   */
+  static removeGroupAdmin(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return apiRequest({...config, url: Endpoints.RemoveGroupAdmin.url({id, user}), method: Endpoints.RemoveGroupAdmin.method});
+  }
 }
 
 /**
@@ -391,5 +424,14 @@ export default class GroupService {
     config?: AxiosRequestConfig
   ): Promise<SCPaginatedResponse<SCUserType>> {
     return GroupApiClient.getGroupWaitingApprovalSubscribers(id, params, config);
+  }
+  static async getGroupAdmins(id: number | string, params?: BaseGetParams, config?: AxiosRequestConfig): Promise<SCPaginatedResponse<SCUserType>> {
+    return GroupApiClient.getGroupAdmins(id, params, config);
+  }
+  static async addGroupAdmins(id: number | string, data: {users: number[]}, config?: AxiosRequestConfig): Promise<any> {
+    return GroupApiClient.addGroupAdmins(id, data, config);
+  }
+  static async removeGroupAdmin(id: number | string, user: number | string, config?: AxiosRequestConfig): Promise<any> {
+    return GroupApiClient.removeGroupAdmin(id, user, config);
   }
 }
