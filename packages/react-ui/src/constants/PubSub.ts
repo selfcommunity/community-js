@@ -21,7 +21,9 @@ export enum SCGroupEventType {
   MEMBERS = 'members',
   ADD_MEMBER = 'members.add_member',
   INVITE_MEMBER = 'members.invite_member',
-  REMOVE_MEMBER = 'members.remove_member'
+  REMOVE_MEMBER = 'members.remove_member',
+  ADD_ADMIN = 'members.add_admin',
+  REMOVE_ADMIN = 'members.remove_admin'
 }
 
 /**

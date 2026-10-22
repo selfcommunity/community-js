@@ -139,6 +139,7 @@ export default function GroupActionsMenu(inProps: GroupActionsMenuProps): JSX.El
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
 
   const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
+  const isGroupCreator = useMemo(() => GroupUtils.isGroupCreator(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
 
   // HANDLERS
   const handleOpen = (group: React.MouseEvent<HTMLButtonElement>) => {
@@ -208,7 +209,7 @@ export default function GroupActionsMenu(inProps: GroupActionsMenuProps): JSX.El
       </MenuItem>,
       isGroupAdmin &&
         scGroup.active && [
-          <Divider key="divider" />,
+          (isMobile || isGroupCreator) && <Divider key="divider" />,
           isMobile && (
             <MenuItem className={classes.item} key="edit" onClick={handleEditClick}>
               <ListItemIcon>
@@ -217,12 +218,14 @@ export default function GroupActionsMenu(inProps: GroupActionsMenuProps): JSX.El
               <FormattedMessage id="ui.groupActionsMenu.item.edit" defaultMessage="ui.groupActionsMenu.item.edit" />
             </MenuItem>
           ),
-          <MenuItem className={classes.item} onClick={() => handleAction(DELETE_GROUP)} key="delete">
-            <ListItemIcon>
-              <Icon>delete</Icon>
-            </ListItemIcon>
-            <FormattedMessage id="ui.groupActionsMenu.item.delete" defaultMessage="ui.groupActionsMenu.item.delete" />
-          </MenuItem>
+          isGroupCreator && (
+            <MenuItem className={classes.item} onClick={() => handleAction(DELETE_GROUP)} key="delete">
+              <ListItemIcon>
+                <Icon>delete</Icon>
+              </ListItemIcon>
+              <FormattedMessage id="ui.groupActionsMenu.item.delete" defaultMessage="ui.groupActionsMenu.item.delete" />
+            </MenuItem>
+          )
         ]
     ];
   };

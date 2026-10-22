@@ -182,6 +182,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
 
   // CONST
   const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
+  const isGroupCreator = useMemo(() => GroupUtils.isGroupCreator(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
 
   /**
    * Handles Change Avatar
@@ -207,7 +208,8 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
    * Handles callback subscribe/unsubscribe group
    */
   const handleSubscribe = (group, status) => {
-    setSCGroup({...group, subscribers_counter: group.subscribers_counter + (status ? 1 : -1)});
+    // An admin leaving the group loses the role
+    setSCGroup({...group, subscribers_counter: group.subscribers_counter + (status ? 1 : -1), ...(!status && {can_manage: false})});
   };
 
   /**
@@ -221,11 +223,14 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
           _group.subscribers_counter = _group.subscribers_counter + 1;
         } else if (msg === `${SCTopicType.GROUP}.${SCGroupEventType.REMOVE_MEMBER}`) {
           _group.subscribers_counter = Math.max(_group.subscribers_counter - 1, 0);
+        } else if (msg === `${SCTopicType.GROUP}.${SCGroupEventType.REMOVE_ADMIN}` && data.user?.id === scUserContext.user?.id) {
+          // The current user gave up the admin role
+          _group.can_manage = false;
         }
         setSCGroup(_group);
       }
     },
-    [scGroup, setSCGroup]
+    [scGroup, setSCGroup, scUserContext.user]
   );
 
   /**
@@ -349,6 +354,7 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
           <Box>
             <GroupInviteButton group={scGroup} groupId={scGroup.id} />
             {isMobile && <GroupActionsMenu group={scGroup} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} {...GroupActionsProps} />}
+            {!isGroupCreator && <GroupSubscribeButton group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />}
           </Box>
         ) : (
           <GroupSubscribeButton group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />

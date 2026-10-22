@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.4.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.3.1...@selfcommunity/react-i18n@1.4.0-alpha.0) (2026-10-22)
+
+
+### Features
+
+* support multiple group admins ([a75e617](https://github.com/selfcommunity/community-js/commit/a75e6170da773685b21f2b5c2b00e84501c31e9c))
+
+
+
+
+
 ## [1.3.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.3.1-alpha.1...@selfcommunity/react-i18n@1.3.1) (2026-10-20)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
