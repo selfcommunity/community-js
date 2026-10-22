@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.5.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.4.1...@selfcommunity/react-ui@1.5.0-alpha.0) (2026-10-22)
+
+
+### Features
+
+* support multiple group admins ([a75e617](https://github.com/selfcommunity/community-js/commit/a75e6170da773685b21f2b5c2b00e84501c31e9c))
+
+
+
+
+
 ## [1.4.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.4.1-alpha.2...@selfcommunity/react-ui@1.4.1) (2026-10-20)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
