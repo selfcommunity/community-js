@@ -1,4 +1,7 @@
 /**
+ * @selfcommunity/api-services
+ */
+/**
  * Axios client wrapper
  */
 import http, {HttpResponse, HttpMethod} from './client';

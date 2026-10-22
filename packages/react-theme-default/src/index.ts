@@ -1,3 +1,6 @@
+/**
+ * @selfcommunity/react-theme-default
+ */
 import './fonts/community-icons.css';
 import './styles/reset.css';
 
