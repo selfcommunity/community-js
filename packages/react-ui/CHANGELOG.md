@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.5.0...@selfcommunity/react-ui@1.5.1-alpha.0) (2026-10-26)
+
+
+### Bug Fixes
+
+* added control on EditGroupButton ([08b3cff](https://github.com/selfcommunity/community-js/commit/08b3cffef56803f810c53da94015c4802ed7fe92))
+* aligned group header admin actions ([7dc3016](https://github.com/selfcommunity/community-js/commit/7dc301675c8416abd1f68285932f39dd16022ba3))
+* removed add icon from EditGroupButton ([31ce20b](https://github.com/selfcommunity/community-js/commit/31ce20b6f5ffa5bb57a24c122c38a19baf533715))
+
+
+
+
+
 # [1.5.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.5.0-alpha.2...@selfcommunity/react-ui@1.5.0) (2026-10-22)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
