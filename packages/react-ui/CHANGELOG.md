@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.6.0-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.5.1-alpha.0...@selfcommunity/react-ui@1.6.0-alpha.0) (2026-10-26)
+
+
+### Features
+
+* added group role badge to group members list ([7a707eb](https://github.com/selfcommunity/community-js/commit/7a707eb5d821322b016ebad7bc9f96ef1fa1a85d))
+
+
+
+
+
 ## [1.5.1-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.5.0...@selfcommunity/react-ui@1.5.1-alpha.0) (2026-10-26)
 
 
