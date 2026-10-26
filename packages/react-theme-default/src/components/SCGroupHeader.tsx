@@ -62,6 +62,17 @@ const Component = {
         },
         '& .SCGroupSubscribeButton-root': {
           marginTop: theme.spacing(1)
+        },
+        '& .SCGroupHeader-actions': {
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: theme.spacing(1),
+          marginTop: theme.spacing(1),
+          '& .SCGroupSubscribeButton-root': {
+            marginTop: 0
+          }
         }
       },
       '& .SCGroupHeader-avatar': {

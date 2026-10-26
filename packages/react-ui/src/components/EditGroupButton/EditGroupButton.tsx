@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {useThemeProps} from '@mui/system';
 import {styled} from '@mui/material';
 import {FormattedMessage} from 'react-intl';
-import {SCUserContextType, useSCFetchGroup, useSCUser} from '@selfcommunity/react-core';
+import {GroupUtils, SCUserContextType, useSCFetchGroup, useSCUser} from '@selfcommunity/react-core';
 import classNames from 'classnames';
 import CreateGroupButton, {CreateGroupButtonProps} from '../CreateGroupButton';
 import {SCGroupType} from '@selfcommunity/types';
@@ -71,19 +71,28 @@ export default function EditGroupButton(inProps: EditGroupButtonProps): JSX.Elem
   const {scGroup, setSCGroup} = useSCFetchGroup({id: groupId, group});
   const scUserContext: SCUserContextType = useSCUser();
 
+  // CONST
+  const isGroupAdmin = useMemo(() => GroupUtils.isGroupAdmin(scGroup, scUserContext.user), [scUserContext.user, scGroup]);
+
   const handleSuccess = (data: SCGroupType) => {
     setSCGroup(data);
     onEditSuccess && onEditSuccess(data);
   };
 
-  if (!scUserContext.user) {
+  // Only group admins can edit the group
+  if (!isGroupAdmin) {
     return null;
   }
   /**
    * Renders root object
    */
   return (
-    <Root variant="outlined" className={classNames(classes.root, className)} GroupFormProps={{group: scGroup, onSuccess: handleSuccess}} {...rest}>
+    <Root
+      variant="outlined"
+      className={classNames(classes.root, className)}
+      startIcon={null}
+      GroupFormProps={{group: scGroup, onSuccess: handleSuccess}}
+      {...rest}>
       <FormattedMessage id="ui.editGroupButton" defaultMessage="ui.editGroupButton" />
     </Root>
   );

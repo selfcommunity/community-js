@@ -15,6 +15,15 @@ export enum SCUserStatus {
   UNREGISTERED = 'u'
 }
 
+/**
+ * Role of the user in a group
+ */
+export enum SCGroupRoleType {
+  CREATOR = 'creator',
+  ADMIN = 'admin',
+  MEMBER = 'member'
+}
+
 export interface SCUserType {
   /**
    * The ID of the user.
@@ -229,6 +238,11 @@ export interface SCUserType {
    * Datetime of the account deletion
    */
   deleted_at?: Date;
+
+  /**
+   * Role of the user in the group (visible only in the group members and group admins api responses).
+   */
+  group_role?: SCGroupRoleType;
 
   /**
    * If the logged user is able to send a private message to the requested user (visible only in the get a specific user api response).

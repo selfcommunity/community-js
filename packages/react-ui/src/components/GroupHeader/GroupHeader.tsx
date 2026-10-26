@@ -41,7 +41,8 @@ const classes = {
   visibilityItem: `${PREFIX}-visibility-item`,
   members: `${PREFIX}-members`,
   membersCounter: `${PREFIX}-members-counter`,
-  multiActions: `${PREFIX}-multi-actions`
+  multiActions: `${PREFIX}-multi-actions`,
+  actions: `${PREFIX}-actions`
 };
 
 const Root = styled(Box, {
@@ -133,6 +134,7 @@ export interface GroupHeaderProps {
  |name|SCGroupHeader-username|Styles applied to the username element.|
  |changePicture|.SCGroupHeader-change-picture|Styles applied to changePicture element.|
  |changeCover|.SCGroupHeader-change-cover`|Styles applied to changeCover element.|
+ |actions|.SCGroupHeader-actions|Styles applied to the admin actions element.|
 
  * @param inProps
  */
@@ -351,10 +353,10 @@ export default function GroupHeader(inProps: GroupHeaderProps): JSX.Element {
           )}
         </>
         {isGroupAdmin ? (
-          <Box>
+          <Box className={classes.actions}>
             <GroupInviteButton group={scGroup} groupId={scGroup.id} />
             {isMobile && <GroupActionsMenu group={scGroup} onEditSuccess={(data: SCGroupType) => setSCGroup(data)} {...GroupActionsProps} />}
-            {!isGroupCreator && <GroupSubscribeButton group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />}
+            {!isGroupCreator && <GroupSubscribeButton size="medium" group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />}
           </Box>
         ) : (
           <GroupSubscribeButton group={scGroup} onSubscribe={handleSubscribe} {...GroupSubscribeButtonProps} />
