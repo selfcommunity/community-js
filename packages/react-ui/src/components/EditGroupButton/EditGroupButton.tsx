@@ -87,7 +87,12 @@ export default function EditGroupButton(inProps: EditGroupButtonProps): JSX.Elem
    * Renders root object
    */
   return (
-    <Root variant="outlined" className={classNames(classes.root, className)} GroupFormProps={{group: scGroup, onSuccess: handleSuccess}} {...rest}>
+    <Root
+      variant="outlined"
+      className={classNames(classes.root, className)}
+      startIcon={null}
+      GroupFormProps={{group: scGroup, onSuccess: handleSuccess}}
+      {...rest}>
       <FormattedMessage id="ui.editGroupButton" defaultMessage="ui.editGroupButton" />
     </Root>
   );
