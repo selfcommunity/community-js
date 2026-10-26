@@ -1164,6 +1164,7 @@
   "ui.suggestedEventsWidget.title": "Eventi in evidenza",
   "ui.suggestedEventsWidget.showAll": "Vedi tutti",
   "ui.user.group.admin": "Amministratore",
+  "ui.user.group.creator": "Creatore",
   "ui.user.ignore": "Ignora",
   "ui.user.userFollowers": "{total, plural, =0 {# Followers} one {# Follower} other {# Followers}}",
   "ui.userActionIconButton.hide": "Blocca utente",

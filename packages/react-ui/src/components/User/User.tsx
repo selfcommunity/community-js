@@ -10,7 +10,7 @@ import {
   useSCPreferences,
   useSCRouting
 } from '@selfcommunity/react-core';
-import {SCUserType} from '@selfcommunity/types';
+import {SCGroupRoleType, SCUserType} from '@selfcommunity/types';
 import classNames from 'classnames';
 import React, {ReactNode, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
@@ -76,7 +76,8 @@ export interface UserProps extends WidgetProps {
    */
   badgeContent?: any;
   /**
-   * If true, shows a custom label next to the user username
+   * If true, shows the group admin label next to the user username.
+   * Used only if the user object has no `group_role`
    * @default false
    */
   isGroupAdmin?: boolean;
@@ -123,6 +124,7 @@ const PREFERENCES = [SCPreferences.STAFF_STAFF_BADGE_LABEL, SCPreferences.STAFF_
  |root|.SCUser-root|Styles applied to the root element.|
  |avatar|.SCUser-avatar|Styles applied to the avatar element.|
  |staffBadgeLabel|.SCUser-staff-badge-label|Styles applied to the staff badge label element.|
+ |groupAdminBadgeLabel|.SCUser-group-admin-badge-label|Styles applied to the group role (creator/admin) badge label element.|
 
  *
  * @param inProps
@@ -163,6 +165,10 @@ export default function User(inProps: UserProps): JSX.Element {
     return _preferences;
   }, [scPreferences.preferences]);
   const hasBadge = scUser && scUser.community_badge;
+  // Role in the group: available only in the group members/admins lists.
+  // Read from the user prop, because the user fetched by id does not include it
+  const groupRole = user?.group_role ?? (isGroupAdmin ? SCGroupRoleType.ADMIN : null);
+  const hasGroupBadge = groupRole === SCGroupRoleType.CREATOR || groupRole === SCGroupRoleType.ADMIN;
   const [openAlert, setOpenAlert] = useState<boolean>(false);
 
   // INTL
@@ -219,18 +225,20 @@ export default function User(inProps: UserProps): JSX.Element {
           )
         }
         primary={
-          (hasBadge && preferences) || isGroupAdmin ? (
+          (hasBadge && preferences) || hasGroupBadge ? (
             <>
               <Typography component="span" className={classes.paperContrastColor}>
                 {scUser.username}
               </Typography>
               <Chip
                 component="span"
-                className={classNames(isGroupAdmin ? classes.groupAdminBadgeLabel : classes.staffBadgeLabel)}
+                className={classNames(hasGroupBadge ? classes.groupAdminBadgeLabel : classes.staffBadgeLabel)}
                 size="small"
                 label={
                   <Typography component="span" className={classes.paperContrastColor}>
-                    {isGroupAdmin ? (
+                    {groupRole === SCGroupRoleType.CREATOR ? (
+                      <FormattedMessage defaultMessage="ui.user.group.creator" id="ui.user.group.creator" />
+                    ) : hasGroupBadge ? (
                       <FormattedMessage defaultMessage="ui.user.group.admin" id="ui.user.group.admin" />
                     ) : (
                       preferences[SCPreferences.STAFF_STAFF_BADGE_LABEL]
