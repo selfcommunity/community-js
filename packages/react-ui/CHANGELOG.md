@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.2-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.6.1...@selfcommunity/react-ui@1.6.2-alpha.0) (2026-10-29)
+
+
+### Bug Fixes
+
+* deleted for notification links to notifications list instead of contribution detail ([546bf5c](https://github.com/selfcommunity/community-js/commit/546bf5cfd21a004064978f5bd89e7ba317eb8f52))
+* let moderators restore contributions deleted by another moderator ([35d914b](https://github.com/selfcommunity/community-js/commit/35d914bf3b7e4a6b11b26944f877c6901af87c8a))
+
+
+
+
+
 ## [1.6.1](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.6.1-alpha.1...@selfcommunity/react-ui@1.6.1) (2026-10-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
