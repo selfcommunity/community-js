@@ -1295,6 +1295,7 @@
   "ui.userToastNotifications.userBlocked.accountBlocked": "Your account has been <b>blocked</b>",
   "ui.userToastNotifications.userBlocked.accountReactivated": "Your account has been <b>reactivated</b>",
   "ui.userToastNotifications.viewContribution": "View contribution",
+  "ui.userToastNotifications.viewNotifications": "View notifications",
   "ui.userToastNotifications.viewMessage": "View",
   "ui.createEventButton.goLive": "Go live",
   "ui.createLivestreamDialog.title": "Go live",
