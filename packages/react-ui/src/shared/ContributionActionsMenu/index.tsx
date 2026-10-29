@@ -1169,53 +1169,76 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     const open = openSection === DELETE_CONTRIBUTION_SECTION;
     return (
       <Box key={DELETE_CONTRIBUTION_SECTION}>
-        {!contributionObj.collapsed && !(contributionObj.deleted && !deleteType) && (
-          <Box>
-            {deleteType !== undefined && deleteType !== null ? (
-              <>
-                <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleAction(MODERATE_CONTRIBUTION_DELETED)}>
-                  <ListItemIcon>
-                    <Icon>restore_from_trash</Icon>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <>
-                        <FormattedMessage
-                          id="ui.contributionActionMenu.restoreFromDeleted"
-                          defaultMessage="ui.contributionActionMenu.restoreFromDeleted"
-                        />{' '}
-                        ({getReportName(deleteType)})
-                      </>
-                    }
-                  />
-                </MenuItem>
-              </>
-            ) : (
-              <>
-                <MenuItem
-                  className={classes.subItem}
-                  disabled={Boolean(currentAction)}
-                  onClick={() => handleOpenSection(DELETE_CONTRIBUTION_SECTION)}>
-                  <ListItemIcon>
-                    <Icon>delete</Icon>
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={
-                      <FormattedMessage
-                        id="ui.contributionActionMenu.deleteContributionWithMotivation"
-                        defaultMessage="ui.contributionActionMenu.deleteContributionWithMotivation"
+        {/* deleteType could be 0 (spam): check it explicitly */}
+        {!contributionObj.collapsed && contributionObj.deleted && (deleteType === undefined || deleteType === null)
+          ? // Contribution deleted without moderation (by the author or by the group manager, also another moderator):
+            // the moderators can restore it anyway, unless the general section already has the restore action
+            contributionObj.can_restore !== false &&
+            !canDeleteContribution() && (
+              <MenuItem className={classes.subItem} disabled={Boolean(currentAction)} onClick={() => handleAction(MODERATE_CONTRIBUTION_DELETED)}>
+                <ListItemIcon>
+                  <Icon>restore_from_trash</Icon>
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <FormattedMessage
+                      id="ui.contributionActionMenu.restoreFromDeleted"
+                      defaultMessage="ui.contributionActionMenu.restoreFromDeleted"
+                    />
+                  }
+                />
+              </MenuItem>
+            )
+          : !contributionObj.collapsed && (
+              <Box>
+                {deleteType !== undefined && deleteType !== null ? (
+                  <>
+                    <MenuItem
+                      className={classes.subItem}
+                      disabled={Boolean(currentAction)}
+                      onClick={() => handleAction(MODERATE_CONTRIBUTION_DELETED)}>
+                      <ListItemIcon>
+                        <Icon>restore_from_trash</Icon>
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={
+                          <>
+                            <FormattedMessage
+                              id="ui.contributionActionMenu.restoreFromDeleted"
+                              defaultMessage="ui.contributionActionMenu.restoreFromDeleted"
+                            />{' '}
+                            ({getReportName(deleteType)})
+                          </>
+                        }
                       />
-                    }
-                  />
-                  {open ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
-                </MenuItem>
-                <Collapse in={open} timeout="auto" unmountOnExit>
-                  {renderReports(DELETE_CONTRIBUTION_SECTION)}
-                </Collapse>
-              </>
+                    </MenuItem>
+                  </>
+                ) : (
+                  <>
+                    <MenuItem
+                      className={classes.subItem}
+                      disabled={Boolean(currentAction)}
+                      onClick={() => handleOpenSection(DELETE_CONTRIBUTION_SECTION)}>
+                      <ListItemIcon>
+                        <Icon>delete</Icon>
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={
+                          <FormattedMessage
+                            id="ui.contributionActionMenu.deleteContributionWithMotivation"
+                            defaultMessage="ui.contributionActionMenu.deleteContributionWithMotivation"
+                          />
+                        }
+                      />
+                      {open ? <Icon>expand_less</Icon> : <Icon>expand_more</Icon>}
+                    </MenuItem>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                      {renderReports(DELETE_CONTRIBUTION_SECTION)}
+                    </Collapse>
+                  </>
+                )}
+              </Box>
             )}
-          </Box>
-        )}
       </Box>
     );
   }

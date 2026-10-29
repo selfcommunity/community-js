@@ -1,6 +1,6 @@
 import {Avatar, Box, Stack, Typography, styled, Icon} from '@mui/material';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
-import {getContributionType, getContributionSnippet, getRouteData} from '../../../utils/contribution';
+import {getContributionType, getContributionSnippet} from '../../../utils/contribution';
 import DateTimeAgo from '../../../shared/DateTimeAgo';
 import NewChip from '../../../shared/NewChip/NewChip';
 import {camelCase} from '@selfcommunity/utils';
@@ -108,8 +108,7 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
       primary={
         <>
           {isSnippetTemplate ? (
-            <Link
-              to={scRoutingContext.url(SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`], getRouteData(notificationObject[contributionType]))}>
+            <Link to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
               <Typography component="div" color="inherit" className={classes.flagText}>
                 <FormattedMessage
                   id={`ui.notification.deletedFor.${camelCase(notificationObject.type)}Snippet`}
@@ -141,27 +140,16 @@ export default function DeletedForNotification(props: NotificationDeletedForProp
               <Typography variant="body2" color="inherit" classes={{root: classes.contributionYouWroteLabel}}>
                 <FormattedMessage id="ui.notification.deletedFor.youWrote" defaultMessage="ui.notification.deletedFor.youWrote" />
               </Typography>
-              <Link
-                to={scRoutingContext.url(
-                  SCRoutes[`${contributionType.toUpperCase()}_ROUTE_NAME`],
-                  getRouteData(notificationObject[contributionType])
-                )}
-                className={classes.contributionText}>
-                <Typography component="span" color="inherit" variant="body2">
-                  {getContributionSnippet(notificationObject[contributionType])}
-                </Typography>
-              </Link>
+              <Typography component="span" color="inherit" variant="body2" className={classes.contributionText}>
+                {getContributionSnippet(notificationObject[contributionType])}
+              </Typography>
             </Box>
             {template === SCNotificationObjectTemplateType.TOAST && (
               <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={2}>
                 <DateTimeAgo date={notificationObject.active_at} />
                 <Typography color="primary" component="div">
-                  <Link
-                    to={scRoutingContext.url(
-                      SCRoutes[`${notificationObject[contributionType]['type'].toUpperCase()}_ROUTE_NAME`],
-                      getRouteData(notificationObject[contributionType])
-                    )}>
-                    <FormattedMessage id="ui.userToastNotifications.viewContribution" defaultMessage="ui.userToastNotifications.viewContribution" />
+                  <Link to={scRoutingContext.url(SCRoutes.USER_NOTIFICATIONS_ROUTE_NAME, {})}>
+                    <FormattedMessage id="ui.userToastNotifications.viewNotifications" defaultMessage="ui.userToastNotifications.viewNotifications" />
                   </Link>
                 </Typography>
               </Stack>
