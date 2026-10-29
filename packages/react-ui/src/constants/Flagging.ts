@@ -16,3 +16,4 @@ export const MODERATION_CONTRIBUTION_STATE_DELETED = 'deleted';
 /** Moderation actions **/
 export const MODERATION_TYPE_ACTION_HIDE = 'hide';
 export const MODERATION_TYPE_ACTION_DELETE = 'delete';
+export const MODERATION_TYPE_ACTION_RESTORE = 'restore';

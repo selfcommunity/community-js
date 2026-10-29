@@ -34,6 +34,7 @@ import {
   MODERATION_CONTRIBUTION_STATE_HIDDEN,
   MODERATION_TYPE_ACTION_DELETE,
   MODERATION_TYPE_ACTION_HIDE,
+  MODERATION_TYPE_ACTION_RESTORE,
   REPORT_AGGRESSIVE,
   REPORT_OFFTOPIC,
   REPORT_POORCONTENT,
@@ -842,20 +843,29 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    */
   function performPostConfirmAction(success) {
     if (success) {
+      // Who has just deleted (or hidden) the contribution can always restore (or show) it again
       if ([DELETE_CONTRIBUTION, RESTORE_CONTRIBUTION].includes(currentAction)) {
         commentObj
-          ? setCommentObj({...commentObj, ...{deleted: currentAction === DELETE_CONTRIBUTION}})
-          : setFeedObj({...feedObj, ...{deleted: currentAction === DELETE_CONTRIBUTION}});
+          ? setCommentObj({...commentObj, ...{deleted: currentAction === DELETE_CONTRIBUTION, can_restore: currentAction === DELETE_CONTRIBUTION}})
+          : setFeedObj({...feedObj, ...{deleted: currentAction === DELETE_CONTRIBUTION, can_restore: currentAction === DELETE_CONTRIBUTION}});
       } else if ([COLLAPSE_CONTRIBUTION, UNCOLLAPSE_CONTRIBUTION].includes(currentAction)) {
         commentObj
-          ? setCommentObj({...commentObj, ...{collapsed: currentAction === COLLAPSE_CONTRIBUTION}})
-          : setFeedObj({...feedObj, ...{collapsed: currentAction === COLLAPSE_CONTRIBUTION}});
+          ? setCommentObj({
+              ...commentObj,
+              ...{collapsed: currentAction === COLLAPSE_CONTRIBUTION, can_uncollapse: currentAction === COLLAPSE_CONTRIBUTION}
+            })
+          : setFeedObj({
+              ...feedObj,
+              ...{collapsed: currentAction === COLLAPSE_CONTRIBUTION, can_uncollapse: currentAction === COLLAPSE_CONTRIBUTION}
+            });
       } else if (currentAction === MODERATE_CONTRIBUTION_HIDDEN) {
         commentObj
-          ? setCommentObj({...commentObj, ...{collapsed: !commentObj.collapsed}})
-          : setFeedObj({...feedObj, ...{collapsed: !feedObj.collapsed}});
+          ? setCommentObj({...commentObj, ...{collapsed: !commentObj.collapsed, can_uncollapse: !commentObj.collapsed}})
+          : setFeedObj({...feedObj, ...{collapsed: !feedObj.collapsed, can_uncollapse: !feedObj.collapsed}});
       } else if (currentAction === MODERATE_CONTRIBUTION_DELETED) {
-        commentObj ? setCommentObj({...commentObj, ...{deleted: !commentObj.deleted}}) : setFeedObj({...feedObj, ...{deleted: !feedObj.deleted}});
+        commentObj
+          ? setCommentObj({...commentObj, ...{deleted: !commentObj.deleted, can_restore: !commentObj.deleted}})
+          : setFeedObj({...feedObj, ...{deleted: !feedObj.deleted, can_restore: !feedObj.deleted}});
       }
       setCurrentActionLoading(null);
       setCurrentAction(null);
@@ -882,7 +892,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(DELETE_CONTRIBUTION);
         performDeleteContribution()
           .then(() => {
-            const _contributionObj = Object.assign({}, contributionObj, {deleted: true});
+            const _contributionObj = Object.assign({}, contributionObj, {deleted: true, can_restore: true});
             onDeleteContribution && onDeleteContribution(_contributionObj);
             performPostConfirmAction(true);
           })
@@ -894,7 +904,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(RESTORE_CONTRIBUTION);
         performRestoreContribution()
           .then(() => {
-            const _contributionObj = Object.assign({}, contributionObj, {deleted: false});
+            const _contributionObj = Object.assign({}, contributionObj, {deleted: false, can_restore: false});
             onRestoreContribution && onRestoreContribution(_contributionObj);
             performPostConfirmAction(true);
           })
@@ -907,7 +917,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(currentAction);
         performCollapseContribution(collapse)
           .then(() => {
-            const _contributionObj = Object.assign({}, contributionObj, {collapsed: collapse});
+            const _contributionObj = Object.assign({}, contributionObj, {collapsed: collapse, can_uncollapse: collapse});
             onHideContribution && onHideContribution(_contributionObj);
             performPostConfirmAction(true);
           })
@@ -931,7 +941,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
         setCurrentActionLoading(MODERATE_CONTRIBUTION_HIDDEN);
         performModerationContribution(MODERATION_TYPE_ACTION_HIDE, hideFlagType)
           .then(() => {
-            const _contributionObj = Object.assign({}, contributionObj, {collapsed: !contributionObj.collapsed});
+            const _contributionObj = Object.assign({}, contributionObj, {
+              collapsed: !contributionObj.collapsed,
+              can_uncollapse: !contributionObj.collapsed
+            });
             setHideType(contributionObj.collapsed ? null : hideFlagType);
             setHideFlagType(null);
             onHideContribution && onHideContribution(_contributionObj);
@@ -943,9 +956,13 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
           });
       } else if (currentAction === MODERATE_CONTRIBUTION_DELETED) {
         setCurrentActionLoading(MODERATE_CONTRIBUTION_DELETED);
-        performModerationContribution(MODERATION_TYPE_ACTION_DELETE, deleteFlagType)
+        // Restore with the explicit action: action=delete with a moderation_type could turn into a moderated deletion
+        (contributionObj.deleted
+          ? performModerationContribution(MODERATION_TYPE_ACTION_RESTORE, null)
+          : performModerationContribution(MODERATION_TYPE_ACTION_DELETE, deleteFlagType)
+        )
           .then(() => {
-            const _contributionObj = Object.assign({}, contributionObj, {deleted: !contributionObj.deleted});
+            const _contributionObj = Object.assign({}, contributionObj, {deleted: !contributionObj.deleted, can_restore: !contributionObj.deleted});
             setDeleteType(deleteType === deleteFlagType ? null : deleteFlagType);
             setDeleteFlagType(null);
             onDeleteContribution && onDeleteContribution(_contributionObj);
@@ -1214,6 +1231,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    * Can authenticated user delete the contribution
    */
   function canDeleteContribution(): boolean {
+    // Who is lower in the hierarchy (moderators > group managers > author) cannot restore what who is higher deleted
+    if (contributionObj.deleted && contributionObj.can_restore === false) {
+      return false;
+    }
     return scUserContext.user && (scUserContext.user.id === contributionObj.author.id || isGroupManager);
   }
 
@@ -1221,6 +1242,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    * Can authenticated user hide/show the contribution to the group members (group manager)
    */
   function canCollapseContribution(): boolean {
+    // A group manager cannot show again what a moderator hid
+    if (contributionObj.collapsed && contributionObj.can_uncollapse === false) {
+      return false;
+    }
     return isGroupManager && !contributionObj.deleted;
   }
 
