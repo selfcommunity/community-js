@@ -195,6 +195,16 @@ export interface SCFeedObjectType {
   collapsed: boolean;
 
   /**
+   * True if the authenticated user can restore the deleted contribution (computed by the server according to who deleted it)
+   */
+  can_restore?: boolean;
+
+  /**
+   * True if the authenticated user can show again the hidden contribution (computed by the server according to who hid it)
+   */
+  can_uncollapse?: boolean;
+
+  /**
    * Number of comment
    */
   comment_count: number;
