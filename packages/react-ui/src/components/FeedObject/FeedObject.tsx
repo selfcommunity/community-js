@@ -59,6 +59,7 @@ import {
   useSCUser
 } from '@selfcommunity/react-core';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
+import ContributionModerationChip from '../../shared/ContributionModerationChip';
 import UserAvatar from '../../shared/UserAvatar';
 import {MAX_SUMMARY_LENGTH} from '../../constants/Feed';
 import Composer from '../Composer';
@@ -323,7 +324,7 @@ export interface FeedObjectProps extends CardProps, VirtualScrollerItemProps {
  |root|.SCFeedObject-root|Styles applied to the root element.|
  |deleted|.SCFeedObject-deleted|Styles applied to the feed obj when is deleted (visible only for admin and moderator).|
  |collapsed|.SCFeedObject-collapsed|Styles applied to the feed obj when is hidden (visible only for the group manager, admin and moderator).|
- |collapsedChip|.SCFeedObject-collapsed-chip|Styles applied to the hidden label of the feed obj.|
+ |collapsedChip|.SCFeedObject-collapsed-chip|Styles applied to the deleted/hidden label of the feed obj.|
  |header|.SCFeedObject-header|Styles applied to the header of the card.|
  |category|.SCFeedObject-category|Styles applied to the category element.|
  |event|.SCFeedObject-event|Styles applied to the event element.|
@@ -407,11 +408,13 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
   const {obj, setObj, error} = useSCFetchFeedObject({id: feedObjectId, feedObject, feedObjectType, cacheStrategy});
   const objId = obj ? obj.id : null;
   const [openAlert, setOpenAlert] = useState<boolean>(false);
-  // Contents hidden from group members are visible only to admin, moderator and the manager of the group.
+  // Hidden contents are visible only to admin, moderator and (for the contents of a group) the manager of the group.
   // The author keeps seeing the content as a normal one, without knowing it is hidden.
   const canViewCollapsed: boolean =
-    UserUtils.isAdmin(scUserContext.user) || UserUtils.isModerator(scUserContext.user) || GroupUtils.isGroupAdmin(obj?.group, scUserContext.user);
-  const showCollapsed = Boolean(obj?.group && obj.collapsed && !obj.deleted && canViewCollapsed);
+    UserUtils.isAdmin(scUserContext.user) ||
+    UserUtils.isModerator(scUserContext.user) ||
+    (Boolean(obj?.group) && GroupUtils.isGroupAdmin(obj.group, scUserContext.user));
+  const showCollapsed = Boolean(obj?.collapsed && !obj.deleted && canViewCollapsed);
 
   /**
    * Get initial expanded activities type
@@ -887,14 +890,7 @@ export default function FeedObject(inProps: FeedObjectProps): JSX.Element {
                 clickable
               />
             )}
-            {showCollapsed && (
-              <Chip
-                className={classes.collapsedChip}
-                size="small"
-                icon={<Icon>visibility_off</Icon>}
-                label={<FormattedMessage id="ui.feedObject.collapsed" defaultMessage="ui.feedObject.collapsed" />}
-              />
-            )}
+            <ContributionModerationChip className={classes.collapsedChip} contribution={obj} group={obj.group} />
             <CardHeader
               className={classes.header}
               avatar={

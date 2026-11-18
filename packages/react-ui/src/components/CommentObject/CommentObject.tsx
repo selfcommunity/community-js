@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import Widget, {WidgetProps} from '../Widget';
 import {FormattedMessage} from 'react-intl';
-import {Avatar, Box, Button, CardContent, CardProps, Chip, Icon, IconButton, Typography, styled} from '@mui/material';
+import {Avatar, Box, Button, CardContent, CardProps, Icon, IconButton, Typography, styled} from '@mui/material';
 import Bullet from '../../shared/Bullet';
 import classNames from 'classnames';
 import {SCOPE_SC_UI} from '../../constants/Errors';
@@ -36,6 +36,7 @@ import {
 import VoteButton from '../VoteButton';
 import VoteAudienceButton from '../VoteAudienceButton';
 import UserDeletedSnackBar from '../../shared/UserDeletedSnackBar';
+import ContributionModerationChip from '../../shared/ContributionModerationChip';
 import UserAvatar from '../../shared/UserAvatar';
 import {PREFIX} from './constants';
 
@@ -509,9 +510,10 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
   function renderComment(comment: SCCommentType) {
     if (
       comment.deleted &&
-      (!scUserContext.user || (scUserContext.user && !UserUtils.isStaff(scUserContext.user) && scUserContext.user.id !== comment.author.id))
+      (!scUserContext.user ||
+        (!UserUtils.isAdmin(scUserContext.user) && !UserUtils.isModerator(scUserContext.user) && scUserContext.user.id !== comment.author.id))
     ) {
-      // render the comment if user is logged and is staff (admin, moderator)
+      // render the comment if user is logged and is admin or moderator (an editor has no moderation powers)
       // or the comment author is the logged user
       return null;
     }
@@ -574,23 +576,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                       onClick={comment.author.deleted ? () => setOpenAlert(true) : null}>
                       <Typography component="span">{comment.author.username}</Typography>
                     </Link>
-                    {comment.collapsed &&
-                      !isCollapsedHiddenToAuthor(comment) &&
-                      (isGroupManager ? (
-                        <Chip
-                          className={classes.flagChip}
-                          size="small"
-                          icon={<Icon>visibility_off</Icon>}
-                          label={<FormattedMessage id="ui.commentObject.collapsedGroup" defaultMessage="ui.commentObject.collapsedGroup" />}
-                        />
-                      ) : (
-                        <Chip
-                          className={classes.flagChip}
-                          color="error"
-                          size="small"
-                          label={<FormattedMessage id="ui.commentObject.flag" defaultMessage="ui.commentObject.flag" />}
-                        />
-                      ))}
+                    <ContributionModerationChip className={classes.flagChip} contribution={comment} group={commentsObject.feedObject?.group} />
                     <Typography className={classes.textContent} variant="body2" gutterBottom dangerouslySetInnerHTML={{__html: summaryHtml}} />
                     {summaryHtmlTruncated && truncateContent && (
                       <Link to={scRoutingContext.url(SCRoutes.COMMENT_ROUTE_NAME, getRouteData(comment))} className={classes.showMoreContent}>
