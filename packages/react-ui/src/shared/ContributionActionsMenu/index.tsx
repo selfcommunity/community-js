@@ -185,6 +185,13 @@ export interface ContributionActionsMenuProps {
   group?: SCGroupType;
 
   /**
+   * True if an ancestor of the comment is deleted: the backend refuses to restore the comment
+   * while the ancestor is deleted, so the restore actions are not shown
+   * @default false
+   */
+  ancestorDeleted?: boolean;
+
+  /**
    * Handle edit obj
    */
   onEditContribution?: (obj: SCCommentType | SCFeedObjectType) => void;
@@ -246,6 +253,7 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
     commentObjectId,
     commentObject,
     group,
+    ancestorDeleted = false,
     onFlagContribution,
     onEditContribution,
     onHideContribution,
@@ -1167,6 +1175,10 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    */
   function renderDeleteContributionSection() {
     const open = openSection === DELETE_CONTRIBUTION_SECTION;
+    if (contributionObj.deleted && ancestorDeleted) {
+      // The backend refuses to restore a comment whose ancestor is deleted, also to the moderators
+      return null;
+    }
     return (
       <Box key={DELETE_CONTRIBUTION_SECTION}>
         {/* deleteType could be 0 (spam): check it explicitly */}
@@ -1256,7 +1268,8 @@ export default function ContributionActionsMenu(props: ContributionActionsMenuPr
    */
   function canDeleteContribution(): boolean {
     // Who is lower in the hierarchy (moderators > group managers > author) cannot restore what who is higher deleted
-    if (contributionObj.deleted && contributionObj.can_restore === false) {
+    // and nobody can restore a comment whose ancestor is deleted
+    if (contributionObj.deleted && (contributionObj.can_restore === false || ancestorDeleted)) {
       return false;
     }
     return scUserContext.user && (scUserContext.user.id === contributionObj.author.id || isGroupManager);

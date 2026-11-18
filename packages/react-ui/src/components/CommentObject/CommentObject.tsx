@@ -194,6 +194,12 @@ export interface CommentObjectProps {
   showActions?: boolean;
 
   /**
+   * True if an ancestor of the comment is deleted: the comment cannot be restored while the ancestor is deleted
+   * @default false
+   */
+  ancestorDeleted?: boolean;
+
+  /**
    * Other props
    */
   [p: string]: any;
@@ -266,6 +272,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
     cacheStrategy = CacheStrategies.NETWORK_ONLY,
     CommentsObjectComponentProps = {},
     showActions = true,
+    ancestorDeleted = false,
     ...rest
   } = props;
 
@@ -589,6 +596,7 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
                       <ContributionActionsMenu
                         commentObject={comment}
                         group={commentsObject.feedObject?.group}
+                        ancestorDeleted={ancestorDeleted}
                         onRestoreContribution={handleRestore}
                         onHideContribution={handleHide}
                         onDeleteContribution={handleDelete}
@@ -664,7 +672,8 @@ export default function CommentObject(inProps: CommentObjectProps): JSX.Element 
           linkableCommentDateTime: linkableCommentDateTime,
           ...rest,
           cacheStrategy,
-          truncateContent
+          truncateContent,
+          ancestorDeleted: ancestorDeleted || Boolean(comment.deleted)
         }}
         CommentsObjectSkeletonProps={{count: 1, CommentObjectSkeletonProps: CommentObjectSkeletonProps}}
         inPlaceLoadMoreContents={true}
