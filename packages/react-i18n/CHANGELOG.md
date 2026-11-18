@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.4-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.5.3...@selfcommunity/react-i18n@1.5.4-alpha.0) (2026-11-18)
+
+
+### Bug Fixes
+
+* **react-i18n:** correct Italian notification texts for aggressive, poor and vulgar flagged contributions ([7803ce5](https://github.com/selfcommunity/community-js/commit/7803ce5584745b8e2fd9fbd9dc0832a65f4c4263))
+
+
+
+
+
 ## [1.5.3](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-i18n@1.5.3-alpha.1...@selfcommunity/react-i18n@1.5.3) (2026-11-18)
 
 **Note:** Version bump only for package @selfcommunity/react-i18n
