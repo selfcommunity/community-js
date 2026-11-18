@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.3-alpha.0](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.6.2...@selfcommunity/react-ui@1.6.3-alpha.0) (2026-11-18)
+
+
+### Bug Fixes
+
+* show moderation chips on contributions and let moderators always restore/show them ([2255460](https://github.com/selfcommunity/community-js/commit/2255460ec79007ff5c98a6a80ecc3222e7b47419))
+
+
+
+
+
 ## [1.6.2](https://github.com/selfcommunity/community-js/compare/@selfcommunity/react-ui@1.6.2-alpha.1...@selfcommunity/react-ui@1.6.2) (2026-10-29)
 
 **Note:** Version bump only for package @selfcommunity/react-ui
